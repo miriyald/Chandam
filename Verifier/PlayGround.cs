@@ -50,7 +50,7 @@ namespace Verifier
 
             Probable Pr = Padyam.MostProbable(s, Options);
             MatchResult MR = Pr.MatchResult;
-            Console.Write(MR.Percentage);
+            Console.WriteLine(MR.Percentage);
         }
         private void Matcher(string s)
         {
@@ -63,7 +63,7 @@ namespace Verifier
 
             MatchResult MR = P.Match(s, R);
 
-            Console.Write(MR.Percentage);
+            Console.WriteLine(MR.Percentage);
         }
     }
 }
