@@ -12,12 +12,13 @@
 
 using Chandam.Rules;
 using Library.Chandam.Samples;
-using SearchEngine.Services.Indic;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using System.Xml;
+using Verifier.Services.Indic;
+using static Verifier.Services.Indic.Indic;
 
 namespace Verifier
 {

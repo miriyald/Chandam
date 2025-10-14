@@ -10,7 +10,6 @@
 // </copyright>
 //---------------------------------------------------------------------------------------------
 
-using NAudio.Wave;
 using System.IO;
 
 namespace Verifier

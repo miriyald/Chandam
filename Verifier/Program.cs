@@ -30,8 +30,8 @@ namespace Verifier
 				StopWatch S = new StopWatch();
 				S.Start();
 
-				const string root = @"C:\Working\Chandam\Web\js\";
-				new GenerateRulesJS(root).Go();
+				//const string root = @"C:\Working\Chandam\Web\js\";
+				//new GenerateRulesJS(root).Go();
 
 				//new Chandassu().BuildNotes();
 				//new ExtractServerData().Dump();
@@ -39,7 +39,7 @@ namespace Verifier
 				//new Vruttam2Jati().Go();
 				//new Jati2Vruttam2().Go();
 				//new Jati2Vruttam2().Go3();
-				//new PlayGround().Play();
+				new PlayGround().Play();
 				//new Seq2Music().Go();
 
 				S.Reset();
