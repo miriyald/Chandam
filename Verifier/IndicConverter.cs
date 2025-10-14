@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using System.Globalization;
 
@@ -21,12 +19,8 @@ namespace Verifier.Services.Indic
             Mixture = 1,
             English = 2
         }
-
-
         public static LangType Analyse(string PureString)
         {
-
-
             string[] Words = PureString.Split(' ');
             bool indic = false, english = false;
 
@@ -36,8 +30,6 @@ namespace Verifier.Services.Indic
 
                 char First = Word[0];
                 UnicodeCategory UC = Char.GetUnicodeCategory(First);
-
-
 
                 if (UC == UnicodeCategory.OtherLetter)
                 {
@@ -57,21 +49,15 @@ namespace Verifier.Services.Indic
             return LangType.Mixture;
 
         }
-
     }
+
     public class Converter
     {
-
-
-
         public static string Convert(string S, Indic.Language From, Indic.Language To)
         {
             if (S == null) { return null; }
             try
             {
-
-
-
                 Encoding encFrom = Encoding.GetEncoding((int)From);
                 Encoding encTo = Encoding.GetEncoding((int)To);
                 string str = S;
@@ -80,16 +66,11 @@ namespace Verifier.Services.Indic
             }
             catch { return null; }
         }
-
         public static string UniCode2ISCII(string S, Indic.Language L)
         {
-
             if (S == null) { return null; }
             try
             {
-
-
-
                 Encoding encFrom = Encoding.GetEncoding((int)L);
                 Encoding encTo = Encoding.GetEncoding(1252);
                 string str = S;

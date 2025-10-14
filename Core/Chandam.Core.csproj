@@ -1,41 +1,20 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{2F146852-E09A-43DE-A3FC-26AF8A464ADE}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <TargetFramework>net9.0</TargetFramework>
     <RootNamespace>Core</RootNamespace>
     <AssemblyName>Chandam.Core</AssemblyName>
-    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
+    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
+    <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
+    <GenerateAssemblyFileVersionAttribute>false</GenerateAssemblyFileVersionAttribute>
+    <GenerateAssemblyInformationalVersionAttribute>false</GenerateAssemblyInformationalVersionAttribute>
+    <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
+    <GenerateAssemblyTitleAttribute>false</GenerateAssemblyTitleAttribute>
+    <GenerateAssemblyVersionAttribute>false</GenerateAssemblyVersionAttribute>
+    <NoWarn>CS8981</NoWarn>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-  <PropertyGroup>
-    <SignAssembly>true</SignAssembly>
-  </PropertyGroup>
-  <ItemGroup>
-    <Reference Include="System" />
-    <Reference Include="System.Xml" />
-  </ItemGroup>
+
   <ItemGroup>
     <Compile Include="Business\Business.cs" />
     <Compile Include="Business\Business2.cs" />
@@ -66,23 +45,11 @@
     <Compile Include="Tests\SanityTest.cs" />
     <Compile Include="Unclassified\Strings.cs" />
   </ItemGroup>
+
   <ItemGroup>
-    <ProjectReference Include="..\Rules\Chandam.Rules.csproj">
-      <Project>{91C994A6-0245-406C-8637-C446E58F27BE}</Project>
-      <Name>Chandam.Rules</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Samples\Chandam.Samples.csproj">
-      <Project>{F346FEDE-C516-44E4-B1E3-62793CB424C2}</Project>
-      <Name>Chandam.Samples</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Strings\Chandam.Indic.csproj">
-      <Project>{EBA36E87-C1A0-44FE-AF8A-569727B148A4}</Project>
-      <Name>Chandam.Indic</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Util\Chandam.Util.csproj">
-      <Project>{B7ECDF4A-15E5-429C-BB4C-BFF673E85F08}</Project>
-      <Name>Chandam.Util</Name>
-    </ProjectReference>
+    <ProjectReference Include="..\Rules\Chandam.Rules.csproj" />
+    <ProjectReference Include="..\Samples\Chandam.Samples.csproj" />
+    <ProjectReference Include="..\Strings\Chandam.Indic.csproj" />
+    <ProjectReference Include="..\Util\Chandam.Util.csproj" />
   </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

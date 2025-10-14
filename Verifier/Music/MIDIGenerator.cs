@@ -97,9 +97,9 @@ namespace Verifier
 				objWriter = null;
 
 			}
-			catch (Exception e)
+			catch
 			{
-				throw e;
+				throw ;
 			}
 
 		}

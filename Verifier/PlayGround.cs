@@ -10,10 +10,11 @@
 // </copyright>
 //---------------------------------------------------------------------------------------------
 
+using System;
+using System.Text;
 using Chandam.Core;
 using Chandam.Rules;
 using Chandam.Rules.Rare;
-using System;
 using Verifier.Services.Indic;
 using static Verifier.Services.Indic.Indic;
 
@@ -30,6 +31,7 @@ namespace Verifier
 
         internal void Play()
         {
+            Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
             string s = Converter.Convert(@"ఉత్తరదిశకుఁబోయితి హిమవ దుర్విధరమునవాలియై
 కత్తళమనుచుఁబోయిపరుగునఁ గ్రౌంచగిరిపయివాలియై
 జొత్తిలనడుగుదోయితుదికొససోమగిరిపయివాలియై
@@ -50,7 +52,7 @@ namespace Verifier
 
             Probable Pr = Padyam.MostProbable(s, Options);
             MatchResult MR = Pr.MatchResult;
-            Console.Write(MR.Percentage);
+            Console.WriteLine(MR.Percentage);
         }
         private void Matcher(string s)
         {
@@ -63,7 +65,7 @@ namespace Verifier
 
             MatchResult MR = P.Match(s, R);
 
-            Console.Write(MR.Percentage);
+            Console.WriteLine(MR.Percentage);
         }
     }
 }
