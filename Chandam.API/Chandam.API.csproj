@@ -1,0 +1,21 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>net8.0;net48</TargetFrameworks>
+    <LangVersion>latest</LangVersion>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Core\Chandam.Core.csproj" />
+    <ProjectReference Include="..\Rules\Chandam.Rules.csproj" />
+    <ProjectReference Include="..\Util\Chandam.Util.csproj" />
+    <ProjectReference Include="..\Strings\Chandam.Indic.csproj" />
+    <ProjectReference Include="..\Samples\Chandam.Samples.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="System.Text.Json" Version="9.0.1" />
+  </ItemGroup>
+
+</Project>

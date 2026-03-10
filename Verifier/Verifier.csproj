@@ -39,6 +39,8 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
@@ -48,6 +50,7 @@
     <Compile Include="Dict.cs" />
     <Compile Include="Eval.cs" />
     <Compile Include="GenerateRulesJS.cs" />
+    <Compile Include="GenerateRulesJSON.cs" />
     <Compile Include="Jati2Vruttam.cs" />
     <Compile Include="Jati2Vruttam2.cs" />
     <Compile Include="Music\MidiSong.cs" />

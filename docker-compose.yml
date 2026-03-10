@@ -1,0 +1,45 @@
+version: '3.8'
+
+services:
+  chandam-api:
+    build:
+      context: .
+      dockerfile: Chandam.API.WebApi/Dockerfile
+    image: chandam-api:latest
+    container_name: chandam-api
+    ports:
+      - "8080:8080"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+      - CHANDAM_RULESET=default
+    volumes:
+      - ./config/rules:/app/config/rules:ro
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/health"]
+      interval: 30s
+      timeout: 3s
+      retries: 3
+      start_period: 10s
+
+  # Optional: Chandam API with complete Telugu rules
+  chandam-api-complete:
+    build:
+      context: .
+      dockerfile: Chandam.API.WebApi/Dockerfile
+    image: chandam-api:latest
+    container_name: chandam-api-complete
+    ports:
+      - "8081:8080"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+      - CHANDAM_RULESET=telugu-complete
+    volumes:
+      - ./config/rules:/app/config/rules:ro
+    restart: unless-stopped
+    profiles:
+      - complete
+
+networks:
+  default:
+    name: chandam-network

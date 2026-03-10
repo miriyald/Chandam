@@ -1,0 +1,40 @@
+# Build outputs
+**/bin/
+**/obj/
+**/out/
+
+# IDE files
+.vs/
+.vscode/
+*.user
+*.suo
+
+# Documentation
+**/docs/
+README.md
+
+# Git
+.git/
+.gitignore
+.gitattributes
+
+# Tests
+**/*Tests/
+**/*.Tests/
+
+# Demo apps
+**/Chandam.API.Demo/
+
+# Old projects
+Client/
+Server/
+Verifier/bin/
+Verifier/obj/
+
+# Config (will be mounted as volume)
+# config/
+
+# Temporary files
+**/tmp/
+**/*.tmp
+**/*.log

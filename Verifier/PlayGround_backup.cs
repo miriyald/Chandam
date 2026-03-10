@@ -30,10 +30,15 @@ namespace Verifier
 
         internal void Play()
         {
-            // Generate JSON rule files for Chandam.API
-            Console.WriteLine("=== Generating JSON Rule Files for Chandam.API ===\n");
-            new GenerateRulesJSON().GenerateAllRuleSets();
-            Console.WriteLine("\n=== Generation Complete ===\n");
+            string s = Converter.Convert(@"ఉత్తరదిశకుఁబోయితి హిమవ దుర్విధరమునవాలియై
+కత్తళమనుచుఁబోయిపరుగునఁ గ్రౌంచగిరిపయివాలియై
+జొత్తిలనడుగుదోయితుదికొససోమగిరిపయివాలియై
+తత్తరపడుచువేరుదెసమదితట్టకముడుగుచుండఁగా.", Language.Telugu, Language.Kannada);
+
+            Matcher(s);
+
+            Identifier(s);
+
         }
         private void Identifier(string s)
         {

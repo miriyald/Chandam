@@ -1,0 +1,7 @@
+        internal void Play()
+        {
+            // Generate JSON rule files for Chandam.API
+            Console.WriteLine("=== Generating JSON Rule Files for Chandam.API ===\n");
+            new GenerateRulesJSON().GenerateAllRuleSets();
+            Console.WriteLine("\n=== Generation Complete ===\n");
+        }
