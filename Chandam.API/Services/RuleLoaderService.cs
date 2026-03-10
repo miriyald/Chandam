@@ -6,6 +6,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text.Json;
+using YamlDotNet.Serialization;
+using YamlDotNet.Serialization.NamingConventions;
 
 namespace Chandam.API.Services;
 
@@ -17,7 +19,7 @@ public class RuleLoaderService
 {
     private readonly Dictionary<string, Rule[]> _loadedRuleSets = new();
     private string _currentRuleSetId = "default";
-    private string _rulesDirectory = "config/rules";
+    private string _rulesDirectory = "Config/Rules";
 
     public RuleLoaderService(string? rulesDirectory = null)
     {
@@ -45,25 +47,40 @@ public class RuleLoaderService
             return;
         }
 
+        // Look for both YAML and JSON files (prefer YAML for readability)
+        var yamlFiles = Directory.GetFiles(_rulesDirectory, "*.yaml");
         var jsonFiles = Directory.GetFiles(_rulesDirectory, "*.json");
+        var allFiles = yamlFiles.Concat(jsonFiles).ToArray();
 
-        if (jsonFiles.Length == 0)
+        if (allFiles.Length == 0)
         {
-            Console.WriteLine("No JSON rule files found. Using compiled rules.");
+            Console.WriteLine("No rule files found. Using compiled rules.");
             LoadDefaultCompiledRules();
             return;
         }
 
-        foreach (var filePath in jsonFiles)
+        // Track which identifiers we've already loaded (YAML takes precedence)
+        var loadedIdentifiers = new HashSet<string>();
+
+        foreach (var filePath in allFiles)
         {
             try
             {
+                var identifier = Path.GetFileNameWithoutExtension(filePath);
+
+                // Skip if we already loaded this identifier (YAML was processed first)
+                if (loadedIdentifiers.Contains(identifier))
+                {
+                    continue;
+                }
+
                 var ruleSet = LoadRuleSetFromFile(filePath);
                 if (ruleSet != null && ruleSet.Length > 0)
                 {
-                    var identifier = Path.GetFileNameWithoutExtension(filePath);
                     _loadedRuleSets[identifier] = ruleSet;
-                    Console.WriteLine($"Loaded rule set '{identifier}' with {ruleSet.Length} rules");
+                    loadedIdentifiers.Add(identifier);
+                    var fileType = Path.GetExtension(filePath).ToUpper();
+                    Console.WriteLine($"Loaded rule set '{identifier}' with {ruleSet.Length} rules ({fileType})");
                 }
             }
             catch (Exception ex)
@@ -76,6 +93,21 @@ public class RuleLoaderService
         if (_loadedRuleSets.Count == 0)
         {
             LoadDefaultCompiledRules();
+        }
+        else
+        {
+            // Set largest rule set as default if "default" doesn't exist
+            if (!_loadedRuleSets.ContainsKey("default"))
+            {
+                var largestRuleSet = _loadedRuleSets
+                    .OrderByDescending(kvp => kvp.Value.Length)
+                    .First().Key;
+                _currentRuleSetId = largestRuleSet;
+                Console.WriteLine($"Set default rule set to '{largestRuleSet}' ({_loadedRuleSets[largestRuleSet].Length} rules)");
+            }
+
+            // Register current rule set with Manager
+            RegisterCurrentRuleSet();
         }
     }
 
@@ -112,8 +144,43 @@ public class RuleLoaderService
         if (!File.Exists(filePath))
             return null;
 
-        var json = File.ReadAllText(filePath);
-        return LoadFromJsonString(json);
+        var extension = Path.GetExtension(filePath).ToLower();
+        var content = File.ReadAllText(filePath);
+
+        return extension switch
+        {
+            ".yaml" or ".yml" => LoadFromYamlString(content),
+            ".json" => LoadFromJsonString(content),
+            _ => null
+        };
+    }
+
+    /// <summary>
+    /// Load rules from YAML string (human-editable format)
+    /// </summary>
+    public Rule[]? LoadFromYamlString(string yaml)
+    {
+        if (string.IsNullOrWhiteSpace(yaml))
+            return null;
+
+        try
+        {
+            var deserializer = new DeserializerBuilder()
+                .WithNamingConvention(CamelCaseNamingConvention.Instance)
+                .Build();
+
+            var ruleSetDto = deserializer.Deserialize<RuleSetDto>(yaml);
+
+            if (ruleSetDto == null || ruleSetDto.Rules == null || ruleSetDto.Rules.Count == 0)
+                return null;
+
+            return RuleDtoConverter.ConvertToRules(ruleSetDto.Rules);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"YAML deserialization error: {ex.Message}");
+            return null;
+        }
     }
 
     /// <summary>

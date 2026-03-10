@@ -5,6 +5,8 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Web.Script.Serialization;
+using YamlDotNet.Serialization;
+using YamlDotNet.Serialization.NamingConventions;
 
 namespace Verifier
 {
@@ -16,7 +18,7 @@ namespace Verifier
     {
         private readonly string _outputDirectory;
 
-        public GenerateRulesJSON(string outputDirectory = @"..\..\config\rules")
+        public GenerateRulesJSON(string outputDirectory = @"..\..\..\Config\Rules")
         {
             _outputDirectory = outputDirectory;
         }
@@ -61,7 +63,8 @@ namespace Verifier
             };
 
             SaveRuleSet(ruleSet, "chandam-rules.json");
-            Console.WriteLine($"  ✓ Generated {frequentRules.Length} frequent rules");
+            SaveRuleSetYaml(ruleSet, "chandam-rules.yaml");
+            Console.WriteLine($"  ✓ Generated {frequentRules.Length} frequent rules (JSON + YAML)");
         }
 
         /// <summary>
@@ -85,7 +88,8 @@ namespace Verifier
             };
 
             SaveRuleSet(ruleSet, "telugu-complete.json");
-            Console.WriteLine($"  ✓ Generated {teluguRules.Length} Telugu rules");
+            SaveRuleSetYaml(ruleSet, "telugu-complete.yaml");
+            Console.WriteLine($"  ✓ Generated {teluguRules.Length} Telugu rules (JSON + YAML)");
         }
 
         /// <summary>
@@ -166,14 +170,28 @@ namespace Verifier
 
             foreach (var exampleText in examples)
             {
-                // For now, use legacy format with default author/date
-                // In future, can enhance with actual metadata
+                // Parse tilde notation: text after ~ goes to Reference field
+                var text = exampleText;
+                string reference = null;
+
+                var tildeIndex = exampleText.IndexOf('~');
+                if (tildeIndex >= 0)
+                {
+                    reference = exampleText.Substring(tildeIndex + 1).Trim();
+                    text = exampleText.Substring(0, tildeIndex).Trim();
+                }
+                else
+                {
+                    // No tilde, but still trim leading/trailing whitespace
+                    text = exampleText.Trim();
+                }
+
                 var dto = new ExampleDto
                 {
-                    Text = exampleText,
+                    Text = text,
                     Author = "మహానుభావుడు.",  // Default: "Great scholar"
                     Date = "తెలియదు",          // Default: "Unknown"
-                    Reference = null,
+                    Reference = reference,      // Text after ~ goes here
                     Notes = null
                 };
 
@@ -201,7 +219,25 @@ namespace Verifier
 
             File.WriteAllText(filePath, json, Encoding.UTF8);
 
-            Console.WriteLine($"  ✓ Saved: {filePath}");
+            Console.WriteLine($"  ✓ Saved JSON: {filePath}");
+        }
+
+        /// <summary>
+        /// Save RuleSetDto to YAML file (human-editable format)
+        /// </summary>
+        private void SaveRuleSetYaml(RuleSetDto ruleSet, string filename)
+        {
+            var filePath = Path.Combine(_outputDirectory, filename);
+
+            var serializer = new SerializerBuilder()
+                .WithNamingConvention(CamelCaseNamingConvention.Instance)
+                .ConfigureDefaultValuesHandling(DefaultValuesHandling.OmitNull | DefaultValuesHandling.OmitDefaults)
+                .Build();
+
+            var yaml = serializer.Serialize(ruleSet);
+            File.WriteAllText(filePath, yaml, Encoding.UTF8);
+
+            Console.WriteLine($"  ✓ Saved YAML: {filePath}");
         }
 
         /// <summary>

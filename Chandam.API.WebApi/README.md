@@ -84,7 +84,7 @@ dotnet run
 ```bash
 cd Chandam3
 docker build -f Chandam.API.WebApi/Dockerfile -t chandam-api:latest .
-docker run -p 8080:8080 -v $(pwd)/config/rules:/app/config/rules chandam-api:latest
+docker run -p 8080:8080 -v $(pwd)/Config/Rules:/app/Config/Rules chandam-api:latest
 ```
 
 ### Using docker-compose:
@@ -132,8 +132,43 @@ Edit `appsettings.json`:
 ```json
 {
   "Chandam": {
-    "RulesPath": "config/rules",
+    "RulesPath": "Config/Rules",
     "RuleSet": "default"
   }
 }
+```
+
+## Rule Files
+
+Rule definitions can be provided in both JSON and YAML formats in the `Config/Rules` directory.
+
+**Available Rule Sets:**
+- `chandam-rules.json` / `chandam-rules.yaml` - 14 frequent Telugu Chandams
+- `telugu-complete.json` / `telugu-complete.yaml` - 379 complete Telugu rules
+
+**YAML Format Benefits:**
+- Human-readable and editable
+- Multi-line Telugu text without Unicode escapes
+- Easier for manual editing and version control
+- When both formats exist, YAML takes precedence
+
+**Example YAML Rule:**
+```yaml
+identifier: kandam
+name: కందం
+language: telugu
+lines: 4
+rules:
+  - [మ, స, జ, స, తత, గా]
+yati:
+  - [6, 13]
+prasa: true
+examples:
+  - text: |
+      శ్రీవేంకటాద్రీశ్వరుడే శరణ్యుడు
+      శ్రీవేంకటాద్రీశ్వరుడే శరణ్యుడు
+      శ్రీవేంకటాద్రీశ్వరుడే శరణ్యుడు
+      శ్రీవేంకటాద్రీశ్వరుడే శరణ్యుడు
+    author: అన్నమయ్య
+    date: "15వ శతాబ్దం"
 ```

@@ -1,5 +1,8 @@
+using Chandam.API.Converters;
+using Chandam.API.Helpers;
 using Chandam.API.Models;
 using Chandam.API.Services;
+using Chandam.API.WebApi.Middleware;
 using Chandam.Rules;
 using System.Text.Encodings.Web;
 using System.Text.Json;
@@ -8,16 +11,26 @@ using System.Text.Unicode;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// Configure logging
+builder.Logging.ClearProviders();
+builder.Logging.AddConsole();
+builder.Logging.AddDebug();
+builder.Logging.SetMinimumLevel(LogLevel.Information);
+
 // Configure JSON options to preserve Telugu characters
 builder.Services.ConfigureHttpJsonOptions(options =>
 {
     options.SerializerOptions.Encoder = JavaScriptEncoder.Create(UnicodeRanges.All);
     options.SerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull;
     options.SerializerOptions.WriteIndented = true;
+
+    // Add custom language converter (supports "te", "0", "Telugu", etc.)
+    options.SerializerOptions.Converters.Add(new LanguageJsonConverter());
+    options.SerializerOptions.Converters.Add(new NullableLanguageJsonConverter());
 });
 
 // Register Chandam services
-var rulesPath = builder.Configuration.GetValue<string>("Chandam:RulesPath") ?? "config/rules";
+var rulesPath = builder.Configuration.GetValue<string>("Chandam:RulesPath") ?? "Config/Rules";
 var ruleSet = builder.Configuration.GetValue<string>("Chandam:RuleSet") ??
               Environment.GetEnvironmentVariable("CHANDAM_RULESET") ?? "default";
 
@@ -50,6 +63,9 @@ builder.Services.AddCors(options =>
 
 var app = builder.Build();
 
+// Add request logging middleware
+app.UseRequestLogging();
+
 app.UseCors();
 
 // Health check endpoint
@@ -71,6 +87,12 @@ app.MapPost("/api/determine", (DetermineRequest request, ChandamService service)
 app.MapPost("/api/try-match", (TryMatchRequest request, ChandamService service) =>
 {
     var response = service.TryMatch(request);
+    return Results.Ok(response);
+});
+
+app.MapPost("/api/try-match-custom", (TryMatchCustomRequest request, ChandamService service) =>
+{
+    var response = service.TryMatchCustom(request);
     return Results.Ok(response);
 });
 
@@ -114,12 +136,21 @@ app.MapGet("/api/rules/{identifier}/samples", (string identifier, int? maxExampl
     return Results.Ok(response);
 });
 
-app.MapGet("/api/rules", (RuleLoaderService loader, RuleLanguage? language) =>
+app.MapGet("/api/rules", (RuleLoaderService loader, string? language) =>
 {
-    var rules = loader.GetAllRules(language);
+    // Parse language code (supports "te", "0", "Telugu", etc.)
+    RuleLanguage? languageEnum = null;
+    if (!string.IsNullOrWhiteSpace(language))
+    {
+        languageEnum = LanguageCodeMapper.ParseLanguage(language);
+    }
+
+    var rules = loader.GetAllRules(languageEnum);
     return Results.Ok(new
     {
         TotalRules = rules.Count,
+        Language = languageEnum?.ToString() ?? "All",
+        LanguageCode = languageEnum.HasValue ? LanguageCodeMapper.ToLanguageCode(languageEnum.Value) : null,
         Rules = rules.Select(r => new
         {
             r.Identifier,
@@ -127,8 +158,24 @@ app.MapGet("/api/rules", (RuleLoaderService loader, RuleLanguage? language) =>
             Type = r.PadyamType.ToString(),
             SubType = r.PadyamSubType.ToString(),
             Language = r.Language.ToString(),
+            LanguageCode = LanguageCodeMapper.ToLanguageCode(r.Language),
             Frequency = r.Frequency.ToString(),
             r.Lines
+        })
+    });
+});
+
+// List supported languages
+app.MapGet("/api/languages", () =>
+{
+    var languages = LanguageCodeMapper.GetSupportedLanguages();
+    return Results.Ok(new
+    {
+        SupportedLanguages = languages.Select(kvp => new
+        {
+            Code = kvp.Key,
+            Name = kvp.Value.ToString(),
+            NumericValue = (int)kvp.Value
         })
     });
 });

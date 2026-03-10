@@ -31,7 +31,7 @@ echo "To run the container:"
 echo "  docker run -d -p 8080:8080 --name chandam-api chandam-api:latest"
 echo
 echo "With custom rules:"
-echo "  docker run -d -p 8080:8080 -v \$(pwd)/config/rules:/app/config/rules chandam-api:latest"
+echo "  docker run -d -p 8080:8080 -v \$(pwd)/Config/Rules:/app/Config/Rules chandam-api:latest"
 echo
 echo "Using docker-compose:"
 echo "  docker-compose up -d"

@@ -53,7 +53,7 @@ public static class RuleDtoConverter
             PrasaYati = dto.PrasaYati,
             References = dto.References,
             // Note: RuleText has protected setter, cannot set from here
-            Rules = dto.Rules,
+            Rules = ConvertRulesArray(dto.Rules),
             // Note: ReverseYati has protected setter, cannot set from here (defaults to false)
             RuleType = ParseRuleType(dto.RuleType),
             Threshold = dto.Threshold,
@@ -213,5 +213,55 @@ public static class RuleDtoConverter
             "gposition" => YatiMode.GPosition,
             _ => YatiMode.CharPosition
         };
+    }
+
+    /// <summary>
+    /// Convert string[][] Rules to object[][] Rules
+    /// Converts Category enum names (e.g., "Surya", "Indra") to Category enums
+    /// Keeps Gana names (e.g., "త", "జ", "గా") as strings
+    /// </summary>
+    private static object[][]? ConvertRulesArray(string[][]? rules)
+    {
+        if (rules == null || rules.Length == 0)
+            return null;
+
+        var result = new object[rules.Length][];
+        for (int i = 0; i < rules.Length; i++)
+        {
+            if (rules[i] == null || rules[i].Length == 0)
+            {
+                result[i] = Array.Empty<object>();
+                continue;
+            }
+
+            result[i] = new object[rules[i].Length];
+            for (int j = 0; j < rules[i].Length; j++)
+            {
+                var value = rules[i][j];
+
+                // Try to parse as Category enum
+                if (Enum.TryParse<Category>(value, ignoreCase: true, out var category))
+                {
+                    result[i][j] = category;
+                }
+                // Try to parse as SubCategory enum
+                else if (Enum.TryParse<SubCategory>(value, ignoreCase: true, out var subCategory))
+                {
+                    result[i][j] = subCategory;
+                }
+                // Try to parse as Category2 enum
+                else if (Enum.TryParse<Category2>(value, ignoreCase: true, out var category2))
+                {
+                    result[i][j] = category2;
+                }
+                else
+                {
+                    // Keep as string (Gana name)
+                    result[i][j] = value;
+                }
+            }
+        }
+
+        return result;
     }
 }

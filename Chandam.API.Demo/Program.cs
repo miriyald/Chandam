@@ -14,7 +14,7 @@ class Program
         Console.WriteLine("=== Chandam.API Demo ===\n");
 
         // Initialize services
-        // Try to find config/rules in project root
+        // Try to find Config/Rules in project root
         var projectRoot = FindProjectRoot();
         var rulesPath = projectRoot != null ? System.IO.Path.Combine(projectRoot, "config", "rules") : null;
 

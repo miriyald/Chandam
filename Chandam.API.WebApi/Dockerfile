@@ -11,7 +11,7 @@ COPY ["Util/Chandam.Util.csproj", "Util/"]
 COPY ["Strings/Chandam.Indic.csproj", "Strings/"]
 COPY ["Samples/Chandam.Samples.csproj", "Samples/"]
 
-# Restore dependencies
+# Restore dependencies (will restore for all targets)
 RUN dotnet restore "Chandam.API.WebApi/Chandam.API.WebApi.csproj"
 
 # Copy source code
@@ -32,10 +32,8 @@ RUN dotnet publish "Chandam.API.WebApi.csproj" -c Release -o /app/publish /p:Use
 FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS runtime
 WORKDIR /app
 
-# Install required dependencies for .NET Framework 4.8 assemblies
-RUN apt-get update && apt-get install -y \
-    libc6-dev \
-    && rm -rf /var/lib/apt/lists/*
+# Install curl for healthcheck
+RUN apt-get update && apt-get install -y curl && rm -rf /var/lib/apt/lists/*
 
 # Copy published app
 COPY --from=build /app/publish .
@@ -44,7 +42,7 @@ COPY --from=build /app/publish .
 COPY --from=build /src/config ./config
 
 # Create volume mount point for rule files
-VOLUME ["/app/config/rules"]
+VOLUME ["/app/Config/Rules"]
 
 # Expose port
 EXPOSE 8080

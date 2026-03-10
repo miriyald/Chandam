@@ -5,7 +5,7 @@ Create MCP servers that expose Chandam functions to AI agents via stdio (for Cla
 
 ## Prerequisites
 - ✅ Phase 1 complete (Chandam.API with RuleLoaderService and ChandamService)
-- ✅ Rule sets available in config/rules/
+- ✅ Rule sets available in Config/Rules/
 
 ## Scope
 - ✅ Stdio MCP Server (console app, JSON-RPC over stdin/stdout)
@@ -115,7 +115,7 @@ static async Task Main(string[] args)
 
     // Initialize services
     var ruleLoader = new RuleLoaderService();
-    ruleLoader.LoadAllRuleSets(config.RulesDirectory ?? "config/rules");
+    ruleLoader.LoadAllRuleSets(config.RulesDirectory ?? "Config/Rules");
 
     if (!string.IsNullOrEmpty(config.RuleSetId))
     {
@@ -161,7 +161,7 @@ public class StdioMcpServer
 {
   "RuleSet": {
     "DefaultRuleSetId": "default",
-    "RulesDirectory": "config/rules",
+    "RulesDirectory": "Config/Rules",
     "AllowRuleSetSwitch": true
   },
   "Logging": {

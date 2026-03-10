@@ -1,4 +1,6 @@
+using Chandam.API.Converters;
 using Chandam.API.Models;
+using Chandam.API.Models.Config;
 using Chandam.Core;
 using Chandam.Rules;
 using System;
@@ -126,6 +128,85 @@ public class ChandamService
                 {
                     IsMatch = false,
                     ErrorMessage = $"ఛందం దొరకలేదు: {request.RuleIdentifier} (Rule not found)"
+                };
+            }
+
+            // Create Padyam and configure matching options
+            var padyam = new Padyam
+            {
+                MatchYati = request.MatchYati,
+                MatchPrasa = request.MatchPrasa
+            };
+
+            // Perform the match
+            var matchResult = padyam.Match(request.PoemText, rule);
+
+            var match = new ChandamMatch
+            {
+                Identifier = rule.Identifier,
+                Name = rule.Name,
+                MatchPercentage = matchResult.Percentage,
+                PadyamType = rule.PadyamType.ToString(),
+                PadyamSubType = rule.PadyamSubType.ToString(),
+                Frequency = rule.Frequency.ToString(),
+                Description = DescriptionBuilder.BuildDescription(rule),
+                Details = BuildMatchDetails(matchResult, rule)
+            };
+
+            return new TryMatchResponse
+            {
+                IsMatch = matchResult.Percentage >= rule.Threshold,
+                Match = match
+            };
+        }
+        catch (Exception ex)
+        {
+            return new TryMatchResponse
+            {
+                IsMatch = false,
+                ErrorMessage = $"లోపం: {ex.Message} (Error: {ex.Message})"
+            };
+        }
+    }
+
+    /// <summary>
+    /// Match a poem against a custom (unregistered) Chandam rule
+    /// Allows testing rules without registering them first
+    /// </summary>
+    public TryMatchResponse TryMatchCustom(TryMatchCustomRequest request)
+    {
+        try
+        {
+            if (string.IsNullOrWhiteSpace(request.PoemText))
+            {
+                return new TryMatchResponse
+                {
+                    IsMatch = false,
+                    ErrorMessage = "పద్యం ఖాళీగా ఉంది. (Poem text is required)"
+                };
+            }
+
+            if (request.Rule == null || string.IsNullOrWhiteSpace(request.Rule.Name))
+            {
+                return new TryMatchResponse
+                {
+                    IsMatch = false,
+                    ErrorMessage = "ఛందం నియమము ఖాళీగా ఉంది. (Rule definition is required)"
+                };
+            }
+
+            // Convert RuleDto to Rule
+            Rule rule;
+            try
+            {
+                rule = RuleDtoConverter.ConvertToRule(request.Rule);
+            }
+            catch (Exception ex)
+            {
+                return new TryMatchResponse
+                {
+                    IsMatch = false,
+                    ErrorMessage = $"ఛందం నియమము చెల్లదు: {ex.Message} (Invalid rule definition: {ex.Message})"
                 };
             }
 
