@@ -1,5 +1,5 @@
 version: 1.0
-generatedAt: 2026-03-10T17:11:19.0521071Z
+generatedAt: 2026-03-10T21:49:58.1104578Z
 totalRules: 379
 totalExamples: 554
 results:
@@ -22,7 +22,7 @@ results:
   matchedLines: 2
   totalLines: 4
   mismatchCount: 2
-  timestamp: 2026-03-10T17:11:19.1274084Z
+  timestamp: 2026-03-10T21:49:58.1701702Z
 - ruleIdentifier: aaTaveladi
   ruleName: ఆటవెలది
   exampleIndex: 1
@@ -42,7 +42,7 @@ results:
   matchedLines: 3
   totalLines: 4
   mismatchCount: 1
-  timestamp: 2026-03-10T17:11:19.1296412Z
+  timestamp: 2026-03-10T21:49:58.1717648Z
 - ruleIdentifier: aaTaveladi
   ruleName: ఆటవెలది
   exampleIndex: 2
@@ -62,7 +62,7 @@ results:
   matchedLines: 2
   totalLines: 4
   mismatchCount: 2
-  timestamp: 2026-03-10T17:11:19.1300711Z
+  timestamp: 2026-03-10T21:49:58.1721309Z
 - ruleIdentifier: aaTaveladi
   ruleName: ఆటవెలది
   exampleIndex: 3
@@ -82,7 +82,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.1304482Z
+  timestamp: 2026-03-10T21:49:58.1724414Z
 - ruleIdentifier: aaTaveladi
   ruleName: ఆటవెలది
   exampleIndex: 4
@@ -102,7 +102,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.1309844Z
+  timestamp: 2026-03-10T21:49:58.1727667Z
 - ruleIdentifier: aaTaveladi
   ruleName: ఆటవెలది
   exampleIndex: 5
@@ -122,7 +122,7 @@ results:
   matchedLines: 3
   totalLines: 4
   mismatchCount: 1
-  timestamp: 2026-03-10T17:11:19.1313595Z
+  timestamp: 2026-03-10T21:49:58.1730582Z
 - ruleIdentifier: taeTageeti
   ruleName: తేటగీతి
   exampleIndex: 0
@@ -142,12 +142,19 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.1319543Z
+  timestamp: 2026-03-10T21:49:58.1734658Z
 - ruleIdentifier: taeTageeti
   ruleName: తేటగీతి
   exampleIndex: 1
-  poemText: "అరసి నిర్గుణబ్రహ్మంబు నాశ్రయించి\nవిధినిషేధ నివృత్తి సద్విమలమతులు\nసేయుచుందురు హరిగుణచింతనములు\nమానసంబుల నేప్రొద్దు మానవేంద్ర! "
-  poemHash: DyKQ+MHQ8VIhAkg4Dz699CrxZjzinmcJG72ZAijF1fo=
+  poemText: >-
+    అరసి నిర్గుణబ్రహ్మంబు నాశ్రయించి
+
+    విధినిషేధ నివృత్తి సద్విమలమతులు
+
+    సేయుచుందురు హరిగుణచింతనములు
+
+    మానసంబుల నేప్రొద్దు మానవేంద్ర!
+  poemHash: uCJSdLjpQP0y7muU5kVCiaLpaQY861S9lbd4HIlYEZw=
   matchPercentage: 100
   isMatch: true
   yatiMatched: true
@@ -155,7 +162,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.1324477Z
+  timestamp: 2026-03-10T21:49:58.1737519Z
 - ruleIdentifier: taeTageeti
   ruleName: తేటగీతి
   exampleIndex: 2
@@ -175,7 +182,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.1327847Z
+  timestamp: 2026-03-10T21:49:58.1740106Z
 - ruleIdentifier: taeTageeti
   ruleName: తేటగీతి
   exampleIndex: 3
@@ -195,7 +202,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.1331622Z
+  timestamp: 2026-03-10T21:49:58.1742943Z
 - ruleIdentifier: taeTageeti
   ruleName: తేటగీతి
   exampleIndex: 4
@@ -215,7 +222,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.1336078Z
+  timestamp: 2026-03-10T21:49:58.1746225Z
 - ruleIdentifier: taeTageeti
   ruleName: తేటగీతి(పంచపాది)
   exampleIndex: 5
@@ -237,7 +244,7 @@ results:
   matchedLines: 4
   totalLines: 5
   mismatchCount: 1
-  timestamp: 2026-03-10T17:11:19.1351157Z
+  timestamp: 2026-03-10T21:49:58.1755947Z
 - ruleIdentifier: shaTpadamu
   ruleName: షట్పదము
   exampleIndex: 0
@@ -261,7 +268,7 @@ results:
   matchedLines: 6
   totalLines: 6
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.1356455Z
+  timestamp: 2026-03-10T21:49:58.1760377Z
 - ruleIdentifier: shaTpadamu
   ruleName: షట్పదము
   exampleIndex: 1
@@ -285,7 +292,7 @@ results:
   matchedLines: 5
   totalLines: 6
   mismatchCount: 1
-  timestamp: 2026-03-10T17:11:19.1362963Z
+  timestamp: 2026-03-10T21:49:58.1767619Z
 - ruleIdentifier: sarvalaghusIsamu
   ruleName: సర్వలఘుసీసము-పూర్వభాగము
   exampleIndex: 0
@@ -313,7 +320,7 @@ results:
   matchedLines: 8
   totalLines: 8
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.1373666Z
+  timestamp: 2026-03-10T21:49:58.1777311Z
 - ruleIdentifier: sarvalaghusIsamu
   ruleName: సర్వలఘుసీసము-పూర్వభాగము
   exampleIndex: 1
@@ -336,7 +343,7 @@ results:
   matchedLines: 8
   totalLines: 8
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.1382398Z
+  timestamp: 2026-03-10T21:49:58.1783305Z
 - ruleIdentifier: sarvalaghusIsamu2
   ruleName: సర్వలఘుసీసము2-పూర్వభాగము
   exampleIndex: 0
@@ -356,7 +363,7 @@ results:
   matchedLines: 1
   totalLines: 4
   mismatchCount: 6
-  timestamp: 2026-03-10T17:11:19.1394847Z
+  timestamp: 2026-03-10T21:49:58.1790411Z
 - ruleIdentifier: sarvalaghusIsamu2
   ruleName: సర్వలఘుసీసము2-పూర్వభాగము
   exampleIndex: 1
@@ -376,7 +383,7 @@ results:
   matchedLines: 1
   totalLines: 4
   mismatchCount: 5
-  timestamp: 2026-03-10T17:11:19.1404715Z
+  timestamp: 2026-03-10T21:49:58.1796989Z
 - ruleIdentifier: sarvalaghusIsamu2
   ruleName: సర్వలఘుసీసము2-పూర్వభాగము
   exampleIndex: 2
@@ -396,7 +403,7 @@ results:
   matchedLines: 1
   totalLines: 4
   mismatchCount: 5
-  timestamp: 2026-03-10T17:11:19.1414120Z
+  timestamp: 2026-03-10T21:49:58.1803112Z
 - ruleIdentifier: sarvalaghusIsamu2
   ruleName: సర్వలఘుసీసము2-పూర్వభాగము
   exampleIndex: 3
@@ -416,7 +423,7 @@ results:
   matchedLines: 0
   totalLines: 4
   mismatchCount: 16
-  timestamp: 2026-03-10T17:11:19.1444734Z
+  timestamp: 2026-03-10T21:49:58.1817650Z
 - ruleIdentifier: seesaM
   ruleName: సీసం-పూర్వభాగము
   exampleIndex: 0
@@ -436,7 +443,7 @@ results:
   matchedLines: 3
   totalLines: 8
   mismatchCount: 21
-  timestamp: 2026-03-10T17:11:19.1455655Z
+  timestamp: 2026-03-10T21:49:58.1822828Z
 - ruleIdentifier: seesaM
   ruleName: సీసం-పూర్వభాగము
   exampleIndex: 1
@@ -464,7 +471,7 @@ results:
   matchedLines: 8
   totalLines: 8
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.1474072Z
+  timestamp: 2026-03-10T21:49:58.1829513Z
 - ruleIdentifier: seesaM
   ruleName: సీసం-పూర్వభాగము
   exampleIndex: 2
@@ -492,7 +499,7 @@ results:
   matchedLines: 8
   totalLines: 8
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.1495672Z
+  timestamp: 2026-03-10T21:49:58.1836618Z
 - ruleIdentifier: seesaM
   ruleName: సీసం-పూర్వభాగము
   exampleIndex: 3
@@ -519,7 +526,7 @@ results:
   matchedLines: 4
   totalLines: 8
   mismatchCount: 4
-  timestamp: 2026-03-10T17:11:19.1694784Z
+  timestamp: 2026-03-10T21:49:58.1842547Z
 - ruleIdentifier: seesaM
   ruleName: సీసం-పూర్వభాగము
   exampleIndex: 4
@@ -542,7 +549,7 @@ results:
   matchedLines: 7
   totalLines: 8
   mismatchCount: 1
-  timestamp: 2026-03-10T17:11:19.1705007Z
+  timestamp: 2026-03-10T21:49:58.1946614Z
 - ruleIdentifier: seesaM2
   ruleName: సీసం2-పూర్వభాగము
   exampleIndex: 0
@@ -562,12 +569,19 @@ results:
   matchedLines: 0
   totalLines: 4
   mismatchCount: 7
-  timestamp: 2026-03-10T17:11:19.1716487Z
+  timestamp: 2026-03-10T21:49:58.1955655Z
 - ruleIdentifier: seesaM2
   ruleName: సీసం2-పూర్వభాగము
   exampleIndex: 1
-  poemText: "పందికై పోరాడ ఫాలాక్షుఁ డెవ్వని; బలమున నా కిచ్చెఁ బాశుపతము? \nనెవ్వని లావున నిమ్మేన దేవేంద్రు; పీఠార్థమున నుండ బెంపుఁ గంటిఁ? \nగాలకేయ నివాత కవచాదిదైత్యులఁ; జంపితి నెవ్వని సంస్మరించి? \nగోగ్రహణము నాఁడు కురుకులాంభోనిధిఁ; గడచితి నెవ్వని కరుణఁ జేసి? "
-  poemHash: J85poHR99+Z1LOirWNJVTs5PriMWmB3w2oG1rpMOXcY=
+  poemText: >-
+    పందికై పోరాడ ఫాలాక్షుఁ డెవ్వని; బలమున నా కిచ్చెఁ బాశుపతము? 
+
+    నెవ్వని లావున నిమ్మేన దేవేంద్రు; పీఠార్థమున నుండ బెంపుఁ గంటిఁ? 
+
+    గాలకేయ నివాత కవచాదిదైత్యులఁ; జంపితి నెవ్వని సంస్మరించి? 
+
+    గోగ్రహణము నాఁడు కురుకులాంభోనిధిఁ; గడచితి నెవ్వని కరుణఁ జేసి?
+  poemHash: 5oitezGxpWbNxXafAk6Juh+FmQ1UZ6WSV07bFhakLpc=
   matchPercentage: 87
   isMatch: true
   yatiMatched: false
@@ -575,7 +589,7 @@ results:
   matchedLines: 1
   totalLines: 4
   mismatchCount: 6
-  timestamp: 2026-03-10T17:11:19.1726526Z
+  timestamp: 2026-03-10T21:49:58.1961761Z
 - ruleIdentifier: seesaM2
   ruleName: సీసం2-పూర్వభాగము
   exampleIndex: 2
@@ -595,7 +609,7 @@ results:
   matchedLines: 0
   totalLines: 4
   mismatchCount: 9
-  timestamp: 2026-03-10T17:11:19.1736808Z
+  timestamp: 2026-03-10T21:49:58.1967886Z
 - ruleIdentifier: seesaM2
   ruleName: సీసం2-పూర్వభాగము
   exampleIndex: 3
@@ -615,7 +629,7 @@ results:
   matchedLines: 0
   totalLines: 4
   mismatchCount: 7
-  timestamp: 2026-03-10T17:11:19.1747113Z
+  timestamp: 2026-03-10T21:49:58.1974727Z
 - ruleIdentifier: utsaahamu
   ruleName: ఉత్సాహము
   exampleIndex: 0
@@ -635,12 +649,19 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.1779743Z
+  timestamp: 2026-03-10T21:49:58.1998156Z
 - ruleIdentifier: utsaahamu
   ruleName: ఉత్సాహము
   exampleIndex: 1
-  poemText: "చారుదేష్ణుఁ డాగ్రహించి శత్రుభీషణోగ్ర దో \nస్సారదర్ప మేర్పడన్ నిశాత బాణకోటిచే \nదారుణప్రతాపసాల్వదండనాథమండలిన్ \nమారి రేఁగినట్లు పిల్కుమార్చి పేర్చి యార్చినన్. "
-  poemHash: BlmVRZvxa16o8SKmyJZTrHLnxpLNaIE91sb3cOaNhXw=
+  poemText: >-
+    చారుదేష్ణుఁ డాగ్రహించి శత్రుభీషణోగ్ర దో 
+
+    స్సారదర్ప మేర్పడన్ నిశాత బాణకోటిచే 
+
+    దారుణప్రతాపసాల్వదండనాథమండలిన్ 
+
+    మారి రేఁగినట్లు పిల్కుమార్చి పేర్చి యార్చినన్.
+  poemHash: uK46C41R+EO78DBXgRxqqoCPQWml61QjQj1H1Vkvt8c=
   matchPercentage: 100
   isMatch: true
   yatiMatched: true
@@ -648,7 +669,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.1786795Z
+  timestamp: 2026-03-10T21:49:58.2004139Z
 - ruleIdentifier: utsaahamu
   ruleName: ఉత్సాహము
   exampleIndex: 2
@@ -668,7 +689,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.1792620Z
+  timestamp: 2026-03-10T21:49:58.2007652Z
 - ruleIdentifier: utsaahamu
   ruleName: ఉత్సాహము
   exampleIndex: 3
@@ -688,7 +709,7 @@ results:
   matchedLines: 3
   totalLines: 4
   mismatchCount: 1
-  timestamp: 2026-03-10T17:11:19.1799020Z
+  timestamp: 2026-03-10T21:49:58.2011507Z
 - ruleIdentifier: utsaahamu
   ruleName: ఉత్సాహము
   exampleIndex: 4
@@ -708,7 +729,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.1805477Z
+  timestamp: 2026-03-10T21:49:58.2015262Z
 - ruleIdentifier: kandam
   ruleName: కందం
   exampleIndex: 0
@@ -728,7 +749,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.1822524Z
+  timestamp: 2026-03-10T21:49:58.2027561Z
 - ruleIdentifier: kandam
   ruleName: కందం
   exampleIndex: 1
@@ -748,7 +769,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.1827411Z
+  timestamp: 2026-03-10T21:49:58.2030643Z
 - ruleIdentifier: kandam
   ruleName: కందం
   exampleIndex: 2
@@ -768,7 +789,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.1831252Z
+  timestamp: 2026-03-10T21:49:58.2032983Z
 - ruleIdentifier: kandam
   ruleName: కందం
   exampleIndex: 3
@@ -788,7 +809,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.1835622Z
+  timestamp: 2026-03-10T21:49:58.2035561Z
 - ruleIdentifier: kandam
   ruleName: కందం
   exampleIndex: 4
@@ -808,7 +829,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.1840477Z
+  timestamp: 2026-03-10T21:49:58.2038338Z
 - ruleIdentifier: kandam
   ruleName: కందం
   exampleIndex: 5
@@ -828,7 +849,7 @@ results:
   matchedLines: 3
   totalLines: 4
   mismatchCount: 1
-  timestamp: 2026-03-10T17:11:19.1845013Z
+  timestamp: 2026-03-10T21:49:58.2041122Z
 - ruleIdentifier: taruvOja
   ruleName: తరువోజ
   exampleIndex: 0
@@ -848,7 +869,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.1855974Z
+  timestamp: 2026-03-10T21:49:58.2049251Z
 - ruleIdentifier: taruvOja
   ruleName: తరువోజ
   exampleIndex: 1
@@ -868,7 +889,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.1865663Z
+  timestamp: 2026-03-10T21:49:58.2054529Z
 - ruleIdentifier: taruvOja
   ruleName: తరువోజ
   exampleIndex: 2
@@ -888,7 +909,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.1873677Z
+  timestamp: 2026-03-10T21:49:58.2059726Z
 - ruleIdentifier: taruvOja
   ruleName: తరువోజ
   exampleIndex: 3
@@ -908,12 +929,19 @@ results:
   matchedLines: 3
   totalLines: 4
   mismatchCount: 2
-  timestamp: 2026-03-10T17:11:19.1880768Z
+  timestamp: 2026-03-10T21:49:58.2065027Z
 - ruleIdentifier: taruvOja
   ruleName: తరువోజ
   exampleIndex: 4
-  poemText: "వెండి వెన్నెల కాచి వెలుగు జాబిల్లి వెండి కొండను నిల్చె విశ్వేశుపైన\nపండు వెన్నెల తోడ పరవశంబిడక పండె పూవుగ తాను ఫాలాక్షుసిగను\nకొండ కోనల పైన కురిపించి సుధలు గుండెలో తా గ్రుచ్చ గునపాలునాకు\nఎండిపోవగ గుండె ఈనాడు ఇచట ఎండమావిగ మారెనీజీవితమ్ము "
-  poemHash: Sl7A08QIBTyFNytczcDV1kOXCZff7c9VxDtMCLv0ZeQ=
+  poemText: >-
+    వెండి వెన్నెల కాచి వెలుగు జాబిల్లి వెండి కొండను నిల్చె విశ్వేశుపైన
+
+    పండు వెన్నెల తోడ పరవశంబిడక పండె పూవుగ తాను ఫాలాక్షుసిగను
+
+    కొండ కోనల పైన కురిపించి సుధలు గుండెలో తా గ్రుచ్చ గునపాలునాకు
+
+    ఎండిపోవగ గుండె ఈనాడు ఇచట ఎండమావిగ మారెనీజీవితమ్ము
+  poemHash: zADQEDSgtliuuvnU1GKQLeZThpgYbJdAB/E8l+VKpeI=
   matchPercentage: 100
   isMatch: true
   yatiMatched: true
@@ -921,7 +949,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.1886123Z
+  timestamp: 2026-03-10T21:49:58.2070396Z
 - ruleIdentifier: tripadi
   ruleName: త్రిపది
   exampleIndex: 0
@@ -939,7 +967,7 @@ results:
   matchedLines: 3
   totalLines: 3
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.1889059Z
+  timestamp: 2026-03-10T21:49:58.2076247Z
 - ruleIdentifier: aMtaraakkara
   ruleName: అంతరాక్కర
   exampleIndex: 0
@@ -959,7 +987,7 @@ results:
   matchedLines: 0
   totalLines: 4
   mismatchCount: 4
-  timestamp: 2026-03-10T17:11:19.1894255Z
+  timestamp: 2026-03-10T21:49:58.2083640Z
 - ruleIdentifier: aMtaraakkara
   ruleName: అంతరాక్కర
   exampleIndex: 1
@@ -979,7 +1007,7 @@ results:
   matchedLines: 1
   totalLines: 4
   mismatchCount: 3
-  timestamp: 2026-03-10T17:11:19.1899869Z
+  timestamp: 2026-03-10T21:49:58.2091491Z
 - ruleIdentifier: aMtaraakkara
   ruleName: అంతరాక్కర
   exampleIndex: 2
@@ -999,7 +1027,7 @@ results:
   matchedLines: 1
   totalLines: 4
   mismatchCount: 3
-  timestamp: 2026-03-10T17:11:19.1904679Z
+  timestamp: 2026-03-10T21:49:58.2095326Z
 - ruleIdentifier: aMtaraakkara
   ruleName: అంతరాక్కర
   exampleIndex: 3
@@ -1019,7 +1047,7 @@ results:
   matchedLines: 2
   totalLines: 4
   mismatchCount: 2
-  timestamp: 2026-03-10T17:11:19.1910064Z
+  timestamp: 2026-03-10T21:49:58.2098596Z
 - ruleIdentifier: alpaakkara
   ruleName: అల్పాక్కర
   exampleIndex: 0
@@ -1039,7 +1067,7 @@ results:
   matchedLines: 1
   totalLines: 4
   mismatchCount: 3
-  timestamp: 2026-03-10T17:11:19.1915150Z
+  timestamp: 2026-03-10T21:49:58.2102345Z
 - ruleIdentifier: alpaakkara
   ruleName: అల్పాక్కర
   exampleIndex: 1
@@ -1059,7 +1087,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.1919179Z
+  timestamp: 2026-03-10T21:49:58.2104853Z
 - ruleIdentifier: alpaakkara
   ruleName: అల్పాక్కర
   exampleIndex: 2
@@ -1079,7 +1107,7 @@ results:
   matchedLines: 3
   totalLines: 4
   mismatchCount: 1
-  timestamp: 2026-03-10T17:11:19.1927896Z
+  timestamp: 2026-03-10T21:49:58.2110306Z
 - ruleIdentifier: madhuraakkara
   ruleName: మధురాక్కర
   exampleIndex: 0
@@ -1099,7 +1127,7 @@ results:
   matchedLines: 3
   totalLines: 4
   mismatchCount: 1
-  timestamp: 2026-03-10T17:11:19.1934846Z
+  timestamp: 2026-03-10T21:49:58.2114465Z
 - ruleIdentifier: madhuraakkara
   ruleName: మధురాక్కర
   exampleIndex: 1
@@ -1119,7 +1147,7 @@ results:
   matchedLines: 2
   totalLines: 4
   mismatchCount: 2
-  timestamp: 2026-03-10T17:11:19.1941225Z
+  timestamp: 2026-03-10T21:49:58.2118322Z
 - ruleIdentifier: madhuraakkara
   ruleName: మధురాక్కర
   exampleIndex: 2
@@ -1139,7 +1167,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.1946994Z
+  timestamp: 2026-03-10T21:49:58.2122139Z
 - ruleIdentifier: madhyaakkara
   ruleName: మధ్యాక్కర
   exampleIndex: 0
@@ -1159,7 +1187,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.1954322Z
+  timestamp: 2026-03-10T21:49:58.2126631Z
 - ruleIdentifier: madhyaakkara
   ruleName: మధ్యాక్కర
   exampleIndex: 1
@@ -1179,8 +1207,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.1961343Z
-  remarks: శ్రీ పిరాట్ల వెంకట శివరామకృష్ణ ప్రసాద్ గారిచే విరచితం.
+  timestamp: 2026-03-10T21:49:58.2130633Z
 - ruleIdentifier: madhyaakkara
   ruleName: మధ్యాక్కర
   exampleIndex: 2
@@ -1200,7 +1227,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.1971068Z
+  timestamp: 2026-03-10T21:49:58.2134617Z
 - ruleIdentifier: mahaaakkara
   ruleName: మహాక్కర
   exampleIndex: 0
@@ -1220,7 +1247,7 @@ results:
   matchedLines: 1
   totalLines: 4
   mismatchCount: 7
-  timestamp: 2026-03-10T17:11:19.1980630Z
+  timestamp: 2026-03-10T21:49:58.2140081Z
 - ruleIdentifier: mahaaakkara
   ruleName: మహాక్కర
   exampleIndex: 1
@@ -1240,7 +1267,7 @@ results:
   matchedLines: 3
   totalLines: 4
   mismatchCount: 3
-  timestamp: 2026-03-10T17:11:19.1987846Z
+  timestamp: 2026-03-10T21:49:58.2144905Z
 - ruleIdentifier: mahaaakkara
   ruleName: మహాక్కర
   exampleIndex: 2
@@ -1258,7 +1285,7 @@ results:
   matchedLines: 1
   totalLines: 4
   mismatchCount: 10
-  timestamp: 2026-03-10T17:11:19.1993804Z
+  timestamp: 2026-03-10T21:49:58.2148971Z
 - ruleIdentifier: dvipada
   ruleName: ద్విపద
   exampleIndex: 0
@@ -1274,7 +1301,7 @@ results:
   matchedLines: 2
   totalLines: 2
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.1996965Z
+  timestamp: 2026-03-10T21:49:58.2150933Z
 - ruleIdentifier: dvipada
   ruleName: ద్విపద
   exampleIndex: 1
@@ -1290,7 +1317,7 @@ results:
   matchedLines: 2
   totalLines: 2
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.1999585Z
+  timestamp: 2026-03-10T21:49:58.2153288Z
 - ruleIdentifier: dvipada
   ruleName: ద్విపద
   exampleIndex: 2
@@ -1306,7 +1333,7 @@ results:
   matchedLines: 2
   totalLines: 2
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.2002502Z
+  timestamp: 2026-03-10T21:49:58.2154952Z
 - ruleIdentifier: dvipada
   ruleName: ద్విపద
   exampleIndex: 3
@@ -1322,7 +1349,7 @@ results:
   matchedLines: 2
   totalLines: 2
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.2005422Z
+  timestamp: 2026-03-10T21:49:58.2156564Z
 - ruleIdentifier: dvipada
   ruleName: ద్విపద
   exampleIndex: 4
@@ -1338,7 +1365,7 @@ results:
   matchedLines: 1
   totalLines: 2
   mismatchCount: 1
-  timestamp: 2026-03-10T17:11:19.2008517Z
+  timestamp: 2026-03-10T21:49:58.2158258Z
 - ruleIdentifier: dvipada
   ruleName: ద్విపద
   exampleIndex: 5
@@ -1354,7 +1381,7 @@ results:
   matchedLines: 1
   totalLines: 2
   mismatchCount: 1
-  timestamp: 2026-03-10T17:11:19.2011695Z
+  timestamp: 2026-03-10T21:49:58.2160105Z
 - ruleIdentifier: dvipadamaalika
   ruleName: ద్విపదమాలిక
   exampleIndex: 0
@@ -1374,7 +1401,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.2016693Z
+  timestamp: 2026-03-10T21:49:58.2163013Z
 - ruleIdentifier: maMjareedvipada
   ruleName: మంజరీ ద్విపద
   exampleIndex: 0
@@ -1394,7 +1421,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.2021675Z
+  timestamp: 2026-03-10T21:49:58.2165638Z
 - ruleIdentifier: maMjareedvipada
   ruleName: మంజరీ ద్విపద
   exampleIndex: 1
@@ -1414,7 +1441,7 @@ results:
   matchedLines: 3
   totalLines: 4
   mismatchCount: 1
-  timestamp: 2026-03-10T17:11:19.2026883Z
+  timestamp: 2026-03-10T21:49:58.2168908Z
 - ruleIdentifier: maMjareedvipada
   ruleName: మంజరీ ద్విపద
   exampleIndex: 2
@@ -1434,7 +1461,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.2030623Z
+  timestamp: 2026-03-10T21:49:58.2171683Z
 - ruleIdentifier: maMjareedvipada
   ruleName: మంజరీ ద్విపద
   exampleIndex: 3
@@ -1454,7 +1481,7 @@ results:
   matchedLines: 3
   totalLines: 4
   mismatchCount: 1
-  timestamp: 2026-03-10T17:11:19.2034794Z
+  timestamp: 2026-03-10T21:49:58.2174692Z
 - ruleIdentifier: maMjareedvipada
   ruleName: మంజరీ ద్విపద
   exampleIndex: 4
@@ -1474,7 +1501,7 @@ results:
   matchedLines: 3
   totalLines: 4
   mismatchCount: 1
-  timestamp: 2026-03-10T17:11:19.2038600Z
+  timestamp: 2026-03-10T21:49:58.2177431Z
 - ruleIdentifier: iMdravajramu
   ruleName: ఇంద్రవజ్రము
   exampleIndex: 0
@@ -1494,7 +1521,7 @@ results:
   matchedLines: 3
   totalLines: 4
   mismatchCount: 1
-  timestamp: 2026-03-10T17:11:19.2045219Z
+  timestamp: 2026-03-10T21:49:58.2182528Z
 - ruleIdentifier: iMdravajramu
   ruleName: ఇంద్రవజ్రము
   exampleIndex: 1
@@ -1514,7 +1541,7 @@ results:
   matchedLines: 2
   totalLines: 4
   mismatchCount: 2
-  timestamp: 2026-03-10T17:11:19.2063476Z
+  timestamp: 2026-03-10T21:49:58.2204593Z
 - ruleIdentifier: utpalamaala
   ruleName: ఉత్పలమాల
   exampleIndex: 0
@@ -1534,7 +1561,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.2074419Z
+  timestamp: 2026-03-10T21:49:58.2213256Z
 - ruleIdentifier: utpalamaala
   ruleName: ఉత్పలమాల
   exampleIndex: 1
@@ -1554,7 +1581,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.2089263Z
+  timestamp: 2026-03-10T21:49:58.2220293Z
 - ruleIdentifier: utpalamaala
   ruleName: ఉత్పలమాల
   exampleIndex: 2
@@ -1574,7 +1601,7 @@ results:
   matchedLines: 1
   totalLines: 4
   mismatchCount: 3
-  timestamp: 2026-03-10T17:11:19.2101976Z
+  timestamp: 2026-03-10T21:49:58.2228342Z
 - ruleIdentifier: utpalamaala
   ruleName: ఉత్పలమాల
   exampleIndex: 3
@@ -1594,7 +1621,7 @@ results:
   matchedLines: 2
   totalLines: 4
   mismatchCount: 2
-  timestamp: 2026-03-10T17:11:19.2111764Z
+  timestamp: 2026-03-10T21:49:58.2235345Z
 - ruleIdentifier: utpalamaala
   ruleName: ఉత్పలమాల
   exampleIndex: 4
@@ -1614,7 +1641,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.2199549Z
+  timestamp: 2026-03-10T21:49:58.2243295Z
 - ruleIdentifier: upEMdravajramu
   ruleName: ఉపేంద్రవజ్రము
   exampleIndex: 0
@@ -1634,7 +1661,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.2205251Z
+  timestamp: 2026-03-10T21:49:58.2248070Z
 - ruleIdentifier: upEMdravajramu
   ruleName: ఉపేంద్రవజ్రము
   exampleIndex: 1
@@ -1654,7 +1681,7 @@ results:
   matchedLines: 3
   totalLines: 4
   mismatchCount: 1
-  timestamp: 2026-03-10T17:11:19.2212329Z
+  timestamp: 2026-03-10T21:49:58.2253244Z
 - ruleIdentifier: upEMdravajramu
   ruleName: ఉపేంద్రవజ్రము
   exampleIndex: 2
@@ -1674,7 +1701,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.2218094Z
+  timestamp: 2026-03-10T21:49:58.2257918Z
 - ruleIdentifier: kaviraajaviraajitamu
   ruleName: కవిరాజవిరాజితము (హంసగతి , మహాతరుణీదయిత , శ్రవణాభరణమ్)
   exampleIndex: 0
@@ -1694,7 +1721,7 @@ results:
   matchedLines: 0
   totalLines: 4
   mismatchCount: 8
-  timestamp: 2026-03-10T17:11:19.2231366Z
+  timestamp: 2026-03-10T21:49:58.2291246Z
 - ruleIdentifier: kaviraajaviraajitamu
   ruleName: కవిరాజవిరాజితము (హంసగతి , మహాతరుణీదయిత , శ్రవణాభరణమ్)
   exampleIndex: 1
@@ -1714,12 +1741,19 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.2238612Z
+  timestamp: 2026-03-10T21:49:58.2299409Z
 - ruleIdentifier: kaviraajaviraajitamu
   ruleName: కవిరాజవిరాజితము (హంసగతి , మహాతరుణీదయిత , శ్రవణాభరణమ్)
   exampleIndex: 2
-  poemText: "అనవుడునిట్లనునన్నరపాలునకాతఁడు మోక్షమునర్థిజగ\nజ్జనులకుఁబుట్తుటసన్మతిగోరివిశారదులాదరసంబృతులై\nయనఘసుదుస్తరమైనభవంబునకచ్చగునీయితి హాసముబో\nధనమహనీయవిధంబునఁజెప్పిరిదాత్తగుణాశ్రయతామహితా "
-  poemHash: aWiQV5/S+rG519FnP5cYDIe6vOyJE6pAJM5jpXocD+k=
+  poemText: >-
+    అనవుడునిట్లనునన్నరపాలునకాతఁడు మోక్షమునర్థిజగ
+
+    జ్జనులకుఁబుట్తుటసన్మతిగోరివిశారదులాదరసంబృతులై
+
+    యనఘసుదుస్తరమైనభవంబునకచ్చగునీయితి హాసముబో
+
+    ధనమహనీయవిధంబునఁజెప్పిరిదాత్తగుణాశ్రయతామహితా
+  poemHash: VIRiieOkD/kWSd5JBpgw5f6ScjuJV2VvqqF+Ifs73RY=
   matchPercentage: 93
   isMatch: true
   yatiMatched: false
@@ -1727,7 +1761,7 @@ results:
   matchedLines: 2
   totalLines: 4
   mismatchCount: 4
-  timestamp: 2026-03-10T17:11:19.2245814Z
+  timestamp: 2026-03-10T21:49:58.2306680Z
 - ruleIdentifier: kaviraajaviraajitamu
   ruleName: కవిరాజవిరాజితము (హంసగతి , మహాతరుణీదయిత , శ్రవణాభరణమ్)
   exampleIndex: 3
@@ -1747,8 +1781,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.2254001Z
-  remarks: శ్రీ పిరాట్ల వెంకట శివరామకృష్ణ ప్రసాద్ గారిచే విరచితం.
+  timestamp: 2026-03-10T21:49:58.2314501Z
 - ruleIdentifier: krauMchapadaM
   ruleName: క్రౌంచపదం (పంచశిర , కోకపదమ్)
   exampleIndex: 0
@@ -1768,12 +1801,19 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.2262005Z
+  timestamp: 2026-03-10T21:49:58.2323864Z
 - ruleIdentifier: krauMchapadaM
   ruleName: క్రౌంచపదం (పంచశిర , కోకపదమ్)
   exampleIndex: 1
-  poemText: "చంచలవీచూసంచయలీలాసలలితతరళితజలరుహపాళీ\nసంచితహస్తోదంచితభంగీజనితమదనమతసరణిగుణవ్యా\nఖ్యాంచితగోష్ఠీసంచరణప్యత్యయసముచితహళహళికలతోరా\nయంచలు మ్రేయన్‌గొంచలుగూయన్ వ్యవహితపరరవమయినకొలంకున్ "
-  poemHash: UFVIdiD7nH0EuK/qtpZ8mIWmJWO/4elOQeXOLpsJIvU=
+  poemText: >-
+    చంచలవీచూసంచయలీలాసలలితతరళితజలరుహపాళీ
+
+    సంచితహస్తోదంచితభంగీజనితమదనమతసరణిగుణవ్యా
+
+    ఖ్యాంచితగోష్ఠీసంచరణప్యత్యయసముచితహళహళికలతోరా
+
+    యంచలు మ్రేయన్‌గొంచలుగూయన్ వ్యవహితపరరవమయినకొలంకున్
+  poemHash: caFlA9LnvX+noBArZ4C6iYVajzQ2OKpEoj7DVPGTb18=
   matchPercentage: 96
   isMatch: true
   yatiMatched: false
@@ -1781,7 +1821,7 @@ results:
   matchedLines: 2
   totalLines: 4
   mismatchCount: 2
-  timestamp: 2026-03-10T17:11:19.2275619Z
+  timestamp: 2026-03-10T21:49:58.2334722Z
 - ruleIdentifier: chaMpakamaala
   ruleName: చంపకమాల (సరసీ)
   exampleIndex: 0
@@ -1801,7 +1841,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.2283423Z
+  timestamp: 2026-03-10T21:49:58.2343663Z
 - ruleIdentifier: chaMpakamaala
   ruleName: చంపకమాల (సరసీ)
   exampleIndex: 1
@@ -1821,7 +1861,7 @@ results:
   matchedLines: 3
   totalLines: 4
   mismatchCount: 1
-  timestamp: 2026-03-10T17:11:19.2289849Z
+  timestamp: 2026-03-10T21:49:58.2349989Z
 - ruleIdentifier: chaMpakamaala
   ruleName: చంపకమాల (సరసీ)
   exampleIndex: 2
@@ -1841,7 +1881,7 @@ results:
   matchedLines: 2
   totalLines: 4
   mismatchCount: 2
-  timestamp: 2026-03-10T17:11:19.2297651Z
+  timestamp: 2026-03-10T21:49:58.2358458Z
 - ruleIdentifier: chaMpakamaala
   ruleName: చంపకమాల (సరసీ)
   exampleIndex: 3
@@ -1861,7 +1901,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.2305443Z
+  timestamp: 2026-03-10T21:49:58.2367175Z
 - ruleIdentifier: chaMpakamaala
   ruleName: చంపకమాల (సరసీ)
   exampleIndex: 4
@@ -1881,12 +1921,19 @@ results:
   matchedLines: 3
   totalLines: 4
   mismatchCount: 1
-  timestamp: 2026-03-10T17:11:19.2312834Z
+  timestamp: 2026-03-10T21:49:58.2374660Z
 - ruleIdentifier: chaMpakamaala
   ruleName: చంపకమాల (సరసీ)
   exampleIndex: 5
-  poemText: "తన కులధర్మమున్ విడిచి దానవవైరి పదారవిందముల్\nపనిపడి సేవసేసి పరిపాకము వొందక యెవ్వఁడేనిఁ జ\nచ్చిన మఱు మేన నైన నది సిద్ధి వహించుఁ దదీయ సేవఁ బా\nసినఁ గుల ధర్మగౌరవము సిద్ధి వహించునె యెన్ని మేనులన్. "
-  poemHash: RSLmd9W1Ptkns4G2UlxgkXLy6xiBka5inAfWSgpf5/0=
+  poemText: >-
+    తన కులధర్మమున్ విడిచి దానవవైరి పదారవిందముల్
+
+    పనిపడి సేవసేసి పరిపాకము వొందక యెవ్వఁడేనిఁ జ
+
+    చ్చిన మఱు మేన నైన నది సిద్ధి వహించుఁ దదీయ సేవఁ బా
+
+    సినఁ గుల ధర్మగౌరవము సిద్ధి వహించునె యెన్ని మేనులన్.
+  poemHash: qyI5fwr11NwSdgBQnRbt7k0rmrnSdiORilLwXVP0ePg=
   matchPercentage: 100
   isMatch: true
   yatiMatched: true
@@ -1894,7 +1941,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.2320657Z
+  timestamp: 2026-03-10T21:49:58.2382337Z
 - ruleIdentifier: chaMpakamaala
   ruleName: చంపకమాల (సరసీ)
   exampleIndex: 6
@@ -1914,7 +1961,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.2327822Z
+  timestamp: 2026-03-10T21:49:58.2389349Z
 - ruleIdentifier: taralamu
   ruleName: తరళము (ధ్రువకోకిల)
   exampleIndex: 0
@@ -1934,7 +1981,7 @@ results:
   matchedLines: 3
   totalLines: 4
   mismatchCount: 1
-  timestamp: 2026-03-10T17:11:19.2336064Z
+  timestamp: 2026-03-10T21:49:58.2397902Z
 - ruleIdentifier: taralamu
   ruleName: తరళము (ధ్రువకోకిల)
   exampleIndex: 1
@@ -1954,7 +2001,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.2343555Z
+  timestamp: 2026-03-10T21:49:58.2405377Z
 - ruleIdentifier: taralamu
   ruleName: తరళము (ధ్రువకోకిల)
   exampleIndex: 2
@@ -1974,7 +2021,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.2350882Z
+  timestamp: 2026-03-10T21:49:58.2412702Z
 - ruleIdentifier: taralamu
   ruleName: తరళము (ధ్రువకోకిల)
   exampleIndex: 3
@@ -1994,7 +2041,7 @@ results:
   matchedLines: 3
   totalLines: 4
   mismatchCount: 1
-  timestamp: 2026-03-10T17:11:19.2357898Z
+  timestamp: 2026-03-10T21:49:58.2419886Z
 - ruleIdentifier: taralamu
   ruleName: తరళము (ధ్రువకోకిల)
   exampleIndex: 4
@@ -2014,7 +2061,7 @@ results:
   matchedLines: 3
   totalLines: 4
   mismatchCount: 1
-  timestamp: 2026-03-10T17:11:19.2365353Z
+  timestamp: 2026-03-10T21:49:58.2427231Z
 - ruleIdentifier: taralamu
   ruleName: తరళము (ధ్రువకోకిల)
   exampleIndex: 5
@@ -2034,7 +2081,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.2372340Z
+  timestamp: 2026-03-10T21:49:58.2434491Z
 - ruleIdentifier: tOTakamu
   ruleName: తోటకము (ఛిత్తక , భ్రమరావళి , నందినీ)
   exampleIndex: 0
@@ -2054,7 +2101,7 @@ results:
   matchedLines: 3
   totalLines: 4
   mismatchCount: 1
-  timestamp: 2026-03-10T17:11:19.2377471Z
+  timestamp: 2026-03-10T21:49:58.2439758Z
 - ruleIdentifier: tOTakamu
   ruleName: తోటకము (ఛిత్తక , భ్రమరావళి , నందినీ)
   exampleIndex: 1
@@ -2074,7 +2121,7 @@ results:
   matchedLines: 3
   totalLines: 4
   mismatchCount: 1
-  timestamp: 2026-03-10T17:11:19.2382254Z
+  timestamp: 2026-03-10T21:49:58.2446326Z
 - ruleIdentifier: tOTakamu
   ruleName: తోటకము (ఛిత్తక , భ్రమరావళి , నందినీ)
   exampleIndex: 2
@@ -2094,7 +2141,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.2385726Z
+  timestamp: 2026-03-10T21:49:58.2451464Z
 - ruleIdentifier: tOvakamu
   ruleName: తోవకము (తోదకము-2 , దోధకము , తామరస , కలరవము)
   exampleIndex: 0
@@ -2114,7 +2161,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.2390972Z
+  timestamp: 2026-03-10T21:49:58.2456998Z
 - ruleIdentifier: tOvakamu
   ruleName: తోవకము (తోదకము-2 , దోధకము , తామరస , కలరవము)
   exampleIndex: 1
@@ -2134,7 +2181,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.2397444Z
+  timestamp: 2026-03-10T21:49:58.2461669Z
 - ruleIdentifier: paMchaamaramu
   ruleName: పంచచామరము (నారాచ , మహోత్సవ)
   exampleIndex: 0
@@ -2154,7 +2201,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.2403405Z
+  timestamp: 2026-03-10T21:49:58.2469425Z
 - ruleIdentifier: paMchaamaramu
   ruleName: పంచచామరము (నారాచ , మహోత్సవ)
   exampleIndex: 1
@@ -2174,7 +2221,7 @@ results:
   matchedLines: 3
   totalLines: 4
   mismatchCount: 4
-  timestamp: 2026-03-10T17:11:19.2408272Z
+  timestamp: 2026-03-10T21:49:58.2476178Z
 - ruleIdentifier: paMchaamaramu
   ruleName: పంచచామరము (నారాచ , మహోత్సవ)
   exampleIndex: 2
@@ -2194,7 +2241,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.2413170Z
+  timestamp: 2026-03-10T21:49:58.2483696Z
 - ruleIdentifier: paMchaamaramu
   ruleName: పంచచామరము (నారాచ , మహోత్సవ)
   exampleIndex: 3
@@ -2214,7 +2261,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.2416962Z
+  timestamp: 2026-03-10T21:49:58.2489412Z
 - ruleIdentifier: bhujaMgaprayaatamu
   ruleName: భుజంగప్రయాతము (అప్రమేయా)
   exampleIndex: 0
@@ -2234,12 +2281,19 @@ results:
   matchedLines: 3
   totalLines: 4
   mismatchCount: 1
-  timestamp: 2026-03-10T17:11:19.2421523Z
+  timestamp: 2026-03-10T21:49:58.2496434Z
 - ruleIdentifier: bhujaMgaprayaatamu
   ruleName: భుజంగప్రయాతము (అప్రమేయా)
   exampleIndex: 1
-  poemText: "హరీ ! చక్రధారీ ! మురారీ ! త్రిధామా !\nవరాంగా ! యుపేంద్రా ! సుబావో ! స్వయంభూ !\nపరేశా ! హృషీకేశ ! వైకుంఠవాసా !\nవరాహా ! సహస్రాక్ష ! ప్రాగ్వంశ ! దేవా ! "
-  poemHash: TOF7h1OCathadU2etswAuPA+2HgApbE83sNlfxhvArE=
+  poemText: >-
+    హరీ ! చక్రధారీ ! మురారీ ! త్రిధామా !
+
+    వరాంగా ! యుపేంద్రా ! సుబావో ! స్వయంభూ !
+
+    పరేశా ! హృషీకేశ ! వైకుంఠవాసా !
+
+    వరాహా ! సహస్రాక్ష ! ప్రాగ్వంశ ! దేవా !
+  poemHash: 0WAhqPcHoJQZPWikL/U7ziyTKcFoB9l05iRW41YdqJU=
   matchPercentage: 97
   isMatch: true
   yatiMatched: false
@@ -2247,18 +2301,19 @@ results:
   matchedLines: 3
   totalLines: 4
   mismatchCount: 1
-  timestamp: 2026-03-10T17:11:19.2425520Z
+  timestamp: 2026-03-10T21:49:58.2502383Z
 - ruleIdentifier: bhujaMgaprayaatamu
   ruleName: భుజంగప్రయాతము (అప్రమేయా)
   exampleIndex: 2
-  poemText: >2-
-     ద్విపాస్యత్రిధామత్రిధాతుప్రసిద్ధా!
+  poemText: >-
+    ద్విపాస్యత్రిధామత్రిధాతుప్రసిద్ధా!
+
     సుపర్వప్రమోదాశుభాంగావృషాంకా!
 
     కపిత్థాత్త సంపృక్త భుక్తప్రహృష్టా!
 
     కృపాంభోధి! కుబ్జాకృ తీశా! నమస్తే!
-  poemHash: jOSSO06BdWnkKku6TUp5E6Ccl36PjQpPfWSbhj+FbIA=
+  poemHash: D0bCH4T0Au7hYHyXsVrs1kmtRSqlHdxz5tmplpTk7aI=
   matchPercentage: 88
   isMatch: true
   yatiMatched: false
@@ -2266,7 +2321,7 @@ results:
   matchedLines: 0
   totalLines: 4
   mismatchCount: 4
-  timestamp: 2026-03-10T17:11:19.2429776Z
+  timestamp: 2026-03-10T21:49:58.2508595Z
 - ruleIdentifier: bhujaMgaprayaatamu
   ruleName: భుజంగప్రయాతము (అప్రమేయా)
   exampleIndex: 3
@@ -2286,7 +2341,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.2432883Z
+  timestamp: 2026-03-10T21:49:58.2513275Z
 - ruleIdentifier: mattakOkilamu
   ruleName: మత్తకోకిల (చర్చరీ , మల్లికామాల , మాలికోత్తరమాలికా , విబుధప్రియా , హరనర్తన , ఉజ్జ్వల)
   exampleIndex: 0
@@ -2306,7 +2361,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.2438522Z
+  timestamp: 2026-03-10T21:49:58.2521709Z
 - ruleIdentifier: mattakOkilamu
   ruleName: మత్తకోకిల (చర్చరీ , మల్లికామాల , మాలికోత్తరమాలికా , విబుధప్రియా , హరనర్తన , ఉజ్జ్వల)
   exampleIndex: 1
@@ -2326,7 +2381,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.2443648Z
+  timestamp: 2026-03-10T21:49:58.2529785Z
 - ruleIdentifier: mattakOkilamu
   ruleName: మత్తకోకిల (చర్చరీ , మల్లికామాల , మాలికోత్తరమాలికా , విబుధప్రియా , హరనర్తన , ఉజ్జ్వల)
   exampleIndex: 2
@@ -2346,7 +2401,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.2449142Z
+  timestamp: 2026-03-10T21:49:58.2538112Z
 - ruleIdentifier: mattakOkilamu
   ruleName: మత్తకోకిల (చర్చరీ , మల్లికామాల , మాలికోత్తరమాలికా , విబుధప్రియా , హరనర్తన , ఉజ్జ్వల)
   exampleIndex: 3
@@ -2366,7 +2421,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.2454553Z
+  timestamp: 2026-03-10T21:49:58.2545864Z
 - ruleIdentifier: mattakOkilamu
   ruleName: మత్తకోకిల (చర్చరీ , మల్లికామాల , మాలికోత్తరమాలికా , విబుధప్రియా , హరనర్తన , ఉజ్జ్వల)
   exampleIndex: 4
@@ -2386,7 +2441,7 @@ results:
   matchedLines: 2
   totalLines: 4
   mismatchCount: 2
-  timestamp: 2026-03-10T17:11:19.2461391Z
+  timestamp: 2026-03-10T21:49:58.2554978Z
 - ruleIdentifier: mattakOkilamu
   ruleName: మత్తకోకిల (చర్చరీ , మల్లికామాల , మాలికోత్తరమాలికా , విబుధప్రియా , హరనర్తన , ఉజ్జ్వల)
   exampleIndex: 5
@@ -2406,7 +2461,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.2467779Z
+  timestamp: 2026-03-10T21:49:58.2562557Z
 - ruleIdentifier: maththEbhaM
   ruleName: మత్తేభవిక్రీడితము
   exampleIndex: 0
@@ -2426,7 +2481,7 @@ results:
   matchedLines: 2
   totalLines: 4
   mismatchCount: 2
-  timestamp: 2026-03-10T17:11:19.2474326Z
+  timestamp: 2026-03-10T21:49:58.2571264Z
 - ruleIdentifier: maththEbhaM
   ruleName: మత్తేభవిక్రీడితము
   exampleIndex: 1
@@ -2446,7 +2501,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.2480266Z
+  timestamp: 2026-03-10T21:49:58.2579360Z
 - ruleIdentifier: maththEbhaM
   ruleName: మత్తేభవిక్రీడితము
   exampleIndex: 2
@@ -2466,7 +2521,7 @@ results:
   matchedLines: 3
   totalLines: 4
   mismatchCount: 1
-  timestamp: 2026-03-10T17:11:19.2486048Z
+  timestamp: 2026-03-10T21:49:58.2587878Z
 - ruleIdentifier: maththEbhaM
   ruleName: మత్తేభవిక్రీడితము
   exampleIndex: 3
@@ -2486,7 +2541,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.2492118Z
+  timestamp: 2026-03-10T21:49:58.2596785Z
 - ruleIdentifier: maththEbhaM
   ruleName: మత్తేభవిక్రీడితము
   exampleIndex: 4
@@ -2506,7 +2561,7 @@ results:
   matchedLines: 0
   totalLines: 4
   mismatchCount: 24
-  timestamp: 2026-03-10T17:11:19.2498450Z
+  timestamp: 2026-03-10T21:49:58.2606388Z
 - ruleIdentifier: mahaasragdhara
   ruleName: మహాస్రగ్ధర
   exampleIndex: 0
@@ -2526,7 +2581,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.2505247Z
+  timestamp: 2026-03-10T21:49:58.2615617Z
 - ruleIdentifier: mahaasragdhara
   ruleName: మహాస్రగ్ధర
   exampleIndex: 1
@@ -2546,7 +2601,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.2511357Z
+  timestamp: 2026-03-10T21:49:58.2624783Z
 - ruleIdentifier: mahaasragdhara
   ruleName: మహాస్రగ్ధర
   exampleIndex: 2
@@ -2566,7 +2621,7 @@ results:
   matchedLines: 3
   totalLines: 4
   mismatchCount: 2
-  timestamp: 2026-03-10T17:11:19.2517685Z
+  timestamp: 2026-03-10T21:49:58.2634106Z
 - ruleIdentifier: mahaasragdhara
   ruleName: మహాస్రగ్ధర
   exampleIndex: 3
@@ -2586,7 +2641,7 @@ results:
   matchedLines: 3
   totalLines: 4
   mismatchCount: 2
-  timestamp: 2026-03-10T17:11:19.2525103Z
+  timestamp: 2026-03-10T21:49:58.2643828Z
 - ruleIdentifier: mahaasragdhara
   ruleName: మహాస్రగ్ధర
   exampleIndex: 4
@@ -2606,7 +2661,7 @@ results:
   matchedLines: 2
   totalLines: 4
   mismatchCount: 3
-  timestamp: 2026-03-10T17:11:19.2532236Z
+  timestamp: 2026-03-10T21:49:58.2654093Z
 - ruleIdentifier: mahaasragdhara
   ruleName: మహాస్రగ్ధర
   exampleIndex: 5
@@ -2626,7 +2681,7 @@ results:
   matchedLines: 2
   totalLines: 4
   mismatchCount: 4
-  timestamp: 2026-03-10T17:11:19.2539510Z
+  timestamp: 2026-03-10T21:49:58.2663889Z
 - ruleIdentifier: mahaasragdhara
   ruleName: మహాస్రగ్ధర
   exampleIndex: 6
@@ -2646,7 +2701,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.2574517Z
+  timestamp: 2026-03-10T21:49:58.2673144Z
 - ruleIdentifier: mahaasragdhara
   ruleName: మహాస్రగ్ధర
   exampleIndex: 7
@@ -2666,7 +2721,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.2581026Z
+  timestamp: 2026-03-10T21:49:58.2682148Z
 - ruleIdentifier: maanini
   ruleName: మానిని (మదిరా , లతాకుసుమ , సంగతా)
   exampleIndex: 0
@@ -2686,7 +2741,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.2588107Z
+  timestamp: 2026-03-10T21:49:58.2691947Z
 - ruleIdentifier: maanini
   ruleName: మానిని (మదిరా , లతాకుసుమ , సంగతా)
   exampleIndex: 1
@@ -2706,7 +2761,7 @@ results:
   matchedLines: 3
   totalLines: 4
   mismatchCount: 2
-  timestamp: 2026-03-10T17:11:19.2594255Z
+  timestamp: 2026-03-10T21:49:58.2717860Z
 - ruleIdentifier: maalini
   ruleName: మాలిని (నాందీముఖీ)
   exampleIndex: 0
@@ -2726,7 +2781,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.2600038Z
+  timestamp: 2026-03-10T21:49:58.2725408Z
 - ruleIdentifier: maalini
   ruleName: మాలిని (నాందీముఖీ)
   exampleIndex: 1
@@ -2746,7 +2801,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.2604422Z
+  timestamp: 2026-03-10T21:49:58.2730828Z
 - ruleIdentifier: mEghavisphooritaM
   ruleName: మేఘవిస్ఫూర్జితం
   exampleIndex: 0
@@ -2766,7 +2821,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.2610228Z
+  timestamp: 2026-03-10T21:49:58.2737881Z
 - ruleIdentifier: mEghavisphooritaM
   ruleName: మేఘవిస్ఫూర్జితం
   exampleIndex: 1
@@ -2786,7 +2841,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.2617363Z
+  timestamp: 2026-03-10T21:49:58.2746586Z
 - ruleIdentifier: layagraahi
   ruleName: లయగ్రాహి
   exampleIndex: 0
@@ -2806,7 +2861,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.2637195Z
+  timestamp: 2026-03-10T21:49:58.2771049Z
 - ruleIdentifier: layagraahi
   ruleName: లయగ్రాహి
   exampleIndex: 1
@@ -2826,7 +2881,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.2645910Z
+  timestamp: 2026-03-10T21:49:58.2786117Z
 - ruleIdentifier: layavibhaati
   ruleName: లయవిభాతి
   exampleIndex: 0
@@ -2846,12 +2901,19 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.2653902Z
+  timestamp: 2026-03-10T21:49:58.2796368Z
 - ruleIdentifier: layavibhaati
   ruleName: లయవిభాతి
   exampleIndex: 1
-  poemText: "అలికులము నీలముల చెలువము వహింప నవడళముల హరిన్మణుల పొలుపు నదలిర్పన్\nదలిరుగమి కెంపులుగఁ బలుదెఱ్ఁగు క్రొవ్విరుల విలసనము ముత్తియపు గుళికలకుఁ దక్కున్ \nగల మణులకుం బసిఁడికళకులకు నీడగుచు వెలయఁగఁ బరాగములు లలితపు వితానం\nబులుగ గృహముఖ్యముల  చెలువు ప్రతిబింబములు బలెఁ బురము నల్ధెసలఁ బొలుచును వనంబుల్ "
-  poemHash: DCoP4VqNfXqE984yGrDapXpDYt/dYdYhG7TJhOinZdk=
+  poemText: >-
+    అలికులము నీలముల చెలువము వహింప నవడళముల హరిన్మణుల పొలుపు నదలిర్పన్
+
+    దలిరుగమి కెంపులుగఁ బలుదెఱ్ఁగు క్రొవ్విరుల విలసనము ముత్తియపు గుళికలకుఁ దక్కున్ 
+
+    గల మణులకుం బసిఁడికళకులకు నీడగుచు వెలయఁగఁ బరాగములు లలితపు వితానం
+
+    బులుగ గృహముఖ్యముల  చెలువు ప్రతిబింబములు బలెఁ బురము నల్ధెసలఁ బొలుచును వనంబుల్
+  poemHash: /V997F0+7I/8WAmdbmF5GDIq528FytR8qGMWARdz4dw=
   matchPercentage: 100
   isMatch: true
   yatiMatched: true
@@ -2859,7 +2921,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.2662867Z
+  timestamp: 2026-03-10T21:49:58.2807809Z
 - ruleIdentifier: layavibhaati
   ruleName: లయవిభాతి
   exampleIndex: 2
@@ -2879,7 +2941,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.2671701Z
+  timestamp: 2026-03-10T21:49:58.2817981Z
 - ruleIdentifier: vanamayooramu
   ruleName: వనమయూరము(ఇందువదన , ఇన్ద్రవదనా)
   exampleIndex: 0
@@ -2899,7 +2961,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.2676166Z
+  timestamp: 2026-03-10T21:49:58.2823558Z
 - ruleIdentifier: vanamayooramu
   ruleName: వనమయూరము(ఇందువదన , ఇన్ద్రవదనా)
   exampleIndex: 1
@@ -2919,7 +2981,7 @@ results:
   matchedLines: 3
   totalLines: 4
   mismatchCount: 2
-  timestamp: 2026-03-10T17:11:19.2683708Z
+  timestamp: 2026-03-10T21:49:58.2834841Z
 - ruleIdentifier: vanamayooramu
   ruleName: వనమయూరము(ఇందువదన , ఇన్ద్రవదనా)
   exampleIndex: 2
@@ -2939,7 +3001,7 @@ results:
   matchedLines: 3
   totalLines: 4
   mismatchCount: 1
-  timestamp: 2026-03-10T17:11:19.2687745Z
+  timestamp: 2026-03-10T21:49:58.2840277Z
 - ruleIdentifier: vasaMtatilakamu
   ruleName: వసంతతిలకము (ఉద్ధర్షిణీ , ఔద్ధర్షిణి , కర్ణోత్పలా , మధుమాధవీ , శోభావతీ , సింహోన్నతా , సింహోద్ధతా , మదనము)
   exampleIndex: 0
@@ -2959,7 +3021,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.2692220Z
+  timestamp: 2026-03-10T21:49:58.2848775Z
 - ruleIdentifier: vasaMtatilakamu
   ruleName: వసంతతిలకము (ఉద్ధర్షిణీ , ఔద్ధర్షిణి , కర్ణోత్పలా , మధుమాధవీ , శోభావతీ , సింహోన్నతా , సింహోద్ధతా , మదనము)
   exampleIndex: 1
@@ -2979,7 +3041,7 @@ results:
   matchedLines: 3
   totalLines: 4
   mismatchCount: 1
-  timestamp: 2026-03-10T17:11:19.2697321Z
+  timestamp: 2026-03-10T21:49:58.2855186Z
 - ruleIdentifier: saardhoolaM
   ruleName: శార్దూలవిక్రీడితము
   exampleIndex: 0
@@ -2999,7 +3061,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.2703242Z
+  timestamp: 2026-03-10T21:49:58.2863463Z
 - ruleIdentifier: saardhoolaM
   ruleName: శార్దూలవిక్రీడితము
   exampleIndex: 1
@@ -3019,7 +3081,7 @@ results:
   matchedLines: 3
   totalLines: 4
   mismatchCount: 1
-  timestamp: 2026-03-10T17:11:19.2710227Z
+  timestamp: 2026-03-10T21:49:58.2874293Z
 - ruleIdentifier: saardhoolaM
   ruleName: శార్దూలవిక్రీడితము
   exampleIndex: 2
@@ -3039,7 +3101,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.2716416Z
+  timestamp: 2026-03-10T21:49:58.2881705Z
 - ruleIdentifier: saardhoolaM
   ruleName: శార్దూలవిక్రీడితము
   exampleIndex: 3
@@ -3059,7 +3121,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.2721073Z
+  timestamp: 2026-03-10T21:49:58.2887503Z
 - ruleIdentifier: saardhoolaM
   ruleName: శార్దూలవిక్రీడితము
   exampleIndex: 4
@@ -3079,7 +3141,7 @@ results:
   matchedLines: 0
   totalLines: 4
   mismatchCount: 32
-  timestamp: 2026-03-10T17:11:19.2726938Z
+  timestamp: 2026-03-10T21:49:58.2893808Z
 - ruleIdentifier: saardhoolaM
   ruleName: శార్దూలవిక్రీడితము
   exampleIndex: 5
@@ -3099,7 +3161,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.2732970Z
+  timestamp: 2026-03-10T21:49:58.2900804Z
 - ruleIdentifier: saardhoolaM
   ruleName: శార్దూలవిక్రీడితము
   exampleIndex: 6
@@ -3119,7 +3181,7 @@ results:
   matchedLines: 3
   totalLines: 4
   mismatchCount: 1
-  timestamp: 2026-03-10T17:11:19.2738772Z
+  timestamp: 2026-03-10T21:49:58.2907538Z
 - ruleIdentifier: sragdhara
   ruleName: స్రగ్ధర
   exampleIndex: 0
@@ -3139,12 +3201,19 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.2746087Z
+  timestamp: 2026-03-10T21:49:58.2917664Z
 - ruleIdentifier: sragdhara
   ruleName: స్రగ్ధర
   exampleIndex: 1
-  poemText: "సేవించెన్ రంగధామున్ శ్రితనివహపయస్సింధుసంపూర్ణసోముం\nగావేరీ మధ్యసీమున్ ఘనకలుష మహాకాలకూటోగ్ర భీమున్\nదేవారిశ్రీవిరామున్ దివిజవినుత సందీపితానంత నామున్\nధీవిజ్ఞానాభిరాముం ద్రిభువన విలసద్దేవతా సార్వభౌమున్. "
-  poemHash: /G2YqlGjNXFe5zMjPUVDletGBUYQ94W+/kp82KEMJxc=
+  poemText: >-
+    సేవించెన్ రంగధామున్ శ్రితనివహపయస్సింధుసంపూర్ణసోముం
+
+    గావేరీ మధ్యసీమున్ ఘనకలుష మహాకాలకూటోగ్ర భీమున్
+
+    దేవారిశ్రీవిరామున్ దివిజవినుత సందీపితానంత నామున్
+
+    ధీవిజ్ఞానాభిరాముం ద్రిభువన విలసద్దేవతా సార్వభౌమున్.
+  poemHash: +bISXawfJOTtRfRBZhT97izZEaHruRTppRCkVlqHBaM=
   matchPercentage: 100
   isMatch: true
   yatiMatched: true
@@ -3152,7 +3221,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.2751867Z
+  timestamp: 2026-03-10T21:49:58.2926687Z
 - ruleIdentifier: sragdhara
   ruleName: స్రగ్ధర
   exampleIndex: 2
@@ -3172,12 +3241,19 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.2757859Z
+  timestamp: 2026-03-10T21:49:58.2936296Z
 - ruleIdentifier: sragdhara
   ruleName: స్రగ్ధర
   exampleIndex: 3
-  poemText: "నా సామర్థ్యం బసామాన్యము త్రిజగములన్ గాంచె నెంతే ప్రశస్తిన్\nనా సాటెవ్వారు హా హా నరులును గపు లీనాడు నన్ గాంచుడంచున్\nజేసెన్ నాదంబు దిక్కుల్ చెదరెడు నటులన్ జెట్టి యింద్రారి బల్మిన్\nవేసెన్ బ్రహ్మాస్త్రమంతన్ వివిధ కపులపై భీకరంబైన రీతిన్ "
-  poemHash: RwNR4MrwCkqKanaRYlJWbig/QQL/6hv/byJJFpDr+J4=
+  poemText: >-
+    నా సామర్థ్యం బసామాన్యము త్రిజగములన్ గాంచె నెంతే ప్రశస్తిన్
+
+    నా సాటెవ్వారు హా హా నరులును గపు లీనాడు నన్ గాంచుడంచున్
+
+    జేసెన్ నాదంబు దిక్కుల్ చెదరెడు నటులన్ జెట్టి యింద్రారి బల్మిన్
+
+    వేసెన్ బ్రహ్మాస్త్రమంతన్ వివిధ కపులపై భీకరంబైన రీతిన్
+  poemHash: +z/0StWpn3Wq348Fxx2GeQiXjd5GqdJM4U3VkA7kW34=
   matchPercentage: 98
   isMatch: true
   yatiMatched: false
@@ -3185,12 +3261,19 @@ results:
   matchedLines: 3
   totalLines: 4
   mismatchCount: 1
-  timestamp: 2026-03-10T17:11:19.2764475Z
+  timestamp: 2026-03-10T21:49:58.2944731Z
 - ruleIdentifier: sragdhara
   ruleName: స్రగ్ధర
   exampleIndex: 4
-  poemText: "శ్రీవాణీ! నిన్ను పూజించి మనెదను సదా సేవ నే జేతునమ్మా!\nభావమ్మందుంచి యర్చింప దలచెద రమా పార్వతీ తోడ, రమ్మా!\nదేవీ! నీ నామమందే దృఢమయిన గతిన్ తీవ్ర విశ్వాసముంతున్.\nనా విశ్వాసమ్ము లోనున్న పదములవి వీణాధరీ నీవె నమ్మా! "
-  poemHash: vVhtLoSVkQ2Py6BlqWml81XrojzB/zSjsLCL7kLuXDY=
+  poemText: >-
+    శ్రీవాణీ! నిన్ను పూజించి మనెదను సదా సేవ నే జేతునమ్మా!
+
+    భావమ్మందుంచి యర్చింప దలచెద రమా పార్వతీ తోడ, రమ్మా!
+
+    దేవీ! నీ నామమందే దృఢమయిన గతిన్ తీవ్ర విశ్వాసముంతున్.
+
+    నా విశ్వాసమ్ము లోనున్న పదములవి వీణాధరీ నీవె నమ్మా!
+  poemHash: E/rzVrSFkLkK7qBm3b/wEwYmQe259hccxYf8M2df8Sc=
   matchPercentage: 100
   isMatch: true
   yatiMatched: true
@@ -3198,7 +3281,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.2770505Z
+  timestamp: 2026-03-10T21:49:58.2952293Z
 - ruleIdentifier: sragdhara
   ruleName: స్రగ్ధర
   exampleIndex: 5
@@ -3218,7 +3301,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.2776515Z
+  timestamp: 2026-03-10T21:49:58.2959076Z
 - ruleIdentifier: sragdhara
   ruleName: స్రగ్ధర
   exampleIndex: 6
@@ -3238,7 +3321,7 @@ results:
   matchedLines: 3
   totalLines: 4
   mismatchCount: 2
-  timestamp: 2026-03-10T17:11:19.2784335Z
+  timestamp: 2026-03-10T21:49:58.2965198Z
 - ruleIdentifier: sragviNi
   ruleName: స్రగ్విణీ (లక్ష్మీధర , పద్మినీ)
   exampleIndex: 0
@@ -3258,7 +3341,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.2788838Z
+  timestamp: 2026-03-10T21:49:58.2969006Z
 - ruleIdentifier: sragviNi
   ruleName: స్రగ్విణీ (లక్ష్మీధర , పద్మినీ)
   exampleIndex: 1
@@ -3278,7 +3361,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.2792622Z
+  timestamp: 2026-03-10T21:49:58.2971521Z
 - ruleIdentifier: svaagatavRttamu
   ruleName: స్వాగతం
   exampleIndex: 0
@@ -3298,7 +3381,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.2796134Z
+  timestamp: 2026-03-10T21:49:58.2975651Z
 - ruleIdentifier: svaagatavRttamu
   ruleName: స్వాగతం
   exampleIndex: 1
@@ -3318,7 +3401,7 @@ results:
   matchedLines: 3
   totalLines: 4
   mismatchCount: 1
-  timestamp: 2026-03-10T17:11:19.2800081Z
+  timestamp: 2026-03-10T21:49:58.2979920Z
 - ruleIdentifier: kshama
   ruleName: క్షమ(క్షప , చంద్రిక-2)
   exampleIndex: 0
@@ -3338,7 +3421,7 @@ results:
   matchedLines: 3
   totalLines: 4
   mismatchCount: 1
-  timestamp: 2026-03-10T17:11:19.2804460Z
+  timestamp: 2026-03-10T21:49:58.2985459Z
 - ruleIdentifier: kshama
   ruleName: క్షమ(క్షప , చంద్రిక-2)
   exampleIndex: 1
@@ -3355,7 +3438,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.2809268Z
+  timestamp: 2026-03-10T21:49:58.2991361Z
 - ruleIdentifier: khacharaplutamu
   ruleName: ఖచరప్లుతము
   exampleIndex: 0
@@ -3375,12 +3458,19 @@ results:
   matchedLines: 3
   totalLines: 4
   mismatchCount: 1
-  timestamp: 2026-03-10T17:11:19.2815399Z
+  timestamp: 2026-03-10T21:49:58.2998228Z
 - ruleIdentifier: khacharaplutamu
   ruleName: ఖచరప్లుతము
   exampleIndex: 1
-  poemText: "కనకసారససారసరేఖాగ్రస్థితపక్షిచయంబహో\nయనినయట్టులకట్టినరెక్కల్‌వ్యాయతచంచులునాడఁగన్\nకనినమున్నులకన్నులఁబంపాకాండసరోజలమూగఁగా\nదనుజనాయకుఁడాయకఁగొంచున్‌దాటిచనెన్ గగనాధ్వమున్ "
-  poemHash: wu1PXRb0aikDUjDy5sbGA6UjhvpEfEXP6PRsVjd7T7U=
+  poemText: >-
+    కనకసారససారసరేఖాగ్రస్థితపక్షిచయంబహో
+
+    యనినయట్టులకట్టినరెక్కల్‌వ్యాయతచంచులునాడఁగన్
+
+    కనినమున్నులకన్నులఁబంపాకాండసరోజలమూగఁగా
+
+    దనుజనాయకుఁడాయకఁగొంచున్‌దాటిచనెన్ గగనాధ్వమున్
+  poemHash: KJkudPTkaNhVMpOLCpQ5GnBrbSuWTExAvjosYU1ZXgo=
   matchPercentage: 100
   isMatch: true
   yatiMatched: true
@@ -3388,7 +3478,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.2820432Z
+  timestamp: 2026-03-10T21:49:58.3004416Z
 - ruleIdentifier: geetaalaMbanamu
   ruleName: గీతాలంబనము (కలితాంత , కాంత , కాంతి , మోటనకమ్)
   exampleIndex: 0
@@ -3408,7 +3498,7 @@ results:
   matchedLines: 3
   totalLines: 4
   mismatchCount: 1
-  timestamp: 2026-03-10T17:11:19.2824595Z
+  timestamp: 2026-03-10T21:49:58.3010195Z
 - ruleIdentifier: geetaalaMbanamu
   ruleName: గీతాలంబనము (కలితాంత , కాంత , కాంతి , మోటనకమ్)
   exampleIndex: 1
@@ -3428,7 +3518,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.2827547Z
+  timestamp: 2026-03-10T21:49:58.3013739Z
 - ruleIdentifier: chaMchareekaavaLi
   ruleName: చంచరీకావళి-1 (చంచరీకాతతి)
   exampleIndex: 0
@@ -3448,7 +3538,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.2833331Z
+  timestamp: 2026-03-10T21:49:58.3019247Z
 - ruleIdentifier: chaMchareekaavaLi
   ruleName: చంచరీకావళి-1 (చంచరీకాతతి)
   exampleIndex: 1
@@ -3468,7 +3558,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.2838162Z
+  timestamp: 2026-03-10T21:49:58.3023105Z
 - ruleIdentifier: chaMdrakaLa
   ruleName: చంద్రకళ
   exampleIndex: 0
@@ -3488,7 +3578,7 @@ results:
   matchedLines: 2
   totalLines: 4
   mismatchCount: 2
-  timestamp: 2026-03-10T17:11:19.2845556Z
+  timestamp: 2026-03-10T21:49:58.3029413Z
 - ruleIdentifier: chaMdrakaLa
   ruleName: చంద్రకళ
   exampleIndex: 1
@@ -3508,7 +3598,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.2851907Z
+  timestamp: 2026-03-10T21:49:58.3033567Z
 - ruleIdentifier: chaMdraSree
   ruleName: చంద్రశ్రీ (ప్రవరలలితమ్)
   exampleIndex: 0
@@ -3528,7 +3618,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.2858509Z
+  timestamp: 2026-03-10T21:49:58.3038632Z
 - ruleIdentifier: chitrapadamu
   ruleName: చిత్రపదము
   exampleIndex: 0
@@ -3548,7 +3638,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.2862155Z
+  timestamp: 2026-03-10T21:49:58.3042391Z
 - ruleIdentifier: chitrapadamu
   ruleName: చిత్రపదము
   exampleIndex: 1
@@ -3568,7 +3658,7 @@ results:
   matchedLines: 3
   totalLines: 4
   mismatchCount: 2
-  timestamp: 2026-03-10T17:11:19.2864811Z
+  timestamp: 2026-03-10T21:49:58.3044556Z
 - ruleIdentifier: jaladamu
   ruleName: జలదము (లవలీలతా)
   exampleIndex: 0
@@ -3588,7 +3678,7 @@ results:
   matchedLines: 3
   totalLines: 4
   mismatchCount: 2
-  timestamp: 2026-03-10T17:11:19.2869578Z
+  timestamp: 2026-03-10T21:49:58.3048940Z
 - ruleIdentifier: jaladamu
   ruleName: జలదము (లవలీలతా)
   exampleIndex: 1
@@ -3608,7 +3698,7 @@ results:
   matchedLines: 3
   totalLines: 4
   mismatchCount: 1
-  timestamp: 2026-03-10T17:11:19.2874331Z
+  timestamp: 2026-03-10T21:49:58.3052260Z
 - ruleIdentifier: jaladharamaala
   ruleName: జలధరమాలా (కాంతోత్పీడా)
   exampleIndex: 0
@@ -3628,7 +3718,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.2879157Z
+  timestamp: 2026-03-10T21:49:58.3056718Z
 - ruleIdentifier: jaladharamaala
   ruleName: జలధరమాలా (కాంతోత్పీడా)
   exampleIndex: 1
@@ -3648,7 +3738,7 @@ results:
   matchedLines: 2
   totalLines: 4
   mismatchCount: 2
-  timestamp: 2026-03-10T17:11:19.2898288Z
+  timestamp: 2026-03-10T21:49:58.3059375Z
 - ruleIdentifier: jalOddhatagati
   ruleName: జలోద్ధతగతి
   exampleIndex: 0
@@ -3668,7 +3758,7 @@ results:
   matchedLines: 3
   totalLines: 4
   mismatchCount: 1
-  timestamp: 2026-03-10T17:11:19.2902449Z
+  timestamp: 2026-03-10T21:49:58.3063604Z
 - ruleIdentifier: jalOddhatagati
   ruleName: జలోద్ధతగతి
   exampleIndex: 1
@@ -3688,7 +3778,7 @@ results:
   matchedLines: 3
   totalLines: 4
   mismatchCount: 1
-  timestamp: 2026-03-10T17:11:19.2905709Z
+  timestamp: 2026-03-10T21:49:58.3069133Z
 - ruleIdentifier: tanumadhyaavRttamu
   ruleName: తనుమధ్య
   exampleIndex: 0
@@ -3708,7 +3798,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.2908423Z
+  timestamp: 2026-03-10T21:49:58.3073755Z
 - ruleIdentifier: tanumadhyaavRttamu
   ruleName: తనుమధ్య
   exampleIndex: 1
@@ -3728,7 +3818,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.2910433Z
+  timestamp: 2026-03-10T21:49:58.3076719Z
 - ruleIdentifier: taraLamu
   ruleName: తరలి
   exampleIndex: 0
@@ -3748,7 +3838,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.2915569Z
+  timestamp: 2026-03-10T21:49:58.3085573Z
 - ruleIdentifier: turagavalgitavRttamu
   ruleName: తురగవల్గిత (తురగ)
   exampleIndex: 0
@@ -3768,12 +3858,19 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.2921623Z
+  timestamp: 2026-03-10T21:49:58.3093984Z
 - ruleIdentifier: turagavalgitavRttamu
   ruleName: తురగవల్గిత (తురగ)
   exampleIndex: 1
-  poemText: "తరుణరవికరవికచసరసిజ దర్పమోచన లోచనా\nశరధినిరపధినిఖిలజలహృతి సాంద్రకంధరబంధురా\nగిరిమధనమధువిధురకర శ్రితకీరవాహనమోహనా\nస్ఫురద చిర రుచి రుచిరచిరరుచి పోషకాంబరడంబరా "
-  poemHash: EsXxgAdEhkOp446ZZFsClpUZPPwarE5k+OLyYR93v5E=
+  poemText: >-
+    తరుణరవికరవికచసరసిజ దర్పమోచన లోచనా
+
+    శరధినిరపధినిఖిలజలహృతి సాంద్రకంధరబంధురా
+
+    గిరిమధనమధువిధురకర శ్రితకీరవాహనమోహనా
+
+    స్ఫురద చిర రుచి రుచిరచిరరుచి పోషకాంబరడంబరా
+  poemHash: bhowhidnGUOXQwaIq59orxE6atE6gFfDJkUNrfK8mcQ=
   matchPercentage: 100
   isMatch: true
   yatiMatched: true
@@ -3781,7 +3878,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.2926063Z
+  timestamp: 2026-03-10T21:49:58.3113537Z
 - ruleIdentifier: dRtavilaMbitamu
   ruleName: ద్రుతవిలంబితము (సుందరీ , హరిణప్లుతా)
   exampleIndex: 0
@@ -3801,7 +3898,7 @@ results:
   matchedLines: 3
   totalLines: 4
   mismatchCount: 1
-  timestamp: 2026-03-10T17:11:19.2930032Z
+  timestamp: 2026-03-10T21:49:58.3119755Z
 - ruleIdentifier: dRtavilaMbitamu
   ruleName: ద్రుతవిలంబితము (సుందరీ , హరిణప్లుతా)
   exampleIndex: 1
@@ -3821,7 +3918,7 @@ results:
   matchedLines: 3
   totalLines: 4
   mismatchCount: 1
-  timestamp: 2026-03-10T17:11:19.2932898Z
+  timestamp: 2026-03-10T21:49:58.3124560Z
 - ruleIdentifier: nadeepraghOshamu
   ruleName: నదీప్రఘోషము
   exampleIndex: 0
@@ -3841,7 +3938,7 @@ results:
   matchedLines: 0
   totalLines: 4
   mismatchCount: 5
-  timestamp: 2026-03-10T17:11:19.2936958Z
+  timestamp: 2026-03-10T21:49:58.3130924Z
 - ruleIdentifier: narkuTamu
   ruleName: నర్కుటము (కోకిలకాక , నర్దటకమ్)
   exampleIndex: 0
@@ -3861,7 +3958,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.2941498Z
+  timestamp: 2026-03-10T21:49:58.3138047Z
 - ruleIdentifier: narkuTamu
   ruleName: నర్కుటము (కోకిలకాక , నర్దటకమ్)
   exampleIndex: 1
@@ -3881,7 +3978,7 @@ results:
   matchedLines: 3
   totalLines: 4
   mismatchCount: 1
-  timestamp: 2026-03-10T17:11:19.2945133Z
+  timestamp: 2026-03-10T21:49:58.3143700Z
 - ruleIdentifier: navanaMdini
   ruleName: నవనందిని
   exampleIndex: 0
@@ -3901,7 +3998,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.2949989Z
+  timestamp: 2026-03-10T21:49:58.3149619Z
 - ruleIdentifier: navanaMdini
   ruleName: నవనందిని
   exampleIndex: 1
@@ -3921,7 +4018,7 @@ results:
   matchedLines: 1
   totalLines: 4
   mismatchCount: 3
-  timestamp: 2026-03-10T17:11:19.2953645Z
+  timestamp: 2026-03-10T21:49:58.3155358Z
 - ruleIdentifier: naaree
   ruleName: నారీ (జన , పుష్ప , మద , మధు , బలి)
   exampleIndex: 0
@@ -3941,7 +4038,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.2955674Z
+  timestamp: 2026-03-10T21:49:58.3157459Z
 - ruleIdentifier: naaree
   ruleName: నారీ (జన , పుష్ప , మద , మధు , బలి)
   exampleIndex: 1
@@ -3961,7 +4058,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.2956709Z
+  timestamp: 2026-03-10T21:49:58.3159094Z
 - ruleIdentifier: naareeplutavRttamu
   ruleName: నారీప్లుత
   exampleIndex: 0
@@ -3981,7 +4078,7 @@ results:
   matchedLines: 3
   totalLines: 4
   mismatchCount: 1
-  timestamp: 2026-03-10T17:11:19.2961213Z
+  timestamp: 2026-03-10T21:49:58.3164926Z
 - ruleIdentifier: naareeplutavRttamu
   ruleName: నారీప్లుత
   exampleIndex: 1
@@ -4001,7 +4098,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.2964907Z
+  timestamp: 2026-03-10T21:49:58.3169875Z
 - ruleIdentifier: padmakamu
   ruleName: పద్మకము-1 (పద్మ)
   exampleIndex: 0
@@ -4021,7 +4118,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.2969691Z
+  timestamp: 2026-03-10T21:49:58.3176067Z
 - ruleIdentifier: padmanaabhamu
   ruleName: పద్మనాభము
   exampleIndex: 0
@@ -4041,12 +4138,19 @@ results:
   matchedLines: 3
   totalLines: 4
   mismatchCount: 1
-  timestamp: 2026-03-10T17:11:19.2978376Z
+  timestamp: 2026-03-10T21:49:58.3187811Z
 - ruleIdentifier: padmanaabhamu
   ruleName: పద్మనాభము
   exampleIndex: 1
-  poemText: "శ్రీరంగనాధప్రధన్ బద్మనాభుండు సృష్టిస్థి  తిందానెయై,స్రష్టకొల్వన్\nక్షీరాబ్ధి కన్యాప్రసేవాసుఖానందసిధ్ధింగనన్   శేషతల్పంబుపై\nనారూఢయోగప్రశాంతిన్ సువిశ్రాంతినాత్మాంతసంసృష్టిరక్షించుచున్ భ\nక్తారాధ్యదైవంబుగావైభవోపేతుఁడై వెల్గుధాత్రిన్ స్వలీలావిభూతిన్   "
-  poemHash: g/ZQ61k60G/JWroehUgoCknn9fkI6bnO3ArgzCY9ImE=
+  poemText: >-
+    శ్రీరంగనాధప్రధన్ బద్మనాభుండు సృష్టిస్థి  తిందానెయై,స్రష్టకొల్వన్
+
+    క్షీరాబ్ధి కన్యాప్రసేవాసుఖానందసిధ్ధింగనన్   శేషతల్పంబుపై
+
+    నారూఢయోగప్రశాంతిన్ సువిశ్రాంతినాత్మాంతసంసృష్టిరక్షించుచున్ భ
+
+    క్తారాధ్యదైవంబుగావైభవోపేతుఁడై వెల్గుధాత్రిన్ స్వలీలావిభూతిన్
+  poemHash: OPcwMjra0JVAhpxWiFWUzmyw4iPOZnwTI+heL8EhFfM=
   matchPercentage: 96
   isMatch: true
   yatiMatched: false
@@ -4054,7 +4158,7 @@ results:
   matchedLines: 2
   totalLines: 4
   mismatchCount: 2
-  timestamp: 2026-03-10T17:11:19.2985304Z
+  timestamp: 2026-03-10T21:49:58.3197775Z
 - ruleIdentifier: paalaaSadaLamu
   ruleName: పాలాశదళము (త్వరితగతి)
   exampleIndex: 0
@@ -4074,7 +4178,7 @@ results:
   matchedLines: 3
   totalLines: 4
   mismatchCount: 1
-  timestamp: 2026-03-10T17:11:19.2990153Z
+  timestamp: 2026-03-10T21:49:58.3204725Z
 - ruleIdentifier: pRthiveevRttamu
   ruleName: పృథ్వి-2
   exampleIndex: 0
@@ -4094,7 +4198,7 @@ results:
   matchedLines: 3
   totalLines: 4
   mismatchCount: 1
-  timestamp: 2026-03-10T17:11:19.2995105Z
+  timestamp: 2026-03-10T21:49:58.3212404Z
 - ruleIdentifier: pRthiveevRttamu
   ruleName: పృథ్వి-2
   exampleIndex: 1
@@ -4114,7 +4218,7 @@ results:
   matchedLines: 3
   totalLines: 4
   mismatchCount: 1
-  timestamp: 2026-03-10T17:11:19.3000292Z
+  timestamp: 2026-03-10T21:49:58.3219888Z
 - ruleIdentifier: praguNa
   ruleName: ప్రగుణ
   exampleIndex: 0
@@ -4134,7 +4238,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.3003154Z
+  timestamp: 2026-03-10T21:49:58.3223322Z
 - ruleIdentifier: pramaaNi
   ruleName: ప్రమాణి (ప్రమాణికా)
   exampleIndex: 0
@@ -4154,7 +4258,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.3006228Z
+  timestamp: 2026-03-10T21:49:58.3229424Z
 - ruleIdentifier: pramaaNi
   ruleName: ప్రమాణి (ప్రమాణికా)
   exampleIndex: 1
@@ -4174,7 +4278,7 @@ results:
   matchedLines: 3
   totalLines: 4
   mismatchCount: 1
-  timestamp: 2026-03-10T17:11:19.3008103Z
+  timestamp: 2026-03-10T21:49:58.3233125Z
 - ruleIdentifier: pramitaaksharamu
   ruleName: ప్రమితాక్షరము
   exampleIndex: 0
@@ -4194,7 +4298,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.3010833Z
+  timestamp: 2026-03-10T21:49:58.3238597Z
 - ruleIdentifier: pramitaaksharamu
   ruleName: ప్రమితాక్షరము
   exampleIndex: 1
@@ -4214,7 +4318,7 @@ results:
   matchedLines: 3
   totalLines: 4
   mismatchCount: 1
-  timestamp: 2026-03-10T17:11:19.3013032Z
+  timestamp: 2026-03-10T21:49:58.3243308Z
 - ruleIdentifier: praharaNakalita
   ruleName: ప్రహరణకలిత (ప్రహరణకలికా)
   exampleIndex: 0
@@ -4234,7 +4338,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.3016094Z
+  timestamp: 2026-03-10T21:49:58.3249517Z
 - ruleIdentifier: praharaNakalita
   ruleName: ప్రహరణకలిత (ప్రహరణకలికా)
   exampleIndex: 1
@@ -4254,7 +4358,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.3018548Z
+  timestamp: 2026-03-10T21:49:58.3254802Z
 - ruleIdentifier: praharaNakalita
   ruleName: ప్రహరణకలిత (ప్రహరణకలికా)
   exampleIndex: 2
@@ -4274,7 +4378,7 @@ results:
   matchedLines: 3
   totalLines: 4
   mismatchCount: 1
-  timestamp: 2026-03-10T17:11:19.3021106Z
+  timestamp: 2026-03-10T21:49:58.3260639Z
 - ruleIdentifier: praharshiNi
   ruleName: ప్రహర్షిణి (మయూరపిచ్ఛ)
   exampleIndex: 0
@@ -4294,7 +4398,7 @@ results:
   matchedLines: 2
   totalLines: 4
   mismatchCount: 3
-  timestamp: 2026-03-10T17:11:19.3024560Z
+  timestamp: 2026-03-10T21:49:58.3267829Z
 - ruleIdentifier: priyaMvada
   ruleName: ప్రియంవద (మత్తకోకిల)
   exampleIndex: 0
@@ -4314,7 +4418,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.3027527Z
+  timestamp: 2026-03-10T21:49:58.3273563Z
 - ruleIdentifier: priyaMvada
   ruleName: ప్రియంవద (మత్తకోకిల)
   exampleIndex: 1
@@ -4334,7 +4438,7 @@ results:
   matchedLines: 3
   totalLines: 4
   mismatchCount: 1
-  timestamp: 2026-03-10T17:11:19.3030018Z
+  timestamp: 2026-03-10T21:49:58.3278967Z
 - ruleIdentifier: priyakaaMta
   ruleName: ప్రియకాంత(కాంత)
   exampleIndex: 0
@@ -4354,7 +4458,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.3033464Z
+  timestamp: 2026-03-10T21:49:58.3286141Z
 - ruleIdentifier: priyakaaMta
   ruleName: ప్రియకాంత(కాంత)
   exampleIndex: 1
@@ -4374,7 +4478,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.3036907Z
+  timestamp: 2026-03-10T21:49:58.3294279Z
 - ruleIdentifier: phalasadanamu
   ruleName: ఫలసదనము (శిశుభరణమ్)
   exampleIndex: 0
@@ -4394,7 +4498,7 @@ results:
   matchedLines: 3
   totalLines: 4
   mismatchCount: 1
-  timestamp: 2026-03-10T17:11:19.3039961Z
+  timestamp: 2026-03-10T21:49:58.3300038Z
 - ruleIdentifier: phalasadanamu
   ruleName: ఫలసదనము (శిశుభరణమ్)
   exampleIndex: 1
@@ -4414,7 +4518,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.3042816Z
+  timestamp: 2026-03-10T21:49:58.3306088Z
 - ruleIdentifier: baMdhuramu
   ruleName: బంధురము
   exampleIndex: 0
@@ -4434,7 +4538,7 @@ results:
   matchedLines: 0
   totalLines: 4
   mismatchCount: 24
-  timestamp: 2026-03-10T17:11:19.3048793Z
+  timestamp: 2026-03-10T21:49:58.3316099Z
 - ruleIdentifier: bhadrakamu
   ruleName: భద్రకము-3
   exampleIndex: 0
@@ -4454,7 +4558,7 @@ results:
   matchedLines: 3
   totalLines: 4
   mismatchCount: 1
-  timestamp: 2026-03-10T17:11:19.3056149Z
+  timestamp: 2026-03-10T21:49:58.3324976Z
 - ruleIdentifier: bhadrakamu1
   ruleName: భద్రకము-1
   exampleIndex: 0
@@ -4474,7 +4578,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.3060185Z
+  timestamp: 2026-03-10T21:49:58.3328825Z
 - ruleIdentifier: bhadriNeevRttamu
   ruleName: భద్రిణీ
   exampleIndex: 0
@@ -4494,7 +4598,7 @@ results:
   matchedLines: 2
   totalLines: 4
   mismatchCount: 2
-  timestamp: 2026-03-10T17:11:19.3068016Z
+  timestamp: 2026-03-10T21:49:58.3337570Z
 - ruleIdentifier: bhaaskaravilasitamu
   ruleName: భాస్కరవిలసితము
   exampleIndex: 0
@@ -4514,7 +4618,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.3076980Z
+  timestamp: 2026-03-10T21:49:58.3347320Z
 - ruleIdentifier: bhujaMgavijRMbhitamu
   ruleName: భుజంగవిజృంభితము
   exampleIndex: 0
@@ -4534,7 +4638,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.3086371Z
+  timestamp: 2026-03-10T21:49:58.3357427Z
 - ruleIdentifier: bhujaMgavijRMbhitamu
   ruleName: భుజంగవిజృంభితము
   exampleIndex: 1
@@ -4554,7 +4658,7 @@ results:
   matchedLines: 0
   totalLines: 4
   mismatchCount: 43
-  timestamp: 2026-03-10T17:11:19.3091939Z
+  timestamp: 2026-03-10T21:49:58.3363344Z
 - ruleIdentifier: bhujagaSiSirutamu
   ruleName: భుజంగశిశురుతము
   exampleIndex: 0
@@ -4574,7 +4678,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.3095456Z
+  timestamp: 2026-03-10T21:49:58.3366827Z
 - ruleIdentifier: bhootilakamu
   ruleName: భూతిలకము
   exampleIndex: 0
@@ -4594,7 +4698,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.3103193Z
+  timestamp: 2026-03-10T21:49:58.3375328Z
 - ruleIdentifier: bhootilakamu
   ruleName: భూతిలకము
   exampleIndex: 1
@@ -4614,7 +4718,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.3110447Z
+  timestamp: 2026-03-10T21:49:58.3383335Z
 - ruleIdentifier: bhoonutamu
   ruleName: భూనుతము-1 (లతా , వనలతా , వలనా)
   exampleIndex: 0
@@ -4634,7 +4738,7 @@ results:
   matchedLines: 3
   totalLines: 4
   mismatchCount: 1
-  timestamp: 2026-03-10T17:11:19.3116682Z
+  timestamp: 2026-03-10T21:49:58.3389973Z
 - ruleIdentifier: bhoonutamu
   ruleName: భూనుతము-1 (లతా , వనలతా , వలనా)
   exampleIndex: 1
@@ -4654,7 +4758,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.3121455Z
+  timestamp: 2026-03-10T21:49:58.3395167Z
 - ruleIdentifier: maMgaLamahaaSree
   ruleName: మంగళమహాశ్రీ
   exampleIndex: 0
@@ -4674,7 +4778,7 @@ results:
   matchedLines: 2
   totalLines: 4
   mismatchCount: 3
-  timestamp: 2026-03-10T17:11:19.3131690Z
+  timestamp: 2026-03-10T21:49:58.3405935Z
 - ruleIdentifier: maMgaLamahaaSree
   ruleName: మంగళమహాశ్రీ
   exampleIndex: 1
@@ -4694,12 +4798,19 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.3140761Z
+  timestamp: 2026-03-10T21:49:58.3415693Z
 - ruleIdentifier: maMgaLamahaaSree
   ruleName: మంగళమహాశ్రీ
   exampleIndex: 2
-  poemText: "చిత్తకభిదంఘ్రియుగ చింతన కళాధిగత జిష్ణు సమవైభవ విశేషా\nవిత్తరమణామరగవీ తరణిభూజలద విశ్రుత కరాంబురుహ గోష్ఠీ \nనృత్తమణిరంగతల నీతిమనురాజనిభనిర్భరదయారసపయేధీ\nమత్తగజయూధ మదమగ్నసిఖితాళిరవమాన్యగృహమంగళమహాశ్రీ "
-  poemHash: gSGYRVNekPREMbuNhO6sZrss98Rqve5ZTSyuoovphXA=
+  poemText: >-
+    చిత్తకభిదంఘ్రియుగ చింతన కళాధిగత జిష్ణు సమవైభవ విశేషా
+
+    విత్తరమణామరగవీ తరణిభూజలద విశ్రుత కరాంబురుహ గోష్ఠీ 
+
+    నృత్తమణిరంగతల నీతిమనురాజనిభనిర్భరదయారసపయేధీ
+
+    మత్తగజయూధ మదమగ్నసిఖితాళిరవమాన్యగృహమంగళమహాశ్రీ
+  poemHash: Jr9n2sqVGU5b0yibk92X48xxiB7F+SertcV/15gQn04=
   matchPercentage: 100
   isMatch: true
   yatiMatched: true
@@ -4707,7 +4818,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.3150615Z
+  timestamp: 2026-03-10T21:49:58.3424242Z
 - ruleIdentifier: maMjubhaashiNi
   ruleName: మంజుభాషిణి
   exampleIndex: 0
@@ -4727,7 +4838,7 @@ results:
   matchedLines: 0
   totalLines: 4
   mismatchCount: 4
-  timestamp: 2026-03-10T17:11:19.3158075Z
+  timestamp: 2026-03-10T21:49:58.3430197Z
 - ruleIdentifier: maMdaakraaMta
   ruleName: మందాక్రాంతము (శ్రీధరా)
   exampleIndex: 0
@@ -4747,7 +4858,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.3163446Z
+  timestamp: 2026-03-10T21:49:58.3437231Z
 - ruleIdentifier: maMdaakraaMta
   ruleName: మందాక్రాంతము (శ్రీధరా)
   exampleIndex: 1
@@ -4767,7 +4878,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.3169310Z
+  timestamp: 2026-03-10T21:49:58.3445224Z
 - ruleIdentifier: maNigaNanikaramu
   ruleName: మణిగణనికరము (శశికళ)
   exampleIndex: 0
@@ -4787,7 +4898,7 @@ results:
   matchedLines: 3
   totalLines: 4
   mismatchCount: 2
-  timestamp: 2026-03-10T17:11:19.3174951Z
+  timestamp: 2026-03-10T21:49:58.3451310Z
 - ruleIdentifier: maNigaNanikaramu
   ruleName: మణిగణనికరము (శశికళ)
   exampleIndex: 1
@@ -4807,7 +4918,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.3179382Z
+  timestamp: 2026-03-10T21:49:58.3456561Z
 - ruleIdentifier: maNibhooshaNamu
   ruleName: మణిభూషణము (మణిభూషణశ్రీ , నూతనమ్ , రమణీయక , సుందర , ఉత్సర)
   exampleIndex: 0
@@ -4827,7 +4938,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.3184920Z
+  timestamp: 2026-03-10T21:49:58.3462446Z
 - ruleIdentifier: maNibhooshaNamu
   ruleName: మణిభూషణము (మణిభూషణశ్రీ , నూతనమ్ , రమణీయక , సుందర , ఉత్సర)
   exampleIndex: 1
@@ -4847,7 +4958,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.3189967Z
+  timestamp: 2026-03-10T21:49:58.3468088Z
 - ruleIdentifier: maNimaala
   ruleName: మణిమాల-2
   exampleIndex: 0
@@ -4867,12 +4978,19 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.3196838Z
+  timestamp: 2026-03-10T21:49:58.3476330Z
 - ruleIdentifier: maNimaala
   ruleName: మణిమాల-2
   exampleIndex: 1
-  poemText: "కదియంగమూఁడుసజముల్ సకారయుతమై దిశాఖ్యయతిగా\nమదినానుకారి నిఖిలాగమజ్ఞమణిమాలయండ్రుసుకవుల్ \nకదియంగమూఁడుసజముల్ సకారయుతమై దిశాఖ్యయతిగా\nమదినానుకారి నిఖిలాగమజ్ఞమణిమాలయండ్రుసుకవుల్ "
-  poemHash: wfPQsiaK8/6YiwvXzCqhAttBH4iu4+hJECnwUxSaQS0=
+  poemText: >-
+    కదియంగమూఁడుసజముల్ సకారయుతమై దిశాఖ్యయతిగా
+
+    మదినానుకారి నిఖిలాగమజ్ఞమణిమాలయండ్రుసుకవుల్ 
+
+    కదియంగమూఁడుసజముల్ సకారయుతమై దిశాఖ్యయతిగా
+
+    మదినానుకారి నిఖిలాగమజ్ఞమణిమాలయండ్రుసుకవుల్
+  poemHash: 7XuHwV0q99kaQ2zISB/JIiOVdx1DprISzT/EG1TeOLg=
   matchPercentage: 100
   isMatch: true
   yatiMatched: true
@@ -4880,7 +4998,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.3203101Z
+  timestamp: 2026-03-10T21:49:58.3483346Z
 - ruleIdentifier: maNiraMgamu
   ruleName: మణిరంగము
   exampleIndex: 0
@@ -4900,7 +5018,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.3207400Z
+  timestamp: 2026-03-10T21:49:58.3488202Z
 - ruleIdentifier: maNiraMgamu
   ruleName: మణిరంగము
   exampleIndex: 1
@@ -4920,7 +5038,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.3211163Z
+  timestamp: 2026-03-10T21:49:58.3493342Z
 - ruleIdentifier: mattamayooramu
   ruleName: మత్తమయూరము (మాయా)
   exampleIndex: 0
@@ -4940,7 +5058,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.3232404Z
+  timestamp: 2026-03-10T21:49:58.3500076Z
 - ruleIdentifier: mattamayooramu
   ruleName: మత్తమయూరము (మాయా)
   exampleIndex: 1
@@ -4960,7 +5078,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.3235515Z
+  timestamp: 2026-03-10T21:49:58.3505766Z
 - ruleIdentifier: mattahaMsini
   ruleName: మత్తహంసిని (మత్తహాసిని)
   exampleIndex: 0
@@ -4980,7 +5098,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.3239360Z
+  timestamp: 2026-03-10T21:49:58.3511006Z
 - ruleIdentifier: madanavilasitamu
   ruleName: మదనవిలసిత (ద్రుతగతి , చపలా , మధుమతి , లటహ , హరివిలసిత)
   exampleIndex: 0
@@ -5000,7 +5118,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.3241486Z
+  timestamp: 2026-03-10T21:49:58.3514127Z
 - ruleIdentifier: madanavilasitamu
   ruleName: మదనవిలసిత (ద్రుతగతి , చపలా , మధుమతి , లటహ , హరివిలసిత)
   exampleIndex: 1
@@ -5020,7 +5138,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.3243347Z
+  timestamp: 2026-03-10T21:49:58.3517662Z
 - ruleIdentifier: madanamu
   ruleName: మదనము
   exampleIndex: 0
@@ -5040,7 +5158,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.3246860Z
+  timestamp: 2026-03-10T21:49:58.3523144Z
 - ruleIdentifier: manOj_namu
   ruleName: మనోజ్ఞము
   exampleIndex: 0
@@ -5060,7 +5178,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.3250680Z
+  timestamp: 2026-03-10T21:49:58.3529338Z
 - ruleIdentifier: manOj_namu
   ruleName: మనోజ్ఞము
   exampleIndex: 1
@@ -5080,7 +5198,7 @@ results:
   matchedLines: 3
   totalLines: 4
   mismatchCount: 1
-  timestamp: 2026-03-10T17:11:19.3254649Z
+  timestamp: 2026-03-10T21:49:58.3550163Z
 - ruleIdentifier: mayoorasaari
   ruleName: మయూరసారి(మయూరభాషిణి)
   exampleIndex: 0
@@ -5100,7 +5218,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.3258844Z
+  timestamp: 2026-03-10T21:49:58.3555295Z
 - ruleIdentifier: malayajamu
   ruleName: మలయజము
   exampleIndex: 0
@@ -5120,12 +5238,19 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.3268536Z
+  timestamp: 2026-03-10T21:49:58.3564273Z
 - ruleIdentifier: malayajamu
   ruleName: మలయజము
   exampleIndex: 1
-  poemText: "నలిన విలోచన నజనసనంబులు నభనగణంబులు నటలగమున్ \nమలనగిరిత్రయమహితయతుల్దగిమయలజవృత్తము మహివెలయున్ \nనలిన విలోచన నజనసనంబులు నభనగణంబులు నటలగమున్ \nమలనగిరిత్రయమహితయతుల్దగిమయలజవృత్తము మహివెలయున్ "
-  poemHash: c36XArlRyKmg4NfuwlhkcnGwHThtZhHKwJ6xQLHYUAs=
+  poemText: >-
+    నలిన విలోచన నజనసనంబులు నభనగణంబులు నటలగమున్ 
+
+    మలనగిరిత్రయమహితయతుల్దగిమయలజవృత్తము మహివెలయున్ 
+
+    నలిన విలోచన నజనసనంబులు నభనగణంబులు నటలగమున్ 
+
+    మలనగిరిత్రయమహితయతుల్దగిమయలజవృత్తము మహివెలయున్
+  poemHash: gKwN7I7wGDXUkwJMBguQi6j0oGBBU+9+u1UH7aBBi2s=
   matchPercentage: 100
   isMatch: true
   yatiMatched: true
@@ -5133,7 +5258,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.3276902Z
+  timestamp: 2026-03-10T21:49:58.3572794Z
 - ruleIdentifier: maedini
   ruleName: మేదిని (వాణి , వాణినీ)
   exampleIndex: 0
@@ -5153,7 +5278,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.3282648Z
+  timestamp: 2026-03-10T21:49:58.3581182Z
 - ruleIdentifier: maedini
   ruleName: మేదిని (వాణి , వాణినీ)
   exampleIndex: 1
@@ -5173,7 +5298,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.3288787Z
+  timestamp: 2026-03-10T21:49:58.3587255Z
 - ruleIdentifier: vaaraaMgi
   ruleName: వారాంగి
   exampleIndex: 0
@@ -5193,7 +5318,7 @@ results:
   matchedLines: 2
   totalLines: 4
   mismatchCount: 2
-  timestamp: 2026-03-10T17:11:19.3295062Z
+  timestamp: 2026-03-10T21:49:58.3592869Z
 - ruleIdentifier: vaaraaMgi
   ruleName: వారాంగి
   exampleIndex: 1
@@ -5211,7 +5336,7 @@ results:
   matchedLines: 2
   totalLines: 4
   mismatchCount: 2
-  timestamp: 2026-03-10T17:11:19.3300304Z
+  timestamp: 2026-03-10T21:49:58.3599015Z
 - ruleIdentifier: ratipriyavRttamu
   ruleName: రతిప్రియ
   exampleIndex: 0
@@ -5231,7 +5356,7 @@ results:
   matchedLines: 1
   totalLines: 4
   mismatchCount: 5
-  timestamp: 2026-03-10T17:11:19.3304334Z
+  timestamp: 2026-03-10T21:49:58.3603854Z
 - ruleIdentifier: rathOddhatamu
   ruleName: రథోద్ధతము (పరాంతికము)
   exampleIndex: 0
@@ -5251,7 +5376,7 @@ results:
   matchedLines: 3
   totalLines: 4
   mismatchCount: 1
-  timestamp: 2026-03-10T17:11:19.3307869Z
+  timestamp: 2026-03-10T21:49:58.3609330Z
 - ruleIdentifier: rathOddhatamu
   ruleName: రథోద్ధతము (పరాంతికము)
   exampleIndex: 1
@@ -5271,7 +5396,7 @@ results:
   matchedLines: 3
   totalLines: 4
   mismatchCount: 1
-  timestamp: 2026-03-10T17:11:19.3310398Z
+  timestamp: 2026-03-10T21:49:58.3612793Z
 - ruleIdentifier: ramaNakamu
   ruleName: రమణకము
   exampleIndex: 0
@@ -5291,7 +5416,7 @@ results:
   matchedLines: 2
   totalLines: 4
   mismatchCount: 2
-  timestamp: 2026-03-10T17:11:19.3316174Z
+  timestamp: 2026-03-10T21:49:58.3618656Z
 - ruleIdentifier: ramaNakamu
   ruleName: రమణకము
   exampleIndex: 1
@@ -5311,8 +5436,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.3321924Z
-  remarks: శ్రీ సూర్యనారాయణ  సరిపల్లి గారిచే విరచితం.
+  timestamp: 2026-03-10T21:49:58.3626512Z
 - ruleIdentifier: rugmavati
   ruleName: రుగ్మవతి
   exampleIndex: 0
@@ -5332,7 +5456,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.3326115Z
+  timestamp: 2026-03-10T21:49:58.3631970Z
 - ruleIdentifier: ruchiramu
   ruleName: రుచిరము (కలావతీ , అతిరుచిరా , సదాగతి)
   exampleIndex: 0
@@ -5352,7 +5476,7 @@ results:
   matchedLines: 3
   totalLines: 4
   mismatchCount: 1
-  timestamp: 2026-03-10T17:11:19.3330454Z
+  timestamp: 2026-03-10T21:49:58.3637303Z
 - ruleIdentifier: lata
   ruleName: లత (మదనజవనికా)
   exampleIndex: 0
@@ -5372,7 +5496,7 @@ results:
   matchedLines: 0
   totalLines: 4
   mismatchCount: 4
-  timestamp: 2026-03-10T17:11:19.3334592Z
+  timestamp: 2026-03-10T21:49:58.3642309Z
 - ruleIdentifier: layahaari
   ruleName: లయహారి
   exampleIndex: 0
@@ -5392,12 +5516,19 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.3345526Z
+  timestamp: 2026-03-10T21:49:58.3655366Z
 - ruleIdentifier: layahaari
   ruleName: లయహారి
   exampleIndex: 1
-  poemText: "పిడుగులురలి నగతిని బొడుచుచును నడచుచును బెడిదముగ విదలుచుచు విడిపడని పట్టున్ \nనడగిరులు వెడదరులు విడిలుకొని పెనుగరుల సుడివడిన యులిఉలును పొడుచుకొను రీతిన్ \nతొడలు తొడలు వి ద్రుచుచు మెడలు మెడలు విరుచుచు నొడలు నొడలు కుముల్ఁగ బొడుచుచు మహోగ్రుల్\nవిడివడిన కనలు వెలు వడిన పెనుపరిచలము కడవ నొకఁడొకఁడు పెనువడిన గతి పోరన్ "
-  poemHash: V3AY4mA/9E5H+uOD85TnbRR8MTX6rKC0bwYBnkY7DTQ=
+  poemText: >-
+    పిడుగులురలి నగతిని బొడుచుచును నడచుచును బెడిదముగ విదలుచుచు విడిపడని పట్టున్ 
+
+    నడగిరులు వెడదరులు విడిలుకొని పెనుగరుల సుడివడిన యులిఉలును పొడుచుకొను రీతిన్ 
+
+    తొడలు తొడలు వి ద్రుచుచు మెడలు మెడలు విరుచుచు నొడలు నొడలు కుముల్ఁగ బొడుచుచు మహోగ్రుల్
+
+    విడివడిన కనలు వెలు వడిన పెనుపరిచలము కడవ నొకఁడొకఁడు పెనువడిన గతి పోరన్
+  poemHash: WgSVpcmdegTp6/8ElDCvWhAMfbHLMzWvA9EUozh8x8Y=
   matchPercentage: 100
   isMatch: true
   yatiMatched: true
@@ -5405,7 +5536,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.3354932Z
+  timestamp: 2026-03-10T21:49:58.3667462Z
 - ruleIdentifier: laaTeeviTamu
   ruleName: లాటీవిటము
   exampleIndex: 0
@@ -5425,7 +5556,7 @@ results:
   matchedLines: 3
   totalLines: 4
   mismatchCount: 1
-  timestamp: 2026-03-10T17:11:19.3361195Z
+  timestamp: 2026-03-10T21:49:58.3675582Z
 - ruleIdentifier: laaTeeviTamu
   ruleName: లాటీవిటము
   exampleIndex: 1
@@ -5445,7 +5576,7 @@ results:
   matchedLines: 3
   totalLines: 4
   mismatchCount: 1
-  timestamp: 2026-03-10T17:11:19.3366570Z
+  timestamp: 2026-03-10T21:49:58.3682838Z
 - ruleIdentifier: vaMSasthamu
   ruleName: వంశస్థము
   exampleIndex: 0
@@ -5465,7 +5596,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.3370198Z
+  timestamp: 2026-03-10T21:49:58.3687889Z
 - ruleIdentifier: vaMSasthamu
   ruleName: వంశస్థము
   exampleIndex: 1
@@ -5485,7 +5616,7 @@ results:
   matchedLines: 3
   totalLines: 4
   mismatchCount: 1
-  timestamp: 2026-03-10T17:11:19.3373785Z
+  timestamp: 2026-03-10T21:49:58.3692710Z
 - ruleIdentifier: vanamaMjari
   ruleName: వనమంజరి
   exampleIndex: 0
@@ -5505,7 +5636,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.3379757Z
+  timestamp: 2026-03-10T21:49:58.3700512Z
 - ruleIdentifier: vanamaMjari
   ruleName: వనమంజరి
   exampleIndex: 1
@@ -5525,7 +5656,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.3384398Z
+  timestamp: 2026-03-10T21:49:58.3706744Z
 - ruleIdentifier: vasaMtamaMjari
   ruleName: వసంతమంజరి
   exampleIndex: 0
@@ -5545,7 +5676,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.3389181Z
+  timestamp: 2026-03-10T21:49:58.3713155Z
 - ruleIdentifier: vaatOrmi
   ruleName: వాతోర్మి
   exampleIndex: 0
@@ -5565,7 +5696,7 @@ results:
   matchedLines: 3
   totalLines: 4
   mismatchCount: 1
-  timestamp: 2026-03-10T17:11:19.3392814Z
+  timestamp: 2026-03-10T21:49:58.3718682Z
 - ruleIdentifier: vaatOrmi
   ruleName: వాతోర్మి
   exampleIndex: 1
@@ -5585,7 +5716,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.3396244Z
+  timestamp: 2026-03-10T21:49:58.3723770Z
 - ruleIdentifier: vichitramu
   ruleName: విచిత్రము (సోమరాజీ)
   exampleIndex: 0
@@ -5605,7 +5736,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.3398352Z
+  timestamp: 2026-03-10T21:49:58.3727168Z
 - ruleIdentifier: vichitramu
   ruleName: విచిత్రము (సోమరాజీ)
   exampleIndex: 1
@@ -5625,7 +5756,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.3400359Z
+  timestamp: 2026-03-10T21:49:58.3730309Z
 - ruleIdentifier: vidyunmaala
   ruleName: విద్యున్మాలా (విద్యుల్లేఖా)
   exampleIndex: 0
@@ -5645,7 +5776,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.3403893Z
+  timestamp: 2026-03-10T21:49:58.3735753Z
 - ruleIdentifier: vibhootivRttamu
   ruleName: విభూతి (చామరమ్)
   exampleIndex: 0
@@ -5665,7 +5796,7 @@ results:
   matchedLines: 0
   totalLines: 4
   mismatchCount: 4
-  timestamp: 2026-03-10T17:11:19.3406762Z
+  timestamp: 2026-03-10T21:49:58.3740324Z
 - ruleIdentifier: vibhootivRttamu
   ruleName: విభూతి (చామరమ్)
   exampleIndex: 1
@@ -5685,7 +5816,7 @@ results:
   matchedLines: 0
   totalLines: 4
   mismatchCount: 6
-  timestamp: 2026-03-10T17:11:19.3409405Z
+  timestamp: 2026-03-10T21:49:58.3744126Z
 - ruleIdentifier: viSvadaevi
   ruleName: విశ్వదేవి (వైశ్వదేవీ)
   exampleIndex: 0
@@ -5705,7 +5836,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.3413914Z
+  timestamp: 2026-03-10T21:49:58.3750362Z
 - ruleIdentifier: viSvadaevi
   ruleName: విశ్వదేవి (వైశ్వదేవీ)
   exampleIndex: 1
@@ -5725,7 +5856,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.3417588Z
+  timestamp: 2026-03-10T21:49:58.3755656Z
 - ruleIdentifier: SarabhakreeDaa
   ruleName: శరభక్రీడా
   exampleIndex: 0
@@ -5745,7 +5876,7 @@ results:
   matchedLines: 1
   totalLines: 4
   mismatchCount: 3
-  timestamp: 2026-03-10T17:11:19.3422856Z
+  timestamp: 2026-03-10T21:49:58.3763336Z
 - ruleIdentifier: Saalini
   ruleName: శాలిని
   exampleIndex: 0
@@ -5765,7 +5896,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.3427001Z
+  timestamp: 2026-03-10T21:49:58.3769100Z
 - ruleIdentifier: Saalini
   ruleName: శాలిని
   exampleIndex: 1
@@ -5785,7 +5916,7 @@ results:
   matchedLines: 2
   totalLines: 4
   mismatchCount: 2
-  timestamp: 2026-03-10T17:11:19.3431329Z
+  timestamp: 2026-03-10T21:49:58.3775060Z
 - ruleIdentifier: SikhariNi
   ruleName: శిఖరిణి
   exampleIndex: 0
@@ -5805,7 +5936,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.3436240Z
+  timestamp: 2026-03-10T21:49:58.3782288Z
 - ruleIdentifier: SikhariNi
   ruleName: శిఖరిణి
   exampleIndex: 1
@@ -5825,7 +5956,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.3441851Z
+  timestamp: 2026-03-10T21:49:58.3789924Z
 - ruleIdentifier: SuddhaviraaTi
   ruleName: శుద్ధవిరాటి (విరాట్)
   exampleIndex: 0
@@ -5845,7 +5976,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.3445826Z
+  timestamp: 2026-03-10T21:49:58.3795121Z
 - ruleIdentifier: Syaeni
   ruleName: శ్యేని (సేని)
   exampleIndex: 0
@@ -5865,7 +5996,7 @@ results:
   matchedLines: 2
   totalLines: 4
   mismatchCount: 2
-  timestamp: 2026-03-10T17:11:19.3450110Z
+  timestamp: 2026-03-10T21:49:58.3800992Z
 - ruleIdentifier: Syaeni
   ruleName: శ్యేని (సేని)
   exampleIndex: 1
@@ -5885,7 +6016,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.3453211Z
+  timestamp: 2026-03-10T21:49:58.3806408Z
 - ruleIdentifier: Sree
   ruleName: శ్రీ (శ్రీః)
   exampleIndex: 0
@@ -5905,7 +6036,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.3454414Z
+  timestamp: 2026-03-10T21:49:58.3808262Z
 - ruleIdentifier: Sree
   ruleName: శ్రీ (శ్రీః)
   exampleIndex: 1
@@ -5925,7 +6056,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.3455043Z
+  timestamp: 2026-03-10T21:49:58.3809257Z
 - ruleIdentifier: stree
   ruleName: స్త్రీ
   exampleIndex: 0
@@ -5945,7 +6076,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.3456285Z
+  timestamp: 2026-03-10T21:49:58.3811070Z
 - ruleIdentifier: stree
   ruleName: స్త్రీ
   exampleIndex: 1
@@ -5965,7 +6096,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.3457229Z
+  timestamp: 2026-03-10T21:49:58.3811908Z
 - ruleIdentifier: SreeramaNamu
   ruleName: శ్రీరమణము
   exampleIndex: 0
@@ -5985,7 +6116,7 @@ results:
   matchedLines: 2
   totalLines: 4
   mismatchCount: 2
-  timestamp: 2026-03-10T17:11:19.3460504Z
+  timestamp: 2026-03-10T21:49:58.3817658Z
 - ruleIdentifier: SreeramaNamu
   ruleName: శ్రీరమణము
   exampleIndex: 1
@@ -6005,7 +6136,7 @@ results:
   matchedLines: 3
   totalLines: 4
   mismatchCount: 1
-  timestamp: 2026-03-10T17:11:19.3463939Z
+  timestamp: 2026-03-10T21:49:58.3821894Z
 - ruleIdentifier: samaani
   ruleName: సమాని (సమానిక , శ్రద్ధరా)
   exampleIndex: 0
@@ -6025,7 +6156,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.3467056Z
+  timestamp: 2026-03-10T21:49:58.3825299Z
 - ruleIdentifier: samaani
   ruleName: సమాని (సమానిక , శ్రద్ధరా)
   exampleIndex: 1
@@ -6045,7 +6176,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.3469563Z
+  timestamp: 2026-03-10T21:49:58.3826952Z
 - ruleIdentifier: sarasaaMkavRttamu
   ruleName: సరసాంక
   exampleIndex: 0
@@ -6065,7 +6196,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.3474317Z
+  timestamp: 2026-03-10T21:49:58.3831259Z
 - ruleIdentifier: sarasijamu
   ruleName: సరసిజము
   exampleIndex: 0
@@ -6085,12 +6216,19 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.3482170Z
+  timestamp: 2026-03-10T21:49:58.3843586Z
 - ruleIdentifier: sarasijamu
   ruleName: సరసిజము
   exampleIndex: 1
-  poemText: "రమ్యత్వంబారఁగఁబెంపూర్జితముగ మణివిరచితమకుటములుం\nదారుంజూడన్ సారవిభూతిన్ ధరణిపులనిమిషదవనిభిలగుచున్ \nభూరిప్రీతిన్ సూరెలగొల్వన్ భువనవినుతమగు పొలుపువెలయ ము\nన్నీ రాజుండున్ దారుణదైవం బిటువఱు చునెతుది నితనిఁగటకటా "
-  poemHash: EvMqvwk3KnQKkXIpJj1+SzLK78A/i5QOsNKz2XItjzw=
+  poemText: >-
+    రమ్యత్వంబారఁగఁబెంపూర్జితముగ మణివిరచితమకుటములుం
+
+    దారుంజూడన్ సారవిభూతిన్ ధరణిపులనిమిషదవనిభిలగుచున్ 
+
+    భూరిప్రీతిన్ సూరెలగొల్వన్ భువనవినుతమగు పొలుపువెలయ ము
+
+    న్నీ రాజుండున్ దారుణదైవం బిటువఱు చునెతుది నితనిఁగటకటా
+  poemHash: kTN3zRhhBZepo9g01ax6c+4OTUdSoPPoE8DRhq5DEFk=
   matchPercentage: 83
   isMatch: true
   yatiMatched: false
@@ -6098,7 +6236,7 @@ results:
   matchedLines: 0
   totalLines: 4
   mismatchCount: 9
-  timestamp: 2026-03-10T17:11:19.3490534Z
+  timestamp: 2026-03-10T21:49:58.3853543Z
 - ruleIdentifier: saadhveevRttamu
   ruleName: సాధ్వీ
   exampleIndex: 0
@@ -6118,11 +6256,11 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.3495460Z
+  timestamp: 2026-03-10T21:49:58.3863708Z
 - ruleIdentifier: siMharaekha
   ruleName: సింహరేఖ
   exampleIndex: 0
-  poemText: >
+  poemText: >-
     శ్రీరజంబుపై గగంబుల్
 
     చేర సింహరేఖ యయ్యెన్
@@ -6130,7 +6268,7 @@ results:
     శ్రీరజంబుపై గగంబుల్
 
     చేర సింహరేఖ యయ్యెన్
-  poemHash: aN7z3eNL3HXbHlUOCknFxnLbphduYxGBWV/4dvoZnH0=
+  poemHash: gJnAsF2zylMRgur9WCRNHtcu8UOmW/7V97I+J0LM9nw=
   matchPercentage: 100
   isMatch: true
   yatiMatched: true
@@ -6138,7 +6276,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.3497521Z
+  timestamp: 2026-03-10T21:49:58.3867653Z
 - ruleIdentifier: siMharaekha
   ruleName: సింహరేఖ
   exampleIndex: 1
@@ -6158,7 +6296,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.3499314Z
+  timestamp: 2026-03-10T21:49:58.3871293Z
 - ruleIdentifier: sukaaMti
   ruleName: సుకాంతి (జయా , నగానితా , నగణికా , లాసినీ , విలాసినీ , కలా)
   exampleIndex: 0
@@ -6178,7 +6316,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.3500580Z
+  timestamp: 2026-03-10T21:49:58.3873706Z
 - ruleIdentifier: sukaaMti
   ruleName: సుకాంతి (జయా , నగానితా , నగణికా , లాసినీ , విలాసినీ , కలా)
   exampleIndex: 1
@@ -6198,7 +6336,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.3501688Z
+  timestamp: 2026-03-10T21:49:58.3875945Z
 - ruleIdentifier: suMdari
   ruleName: సుందరి-2
   exampleIndex: 0
@@ -6218,7 +6356,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.3504802Z
+  timestamp: 2026-03-10T21:49:58.3882305Z
 - ruleIdentifier: suMdari
   ruleName: సుందరి-2
   exampleIndex: 1
@@ -6238,7 +6376,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.3507908Z
+  timestamp: 2026-03-10T21:49:58.3888306Z
 - ruleIdentifier: paMkti
   ruleName: పంక్తి-1 (సుందరి-1 , అక్షరోపపదా , అక్షరపంక్తి , కాంచనమాలా , కుంతలతన్వీ , భూతలతన్వీ , హంసా , పఙ్క్తిః)
   exampleIndex: 0
@@ -6258,7 +6396,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.3509390Z
+  timestamp: 2026-03-10T21:49:58.3891344Z
 - ruleIdentifier: paMkti
   ruleName: పంక్తి-1 (సుందరి-1 , అక్షరోపపదా , అక్షరపంక్తి , కాంచనమాలా , కుంతలతన్వీ , భూతలతన్వీ , హంసా , పఙ్క్తిః)
   exampleIndex: 1
@@ -6278,7 +6416,7 @@ results:
   matchedLines: 3
   totalLines: 4
   mismatchCount: 3
-  timestamp: 2026-03-10T17:11:19.3510620Z
+  timestamp: 2026-03-10T21:49:58.3893811Z
 - ruleIdentifier: sugaMdhi
   ruleName: సుగంధి (ఉత్సవ , ఉత్సాహ , చామర , తూణక , మహోత్సవ , శాలిని-2 , ప్రశాంతి)
   exampleIndex: 0
@@ -6298,7 +6436,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.3514312Z
+  timestamp: 2026-03-10T21:49:58.3901419Z
 - ruleIdentifier: sugaMdhi
   ruleName: సుగంధి (ఉత్సవ , ఉత్సాహ , చామర , తూణక , మహోత్సవ , శాలిని-2 , ప్రశాంతి)
   exampleIndex: 1
@@ -6318,7 +6456,7 @@ results:
   matchedLines: 3
   totalLines: 4
   mismatchCount: 1
-  timestamp: 2026-03-10T17:11:19.3518099Z
+  timestamp: 2026-03-10T21:49:58.3912057Z
 - ruleIdentifier: sugaMdhi
   ruleName: సుగంధి (ఉత్సవ , ఉత్సాహ , చామర , తూణక , మహోత్సవ , శాలిని-2 , ప్రశాంతి)
   exampleIndex: 2
@@ -6338,7 +6476,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.3520960Z
+  timestamp: 2026-03-10T21:49:58.3983515Z
 - ruleIdentifier: sugaMdhi
   ruleName: సుగంధి (ఉత్సవ , ఉత్సాహ , చామర , తూణక , మహోత్సవ , శాలిని-2 , ప్రశాంతి)(మాలిక)
   exampleIndex: 3
@@ -6366,8 +6504,7 @@ results:
   matchedLines: 8
   totalLines: 8
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.3538459Z
-  remarks: శ్రీ సూర్యనారాయణ సరిపల్లి గారిచే విరచితం.
+  timestamp: 2026-03-10T21:49:58.3993462Z
 - ruleIdentifier: matta
   ruleName: మత్త (హంసశ్రేణి)
   exampleIndex: 0
@@ -6387,7 +6524,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.3541641Z
+  timestamp: 2026-03-10T21:49:58.3998366Z
 - ruleIdentifier: tribhaMgi
   ruleName: త్రిభంగి
   exampleIndex: 0
@@ -6407,7 +6544,7 @@ results:
   matchedLines: 1
   totalLines: 4
   mismatchCount: 9
-  timestamp: 2026-03-10T17:11:19.3549507Z
+  timestamp: 2026-03-10T21:49:58.4010927Z
 - ruleIdentifier: tribhaMgi
   ruleName: త్రిభంగి(పంచపాది)
   exampleIndex: 1
@@ -6429,7 +6566,7 @@ results:
   matchedLines: 0
   totalLines: 5
   mismatchCount: 15
-  timestamp: 2026-03-10T17:11:19.3559162Z
+  timestamp: 2026-03-10T21:49:58.4044995Z
 - ruleIdentifier: vinayaM
   ruleName: వినయము (రమణః)
   exampleIndex: 0
@@ -6446,7 +6583,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.3560652Z
+  timestamp: 2026-03-10T21:49:58.4047187Z
 - ruleIdentifier: biMbamu
   ruleName: బింబము (వలా)
   exampleIndex: 0
@@ -6466,7 +6603,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.3562204Z
+  timestamp: 2026-03-10T21:49:58.4049681Z
 - ruleIdentifier: biMbamu
   ruleName: బింబము (వలా)
   exampleIndex: 1
@@ -6486,7 +6623,7 @@ results:
   matchedLines: 1
   totalLines: 4
   mismatchCount: 3
-  timestamp: 2026-03-10T17:11:19.3563598Z
+  timestamp: 2026-03-10T21:49:58.4051578Z
 - ruleIdentifier: madhumati
   ruleName: మధుమతి (స్వనకరీ)
   exampleIndex: 0
@@ -6506,7 +6643,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.3565508Z
+  timestamp: 2026-03-10T21:49:58.4054895Z
 - ruleIdentifier: madhumati
   ruleName: మధుమతి (స్వనకరీ)
   exampleIndex: 1
@@ -6519,7 +6656,7 @@ results:
   matchedLines: 0
   totalLines: 4
   mismatchCount: 15
-  timestamp: 2026-03-10T17:11:19.3567145Z
+  timestamp: 2026-03-10T21:49:58.4057388Z
 - ruleIdentifier: madaraekha
   ruleName: మదరేఖ
   exampleIndex: 0
@@ -6539,7 +6676,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.3568909Z
+  timestamp: 2026-03-10T21:49:58.4060698Z
 - ruleIdentifier: madaraekha
   ruleName: మదరేఖ
   exampleIndex: 1
@@ -6559,7 +6696,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.3570460Z
+  timestamp: 2026-03-10T21:49:58.4064358Z
 - ruleIdentifier: halamukhi
   ruleName: హలముఖి
   exampleIndex: 0
@@ -6579,7 +6716,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.3572573Z
+  timestamp: 2026-03-10T21:49:58.4068351Z
 - ruleIdentifier: halamukhi
   ruleName: హలముఖి
   exampleIndex: 1
@@ -6599,7 +6736,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.3574180Z
+  timestamp: 2026-03-10T21:49:58.4071370Z
 - ruleIdentifier: upajaati
   ruleName: ఉపజాతి
   exampleIndex: 0
@@ -6619,7 +6756,7 @@ results:
   matchedLines: 1
   totalLines: 4
   mismatchCount: 3
-  timestamp: 2026-03-10T17:11:19.3577612Z
+  timestamp: 2026-03-10T21:49:58.4076691Z
 - ruleIdentifier: iMdravaMSamu
   ruleName: ఇంద్రవంశము(ఇన్దువంశా)
   exampleIndex: 0
@@ -6639,7 +6776,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.3580699Z
+  timestamp: 2026-03-10T21:49:58.4081311Z
 - ruleIdentifier: iMdravaMSamu
   ruleName: ఇంద్రవంశము(ఇన్దువంశా)
   exampleIndex: 1
@@ -6659,7 +6796,7 @@ results:
   matchedLines: 3
   totalLines: 4
   mismatchCount: 1
-  timestamp: 2026-03-10T17:11:19.3583033Z
+  timestamp: 2026-03-10T21:49:58.4084985Z
 - ruleIdentifier: aparaajitamu
   ruleName: అపరాజితము (పరాజితము)
   exampleIndex: 0
@@ -6679,7 +6816,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.3585722Z
+  timestamp: 2026-03-10T21:49:58.4089787Z
 - ruleIdentifier: aparaajitamu
   ruleName: అపరాజితము (పరాజితము)
   exampleIndex: 1
@@ -6699,7 +6836,7 @@ results:
   matchedLines: 2
   totalLines: 4
   mismatchCount: 10
-  timestamp: 2026-03-10T17:11:19.3588117Z
+  timestamp: 2026-03-10T21:49:58.4094240Z
 - ruleIdentifier: asaMbaadha
   ruleName: అసంబాధ
   exampleIndex: 0
@@ -6719,7 +6856,7 @@ results:
   matchedLines: 3
   totalLines: 4
   mismatchCount: 1
-  timestamp: 2026-03-10T17:11:19.3591255Z
+  timestamp: 2026-03-10T21:49:58.4099595Z
 - ruleIdentifier: asaMbaadha
   ruleName: అసంబాధ
   exampleIndex: 1
@@ -6739,7 +6876,7 @@ results:
   matchedLines: 3
   totalLines: 4
   mismatchCount: 1
-  timestamp: 2026-03-10T17:11:19.3594375Z
+  timestamp: 2026-03-10T21:49:58.4104461Z
 - ruleIdentifier: kamalavilasitamu
   ruleName: కమలవిలసితము(సురుచిర , ఉపచిత్ర , సుపవిత్ర)
   exampleIndex: 0
@@ -6759,7 +6896,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.3597698Z
+  timestamp: 2026-03-10T21:49:58.4107666Z
 - ruleIdentifier: kamalavilasitamu
   ruleName: కమలవిలసితము(సురుచిర , ఉపచిత్ర , సుపవిత్ర)
   exampleIndex: 1
@@ -6779,7 +6916,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.3600070Z
+  timestamp: 2026-03-10T21:49:58.4110178Z
 - ruleIdentifier: sukaesaramu
   ruleName: సుకేసరము (ప్రభద్రక , భద్రక-2)
   exampleIndex: 0
@@ -6799,7 +6936,7 @@ results:
   matchedLines: 3
   totalLines: 4
   mismatchCount: 1
-  timestamp: 2026-03-10T17:11:19.3603564Z
+  timestamp: 2026-03-10T21:49:58.4113672Z
 - ruleIdentifier: sukaesaramu
   ruleName: సుకేసరము (ప్రభద్రక , భద్రక-2)
   exampleIndex: 1
@@ -6819,7 +6956,7 @@ results:
   matchedLines: 3
   totalLines: 4
   mismatchCount: 1
-  timestamp: 2026-03-10T17:11:19.3607105Z
+  timestamp: 2026-03-10T21:49:58.4116814Z
 - ruleIdentifier: hariNi
   ruleName: హరిణి
   exampleIndex: 0
@@ -6839,7 +6976,7 @@ results:
   matchedLines: 1
   totalLines: 4
   mismatchCount: 11
-  timestamp: 2026-03-10T17:11:19.3613368Z
+  timestamp: 2026-03-10T21:49:58.4122004Z
 - ruleIdentifier: hariNi
   ruleName: హరిణి
   exampleIndex: 1
@@ -6859,7 +6996,7 @@ results:
   matchedLines: 3
   totalLines: 4
   mismatchCount: 1
-  timestamp: 2026-03-10T17:11:19.3619740Z
+  timestamp: 2026-03-10T21:49:58.4125641Z
 - ruleIdentifier: kusumitalataavaellita
   ruleName: కుసుమితలతావేల్లిత
   exampleIndex: 0
@@ -6879,7 +7016,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.3626812Z
+  timestamp: 2026-03-10T21:49:58.4129951Z
 - ruleIdentifier: aMburuhamu
   ruleName: అంబురుహము
   exampleIndex: 0
@@ -6899,7 +7036,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.3633315Z
+  timestamp: 2026-03-10T21:49:58.4134444Z
 - ruleIdentifier: aMburuhamu
   ruleName: అంబురుహము
   exampleIndex: 1
@@ -6919,7 +7056,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.3638701Z
+  timestamp: 2026-03-10T21:49:58.4137270Z
 - ruleIdentifier: aSvalalitamu
   ruleName: అశ్వలలితము (అద్రితనయా)
   exampleIndex: 0
@@ -6939,12 +7076,19 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.3646119Z
+  timestamp: 2026-03-10T21:49:58.4142191Z
 - ruleIdentifier: aSvalalitamu
   ruleName: అశ్వలలితము (అద్రితనయా)
   exampleIndex: 1
-  poemText: "ఇరుదెసలందురజ్జువులుగట్టియిట్టటులలాగునట్టివెరవై\nతురగచయంబుఘోరఖరరాజి త్రోలఁగను ద్రాళ్ళు వ్రీలిచనినన్\nఖరతురగంబులంగ్రమమునేగిఘాఢముగగోడలందుఁడునగన్\nతిరిగిసురారిబాహువులుగాని దేహమునుగానిసుంతచెడదున్ "
-  poemHash: hf8HjuzhTmRiM4ZkFZBYdN6w7jPgZ0yng+s/ZNOgr2Y=
+  poemText: >-
+    ఇరుదెసలందురజ్జువులుగట్టియిట్టటులలాగునట్టివెరవై
+
+    తురగచయంబుఘోరఖరరాజి త్రోలఁగను ద్రాళ్ళు వ్రీలిచనినన్
+
+    ఖరతురగంబులంగ్రమమునేగిఘాఢముగగోడలందుఁడునగన్
+
+    తిరిగిసురారిబాహువులుగాని దేహమునుగానిసుంతచెడదున్
+  poemHash: eFvxPD5TQAJmq4BUxY/+t7uQZ24TGSCxhZiJDK7aHRI=
   matchPercentage: 100
   isMatch: true
   yatiMatched: true
@@ -6952,7 +7096,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.3653184Z
+  timestamp: 2026-03-10T21:49:58.4146258Z
 - ruleIdentifier: ashTamoorti
   ruleName: అష్టమూర్తి
   exampleIndex: 0
@@ -6972,12 +7116,19 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.3662196Z
+  timestamp: 2026-03-10T21:49:58.4152224Z
 - ruleIdentifier: ashTamoorti
   ruleName: అష్టమూర్తి
   exampleIndex: 1
-  poemText: "నాక్పృగ్వీవిధితినేగున్‌నతమహాసారమాగున్‌నగమహాకృతిజోగున్\nబాకారిప్రముఖసౌరప్రణతి గంభీరరేఖాప్రవిమలాధుతతేజః\nప్రాకారాంతరనిగూఢప్రచలనాభోగధర్మప్రసరణాంచితమూర్తిన్\nలోకాలోకకుధరాంభోలులితపర్యాయమూర్తిన్ లుఠనమంథరమూర్తిన్ "
-  poemHash: 0HMtqcoAEAX16gqf7Lw8y/zjLr95ecitcm1dmYrn1U8=
+  poemText: >-
+    నాక్పృగ్వీవిధితినేగున్‌నతమహాసారమాగున్‌నగమహాకృతిజోగున్
+
+    బాకారిప్రముఖసౌరప్రణతి గంభీరరేఖాప్రవిమలాధుతతేజః
+
+    ప్రాకారాంతరనిగూఢప్రచలనాభోగధర్మప్రసరణాంచితమూర్తిన్
+
+    లోకాలోకకుధరాంభోలులితపర్యాయమూర్తిన్ లుఠనమంథరమూర్తిన్
+  poemHash: 3vmDTr8fC6IZ/pmUOw/a84Ly9MM++AohPKcTMwJvDQg=
   matchPercentage: 94
   isMatch: true
   yatiMatched: true
@@ -6985,7 +7136,7 @@ results:
   matchedLines: 1
   totalLines: 4
   mismatchCount: 3
-  timestamp: 2026-03-10T17:11:19.3669937Z
+  timestamp: 2026-03-10T21:49:58.4156855Z
 - ruleIdentifier: manOharamu
   ruleName: మనోహరము
   exampleIndex: 0
@@ -7005,7 +7156,7 @@ results:
   matchedLines: 1
   totalLines: 4
   mismatchCount: 4
-  timestamp: 2026-03-10T17:11:19.3674620Z
+  timestamp: 2026-03-10T21:49:58.4161297Z
 - ruleIdentifier: aMgajaastramu
   ruleName: అంగజాస్త్రము
   exampleIndex: 0
@@ -7025,7 +7176,7 @@ results:
   matchedLines: 3
   totalLines: 4
   mismatchCount: 1
-  timestamp: 2026-03-10T17:11:19.3678980Z
+  timestamp: 2026-03-10T21:49:58.4164611Z
 - ruleIdentifier: aMgajaastramu
   ruleName: అంగజాస్త్రము
   exampleIndex: 1
@@ -7045,7 +7196,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.3682759Z
+  timestamp: 2026-03-10T21:49:58.4166694Z
 - ruleIdentifier: rathagamanamanOharamu
   ruleName: రథగమన మనోహరము
   exampleIndex: 0
@@ -7063,7 +7214,7 @@ results:
   matchedLines: 3
   totalLines: 4
   mismatchCount: 1
-  timestamp: 2026-03-10T17:11:19.3688015Z
+  timestamp: 2026-03-10T21:49:58.4171599Z
 - ruleIdentifier: veeNaarachanamu
   ruleName: వీణారచనము
   exampleIndex: 0
@@ -7081,7 +7232,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.3692931Z
+  timestamp: 2026-03-10T21:49:58.4176473Z
 - ruleIdentifier: kumaari
   ruleName: కుమారి (కురరీరుతా)
   exampleIndex: 0
@@ -7101,7 +7252,7 @@ results:
   matchedLines: 2
   totalLines: 4
   mismatchCount: 2
-  timestamp: 2026-03-10T17:11:19.3697732Z
+  timestamp: 2026-03-10T21:49:58.4181755Z
 - ruleIdentifier: kumaaralalita
   ruleName: కుమారలలిత-1 (స్విదా)
   exampleIndex: 0
@@ -7121,7 +7272,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.3700339Z
+  timestamp: 2026-03-10T21:49:58.4184753Z
 - ruleIdentifier: kOmalavRttamu
   ruleName: కోమలి
   exampleIndex: 0
@@ -7141,7 +7292,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.3704811Z
+  timestamp: 2026-03-10T21:49:58.4189413Z
 - ruleIdentifier: paNavamu
   ruleName: పణవము (ప్రణవ , హీరాఙ్గీ)
   exampleIndex: 0
@@ -7161,7 +7312,7 @@ results:
   matchedLines: 3
   totalLines: 4
   mismatchCount: 1
-  timestamp: 2026-03-10T17:11:19.3709083Z
+  timestamp: 2026-03-10T21:49:58.4194198Z
 - ruleIdentifier: paNavamu
   ruleName: పణవము (ప్రణవ , హీరాఙ్గీ)
   exampleIndex: 1
@@ -7181,7 +7332,7 @@ results:
   matchedLines: 3
   totalLines: 4
   mismatchCount: 1
-  timestamp: 2026-03-10T17:11:19.3713184Z
+  timestamp: 2026-03-10T21:49:58.4198384Z
 - ruleIdentifier: paNavamu
   ruleName: పణవము (ప్రణవ , హీరాఙ్గీ)
   exampleIndex: 2
@@ -7196,7 +7347,7 @@ results:
   matchedLines: 1
   totalLines: 4
   mismatchCount: 11
-  timestamp: 2026-03-10T17:11:19.3715431Z
+  timestamp: 2026-03-10T21:49:58.4200844Z
 - ruleIdentifier: suralata
   ruleName: సురలత (శశివదన , కనకలతా , చతురంశా , మకరశీర్షా , ముకులితా)
   exampleIndex: 0
@@ -7216,7 +7367,7 @@ results:
   matchedLines: 3
   totalLines: 4
   mismatchCount: 2
-  timestamp: 2026-03-10T17:11:19.3717705Z
+  timestamp: 2026-03-10T21:49:58.4203521Z
 - ruleIdentifier: suralata
   ruleName: సురలత (శశివదన , కనకలతా , చతురంశా , మకరశీర్షా , ముకులితా)
   exampleIndex: 1
@@ -7233,7 +7384,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.3720363Z
+  timestamp: 2026-03-10T21:49:58.4206352Z
 - ruleIdentifier: sumaMgali
   ruleName: సుమంగలి-2
   exampleIndex: 0
@@ -7253,7 +7404,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.3725187Z
+  timestamp: 2026-03-10T21:49:58.4210976Z
 - ruleIdentifier: karibRMhitamu
   ruleName: కరిబృంహితము
   exampleIndex: 0
@@ -7273,7 +7424,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.3732657Z
+  timestamp: 2026-03-10T21:49:58.4218669Z
 - ruleIdentifier: karibRMhitamu
   ruleName: కరిబృంహితము
   exampleIndex: 1
@@ -7293,7 +7444,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.3739164Z
+  timestamp: 2026-03-10T21:49:58.4225161Z
 - ruleIdentifier: kanakaprabha
   ruleName: కనకప్రభ (మంజుభాషిణి , జయా , నందినీ , ప్రబోధితా , మనోవతీ , విలంబితా , సునందినీ , సుమంగలీ)
   exampleIndex: 0
@@ -7313,7 +7464,7 @@ results:
   matchedLines: 3
   totalLines: 4
   mismatchCount: 1
-  timestamp: 2026-03-10T17:11:19.3743743Z
+  timestamp: 2026-03-10T21:49:58.4229392Z
 - ruleIdentifier: kanakaprabha
   ruleName: కనకప్రభ (మంజుభాషిణి , జయా , నందినీ , ప్రబోధితా , మనోవతీ , విలంబితా , సునందినీ , సుమంగలీ)
   exampleIndex: 1
@@ -7333,12 +7484,19 @@ results:
   matchedLines: 3
   totalLines: 4
   mismatchCount: 1
-  timestamp: 2026-03-10T17:11:19.3748287Z
+  timestamp: 2026-03-10T21:49:58.4233505Z
 - ruleIdentifier: viyOgini
   ruleName: వియోగిని
   exampleIndex: 0
-  poemText: "ముద మెక్కడ మ్రోడు నే వనిన్\nనిదురే లేదుగ నే వియోగినిన్\nమధుమాసపు మైక మెప్పుడో\nసుధతో నూతనశోభ లెప్పుడో "
-  poemHash: LSu8RSvj2rRed5484nhlRMPiomjaeZYMxIs65zAF+qg=
+  poemText: >-
+    ముద మెక్కడ మ్రోడు నే వనిన్
+
+    నిదురే లేదుగ నే వియోగినిన్
+
+    మధుమాసపు మైక మెప్పుడో
+
+    సుధతో నూతనశోభ లెప్పుడో
+  poemHash: 4hzchf2MHWa8maZAQz2pvTnkKww4D6pSWekeWoxGk14=
   matchPercentage: 100
   isMatch: true
   yatiMatched: true
@@ -7346,7 +7504,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.3752719Z
+  timestamp: 2026-03-10T21:49:58.4236859Z
 - ruleIdentifier: ajitaprataapamu
   ruleName: అజిత ప్రతాపము
   exampleIndex: 0
@@ -7366,7 +7524,7 @@ results:
   matchedLines: 1
   totalLines: 4
   mismatchCount: 3
-  timestamp: 2026-03-10T17:11:19.3756916Z
+  timestamp: 2026-03-10T21:49:58.4240308Z
 - ruleIdentifier: aMbuja
   ruleName: అంబుజ (మణ్డలమ్)
   exampleIndex: 0
@@ -7384,7 +7542,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.3759213Z
+  timestamp: 2026-03-10T21:49:58.4242348Z
 - ruleIdentifier: aMbuja
   ruleName: అంబుజ (మణ్డలమ్)
   exampleIndex: 1
@@ -7404,7 +7562,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.3760982Z
+  timestamp: 2026-03-10T21:49:58.4243612Z
 - ruleIdentifier: aMbuja
   ruleName: అంబుజ (మణ్డలమ్)
   exampleIndex: 2
@@ -7424,7 +7582,7 @@ results:
   matchedLines: 0
   totalLines: 4
   mismatchCount: 4
-  timestamp: 2026-03-10T17:11:19.3763105Z
+  timestamp: 2026-03-10T21:49:58.4244879Z
 - ruleIdentifier: tripadi2
   ruleName: త్రిపది2
   exampleIndex: 0
@@ -7442,7 +7600,7 @@ results:
   matchedLines: 3
   totalLines: 3
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.3878272Z
+  timestamp: 2026-03-10T21:49:58.4247396Z
 - ruleIdentifier: tripadi2
   ruleName: త్రిపది2
   exampleIndex: 1
@@ -7460,7 +7618,7 @@ results:
   matchedLines: 3
   totalLines: 3
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.3883799Z
+  timestamp: 2026-03-10T21:49:58.4249459Z
 - ruleIdentifier: tripadi2
   ruleName: త్రిపది2
   exampleIndex: 2
@@ -7478,7 +7636,7 @@ results:
   matchedLines: 3
   totalLines: 3
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.3887425Z
+  timestamp: 2026-03-10T21:49:58.4250981Z
 - ruleIdentifier: tripadi2
   ruleName: త్రిపది2
   exampleIndex: 3
@@ -7496,7 +7654,7 @@ results:
   matchedLines: 3
   totalLines: 3
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.3895513Z
+  timestamp: 2026-03-10T21:49:58.4252557Z
 - ruleIdentifier: tripadi2
   ruleName: త్రిపది2
   exampleIndex: 4
@@ -7514,7 +7672,7 @@ results:
   matchedLines: 3
   totalLines: 3
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.3899248Z
+  timestamp: 2026-03-10T21:49:58.4254115Z
 - ruleIdentifier: tripadi2
   ruleName: త్రిపది2
   exampleIndex: 5
@@ -7532,7 +7690,7 @@ results:
   matchedLines: 3
   totalLines: 3
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.3903236Z
+  timestamp: 2026-03-10T21:49:58.4255884Z
 - ruleIdentifier: utkaLika
   ruleName: ఉత్కళిక
   exampleIndex: 0
@@ -7560,7 +7718,7 @@ results:
   matchedLines: 8
   totalLines: 8
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.3912617Z
+  timestamp: 2026-03-10T21:49:58.4261851Z
 - ruleIdentifier: vijayabhadraragaDa
   ruleName: విజయభద్ర  రగడ
   exampleIndex: 0
@@ -7580,7 +7738,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.3926621Z
+  timestamp: 2026-03-10T21:49:58.4268206Z
 - ruleIdentifier: haMsagatiragaDa
   ruleName: హంసగతి  రగడ
   exampleIndex: 0
@@ -7596,7 +7754,7 @@ results:
   matchedLines: 2
   totalLines: 2
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.3930651Z
+  timestamp: 2026-03-10T21:49:58.4270769Z
 - ruleIdentifier: vRshabhagatiragaDa
   ruleName: వృషభగతి రగడ
   exampleIndex: 0
@@ -7616,7 +7774,7 @@ results:
   matchedLines: 3
   totalLines: 4
   mismatchCount: 1
-  timestamp: 2026-03-10T17:11:19.3940454Z
+  timestamp: 2026-03-10T21:49:58.4275584Z
 - ruleIdentifier: dviradagatiragaDa
   ruleName: ద్విరదగతి రగడ
   exampleIndex: 0
@@ -7640,7 +7798,7 @@ results:
   matchedLines: 5
   totalLines: 6
   mismatchCount: 1
-  timestamp: 2026-03-10T17:11:19.3952037Z
+  timestamp: 2026-03-10T21:49:58.4281460Z
 - ruleIdentifier: hariNagatiragaDa
   ruleName: హరిణగతి రగడ
   exampleIndex: 0
@@ -7656,7 +7814,7 @@ results:
   matchedLines: 2
   totalLines: 2
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.3955567Z
+  timestamp: 2026-03-10T21:49:58.4283329Z
 - ruleIdentifier: hariNagatiragaDa
   ruleName: హరిణగతి రగడ
   exampleIndex: 1
@@ -7671,7 +7829,7 @@ results:
   matchedLines: 2
   totalLines: 2
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.3957804Z
+  timestamp: 2026-03-10T21:49:58.4284309Z
 - ruleIdentifier: hariNagatiragaDa
   ruleName: హరిణగతి రగడ
   exampleIndex: 2
@@ -7686,7 +7844,7 @@ results:
   matchedLines: 1
   totalLines: 2
   mismatchCount: 2
-  timestamp: 2026-03-10T17:11:19.3961207Z
+  timestamp: 2026-03-10T21:49:58.4285687Z
 - ruleIdentifier: hariNagatiragaDa
   ruleName: హరిణగతి రగడ
   exampleIndex: 3
@@ -7701,7 +7859,7 @@ results:
   matchedLines: 1
   totalLines: 2
   mismatchCount: 1
-  timestamp: 2026-03-10T17:11:19.3964286Z
+  timestamp: 2026-03-10T21:49:58.4286937Z
 - ruleIdentifier: harigatiragaDa
   ruleName: హరిగతి రగడ
   exampleIndex: 0
@@ -7721,7 +7879,7 @@ results:
   matchedLines: 3
   totalLines: 4
   mismatchCount: 1
-  timestamp: 2026-03-10T17:11:19.3974744Z
+  timestamp: 2026-03-10T21:49:58.4291588Z
 - ruleIdentifier: madhuragatiragaDa
   ruleName: మధురగతి రగడ
   exampleIndex: 0
@@ -7741,7 +7899,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.3981924Z
+  timestamp: 2026-03-10T21:49:58.4294717Z
 - ruleIdentifier: vijayamaMgaLaragaDa
   ruleName: విజయమంగళ  రగడ
   exampleIndex: 0
@@ -7757,7 +7915,7 @@ results:
   matchedLines: 2
   totalLines: 2
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.3989531Z
+  timestamp: 2026-03-10T21:49:58.4298095Z
 - ruleIdentifier: vijayamaMgaLaragaDa
   ruleName: విజయమంగళ  రగడ
   exampleIndex: 1
@@ -7773,7 +7931,7 @@ results:
   matchedLines: 2
   totalLines: 2
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.4000124Z
+  timestamp: 2026-03-10T21:49:58.4301482Z
 - ruleIdentifier: hayaprachaararagaDa
   ruleName: హయప్రచార రగడ
   exampleIndex: 0
@@ -7793,7 +7951,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.4007055Z
+  timestamp: 2026-03-10T21:49:58.4304156Z
 - ruleIdentifier: hayaprachaararagaDa
   ruleName: హయప్రచార రగడ
   exampleIndex: 1
@@ -7813,7 +7971,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.4012853Z
+  timestamp: 2026-03-10T21:49:58.4306140Z
 - ruleIdentifier: turagavalganaragaDa
   ruleName: తురగవల్గన రగడ
   exampleIndex: 0
@@ -7881,7 +8039,7 @@ results:
   matchedLines: 27
   totalLines: 28
   mismatchCount: 1
-  timestamp: 2026-03-10T17:11:19.4098653Z
+  timestamp: 2026-03-10T21:49:58.4355974Z
 - ruleIdentifier: mutyaalasaramu2
   ruleName: ముత్యాల సరము2
   exampleIndex: 0
@@ -7901,7 +8059,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.4103134Z
+  timestamp: 2026-03-10T21:49:58.4359641Z
 - ruleIdentifier: mutyaalasaramu2
   ruleName: ముత్యాల సరము2
   exampleIndex: 1
@@ -7921,7 +8079,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.4106219Z
+  timestamp: 2026-03-10T21:49:58.4361561Z
 - ruleIdentifier: mutyaalasaramu2
   ruleName: ముత్యాల సరము2
   exampleIndex: 2
@@ -7941,7 +8099,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.4109247Z
+  timestamp: 2026-03-10T21:49:58.4363383Z
 - ruleIdentifier: mutyaalasaramu2
   ruleName: ముత్యాల సరము2
   exampleIndex: 3
@@ -7961,7 +8119,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.4112467Z
+  timestamp: 2026-03-10T21:49:58.4366060Z
 - ruleIdentifier: bhaamineeshaTpada
   ruleName: భామినీ షట్పద
   exampleIndex: 0
@@ -7985,7 +8143,7 @@ results:
   matchedLines: 4
   totalLines: 6
   mismatchCount: 2
-  timestamp: 2026-03-10T17:11:19.4120172Z
+  timestamp: 2026-03-10T21:49:58.4374039Z
 - ruleIdentifier: bhaamineeshaTpada
   ruleName: భామినీ షట్పద
   exampleIndex: 1
@@ -8009,7 +8167,7 @@ results:
   matchedLines: 4
   totalLines: 6
   mismatchCount: 2
-  timestamp: 2026-03-10T17:11:19.4126562Z
+  timestamp: 2026-03-10T21:49:58.4382573Z
 - ruleIdentifier: bhaamineeshaTpada
   ruleName: భామినీ షట్పద
   exampleIndex: 2
@@ -8033,7 +8191,7 @@ results:
   matchedLines: 5
   totalLines: 6
   mismatchCount: 1
-  timestamp: 2026-03-10T17:11:19.4132870Z
+  timestamp: 2026-03-10T21:49:58.4389025Z
 - ruleIdentifier: bhaamineeshaTpada
   ruleName: భామినీ షట్పద
   exampleIndex: 3
@@ -8057,7 +8215,7 @@ results:
   matchedLines: 4
   totalLines: 6
   mismatchCount: 2
-  timestamp: 2026-03-10T17:11:19.4139143Z
+  timestamp: 2026-03-10T21:49:58.4394908Z
 - ruleIdentifier: bhaamineeshaTpada
   ruleName: భామినీ షట్పద
   exampleIndex: 4
@@ -8081,7 +8239,7 @@ results:
   matchedLines: 4
   totalLines: 6
   mismatchCount: 2
-  timestamp: 2026-03-10T17:11:19.4144835Z
+  timestamp: 2026-03-10T21:49:58.4400220Z
 - ruleIdentifier: bhOgashaTpada
   ruleName: భోగ షట్పద
   exampleIndex: 0
@@ -8105,7 +8263,7 @@ results:
   matchedLines: 6
   totalLines: 6
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.4150785Z
+  timestamp: 2026-03-10T21:49:58.4406236Z
 - ruleIdentifier: kusumashaTpada
   ruleName: కుసుమ షట్పద
   exampleIndex: 0
@@ -8129,7 +8287,7 @@ results:
   matchedLines: 6
   totalLines: 6
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.4154394Z
+  timestamp: 2026-03-10T21:49:58.4409958Z
 - ruleIdentifier: SarashaTpada
   ruleName: శర షట్పద
   exampleIndex: 0
@@ -8153,7 +8311,7 @@ results:
   matchedLines: 4
   totalLines: 6
   mismatchCount: 4
-  timestamp: 2026-03-10T17:11:19.4157814Z
+  timestamp: 2026-03-10T21:49:58.4413324Z
 - ruleIdentifier: mRgi
   ruleName: మృగీ
   exampleIndex: 0
@@ -8173,7 +8331,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.4159591Z
+  timestamp: 2026-03-10T21:49:58.4415299Z
 - ruleIdentifier: vreeDa
   ruleName: వ్రీడ (వ్రీళ , క్రీడా)
   exampleIndex: 0
@@ -8193,7 +8351,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.4161745Z
+  timestamp: 2026-03-10T21:49:58.4417799Z
 - ruleIdentifier: kanya
   ruleName: కన్య
   exampleIndex: 0
@@ -8213,7 +8371,7 @@ results:
   matchedLines: 3
   totalLines: 4
   mismatchCount: 1
-  timestamp: 2026-03-10T17:11:19.4163933Z
+  timestamp: 2026-03-10T21:49:58.4420419Z
 - ruleIdentifier: sati
   ruleName: సతి (కణ్ఠీ)
   exampleIndex: 0
@@ -8233,7 +8391,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.4166042Z
+  timestamp: 2026-03-10T21:49:58.4422863Z
 - ruleIdentifier: preeti
   ruleName: ప్రీతి (సూరిణీ)
   exampleIndex: 0
@@ -8253,7 +8411,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.4168367Z
+  timestamp: 2026-03-10T21:49:58.4425390Z
 - ruleIdentifier: naMda
   ruleName: నంద (కణికా)
   exampleIndex: 0
@@ -8273,7 +8431,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.4170358Z
+  timestamp: 2026-03-10T21:49:58.4427700Z
 - ruleIdentifier: valamuri
   ruleName: వలమురి(సులూః)
   exampleIndex: 0
@@ -8293,7 +8451,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.4171836Z
+  timestamp: 2026-03-10T21:49:58.4429476Z
 - ruleIdentifier: vasumati
   ruleName: వసుమతి
   exampleIndex: 0
@@ -8313,7 +8471,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.4174596Z
+  timestamp: 2026-03-10T21:49:58.4432390Z
 - ruleIdentifier: vasudha
   ruleName: వసుధ (కిసలయ , తిలకా)
   exampleIndex: 0
@@ -8333,7 +8491,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.4176783Z
+  timestamp: 2026-03-10T21:49:58.4434634Z
 - ruleIdentifier: chaMdravadana
   ruleName: చంద్రవదన
   exampleIndex: 0
@@ -8353,12 +8511,19 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.4179265Z
+  timestamp: 2026-03-10T21:49:58.4437573Z
 - ruleIdentifier: saavitrI
   ruleName: సావిత్రి (విద్యుల్లేఖా)
   exampleIndex: 0
-  poemText: "సావిత్రీ ధ్యానంబౌ\nభావప్రాప్తోద్భాసన్\nజీవాత్మైక్యంబెంచన్\nధీవిస్రబ్ధప్రాప్తిన్ "
-  poemHash: vhzA+ukqH8hzqhj2PCn0ySwdxV3VeBpfgix5LS5SFAA=
+  poemText: >-
+    సావిత్రీ ధ్యానంబౌ
+
+    భావప్రాప్తోద్భాసన్
+
+    జీవాత్మైక్యంబెంచన్
+
+    ధీవిస్రబ్ధప్రాప్తిన్
+  poemHash: 5fZmfncQGPjyRkK5onUDsVLPjKnGguc5/ISIn4+1iYE=
   matchPercentage: 100
   isMatch: true
   yatiMatched: true
@@ -8366,7 +8531,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.4182017Z
+  timestamp: 2026-03-10T21:49:58.4441484Z
 - ruleIdentifier: suruchira1
   ruleName: సురుచిర-1 (సరసిజ , మదలేఖా , విధువక్త్రా , రుచిరమ్)
   exampleIndex: 0
@@ -8386,7 +8551,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.4184536Z
+  timestamp: 2026-03-10T21:49:58.4444746Z
 - ruleIdentifier: haMsamaala
   ruleName: హంసమాల (భూరిధామా)
   exampleIndex: 0
@@ -8406,7 +8571,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.4186809Z
+  timestamp: 2026-03-10T21:49:58.4447635Z
 - ruleIdentifier: lOla
   ruleName: లోల (అభీకమ్)
   exampleIndex: 0
@@ -8426,7 +8591,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.4189258Z
+  timestamp: 2026-03-10T21:49:58.4451639Z
 - ruleIdentifier: kumaaralalita2
   ruleName: కుమారలలిత-2
   exampleIndex: 0
@@ -8446,7 +8611,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.4191590Z
+  timestamp: 2026-03-10T21:49:58.4455637Z
 - ruleIdentifier: prasavaSara
   ruleName: ప్రసవశర (దృతిః)
   exampleIndex: 0
@@ -8466,7 +8631,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.4193732Z
+  timestamp: 2026-03-10T21:49:58.4459428Z
 - ruleIdentifier: haMsaruta
   ruleName: హంసరుత
   exampleIndex: 0
@@ -8486,7 +8651,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.4196310Z
+  timestamp: 2026-03-10T21:49:58.4463184Z
 - ruleIdentifier: vimaana
   ruleName: విమాన (వారిశాలా)
   exampleIndex: 0
@@ -8506,7 +8671,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.4199199Z
+  timestamp: 2026-03-10T21:49:58.4467096Z
 - ruleIdentifier: vitaana
   ruleName: వితాన
   exampleIndex: 0
@@ -8526,7 +8691,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.4202237Z
+  timestamp: 2026-03-10T21:49:58.4471237Z
 - ruleIdentifier: maaNavaka
   ruleName: మాణవక
   exampleIndex: 0
@@ -8546,7 +8711,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.4204787Z
+  timestamp: 2026-03-10T21:49:58.4475626Z
 - ruleIdentifier: naaraacha
   ruleName: నారాచ (నారాచక)
   exampleIndex: 0
@@ -8566,7 +8731,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.4207528Z
+  timestamp: 2026-03-10T21:49:58.4479108Z
 - ruleIdentifier: naagara
   ruleName: నాగర (నాగరక)
   exampleIndex: 0
@@ -8586,7 +8751,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.4210208Z
+  timestamp: 2026-03-10T21:49:58.4482266Z
 - ruleIdentifier: bhujaMgaSiSirutamu
   ruleName: భుజగశిశురుతము (భుజగశిశుభృతా)
   exampleIndex: 0
@@ -8606,7 +8771,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.4213023Z
+  timestamp: 2026-03-10T21:49:58.4486215Z
 - ruleIdentifier: chaMpakamaali
   ruleName: చంపకమాలి (రుక్మవతి , చంపకమాలి , చంపకమాలా , పుష్పసమృద్ధి , సుభావా)
   exampleIndex: 0
@@ -8626,7 +8791,7 @@ results:
   matchedLines: 3
   totalLines: 4
   mismatchCount: 1
-  timestamp: 2026-03-10T17:11:19.4217241Z
+  timestamp: 2026-03-10T21:49:58.4491894Z
 - ruleIdentifier: bhadrika
   ruleName: భద్రిక-1 (సుభద్రికా , చంద్రిక , అపరవక్త్ర , ప్రసభ)
   exampleIndex: 0
@@ -8646,7 +8811,7 @@ results:
   matchedLines: 3
   totalLines: 4
   mismatchCount: 1
-  timestamp: 2026-03-10T17:11:19.4222865Z
+  timestamp: 2026-03-10T21:49:58.4496648Z
 - ruleIdentifier: bhadrika
   ruleName: భద్రిక-1 (సుభద్రికా , చంద్రిక , అపరవక్త్ర , ప్రసభ)
   exampleIndex: 1
@@ -8666,7 +8831,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.4228764Z
+  timestamp: 2026-03-10T21:49:58.4500092Z
 - ruleIdentifier: bhadrika2
   ruleName: చంద్రిక (భద్రిక-2)
   exampleIndex: 0
@@ -8686,7 +8851,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.4235159Z
+  timestamp: 2026-03-10T21:49:58.4503872Z
 - ruleIdentifier: dOdakamu
   ruleName: దోదకము (తోధక , తోదక , తోటక , దోధక , తరంగక , బందు , భిత్తక)
   exampleIndex: 0
@@ -8706,7 +8871,7 @@ results:
   matchedLines: 2
   totalLines: 4
   mismatchCount: 2
-  timestamp: 2026-03-10T17:11:19.4242467Z
+  timestamp: 2026-03-10T21:49:58.4508319Z
 - ruleIdentifier: dOdakamu
   ruleName: దోదకము (తోధక , తోదక , తోటక , దోధక , తరంగక , బందు , భిత్తక)
   exampleIndex: 1
@@ -8726,7 +8891,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.4248862Z
+  timestamp: 2026-03-10T21:49:58.4511759Z
 - ruleIdentifier: kOmala
   ruleName: కోమల
   exampleIndex: 0
@@ -8746,7 +8911,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.4255639Z
+  timestamp: 2026-03-10T21:49:58.4515724Z
 - ruleIdentifier: kaumidi
   ruleName: కౌముది (చరపదమ్)
   exampleIndex: 0
@@ -8766,7 +8931,7 @@ results:
   matchedLines: 3
   totalLines: 4
   mismatchCount: 1
-  timestamp: 2026-03-10T17:11:19.4263036Z
+  timestamp: 2026-03-10T21:49:58.4520348Z
 - ruleIdentifier: naMdini
   ruleName: నందిని (నంది)
   exampleIndex: 0
@@ -8786,7 +8951,7 @@ results:
   matchedLines: 1
   totalLines: 4
   mismatchCount: 3
-  timestamp: 2026-03-10T17:11:19.4270053Z
+  timestamp: 2026-03-10T21:49:58.4524683Z
 - ruleIdentifier: utsuka
   ruleName: ఉత్సుక (మదనోద్ధురా)
   exampleIndex: 0
@@ -8806,7 +8971,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.4275962Z
+  timestamp: 2026-03-10T21:49:58.4529258Z
 - ruleIdentifier: kiSOra
   ruleName: కిశోర (కరశయా)
   exampleIndex: 0
@@ -8826,7 +8991,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.4280422Z
+  timestamp: 2026-03-10T21:49:58.4531985Z
 - ruleIdentifier: rasaali
   ruleName: రసాలి
   exampleIndex: 0
@@ -8846,7 +9011,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.4286787Z
+  timestamp: 2026-03-10T21:49:58.4535738Z
 - ruleIdentifier: manOrama
   ruleName: మనోరమ
   exampleIndex: 0
@@ -8866,7 +9031,7 @@ results:
   matchedLines: 3
   totalLines: 4
   mismatchCount: 1
-  timestamp: 2026-03-10T17:11:19.4293226Z
+  timestamp: 2026-03-10T21:49:58.4539517Z
 - ruleIdentifier: paMkti2
   ruleName: పంక్తి-2(విశ్వముఖీ)
   exampleIndex: 0
@@ -8886,7 +9051,7 @@ results:
   matchedLines: 3
   totalLines: 4
   mismatchCount: 1
-  timestamp: 2026-03-10T17:11:19.4299837Z
+  timestamp: 2026-03-10T21:49:58.4543419Z
 - ruleIdentifier: bhOgavilasita
   ruleName: భోగివిలసిత(కుప్యమ్)
   exampleIndex: 0
@@ -8906,7 +9071,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.4306251Z
+  timestamp: 2026-03-10T21:49:58.4547262Z
 - ruleIdentifier: padamaali
   ruleName: పదమాలి (మాలతీ)
   exampleIndex: 0
@@ -8926,7 +9091,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.4311889Z
+  timestamp: 2026-03-10T21:49:58.4550608Z
 - ruleIdentifier: prabha
   ruleName: ప్రభ (ప్రముదితవదన , ప్రభాత , మందాకినీ , గౌరీ , చంచలాక్షీ)
   exampleIndex: 0
@@ -8946,7 +9111,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.4319485Z
+  timestamp: 2026-03-10T21:49:58.4554984Z
 - ruleIdentifier: prahEya
   ruleName: ప్రహేయ (పుటః)
   exampleIndex: 0
@@ -8966,7 +9131,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.4326105Z
+  timestamp: 2026-03-10T21:49:58.4558777Z
 - ruleIdentifier: maNimaala1
   ruleName: మణిమాల-1 (అబ్జవిచిత్రా , పుష్పవిచిత్రా)
   exampleIndex: 0
@@ -8986,7 +9151,7 @@ results:
   matchedLines: 3
   totalLines: 4
   mismatchCount: 1
-  timestamp: 2026-03-10T17:11:19.4333378Z
+  timestamp: 2026-03-10T21:49:58.4562938Z
 - ruleIdentifier: mEghavilasitamu
   ruleName: మేఘవిలసితము
   exampleIndex: 0
@@ -9006,7 +9171,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.4339899Z
+  timestamp: 2026-03-10T21:49:58.4566890Z
 - ruleIdentifier: lalita
   ruleName: లలిత
   exampleIndex: 0
@@ -9026,7 +9191,7 @@ results:
   matchedLines: 0
   totalLines: 4
   mismatchCount: 4
-  timestamp: 2026-03-10T17:11:19.4348338Z
+  timestamp: 2026-03-10T21:49:58.4571809Z
 - ruleIdentifier: navamaalini
   ruleName: నవమాలిని
   exampleIndex: 0
@@ -9046,7 +9211,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.4355158Z
+  timestamp: 2026-03-10T21:49:58.4575963Z
 - ruleIdentifier: kusuma_vichitra
   ruleName: కుసుమవిచిత్ర (గజలలిత)
   exampleIndex: 0
@@ -9066,7 +9231,7 @@ results:
   matchedLines: 3
   totalLines: 4
   mismatchCount: 1
-  timestamp: 2026-03-10T17:11:19.4362371Z
+  timestamp: 2026-03-10T21:49:58.4580710Z
 - ruleIdentifier: chaMdravartma
   ruleName: చంద్రవర్త్మ
   exampleIndex: 0
@@ -9086,7 +9251,7 @@ results:
   matchedLines: 3
   totalLines: 4
   mismatchCount: 1
-  timestamp: 2026-03-10T17:11:19.4369936Z
+  timestamp: 2026-03-10T21:49:58.4585418Z
 - ruleIdentifier: vRMta
   ruleName: వృంత (రథపదమ్)
   exampleIndex: 0
@@ -9106,7 +9271,7 @@ results:
   matchedLines: 3
   totalLines: 4
   mismatchCount: 1
-  timestamp: 2026-03-10T17:11:19.4376307Z
+  timestamp: 2026-03-10T21:49:58.4589297Z
 - ruleIdentifier: maMdaaradaama
   ruleName: మందారదామ (ప్రాకారబన్ధః)
   exampleIndex: 0
@@ -9126,7 +9291,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.4382038Z
+  timestamp: 2026-03-10T21:49:58.4592845Z
 - ruleIdentifier: sumukhi
   ruleName: సుముఖి (ద్రుతపాదగతి)
   exampleIndex: 0
@@ -9144,7 +9309,7 @@ results:
   matchedLines: 2
   totalLines: 4
   mismatchCount: 6
-  timestamp: 2026-03-10T17:11:19.4385709Z
+  timestamp: 2026-03-10T21:49:58.4596005Z
 - ruleIdentifier: upasthita2
   ruleName: ఉపస్థిత-2 (స్త్రీ , శిఖండి , విరుత)
   exampleIndex: 0
@@ -9164,7 +9329,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.4390134Z
+  timestamp: 2026-03-10T21:49:58.4600155Z
 - ruleIdentifier: upasthita1
   ruleName: ఉపస్థిత-1
   exampleIndex: 0
@@ -9184,7 +9349,7 @@ results:
   matchedLines: 3
   totalLines: 4
   mismatchCount: 1
-  timestamp: 2026-03-10T17:11:19.4394773Z
+  timestamp: 2026-03-10T21:49:58.4605247Z
 - ruleIdentifier: Ekaroopa
   ruleName: ఏకరూప
   exampleIndex: 0
@@ -9204,7 +9369,7 @@ results:
   matchedLines: 3
   totalLines: 4
   mismatchCount: 1
-  timestamp: 2026-03-10T17:11:19.4398737Z
+  timestamp: 2026-03-10T21:49:58.4609639Z
 - ruleIdentifier: pRdhivi
   ruleName: పృథివి (పృథ్వి)
   exampleIndex: 0
@@ -9224,7 +9389,7 @@ results:
   matchedLines: 3
   totalLines: 4
   mismatchCount: 1
-  timestamp: 2026-03-10T17:11:19.4402246Z
+  timestamp: 2026-03-10T21:49:58.4613480Z
 - ruleIdentifier: bhramara_vilasita
   ruleName: భ్రమరవిలసిత
   exampleIndex: 0
@@ -9244,7 +9409,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.4405771Z
+  timestamp: 2026-03-10T21:49:58.4617337Z
 - ruleIdentifier: mauktikamaala
   ruleName: మౌక్తికమాల (అనుకూలా)
   exampleIndex: 0
@@ -9264,7 +9429,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.4410162Z
+  timestamp: 2026-03-10T21:49:58.4620250Z
 - ruleIdentifier: sumaMgali1
   ruleName: సుమంగలి-1 (కలహంసః)
   exampleIndex: 0
@@ -9284,12 +9449,19 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.4413930Z
+  timestamp: 2026-03-10T21:49:58.4622723Z
 - ruleIdentifier: prabhaatamu2
   ruleName: ప్రభాతము-2 (మృగేంద్రముఖ , సువక్త్రా , అచల)
   exampleIndex: 0
-  poemText: "తొలువెలుఁగయ్యెని దోయి యోయియోకో\nసలసుతసుప్రజ సాధు రామచంద్రా \nతొలొవెలుఁగయ్యెని దోయి కౌసలేయా\nమెలకువ వచ్చెనె మీకు రామభద్రా "
-  poemHash: mRWYlb3bRIQe/cdloXiFNML7RggtbD0g9971t1IxwXQ=
+  poemText: >-
+    తొలువెలుఁగయ్యెని దోయి యోయియోకో
+
+    సలసుతసుప్రజ సాధు రామచంద్రా 
+
+    తొలొవెలుఁగయ్యెని దోయి కౌసలేయా
+
+    మెలకువ వచ్చెనె మీకు రామభద్రా
+  poemHash: NL8P4JIarkXq6ow9AaXsh/R0L+0R6scIb1utbFxz5es=
   matchPercentage: 100
   isMatch: true
   yatiMatched: true
@@ -9297,7 +9469,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.4418230Z
+  timestamp: 2026-03-10T21:49:58.4625428Z
 - ruleIdentifier: prabhaatamu2
   ruleName: ప్రభాతము-2 (మృగేంద్రముఖ , సువక్త్రా , అచల)
   exampleIndex: 1
@@ -9317,7 +9489,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.4422481Z
+  timestamp: 2026-03-10T21:49:58.4627935Z
 - ruleIdentifier: chaMcharIkaavali2
   ruleName: చంచరీకావళి-2
   exampleIndex: 0
@@ -9337,7 +9509,7 @@ results:
   matchedLines: 0
   totalLines: 4
   mismatchCount: 4
-  timestamp: 2026-03-10T17:11:19.4429459Z
+  timestamp: 2026-03-10T21:49:58.4630670Z
 - ruleIdentifier: bhaMbaragaana
   ruleName: భంభరగానము
   exampleIndex: 0
@@ -9357,7 +9529,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.4435134Z
+  timestamp: 2026-03-10T21:49:58.4633546Z
 - ruleIdentifier: bhoonuta2
   ruleName: భూనుతము-2
   exampleIndex: 0
@@ -9377,7 +9549,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.4531050Z
+  timestamp: 2026-03-10T21:49:58.4636258Z
 - ruleIdentifier: nalini
   ruleName: నలిని (భ్రమరావలికా , నలినీ , భ్రమరావళి)
   exampleIndex: 0
@@ -9397,7 +9569,7 @@ results:
   matchedLines: 3
   totalLines: 4
   mismatchCount: 1
-  timestamp: 2026-03-10T17:11:19.4537943Z
+  timestamp: 2026-03-10T21:49:58.4639224Z
 - ruleIdentifier: chaMdrarEkha
   ruleName: చంద్రరేఖ
   exampleIndex: 0
@@ -9417,7 +9589,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.4545129Z
+  timestamp: 2026-03-10T21:49:58.4642975Z
 - ruleIdentifier: ila
   ruleName: ఇల
   exampleIndex: 0
@@ -9437,7 +9609,7 @@ results:
   matchedLines: 3
   totalLines: 4
   mismatchCount: 1
-  timestamp: 2026-03-10T17:11:19.4549892Z
+  timestamp: 2026-03-10T21:49:58.4645845Z
 - ruleIdentifier: ila2
   ruleName: 'ఇల2 '
   exampleIndex: 0
@@ -9457,7 +9629,7 @@ results:
   matchedLines: 0
   totalLines: 4
   mismatchCount: 4
-  timestamp: 2026-03-10T17:11:19.4555048Z
+  timestamp: 2026-03-10T21:49:58.4648861Z
 - ruleIdentifier: alasagati
   ruleName: 'అలసగతి '
   exampleIndex: 0
@@ -9477,7 +9649,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.4561008Z
+  timestamp: 2026-03-10T21:49:58.4657821Z
 - ruleIdentifier: padmakamu2
   ruleName: పద్మకము-2 (పద్మ)
   exampleIndex: 0
@@ -9497,7 +9669,7 @@ results:
   matchedLines: 3
   totalLines: 4
   mismatchCount: 1
-  timestamp: 2026-03-10T17:11:19.4566927Z
+  timestamp: 2026-03-10T21:49:58.4674066Z
 - ruleIdentifier: lalitagati
   ruleName: లలితగతి
   exampleIndex: 0
@@ -9517,7 +9689,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.4572763Z
+  timestamp: 2026-03-10T21:49:58.4677044Z
 - ruleIdentifier: gajaraaja
   ruleName: గజరాజ
   exampleIndex: 0
@@ -9537,7 +9709,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.4577581Z
+  timestamp: 2026-03-10T21:49:58.4679697Z
 - ruleIdentifier: gajavilasita
   ruleName: గజవిలసిత (ఋషభగజవిలసితమ్)
   exampleIndex: 0
@@ -9557,7 +9729,7 @@ results:
   matchedLines: 2
   totalLines: 4
   mismatchCount: 2
-  timestamp: 2026-03-10T17:11:19.4582919Z
+  timestamp: 2026-03-10T21:49:58.4682890Z
 - ruleIdentifier: aSvagati
   ruleName: అశ్వగతి (ఖగతిః , అశ్వాక్రాంత , పద్మముఖీ , సంగత)
   exampleIndex: 0
@@ -9577,7 +9749,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.4587923Z
+  timestamp: 2026-03-10T21:49:58.4685882Z
 - ruleIdentifier: madanadarpaNa
   ruleName: మదనదర్పణ (మదనదర్ప)
   exampleIndex: 0
@@ -9597,7 +9769,7 @@ results:
   matchedLines: 0
   totalLines: 4
   mismatchCount: 4
-  timestamp: 2026-03-10T17:11:19.4595534Z
+  timestamp: 2026-03-10T21:49:58.4691547Z
 - ruleIdentifier: chaMdrabhaanu
   ruleName: చంద్రభాను
   exampleIndex: 0
@@ -9617,7 +9789,7 @@ results:
   matchedLines: 2
   totalLines: 4
   mismatchCount: 2
-  timestamp: 2026-03-10T17:11:19.4603221Z
+  timestamp: 2026-03-10T21:49:58.4699623Z
 - ruleIdentifier: vaMSapattrapatita
   ruleName: వంశపత్రపతిత
   exampleIndex: 0
@@ -9637,7 +9809,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.4608926Z
+  timestamp: 2026-03-10T21:49:58.4704834Z
 - ruleIdentifier: dhRti
   ruleName: ధృతి (పృథ్వి , విలంబితగతి)
   exampleIndex: 0
@@ -9657,7 +9829,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.4613647Z
+  timestamp: 2026-03-10T21:49:58.4710763Z
 - ruleIdentifier: chaMpakakEsari
   ruleName: 'చంపకకేసరి '
   exampleIndex: 0
@@ -9677,7 +9849,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.4617818Z
+  timestamp: 2026-03-10T21:49:58.4716798Z
 - ruleIdentifier: tvaritapadagati
   ruleName: 'త్వరితపదగతి '
   exampleIndex: 0
@@ -9697,7 +9869,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.4621824Z
+  timestamp: 2026-03-10T21:49:58.4723574Z
 - ruleIdentifier: niSa
   ruleName: నిశా-2 (నారాచ , నారాచక , మహామలికా , సింహవిక్రీడిత , వరదా )
   exampleIndex: 0
@@ -9717,12 +9889,19 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.4626975Z
+  timestamp: 2026-03-10T21:49:58.4731701Z
 - ruleIdentifier: haranartana
   ruleName: 'హరనర్తన '
   exampleIndex: 0
-  poemText: "బద్ధవాసనఁజేసిహావళిశార్దూళావళిపొందుచున్\nయుద్ధభూమినిఁజేరిదృష్ట్లొగినేదాత్త్యాయతిఁజిందుచున్\nవిద్ధసైందవరాజిపైవిచలద్ గృధ్రావృతి క్రోధసం\nబద్ధ గర్జనఁబాపి తప్పక యట్లేకప్పక నిల్చున్ "
-  poemHash: XsCX2pb2P9FDMy6uBkL+rCsWTkK+L3ymkHVBC2BOTCI=
+  poemText: >-
+    బద్ధవాసనఁజేసిహావళిశార్దూళావళిపొందుచున్
+
+    యుద్ధభూమినిఁజేరిదృష్ట్లొగినేదాత్త్యాయతిఁజిందుచున్
+
+    విద్ధసైందవరాజిపైవిచలద్ గృధ్రావృతి క్రోధసం
+
+    బద్ధ గర్జనఁబాపి తప్పక యట్లేకప్పక నిల్చున్
+  poemHash: D8bLxYDIf5mQa9c3PJ2idcWiv/u7GXOZzZLeCJHpk/U=
   matchPercentage: 95
   isMatch: true
   yatiMatched: false
@@ -9730,7 +9909,7 @@ results:
   matchedLines: 2
   totalLines: 4
   mismatchCount: 2
-  timestamp: 2026-03-10T17:11:19.4632544Z
+  timestamp: 2026-03-10T21:49:58.4740665Z
 - ruleIdentifier: ativinaya
   ruleName: అతివినయ
   exampleIndex: 0
@@ -9750,7 +9929,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.4636549Z
+  timestamp: 2026-03-10T21:49:58.4745781Z
 - ruleIdentifier: dEvaraaja
   ruleName: దేవరాజ
   exampleIndex: 0
@@ -9770,7 +9949,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.4641907Z
+  timestamp: 2026-03-10T21:49:58.4750032Z
 - ruleIdentifier: kshmaahaara
   ruleName: క్ష్మాహార
   exampleIndex: 0
@@ -9790,7 +9969,7 @@ results:
   matchedLines: 3
   totalLines: 4
   mismatchCount: 2
-  timestamp: 2026-03-10T17:11:19.4647819Z
+  timestamp: 2026-03-10T21:49:58.4754787Z
 - ruleIdentifier: kavikaMThavibhooShaNa
   ruleName: కవికంఠభూషణ (కవికంఠవిభూషణ)
   exampleIndex: 0
@@ -9810,7 +9989,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.4653350Z
+  timestamp: 2026-03-10T21:49:58.4759786Z
 - ruleIdentifier: SaMbhu
   ruleName: శంభు
   exampleIndex: 0
@@ -9830,7 +10009,7 @@ results:
   matchedLines: 3
   totalLines: 4
   mismatchCount: 1
-  timestamp: 2026-03-10T17:11:19.4660617Z
+  timestamp: 2026-03-10T21:49:58.4763910Z
 - ruleIdentifier: Subhika
   ruleName: శుభిక
   exampleIndex: 0
@@ -9850,7 +10029,7 @@ results:
   matchedLines: 2
   totalLines: 4
   mismatchCount: 6
-  timestamp: 2026-03-10T17:11:19.4666897Z
+  timestamp: 2026-03-10T21:49:58.4768010Z
 - ruleIdentifier: durmila
   ruleName: దుర్మిల (ద్విమిలా)
   exampleIndex: 0
@@ -9870,7 +10049,7 @@ results:
   matchedLines: 2
   totalLines: 4
   mismatchCount: 2
-  timestamp: 2026-03-10T17:11:19.4672993Z
+  timestamp: 2026-03-10T21:49:58.4772682Z
 - ruleIdentifier: SRMgaara
   ruleName: శృంగార
   exampleIndex: 0
@@ -9890,7 +10069,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.4679830Z
+  timestamp: 2026-03-10T21:49:58.4778149Z
 - ruleIdentifier: kirITa
   ruleName: మేదురదన్తమ్ (కిరీట)
   exampleIndex: 0
@@ -9910,12 +10089,19 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.4686426Z
+  timestamp: 2026-03-10T21:49:58.4784580Z
 - ruleIdentifier: baMdhura
   ruleName: 'బంధుర '
   exampleIndex: 0
-  poemText: "పరిమళభరితవికచ సుమముల శ్రీబంధుర కాంచన దివ్యమణి\nస్ఫిర వలసమున వెలయఁగ భ్రమరసంవీత వినీలవిభాసమునన్\nసిరిమొగమున రతనపునిలుపసలాసేచనకంబుగ శోభిలఁగన్\nహరి మధువ ననివసనమిలగనె నవ్యక్తుగతిన్ బ్రియకామినికై "
-  poemHash: 3jPjswzcJx0QS3Ordiq5eGyejZoju/jg6MdQ1fkM92s=
+  poemText: >-
+    పరిమళభరితవికచ సుమముల శ్రీబంధుర కాంచన దివ్యమణి
+
+    స్ఫిర వలసమున వెలయఁగ భ్రమరసంవీత వినీలవిభాసమునన్
+
+    సిరిమొగమున రతనపునిలుపసలాసేచనకంబుగ శోభిలఁగన్
+
+    హరి మధువ ననివసనమిలగనె నవ్యక్తుగతిన్ బ్రియకామినికై
+  poemHash: gSNqaFpZo0+rbyXbWf8uF/9dqiS6QRUfS7wHoK4h4Dg=
   matchPercentage: 98
   isMatch: true
   yatiMatched: false
@@ -9923,7 +10109,7 @@ results:
   matchedLines: 3
   totalLines: 4
   mismatchCount: 1
-  timestamp: 2026-03-10T17:11:19.4694162Z
+  timestamp: 2026-03-10T21:49:58.4791680Z
 - ruleIdentifier: vijaya
   ruleName: విజయ
   exampleIndex: 0
@@ -9943,7 +10129,7 @@ results:
   matchedLines: 2
   totalLines: 4
   mismatchCount: 2
-  timestamp: 2026-03-10T17:11:19.4706698Z
+  timestamp: 2026-03-10T21:49:58.4797491Z
 - ruleIdentifier: suruchi
   ruleName: సురుచి
   exampleIndex: 0
@@ -9963,7 +10149,7 @@ results:
   matchedLines: 2
   totalLines: 4
   mismatchCount: 2
-  timestamp: 2026-03-10T17:11:19.4719012Z
+  timestamp: 2026-03-10T21:49:58.4803399Z
 - ruleIdentifier: vanaruha
   ruleName: వనరుహ
   exampleIndex: 0
@@ -9983,7 +10169,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.4730783Z
+  timestamp: 2026-03-10T21:49:58.4808835Z
 - ruleIdentifier: jaladarava
   ruleName: ధరణిధరగతి (జలదరవ , అలకా)
   exampleIndex: 0
@@ -10003,7 +10189,7 @@ results:
   matchedLines: 3
   totalLines: 4
   mismatchCount: 2
-  timestamp: 2026-03-10T17:11:19.4741991Z
+  timestamp: 2026-03-10T21:49:58.4813462Z
 - ruleIdentifier: varaha
   ruleName: వరాహ
   exampleIndex: 0
@@ -10023,7 +10209,7 @@ results:
   matchedLines: 2
   totalLines: 4
   mismatchCount: 5
-  timestamp: 2026-03-10T17:11:19.4754772Z
+  timestamp: 2026-03-10T21:49:58.4818316Z
 - ruleIdentifier: prabhu
   ruleName: ప్రభు
   exampleIndex: 0
@@ -10043,7 +10229,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.4767853Z
+  timestamp: 2026-03-10T21:49:58.4823103Z
 - ruleIdentifier: apavaaha
   ruleName: అపవాహ
   exampleIndex: 0
@@ -10063,7 +10249,7 @@ results:
   matchedLines: 0
   totalLines: 4
   mismatchCount: 9
-  timestamp: 2026-03-10T17:11:19.4781668Z
+  timestamp: 2026-03-10T21:49:58.4828499Z
 - ruleIdentifier: apavaaha
   ruleName: అపవాహ
   exampleIndex: 1
@@ -10083,7 +10269,7 @@ results:
   matchedLines: 0
   totalLines: 4
   mismatchCount: 12
-  timestamp: 2026-03-10T17:11:19.4793859Z
+  timestamp: 2026-03-10T21:49:58.4833161Z
 - ruleIdentifier: tanvi
   ruleName: తన్వి
   exampleIndex: 0
@@ -10103,7 +10289,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.4807279Z
+  timestamp: 2026-03-10T21:49:58.4838653Z
 - ruleIdentifier: kusuma
   ruleName: కుసుమ
   exampleIndex: 0
@@ -10123,7 +10309,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.4817305Z
+  timestamp: 2026-03-10T21:49:58.4843358Z
 - ruleIdentifier: mattaakrIDa
   ruleName: మత్తాక్రీడ
   exampleIndex: 0
@@ -10143,7 +10329,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.4829141Z
+  timestamp: 2026-03-10T21:49:58.4850737Z
 - ruleIdentifier: narEMdra
   ruleName: నరేంద్ర
   exampleIndex: 0
@@ -10163,7 +10349,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.4839301Z
+  timestamp: 2026-03-10T21:49:58.4855713Z
 - ruleIdentifier: surabhoojaraaja
   ruleName: సురభూజరాజ
   exampleIndex: 0
@@ -10183,7 +10369,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.4848212Z
+  timestamp: 2026-03-10T21:49:58.4860865Z
 - ruleIdentifier: kanakalata
   ruleName: కనకలత
   exampleIndex: 0
@@ -10203,7 +10389,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.4856136Z
+  timestamp: 2026-03-10T21:49:58.4864579Z
 - ruleIdentifier: haMsi
   ruleName: హంసి
   exampleIndex: 0
@@ -10223,7 +10409,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.4867110Z
+  timestamp: 2026-03-10T21:49:58.4868773Z
 - ruleIdentifier: vichikilata
   ruleName: విచికిలిత (కనకలతిక , అచలవిరతిః)
   exampleIndex: 0
@@ -10243,7 +10429,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.4877703Z
+  timestamp: 2026-03-10T21:49:58.4873920Z
 - ruleIdentifier: prabhaalalitamu
   ruleName: ప్రభాకలితము
   exampleIndex: 0
@@ -10263,7 +10449,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.4887029Z
+  timestamp: 2026-03-10T21:49:58.4877600Z
 - ruleIdentifier: kalita
   ruleName: కలిత
   exampleIndex: 0
@@ -10283,7 +10469,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.4894891Z
+  timestamp: 2026-03-10T21:49:58.4880928Z
 - ruleIdentifier: bhujara
   ruleName: భుజగ
   exampleIndex: 0
@@ -10303,7 +10489,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.4903779Z
+  timestamp: 2026-03-10T21:49:58.4884347Z
 - ruleIdentifier: chaarumati
   ruleName: శతపత్ర (చారుమతి)
   exampleIndex: 0
@@ -10323,7 +10509,7 @@ results:
   matchedLines: 2
   totalLines: 4
   mismatchCount: 20
-  timestamp: 2026-03-10T17:11:19.4915900Z
+  timestamp: 2026-03-10T21:49:58.4889060Z
 - ruleIdentifier: ujjvala
   ruleName: ఉజ్జ్వల
   exampleIndex: 0
@@ -10343,7 +10529,7 @@ results:
   matchedLines: 0
   totalLines: 4
   mismatchCount: 16
-  timestamp: 2026-03-10T17:11:19.4923075Z
+  timestamp: 2026-03-10T21:49:58.4892070Z
 - ruleIdentifier: vRtta
   ruleName: వృత్త
   exampleIndex: 0
@@ -10363,7 +10549,7 @@ results:
   matchedLines: 3
   totalLines: 4
   mismatchCount: 1
-  timestamp: 2026-03-10T17:11:19.4930495Z
+  timestamp: 2026-03-10T21:49:58.4894922Z
 - ruleIdentifier: madraka
   ruleName: మద్రక
   exampleIndex: 0
@@ -10383,7 +10569,7 @@ results:
   matchedLines: 2
   totalLines: 4
   mismatchCount: 2
-  timestamp: 2026-03-10T17:11:19.4941535Z
+  timestamp: 2026-03-10T21:49:58.4899124Z
 - ruleIdentifier: laakshaNi
   ruleName: లాక్షణి
   exampleIndex: 0
@@ -10403,12 +10589,19 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.4950965Z
+  timestamp: 2026-03-10T21:49:58.4902913Z
 - ruleIdentifier: dara
   ruleName: దర
   exampleIndex: 0
-  poemText: "ఎనిమిది నగణములెలమిగ నిలుపుచు నిరవుగ భసలము లింపుగ నెరపన్\nమును కొని దరమగు పొలువుగ వసువులు మురిపెపు యతులుగ మూఁడు నెలవులన్ \nఎనిమిది నగణములెలమిగ నిలుపుచు నిరవుగ భసలము లింపుగ నెరపన్\nమును కొని దరమగు పొలువుగ వసువులు మురిపెపు యతులుగ మూఁడు నెలవులన్ "
-  poemHash: KMs13WOFgHuycNgX6bVweUgLep094ShbnnCaSqMF3XA=
+  poemText: >-
+    ఎనిమిది నగణములెలమిగ నిలుపుచు నిరవుగ భసలము లింపుగ నెరపన్
+
+    మును కొని దరమగు పొలువుగ వసువులు మురిపెపు యతులుగ మూఁడు నెలవులన్ 
+
+    ఎనిమిది నగణములెలమిగ నిలుపుచు నిరవుగ భసలము లింపుగ నెరపన్
+
+    మును కొని దరమగు పొలువుగ వసువులు మురిపెపు యతులుగ మూఁడు నెలవులన్
+  poemHash: 1TlvySZL5kuK8xzXsjs1oT9vvtqtgSwqzWmYVsOsOFE=
   matchPercentage: 100
   isMatch: true
   yatiMatched: true
@@ -10416,12 +10609,19 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.4985586Z
+  timestamp: 2026-03-10T21:49:58.4908158Z
 - ruleIdentifier: Saaloora
   ruleName: శాలూర
   exampleIndex: 0
-  poemText: "అంతన్ రఘుపరివృఢధనురుదితశరనికరసరదనలపటుతరశిఖా\nప్రాంతంబగుచుజలధిబహులకుహరనివసదసురమకరతతితతతనూ \nసంతానములు తెక తెక లయి తహ తహ లయి తికమక పడి వడిగుడుసులై\nయంతర్జలములనసుచయములురలిసగము వెలకిలఁబడిచలనమురలెన్ "
-  poemHash: cMbpoA4y/TziLqYmwfUAKjllwhCYasb26pL3gWyuYSs=
+  poemText: >-
+    అంతన్ రఘుపరివృఢధనురుదితశరనికరసరదనలపటుతరశిఖా
+
+    ప్రాంతంబగుచుజలధిబహులకుహరనివసదసురమకరతతితతతనూ 
+
+    సంతానములు తెక తెక లయి తహ తహ లయి తికమక పడి వడిగుడుసులై
+
+    యంతర్జలములనసుచయములురలిసగము వెలకిలఁబడిచలనమురలెన్
+  poemHash: nuEsMbOfu1h2g8p2kJGbTQ7JGDr4xLu7aH5ynYz6kSk=
   matchPercentage: 94
   isMatch: true
   yatiMatched: false
@@ -10429,12 +10629,12 @@ results:
   matchedLines: 1
   totalLines: 4
   mismatchCount: 3
-  timestamp: 2026-03-10T17:11:19.4997003Z
+  timestamp: 2026-03-10T21:49:58.4912846Z
 - ruleIdentifier: chaMDavRshTiprayaata
   ruleName: చండవృష్టిప్రయాత
   exampleIndex: 0
-  poemText: 'నగణయుగము మీదటందేడు రేఫల్ దగన్ జండవృష్టాఖ్యతో దండకంబౌహరీ '
-  poemHash: DRKVAqEIWXlG4BKyV8DpIi/1QWpJtEdS/IpS84xS9Ss=
+  poemText: నగణయుగము మీదటందేడు రేఫల్ దగన్ జండవృష్టాఖ్యతో దండకంబౌహరీ
+  poemHash: nE3FUJ77+P5CWmjspPfQoZeTsXbbtohdce7/mZjNNdQ=
   matchPercentage: 81
   isMatch: true
   yatiMatched: true
@@ -10442,7 +10642,7 @@ results:
   matchedLines: 0
   totalLines: 1
   mismatchCount: 1
-  timestamp: 2026-03-10T17:11:19.5000677Z
+  timestamp: 2026-03-10T21:49:58.4914369Z
 - ruleIdentifier: arNa
   ruleName: అర్ణ
   exampleIndex: 0
@@ -10455,12 +10655,12 @@ results:
   matchedLines: 1
   totalLines: 1
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.5004229Z
+  timestamp: 2026-03-10T21:49:58.4915838Z
 - ruleIdentifier: arNava
   ruleName: అర్ణవ(అర్హవ)
   exampleIndex: 0
-  poemText: 'మొదట ననలమీఁదటం దొమ్మిదేరేఫలుంపంగనౌదండకం బర్ణవం బండ్రు శ్రీరామభక్తాగ్రణీ '
-  poemHash: PpS8291jXIkKLuBnLOG5ADR6dPCOvarL49K3hPfIcDY=
+  poemText: మొదట ననలమీఁదటం దొమ్మిదేరేఫలుంపంగనౌదండకం బర్ణవం బండ్రు శ్రీరామభక్తాగ్రణీ
+  poemHash: r//k4r758nfMQj/8EW1ZtSEFbDK7G48W9XymS3t2O7U=
   matchPercentage: 100
   isMatch: true
   yatiMatched: true
@@ -10468,12 +10668,12 @@ results:
   matchedLines: 1
   totalLines: 1
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.5008023Z
+  timestamp: 2026-03-10T21:49:58.4917580Z
 - ruleIdentifier: vyaaLa
   ruleName: వ్యాళ
   exampleIndex: 0
-  poemText: 'ఋతులఘువులు పైని రేఫల్ పదిన్నిల్పగా వ్యాళనామంబుతోఁ దండకంబౌనయా జంబుమాలిద్రుధూమధ్యజా '
-  poemHash: /PDx+4R9DQRYpZTyEaCKit1B3nBgsjP0D3/siQQKLDA=
+  poemText: ఋతులఘువులు పైని రేఫల్ పదిన్నిల్పగా వ్యాళనామంబుతోఁ దండకంబౌనయా జంబుమాలిద్రుధూమధ్యజా
+  poemHash: Dv8UuAosVKqTM3uKZnH2l24kNcusW1rzbp8SN27w2c0=
   matchPercentage: 100
   isMatch: true
   yatiMatched: true
@@ -10481,7 +10681,7 @@ results:
   matchedLines: 1
   totalLines: 1
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.5012377Z
+  timestamp: 2026-03-10T21:49:58.4919545Z
 - ruleIdentifier: jeemoota
   ruleName: జీమూత
   exampleIndex: 0
@@ -10494,7 +10694,7 @@ results:
   matchedLines: 1
   totalLines: 1
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.5016749Z
+  timestamp: 2026-03-10T21:49:58.4921175Z
 - ruleIdentifier: leelaakara
   ruleName: లీలాకర
   exampleIndex: 0
@@ -10507,7 +10707,7 @@ results:
   matchedLines: 1
   totalLines: 1
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.5021516Z
+  timestamp: 2026-03-10T21:49:58.4934658Z
 - ruleIdentifier: uddaama
   ruleName: ఉద్దామ
   exampleIndex: 0
@@ -10520,12 +10720,12 @@ results:
   matchedLines: 1
   totalLines: 1
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.5026298Z
+  timestamp: 2026-03-10T21:49:58.4937038Z
 - ruleIdentifier: SaMkha
   ruleName: శంఖ
   exampleIndex: 0
-  poemText: 'నయుగళిపయి నెన్నఁబధ్నాల్గు రేఫల్ క్రమంబొప్పఁగా నుండినన్శంఖమన్ దండకం బెందు నందంబగున్ శాంఖహస్తాంఘ్రినీరేజభృంగాయమానాఘనా '
-  poemHash: YpBXD31oFSU049b2hIzV3hvBDVJQgGImH8zU1drYWqc=
+  poemText: నయుగళిపయి నెన్నఁబధ్నాల్గు రేఫల్ క్రమంబొప్పఁగా నుండినన్శంఖమన్ దండకం బెందు నందంబగున్ శాంఖహస్తాంఘ్రినీరేజభృంగాయమానాఘనా
+  poemHash: BwufAaLV/FkQEMDis6BRCxdzClUwPPQ5xD1KGYYpSBM=
   matchPercentage: 100
   isMatch: true
   yatiMatched: true
@@ -10533,7 +10733,7 @@ results:
   matchedLines: 1
   totalLines: 1
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.5032316Z
+  timestamp: 2026-03-10T21:49:58.4939320Z
 - ruleIdentifier: nanahata
   ruleName: ననహత దండకము
   exampleIndex: 0
@@ -10546,7 +10746,7 @@ results:
   matchedLines: 1
   totalLines: 1
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.5035318Z
+  timestamp: 2026-03-10T21:49:58.4940752Z
 - ruleIdentifier: sanahata
   ruleName: సనహత దండకము
   exampleIndex: 0
@@ -10559,7 +10759,7 @@ results:
   matchedLines: 1
   totalLines: 1
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.5051114Z
+  timestamp: 2026-03-10T21:49:58.4947032Z
 - ruleIdentifier: sanahata
   ruleName: సనహత దండకము
   exampleIndex: 1
@@ -10572,7 +10772,7 @@ results:
   matchedLines: 1
   totalLines: 1
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.5055666Z
+  timestamp: 2026-03-10T21:49:58.4948862Z
 - ruleIdentifier: nanata
   ruleName: ననత దండకము
   exampleIndex: 0
@@ -10585,7 +10785,7 @@ results:
   matchedLines: 0
   totalLines: 1
   mismatchCount: 13
-  timestamp: 2026-03-10T17:11:19.5062575Z
+  timestamp: 2026-03-10T21:49:58.4951772Z
 - ruleIdentifier: nanaya
   ruleName: ననయ దండకము
   exampleIndex: 0
@@ -10598,7 +10798,7 @@ results:
   matchedLines: 0
   totalLines: 1
   mismatchCount: 15
-  timestamp: 2026-03-10T17:11:19.5069305Z
+  timestamp: 2026-03-10T21:49:58.4954174Z
 - ruleIdentifier: nata
   ruleName: నత దండకము
   exampleIndex: 0
@@ -10611,12 +10811,12 @@ results:
   matchedLines: 0
   totalLines: 1
   mismatchCount: 2
-  timestamp: 2026-03-10T17:11:19.5072760Z
+  timestamp: 2026-03-10T21:49:58.4956080Z
 - ruleIdentifier: sata
   ruleName: సత దండకము
   exampleIndex: 0
-  poemText: 'గిరిశా కైలాసవాసా ధరాకన్యకాముగ్ధనేత్రాబ్జరాగాంశుమాలీ ననుంజేదుకోవేభవత్పాదసాన్నిధ్యమియగదే దేవదేవా నమస్తే నమస్తే నమస్తే నమః '
-  poemHash: PF48NgWgDT3oOKsGTQdRZzEPnfdKxT5eg4wYK19FXw8=
+  poemText: గిరిశా కైలాసవాసా ధరాకన్యకాముగ్ధనేత్రాబ్జరాగాంశుమాలీ ననుంజేదుకోవేభవత్పాదసాన్నిధ్యమియగదే దేవదేవా నమస్తే నమస్తే నమస్తే నమః
+  poemHash: Clcl0Ip4Cm8i5ISoHwM5n+pHx3v5gU3mRFjbRWoTa6U=
   matchPercentage: 90
   isMatch: true
   yatiMatched: true
@@ -10624,7 +10824,7 @@ results:
   matchedLines: 0
   totalLines: 1
   mismatchCount: 2
-  timestamp: 2026-03-10T17:11:19.5076372Z
+  timestamp: 2026-03-10T21:49:58.4958388Z
 - ruleIdentifier: ragaNa
   ruleName: రగణ దండకము
   exampleIndex: 0
@@ -10637,7 +10837,7 @@ results:
   matchedLines: 0
   totalLines: 1
   mismatchCount: 2
-  timestamp: 2026-03-10T17:11:19.5078783Z
+  timestamp: 2026-03-10T21:49:58.4959939Z
 - ruleIdentifier: tagaNa
   ruleName: తగణ దండకము
   exampleIndex: 0
@@ -10650,7 +10850,7 @@ results:
   matchedLines: 1
   totalLines: 1
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.5086957Z
+  timestamp: 2026-03-10T21:49:58.4965563Z
 - ruleIdentifier: tagaNa
   ruleName: తగణ దండకము
   exampleIndex: 1
@@ -10663,12 +10863,12 @@ results:
   matchedLines: 1
   totalLines: 1
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.5093044Z
+  timestamp: 2026-03-10T21:49:58.4969907Z
 - ruleIdentifier: tagaNa
   ruleName: తగణ దండకము
   exampleIndex: 2
-  poemText: 'శ్రీకంఠ లోకేశ లోకోద్భవస్తాన సంహారకారీ పురారీ మురారీ ప్రియా చంద్రధారీ ...నమస్తే నమస్తే నమః  '
-  poemHash: XTWwe7+C7asA9wi9lLkng+Kr3qNkYJ2MdVf6Hm226yQ=
+  poemText: శ్రీకంఠ లోకేశ లోకోద్భవస్తాన సంహారకారీ పురారీ మురారీ ప్రియా చంద్రధారీ ...నమస్తే నమస్తే నమః
+  poemHash: iMSZ1OPRh8k/EBPs0yfUYFdnEkbpRF2imqqzW55HNnA=
   matchPercentage: 100
   isMatch: true
   yatiMatched: true
@@ -10676,7 +10876,7 @@ results:
   matchedLines: 1
   totalLines: 1
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.5095278Z
+  timestamp: 2026-03-10T21:49:58.4971464Z
 - ruleIdentifier: nagaNa
   ruleName: నగణ దండకము
   exampleIndex: 0
@@ -10689,7 +10889,7 @@ results:
   matchedLines: 1
   totalLines: 1
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.5096741Z
+  timestamp: 2026-03-10T21:49:58.4972452Z
 - ruleIdentifier: hagaNa
   ruleName: హగణ దండకము
   exampleIndex: 0
@@ -10702,7 +10902,7 @@ results:
   matchedLines: 0
   totalLines: 1
   mismatchCount: 17
-  timestamp: 2026-03-10T17:11:19.5099719Z
+  timestamp: 2026-03-10T21:49:58.4974363Z
 - ruleIdentifier: nasahata
   ruleName: నసహత దండకము
   exampleIndex: 0
@@ -10715,7 +10915,7 @@ results:
   matchedLines: 1
   totalLines: 1
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.5101355Z
+  timestamp: 2026-03-10T21:49:58.4975633Z
 - ruleIdentifier: taaLaragaDa
   ruleName: తాళ రగడ
   exampleIndex: 0
@@ -10731,7 +10931,7 @@ results:
   matchedLines: 2
   totalLines: 2
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.5107872Z
+  timestamp: 2026-03-10T21:49:58.4979977Z
 - ruleIdentifier: Sreekara
   ruleName: శ్రీకర
   exampleIndex: 0
@@ -10751,8 +10951,7 @@ results:
   matchedLines: 4
   totalLines: 4
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.5111694Z
-  remarks: శ్రీ పిరాట్ల వెంకట శివరామకృష్ణ ప్రసాద్ గారిచే విరచితం.
+  timestamp: 2026-03-10T21:49:58.4982530Z
 - ruleIdentifier: mattaebha
   ruleName: మత్తేభ (అశ్వధాటి,సితస్తవకః)(మాలిక)
   exampleIndex: 0
@@ -10804,8 +11003,7 @@ results:
   matchedLines: 20
   totalLines: 20
   mismatchCount: 0
-  timestamp: 2026-03-10T17:11:19.5141683Z
-  remarks: శ్రీ సూర్యనారాయణ సరిపల్లి గారిచే విరచితం.
+  timestamp: 2026-03-10T21:49:58.5010979Z
 summary:
   perfectMatches: 335
   highMatches: 503

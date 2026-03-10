@@ -26,7 +26,9 @@
       "Read(//c/Working/Experiments/Chandam3/Verifier/bin/Debug/**)",
       "Bash(grep -c 'text: \"\".*\\\\\\\\n' c:/Working/Experiments/Chandam3/Config/Rules/telugu-complete.yaml)",
       "Bash(ls -lh c:/Working/Experiments/Chandam3/Config/Rules/*.yaml)",
-      "Bash(dotnet test --filter \"GenerateBaselineResults\" --logger \"console;verbosity=normal\")"
+      "Bash(dotnet test --filter \"GenerateBaselineResults\" --logger \"console;verbosity=normal\")",
+      "Bash(dotnet test --filter \"AllExamples_ShouldMatchBaseline\" --logger \"console;verbosity=normal\")",
+      "Read(//c/Working/Experiments/Chandam3/**)"
     ]
   }
 }

@@ -2,7 +2,7 @@
 
 > Telugu/Sanskrit/Kannada poetry meter (Chandam/ఛందం) analysis system with AI-friendly APIs
 
-[![Phase 1](https://img.shields.io/badge/Phase%201-Complete-brightgreen)](docs/execution/PHASE1-FINAL-STATUS.md)
+[![Phase 1](https://img.shields.io/badge/Phase%201-Complete-brightgreen)](docs/execution/PHASE1-COMPLETION-SUMMARY.md)
 [![Phase 2](https://img.shields.io/badge/Phase%202-Planned-blue)](docs/plans/phase2-mcp-servers.md)
 [![Phase 3](https://img.shields.io/badge/Phase%203-Planned-blue)](docs/plans/phase3-wasm.md)
 
@@ -13,8 +13,19 @@
 Chandam (ఛందం) is the prosody/meter system used in Telugu, Sanskrit, and Kannada poetry. This project provides:
 
 - **API Layer** for programmatic access to Chandam analysis
-- **MCP Servers** for AI agent integration (Claude, etc.)
-- **Blazor WASM** for browser-based offline usage
+- **MCP Servers** for AI agent integration (Claude, etc.) - *Planned*
+- **Blazor WASM** for browser-based offline usage - *Planned*
+
+### Key Features
+
+✅ **Dual Format Support** - JSON & YAML config files (YAML preferred for editing)
+✅ **Multi-line Telugu Text** - Readable poems without Unicode escapes
+✅ **Comprehensive Testing** - 554 examples tested across 379 rules
+✅ **High Accuracy** - 96.09% average match across all examples
+✅ **Docker Ready** - Containerized API with health checks
+✅ **Language Flexibility** - ISO 639-1, ISO 639-2, full names, numeric codes
+✅ **Request Logging** - Timing metrics and structured logging
+✅ **Baseline Testing** - Regression detection with 5% tolerance
 
 ## Quick Start
 
@@ -30,11 +41,14 @@ dotnet run
 
 ```bash
 # Build
-dotnet publish Chandam.API.WebApi/Chandam.API.WebApi.csproj -c Release -o publish/chandam-api
+dotnet publish Chandam.API.WebApi/Chandam.API.WebApi.csproj -c Release -o Publish/chandam-api
 docker build -t chandam-api -f Chandam.API.WebApi/Dockerfile.simple .
 
 # Run
 docker run -d -p 8080:8080 --name chandam-api chandam-api
+
+# Check health
+curl http://localhost:8080/health
 
 # Test
 bash scripts/test-api.sh http://localhost:8080
@@ -63,14 +77,16 @@ bash scripts/test-language-codes.sh http://localhost:5000
 
 - [x] 5 core Chandam analysis functions
 - [x] HTTP REST API with 8 endpoints
-- [x] JSON rule loading (379 Telugu rules)
-- [x] ISO 639 language code support
+- [x] JSON & YAML rule loading (379 Telugu rules, dual format)
+- [x] ISO 639 language code support (te, tel, Telugu, numeric)
 - [x] Docker containerization
 - [x] Request/response logging with timing metrics
-- [x] Integration tests with baseline reports
-- [x] 97% match accuracy on test poems
+- [x] Integration tests with baseline reports (554 examples tested)
+- [x] 96.09% average match accuracy across all examples
+- [x] YAML format for human-editable multi-line Telugu text
+- [x] Tilde (~) notation handling for example attribution
 
-**Documentation**: [Phase 1 Final Status](docs/execution/PHASE1-FINAL-STATUS.md)
+**Documentation**: [Phase 1 Completion Summary](docs/execution/PHASE1-COMPLETION-SUMMARY.md)
 
 ### 🔵 Phase 2: MCP Servers (PLANNED)
 - [ ] Stdio MCP server (Claude Desktop integration)
@@ -121,6 +137,21 @@ All formats accepted in API requests.
 4. **GetRuleInfo** - Get rule details (patterns, examples, description)
 5. **GetSamples** - Get example poems for a specific Chandam
 
+## Rule Sets
+
+Two rule sets available:
+
+| Rule Set | Rules | Format | Size | Description |
+|----------|-------|--------|------|-------------|
+| `chandam-rules` | 14 | JSON/YAML | 54KB/42KB | Frequent Telugu Chandams |
+| `telugu-complete` | 379 | JSON/YAML | 672KB/433KB | All Telugu Chandam rules |
+
+**YAML Benefits**:
+- Multi-line Telugu poem text (readable without Unicode escapes)
+- Human-editable for manual rule customization
+- Smaller file size (~35% compression)
+- Version control friendly
+
 ## Project Structure
 
 See [PROJECT_RULES.md](PROJECT_RULES.md) for detailed organization.
@@ -132,15 +163,16 @@ Chandam3/
 │   ├── execution/                 # Status tracking
 │   └── *.md                       # Guidelines, known issues
 ├── scripts/                       # All scripts
-├── tests/                         # Test infrastructure
-│   └── baselines/                # Baseline test results
-├── config/                        # Configuration
-│   └── rules/                    # Rule definitions (JSON)
+├── Tests/                         # Test infrastructure
+│   └── Baselines/                # Baseline test results (YAML)
+├── Config/                        # Configuration
+│   └── Rules/                    # Rule definitions (JSON/YAML)
 ├── Chandam.API/                   # API layer
 ├── Chandam.API.WebApi/           # HTTP REST API
 ├── Chandam.API.IntegrationTests/ # Integration tests
-├── Core/                         # Business logic
-└── Rules/                        # Rule definitions
+├── Chandam.API.Tests/            # Unit tests (placeholder)
+├── Core/                         # Business logic (DO NOT MODIFY)
+└── Rules/                        # Rule definitions (DO NOT MODIFY)
 ```
 
 ## Development
@@ -153,16 +185,22 @@ Chandam3/
 ### Running Tests
 
 ```bash
-# Unit tests (when added)
-dotnet test
-
 # Integration tests (baseline verification)
 cd Chandam.API.IntegrationTests
 dotnet test
+# Tests 554 examples across 379 rules
+# Perfect matches (100%): 335 (60.5%)
+# High matches (>=90%): 503 (90.8%)
+# Average accuracy: 96.09%
 
 # API tests
 bash scripts/test-api.sh http://localhost:5000
 bash scripts/test-language-codes.sh http://localhost:5000
+
+# Unit tests
+cd Chandam.API.Tests
+dotnet test
+# Note: Placeholder project (deferred to Phase 2)
 ```
 
 ### Generating Baseline
@@ -170,7 +208,21 @@ bash scripts/test-language-codes.sh http://localhost:5000
 ```bash
 cd Chandam.API.IntegrationTests
 dotnet test --filter "GenerateBaselineResults"
-# Baseline saved to: Tests/Baselines/baseline-results.json
+# Baseline saved to: Tests/Baselines/baseline-results.yaml
+```
+
+### Config Files
+
+Rule definitions available in dual format:
+- **JSON**: Machine-optimized (672KB for 379 rules)
+- **YAML**: Human-editable with multi-line Telugu text (433KB)
+
+**YAML takes precedence** when both formats exist. Regenerate config files:
+
+```bash
+cd Verifier
+dotnet run -- --generate-json
+# Generates both JSON and YAML files in Config/Rules/
 ```
 
 ### Logging & Monitoring
@@ -185,9 +237,10 @@ API includes comprehensive request/response logging:
 
 - **Project Rules**: [PROJECT_RULES.md](PROJECT_RULES.md) - Organization standards
 - **Coding Preferences**: [docs/CODING_PREFERENCES.md](docs/CODING_PREFERENCES.md)
-- **Docker Guide**: [docs/DOCKER-KNOWN-ISSUES.md](docs/DOCKER-KNOWN-ISSUES.md)
-- **Phase Plans**: [docs/plans/](docs/plans/)
-- **Execution Status**: [docs/execution/](docs/execution/)
+- **Docker Guide**: [docs/DOCKER.md](docs/DOCKER.md) - Docker deployment guide
+- **Phase Plans**: [docs/plans/](docs/plans/) - Detailed phase planning
+- **Execution Status**: [docs/execution/](docs/execution/) - Progress tracking
+- **API Documentation**: [Chandam.API.WebApi/README.md](Chandam.API.WebApi/README.md) - API endpoint reference
 
 ## Key Constraints
 
