@@ -3,6 +3,7 @@ using System.Text.Json;
 using Chandam.API.Helpers;
 using Chandam.API.Models;
 using Chandam.API.Services;
+using Chandam.Dictionary.Services;
 using ModelContextProtocol.Server;
 
 namespace Chandam.MCP.Tools;
@@ -12,6 +13,7 @@ public class ChandamTools
 {
     private readonly ChandamService _service;
     private readonly RuleLoaderService _ruleLoader;
+    private readonly DictionaryService _dictionaryService;
 
     private static readonly JsonSerializerOptions JsonOptions = new()
     {
@@ -19,10 +21,11 @@ public class ChandamTools
         Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping
     };
 
-    public ChandamTools(ChandamService service, RuleLoaderService ruleLoader)
+    public ChandamTools(ChandamService service, RuleLoaderService ruleLoader, DictionaryService dictionaryService)
     {
         _service = service;
         _ruleLoader = ruleLoader;
+        _dictionaryService = dictionaryService;
     }
 
     [McpServerTool, Description("Auto-detect the best matching Chandam (meter/prosody) for a Telugu/Sanskrit poem. Returns the closest matching meter with confidence percentage.")]
@@ -129,5 +132,13 @@ public class ChandamTools
         });
 
         return JsonSerializer.Serialize(ruleList, JsonOptions);
+    }
+
+    [McpServerTool, Description("Look up the meaning of a Telugu word from multiple dictionary sources (Andhrabharati, Wiktionary, Shabdkosh). Returns definitions from all available sources.")]
+    public async Task<string> GetWordMeaning(
+        [Description("The Telugu word to look up")] string word)
+    {
+        var results = await _dictionaryService.LookupAsync(word);
+        return JsonSerializer.Serialize(results, JsonOptions);
     }
 }

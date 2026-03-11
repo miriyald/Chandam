@@ -1,0 +1,58 @@
+@page "/determine"
+@inject ChandamService Service
+
+<h2>Determine Chandam</h2>
+<p>Auto-detect the best matching meter for a poem.</p>
+
+<PoemInput @bind-PoemText="poemText" @bind-Language="language"
+           @bind-MatchYati="matchYati" @bind-MatchPrasa="matchPrasa" />
+
+<button class="btn btn-primary" @onclick="Analyze" disabled="@(string.IsNullOrWhiteSpace(poemText) || analyzing)">
+    @(analyzing ? "Analyzing..." : "Determine Chandam")
+</button>
+
+@if (result != null)
+{
+    @if (result.Success && result.Matches?.Count > 0)
+    {
+        <h3>Result</h3>
+        @foreach (var match in result.Matches)
+        {
+            <ResultDisplay Match="match" />
+        }
+    }
+    else
+    {
+        <ResultDisplay ErrorMessage="@result.ErrorMessage" />
+    }
+}
+
+@code {
+    private string poemText = "";
+    private string language = "te";
+    private bool matchYati = true;
+    private bool matchPrasa = true;
+    private bool analyzing;
+    private DetermineResponse? result;
+
+    private async Task Analyze()
+    {
+        analyzing = true;
+        result = null;
+        StateHasChanged();
+
+        await Task.Yield(); // Let UI update
+
+        var langEnum = Chandam.API.Helpers.LanguageCodeMapper.ParseLanguage(language);
+        var request = new DetermineRequest
+        {
+            PoemText = poemText,
+            MatchYati = matchYati,
+            MatchPrasa = matchPrasa,
+            Language = langEnum ?? Chandam.Rules.RuleLanguage.Telugu
+        };
+
+        result = Service.Determine(request);
+        analyzing = false;
+    }
+}

@@ -5,6 +5,7 @@
 [![Phase 1](https://img.shields.io/badge/Phase%201-Complete-brightgreen)](Docs/execution/PHASE1-COMPLETION-SUMMARY.md)
 [![Phase 2](https://img.shields.io/badge/Phase%202-Complete-brightgreen)](Docs/plans/phase2-mcp-servers.md)
 [![Phase 3](https://img.shields.io/badge/Phase%203-Planned-blue)](Docs/plans/phase3-wasm.md)
+[![Phase 4](https://img.shields.io/badge/Phase%204-Complete-brightgreen)](Docs/plans/phase4-dictionary.md)
 
 **Website**: https://chandamu.github.io/
 
@@ -20,7 +21,7 @@ Chandam (ఛందం) is the prosody/meter system used in Telugu, Sanskrit, and
 
 - **379 Telugu Chandam rules** with 554 tested examples
 - **96.09% average match accuracy** across all examples
-- **6 MCP tools** for AI agent integration (stdio + HTTP/SSE)
+- **7 MCP tools** for AI agent integration (stdio + HTTP/SSE)
 - **REST API** with 8 endpoints and ISO 639 language code support
 - **Docker containers** for API, MCP HTTP, and MCP Stdio servers
 - **Dual format config** - JSON & YAML (YAML preferred for Telugu text)
@@ -94,7 +95,7 @@ docker run -i chandam-mcp-stdio       # MCP Stdio (interactive)
 
 ## MCP Tools
 
-6 tools available via both stdio and HTTP/SSE transports:
+7 tools available via both stdio and HTTP/SSE transports:
 
 | Tool | Description |
 |------|-------------|
@@ -104,6 +105,7 @@ docker run -i chandam-mcp-stdio       # MCP Stdio (interactive)
 | `get_rule_info` | Get rule details, patterns, description |
 | `get_examples` | Get example poems for a Chandam |
 | `list_rules` | List all available rules (with language filter) |
+| `get_word_meaning` | Look up Telugu word meanings from multiple dictionaries |
 
 ## REST API Endpoints
 
@@ -143,10 +145,16 @@ All formats accepted in API and MCP requests.
 ### Phase 2: MCP Servers - COMPLETE
 - Stdio MCP server (Claude Desktop)
 - HTTP/SSE MCP server (remote access)
-- 6 MCP tools with full JSON schemas
+- 7 MCP tools with full JSON schemas
 - 13 integration tests (all passing)
 - Docker containers for both servers
 - Telugu text preserved in all responses
+
+### Phase 4: Dictionary/Word Meanings - COMPLETE
+- Word meaning lookup from 3 external sources (Andhrabharati, Wiktionary, Shabdkosh)
+- Disk-based caching (one JSON file per word)
+- New MCP tool: `get_word_meaning`
+- Ported from existing Python implementations
 
 ### Phase 3: Blazor WASM - PLANNED
 - Browser-based WASM app
@@ -159,7 +167,8 @@ All formats accepted in API and MCP requests.
 Chandam3/
 ├── Chandam.API/                  # API layer (ChandamService, RuleLoader)
 ├── Chandam.API.WebApi/           # HTTP REST API
-├── Chandam.MCP.Tools/            # Shared MCP tool definitions (6 tools)
+├── Chandam.Dictionary/            # Word meaning lookup (3 sources + disk cache)
+├── Chandam.MCP.Tools/            # Shared MCP tool definitions (7 tools)
 ├── Chandam.MCP.Stdio/            # MCP Stdio server (Claude Desktop)
 ├── Chandam.MCP.Http/             # MCP HTTP/SSE server (remote access)
 ├── Chandam.MCP.Tests/            # MCP integration tests (13 tests)
@@ -200,6 +209,7 @@ bash scripts/test-api.sh http://localhost:5000
 
 - [PROJECT_RULES.md](PROJECT_RULES.md) - Organization standards
 - [Phase 2 Plan](Docs/plans/phase2-mcp-servers.md) - MCP server details
+- [Phase 4 Plan](Docs/plans/phase4-dictionary.md) - Dictionary/word meanings
 - [Docker Guide](Docs/DOCKER.md) - Docker deployment
 - [API Reference](Chandam.API.WebApi/README.md) - REST API docs
 

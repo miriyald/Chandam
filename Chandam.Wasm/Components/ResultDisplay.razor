@@ -1,0 +1,50 @@
+@if (!string.IsNullOrEmpty(ErrorMessage))
+{
+    <div class="error-message">@ErrorMessage</div>
+}
+else if (Match != null)
+{
+    <div class="card">
+        <div class="result-header">
+            <span class="match-name">@Match.Name</span>
+            <span class="match-percentage @GetPercentageClass(Match.MatchPercentage)">
+                @Match.MatchPercentage.ToString("F0")%
+            </span>
+        </div>
+
+        @if (!string.IsNullOrEmpty(Match.Description))
+        {
+            <p class="match-description">@Match.Description</p>
+        }
+
+        <div style="font-size: 0.85rem; color: #666;">
+            <span>Type: @Match.PadyamType</span>
+            @if (!string.IsNullOrEmpty(Match.Frequency))
+            {
+                <span> | Frequency: @Match.Frequency</span>
+            }
+        </div>
+
+        @if (Match.Details?.Mismatches != null && Match.Details.Mismatches.Count > 0)
+        {
+            <div class="mismatches">
+                <strong>Mismatches:</strong>
+                <ul>
+                    @foreach (var mismatch in Match.Details.Mismatches)
+                    {
+                        <li>@mismatch</li>
+                    }
+                </ul>
+            </div>
+        }
+    </div>
+}
+
+@code {
+    [Parameter] public ChandamMatch? Match { get; set; }
+    [Parameter] public string? ErrorMessage { get; set; }
+
+    private string GetPercentageClass(double percentage) =>
+        percentage >= 80 ? "match-high" :
+        percentage >= 50 ? "match-medium" : "match-low";
+}

@@ -6,8 +6,10 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text.Json;
+#if !EXCLUDE_YAML
 using YamlDotNet.Serialization;
 using YamlDotNet.Serialization.NamingConventions;
+#endif
 
 namespace Chandam.API.Services;
 
@@ -149,12 +151,15 @@ public class RuleLoaderService
 
         return extension switch
         {
+#if !EXCLUDE_YAML
             ".yaml" or ".yml" => LoadFromYamlString(content),
+#endif
             ".json" => LoadFromJsonString(content),
             _ => null
         };
     }
 
+#if !EXCLUDE_YAML
     /// <summary>
     /// Load rules from YAML string (human-editable format)
     /// </summary>
@@ -182,6 +187,7 @@ public class RuleLoaderService
             return null;
         }
     }
+#endif
 
     /// <summary>
     /// Load rules from JSON string

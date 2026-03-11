@@ -1,0 +1,40 @@
+@using Chandam.API.Helpers
+
+<div class="card">
+    <div>
+        <textarea rows="8" @bind="PoemText" @bind:event="oninput"
+                  placeholder="పద్యం ఇక్కడ టైప్ చేయండి... (Enter poem here...)"></textarea>
+    </div>
+
+    <div class="options-row">
+        <label>
+            Language:
+            <select @bind="Language">
+                <option value="te">Telugu</option>
+                <option value="kn">Kannada</option>
+                <option value="sa">Sanskrit</option>
+            </select>
+        </label>
+
+        <label>
+            <input type="checkbox" @bind="MatchYati" />
+            Yati (యతి)
+        </label>
+
+        <label>
+            <input type="checkbox" @bind="MatchPrasa" />
+            Prasa (ప్రాస)
+        </label>
+    </div>
+</div>
+
+@code {
+    [Parameter] public string PoemText { get; set; } = "";
+    [Parameter] public EventCallback<string> PoemTextChanged { get; set; }
+    [Parameter] public string Language { get; set; } = "te";
+    [Parameter] public EventCallback<string> LanguageChanged { get; set; }
+    [Parameter] public bool MatchYati { get; set; } = true;
+    [Parameter] public EventCallback<bool> MatchYatiChanged { get; set; }
+    [Parameter] public bool MatchPrasa { get; set; } = true;
+    [Parameter] public EventCallback<bool> MatchPrasaChanged { get; set; }
+}

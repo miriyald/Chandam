@@ -6,6 +6,10 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(ExcludeYaml)' == 'true'">
+    <DefineConstants>$(DefineConstants);EXCLUDE_YAML</DefineConstants>
+  </PropertyGroup>
+
   <ItemGroup>
     <ProjectReference Include="..\Core\Chandam.Core.csproj" />
     <ProjectReference Include="..\Rules\Chandam.Rules.csproj" />
@@ -16,7 +20,7 @@
 
   <ItemGroup>
     <PackageReference Include="System.Text.Json" Version="9.0.1" />
-    <PackageReference Include="YamlDotNet" Version="16.2.1" />
+    <PackageReference Include="YamlDotNet" Version="16.2.1" Condition="'$(ExcludeYaml)' != 'true'" />
   </ItemGroup>
 
 </Project>

@@ -1,5 +1,7 @@
 using System.Text.Json;
 using Chandam.API.Services;
+using Chandam.Dictionary.Cache;
+using Chandam.Dictionary.Services;
 using Chandam.MCP.Tools;
 
 namespace Chandam.MCP.Tests;
@@ -19,7 +21,8 @@ public class ChandamToolsTests
         var ruleLoader = new RuleLoaderService();
         ruleLoader.LoadAllRuleSets(null);
         var service = new ChandamService(ruleLoader);
-        _tools = new ChandamTools(service, ruleLoader);
+        var dictionaryService = new DictionaryService([], new DiskCache("test-cache"));
+        _tools = new ChandamTools(service, ruleLoader, dictionaryService);
     }
 
     [Fact]

@@ -34,7 +34,16 @@
       "Bash(dotnet build:*)",
       "Bash(dotnet sln:*)",
       "Bash(dotnet test:*)",
-      "Bash(timeout 15 dotnet run --project Chandam.MCP.Stdio)"
+      "Bash(timeout 15 dotnet run --project Chandam.MCP.Stdio)",
+      "Bash(dotnet publish:*)",
+      "Bash(ls -lh icudt_*.br)",
+      "Bash(ls -lh YamlDotNet*.br)",
+      "Bash(ls -lh System.Text.RegularExpressions*.br)",
+      "Bash(ls -lhS *.br)",
+      "Bash(du -ch c:/Working/Experiments/Chandam3/Publish/chandam-wasm/wwwroot/_framework/*.br)",
+      "Bash(du -ch c:/Working/Experiments/Chandam3/Publish/chandam-wasm-opt/wwwroot/_framework/*.br)",
+      "Bash(ls -lh c:/Working/Experiments/Chandam3/Publish/chandam-wasm-opt/wwwroot/_framework/icudt*.br)",
+      "Bash(ls -lh c:/Working/Experiments/Chandam3/Publish/chandam-wasm-opt/wwwroot/_framework/YamlDotNet*.br)"
     ]
   }
 }
