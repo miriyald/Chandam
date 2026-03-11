@@ -14,10 +14,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Rules\Chandam.Rules.csproj" />
-    <ProjectReference Include="..\Samples\Chandam.Samples.csproj" />
-    <ProjectReference Include="..\Strings\Chandam.Indic.csproj" />
-    <ProjectReference Include="..\Util\Chandam.Util.csproj" />
+    <ProjectReference Include="..\Chandam.Rules\Chandam.Rules.csproj" />
+    <ProjectReference Include="..\Chandam.Samples\Chandam.Samples.csproj" />
+    <ProjectReference Include="..\Chandam.Indic\Chandam.Indic.csproj" />
+    <ProjectReference Include="..\Chandam.Util\Chandam.Util.csproj" />
   </ItemGroup>
 
 </Project>

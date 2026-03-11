@@ -30,7 +30,7 @@ builder.Services.ConfigureHttpJsonOptions(options =>
 });
 
 // Register Chandam services
-var rulesPath = builder.Configuration.GetValue<string>("Chandam:RulesPath") ?? "Config/Rules";
+var rulesPath = builder.Configuration.GetValue<string>("Chandam:RulesPath") ?? "Chandam.Config/Rules";
 var ruleSet = builder.Configuration.GetValue<string>("Chandam:RuleSet") ??
               Environment.GetEnvironmentVariable("CHANDAM_RULESET") ?? "default";
 

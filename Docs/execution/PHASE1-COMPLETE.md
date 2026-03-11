@@ -54,11 +54,11 @@ Chandam3/
 │   ├── appsettings.json              ✅ Configuration
 │   └── README.md                      ✅ API documentation
 │
-├── Config/Rules/
+├── Chandam.Config/Chandam.Rules/
 │   ├── chandam-rules.json            ✅ 14 frequent rules (54KB)
 │   └── telugu-complete.json          ✅ 379 complete rules (672KB)
 │
-├── Verifier/
+├── Chandam.Tasks/
 │   └── GenerateRulesJSON.cs          ✅ JSON generation tool
 │
 ├── docker-compose.yml                ✅ Orchestration
@@ -79,7 +79,7 @@ docker build -f Chandam.API.WebApi/Dockerfile -t chandam-api:latest .
 
 # Run container
 docker run -d -p 8080:8080 \
-  -v $(pwd)/Config/Rules:/app/Config/Rules \
+  -v $(pwd)/Chandam.Config/Rules:/app/Chandam.Config/Rules \
   chandam-api:latest
 
 # Test API
@@ -250,7 +250,7 @@ Top 5 matches:
 ┌──────────────────┐
 │ Rule Source      │
 ├──────────────────┤
-│ 1. JSON Files    │ ← Config/Rules/*.json
+│ 1. JSON Files    │ ← Chandam.Config/Chandam.Rules/*.json
 │    (external)    │   (14-379 rules)
 │                  │
 │ 2. Compiled      │ ← TeluguRules.Rules
@@ -295,7 +295,7 @@ ASPNETCORE_ENVIRONMENT=Production
 ### Volume Mounts
 
 ```bash
-./Config/Rules → /app/Config/Rules (read-only)
+./Chandam.Config/Rules → /app/Chandam.Config/Rules (read-only)
 ```
 
 ### Running Multiple Instances
@@ -341,7 +341,7 @@ docker run -d -p 8081:8080 -e CHANDAM_RULESET=telugu-complete chandam-api
 
 ### 🔒 Hidden Features (Internal)
 
-- Multiple rule sets in `Config/Rules/` folder
+- Multiple rule sets in `Chandam.Config/Chandam.Rules/` folder
 - Rule set selection via `CHANDAM_RULESET` env var
 - Fallback to compiled rules if JSON missing
 - Not exposed in customer-facing docs
@@ -375,7 +375,7 @@ All existing business logic in `Chandam.Core` remains untouched. API layer is pu
 ### 3. Flexible Rule Loading
 ```csharp
 // Multiple named rule sets
-Config/Rules/
+Chandam.Config/Chandam.Rules/
 ├── chandam-rules.json       (default, 14 frequent)
 ├── telugu-complete.json     (all 379 Telugu)
 └── experimental.json        (custom/test)

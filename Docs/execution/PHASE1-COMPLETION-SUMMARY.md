@@ -185,8 +185,8 @@ Chandam3/
 **Key Rules**:
 - **All .md files** → `docs/` (except README.md, PROJECT_RULES.md)
 - **All scripts** → `scripts/`
-- **Test data** → `Tests/Baselines/`
-- **DO NOT MODIFY** → `Core/`, `Rules/`, `Util/`
+- **Test data** → `Chandam.Config/Baselines/`
+- **DO NOT MODIFY** → `Chandam.Core/`, `Chandam.Rules/`, `Chandam.Util/`
 
 **Benefits**:
 - Consistency across phases
@@ -354,7 +354,7 @@ bash scripts/test-language-codes.sh http://localhost:8080
 ```bash
 cd Chandam.API.IntegrationTests
 dotnet test --filter "GenerateBaselineResults"
-# Output: Tests/Baselines/baseline-results.json
+# Output: Chandam.Config/Baselines/baseline-results.json
 ```
 
 ### Verify No Regressions
@@ -388,16 +388,16 @@ dotnet test --filter "HighConfidenceExamples"
 - `docs/execution/PHASE1-COMPLETION-SUMMARY.md` (this file)
 
 ### YAML Support (Added)
-- `Config/Rules/chandam-rules.yaml` - 14 frequent rules in YAML format
-- `Config/Rules/telugu-complete.yaml` - 379 complete rules in YAML format
+- `Chandam.Config/Chandam.Rules/chandam-rules.yaml` - 14 frequent rules in YAML format
+- `Chandam.Config/Chandam.Rules/telugu-complete.yaml` - 379 complete rules in YAML format
 - `Chandam.API/Services/RuleLoaderService.cs` - Updated to load both YAML and JSON
-- `Verifier/GenerateRulesJSON.cs` - Updated to generate both formats
+- `Chandam.Tasks/GenerateRulesJSON.cs` - Updated to generate both formats
 - YamlDotNet package reference added to `Chandam.API.csproj` and `Verifier.csproj`
 
 ### Organization
 - `docs/` folder structure
 - `scripts/` folder with all scripts moved
-- `Tests/Baselines/` for test data
+- `Chandam.Config/Baselines/` for test data
 
 ---
 

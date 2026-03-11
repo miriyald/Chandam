@@ -5,11 +5,11 @@ WORKDIR /src
 # Copy project files
 COPY ["Chandam.API.WebApi/Chandam.API.WebApi.csproj", "Chandam.API.WebApi/"]
 COPY ["Chandam.API/Chandam.API.csproj", "Chandam.API/"]
-COPY ["Core/Chandam.Core.csproj", "Core/"]
-COPY ["Rules/Chandam.Rules.csproj", "Rules/"]
-COPY ["Util/Chandam.Util.csproj", "Util/"]
-COPY ["Strings/Chandam.Indic.csproj", "Strings/"]
-COPY ["Samples/Chandam.Samples.csproj", "Samples/"]
+COPY ["Chandam.Core/Chandam.Core.csproj", "Chandam.Core/"]
+COPY ["Chandam.Rules/Chandam.Rules.csproj", "Chandam.Rules/"]
+COPY ["Chandam.Util/Chandam.Util.csproj", "Chandam.Util/"]
+COPY ["Chandam.Indic/Chandam.Indic.csproj", "Chandam.Indic/"]
+COPY ["Chandam.Samples/Chandam.Samples.csproj", "Chandam.Samples/"]
 
 # Restore dependencies (will restore for all targets)
 RUN dotnet restore "Chandam.API.WebApi/Chandam.API.WebApi.csproj"
@@ -17,11 +17,11 @@ RUN dotnet restore "Chandam.API.WebApi/Chandam.API.WebApi.csproj"
 # Copy source code
 COPY Chandam.API.WebApi/ Chandam.API.WebApi/
 COPY Chandam.API/ Chandam.API/
-COPY Core/ Core/
-COPY Rules/ Rules/
-COPY Util/ Util/
-COPY Strings/ Strings/
-COPY Samples/ Samples/
+COPY Chandam.Core/ Chandam.Core/
+COPY Chandam.Rules/ Chandam.Rules/
+COPY Chandam.Util/ Chandam.Util/
+COPY Chandam.Indic/ Chandam.Indic/
+COPY Chandam.Samples/ Chandam.Samples/
 
 # Build and publish
 WORKDIR "/src/Chandam.API.WebApi"
@@ -39,10 +39,10 @@ RUN apt-get update && apt-get install -y curl && rm -rf /var/lib/apt/lists/*
 COPY --from=build /app/publish .
 
 # Copy config files (if they exist)
-COPY --from=build /src/config ./config
+COPY --from=build /src/Chandam.Config ./Chandam.Config
 
 # Create volume mount point for rule files
-VOLUME ["/app/Config/Rules"]
+VOLUME ["/app/Chandam.Config/Rules"]
 
 # Expose port
 EXPOSE 8080

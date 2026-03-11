@@ -11,10 +11,10 @@ RUN apt-get update && apt-get install -y curl && rm -rf /var/lib/apt/lists/*
 COPY Publish/chandam-api .
 
 # Copy config files
-COPY Config ./Config
+COPY Chandam.Config ./Chandam.Config
 
 # Create volume mount point for rule files
-VOLUME ["/app/Config/Rules"]
+VOLUME ["/app/Chandam.Config/Rules"]
 
 # Expose port
 EXPOSE 8080

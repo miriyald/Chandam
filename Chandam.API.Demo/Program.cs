@@ -14,9 +14,9 @@ class Program
         Console.WriteLine("=== Chandam.API Demo ===\n");
 
         // Initialize services
-        // Try to find Config/Rules in project root
+        // Try to find Chandam.Config/Rules in project root
         var projectRoot = FindProjectRoot();
-        var rulesPath = projectRoot != null ? System.IO.Path.Combine(projectRoot, "config", "rules") : null;
+        var rulesPath = projectRoot != null ? System.IO.Path.Combine(projectRoot, "Chandam.Config", "Rules") : null;
 
         var ruleLoader = new RuleLoaderService(rulesPath);
         ruleLoader.LoadAllRuleSets();
@@ -147,7 +147,7 @@ class Program
         var current = System.IO.Directory.GetCurrentDirectory();
         while (current != null)
         {
-            var configPath = System.IO.Path.Combine(current, "config", "rules");
+            var configPath = System.IO.Path.Combine(current, "config", "Rules");
             if (System.IO.Directory.Exists(configPath))
             {
                 return current;

@@ -7,9 +7,9 @@ WORKDIR /app
 RUN apt-get update && apt-get install -y curl && rm -rf /var/lib/apt/lists/*
 
 COPY Publish/chandam-mcp-http .
-COPY Config ./Config
+COPY Chandam.Config ./Chandam.Config
 
-VOLUME ["/app/Config/Rules"]
+VOLUME ["/app/Chandam.Config/Rules"]
 
 EXPOSE 3001
 

@@ -173,11 +173,12 @@ Chandam3/
 ├── Chandam.MCP.Http/             # MCP HTTP/SSE server (remote access)
 ├── Chandam.MCP.Tests/            # MCP integration tests (13 tests)
 ├── Chandam.API.IntegrationTests/ # API integration tests (554 examples)
-├── Core/                         # Business logic (DO NOT MODIFY)
-├── Rules/                        # Rule definitions (DO NOT MODIFY)
-├── Config/Rules/                 # Rule config files (JSON/YAML)
+├── Chandam.Core/                 # Business logic (DO NOT MODIFY)
+├── Chandam.Rules/                # Rule definitions (DO NOT MODIFY)
+├── Chandam.Config/Rules/         # Rule config files (JSON/YAML)
+├── Chandam.Config/Baselines/     # Baseline test data
 ├── Docs/                         # Documentation & plans
-└── Scripts/                      # Test & utility scripts
+└── Docs/Scripts/                 # Test & utility scripts
 ```
 
 ## Development

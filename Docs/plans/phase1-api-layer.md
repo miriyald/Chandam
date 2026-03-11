@@ -9,7 +9,7 @@ Create a clean API layer (Chandam.API) that wraps existing business logic and re
 - ✅ Implement ChandamService with 5 core functions
 - ✅ Return JSON responses (preserve Telugu descriptions)
 - ✅ Enhanced Example metadata (author, date, notes, text)
-- ✅ **Use existing Verifier/GenerateRulesJS.cs to generate JSON rule files**
+- ✅ **Use existing Chandam.Tasks/GenerateRulesJS.cs to generate JSON rule files**
 - ✅ **Docker container with HTTP API (Chandam.API.WebApi)**
 - ✅ Demo application validates all functions
 - ⏳ Unit tests with sample poems (deferred to Phase 2 if needed)
@@ -20,14 +20,14 @@ Create a clean API layer (Chandam.API) that wraps existing business logic and re
 ## Rule Loading Design
 
 ### Concept: Named Rule Sets
-- Store multiple rule collections in `Config/Rules/` folder
+- Store multiple rule collections in `Chandam.Config/Chandam.Rules/` folder
 - Each rule set has an identifier (e.g., "default", "telugu-common", "sanskrit-all")
 - **Hidden feature**: Select via HTTP header `X-Chandam-RuleSet: <identifier>`
 - Default: Use compiled rules if no config found
 
 ### Rule Set Files
 ```
-Config/Rules/
+Chandam.Config/Chandam.Rules/
 ├── chandam-rules.json          # Default rule set (14 frequent rules)
 ├── chandam-rules.yaml          # Same rules in human-editable YAML format
 ├── telugu-complete.json        # All Telugu rules (379)
@@ -58,13 +58,13 @@ Package Chandam.API with a simple HTTP wrapper for testing and deployment. This 
 ### Components
 - **Chandam.API.WebApi**: Minimal ASP.NET Core Web API
 - **Dockerfile**: Multi-stage build (restore → build → runtime)
-- **docker-compose.yml**: Orchestration with volume mounts for Config/Rules
+- **docker-compose.yml**: Orchestration with volume mounts for Chandam.Config/Rules
 
 ### Docker Image
 ```
 chandam-api:latest
 ├── Ports: 8080 (HTTP)
-├── Volume: /app/Config/Rules (rule sets)
+├── Volume: /app/Chandam.Config/Rules (rule sets)
 ├── Env: CHANDAM_RULESET (optional rule set selector)
 └── Health: /health endpoint
 ```
@@ -101,16 +101,16 @@ Chandam.API/
 
 ### Step 2: Generate JSON/YAML Rule Files using Verifier
 
-**Existing Tool**: `Verifier/GenerateRulesJS.cs` already exports rules to JSON format!
+**Existing Tool**: `Chandam.Tasks/GenerateRulesJS.cs` already exports rules to JSON format!
 
 **Approach**: Extend the Verifier project to generate both JSON and YAML files in our RuleSetDto format.
 
-**Create new class**: `Verifier/GenerateRulesJSON.cs`
+**Create new class**: `Chandam.Tasks/GenerateRulesJSON.cs`
 
 ```csharp
 public class GenerateRulesJSON
 {
-    public void GenerateAllRuleSets(string outputDirectory = "Config/Rules")
+    public void GenerateAllRuleSets(string outputDirectory = "Chandam.Config/Rules")
     {
         // Generate chandam-rules.json (frequent rules only)
         GenerateFrequentRules();
@@ -125,13 +125,13 @@ public class GenerateRulesJSON
     private void GenerateFrequentRules()
     {
         // Filter Manager.Rules() by Frequency.Frequent
-        // Output to Config/Rules/chandam-rules.json
+        // Output to Chandam.Config/Chandam.Rules/chandam-rules.json
     }
 
     private void GenerateTeluguComplete()
     {
         // All Telugu rules from Manager.Rules()
-        // Output to Config/Rules/telugu-complete.json
+        // Output to Chandam.Config/Chandam.Rules/telugu-complete.json
     }
 }
 ```
@@ -142,7 +142,7 @@ public class GenerateRulesJSON
 - Convert examples to enhanced format with metadata
 - Output in RuleSetDto JSON format
 
-**Add to Verifier/Program.cs**:
+**Add to Chandam.Tasks/Program.cs**:
 ```csharp
 // Add option to generate JSON rule files
 if (args.Contains("--generate-json"))
@@ -170,7 +170,7 @@ dotnet run -- --generate-json
 
 ### Step 5: RuleLoaderService ✅ DONE
 
-- Loads rules from JSON files in `Config/Rules/`
+- Loads rules from JSON files in `Chandam.Config/Chandam.Rules/`
 - Manages multiple named rule sets
 - Switches between rule sets (hidden feature)
 - Fallback to compiled rules via `Manager.Rules()`
@@ -288,15 +288,15 @@ public void GetSamples_ReturnsExamplesWithMetadata()
 ## File References (Copy/Adapt Code)
 
 **Critical files to reference**:
-- `Verifier/GenerateRulesJS.cs` - **Extend to generate JSON rule files**
-- `Verifier/GenerateRulesJS.cs:339-415` - **ExportRules.ToJSON() method to reuse**
+- `Chandam.Tasks/GenerateRulesJS.cs` - **Extend to generate JSON rule files**
+- `Chandam.Tasks/GenerateRulesJS.cs:339-415` - **ExportRules.ToJSON() method to reuse**
 - `Client/App/MapRules.cs:53-86` - Rule2 to Rule converter (already adapted)
 - `Client/App/External.cs:111-303` - Rule2 class definition (referenced for RuleDto)
-- `Util/Rule.cs:22-33` - Existing Example class with Author, Reference, Remarks, Text
-- `Rules/Helper/Tel.RuleHelper.cs:29+` - TeluguRules.Rules array
-- `Rules/Helper/RuleManager.cs:29-50` - Manager.Register() and Manager.FetchRule()
-- `Core/Business/Business3.cs` - Determine, TryMatch methods
-- `Core/Business/Business.cs` - Scores, Rules, Samples methods
+- `Chandam.Util/Rule.cs:22-33` - Existing Example class with Author, Reference, Remarks, Text
+- `Chandam.Rules/Helper/Tel.RuleHelper.cs:29+` - TeluguRules.Rules array
+- `Chandam.Rules/Helper/RuleManager.cs:29-50` - Manager.Register() and Manager.FetchRule()
+- `Chandam.Core/Business/Business3.cs` - Determine, TryMatch methods
+- `Chandam.Core/Business/Business.cs` - Scores, Rules, Samples methods
 
 ## Deliverables
 
@@ -308,11 +308,11 @@ public void GetSamples_ReturnsExamplesWithMetadata()
 
 ✅ **RuleDtoConverter** - Converts JSON → Rule objects
 
-✅ **Verifier/GenerateRulesJSON.cs** - Generates both JSON and YAML rule files
+✅ **Chandam.Tasks/GenerateRulesJSON.cs** - Generates both JSON and YAML rule files
 
-✅ **Config/Rules/*.json** - Generated JSON rule files using Verifier
+✅ **Chandam.Config/Chandam.Rules/*.json** - Generated JSON rule files using Verifier
 
-✅ **Config/Rules/*.yaml** - Generated YAML rule files (human-editable format)
+✅ **Chandam.Config/Chandam.Rules/*.yaml** - Generated YAML rule files (human-editable format)
 
 ⏳ **ChandamService** - 5 core functions returning JSON (TODO)
 
@@ -341,7 +341,7 @@ public void GetSamples_ReturnsExamplesWithMetadata()
 2. ✅ Implement ExampleDto, RuleDto, RuleDtoConverter
 3. ✅ Implement RuleLoaderService
 4. ✅ Extend Verifier to generate JSON rule files
-5. ✅ Run Verifier to generate Config/Rules/*.json files (14 + 379 rules)
+5. ✅ Run Verifier to generate Chandam.Config/Chandam.Rules/*.json files (14 + 379 rules)
 6. ✅ Create Request/Response models (all 5 functions)
 7. ✅ Implement ChandamService with 5 functions
 8. ✅ Implement DescriptionBuilder (Telugu descriptions)
@@ -367,7 +367,7 @@ public void GetSamples_ReturnsExamplesWithMetadata()
 - **chandam-rules.yaml**: Same rules in YAML format (42KB, human-editable)
 - **telugu-complete.json**: 379 complete Telugu rules (672KB)
 - **telugu-complete.yaml**: Same rules in YAML format (432KB, human-editable)
-- **Generated by**: `Verifier/GenerateRulesJSON.cs`
+- **Generated by**: `Chandam.Tasks/GenerateRulesJSON.cs`
 - **YAML Benefits**: Multi-line Telugu text readable without Unicode escapes, easier manual editing
 
 ### 3. Core Services

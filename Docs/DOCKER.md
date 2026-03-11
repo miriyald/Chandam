@@ -19,7 +19,7 @@ docker run -d -p 8080:8080 --name chandam-api chandam-api:latest
 **With JSON rule files:**
 ```bash
 docker run -d -p 8080:8080 \
-  -v $(pwd)/Config/Rules:/app/Config/Rules:ro \
+  -v $(pwd)/Chandam.Config/Rules:/app/Chandam.Config/Rules:ro \
   --name chandam-api \
   chandam-api:latest
 ```
@@ -28,7 +28,7 @@ docker run -d -p 8080:8080 \
 ```bash
 docker run -d -p 8080:8080 \
   -e CHANDAM_RULESET=telugu-complete \
-  -v $(pwd)/Config/Rules:/app/Config/Rules:ro \
+  -v $(pwd)/Chandam.Config/Rules:/app/Chandam.Config/Rules:ro \
   --name chandam-api \
   chandam-api:latest
 ```
@@ -85,7 +85,7 @@ docker-compose down
 
 | Host Path | Container Path | Description |
 |-----------|----------------|-------------|
-| `./Config/Rules` | `/app/Config/Rules` | JSON rule files directory |
+| `./Chandam.Config/Rules` | `/app/Chandam.Config/Rules` | JSON rule files directory |
 
 ## Available Rule Sets
 
@@ -172,7 +172,7 @@ curl http://localhost:9000/health
 ```bash
 docker run -d -p 8080:8080 \
   -e CHANDAM_RULESET=sanskrit-common \
-  -v $(pwd)/Config/Rules:/app/Config/Rules:ro \
+  -v $(pwd)/Chandam.Config/Rules:/app/Chandam.Config/Rules:ro \
   chandam-api:latest
 ```
 
@@ -225,7 +225,7 @@ docker run -p 9000:8080 chandam-api:latest
 
 ```bash
 # Verify volume mount
-docker exec chandam-api ls -la /app/Config/Rules
+docker exec chandam-api ls -la /app/Chandam.Config/Rules
 
 # Check environment
 docker exec chandam-api env | grep CHANDAM

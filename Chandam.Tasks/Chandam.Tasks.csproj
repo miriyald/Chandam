@@ -1,0 +1,39 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>Verifier</RootNamespace>
+    <AssemblyName>Chandam.Tasks</AssemblyName>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <ApplicationIcon>Properties\Research.ico</ApplicationIcon>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="DB\**" />
+    <Compile Remove="DBWorker.cs" />
+    <Compile Remove="Downloads.cs" />
+    <Compile Remove="ExcelUtil.cs" />
+    <Compile Remove="Music\CombineMP3.cs" />
+    <Compile Remove="Music\Wave.cs" />
+    <Compile Remove="PDFUtil.cs" />
+    <Compile Remove="PlayGround_backup.cs" />
+    <Compile Remove="Seq2BinaryMusic.cs" />
+    <Compile Remove="SubscribersList.cs" />
+    <Compile Remove="Work.cs" />
+    <Compile Remove="Worker.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="YamlDotNet" Version="16.2.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Chandam.Core\Chandam.Core.csproj" />
+    <ProjectReference Include="..\Chandam.Rules\Chandam.Rules.csproj" />
+    <ProjectReference Include="..\Chandam.Samples\Chandam.Samples.csproj" />
+    <ProjectReference Include="..\Chandam.Indic\Chandam.Indic.csproj" />
+    <ProjectReference Include="..\Chandam.Util\Chandam.Util.csproj" />
+  </ItemGroup>
+
+</Project>

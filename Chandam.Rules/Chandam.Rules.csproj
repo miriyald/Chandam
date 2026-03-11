@@ -14,7 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Util\Chandam.Util.csproj" />
+    <ProjectReference Include="..\Chandam.Util\Chandam.Util.csproj" />
   </ItemGroup>
 
 </Project>

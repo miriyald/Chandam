@@ -12,7 +12,7 @@ public static class ServiceRegistration
         this IServiceCollection services, string? rulesDirectory = null)
     {
         var ruleLoader = new RuleLoaderService();
-        ruleLoader.LoadAllRuleSets(rulesDirectory ?? "Config/Rules");
+        ruleLoader.LoadAllRuleSets(rulesDirectory ?? "Chandam.Config/Rules");
         services.AddSingleton(ruleLoader);
         services.AddSingleton<ChandamService>();
 

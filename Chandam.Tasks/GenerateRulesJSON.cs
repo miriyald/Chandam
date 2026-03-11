@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
-using System.Web.Script.Serialization;
+using System.Text.Json;
 using YamlDotNet.Serialization;
 using YamlDotNet.Serialization.NamingConventions;
 
@@ -18,7 +18,7 @@ namespace Verifier
     {
         private readonly string _outputDirectory;
 
-        public GenerateRulesJSON(string outputDirectory = @"..\..\..\Config\Rules")
+        public GenerateRulesJSON(string outputDirectory = @"..\..\..\Chandam.Config\Rules")
         {
             _outputDirectory = outputDirectory;
         }
@@ -208,14 +208,11 @@ namespace Verifier
         {
             var filePath = Path.Combine(_outputDirectory, filename);
 
-            // Use JavaScriptSerializer for basic JSON serialization
-            var serializer = new JavaScriptSerializer();
-            serializer.MaxJsonLength = int.MaxValue; // Handle large rule sets
-
-            var json = serializer.Serialize(ruleSet);
-
-            // Pretty print the JSON manually for better readability
-            json = FormatJson(json);
+            var json = JsonSerializer.Serialize(ruleSet, new JsonSerializerOptions
+            {
+                WriteIndented = true,
+                Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping
+            });
 
             File.WriteAllText(filePath, json, Encoding.UTF8);
 

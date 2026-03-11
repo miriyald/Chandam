@@ -11,11 +11,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Core\Chandam.Core.csproj" />
-    <ProjectReference Include="..\Rules\Chandam.Rules.csproj" />
-    <ProjectReference Include="..\Util\Chandam.Util.csproj" />
-    <ProjectReference Include="..\Strings\Chandam.Indic.csproj" />
-    <ProjectReference Include="..\Samples\Chandam.Samples.csproj" />
+    <ProjectReference Include="..\Chandam.Core\Chandam.Core.csproj" />
+    <ProjectReference Include="..\Chandam.Rules\Chandam.Rules.csproj" />
+    <ProjectReference Include="..\Chandam.Util\Chandam.Util.csproj" />
+    <ProjectReference Include="..\Chandam.Indic\Chandam.Indic.csproj" />
+    <ProjectReference Include="..\Chandam.Samples\Chandam.Samples.csproj" />
   </ItemGroup>
 
   <ItemGroup>

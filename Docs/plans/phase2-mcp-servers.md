@@ -7,7 +7,7 @@ Expose Chandam analysis to AI agents via MCP (Model Context Protocol) servers us
 ## Prerequisites
 
 - Phase 1 complete: `Chandam.API` with `ChandamService` (5 core functions) and `RuleLoaderService`
-- Rule sets available in `Config/Rules/` (optional, falls back to compiled rules)
+- Rule sets available in `Chandam.Config/Chandam.Rules/` (optional, falls back to compiled rules)
 - .NET 8 SDK
 
 ## Scope
@@ -164,7 +164,7 @@ Or with a published executable:
   "mcpServers": {
     "chandam": {
       "command": "C:/path/to/Chandam.MCP.Stdio.exe",
-      "args": ["--rules-dir=C:/path/to/Config/Rules"]
+      "args": ["--rules-dir=C:/path/to/Chandam.Config/Rules"]
     }
   }
 }
@@ -217,7 +217,7 @@ Chandam3/
 │   └── ChandamToolsTests.cs
 ├── Chandam.API/                # (Phase 1 - unchanged)
 ├── Chandam.API.WebApi/         # (Phase 1 - unchanged)
-└── Config/Rules/               # Rule YAML/JSON files
+└── Chandam.Config/Chandam.Rules/               # Rule YAML/JSON files
 ```
 
 ---
@@ -272,7 +272,7 @@ POST /message?sessionId=... (tools/list) → Accepted
 
 1. **Console.WriteLine in RuleLoaderService**: The existing `RuleLoaderService` uses `Console.WriteLine` for logging. In the stdio server, this would corrupt the JSON-RPC protocol on stdout. Mitigated by temporarily redirecting `Console.Out` to `Console.Error` during service init.
 
-2. **Config/Rules directory**: When running from project directory, the rules directory path may not resolve. Falls back to compiled rules (379 rules) automatically.
+2. **Chandam.Config/Rules directory**: When running from project directory, the rules directory path may not resolve. Falls back to compiled rules (379 rules) automatically.
 
 ---
 

@@ -21,7 +21,7 @@ public class RuleLoaderService
 {
     private readonly Dictionary<string, Rule[]> _loadedRuleSets = new();
     private string _currentRuleSetId = "default";
-    private string _rulesDirectory = "Config/Rules";
+    private string _rulesDirectory = "Chandam.Config/Rules";
 
     public RuleLoaderService(string? rulesDirectory = null)
     {

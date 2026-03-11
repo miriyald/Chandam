@@ -24,7 +24,7 @@ public class BaselineTests
 
         // Initialize services
         var projectRoot = FindProjectRoot();
-        var rulesPath = projectRoot != null ? Path.Combine(projectRoot, "Config", "Rules") : null;
+        var rulesPath = projectRoot != null ? Path.Combine(projectRoot, "Chandam.Config", "Rules") : null;
 
         _ruleLoader = new RuleLoaderService(rulesPath);
         _ruleLoader.LoadAllRuleSets();
@@ -43,7 +43,7 @@ public class BaselineTests
 
         var baseline = _generator.GenerateBaseline(RuleLanguage.Telugu);
 
-        var outputPath = Path.Combine(FindProjectRoot() ?? ".", "Tests", "Baselines", BaselineFilePath);
+        var outputPath = Path.Combine(FindProjectRoot() ?? ".", "Chandam.Config", "Baselines", BaselineFilePath);
         Directory.CreateDirectory(Path.GetDirectoryName(outputPath)!);
 
         BaselineGenerator.SaveBaseline(baseline, outputPath);
@@ -59,7 +59,7 @@ public class BaselineTests
     public void AllExamples_ShouldMatchBaseline()
     {
         // Load baseline
-        var baselinePath = Path.Combine(FindProjectRoot() ?? ".", "Tests", "Baselines", BaselineFilePath);
+        var baselinePath = Path.Combine(FindProjectRoot() ?? ".", "Chandam.Config", "Baselines", BaselineFilePath);
 
         if (!File.Exists(baselinePath))
         {
@@ -184,7 +184,7 @@ public class BaselineTests
         var current = Directory.GetCurrentDirectory();
         while (current != null)
         {
-            var configPath = Path.Combine(current, "Config", "Rules");
+            var configPath = Path.Combine(current, "Chandam.Config", "Rules");
             if (Directory.Exists(configPath))
             {
                 return current;

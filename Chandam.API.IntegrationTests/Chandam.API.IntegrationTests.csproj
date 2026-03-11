@@ -20,8 +20,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Chandam.API\Chandam.API.csproj" />
-    <ProjectReference Include="..\Rules\Chandam.Rules.csproj" />
-    <ProjectReference Include="..\Core\Chandam.Core.csproj" />
+    <ProjectReference Include="..\Chandam.Rules\Chandam.Rules.csproj" />
+    <ProjectReference Include="..\Chandam.Core\Chandam.Core.csproj" />
   </ItemGroup>
 
 </Project>

@@ -84,7 +84,7 @@ dotnet run
 ```bash
 cd Chandam3
 docker build -f Chandam.API.WebApi/Dockerfile -t chandam-api:latest .
-docker run -p 8080:8080 -v $(pwd)/Config/Rules:/app/Config/Rules chandam-api:latest
+docker run -p 8080:8080 -v $(pwd)/Chandam.Config/Rules:/app/Chandam.Config/Rules chandam-api:latest
 ```
 
 ### Using docker-compose:
@@ -132,7 +132,7 @@ Edit `appsettings.json`:
 ```json
 {
   "Chandam": {
-    "RulesPath": "Config/Rules",
+    "RulesPath": "Chandam.Config/Rules",
     "RuleSet": "default"
   }
 }
@@ -140,7 +140,7 @@ Edit `appsettings.json`:
 
 ## Rule Files
 
-Rule definitions can be provided in both JSON and YAML formats in the `Config/Rules` directory.
+Rule definitions can be provided in both JSON and YAML formats in the `Chandam.Config/Rules` directory.
 
 **Available Rule Sets:**
 - `chandam-rules.json` / `chandam-rules.yaml` - 14 frequent Telugu Chandams

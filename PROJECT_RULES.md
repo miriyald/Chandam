@@ -25,8 +25,8 @@ Chandam3/
 ├── Chandam.API/                   # API layer (Phase 1)
 ├── Chandam.API.WebApi/           # HTTP REST API (Phase 1)
 ├── Chandam.API.IntegrationTests/ # Integration tests
-├── Core/                         # Business logic (DO NOT MODIFY)
-├── Rules/                        # Rule definitions (DO NOT MODIFY)
+├── Chandam.Core/                 # Business logic (DO NOT MODIFY)
+├── Chandam.Rules/                # Rule definitions (DO NOT MODIFY)
 └── ...
 ```
 
@@ -39,7 +39,7 @@ Chandam3/
 - **Project Root**: Only `README.md` and `PROJECT_RULES.md` allowed
 
 ### Scripts (.sh, .ps1, .bat)
-- **ALL scripts**: `scripts/` - No exceptions
+- **ALL scripts**: `Docs/Scripts/` - No exceptions
 - Include:
   - Test scripts (test-*.sh)
   - Build scripts (build-*.sh)
@@ -47,11 +47,11 @@ Chandam3/
   - Utility scripts
 
 ### Tests
-- **Baseline data**: `Tests/Baselines/` - JSON baseline reports
+- **Baseline data**: `Chandam.Config/Baselines/` - JSON baseline reports
 - **Test projects**: Root level with `.Tests` suffix (e.g., `Chandam.API.IntegrationTests/`)
 
 ### Configuration
-- **Rule files**: `Config/Rules/` - JSON and YAML rule definitions (YAML preferred for human editing)
+- **Rule files**: `Chandam.Config/Rules/` - JSON and YAML rule definitions (YAML preferred for human editing)
 - **App settings**: Project-specific (e.g., `Chandam.API.WebApi/appsettings.json`)
 - **YAML Format**: Used for multi-line Telugu text, easier manual editing (YamlDotNet library)
 
@@ -122,7 +122,7 @@ Chandam3/
 
 ### Baseline Testing
 - All rule examples must have baseline results
-- Baseline stored in `Tests/Baselines/baseline-results.json`
+- Baseline stored in `Chandam.Config/Baselines/baseline-results.json`
 - Tests verify no regressions (>5% match decrease)
 - Generate baseline: Run `GenerateBaselineResults` test
 
