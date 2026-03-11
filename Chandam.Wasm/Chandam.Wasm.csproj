@@ -5,6 +5,7 @@
     <Nullable>enable</Nullable>
     <!-- Use browser's JS Intl APIs for globalization - drops ~400KB of ICU data -->
     <HybridGlobalization>true</HybridGlobalization>
+    <!-- Build with: dotnet publish -p:ExcludeYaml=true to strip YamlDotNet (~300KB savings) -->
   </PropertyGroup>
 
   <ItemGroup>

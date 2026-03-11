@@ -16,6 +16,21 @@ namespace Chandam.Rules
 {
 	public partial class RuleHelper
 	{
+		/// <summary>
+		/// Sanskrit rules source — set by the application at startup
+		/// (e.g., SanskritRules.Rules from Chandam.Rules)
+		/// </summary>
+		private static Rule[] _sanRules = new Rule[0];
+
+		public static void RegisterSanskritRules(Rule[] rules)
+		{
+			_sanRules = rules;
+		}
+
+		public static Rule[] GetSanRules()
+		{
+			return _sanRules;
+		}
 
 		/// <summary>
 		/// Gets all the Rules with given Padyam Sub Type

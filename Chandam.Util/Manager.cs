@@ -1,5 +1,5 @@
-﻿//---------------------------------------------------------------------------------------------
-// <copyright file="RuleManager.cs" company="Chandam-ఛందం">
+//---------------------------------------------------------------------------------------------
+// <copyright file="Manager.cs" company="Chandam-ఛందం">
 //    Copyright © 2013 - 2018 'Chandam-ఛందం' : http://chandam.apphb.com
 //    Original Author : Dileep Miriyala (m.dileep@gmail.com)
 //    Last Updated    : 03-Feb-2018 21:35EST
@@ -17,14 +17,6 @@ namespace Chandam.Rules
 	public class Manager
 	{
 		private static Dictionary<string, Rule> LoadedList = new Dictionary<string, Rule>();
-#if SCRIPTSHARP
-
-#else
-		static Manager()
-		{
-			Manager.Register(TeluguRules.Rules);
-		}
-#endif
 
 		public static void Register(Rule[] TeluguRules)
 		{

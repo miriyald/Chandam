@@ -26,7 +26,7 @@ namespace Chandam.Rules
 
 	public static partial class TeluguRules
 	{
-		internal static Rule[] Rules = new Rule[]{
+		public static Rule[] Rules = new Rule[]{
 										new aaTaveladi ( ) , new taeTageeti ( ) ,new shaTpadamu(),
 										new sarvalaghusIsamu ( ) ,new sarvalaghusIsamu2 ( ) , new seesaM ( ) ,  new seesaM2(),
 										new utsaahamu(),new kandam(),new taruvOja(),new tripadi() ,

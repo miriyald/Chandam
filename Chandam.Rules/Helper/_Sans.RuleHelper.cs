@@ -15,12 +15,9 @@ using Chandam.Rules.Sans;
 
 namespace Chandam.Rules
 {
-	public partial class RuleHelper
+	public static class SanskritRules
 	{
-
-		public static Rule[] GetSanRules()
-		{
-			return new Rule[]{new Siva(),
+		public static Rule[] Rules = new Rule[]{new Siva(),
 new vasana (),
 new sabhaa (),
 new jAyA(),
@@ -1185,7 +1182,7 @@ new vinidrasindhuraH(),
 new cArugatiH(),
 new vikuNThakaNThaH(),
 new vinayavilAsaH()};
-		}
+
 		public static Rule GetRulesItem2(string identifier)
 		{
 

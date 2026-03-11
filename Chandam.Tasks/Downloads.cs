@@ -151,7 +151,7 @@ namespace Verifier
 			string title = "ఛందోరత్నావళి";
 			string caption = "ఛందం © తో పద్య సాహిత్యం మరింత రసమయం..!! [http://chandam.apphb.com] ";
 
-			string s = Business.BuildBook();
+			string s = CheatSheet.BuildBook();
 			string s2 = BuildHTML(title, s);
 			string s3 = BuildHTML(title, s, false);
 

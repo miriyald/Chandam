@@ -6,10 +6,8 @@ WORKDIR /src
 COPY ["Chandam.API.WebApi/Chandam.API.WebApi.csproj", "Chandam.API.WebApi/"]
 COPY ["Chandam.API/Chandam.API.csproj", "Chandam.API/"]
 COPY ["Chandam.Core/Chandam.Core.csproj", "Chandam.Core/"]
-COPY ["Chandam.Rules/Chandam.Rules.csproj", "Chandam.Rules/"]
 COPY ["Chandam.Util/Chandam.Util.csproj", "Chandam.Util/"]
 COPY ["Chandam.Indic/Chandam.Indic.csproj", "Chandam.Indic/"]
-COPY ["Chandam.Samples/Chandam.Samples.csproj", "Chandam.Samples/"]
 
 # Restore dependencies (will restore for all targets)
 RUN dotnet restore "Chandam.API.WebApi/Chandam.API.WebApi.csproj"
@@ -18,10 +16,8 @@ RUN dotnet restore "Chandam.API.WebApi/Chandam.API.WebApi.csproj"
 COPY Chandam.API.WebApi/ Chandam.API.WebApi/
 COPY Chandam.API/ Chandam.API/
 COPY Chandam.Core/ Chandam.Core/
-COPY Chandam.Rules/ Chandam.Rules/
 COPY Chandam.Util/ Chandam.Util/
 COPY Chandam.Indic/ Chandam.Indic/
-COPY Chandam.Samples/ Chandam.Samples/
 
 # Build and publish
 WORKDIR "/src/Chandam.API.WebApi"

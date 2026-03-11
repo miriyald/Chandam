@@ -18,14 +18,6 @@ namespace Chandam.Core
 	public static partial class Business
 	{
 
-		public static string BuildBook()
-		{
-			return CheatSheet.BuildBook();
-		}
-		public static string BuildCheatSheet()
-		{
-			return CheatSheet.BuildCheatSheet(false, false);
-		}
 		public static string Rules(string identifier)
 		{
 			Rule R = Manager.FetchRule(identifier);
@@ -39,7 +31,7 @@ namespace Chandam.Core
 
 		public static string Rules2(Rule R, bool useExample)
 		{
-			string s = R.RuleText == null ? CheatSheet.BuildRules2(R, useExample) : R.RuleText;
+			string s = R.RuleText ?? "";
 			return "<div class='err'>" + R.Name + "</div>" + s;
 		}
 

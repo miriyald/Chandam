@@ -43,7 +43,12 @@
       "Bash(du -ch c:/Working/Experiments/Chandam3/Publish/chandam-wasm/wwwroot/_framework/*.br)",
       "Bash(du -ch c:/Working/Experiments/Chandam3/Publish/chandam-wasm-opt/wwwroot/_framework/*.br)",
       "Bash(ls -lh c:/Working/Experiments/Chandam3/Publish/chandam-wasm-opt/wwwroot/_framework/icudt*.br)",
-      "Bash(ls -lh c:/Working/Experiments/Chandam3/Publish/chandam-wasm-opt/wwwroot/_framework/YamlDotNet*.br)"
+      "Bash(ls -lh c:/Working/Experiments/Chandam3/Publish/chandam-wasm-opt/wwwroot/_framework/YamlDotNet*.br)",
+      "Bash(ls c:/Working/Experiments/Chandam3/Chandam.Rules/*.cs c:/Working/Experiments/Chandam3/Chandam.Rules/**/*.cs)",
+      "Bash(du -ch *.br)",
+      "Bash(ls -lS *.br)",
+      "Bash(ls *[Yy]aml*)",
+      "Bash(ls -lS Chandam*.br)"
     ]
   }
 }

@@ -11,6 +11,7 @@
 //---------------------------------------------------------------------------------------------
 
 using System;
+using Chandam.Rules;
 
 //Known Issues:
 //1.Try a kavirajaviraajitam  with a line that has less gana in no.
@@ -21,6 +22,10 @@ namespace Verifier
 	{
 		static void Main(string[] args)
 		{
+			// Initialize compiled rules (moved from Manager static constructor)
+			Manager.Register(TeluguRules.Rules);
+			RuleHelper.RegisterSanskritRules(SanskritRules.Rules);
+
 			Console.ForegroundColor = ConsoleColor.White;
 			Console.Title = "Chandam-Verifier";
 			StopWatch G = new StopWatch();

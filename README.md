@@ -163,22 +163,56 @@ All formats accepted in API and MCP requests.
 
 ## Project Structure
 
+### Solution Groups
+
 ```
-Chandam3/
-├── Chandam.API/                  # API layer (ChandamService, RuleLoader)
-├── Chandam.API.WebApi/           # HTTP REST API
-├── Chandam.Dictionary/            # Word meaning lookup (3 sources + disk cache)
-├── Chandam.MCP.Tools/            # Shared MCP tool definitions (7 tools)
-├── Chandam.MCP.Stdio/            # MCP Stdio server (Claude Desktop)
-├── Chandam.MCP.Http/             # MCP HTTP/SSE server (remote access)
-├── Chandam.MCP.Tests/            # MCP integration tests (13 tests)
-├── Chandam.API.IntegrationTests/ # API integration tests (554 examples)
-├── Chandam.Core/                 # Business logic (DO NOT MODIFY)
-├── Chandam.Rules/                # Rule definitions (DO NOT MODIFY)
-├── Chandam.Config/Rules/         # Rule config files (JSON/YAML)
-├── Chandam.Config/Baselines/     # Baseline test data
-├── Docs/                         # Documentation & plans
-└── Docs/Scripts/                 # Test & utility scripts
+Core/
+  Chandam.Util                    # Contracts, enums, Manager (Rule, Example, RuleLanguage)
+  Chandam.Indic                   # Indic script processing (Telugu, Devanagari, Kannada)
+  Chandam.Rules                   # 343+ Chandam rule data classes + RuleHelper/SortHelper
+  Chandam.Samples                 # Sample poems (Bhaskara, Vemana, Sumati, etc.)
+  Chandam.Core                    # Business logic — matching, scoring (DO NOT MODIFY)
+  Chandam.Dictionary              # Word meaning lookup (3 sources + disk cache)
+
+API/
+  Chandam.API                     # Service layer (ChandamService, RuleLoader)
+  Chandam.API.WebApi              # HTTP REST API (8 endpoints)
+  Chandam.API.Demo                # Console demo app
+  Chandam.API.Tests               # API unit tests
+  Chandam.API.IntegrationTests    # Integration tests (554 examples)
+
+MCP/
+  Chandam.MCP.Tools               # Shared MCP tool definitions (7 tools)
+  Chandam.MCP.Stdio               # MCP Stdio server (Claude Desktop)
+  Chandam.MCP.Http                # MCP HTTP/SSE server (remote access)
+  Chandam.MCP.Tests               # MCP integration tests (13 tests)
+
+Web/
+  Chandam.Wasm                    # Blazor WASM app (planned)
+
+Tasks/
+  Chandam.Tasks                   # Rule generation, verification, utilities
+```
+
+### Project Dependencies
+
+```
+Chandam.Util        ← no dependencies (contracts, Manager, RuleHelper, SortHelper)
+Chandam.Indic       ← Util
+Chandam.Rules       ← Util                    (343+ data classes only)
+Chandam.Samples     ← (standalone)             (sample poem data)
+Chandam.Core        ← Util, Indic              (business logic — no Rules/Samples)
+Chandam.API         ← Core, Util, Indic        (service layer — no Rules/Samples)
+Chandam.Tasks       ← Core, Rules, Samples, Util, Indic
+```
+
+### Config & Docs
+
+```
+Chandam.Config/Rules/             # Rule config files (JSON/YAML)
+Chandam.Config/Baselines/         # Baseline test data
+Docs/                             # Documentation & plans
+Docs/Scripts/                     # Test & utility scripts
 ```
 
 ## Development
