@@ -1,376 +1,301 @@
-# Phase 2: MCP Servers (Stdio + HTTP)
+# Phase 2: MCP Servers (Stdio + HTTP) - COMPLETE
 
 ## Goal
-Create MCP servers that expose Chandam functions to AI agents via stdio (for Claude Desktop) and HTTP (for web/API clients). Support hidden rule set selection feature.
+
+Expose Chandam analysis to AI agents via MCP (Model Context Protocol) servers using the official .NET MCP SDK. Two transport modes: stdio (for Claude Desktop) and HTTP/SSE (for remote/web clients).
 
 ## Prerequisites
-- ✅ Phase 1 complete (Chandam.API with RuleLoaderService and ChandamService)
-- ✅ Rule sets available in Config/Rules/
+
+- Phase 1 complete: `Chandam.API` with `ChandamService` (5 core functions) and `RuleLoaderService`
+- Rule sets available in `Config/Rules/` (optional, falls back to compiled rules)
+- .NET 8 SDK
 
 ## Scope
-- ✅ Stdio MCP Server (console app, JSON-RPC over stdin/stdout)
-- ✅ HTTP MCP Server (ASP.NET Core Web API)
-- ✅ 6 MCP tools exposed (determine, try_match, scores, get_rule, get_examples, list_rules)
-- ✅ Hidden rule set selection via command-line/headers
-- ✅ Configuration support (appsettings.json)
-- ✅ Integration tests
-- ❌ No authentication/authorization (out of scope)
-- ❌ No public documentation of rule set feature (internal only)
 
-## MCP Tools Definition
+| In Scope | Out of Scope |
+|----------|-------------|
+| Stdio MCP Server (Claude Desktop) | Authentication/Authorization |
+| HTTP/SSE MCP Server (remote access) | Rate limiting / Caching |
+| 6 MCP tools | Public rule set documentation |
+| Rule set selection (CLI args + config) | Production deployment |
+| Integration tests (13 tests) | Customer-facing UI |
+| Claude Desktop config | Blazor WASM (Phase 3) |
 
-### 1. determine_chandam
-**Description**: Auto-detect the best matching Chandam (meter/prosody) for a Telugu or Sanskrit poem.
+---
 
-**Input**:
-- `poem_text` (string, required) - The poem to analyze
-- `match_yati` (boolean, default: true) - Check caesura matching
-- `match_prasa` (boolean, default: true) - Check rhyme matching
-- `allow_santi_prasa` (boolean, default: false) - Allow alternative rhyme pattern
-- `quick_match` (boolean, default: true) - Use optimized matching
-- `language` (string, default: "Telugu") - "Telugu" or "Sanskrit"
+## Technology Choice: Official MCP .NET SDK
 
-**Output**: DetermineResponse with best match, top 5 candidates, English explanation
+**Package**: `ModelContextProtocol` v1.1.0 (NuGet)
 
-### 2. try_match_chandam
-**Description**: Match a poem against a specific Chandam rule.
+**Key packages used**:
+- `ModelContextProtocol` - Core SDK (stdio transport, tool registration)
+- `ModelContextProtocol.AspNetCore` - HTTP/SSE transport for ASP.NET Core
 
-**Input**:
-- `poem_text` (string, required)
-- `rule_identifier` (string, required) - e.g., "kandam", "utpalamaala"
-- `match_yati` (boolean, default: true)
-- `match_prasa` (boolean, default: true)
-- `language` (string, default: "Telugu")
+**Key features used**:
+- `[McpServerToolType]` / `[McpServerTool]` attributes for tool registration
+- `WithStdioServerTransport()` - stdio transport
+- `WithHttpTransport()` / `MapMcp()` - HTTP/SSE transport
+- `WithTools<T>()` - type-safe tool registration
+- Automatic JSON schema generation from method parameters
+- DI integration with `IServiceCollection`
 
-**Output**: TryMatchResponse with detailed match analysis
+---
 
-### 3. calculate_chandam_scores
-**Description**: Calculate match scores for all Chandam rules.
+## MCP Tools (6 Total)
 
-**Input**: Same as determine_chandam
+### 1. `determine_chandam`
+Auto-detect the best matching Chandam for a poem.
 
-**Output**: ScoresResponse with ranked list of all rules
+| Parameter | Type | Required | Default | Description |
+|-----------|------|----------|---------|-------------|
+| `poem_text` | string | yes | - | Poem to analyze |
+| `match_yati` | bool | no | true | Check caesura matching |
+| `match_prasa` | bool | no | true | Check rhyme matching |
+| `language` | string | no | "te" | Language code (te/kn/sa/hi/ml) |
 
-### 4. get_chandam_rule
-**Description**: Get detailed information about a specific rule.
+**Returns**: Best match with name, percentage, description, details.
 
-**Input**:
-- `rule_identifier` (string, required)
+### 2. `try_match_chandam`
+Match a poem against a specific Chandam rule.
 
-**Output**: RuleInfoResponse with patterns, examples, description
+| Parameter | Type | Required | Default | Description |
+|-----------|------|----------|---------|-------------|
+| `poem_text` | string | yes | - | Poem to analyze |
+| `rule_identifier` | string | yes | - | Rule ID (e.g., "kandam") |
+| `match_yati` | bool | no | true | Check caesura |
+| `match_prasa` | bool | no | true | Check rhyme |
 
-### 5. get_chandam_examples
-**Description**: Get example poems for a specific rule.
+**Returns**: Match result with percentage, details, mismatches.
 
-**Input**:
-- `rule_identifier` (string, required)
+### 3. `calculate_scores`
+Calculate match scores against all rules.
 
-**Output**: SamplesResponse with example poems
+| Parameter | Type | Required | Default | Description |
+|-----------|------|----------|---------|-------------|
+| `poem_text` | string | yes | - | Poem to analyze |
+| `match_yati` | bool | no | true | Check caesura |
+| `match_prasa` | bool | no | true | Check rhyme |
+| `language` | string | no | "te" | Language code |
+| `min_percentage` | double | no | 0 | Minimum match % to include |
 
-### 6. list_chandam_rules
-**Description**: List all available Chandam rules.
+**Returns**: Ranked list of all matching rules with scores.
 
-**Input**:
-- `language` (string, default: "Telugu") - "Telugu", "Sanskrit", or "All"
-- `frequency` (string, default: "All") - "All", "Frequent", or "Rare"
+### 4. `get_rule_info`
+Get detailed information about a specific Chandam rule.
 
-**Output**: List of RuleInfo objects
+| Parameter | Type | Required | Default | Description |
+|-----------|------|----------|---------|-------------|
+| `rule_identifier` | string | yes | - | Rule ID |
+| `include_examples` | bool | no | false | Include example poems |
 
-## Implementation Plan
+**Returns**: Rule definition, patterns, description, optionally examples.
 
-### Part A: Stdio MCP Server (Chandam.MCP.Server)
+### 5. `get_examples`
+Get example poems for a specific Chandam.
 
-**Project**: Console app targeting .NET 8
+| Parameter | Type | Required | Default | Description |
+|-----------|------|----------|---------|-------------|
+| `rule_identifier` | string | yes | - | Rule ID |
+| `max_examples` | int | no | 5 | Max examples to return |
 
-**Structure**:
+**Returns**: Example poems with author, reference, notes.
+
+### 6. `list_rules`
+List all available Chandam rules.
+
+| Parameter | Type | Required | Default | Description |
+|-----------|------|----------|---------|-------------|
+| `language` | string | no | "te" | Language filter |
+
+**Returns**: List of rule summaries (id, name, type, frequency, lines).
+
+---
+
+## Implementation
+
+### Part A: Shared Tool Definitions (`Chandam.MCP.Tools`)
+
+Shared class library containing MCP tool definitions and DI registration.
+
 ```
-Chandam.MCP.Server/
-├── Chandam.MCP.Server.csproj
-├── Program.cs
-├── StdioMcpServer.cs
-├── ToolHandlers/
-│   ├── DetermineHandler.cs
-│   ├── TryMatchHandler.cs
-│   ├── ScoresHandler.cs
-│   ├── RuleInfoHandler.cs
-│   ├── ExamplesHandler.cs
-│   └── ListRulesHandler.cs
-├── Models/
-│   ├── McpRequest.cs
-│   ├── McpResponse.cs
-│   └── McpToolDefinition.cs
-└── appsettings.json
-```
-
-**Implementation**:
-
-**Program.cs**:
-```csharp
-static async Task Main(string[] args)
-{
-    // Parse command-line args
-    var config = ParseArguments(args);
-    // --ruleset=<identifier>
-    // --rules-dir=<path>
-
-    // Initialize services
-    var ruleLoader = new RuleLoaderService();
-    ruleLoader.LoadAllRuleSets(config.RulesDirectory ?? "Config/Rules");
-
-    if (!string.IsNullOrEmpty(config.RuleSetId))
-    {
-        ruleLoader.SetActiveRuleSet(config.RuleSetId);
-    }
-
-    var chandamService = new ChandamService(ruleLoader);
-
-    // Start MCP server
-    var server = new StdioMcpServer(chandamService);
-    await server.RunAsync();
-}
+Chandam.MCP.Tools/
+├── Chandam.MCP.Tools.csproj    # net8.0, refs ModelContextProtocol + Chandam.API
+├── ChandamTools.cs             # All 6 [McpServerTool] methods
+└── ServiceRegistration.cs      # AddChandamServices() extension method
 ```
 
-**StdioMcpServer.cs**:
-```csharp
-public class StdioMcpServer
-{
-    private ChandamService _service;
+**Key design decisions**:
+- `ChandamTools` takes `ChandamService` + `RuleLoaderService` via constructor injection
+- All tool methods return `string` (JSON-serialized results)
+- Uses `JavaScriptEncoder.UnsafeRelaxedJsonEscaping` to preserve Telugu characters in output
+- `ServiceRegistration.AddChandamServices()` handles rule loading and DI setup for both servers
 
-    public async Task RunAsync()
-    {
-        // Read JSON-RPC requests from stdin
-        // Route to appropriate handler
-        // Write JSON-RPC responses to stdout
-        // Handle errors with proper error codes
-    }
+### Part B: Stdio MCP Server (`Chandam.MCP.Stdio`)
 
-    private async Task<McpResponse> HandleToolCall(McpRequest request)
-    {
-        return request.Method switch
-        {
-            "tools/list" => ListTools(),
-            "tools/call" => await CallTool(request),
-            _ => Error("Unknown method")
-        };
-    }
-}
+Console app for Claude Desktop integration.
+
+```
+Chandam.MCP.Stdio/
+├── Chandam.MCP.Stdio.csproj    # net8.0, refs ModelContextProtocol + MCP.Tools
+└── Program.cs                  # 16 lines
 ```
 
-**Configuration** (appsettings.json):
+**Important**: The stdio transport uses stdout for JSON-RPC protocol. `RuleLoaderService` uses `Console.WriteLine` for logging during init. `Program.cs` temporarily redirects `Console.Out` to `Console.Error` during service registration to prevent corrupting the MCP protocol stream.
+
+**Claude Desktop Configuration** (`claude_desktop_config.json`):
 ```json
 {
-  "RuleSet": {
-    "DefaultRuleSetId": "default",
-    "RulesDirectory": "Config/Rules",
-    "AllowRuleSetSwitch": true
-  },
-  "Logging": {
-    "LogLevel": {
-      "Default": "Information",
-      "Microsoft": "Warning"
+  "mcpServers": {
+    "chandam": {
+      "command": "dotnet",
+      "args": [
+        "run",
+        "--project",
+        "C:/Working/Experiments/Chandam3/Chandam.MCP.Stdio"
+      ]
     }
   }
 }
 ```
 
-**Usage**:
-```bash
-# Use default rule set
-dotnet run --project Chandam.MCP.Server
-
-# Use specific rule set (hidden feature)
-dotnet run --project Chandam.MCP.Server -- --ruleset=telugu-complete
-
-# Custom rules directory
-dotnet run --project Chandam.MCP.Server -- --rules-dir=/path/to/rules
-```
-
-### Part B: HTTP MCP Server (Chandam.MCP.WebApi)
-
-**Project**: ASP.NET Core Web API targeting .NET 8
-
-**Structure**:
-```
-Chandam.MCP.WebApi/
-├── Chandam.MCP.WebApi.csproj
-├── Program.cs
-├── Controllers/
-│   ├── McpToolsController.cs
-│   └── AdminController.cs (internal, not public)
-├── Middleware/
-│   └── RuleSetSelectorMiddleware.cs
-├── Models/ (same as stdio)
-└── appsettings.json
-```
-
-**Implementation**:
-
-**RuleSetSelectorMiddleware.cs**:
-```csharp
-public class RuleSetSelectorMiddleware
+Or with a published executable:
+```json
 {
-    public async Task InvokeAsync(HttpContext context, RuleLoaderService ruleLoader)
-    {
-        // Check for X-Chandam-RuleSet header
-        if (context.Request.Headers.TryGetValue("X-Chandam-RuleSet", out var ruleSetId))
-        {
-            ruleLoader.SetActiveRuleSet(ruleSetId);
-        }
-
-        await _next(context);
+  "mcpServers": {
+    "chandam": {
+      "command": "C:/path/to/Chandam.MCP.Stdio.exe",
+      "args": ["--rules-dir=C:/path/to/Config/Rules"]
     }
+  }
 }
 ```
 
-**McpToolsController.cs**:
-```csharp
-[ApiController]
-[Route("api/mcp/tools")]
-public class McpToolsController : ControllerBase
-{
-    private ChandamService _service;
+### Part C: HTTP/SSE MCP Server (`Chandam.MCP.Http`)
 
-    [HttpGet("list")]
-    public IActionResult ListTools()
+ASP.NET Core server for remote access.
 
-    [HttpPost("determine")]
-    public async Task<IActionResult> Determine([FromBody] DetermineRequest request)
-
-    [HttpPost("try-match")]
-    public async Task<IActionResult> TryMatch([FromBody] TryMatchRequest request)
-
-    [HttpPost("scores")]
-    public async Task<IActionResult> CalculateScores([FromBody] ScoresRequest request)
-
-    [HttpGet("rule/{identifier}")]
-    public async Task<IActionResult> GetRule(string identifier)
-
-    [HttpGet("examples/{identifier}")]
-    public async Task<IActionResult> GetExamples(string identifier)
-
-    [HttpGet("list-rules")]
-    public async Task<IActionResult> ListRules([FromQuery] string language = "Telugu")
-}
+```
+Chandam.MCP.Http/
+├── Chandam.MCP.Http.csproj     # Web SDK, refs ModelContextProtocol.AspNetCore + MCP.Tools
+├── Program.cs                  # 10 lines
+└── appsettings.json            # Port 3001, rules directory config
 ```
 
-**AdminController.cs** (internal, not documented publicly):
-```csharp
-[ApiController]
-[Route("api/admin")]
-public class AdminController : ControllerBase
-{
-    // Internal endpoints for development/testing
-    // Do NOT document in public API docs
-
-    [HttpGet("rulesets")]
-    public IActionResult ListRuleSets()
-
-    [HttpPost("rulesets/reload")]
-    public IActionResult ReloadRuleSets()
-
-    [HttpGet("health")]
-    public IActionResult Health()
-}
-```
+**Endpoints**:
+- `GET /sse` - SSE endpoint (client connects here to establish session)
+- `POST /message?sessionId=...` - JSON-RPC message endpoint
 
 **Usage**:
 ```bash
-# Start server
-dotnet run --project Chandam.MCP.WebApi
-
-# Use default rule set
-curl -X POST http://localhost:5000/api/mcp/tools/determine \
-  -H "Content-Type: application/json" \
-  -d '{"poem_text": "..."}'
-
-# Use specific rule set (hidden feature via header)
-curl -X POST http://localhost:5000/api/mcp/tools/determine \
-  -H "Content-Type: application/json" \
-  -H "X-Chandam-RuleSet: telugu-complete" \
-  -d '{"poem_text": "..."}'
+dotnet run --project Chandam.MCP.Http
+# Server at http://localhost:3001/sse
 ```
 
-**Swagger/OpenAPI**:
-- Configure Swagger for API documentation
-- Document public endpoints only
-- Do NOT document X-Chandam-RuleSet header (internal feature)
-- Do NOT document /api/admin/* endpoints (internal only)
+### Part D: Integration Tests (`Chandam.MCP.Tests`)
 
-### Testing Strategy
-
-**Integration Tests** (Chandam.MCP.Tests):
-```csharp
-// Stdio server tests
-[Fact]
-public async Task StdioServer_DetermineTool_ReturnsValidResponse()
-
-[Fact]
-public async Task StdioServer_WithRuleSetArg_UsesCorrectRules()
-
-// HTTP API tests
-[Fact]
-public async Task HttpApi_DetermineEndpoint_ReturnsOk()
-
-[Fact]
-public async Task HttpApi_WithRuleSetHeader_UsesCorrectRules()
-
-[Fact]
-public async Task HttpApi_ListTools_ReturnsAllSixTools()
-
-// Admin endpoint tests
-[Fact]
-public async Task Admin_ListRuleSets_ReturnsAvailableSets()
-
-[Fact]
-public async Task Admin_Health_ReturnsHealthy()
+```
+Chandam.MCP.Tests/
+├── Chandam.MCP.Tests.csproj    # xUnit, refs MCP.Tools
+└── ChandamToolsTests.cs        # 13 tests
 ```
 
-**Manual Testing with Claude Desktop**:
-1. Build stdio server
-2. Configure Claude Desktop MCP settings
-3. Test all 6 tools
-4. Verify responses are JSON with English descriptions
+---
 
-**Manual Testing with Postman**:
-1. Start HTTP API server
-2. Import Swagger/OpenAPI spec
-3. Test all endpoints
-4. Test rule set header (hidden feature)
+## Project Structure (Final)
 
-## Deliverables
+```
+Chandam3/
+├── Chandam.MCP.Tools/          # Shared: Tool definitions + DI
+│   ├── ChandamTools.cs         # 6 MCP tools
+│   └── ServiceRegistration.cs  # AddChandamServices()
+├── Chandam.MCP.Stdio/          # Stdio server (Claude Desktop)
+│   └── Program.cs
+├── Chandam.MCP.Http/           # HTTP/SSE server (remote)
+│   ├── Program.cs
+│   └── appsettings.json
+├── Chandam.MCP.Tests/          # Integration tests
+│   └── ChandamToolsTests.cs
+├── Chandam.API/                # (Phase 1 - unchanged)
+├── Chandam.API.WebApi/         # (Phase 1 - unchanged)
+└── Config/Rules/               # Rule YAML/JSON files
+```
 
-✅ **Chandam.MCP.Server** - Stdio console app with JSON-RPC support
+---
 
-✅ **Chandam.MCP.WebApi** - HTTP API with 6 endpoints
+## Test Results
 
-✅ **Rule Set Selection** - Via command-line args (stdio) or headers (HTTP)
+### Integration Tests: 13/13 Passed
 
-✅ **Configuration** - appsettings.json for both servers
+```
+Passed ChandamToolsTests.DetermineChandam_WithValidPoem_ReturnsBestMatch
+Passed ChandamToolsTests.DetermineChandam_EmptyPoem_ReturnsError
+Passed ChandamToolsTests.DetermineChandam_AllLanguageCodes_Work(lang: "te")
+Passed ChandamToolsTests.DetermineChandam_AllLanguageCodes_Work(lang: "tel")
+Passed ChandamToolsTests.DetermineChandam_AllLanguageCodes_Work(lang: "Telugu")
+Passed ChandamToolsTests.DetermineChandam_ResultContainsTelugu
+Passed ChandamToolsTests.TryMatchChandam_WithCorrectRule_ReturnsMatch
+Passed ChandamToolsTests.TryMatchChandam_InvalidRule_ReturnsError
+Passed ChandamToolsTests.CalculateScores_ReturnsRankedResults
+Passed ChandamToolsTests.GetRuleInfo_ReturnsRuleDetails
+Passed ChandamToolsTests.GetRuleInfo_WithExamples_IncludesExamples
+Passed ChandamToolsTests.GetExamples_ReturnsExamplePoems
+Passed ChandamToolsTests.ListRules_Telugu_ReturnsRules
+```
 
-✅ **Integration Tests** - 10+ tests validating server functionality
+### Stdio Server: Verified
 
-✅ **Internal Documentation** - README.md explaining hidden rule set feature
+```bash
+# Initialize + tools/list returns all 6 tools
+printf '{"jsonrpc":"2.0","id":1,"method":"initialize",...}\n...\n' | dotnet run --project Chandam.MCP.Stdio
 
-## Success Criteria
+# Response: 6 tools with full JSON schemas
+# determine_chandam, try_match_chandam, calculate_scores,
+# get_rule_info, get_examples, list_rules
+```
 
-1. ✅ Stdio server responds to all 6 tool calls correctly
-2. ✅ HTTP API returns proper JSON responses with 200 status codes
-3. ✅ Rule set selection works via command-line args
-4. ✅ Rule set selection works via HTTP header
-5. ✅ Swagger documentation generated correctly (public endpoints only)
-6. ✅ Integration tests pass (10+ tests)
-7. ✅ Can test with Claude Desktop (if available)
+### HTTP Server: Verified
 
-## Out of Scope (Future Phases)
+```
+GET /sse → 200 OK, Content-Type: text/event-stream
+  Returns: event: endpoint, data: /message?sessionId=...
 
-- ❌ Blazor WASM (Phase 3)
-- ❌ Authentication/Authorization
-- ❌ Rate limiting
-- ❌ Caching layer
-- ❌ Production deployment
-- ❌ Public documentation of rule set feature
-- ❌ Customer-facing UI
+POST /message?sessionId=... (initialize) → Accepted
+  SSE: event: message, data: {protocolVersion, capabilities, serverInfo}
+
+POST /message?sessionId=... (tools/list) → Accepted
+  SSE: event: message, data: {tools: [6 tools with schemas]}
+```
+
+---
+
+## Known Issues
+
+1. **Console.WriteLine in RuleLoaderService**: The existing `RuleLoaderService` uses `Console.WriteLine` for logging. In the stdio server, this would corrupt the JSON-RPC protocol on stdout. Mitigated by temporarily redirecting `Console.Out` to `Console.Error` during service init.
+
+2. **Config/Rules directory**: When running from project directory, the rules directory path may not resolve. Falls back to compiled rules (379 rules) automatically.
+
+---
+
+## Success Criteria - All Met
+
+1. All 6 tools registered and callable via stdio transport
+2. All 6 tools registered and callable via HTTP/SSE transport
+3. Claude Desktop config provided for local testing
+4. Telugu text handled correctly (Unicode preserved, verified in test)
+5. Integration tests pass (13/13)
+6. Language codes (te/tel/Telugu) all work
+7. Error responses are clear and helpful
+
+## Architecture Notes
+
+- **No business logic changes** - MCP tools are thin wrappers around `ChandamService`
+- **Shared tools** - Both servers use the same `ChandamTools` class
+- **Official SDK v1.1.0** - No custom JSON-RPC code needed
+- **DI-based** - Standard .NET dependency injection throughout
+- Tools return JSON strings (the MCP SDK wraps these in proper MCP responses)
+
+---
 
 ## Next Phase Preview
 
-**Phase 3** will create a Blazor WebAssembly app that runs the Chandam analysis entirely in the browser using WASM, with optional backend API integration.
+**Phase 3** will create a Blazor WebAssembly app that runs Chandam analysis entirely in the browser.

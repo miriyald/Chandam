@@ -2,9 +2,9 @@
 
 > Telugu/Sanskrit/Kannada poetry meter (Chandam/ఛందం) analysis system with AI-friendly APIs
 
-[![Phase 1](https://img.shields.io/badge/Phase%201-Complete-brightgreen)](docs/execution/PHASE1-COMPLETION-SUMMARY.md)
-[![Phase 2](https://img.shields.io/badge/Phase%202-Planned-blue)](docs/plans/phase2-mcp-servers.md)
-[![Phase 3](https://img.shields.io/badge/Phase%203-Planned-blue)](docs/plans/phase3-wasm.md)
+[![Phase 1](https://img.shields.io/badge/Phase%201-Complete-brightgreen)](Docs/execution/PHASE1-COMPLETION-SUMMARY.md)
+[![Phase 2](https://img.shields.io/badge/Phase%202-Complete-brightgreen)](Docs/plans/phase2-mcp-servers.md)
+[![Phase 3](https://img.shields.io/badge/Phase%203-Planned-blue)](Docs/plans/phase3-wasm.md)
 
 **Website**: https://chandamu.github.io/
 
@@ -13,98 +13,99 @@
 Chandam (ఛందం) is the prosody/meter system used in Telugu, Sanskrit, and Kannada poetry. This project provides:
 
 - **API Layer** for programmatic access to Chandam analysis
-- **MCP Servers** for AI agent integration (Claude, etc.) - *Planned*
+- **MCP Servers** for AI agent integration (Claude Desktop, remote agents)
 - **Blazor WASM** for browser-based offline usage - *Planned*
 
 ### Key Features
 
-✅ **Dual Format Support** - JSON & YAML config files (YAML preferred for editing)
-✅ **Multi-line Telugu Text** - Readable poems without Unicode escapes
-✅ **Comprehensive Testing** - 554 examples tested across 379 rules
-✅ **High Accuracy** - 96.09% average match across all examples
-✅ **Docker Ready** - Containerized API with health checks
-✅ **Language Flexibility** - ISO 639-1, ISO 639-2, full names, numeric codes
-✅ **Request Logging** - Timing metrics and structured logging
-✅ **Baseline Testing** - Regression detection with 5% tolerance
+- **379 Telugu Chandam rules** with 554 tested examples
+- **96.09% average match accuracy** across all examples
+- **6 MCP tools** for AI agent integration (stdio + HTTP/SSE)
+- **REST API** with 8 endpoints and ISO 639 language code support
+- **Docker containers** for API, MCP HTTP, and MCP Stdio servers
+- **Dual format config** - JSON & YAML (YAML preferred for Telugu text)
 
 ## Quick Start
 
-### Run API Locally
+### MCP Server (Claude Desktop)
 
-```bash
-cd Chandam.API.WebApi
-dotnet run
-# API available at http://localhost:5000
+Add to `claude_desktop_config.json`:
+```json
+{
+  "mcpServers": {
+    "chandam": {
+      "command": "dotnet",
+      "args": ["run", "--project", "C:/path/to/Chandam.MCP.Stdio"]
+    }
+  }
+}
 ```
 
-### Run API in Docker
-
-```bash
-# Build
-dotnet publish Chandam.API.WebApi/Chandam.API.WebApi.csproj -c Release -o Publish/chandam-api
-docker build -t chandam-api -f Chandam.API.WebApi/Dockerfile.simple .
-
-# Run
-docker run -d -p 8080:8080 --name chandam-api chandam-api
-
-# Check health
-curl http://localhost:8080/health
-
-# Test
-bash scripts/test-api.sh http://localhost:8080
+Or with Docker:
+```json
+{
+  "mcpServers": {
+    "chandam": {
+      "command": "docker",
+      "args": ["run", "-i", "--rm", "chandam-mcp-stdio"]
+    }
+  }
+}
 ```
 
-### Test API
+### MCP Server (HTTP/SSE)
 
 ```bash
-# Health check
-curl http://localhost:5000/health
+dotnet run --project Chandam.MCP.Http
+# SSE endpoint: http://localhost:3001/sse
+```
+
+Or with Docker:
+```bash
+docker compose up chandam-mcp-http
+# SSE endpoint: http://localhost:3001/sse
+```
+
+### REST API
+
+```bash
+dotnet run --project Chandam.API.WebApi
+# API at http://localhost:5000
 
 # Auto-detect meter
 curl -X POST http://localhost:5000/api/determine \
   -H "Content-Type: application/json" \
-  -d '{"poemText":"తెలుగు poem...","language":"te","matchYati":true,"matchPrasa":true}'
-
-# Run full test suite
-bash scripts/test-api.sh http://localhost:5000
-bash scripts/test-language-codes.sh http://localhost:5000
+  -d '{"poemText":"సామర్థ్యలీలన్ తతజద్విగంబుల్\nభూమిధ్రవిశ్రాంతుల బొంది యొప్పున్\nప్రేమంబుతో నైందవబింబవక్త్రున్\nహేమాంబురుం బాడుదు రింద్రవజ్రన్","language":"te","matchYati":true,"matchPrasa":true}'
 ```
 
-## Project Status
+### Docker
 
-### ✅ Phase 1: API Layer (COMPLETE)
-**Status**: Production Ready - All tests passing (100%)
+```bash
+# Publish first (required - core projects target net4.8)
+dotnet publish Chandam.MCP.Http/Chandam.MCP.Http.csproj -c Release -o Publish/chandam-mcp-http
+dotnet publish Chandam.MCP.Stdio/Chandam.MCP.Stdio.csproj -c Release -o Publish/chandam-mcp-stdio
+dotnet publish Chandam.API.WebApi/Chandam.API.WebApi.csproj -c Release -o Publish/chandam-api
 
-- [x] 5 core Chandam analysis functions
-- [x] HTTP REST API with 8 endpoints
-- [x] JSON & YAML rule loading (379 Telugu rules, dual format)
-- [x] ISO 639 language code support (te, tel, Telugu, numeric)
-- [x] Docker containerization
-- [x] Request/response logging with timing metrics
-- [x] Integration tests with baseline reports (554 examples tested)
-- [x] 96.09% average match accuracy across all examples
-- [x] YAML format for human-editable multi-line Telugu text
-- [x] Tilde (~) notation handling for example attribution
+# Build & run
+docker compose up chandam-mcp-http    # MCP HTTP/SSE on port 3001
+docker compose up chandam-api         # REST API on port 8080
+docker run -i chandam-mcp-stdio       # MCP Stdio (interactive)
+```
 
-**Documentation**: [Phase 1 Completion Summary](docs/execution/PHASE1-COMPLETION-SUMMARY.md)
+## MCP Tools
 
-### 🔵 Phase 2: MCP Servers (PLANNED)
-- [ ] Stdio MCP server (Claude Desktop integration)
-- [ ] HTTP MCP server (remote access)
-- [ ] 6 MCP tools
-- [ ] Integration tests
+6 tools available via both stdio and HTTP/SSE transports:
 
-**Documentation**: [Phase 2 Plan](docs/plans/phase2-mcp-servers.md)
+| Tool | Description |
+|------|-------------|
+| `determine_chandam` | Auto-detect best matching meter for a poem |
+| `try_match_chandam` | Match poem against a specific Chandam rule |
+| `calculate_scores` | Score poem against all rules (ranked list) |
+| `get_rule_info` | Get rule details, patterns, description |
+| `get_examples` | Get example poems for a Chandam |
+| `list_rules` | List all available rules (with language filter) |
 
-### 🔵 Phase 3: Blazor WASM (PLANNED)
-- [ ] Browser-based WASM app
-- [ ] Offline usage
-- [ ] Embedded rule sets
-- [ ] Static site deployment
-
-**Documentation**: [Phase 3 Plan](docs/plans/phase3-wasm.md)
-
-## API Endpoints
+## REST API Endpoints
 
 | Endpoint | Method | Description |
 |----------|--------|-------------|
@@ -127,52 +128,47 @@ bash scripts/test-language-codes.sh http://localhost:5000
 | Hindi | `hi` | `hin` | 3 | हिन्दी |
 | Malayalam | `ml` | `mal` | 4 | മലയാളം |
 
-All formats accepted in API requests.
+All formats accepted in API and MCP requests.
 
-## Core Functions
+## Project Status
 
-1. **Determine** - Auto-detect best matching Chandam for a poem
-2. **TryMatch** - Match poem against specific Chandam rule
-3. **Scores** - Calculate match scores for all Chandam rules
-4. **GetRuleInfo** - Get rule details (patterns, examples, description)
-5. **GetSamples** - Get example poems for a specific Chandam
+### Phase 1: API Layer - COMPLETE
+- 5 core Chandam analysis functions
+- HTTP REST API with 8 endpoints
+- 379 Telugu rules (JSON & YAML formats)
+- ISO 639 language code support
+- Docker containerization
+- Integration tests (554 examples, 96.09% accuracy)
 
-## Rule Sets
+### Phase 2: MCP Servers - COMPLETE
+- Stdio MCP server (Claude Desktop)
+- HTTP/SSE MCP server (remote access)
+- 6 MCP tools with full JSON schemas
+- 13 integration tests (all passing)
+- Docker containers for both servers
+- Telugu text preserved in all responses
 
-Two rule sets available:
-
-| Rule Set | Rules | Format | Size | Description |
-|----------|-------|--------|------|-------------|
-| `chandam-rules` | 14 | JSON/YAML | 54KB/42KB | Frequent Telugu Chandams |
-| `telugu-complete` | 379 | JSON/YAML | 672KB/433KB | All Telugu Chandam rules |
-
-**YAML Benefits**:
-- Multi-line Telugu poem text (readable without Unicode escapes)
-- Human-editable for manual rule customization
-- Smaller file size (~35% compression)
-- Version control friendly
+### Phase 3: Blazor WASM - PLANNED
+- Browser-based WASM app
+- Offline usage with embedded rules
+- Static site deployment
 
 ## Project Structure
 
-See [PROJECT_RULES.md](PROJECT_RULES.md) for detailed organization.
-
 ```
 Chandam3/
-├── docs/                          # Documentation
-│   ├── plans/                     # Phase planning
-│   ├── execution/                 # Status tracking
-│   └── *.md                       # Guidelines, known issues
-├── scripts/                       # All scripts
-├── Tests/                         # Test infrastructure
-│   └── Baselines/                # Baseline test results (YAML)
-├── Config/                        # Configuration
-│   └── Rules/                    # Rule definitions (JSON/YAML)
-├── Chandam.API/                   # API layer
+├── Chandam.API/                  # API layer (ChandamService, RuleLoader)
 ├── Chandam.API.WebApi/           # HTTP REST API
-├── Chandam.API.IntegrationTests/ # Integration tests
-├── Chandam.API.Tests/            # Unit tests (placeholder)
+├── Chandam.MCP.Tools/            # Shared MCP tool definitions (6 tools)
+├── Chandam.MCP.Stdio/            # MCP Stdio server (Claude Desktop)
+├── Chandam.MCP.Http/             # MCP HTTP/SSE server (remote access)
+├── Chandam.MCP.Tests/            # MCP integration tests (13 tests)
+├── Chandam.API.IntegrationTests/ # API integration tests (554 examples)
 ├── Core/                         # Business logic (DO NOT MODIFY)
-└── Rules/                        # Rule definitions (DO NOT MODIFY)
+├── Rules/                        # Rule definitions (DO NOT MODIFY)
+├── Config/Rules/                 # Rule config files (JSON/YAML)
+├── Docs/                         # Documentation & plans
+└── Scripts/                      # Test & utility scripts
 ```
 
 ## Development
@@ -180,89 +176,33 @@ Chandam3/
 ### Prerequisites
 - .NET 8.0 SDK
 - Docker (optional)
-- Git Bash (Windows) or Bash (Linux/Mac)
 
 ### Running Tests
 
 ```bash
-# Integration tests (baseline verification)
-cd Chandam.API.IntegrationTests
-dotnet test
-# Tests 554 examples across 379 rules
-# Perfect matches (100%): 335 (60.5%)
-# High matches (>=90%): 503 (90.8%)
-# Average accuracy: 96.09%
+# MCP tool tests (13 tests)
+dotnet test Chandam.MCP.Tests
 
-# API tests
+# API integration tests (554 examples across 379 rules)
+dotnet test Chandam.API.IntegrationTests
+
+# API endpoint tests
 bash scripts/test-api.sh http://localhost:5000
-bash scripts/test-language-codes.sh http://localhost:5000
-
-# Unit tests
-cd Chandam.API.Tests
-dotnet test
-# Note: Placeholder project (deferred to Phase 2)
 ```
-
-### Generating Baseline
-
-```bash
-cd Chandam.API.IntegrationTests
-dotnet test --filter "GenerateBaselineResults"
-# Baseline saved to: Tests/Baselines/baseline-results.yaml
-```
-
-### Config Files
-
-Rule definitions available in dual format:
-- **JSON**: Machine-optimized (672KB for 379 rules)
-- **YAML**: Human-editable with multi-line Telugu text (433KB)
-
-**YAML takes precedence** when both formats exist. Regenerate config files:
-
-```bash
-cd Verifier
-dotnet run -- --generate-json
-# Generates both JSON and YAML files in Config/Rules/
-```
-
-### Logging & Monitoring
-
-API includes comprehensive request/response logging:
-- Request method, path, body
-- Response status, body
-- Duration (ms)
-- Structured logging to console
-
-## Documentation
-
-- **Project Rules**: [PROJECT_RULES.md](PROJECT_RULES.md) - Organization standards
-- **Coding Preferences**: [docs/CODING_PREFERENCES.md](docs/CODING_PREFERENCES.md)
-- **Docker Guide**: [docs/DOCKER.md](docs/DOCKER.md) - Docker deployment guide
-- **Phase Plans**: [docs/plans/](docs/plans/) - Detailed phase planning
-- **Execution Status**: [docs/execution/](docs/execution/) - Progress tracking
-- **API Documentation**: [Chandam.API.WebApi/README.md](Chandam.API.WebApi/README.md) - API endpoint reference
 
 ## Key Constraints
 
 - **DO NOT modify** Core/ or Rules/ - contains undocumented domain knowledge
 - **Preserve Telugu authenticity** - no forced English translations
 - **No backward compatibility concerns** - building from scratch
-- **Complete each phase fully** - no known issues before moving forward
 
-## Contributing
+## Documentation
 
-See [PROJECT_RULES.md](PROJECT_RULES.md) for:
-- Folder organization rules
-- Code quality standards
-- Testing requirements
-- Commit message format
+- [PROJECT_RULES.md](PROJECT_RULES.md) - Organization standards
+- [Phase 2 Plan](Docs/plans/phase2-mcp-servers.md) - MCP server details
+- [Docker Guide](Docs/DOCKER.md) - Docker deployment
+- [API Reference](Chandam.API.WebApi/README.md) - REST API docs
 
 ## License
 
-Copyright © 2013-2026 Chandam-ఛందం (http://chandam.apphb.com)
-
----
-
-**Current Focus**: Phase 1 Complete ✅ - Ready for Phase 2
-
-For questions or issues: https://github.com/anthropics/claude-code/issues
+Copyright 2013-2026 Chandam-ఛందం (http://chandam.apphb.com)

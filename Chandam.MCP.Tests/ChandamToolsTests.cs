@@ -1,0 +1,139 @@
+using System.Text.Json;
+using Chandam.API.Services;
+using Chandam.MCP.Tools;
+
+namespace Chandam.MCP.Tests;
+
+public class ChandamToolsTests
+{
+    private readonly ChandamTools _tools;
+
+    // Indravajramu test poem (97% match expected)
+    private const string TestPoem = @"సామర్థ్యలీలన్ తతజద్విగంబుల్
+భూమిధ్రవిశ్రాంతుల బొంది యొప్పున్
+ప్రేమంబుతో నైందవబింబవక్త్రున్
+హేమాంబురుం బాడుదు రింద్రవజ్రన్";
+
+    public ChandamToolsTests()
+    {
+        var ruleLoader = new RuleLoaderService();
+        ruleLoader.LoadAllRuleSets(null);
+        var service = new ChandamService(ruleLoader);
+        _tools = new ChandamTools(service, ruleLoader);
+    }
+
+    [Fact]
+    public void DetermineChandam_WithValidPoem_ReturnsBestMatch()
+    {
+        var result = _tools.DetermineChandam(TestPoem);
+        var json = JsonDocument.Parse(result);
+
+        Assert.True(json.RootElement.GetProperty("Success").GetBoolean());
+        var matches = json.RootElement.GetProperty("Matches");
+        Assert.True(matches.GetArrayLength() > 0);
+    }
+
+    [Fact]
+    public void DetermineChandam_EmptyPoem_ReturnsError()
+    {
+        var result = _tools.DetermineChandam("");
+        var json = JsonDocument.Parse(result);
+
+        Assert.False(json.RootElement.GetProperty("Success").GetBoolean());
+    }
+
+    [Fact]
+    public void TryMatchChandam_WithCorrectRule_ReturnsMatch()
+    {
+        var result = _tools.TryMatchChandam(TestPoem, "iMdravajramu");
+        var json = JsonDocument.Parse(result);
+
+        Assert.True(json.RootElement.GetProperty("IsMatch").GetBoolean());
+        var match = json.RootElement.GetProperty("Match");
+        Assert.True(match.GetProperty("MatchPercentage").GetDouble() > 80);
+    }
+
+    [Fact]
+    public void TryMatchChandam_InvalidRule_ReturnsError()
+    {
+        var result = _tools.TryMatchChandam(TestPoem, "nonexistent_rule");
+        var json = JsonDocument.Parse(result);
+
+        Assert.False(json.RootElement.GetProperty("IsMatch").GetBoolean());
+    }
+
+    [Fact]
+    public void CalculateScores_ReturnsRankedResults()
+    {
+        var result = _tools.CalculateScores(TestPoem, language: "te", min_percentage: 50);
+        var json = JsonDocument.Parse(result);
+
+        var scores = json.RootElement.GetProperty("Scores");
+        Assert.True(scores.GetArrayLength() > 0);
+
+        // Should be ordered by match percentage descending
+        var firstScore = scores[0].GetProperty("MatchPercentage").GetDouble();
+        Assert.True(firstScore >= 50);
+    }
+
+    [Fact]
+    public void GetRuleInfo_ReturnsRuleDetails()
+    {
+        var result = _tools.GetRuleInfo("iMdravajramu");
+        var json = JsonDocument.Parse(result);
+
+        Assert.Equal("iMdravajramu", json.RootElement.GetProperty("Identifier").GetString());
+        Assert.False(string.IsNullOrEmpty(json.RootElement.GetProperty("Name").GetString()));
+    }
+
+    [Fact]
+    public void GetRuleInfo_WithExamples_IncludesExamples()
+    {
+        var result = _tools.GetRuleInfo("iMdravajramu", include_examples: true);
+        var json = JsonDocument.Parse(result);
+
+        Assert.True(json.RootElement.TryGetProperty("Examples", out var examples));
+        Assert.True(examples.GetArrayLength() > 0);
+    }
+
+    [Fact]
+    public void GetExamples_ReturnsExamplePoems()
+    {
+        var result = _tools.GetExamples("iMdravajramu", max_examples: 3);
+        var json = JsonDocument.Parse(result);
+
+        var examples = json.RootElement.GetProperty("Examples");
+        Assert.True(examples.GetArrayLength() > 0);
+        Assert.True(examples.GetArrayLength() <= 3);
+    }
+
+    [Fact]
+    public void ListRules_Telugu_ReturnsRules()
+    {
+        var result = _tools.ListRules("te");
+        var json = JsonDocument.Parse(result);
+
+        Assert.True(json.RootElement.GetArrayLength() > 100);
+    }
+
+    [Theory]
+    [InlineData("te")]
+    [InlineData("tel")]
+    [InlineData("Telugu")]
+    public void DetermineChandam_AllLanguageCodes_Work(string lang)
+    {
+        var result = _tools.DetermineChandam(TestPoem, language: lang);
+        var json = JsonDocument.Parse(result);
+
+        Assert.True(json.RootElement.GetProperty("Success").GetBoolean());
+    }
+
+    [Fact]
+    public void DetermineChandam_ResultContainsTelugu()
+    {
+        var result = _tools.DetermineChandam(TestPoem);
+
+        // Verify Telugu text is preserved (not replaced with English)
+        Assert.Contains("ఇంద్రవజ్ర", result);
+    }
+}

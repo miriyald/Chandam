@@ -28,7 +28,13 @@
       "Bash(ls -lh c:/Working/Experiments/Chandam3/Config/Rules/*.yaml)",
       "Bash(dotnet test --filter \"GenerateBaselineResults\" --logger \"console;verbosity=normal\")",
       "Bash(dotnet test --filter \"AllExamples_ShouldMatchBaseline\" --logger \"console;verbosity=normal\")",
-      "Read(//c/Working/Experiments/Chandam3/**)"
+      "Read(//c/Working/Experiments/Chandam3/**)",
+      "Bash(dotnet nuget:*)",
+      "Bash(dotnet package:*)",
+      "Bash(dotnet build:*)",
+      "Bash(dotnet sln:*)",
+      "Bash(dotnet test:*)",
+      "Bash(timeout 15 dotnet run --project Chandam.MCP.Stdio)"
     ]
   }
 }
