@@ -26,4 +26,9 @@ public class TryMatchCustomRequest
     /// Whether to match Prasa (rhyme/end-sound matching)
     /// </summary>
     public bool MatchPrasa { get; set; } = true;
+
+    /// <summary>
+    /// Optional: Rendered output format (None, Html, Text, Markdown, Both)
+    /// </summary>
+    public RenderFormat RenderFormat { get; set; } = RenderFormat.None;
 }

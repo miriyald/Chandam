@@ -43,14 +43,18 @@ class Program
         if (determineResponse.Success && determineResponse.Matches.Count > 0)
         {
             var match = determineResponse.Matches[0];
-            Console.WriteLine($"✓ Best match: {match.Name} ({match.Identifier})");
+            Console.WriteLine($"✓ Best match: {match.Rule.Name} ({match.Rule.Identifier})");
             Console.WriteLine($"  Match %: {match.MatchPercentage}%");
-            Console.WriteLine($"  Type: {match.PadyamType}");
-            Console.WriteLine($"  Frequency: {match.Frequency}");
-            if (match.Details != null)
+            Console.WriteLine($"  Type: {match.Rule.PadyamType}");
+            Console.WriteLine($"  Frequency: {match.Rule.Frequency}");
+            Console.WriteLine($"  Score: {match.Score}/{match.Total}, IsMatched: {match.IsMatched}");
+            if (match.Errors != null && match.Errors.Count > 0)
             {
-                Console.WriteLine($"  Lines: {match.Details.LineCount}, Matched: {match.Details.MatchedLines}");
-                Console.WriteLine($"  Yati: {match.Details.YatiMatched}, Prasa: {match.Details.PrasaMatched}");
+                Console.WriteLine($"  Errors: {match.Errors.Count}");
+                foreach (var err in match.Errors)
+                {
+                    Console.WriteLine($"    పాదము {err.Line}, స్థానము {err.Position}: {err.MismatchDescription}");
+                }
             }
         }
         else
@@ -74,7 +78,7 @@ class Program
         if (tryMatchResponse.Match != null)
         {
             Console.WriteLine($"Match: {tryMatchResponse.IsMatch}");
-            Console.WriteLine($"Rule: {tryMatchResponse.Match.Name}");
+            Console.WriteLine($"Rule: {tryMatchResponse.Match.Rule.Name}");
             Console.WriteLine($"Match %: {tryMatchResponse.Match.MatchPercentage}%");
         }
         else

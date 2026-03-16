@@ -1,0 +1,51 @@
+# Chandam Project - Windsurf Rules
+
+You are working on **Chandam (ఛందం)**, a Telugu/Sanskrit/Kannada poetry meter analysis system.
+379 Telugu rules, 554 tested examples, 96.09% accuracy. Website: https://chandamu.github.io/
+
+## Hard Rules
+
+1. **NEVER modify** `Chandam.Core/`, `Chandam.Rules/`, `Chandam.Util/`, `Chandam.Indic/`, or `Chandam.Samples/`. These contain undocumented domain knowledge built over 10+ years.
+
+2. **Preserve Telugu text** — no forced English translations, maintain Unicode, test with real Telugu text.
+
+3. **KISS** — no future-proofing, small focused functions, mandatory parameters, solve current problem only.
+
+## Stack
+- C# / .NET 8.0, Blazor WASM, xUnit, Docker
+- MCP (Model Context Protocol) for AI agent integration
+- YAML (YamlDotNet) preferred for Telugu text config
+
+## Architecture
+
+```
+Core (READ-ONLY):  Util -> Indic -> Core (no Rules/Samples dependency)
+API:               Chandam.API (service layer) -> Chandam.API.WebApi (REST)
+MCP:               Chandam.MCP.Tools -> Stdio + Http servers
+Web:               Chandam.Wasm (Blazor WebAssembly)
+```
+
+Rules loaded at runtime via JSON/YAML — not compiled in.
+
+## Build & Test
+```bash
+dotnet build Chandam.sln
+dotnet test Chandam.MCP.Tests              # 13 tests
+dotnet test Chandam.API.IntegrationTests   # 554 examples
+dotnet publish Chandam.Wasm -c Release -p:ExcludeYaml=true
+```
+
+## Coding Standards
+- N-Layer: Interface -> Service -> Data Access + Contracts
+- No business logic in data access
+- Constants in constants folder; secrets in `.env`
+- Commit: `[Phase#] Category: Description`
+
+## File Placement
+- Docs: `Docs/plans/` and `Docs/execution/`
+- Scripts: `Docs/Scripts/`
+- Rules: `Chandam.Config/Rules/`
+- Baselines: `Chandam.Config/Baselines/`
+
+## Domain Terms
+Chandam=Meter, Padyam=Verse, Gana=Foot, Yati=Caesura, Prasa=Rhyme, Vruttam=Meter type

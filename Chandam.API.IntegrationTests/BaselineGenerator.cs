@@ -124,13 +124,20 @@ public class BaselineGenerator
             Remarks = remarks
         };
 
-        if (response.Match?.Details != null)
+        if (response.Match != null)
         {
-            result.YatiMatched = response.Match.Details.YatiMatched;
-            result.PrasaMatched = response.Match.Details.PrasaMatched;
-            result.MatchedLines = response.Match.Details.MatchedLines;
-            result.TotalLines = response.Match.Details.LineCount;
-            result.MismatchCount = response.Match.Details.Mismatches?.Count ?? 0;
+            var errors = response.Match.Errors;
+            result.YatiMatched = !(errors?.Any(e => e.MismatchType == "Yati" || e.MismatchType == "PrasaYati") ?? false);
+            result.PrasaMatched = !(errors?.Any(e =>
+                e.MismatchType == "Prasa" || e.MismatchType == "AnthyaPrasa" ||
+                e.MismatchType == "PrasaYati" || e.MismatchType == "PrasaPoorva" ||
+                e.MismatchType == "AnthyaPrasaPoorva" || e.MismatchType == "PrasaPoorvaBindu" ||
+                e.MismatchType == "AnthyaPrasaPoorvaBindu" || e.MismatchType == "PrasaPoorvaVisarga" ||
+                e.MismatchType == "AnthyaPrasaPoorvaVisarga") ?? false);
+            var linesWithErrors = errors?.Select(e => e.Line).Distinct().Count() ?? 0;
+            result.TotalLines = response.Match.Total > 0 ? response.Match.Total : 0;
+            result.MatchedLines = Math.Max(0, result.TotalLines - linesWithErrors);
+            result.MismatchCount = errors?.Count ?? 0;
         }
 
         return result;

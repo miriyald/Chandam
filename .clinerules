@@ -1,0 +1,68 @@
+# Chandam Project - Cline/Roo Code Rules
+
+## Project
+Chandam (ఛందం) = Telugu/Sanskrit/Kannada poetry meter analysis system.
+379 Telugu rules, 554 tested examples, 96.09% accuracy.
+
+## Critical: Read-Only Projects
+
+NEVER modify these — they contain undocumented domain knowledge:
+- Chandam.Core/ — matching engine, scoring
+- Chandam.Rules/ — 343+ rule data classes
+- Chandam.Util/ — contracts, enums, Manager
+- Chandam.Indic/ — Indic script processing
+- Chandam.Samples/ — sample poems
+
+## Critical: Telugu Authenticity
+- Never force English translations of Telugu domain terms
+- Maintain Unicode support everywhere
+- Test with actual Telugu text
+
+## Architecture
+
+Core (READ-ONLY):
+  Chandam.Util       <- no deps
+  Chandam.Indic      <- Util
+  Chandam.Core       <- Util, Indic (NO Rules/Samples)
+
+API:
+  Chandam.API        <- Core, Util, Indic (service wrapper)
+  Chandam.API.WebApi <- REST API (8 endpoints)
+
+MCP:
+  Chandam.MCP.Tools  <- 7 tool definitions
+  Chandam.MCP.Stdio  <- stdio transport (Claude Desktop)
+  Chandam.MCP.Http   <- HTTP/SSE transport
+
+Web:
+  Chandam.Wasm       <- Blazor WebAssembly
+
+Rules loaded at runtime via JSON/YAML config — not compiled in.
+
+## Tech: C# / .NET 8.0, Blazor WASM, xUnit, Docker, YamlDotNet
+
+## Build & Test
+```bash
+dotnet build Chandam.sln
+dotnet test Chandam.MCP.Tests
+dotnet test Chandam.API.IntegrationTests
+dotnet publish Chandam.Wasm -c Release -p:ExcludeYaml=true
+```
+
+## Coding Standards
+- KISS — no future-proofing
+- N-Layer: Interface -> Service -> Data Access + Contracts
+- Small functions, mandatory parameters
+- Constants folder; secrets in .env
+- Commit: [Phase#] Category: Description
+
+## File Placement
+- Docs: Docs/plans/ and Docs/execution/
+- Scripts: Docs/Scripts/
+- Rules: Chandam.Config/Rules/ (YAML preferred for Telugu)
+- Baselines: Chandam.Config/Baselines/
+
+## Gotchas
+- ExcludeYaml=true must be CLI -p: flag (not csproj) for global propagation
+- HybridGlobalization in WASM saves ~400KB ICU data
+- Language codes: ISO 639-1 (te), ISO 639-2 (tel), numeric (0), names (Telugu)

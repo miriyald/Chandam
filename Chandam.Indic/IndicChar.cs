@@ -1,6 +1,6 @@
 //---------------------------------------------------------------------------------------------
-// <copyright file="IndicChar.cs" company="Chandam-????">
-//    Copyright � 2013 - 2018 'Chandam-????' : http://chandam.apphb.com
+// <copyright file="IndicChar.cs" company="Chandam-ఛందం">
+//    Copyright © 2013 - 2018 'Chandam-ఛందం' : http://chandam.apphb.com
 //    Original Author : Dileep Miriyala (m.dileep@gmail.com)
 //    Last Updated    : 03-Feb-2018 21:36EST
 //    Revisions:

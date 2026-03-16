@@ -6,33 +6,38 @@ else if (Match != null)
 {
     <div class="card">
         <div class="result-header">
-            <span class="match-name">@Match.Name</span>
+            <span class="match-name">@Match.Rule.Name</span>
             <span class="match-percentage @GetPercentageClass(Match.MatchPercentage)">
-                @Match.MatchPercentage.ToString("F0")%
+                @Match.MatchPercentage%
             </span>
         </div>
 
-        @if (!string.IsNullOrEmpty(Match.Description))
+        @if (!string.IsNullOrEmpty(Match.Rule.Description))
         {
-            <p class="match-description">@Match.Description</p>
+            <p class="match-description">@Match.Rule.Description</p>
         }
 
         <div style="font-size: 0.85rem; color: #666;">
-            <span>Type: @Match.PadyamType</span>
-            @if (!string.IsNullOrEmpty(Match.Frequency))
+            <span>Type: @Match.Rule.PadyamType</span>
+            @if (!string.IsNullOrEmpty(Match.Rule.Frequency))
             {
-                <span> | Frequency: @Match.Frequency</span>
+                <span> | Frequency: @Match.Rule.Frequency</span>
             }
+            <span> | Score: @Match.Score/@Match.Total</span>
         </div>
 
-        @if (Match.Details?.Mismatches != null && Match.Details.Mismatches.Count > 0)
+        @if (Match.Errors != null && Match.Errors.Count > 0)
         {
             <div class="mismatches">
                 <strong>Mismatches:</strong>
                 <ul>
-                    @foreach (var mismatch in Match.Details.Mismatches)
+                    @foreach (var err in Match.Errors)
                     {
-                        <li>@mismatch</li>
+                        <li>
+                            పాదము @err.Line, స్థానము @err.Position:
+                            @err.MismatchDescription -
+                            కావలసినది: @err.Expected, ఉన్నది: @err.Actual
+                        </li>
                     }
                 </ul>
             </div>
@@ -44,7 +49,7 @@ else if (Match != null)
     [Parameter] public ChandamMatch? Match { get; set; }
     [Parameter] public string? ErrorMessage { get; set; }
 
-    private string GetPercentageClass(double percentage) =>
+    private string GetPercentageClass(int percentage) =>
         percentage >= 80 ? "match-high" :
         percentage >= 50 ? "match-medium" : "match-low";
 }

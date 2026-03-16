@@ -18,8 +18,9 @@ public class ChandamToolsTests
 
     public ChandamToolsTests()
     {
-        var ruleLoader = new RuleLoaderService();
-        ruleLoader.LoadAllRuleSets(null);
+        var rulesPath = FindRulesDirectory();
+        var ruleLoader = new RuleLoaderService(rulesPath);
+        ruleLoader.LoadAllRuleSets();
         var service = new ChandamService(ruleLoader);
         var dictionaryService = new DictionaryService([], new DiskCache("test-cache"));
         _tools = new ChandamTools(service, ruleLoader, dictionaryService);
@@ -53,7 +54,7 @@ public class ChandamToolsTests
 
         Assert.True(json.RootElement.GetProperty("IsMatch").GetBoolean());
         var match = json.RootElement.GetProperty("Match");
-        Assert.True(match.GetProperty("MatchPercentage").GetDouble() > 80);
+        Assert.True(match.GetProperty("MatchPercentage").GetInt32() > 80);
     }
 
     [Fact]
@@ -138,5 +139,21 @@ public class ChandamToolsTests
 
         // Verify Telugu text is preserved (not replaced with English)
         Assert.Contains("ఇంద్రవజ్ర", result);
+    }
+
+    /// <summary>
+    /// Walk up from test bin directory to find Chandam.Config/Rules
+    /// </summary>
+    private static string? FindRulesDirectory()
+    {
+        var current = Directory.GetCurrentDirectory();
+        while (current != null)
+        {
+            var configPath = Path.Combine(current, "Chandam.Config", "Rules");
+            if (Directory.Exists(configPath))
+                return configPath;
+            current = Directory.GetParent(current)?.FullName;
+        }
+        return null;
     }
 }

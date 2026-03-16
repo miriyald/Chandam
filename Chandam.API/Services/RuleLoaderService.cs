@@ -294,15 +294,14 @@ public class RuleLoaderService
     }
 
     /// <summary>
-    /// Fallback: Load compiled rules that were auto-registered by Manager's static constructor
-    /// Manager.Rules() returns the rules already registered by TeluguRules.Rules
+    /// Fallback: Load compiled rules from Manager registry.
+    /// NOTE: Rules must be registered first via Manager.Register() before this works.
+    /// If Manager is empty, returns empty set.
     /// </summary>
     private void LoadDefaultCompiledRules()
     {
         try
         {
-            // Manager's static constructor already registered TeluguRules.Rules
-            // Just retrieve them using Manager.Rules()
             var compiledRules = Manager.Rules();
             _loadedRuleSets["default"] = compiledRules;
             _currentRuleSetId = "default";

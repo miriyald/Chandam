@@ -48,7 +48,8 @@
       "Bash(du -ch *.br)",
       "Bash(ls -lS *.br)",
       "Bash(ls *[Yy]aml*)",
-      "Bash(ls -lS Chandam*.br)"
+      "Bash(ls -lS Chandam*.br)",
+      "Bash(ls c:/Working/Experiments/Chandam3/Chandam.Wasm/Pages/*.razor c:/Working/Experiments/Chandam3/Chandam.Wasm/Components/*.razor c:/Working/Experiments/Chandam3/Chandam.Wasm/Services/*.cs c:/Working/Experiments/Chandam3/Chandam.Wasm/*.razor c:/Working/Experiments/Chandam3/Chandam.Wasm/wwwroot/data/*.json)"
     ]
   }
 }

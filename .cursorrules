@@ -1,0 +1,90 @@
+# Chandam Project - Cursor Rules
+
+You are working on **Chandam (ఛందం)**, a Telugu/Sanskrit/Kannada poetry meter analysis system.
+It analyzes poems to identify metrical patterns — 379 Telugu rules, 554 tested examples, 96.09% accuracy.
+
+## Critical Constraints
+
+### DO NOT MODIFY these projects (undocumented domain knowledge):
+- `Chandam.Core/` — Matching engine, scoring, pattern recognition
+- `Chandam.Rules/` — 343+ rule data classes
+- `Chandam.Util/` — Contracts, enums, Manager classes
+- `Chandam.Indic/` — Indic script processing
+- `Chandam.Samples/` — Sample poem datasets
+
+If you suspect a bug in core logic, report it — don't fix it.
+
+### Preserve Telugu Authenticity
+- Never force English translations of Telugu terms
+- Maintain full Unicode support in all layers
+- Test with actual Telugu text, not transliterated placeholders
+
+### KISS Principle
+- No future-proofing or speculative features
+- Small, focused functions with mandatory parameters
+- Solve the current problem only
+
+## Architecture
+
+```
+Core/ (READ-ONLY)
+  Chandam.Util       <- no deps (contracts, enums)
+  Chandam.Indic      <- Util (script processing)
+  Chandam.Rules      <- Util (data classes only)
+  Chandam.Samples    <- standalone
+  Chandam.Core       <- Util, Indic (business logic)
+  Chandam.Dictionary <- standalone (HTTP + disk cache)
+
+API/
+  Chandam.API          <- Core, Util, Indic (service layer)
+  Chandam.API.WebApi   <- HTTP REST API (8 endpoints)
+
+MCP/
+  Chandam.MCP.Tools    <- 7 shared MCP tool definitions
+  Chandam.MCP.Stdio    <- MCP server (Claude Desktop)
+  Chandam.MCP.Http     <- MCP HTTP/SSE server
+
+Web/
+  Chandam.Wasm         <- Blazor WebAssembly app
+```
+
+Rules are loaded at **runtime** via JSON/YAML — not compiled in.
+
+## Tech Stack
+- C# / .NET 8.0, Blazor WebAssembly, xUnit
+- MCP (Model Context Protocol) for AI agent integration
+- YAML preferred for Telugu text config (YamlDotNet)
+- Docker + docker-compose
+
+## Build & Test
+```bash
+dotnet build Chandam.sln
+dotnet test Chandam.MCP.Tests              # 13 MCP tests
+dotnet test Chandam.API.IntegrationTests   # 554 examples
+dotnet publish Chandam.Wasm -c Release -p:ExcludeYaml=true  # WASM build
+```
+
+## Coding Standards
+- N-Layer: Interface -> Service -> Data Access + Contracts
+- No business logic in data access
+- Constants in constants folder; secrets in `.env`
+- Commit format: `[Phase#] Category: Description`
+
+## File Placement
+- Docs: `Docs/plans/` (plans), `Docs/execution/` (status)
+- Scripts: `Docs/Scripts/` (all .sh, .ps1, .bat)
+- Rule configs: `Chandam.Config/Rules/` (JSON/YAML)
+- Baselines: `Chandam.Config/Baselines/`
+
+## Domain Terms
+- Chandam (ఛందం) = Meter/Prosody
+- Padyam (పద్యం) = Poem/Verse
+- Gana (గణము) = Metrical foot
+- Yati (యతి) = Caesura
+- Prasa (ప్రాస) = Rhyme
+- Vruttam (వృత్తము) = Meter type
+
+## Known Gotchas
+- `-p:ExcludeYaml=true` must be CLI property (not csproj) to propagate globally
+- Core projects were net4.8, now net8.0 SDK-style
+- HybridGlobalization in WASM reduces ICU data (~400KB saved)

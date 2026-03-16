@@ -1,11 +1,12 @@
-using Chandam.API.Converters;
 using Chandam.API.Models;
 using Chandam.API.Models.Config;
+using Chandam.API.Converters;
 using Chandam.Core;
 using Chandam.Rules;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 
 namespace Chandam.API.Services;
 
@@ -23,7 +24,6 @@ public class ChandamService
 
     /// <summary>
     /// Auto-detect the best matching Chandam(s) for a poem
-    /// Maps to Business3.Determine()
     /// </summary>
     public DetermineResponse Determine(DetermineRequest request)
     {
@@ -38,7 +38,6 @@ public class ChandamService
                 };
             }
 
-            // Set up match options
             var options = new MatchOptions
             {
                 Language = request.Language,
@@ -46,7 +45,6 @@ public class ChandamService
                 MatchPrasa = request.MatchPrasa
             };
 
-            // Call Business3.Determine to get best matches
             var probable = Padyam.MostProbable(request.PoemText, options);
 
             if (probable == null || probable.MatchResult == null)
@@ -61,26 +59,11 @@ public class ChandamService
             var response = new DetermineResponse
             {
                 Success = true,
-                Matches = new List<ChandamMatch>()
+                Matches = new List<ChandamMatch>
+                {
+                    BuildChandamMatch(probable.MatchResult, probable.Rule, probable.Padyam, request.RenderFormat)
+                }
             };
-
-            // Add the best match
-            var match = new ChandamMatch
-            {
-                Identifier = probable.Rule.Identifier,
-                Name = probable.Rule.Name,
-                MatchPercentage = probable.MatchResult.Percentage,
-                PadyamType = probable.Rule.PadyamType.ToString(),
-                PadyamSubType = probable.Rule.PadyamSubType.ToString(),
-                Frequency = probable.Rule.Frequency.ToString(),
-                Description = DescriptionBuilder.BuildDescription(probable.Rule),
-                Details = BuildMatchDetails(probable.MatchResult, probable.Rule)
-            };
-
-            response.Matches.Add(match);
-
-            // TODO: Add more top matches if requested (TopMatches > 1)
-            // This requires calling Scores and taking top N
 
             return response;
         }
@@ -96,7 +79,6 @@ public class ChandamService
 
     /// <summary>
     /// Match a poem against a specific Chandam rule
-    /// Maps to Business3.TryMatch()
     /// </summary>
     public TryMatchResponse TryMatch(TryMatchRequest request)
     {
@@ -120,7 +102,6 @@ public class ChandamService
                 };
             }
 
-            // Fetch the rule
             var rule = Manager.FetchRule(request.RuleIdentifier);
             if (rule == null)
             {
@@ -131,27 +112,14 @@ public class ChandamService
                 };
             }
 
-            // Create Padyam and configure matching options
             var padyam = new Padyam
             {
                 MatchYati = request.MatchYati,
                 MatchPrasa = request.MatchPrasa
             };
 
-            // Perform the match
             var matchResult = padyam.Match(request.PoemText, rule);
-
-            var match = new ChandamMatch
-            {
-                Identifier = rule.Identifier,
-                Name = rule.Name,
-                MatchPercentage = matchResult.Percentage,
-                PadyamType = rule.PadyamType.ToString(),
-                PadyamSubType = rule.PadyamSubType.ToString(),
-                Frequency = rule.Frequency.ToString(),
-                Description = DescriptionBuilder.BuildDescription(rule),
-                Details = BuildMatchDetails(matchResult, rule)
-            };
+            var match = BuildChandamMatch(matchResult, rule, padyam, request.RenderFormat);
 
             return new TryMatchResponse
             {
@@ -171,7 +139,6 @@ public class ChandamService
 
     /// <summary>
     /// Match a poem against a custom (unregistered) Chandam rule
-    /// Allows testing rules without registering them first
     /// </summary>
     public TryMatchResponse TryMatchCustom(TryMatchCustomRequest request)
     {
@@ -195,7 +162,6 @@ public class ChandamService
                 };
             }
 
-            // Convert RuleDto to Rule
             Rule rule;
             try
             {
@@ -210,27 +176,14 @@ public class ChandamService
                 };
             }
 
-            // Create Padyam and configure matching options
             var padyam = new Padyam
             {
                 MatchYati = request.MatchYati,
                 MatchPrasa = request.MatchPrasa
             };
 
-            // Perform the match
             var matchResult = padyam.Match(request.PoemText, rule);
-
-            var match = new ChandamMatch
-            {
-                Identifier = rule.Identifier,
-                Name = rule.Name,
-                MatchPercentage = matchResult.Percentage,
-                PadyamType = rule.PadyamType.ToString(),
-                PadyamSubType = rule.PadyamSubType.ToString(),
-                Frequency = rule.Frequency.ToString(),
-                Description = DescriptionBuilder.BuildDescription(rule),
-                Details = BuildMatchDetails(matchResult, rule)
-            };
+            var match = BuildChandamMatch(matchResult, rule, padyam, request.RenderFormat);
 
             return new TryMatchResponse
             {
@@ -250,7 +203,6 @@ public class ChandamService
 
     /// <summary>
     /// Calculate match scores for all Chandam rules
-    /// Maps to Business.Scores()
     /// </summary>
     public ScoresResponse Scores(ScoresRequest request)
     {
@@ -264,19 +216,15 @@ public class ChandamService
                 };
             }
 
-            // Get all rules (optionally filtered by language)
             var allRules = _ruleLoader.GetAllRules(request.Language);
-
             var scores = new List<ChandamScore>();
 
-            // Create Padyam for matching
             var padyam = new Padyam
             {
                 MatchYati = request.MatchYati,
                 MatchPrasa = request.MatchPrasa
             };
 
-            // Calculate match score for each rule
             foreach (var rule in allRules)
             {
                 try
@@ -297,12 +245,10 @@ public class ChandamService
                 }
                 catch
                 {
-                    // Skip rules that fail to match
                     continue;
                 }
             }
 
-            // Sort by match percentage descending
             scores = scores.OrderByDescending(s => s.MatchPercentage).ToList();
 
             return new ScoresResponse
@@ -322,7 +268,6 @@ public class ChandamService
 
     /// <summary>
     /// Get detailed information about a specific Chandam rule
-    /// Maps to Business.ShowRules()
     /// </summary>
     public GetRuleInfoResponse GetRuleInfo(GetRuleInfoRequest request)
     {
@@ -345,25 +290,8 @@ public class ChandamService
                 };
             }
 
-            var response = new GetRuleInfoResponse
-            {
-                Identifier = rule.Identifier,
-                Name = rule.Name,
-                Lines = rule.Lines,
-                PadyamType = rule.PadyamType.ToString(),
-                PadyamSubType = rule.PadyamSubType.ToString(),
-                Language = rule.Language.ToString(),
-                Frequency = rule.Frequency.ToString(),
-                Rules = ConvertRulesToStringArray(rule.Rules),
-                Yati = rule.Yati,
-                Prasa = rule.Prasa,
-                PrasaYati = rule.PrasaYati,
-                AnthyaPrasa = rule.AnthyaPrasa,
-                Description = DescriptionBuilder.BuildDescription(rule),
-                References = rule.References
-            };
+            var response = BuildRuleInfo(rule);
 
-            // Add examples if requested
             if (request.IncludeExamples && rule.Examples2 != null && rule.Examples2.Length > 0)
             {
                 response.Examples = new List<ExamplePoem>();
@@ -373,7 +301,7 @@ public class ChandamService
                     {
                         Text = example.Text,
                         Author = example.Author ?? "మహానుభావుడు.",
-                        Date = "తెలియదు", // Example doesn't have Date field
+                        Date = "తెలియదు",
                         Reference = example.Reference,
                         Notes = example.Remarks
                     });
@@ -393,7 +321,6 @@ public class ChandamService
 
     /// <summary>
     /// Get example poems for a specific Chandam
-    /// Maps to Business.ShowSamples()
     /// </summary>
     public GetSamplesResponse GetSamples(GetSamplesRequest request)
     {
@@ -459,54 +386,90 @@ public class ChandamService
         }
     }
 
-    /// <summary>
-    /// Build match details from MatchResult
-    /// </summary>
-    private MatchDetails BuildMatchDetails(MatchResult matchResult, Rule rule)
+    private GetRuleInfoResponse BuildRuleInfo(Rule rule)
     {
-        var details = new MatchDetails();
-
-        // Calculate line count from rule definition or errors
-        details.LineCount = rule.Lines;
-
-        // Calculate matched lines: Total lines - lines with errors
-        var linesWithErrors = matchResult.Errors?
-            .Select(e => e.Line)
-            .Distinct()
-            .Count() ?? 0;
-        details.MatchedLines = Math.Max(0, details.LineCount - linesWithErrors);
-
-        // Check for Yati mismatches
-        var yatiErrors = matchResult.Errors?.Any(e => e.Mismatch == Mismatch.Yati || e.Mismatch == Mismatch.PrasaYati) ?? false;
-        details.YatiMatched = !yatiErrors;
-
-        // Check for Prasa mismatches
-        var prasaErrors = matchResult.Errors?.Any(e =>
-            e.Mismatch == Mismatch.Prasa ||
-            e.Mismatch == Mismatch.AnthyaPrasa ||
-            e.Mismatch == Mismatch.PrasaYati ||
-            e.Mismatch == Mismatch.PrasaPoorva ||
-            e.Mismatch == Mismatch.AnthyaPrasaPoorva ||
-            e.Mismatch == Mismatch.PrasaPoorvaBindu ||
-            e.Mismatch == Mismatch.AnthyaPrasaPoorvaBindu ||
-            e.Mismatch == Mismatch.PrasaPoorvaVisarga ||
-            e.Mismatch == Mismatch.AnthyaPrasaPoorvaVisarga) ?? false;
-        details.PrasaMatched = !prasaErrors;
-
-        // Build mismatch descriptions
-        if (matchResult.Errors != null && matchResult.Errors.Count > 0)
+        return new GetRuleInfoResponse
         {
-            details.Mismatches = matchResult.Errors
-                .Select(e => $"పాదము {e.Line}, స్థానము {e.Position}: {e.Mismatch}")
-                .ToList();
-        }
-
-        return details;
+            Identifier = rule.Identifier,
+            Name = rule.Name,
+            Lines = rule.Lines,
+            PadyamType = rule.PadyamType.ToString(),
+            PadyamSubType = rule.PadyamSubType.ToString(),
+            Language = rule.Language.ToString(),
+            Frequency = rule.Frequency.ToString(),
+            Rules = ConvertRulesToStringArray(rule.Rules),
+            Yati = rule.Yati,
+            Prasa = rule.Prasa,
+            PrasaYati = rule.PrasaYati,
+            AnthyaPrasa = rule.AnthyaPrasa,
+            Description = DescriptionBuilder.BuildDescription(rule),
+            References = rule.References
+        };
     }
 
-    /// <summary>
-    /// Convert object[][] to string[][] for serialization
-    /// </summary>
+    private ChandamMatch BuildChandamMatch(MatchResult matchResult, Rule rule, Padyam padyam, RenderFormat renderFormat)
+    {
+        var match = new ChandamMatch
+        {
+            Rule = BuildRuleInfo(rule),
+            Score = matchResult.Score,
+            Total = matchResult.Total,
+            MatchPercentage = matchResult.Percentage,
+            IsMatched = matchResult.IsMatched,
+        };
+
+        if (matchResult.Errors != null && matchResult.Errors.Count > 0)
+        {
+            match.Errors = matchResult.Errors.Select(e => new MatchError
+            {
+                Line = e.Line,
+                Position = e.Position,
+                MismatchType = e.Mismatch.ToString(),
+                MismatchDescription = Helper.MismatchString(e.Mismatch),
+                Expected = e.Expected,
+                Actual = e.Actual,
+                Remarks = e.Remarks
+            }).ToList();
+        }
+
+        if (renderFormat == RenderFormat.Html )
+            match.RenderedHtml = padyam.Build(matchResult);
+        if (renderFormat == RenderFormat.Text )
+            match.RenderedText = padyam.Build2(matchResult);
+        if (renderFormat == RenderFormat.Markdown)
+            match.RenderedMarkdown = BuildMarkdown(matchResult, rule);
+
+        return match;
+    }
+
+    private string BuildMarkdown(MatchResult matchResult, Rule rule)
+    {
+        var sb = new StringBuilder();
+        sb.AppendLine($"## {rule.Name}");
+        sb.AppendLine();
+        sb.AppendLine($"- **ఛందం**: {rule.Name} ({rule.Identifier})");
+        sb.AppendLine($"- **రకం**: {rule.PadyamType}");
+        sb.AppendLine($"- **స్కోరు**: {matchResult.Score}/{matchResult.Total} ({matchResult.Percentage}%)");
+        sb.AppendLine($"- **సరిపోలిక**: {(matchResult.IsMatched ? "అవును" : "కాదు")}");
+        sb.AppendLine();
+
+        if (matchResult.Errors != null && matchResult.Errors.Count > 0)
+        {
+            sb.AppendLine("### తప్పులు");
+            sb.AppendLine();
+            sb.AppendLine("| పాదము | స్థానము | తప్పు | కావలసినది | ఉన్నది |");
+            sb.AppendLine("|--------|---------|-------|-----------|--------|");
+            foreach (var e in matchResult.Errors)
+            {
+                var line = e.Mismatch == Mismatch.Lines ? "" : e.Line == -1 ? "" : e.Line.ToString();
+                var pos = e.Mismatch == Mismatch.Lines ? "" : e.Position == -1 ? "" : e.Position.ToString();
+                sb.AppendLine($"| {line} | {pos} | {Helper.MismatchString(e.Mismatch)} | {e.Expected} | {e.Actual} |");
+            }
+        }
+
+        return sb.ToString();
+    }
+
     private string[][]? ConvertRulesToStringArray(object[][] rules)
     {
         if (rules == null || rules.Length == 0)

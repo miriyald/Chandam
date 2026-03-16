@@ -31,4 +31,9 @@ public class DetermineRequest
     /// Number of top matches to return (default: 5)
     /// </summary>
     public int TopMatches { get; set; } = 5;
+
+    /// <summary>
+    /// Optional: Rendered output format (None, Html, Text, Markdown, Both)
+    /// </summary>
+    public RenderFormat RenderFormat { get; set; } = RenderFormat.None;
 }
