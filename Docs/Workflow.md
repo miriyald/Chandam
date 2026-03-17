@@ -11,6 +11,25 @@ A step-by-step guide for composing a Telugu padyam (poem) using the Chandam MCP 
 1. Discuss the **theme** - What is the poem about? What emotion or message should it carry?
 2. Explore **narrative ideas** - What imagery, metaphors, or story arc will the poem use?
 3. **Select a target chandam** (meter) that suits the theme and tone.
+4. **Run a feasibility check** - Before committing, verify that the chosen meter can accommodate your key theme words (see below).
+
+### Meter–Theme Feasibility Check
+
+After selecting a candidate meter, run `get_rule_info` and check whether your most important theme words can physically fit. This catches showstopper conflicts *before* you invest in constraint design.
+
+**Process:**
+1. Identify the meter's guru/laghu pattern and note which positions allow guru syllables.
+2. For each key theme word, compute its guru positions (long vowels, anusvara, conjuncts).
+3. Check: can each word's guru syllables land on the meter's guru-allowed positions?
+
+**Red flags that require action:**
+- A word has a guru syllable that cannot land on ANY guru-allowed position → you must shorten it, find a synonym, or change the meter.
+- The meter is **laghu-dominant** (>70% of positions are laghu) → most Sanskrit-origin and long-vowel Telugu words won't fit in the laghu zone. You will need to build a dedicated **laghu word bank** (see Phase 2) and accept that some theme words may need shortened forms (e.g., పరాభవ → పరభవ).
+- The meter is **guru-dominant** → short, common Telugu particles and verb forms may not fit.
+
+> **Lesson learned:** లలితగతి (న న న జ స) has 13/15 laghu positions. The word "పరాభవ" (with guru రా) could only appear where రా landed on position 11 — the sole interior guru position. This was discovered during drafting and cost mental iteration. A 2-minute feasibility check upfront would have flagged it immediately.
+
+If the feasibility check fails and no adaptation is acceptable, return to step 3 and pick a different meter **now** — before any constraint design begins.
 
 ### Tools to Use
 
@@ -50,9 +69,27 @@ A step-by-step guide for composing a Telugu padyam (poem) using the Chandam MCP 
 - Use it **only when you genuinely need** to explore a word's meaning, find alternatives, or verify a root form.
 - Do not use it for words you already know well.
 
+### For Laghu-Dominant Meters: Build a Laghu Word Bank
+
+If the meter has >70% laghu positions (e.g., లలితగతి with 13/15 laghu), most Telugu words with long vowels or conjuncts **cannot appear** in the laghu zone. Before proceeding to constraint design, build a dedicated bank of all-laghu words relevant to your theme.
+
+**What qualifies as all-laghu:** Every syllable has a short vowel (అ, ఇ, ఉ, ఋ), no anusvara, no visarga, and no following conjunct consonant.
+
+**Example laghu word bank (for an ego/pride theme):**
+
+| Syllables | Words |
+|-----------|-------|
+| 2 | చెడు, మది, అరి, తన |
+| 3 | అహము, మదము, మనసు, కనుము, తొలగు, అలరు, పలుకు, తలచి, నిలువు, సుఖము, వరము |
+| 4 | వినయము, తమసము, కలుషము, సరసము, మలినము, కలకలన |
+| 5 | పరభవము (shortened from పరాభవము — poetic license) |
+
+Words with guru syllables (like పరాభవ, ఉగాది, సంవత్సరం) can only be placed where their guru syllable lands on one of the meter's guru-allowed positions. Pre-plan these placements.
+
 ### Output
 - A structured outline (what each line will say)
 - A vocabulary palette of candidate words with syllable counts
+- (If laghu-dominant meter) A laghu word bank of usable all-laghu words
 
 ---
 
@@ -61,6 +98,8 @@ A step-by-step guide for composing a Telugu padyam (poem) using the Chandam MCP 
 **Goal:** Make the structural decisions that constrain every line of the poem — ప్రాస, యతి anchors, and word-to-group alignment — BEFORE drafting.
 
 These are the highest-leverage decisions in padyam writing. Getting them wrong costs multiple iteration rounds; getting them right makes drafting almost mechanical.
+
+> **Prerequisite:** Before designing constraints, you must deeply understand the meter's structure. If you haven't already, run `get_rule_info(rule_identifier="...", include_examples=true)` and `get_examples(...)` now. You need to know the exact gaNA pattern, యతి position, and any meter-specific rules (like OddNonJa for కందం) before making ప్రాస and యతి decisions. Phase 3 covers this in detail — do that work first if needed, then return here to design constraints.
 
 ### Step 1: Choose the ప్రాస Consonant
 
@@ -100,12 +139,18 @@ Use `get_rule_info` to find the exact యతి position. For కందం:
 
 Two letters are యతి-compatible if they satisfy any of these:
 
-| Match Type | Rule | Examples |
-|------------|------|----------|
-| **Exact** | Same letter | స ↔ స, బ ↔ బ |
-| **Same వర్గ** | Same consonant group | ప-ఫ-బ-భ-మ are all compatible |
-| **Same vowel** | Vowel sound matches | అ ↔ అ, ఆ ↔ ఆ |
-| **GaNA category** | Both at boundary are same Surya/Indra/Chandra class | See Appendix |
+| Match Type | Rule | Examples | Reliability |
+|------------|------|----------|-------------|
+| **Exact** | Same letter (or same letter with different vowel length) | స ↔ సా, బ ↔ బా | Highest — always works |
+| **Same వర్గ** | Same consonant group | ప-ఫ-బ-భ-మ are all compatible | High — but see warning below |
+| **Same vowel** | Vowel sound matches | అ ↔ అ, ఆ ↔ ఆ | Medium |
+| **GaNA category** | Both at boundary are same Surya/Indra/Chandra class | See Appendix | Lower — engine may not accept |
+
+> **Engine strictness warning:** The validation engine may enforce **stricter యతి matching** than classical prosody theory allows. In practice, **exact consonant matches** (e.g., మ↔మా, క↔కా, వ↔వా) and **close వర్గ matches** (e.g., క↔గా within క-వర్గ, త↔దా within త-వర్గ) are reliably accepted. However, **cross-వర్గ letter matches** (e.g., మ↔బా within ప-వర్గ) may be rejected even though they are theoretically valid.
+>
+> **Recommendation:** Always plan for exact-consonant or same-letter యతి first. Only fall back to వర్గ matching if exact match is impossible — and if you do, validate early to confirm the engine accepts it. Budget an extra iteration if relying on వర్గ-based yati.
+>
+> **Lesson learned:** In a లలితగతి composition, the pair మ↔బా (both ప-వర్గ) was rejected by the engine. Changing to మ↔మా (exact consonant) fixed it immediately — and the replacement word ("మాయ" instead of "బాధ") turned out to be thematically stronger.
 
 The **వర్గ groups** (critical for planning):
 
@@ -138,7 +183,20 @@ For each line that requires యతి, plan a **pair**: the line-start letter an
 | 3 | మహిలో | మ | No | — | Free |
 | 4 | బహుళముగ | బ | Yes (4th గణం) | బ or ప-వర్గ (ప,ఫ,భ,మ) | Wider options — place a ప-వర్గ letter at the 13th matra |
 
-> **Key insight:** Lines with యతి are harder to write. Plan them first. Lines without యతి give you freedom — save them for carrying the meaning.
+> **Key insight (కందం / జాతి):** Lines with యతి are harder to write. Plan them first. Lines without యతి give you freedom — save them for carrying the meaning.
+
+**Example (లలితగతి వృత్తం with ప్రాస = ల):**
+
+In a వృత్తం, ALL lines have యతి (at a fixed character position), so there are no "free" lines. The strategy shifts to: which yati pairs give the most word flexibility?
+
+| Line | Start Word | 1st Letter | యతి Position | యతి Letter Needed | Strategy |
+|------|-----------|------------|-------------|-------------------|----------|
+| 1 | కలకలన | క | 11th char (guru) | క-వర్గ (క,గ,ఘ) with long vowel | గా from ఉగాది at pos 10-12 ✓ |
+| 2 | మలినమగు | మ | 11th char (guru) | Exact మ preferred over వర్గ | మా — e.g., "మాయ" ✓ |
+| 3 | వలసినది | వ | 11th char (guru) | Exact వ | వా — e.g., "వాసి" ✓ |
+| 4 | తలచి | త | 11th char (guru) | త-వర్గ (త,ద,ధ,న) | దా — e.g., "దారి" ✓ |
+
+> **Key insight (వృత్తం):** When ALL lines need యతి, prioritize the lines where యతి + ప్రాస + a theme word placement all intersect. Those have the least freedom and should be drafted first.
 
 #### 2d: Pre-check feasibility
 
@@ -185,6 +243,26 @@ Key vocabulary words must fit cleanly within or across the meter's group boundar
 
 4. Flag **problem words** that can't be placed without violating constraints. Find alternatives from the vocabulary palette.
 
+### Step 3B: Theme Word Feasibility Check
+
+Even after word-to-group alignment analysis, some key theme words may simply **not fit** anywhere in the meter. This step catches those conflicts before drafting begins.
+
+**For each theme word that has guru syllables, answer:**
+
+1. **Can it fit?** — Is there at least one position in the line where the word's guru syllables land on guru-allowed positions?
+2. **If not, can it be adapted?**
+
+| Adaptation | When to Use | Example |
+|-----------|-------------|---------|
+| **Shorten** | Drop a long vowel to make it laghu | పరాభవ → పరభవ (acceptable poetic license in laghu-dominant meters) |
+| **Synonym** | Replace with an all-laghu word of similar meaning | అహంకారము → అహము or మదము (both all-laghu) |
+| **Split across lines** | End one line with the first half, start the next with the rest | "...పరా" (line N) + "భవము..." (line N+1) — enjambment |
+| **Change the meter** | If the word is essential and no adaptation preserves the meaning | Go back to Phase 1 |
+
+**Document every adaptation** — these become the "Deviations & Notes" in the final result (Phase 7).
+
+> **Lesson learned:** In లలితగతి, "పరాభవ" couldn't appear in positions 1-9 (all laghu). The shortened form "పరభవ" was used — acceptable because the meter's extreme laghu dominance makes long-vowel words physically impossible in most positions. This is a well-understood poetic liberty for such meters.
+
 ### Step 4: Compile the Constraint Sheet
 
 Before moving to drafting, write a single reference that captures all design decisions:
@@ -205,7 +283,27 @@ Key word placement:
 - "మదమ్ము" (4 matras): fits one group exactly
 ```
 
-This sheet becomes your drafting blueprint in Phase 4.
+**Example constraint sheet (వృత్తం — లలితగతి):**
+
+```
+Chandam:     లలితగతి (వృత్తం)
+Pattern:     న న న జ స = ||| ||| ||| |U| ||U (15 chars per line)
+ప్రాస:       ల
+Line starters: కల- / మలి- / వల- / తల-
+Guru positions: 11 and 15 ONLY (all others laghu)
+
+Line 1: 15 chars | యతి at 11 (క↔గా, క-వర్గ) | ఉగాది at pos 10-12
+Line 2: 15 chars | యతి at 11 (మ↔మా, exact)  | "మాయ" at pos 11-12
+Line 3: 15 chars | యతి at 11 (వ↔వా, exact)  | "వాసి" at pos 11-12
+Line 4: 15 chars | యతి at 11 (త↔దా, త-వర్గ) | "దారి" at pos 11-12
+
+Theme word adaptations:
+- "పరాభవ" → "పరభవ" (shortened — laghu-dominant meter liberty)
+- "అహంకారము" → "అహము" (all-laghu synonym)
+- "ఉగాది" → place at pos 10-12 so గా hits the guru at pos 11
+```
+
+Both sheets serve the same purpose — they become your drafting blueprint in Phase 4.
 
 ### Output
 - Confirmed ప్రాస consonant with line-starter words
@@ -218,6 +316,8 @@ This sheet becomes your drafting blueprint in Phase 4.
 ## Phase 3: Understand the Chandam Rules
 
 **Goal:** Deeply understand the chosen meter's structure and extract ALL constraints — especially meter-specific rules that the engine validates but that aren't obvious from the basic description.
+
+> **Phase ordering note:** This phase and Phase 2B are deeply interdependent. You need to understand the meter's rules (Phase 3) before you can design constraints (Phase 2B), but Phase 2B is presented first because constraint design is the conceptual prerequisite for drafting. **In practice, do an initial pass of Phase 3 (get rule info + examples) before Phase 2B, then return to Phase 3 to verify your constraint decisions.** If you used `get_rule_info` during Phase 1's feasibility check, you may already have what you need.
 
 1. **Study the rule definition** - Read the gaNA pattern (sequence of guru/laghu syllables), line count, and syllables per line.
 2. **Verify yati and prasa** - Confirm the decisions from Phase 2B match the rule definition.
@@ -266,7 +366,10 @@ Run `get_rule_info` and look for these constraints. They are NOT always obvious 
 4. **Use the vocabulary palette** from Phase 2 to swap words for better metrical fit.
 
 ### Guidelines
-- **Draft యతి lines first** (even lines in కందం). These are the most constrained — write them before the free lines.
+- **Draft the most constrained lines first.** The goal is to solve the hardest placement puzzles before the easier ones:
+  - **కందం / జాతి:** Even lines have యతి + special rules (like the sixth rule). Draft them first; odd lines are free.
+  - **వృత్తం:** ALL lines have యతి, so prioritize lines where యతి + ప్రాస + theme word placement all intersect — those have the least freedom.
+  - **General rule:** If a line must contain a specific theme word AND satisfy యతి, draft it first.
 - **Use the constraint sheet** from Phase 2B as your blueprint. Check each group's matra count as you write.
 - **Validate early.** Don't write all 4 lines blind. After drafting 2 lines, run `try_match_chandam` to catch issues before they compound.
 - Mark lines you're unsure about for revision in Phase 6.
@@ -316,7 +419,7 @@ The validation engine returns specific error types. Use this table to diagnose a
 | Error Type | Meaning | Fix Strategy |
 |------------|---------|-------------|
 | `Weight` | A గణం has wrong matra count | Add/remove syllables, swap guru↔laghu words, or shift a word to an adjacent group |
-| `Yati` | Letter at యతి position doesn't match line start | Restructure so the right letter falls at యతి position. Check sandhi effects. Refer to Phase 2B యతి anchor pairs |
+| `Yati` | Letter at యతి position doesn't match line start | Restructure so the right letter falls at యతి position. **Try exact-consonant match first** (e.g., మ↔మా) — వర్గ-based matches (e.g., మ↔బా) may be rejected by the engine even when theoretically valid. Check sandhi effects. Refer to Phase 2B యతి anchor pairs |
 | `OddNonJa` | Odd-positioned గణం is జ (laghu-guru-laghu / |U|) | Rearrange the group so it becomes భ (U||), స (||U), నల (||||), or గగ (UU) |
 | `Sixth` | Even-line 3rd group isn't జ or నల | Force that specific group to be |U| or |||| pattern |
 | `GCount` | Wrong number of groups in the line | Line is too long or short — add/remove matras to hit the target |
@@ -387,7 +490,9 @@ Each file should follow this structure:
 <Name of the chosen meter>
 
 ## Final Padyam
+```
 <The final poem text>
+```
 
 ## Design Constraints (from Phase 2B)
 | Constraint | Decision |
