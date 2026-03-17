@@ -1,552 +1,43 @@
-# Telugu Padyam Writing Workflow
+# Telugu Padyam Writing Guide
 
-A step-by-step guide for composing a Telugu padyam (poem) using the Chandam MCP tools.
-
----
-
-## Phase 1: Brainstorm
-
-**Goal:** Understand the theme and intent, explore ideas, and pick a target chandam.
-
-1. Discuss the **theme** - What is the poem about? What emotion or message should it carry?
-2. Explore **narrative ideas** - What imagery, metaphors, or story arc will the poem use?
-3. **Select a target chandam** (meter) that suits the theme and tone.
-4. **Run a feasibility check** - Before committing, verify that the chosen meter can accommodate your key theme words (see below).
-
-### Meter–Theme Feasibility Check
-
-After selecting a candidate meter, run `get_rule_info` and check whether your most important theme words can physically fit. This catches showstopper conflicts *before* you invest in constraint design.
-
-**Process:**
-1. Identify the meter's guru/laghu pattern and note which positions allow guru syllables.
-2. For each key theme word, compute its guru positions (long vowels, anusvara, conjuncts).
-3. Check: can each word's guru syllables land on the meter's guru-allowed positions?
-
-**Red flags that require action:**
-- A word has a guru syllable that cannot land on ANY guru-allowed position → you must shorten it, find a synonym, or change the meter.
-- The meter is **laghu-dominant** (>70% of positions are laghu) → most Sanskrit-origin and long-vowel Telugu words won't fit in the laghu zone. You will need to build a dedicated **laghu word bank** (see Phase 2) and accept that some theme words may need shortened forms (e.g., పరాభవ → పరభవ).
-- The meter is **guru-dominant** → short, common Telugu particles and verb forms may not fit.
-
-> **Lesson learned:** లలితగతి (న న న జ స) has 13/15 laghu positions. The word "పరాభవ" (with guru రా) could only appear where రా landed on position 11 — the sole interior guru position. This was discovered during drafting and cost mental iteration. A 2-minute feasibility check upfront would have flagged it immediately.
-
-If the feasibility check fails and no adaptation is acceptable, return to step 3 and pick a different meter **now** — before any constraint design begins.
-
-### Tools to Use
-
-- **`list_rules`** - Browse all available meters for the chosen language.
-  ```
-  list_rules(language="te")
-  ```
-- **`get_rule_info`** - Read a short description of candidate meters to understand their character (e.g., utpalamaala for grand themes, kandam for compact expression).
-  ```
-  get_rule_info(rule_identifier="utpalamaala")
-  ```
-
-### Output
-- A clear theme statement
-- 2-3 candidate meters with brief rationale
-- One selected chandam to proceed with
+A comprehensive guide for composing Telugu padyams (poems) using the Chandam MCP tools. Organized into four parts: **Knowledge** (reference material), **Workflow** (step-by-step process), **Examples** (practical illustrations), and **Learnings** (insights from practice).
 
 ---
 
-## Phase 2: Plan
+# Part I: Knowledge
 
-**Goal:** Lock the high-level idea and build a vocabulary palette.
-
-1. **Finalize the core idea** - Write a one-line summary of what each line/section of the padyam will convey.
-2. **Identify key words** - List the essential words that carry the poem's meaning.
-3. **Explore alternatives** - Use the dictionary tool to find synonyms, related forms, or verify meanings.
-
-### Tools to Use
-
-- **`get_word_meaning`** - Look up a Telugu word across multiple dictionary sources.
-  ```
-  get_word_meaning(word="వసంతము")
-  ```
-
-### Important Constraints
-- The dictionary tool queries external sources. It is **rate-limited and expensive**.
-- Use it **only when you genuinely need** to explore a word's meaning, find alternatives, or verify a root form.
-- Do not use it for words you already know well.
-
-### For Laghu-Dominant Meters: Build a Laghu Word Bank
-
-If the meter has >70% laghu positions (e.g., లలితగతి with 13/15 laghu), most Telugu words with long vowels or conjuncts **cannot appear** in the laghu zone. Before proceeding to constraint design, build a dedicated bank of all-laghu words relevant to your theme.
-
-**What qualifies as all-laghu:** Every syllable has a short vowel (అ, ఇ, ఉ, ఋ), no anusvara, no visarga, and no following conjunct consonant.
-
-**Example laghu word bank (for an ego/pride theme):**
-
-| Syllables | Words |
-|-----------|-------|
-| 2 | చెడు, మది, అరి, తన |
-| 3 | అహము, మదము, మనసు, కనుము, తొలగు, అలరు, పలుకు, తలచి, నిలువు, సుఖము, వరము |
-| 4 | వినయము, తమసము, కలుషము, సరసము, మలినము, కలకలన |
-| 5 | పరభవము (shortened from పరాభవము — poetic license) |
-
-Words with guru syllables (like పరాభవ, ఉగాది, సంవత్సరం) can only be placed where their guru syllable lands on one of the meter's guru-allowed positions. Pre-plan these placements.
-
-### Output
-- A structured outline (what each line will say)
-- A vocabulary palette of candidate words with syllable counts
-- (If laghu-dominant meter) A laghu word bank of usable all-laghu words
+Reference material for Telugu prosody. Consult these sections as needed during writing.
 
 ---
 
-## Phase 2B: Design Constraints
+## 1. Syllable Basics: Guru and Laghu
 
-**Goal:** Make the structural decisions that constrain every line of the poem — ప్రాస, యతి anchors, and word-to-group alignment — BEFORE drafting.
+Every Telugu syllable is classified as either **guru** (heavy/long) or **laghu** (light/short). This is the foundation of all meter analysis.
 
-These are the highest-leverage decisions in padyam writing. Getting them wrong costs multiple iteration rounds; getting them right makes drafting almost mechanical.
+| Type | Telugu | Symbol | Description |
+|------|--------|--------|-------------|
+| **Guru** | గ | `U` | Heavy/long syllable (2 మాత్రలు) |
+| **Laghu** | ల | `\|` | Light/short syllable (1 మాత్ర) |
 
-> **Prerequisite:** Before designing constraints, you must deeply understand the meter's structure. If you haven't already, run `get_rule_info(rule_identifier="...", include_examples=true)` and `get_examples(...)` now. You need to know the exact gaNA pattern, యతి position, and any meter-specific rules (like OddNonJa for కందం) before making ప్రాస and యతి decisions. Phase 3 covers this in detail — do that work first if needed, then return here to design constraints.
+**What makes a syllable guru:**
+- Long vowels: ఆ, ఈ, ఊ, ఏ, ఐ, ఓ, ఔ
+- Anusvara (ం) on the syllable
+- Visarga (ః) on the syllable
+- A syllable followed by a conjunct consonant
 
-### Step 1: Choose the ప్రాస Consonant
-
-The 2nd syllable of every line must share the same consonant. This is not something to discover during drafting — it must be a deliberate upfront choice.
-
-**Process:**
-1. List the key words from your vocabulary palette (Phase 2).
-2. For each word, note its 2nd syllable's consonant.
-3. Identify which consonant gives you the most line-starting options across all 4 lines.
-4. Verify: can you find at least 4 natural line-starters (one per line) using this consonant?
-
-**Example from practice:**
-- Core word "పరాభవ" → 2nd syllable ర → ప్రాస = ర candidate
-- But "పరా" creates a జ (|U|) pattern at line start, which కందం forbids at odd positions
-- Alternative: ప్రాస = హ → line starters అహ, సహ, మహి, బహు — all natural, no constraint violations
-- **Decision: హ** (this single choice saved 3 iterations)
-
-**Output:** One confirmed ప్రాస consonant with 4+ viable line-starter words.
-
-### Step 2: Plan యతి Anchors
-
-యతి is the caesura — a sound-match between the line's first letter and a letter at a specific position within the line. Failing to plan for it is the #1 cause of iteration waste.
-
-#### 2a: Identify యతి type for your meter
-
-| Meter Type | యతి Position | What Must Match |
-|------------|-------------|-----------------|
-| **వృత్తం** (e.g., ఉత్పలమాల) | Fixed character position (e.g., 10th syllable) | Letter at that position ↔ line's 1st letter |
-| **జాతి** (e.g., కందం) | Start of a specific గణం (e.g., 4th గణం) | Letter at గణం boundary ↔ line's 1st letter |
-| **ఉపజాతి** (e.g., ఆటవెలది) | Varies by line | Check `get_rule_info` for each line's rule |
-
-Use `get_rule_info` to find the exact యతి position. For కందం:
-- Lines 1, 3 (odd): **No యతి** requirement
-- Lines 2, 4 (even): యతి at **1st letter of the 4th గణం** (i.e., after 12 మాత్రలు / 3 groups of 4)
-
-#### 2b: Understand యతి compatibility
-
-Two letters are యతి-compatible if they satisfy any of these:
-
-| Match Type | Rule | Examples | Reliability |
-|------------|------|----------|-------------|
-| **Exact** | Same letter (or same letter with different vowel length) | స ↔ సా, బ ↔ బా | Highest — always works |
-| **Same వర్గ** | Same consonant group | ప-ఫ-బ-భ-మ are all compatible | High — but see warning below |
-| **Same vowel** | Vowel sound matches | అ ↔ అ, ఆ ↔ ఆ | Medium |
-| **GaNA category** | Both at boundary are same Surya/Indra/Chandra class | See Appendix | Lower — engine may not accept |
-
-> **Engine strictness warning:** The validation engine may enforce **stricter యతి matching** than classical prosody theory allows. In practice, **exact consonant matches** (e.g., మ↔మా, క↔కా, వ↔వా) and **close వర్గ matches** (e.g., క↔గా within క-వర్గ, త↔దా within త-వర్గ) are reliably accepted. However, **cross-వర్గ letter matches** (e.g., మ↔బా within ప-వర్గ) may be rejected even though they are theoretically valid.
->
-> **Recommendation:** Always plan for exact-consonant or same-letter యతి first. Only fall back to వర్గ matching if exact match is impossible — and if you do, validate early to confirm the engine accepts it. Budget an extra iteration if relying on వర్గ-based yati.
->
-> **Lesson learned:** In a లలితగతి composition, the pair మ↔బా (both ప-వర్గ) was rejected by the engine. Changing to మ↔మా (exact consonant) fixed it immediately — and the replacement word ("మాయ" instead of "బాధ") turned out to be thematically stronger.
-
-The **వర్గ groups** (critical for planning):
-
-| వర్గ | Letters (all mutually compatible) |
-|------|----------------------------------|
-| క-వర్గ | క, ఖ, గ, ఘ, ఙ |
-| చ-వర్గ | చ, ఛ, జ, ఝ, ఞ |
-| ట-వర్గ | ట, ఠ, డ, ఢ, ణ |
-| త-వర్గ | త, థ, ద, ధ, న |
-| ప-వర్గ | ప, ఫ, బ, భ, మ |
-
-**Sandhi effect:** When words join, consonants change (e.g., కు + ప → కుఁ బ). The letter at యతి position may be the sandhi form (బ), not the original (ప). Since ప and బ are same వర్గ, this is still valid — but you must be aware of it.
-
-#### 2c: Build యతి anchor pairs
-
-For each line that requires యతి, plan a **pair**: the line-start letter and the యతి-position letter.
-
-**Process:**
-1. From Step 1, you know each line's starting word (for ప్రాస).
-2. Note the first letter of each line.
-3. For lines with యతి, determine what letter must appear at the యతి boundary.
-4. Build pairs and verify compatibility.
-
-**Example (కందం with ప్రాస = హ):**
-
-| Line | Start Word | 1st Letter | Has యతి? | యతి Letter Needed | Strategy |
-|------|-----------|------------|----------|-------------------|----------|
-| 1 | అహమునకు | అ | No | — | Free |
-| 2 | సహజముగ | స | Yes (4th గణం) | స or same-వర్గ (చ,ఛ,జ,ఝ,ఞ — no, స is not in a వర్గ!) | స must match exactly or by vowel. Plan for స/సం at the 13th matra |
-| 3 | మహిలో | మ | No | — | Free |
-| 4 | బహుళముగ | బ | Yes (4th గణం) | బ or ప-వర్గ (ప,ఫ,భ,మ) | Wider options — place a ప-వర్గ letter at the 13th matra |
-
-> **Key insight (కందం / జాతి):** Lines with యతి are harder to write. Plan them first. Lines without యతి give you freedom — save them for carrying the meaning.
-
-**Example (లలితగతి వృత్తం with ప్రాస = ల):**
-
-In a వృత్తం, ALL lines have యతి (at a fixed character position), so there are no "free" lines. The strategy shifts to: which yati pairs give the most word flexibility?
-
-| Line | Start Word | 1st Letter | యతి Position | యతి Letter Needed | Strategy |
-|------|-----------|------------|-------------|-------------------|----------|
-| 1 | కలకలన | క | 11th char (guru) | క-వర్గ (క,గ,ఘ) with long vowel | గా from ఉగాది at pos 10-12 ✓ |
-| 2 | మలినమగు | మ | 11th char (guru) | Exact మ preferred over వర్గ | మా — e.g., "మాయ" ✓ |
-| 3 | వలసినది | వ | 11th char (guru) | Exact వ | వా — e.g., "వాసి" ✓ |
-| 4 | తలచి | త | 11th char (guru) | త-వర్గ (త,ద,ధ,న) | దా — e.g., "దారి" ✓ |
-
-> **Key insight (వృత్తం):** When ALL lines need యతి, prioritize the lines where యతి + ప్రాస + a theme word placement all intersect. Those have the least freedom and should be drafted first.
-
-#### 2d: Pre-check feasibility
-
-Before moving to Phase 3, verify your design works by sketching rough line shapes:
-
-```
-Line 2 skeleton:  స___ ___ ___ స/సం___ ___
-                  [grp1] [grp2] [grp3] [grp4=యతి] [grp5]
-                  ←— 12 matras —→ ↑ యతి here
-
-Line 4 skeleton:  బ___ ___ ___ బ/ప-వర్గ___ ___
-                  [grp1] [grp2] [grp3] [grp4=యతి] [grp5]
-```
-
-If you can't imagine words fitting these skeletons, revisit Step 1 (change ప్రాస) or even Phase 1 (change meter) **now** — before writing a single line.
-
-### Step 3: Analyze Word-to-Group Alignment
-
-Key vocabulary words must fit cleanly within or across the meter's group boundaries. A word that straddles a boundary awkwardly will cause matra mismatches.
-
-**Process:**
-1. For each key word, compute the **guru/laghu breakdown**:
-   - Long vowels (ఆ, ఈ, ఊ, ఏ, ఐ, ఓ, ఔ) → guru (2 మాత్రలు)
-   - Short vowels (అ, ఇ, ఉ, ఋ) → laghu (1 మాత్ర)
-   - Anusvara (ం) makes the syllable guru
-   - Visarga (ః) makes the syllable guru
-   - A syllable followed by a conjunct consonant → guru
-
-2. Check the **total matra count** against your meter's group size:
-
-   | Word | Breakdown | Total Matras | Fits in 4-matra group? |
-   |------|-----------|-------------|----------------------|
-   | పరాభవ | ప(1) రా(2) భ(1) వ(1) | 5 | No — spans 2 groups |
-   | అహము | అ(1) హ(1) ము(1) | 3 | No — needs 1 more matra |
-   | గర్వం | గర్(2) వం(2) | 4 | Yes — perfect fit |
-   | ఉగాది | ఉ(1) గా(2) ది(1) | 4 | Yes — perfect fit |
-
-3. For words that **don't fit** (like పరాభవ = 5 matras), find where they can **span across** two groups cleanly:
-   ```
-   పరాభవముగ = ప(1)రా(2)భ(1) | వ(1)ము(1)గ(1)...
-                [group: 4]     [continues into next group]
-   ```
-   Verify: does the split point create valid group types? (e.g., |U| = జ — check if that's allowed at that position)
-
-4. Flag **problem words** that can't be placed without violating constraints. Find alternatives from the vocabulary palette.
-
-### Step 3B: Theme Word Feasibility Check
-
-Even after word-to-group alignment analysis, some key theme words may simply **not fit** anywhere in the meter. This step catches those conflicts before drafting begins.
-
-**For each theme word that has guru syllables, answer:**
-
-1. **Can it fit?** — Is there at least one position in the line where the word's guru syllables land on guru-allowed positions?
-2. **If not, can it be adapted?**
-
-| Adaptation | When to Use | Example |
-|-----------|-------------|---------|
-| **Shorten** | Drop a long vowel to make it laghu | పరాభవ → పరభవ (acceptable poetic license in laghu-dominant meters) |
-| **Synonym** | Replace with an all-laghu word of similar meaning | అహంకారము → అహము or మదము (both all-laghu) |
-| **Split across lines** | End one line with the first half, start the next with the rest | "...పరా" (line N) + "భవము..." (line N+1) — enjambment |
-| **Change the meter** | If the word is essential and no adaptation preserves the meaning | Go back to Phase 1 |
-
-**Document every adaptation** — these become the "Deviations & Notes" in the final result (Phase 7).
-
-> **Lesson learned:** In లలితగతి, "పరాభవ" couldn't appear in positions 1-9 (all laghu). The shortened form "పరభవ" was used — acceptable because the meter's extreme laghu dominance makes long-vowel words physically impossible in most positions. This is a well-understood poetic liberty for such meters.
-
-### Step 4: Compile the Constraint Sheet
-
-Before moving to drafting, write a single reference that captures all design decisions:
-
-```
-Chandam:     కందం
-ప్రాస:       హ
-Line starters: అహ- / సహ- / మహ- / బహ-
-
-Line 1: 3 groups × 4 matras = 12 | No యతి | Odd groups ≠ జ
-Line 2: 5 groups × 4 matras = 20 | యతి at grp 4 (స↔స) | Grp 3 must be జ or నల | Odd groups ≠ జ
-Line 3: 3 groups × 4 matras = 12 | No యతి | Odd groups ≠ జ
-Line 4: 5 groups × 4 matras = 20 | యతి at grp 4 (బ↔ప-వర్గ) | Grp 3 must be జ or నల | Odd groups ≠ జ
-
-Key word placement:
-- "పరాభవ" (5 matras): place spanning groups 2→3 of line 1
-- "ఉగాది" (4 matras): fits one group exactly
-- "మదమ్ము" (4 matras): fits one group exactly
-```
-
-**Example constraint sheet (వృత్తం — లలితగతి):**
-
-```
-Chandam:     లలితగతి (వృత్తం)
-Pattern:     న న న జ స = ||| ||| ||| |U| ||U (15 chars per line)
-ప్రాస:       ల
-Line starters: కల- / మలి- / వల- / తల-
-Guru positions: 11 and 15 ONLY (all others laghu)
-
-Line 1: 15 chars | యతి at 11 (క↔గా, క-వర్గ) | ఉగాది at pos 10-12
-Line 2: 15 chars | యతి at 11 (మ↔మా, exact)  | "మాయ" at pos 11-12
-Line 3: 15 chars | యతి at 11 (వ↔వా, exact)  | "వాసి" at pos 11-12
-Line 4: 15 chars | యతి at 11 (త↔దా, త-వర్గ) | "దారి" at pos 11-12
-
-Theme word adaptations:
-- "పరాభవ" → "పరభవ" (shortened — laghu-dominant meter liberty)
-- "అహంకారము" → "అహము" (all-laghu synonym)
-- "ఉగాది" → place at pos 10-12 so గా hits the guru at pos 11
-```
-
-Both sheets serve the same purpose — they become your drafting blueprint in Phase 4.
-
-### Output
-- Confirmed ప్రాస consonant with line-starter words
-- యతి anchor pairs for each line that requires యతి
-- Word-group alignment analysis for all key vocabulary
-- A complete constraint sheet ready for drafting
+**What makes a syllable laghu:**
+- Short vowels: అ, ఇ, ఉ, ఋ
+- No anusvara, no visarga, no following conjunct
 
 ---
 
-## Phase 3: Understand the Chandam Rules
+## 2. GaNA Classification
 
-**Goal:** Deeply understand the chosen meter's structure and extract ALL constraints — especially meter-specific rules that the engine validates but that aren't obvious from the basic description.
+Each Telugu letter in a chandam rule represents a specific pattern of guru and laghu syllables.
 
-> **Phase ordering note:** This phase and Phase 2B are deeply interdependent. You need to understand the meter's rules (Phase 3) before you can design constraints (Phase 2B), but Phase 2B is presented first because constraint design is the conceptual prerequisite for drafting. **In practice, do an initial pass of Phase 3 (get rule info + examples) before Phase 2B, then return to Phase 3 to verify your constraint decisions.** If you used `get_rule_info` during Phase 1's feasibility check, you may already have what you need.
+### Tri-syllable GaNAs (3 aksharas each)
 
-1. **Study the rule definition** - Read the gaNA pattern (sequence of guru/laghu syllables), line count, and syllables per line.
-2. **Verify yati and prasa** - Confirm the decisions from Phase 2B match the rule definition.
-3. **Extract meter-specific constraints** - These are the hidden rules that cause most validation failures (see below).
-4. **Read classical examples** - Study how master poets handled yati transitions and ప్రాస placement.
-
-### Tools to Use
-
-- **`get_rule_info`** with examples enabled:
-  ```
-  get_rule_info(rule_identifier="utpalamaala", include_examples=true)
-  ```
-- **`get_examples`** for additional examples with author attributions:
-  ```
-  get_examples(rule_identifier="utpalamaala", max_examples=5)
-  ```
-
-### Meter-Specific Constraints to Extract
-
-Run `get_rule_info` and look for these constraints. They are NOT always obvious from the basic description but the validation engine WILL check them:
-
-| Constraint | Applies To | What It Means | Validation Error Type |
-|------------|-----------|---------------|----------------------|
-| **OddNonJa** | కందం, other జాతి | Odd-positioned గణాలు (1st, 3rd, 5th within a line) must NOT be జ (|U|) | `OddNonJa` |
-| **Sixth rule** | కందం even lines | The 3rd గణం in even lines (6th overall from the odd+even pair) must be జ or నల only | `Sixth` |
-| **GCount** | All meters | Each line must have exactly the specified number of గణాలు | `GCount` |
-| **Weight** | జాతి meters | Each గణం must have exactly the specified matra count (typically 4) | `Weight` |
-| **Character count** | వృత్తం meters | Each line must have exactly N syllables (e.g., 20 for ఉత్పలమాల) | `Weight` or `GCount` |
-
-**Action:** After reading the rule info, update your constraint sheet from Phase 2B Step 4 to include any meter-specific constraints discovered here.
-
-### Output
-- A cheat sheet: gaNA pattern, line structure, yati position, prasa rule
-- Meter-specific constraints added to the constraint sheet
-- 2-3 annotated examples showing how the rules apply in practice — pay special attention to how examples handle యతి transitions
-
----
-
-## Phase 4: Draft
-
-**Goal:** Compose the first draft of the padyam.
-
-1. **Write line by line**, keeping the gaNA pattern in mind.
-2. **Prioritize meaning and flow** - Get the poetry right first; syllable adjustments come next.
-3. **Apply yati and prasa** as you write, using the cheat sheet from Phase 3.
-4. **Use the vocabulary palette** from Phase 2 to swap words for better metrical fit.
-
-### Guidelines
-- **Draft the most constrained lines first.** The goal is to solve the hardest placement puzzles before the easier ones:
-  - **కందం / జాతి:** Even lines have యతి + special rules (like the sixth rule). Draft them first; odd lines are free.
-  - **వృత్తం:** ALL lines have యతి, so prioritize lines where యతి + ప్రాస + theme word placement all intersect — those have the least freedom.
-  - **General rule:** If a line must contain a specific theme word AND satisfy యతి, draft it first.
-- **Use the constraint sheet** from Phase 2B as your blueprint. Check each group's matra count as you write.
-- **Validate early.** Don't write all 4 lines blind. After drafting 2 lines, run `try_match_chandam` to catch issues before they compound.
-- Mark lines you're unsure about for revision in Phase 6.
-- Aim for a complete draft, even if imperfect.
-
-### Output
-- A full first draft of the padyam
-
----
-
-## Phase 5: Validate
-
-**Goal:** Check the draft against the target chandam and get a concrete score.
-
-### Tools to Use
-
-- **`try_match_chandam`** - Test the draft against the specific chosen meter:
-  ```
-  try_match_chandam(
-    poem_text="<your padyam text>",
-    rule_identifier="utpalamaala",
-    match_yati=true,
-    match_prasa=true
-  )
-  ```
-
-### What to Review in Results
-- **Overall match score** - How closely does the poem follow the meter?
-- **Per-line results** - Which lines match and which don't?
-- **Yati compliance** - Are pauses at the correct positions?
-- **Prasa compliance** - Do the rhyme patterns hold?
-
-### Output
-- Match score and detailed per-line breakdown
-- A list of lines that need revision, with specific issues noted
-
----
-
-## Phase 6: Iterate
-
-**Goal:** Revise problem lines and re-validate until the score is strong.
-
-### Error Interpretation Guide
-
-The validation engine returns specific error types. Use this table to diagnose and fix issues:
-
-| Error Type | Meaning | Fix Strategy |
-|------------|---------|-------------|
-| `Weight` | A గణం has wrong matra count | Add/remove syllables, swap guru↔laghu words, or shift a word to an adjacent group |
-| `Yati` | Letter at యతి position doesn't match line start | Restructure so the right letter falls at యతి position. **Try exact-consonant match first** (e.g., మ↔మా) — వర్గ-based matches (e.g., మ↔బా) may be rejected by the engine even when theoretically valid. Check sandhi effects. Refer to Phase 2B యతి anchor pairs |
-| `OddNonJa` | Odd-positioned గణం is జ (laghu-guru-laghu / |U|) | Rearrange the group so it becomes భ (U||), స (||U), నల (||||), or గగ (UU) |
-| `Sixth` | Even-line 3rd group isn't జ or నల | Force that specific group to be |U| or |||| pattern |
-| `GCount` | Wrong number of groups in the line | Line is too long or short — add/remove matras to hit the target |
-| `Prasa` | 2nd syllable consonant doesn't match | Change the starting word of the offending line |
-
-### Process
-1. **Classify the error** — Is it an incremental fix (Weight, Yati) or a structural problem (Prasa, GCount)?
-2. **For incremental fixes:** Swap words, rearrange phrases, or adjust sandhi to fix the specific line.
-3. **For structural problems:** Consider looping back to Phase 2B to change ప్రాస or యతి anchors. This is a reset — expect temporary score regression.
-4. **Re-run validation** using `try_match_chandam` after each round of changes.
-5. **If score regresses**, revert the change immediately and try a different approach.
-6. **Repeat** for a reasonable number of rounds.
-
-### Stopping Criteria
-- **Stop when:** The score is clear and strong (high match percentage, yati and prasa pass).
-- **Also stop when:** You've done 3-5 rounds and further changes would compromise the poem's meaning or beauty.
-- **Never sacrifice quality for score.** A poem with minor metrical liberty but powerful meaning is better than a metrically perfect but lifeless verse.
-
-### Output
-- Revised padyam after each iteration
-- Corresponding match scores showing improvement
-
----
-
-## Phase 7: Final Result
-
-**Goal:** Present the finished padyam with a complete summary.
-
-### Deliverables
-
-1. **The final padyam** - Clean text, properly formatted.
-2. **Summary table:**
-
-   | Item              | Detail                        |
-   |-------------------|-------------------------------|
-   | Chandam           | Name of the meter used        |
-   | Language          | te / sa / kn / etc.           |
-   | Match Score       | Final percentage              |
-   | Yati              | Pass / Fail (with notes)      |
-   | Prasa             | Pass / Fail (with notes)      |
-   | Iterations        | Number of revision rounds     |
-
-3. **Notes on deviations** - If any intentional metrical liberties were taken, explain the poetic justification.
-4. **Verdict** - Is the padyam ready, or does it need further expert review?
-
-### Save Results
-
-Save each run to **`results/<YYYY-MM-DD>T<HH-MM-SS>.md`** using the current date-time. This preserves a history of all composition attempts.
-
-```
-results/
-  2026-03-17T14-30-00.md    ← first attempt
-  2026-03-17T15-45-12.md    ← second attempt, different theme
-  2026-03-18T09-00-00.md    ← next day
-```
-
-Create the `results/` directory if it doesn't exist. Use the format `YYYY-MM-DDTHH-MM-SS` (hyphens instead of colons for filesystem safety).
-
-Each file should follow this structure:
-
-```markdown
-# Padyam Results — <YYYY-MM-DD>T<HH-MM-SS>
-
-## Theme
-<One-line theme description>
-
-## Chandam
-<Name of the chosen meter>
-
-## Final Padyam
-```
-<The final poem text>
-```
-
-## Design Constraints (from Phase 2B)
-| Constraint | Decision |
-|------------|----------|
-| ప్రాస       | <consonant and line starters> |
-| యతి        | <anchor pairs per line> |
-| Key words  | <word-group alignment notes> |
-
-## Score Summary
-| Item              | Detail                        |
-|-------------------|-------------------------------|
-| Chandam           | ...                           |
-| Language          | ...                           |
-| Match Score       | ...                           |
-| Yati              | Pass / Fail (with notes)      |
-| Prasa             | Pass / Fail (with notes)      |
-| Iterations        | ...                           |
-
-## Iteration History
-| Round | Key Changes Made                  | Score |
-|-------|-----------------------------------|-------|
-| 1     | Initial draft                     | ...   |
-| 2     | Fixed lines X, Y                  | ...   |
-| ...   | ...                               | ...   |
-
-## Deviations & Notes
-<Any intentional metrical liberties and their justification>
-
-## Verdict
-<Final assessment: Ready / Needs expert review>
-```
-
-Each file serves as a persistent, timestamped record of one composition session and its outcome.
-
----
-
-## Appendix: GaNA Classification Reference
-
-Understanding how syllable groups (gaNAlu) are classified is fundamental to working with any chandam. The engine categorizes syllable patterns into types based on their weight.
-
-### Basic Syllable Units
-
-| Telugu Symbol | Binary Pattern | Name | Description |
-|---------------|----------------|------|-------------|
-| గ | `U` | **Guruvu** (guru) | Heavy/long syllable |
-| ల | `\|` | **Laghuvu** (laghu) | Light/short syllable |
-
-### GaNA Symbol Mapping
-
-Each Telugu letter in a chandam rule represents a specific pattern of guru (U) and laghu (|) syllables. This is the core alphabet of Telugu prosody.
-
-#### Tri-syllable GaNAs (3 aksharas each)
-
-These are the 8 fundamental gaNAs. Every chandam rule is built from combinations of these.
+The 8 fundamental gaNAs — every chandam rule is built from combinations of these.
 
 | Telugu Symbol | Name | Binary Pattern | Mnemonic |
 |---------------|------|----------------|----------|
@@ -559,7 +50,7 @@ These are the 8 fundamental gaNAs. Every chandam rule is built from combinations
 | త | ta-gaNamu | `UU\|` | heavy-heavy-light |
 | మ | ma-gaNamu | `UUU` | all heavy |
 
-#### Sub-units (1-2 aksharas)
+### Sub-units (1-2 aksharas)
 
 | Telugu Symbol | Binary Pattern | Description |
 |---------------|----------------|-------------|
@@ -570,36 +61,36 @@ These are the 8 fundamental gaNAs. Every chandam rule is built from combinations
 | గా | `UU` | Two gurus |
 | లల | `\|\|` | Two laghus |
 
-#### Compound GaNAs (4 syllables) - Indra class
+### Compound GaNAs (4 syllables) - Indra class
 
 | Telugu Symbol | Name | Binary Pattern | Derivation |
 |---------------|------|----------------|------------|
-| నల | nala-gaNamu | `\|\|\|\|` | న + ల (na + laghu) |
-| నగ | naga-gaNamu | `\|\|\|U` | న + గ (na + guru) |
-| సల | sala-gaNamu | `\|\|U\|` | స + ల (sa + laghu) |
+| నల | nala-gaNamu | `\|\|\|\|` | న + ల |
+| నగ | naga-gaNamu | `\|\|\|U` | న + గ |
+| సల | sala-gaNamu | `\|\|U\|` | స + ల |
 
-#### Compound GaNAs (5 syllables) - Chandra class
+### Compound GaNAs (5 syllables) - Chandra class
 
 | Telugu Symbol | Name | Binary Pattern | Derivation |
 |---------------|------|----------------|------------|
-| నగగ | nagaga-gaNamu | `\|\|\|UU` | న + గా (na + two gurus) |
-| నహ | naha-gaNamu | `\|\|\|U\|` | న + హ (na + ha) |
-| సలల | salala-gaNamu | `\|\|U\|\|` | స + లల (sa + two laghus) |
-| భల | bhala-gaNamu | `U\|\|\|` | భ + ల (bha + laghu) |
-| భగురు | bhaguru-gaNamu | `U\|\|U` | భ + గ (bha + guru) |
-| మలఘు | malaghu-gaNamu | `UUU\|` | మ + ల (ma + laghu) |
-| సవ | sava-gaNamu | `\|\|U\|U` | స + వ reversed / స + హ variant |
-| సహ | saha-gaNamu | `\|\|UU\|` | స + హ with guru |
-| తల | tala-gaNamu | `UU\|\|` | త + ల (ta + laghu) |
-| రల | rala-gaNamu | `U\|U\|` | ర + ల (ra + laghu) |
-| నవ | nava-gaNamu | `\|\|\|\|U` | నల + గ (nala + guru) |
-| నలల | nalala-gaNamu | `\|\|\|\|\|` | నల + ల (nala + laghu) |
-| రగురు | raguru-gaNamu | `U\|UU` | ర + గ (ra + guru) |
-| తగ | taga-gaNamu | `UU\|U` | త + గ (ta + guru) |
+| నగగ | nagaga-gaNamu | `\|\|\|UU` | న + గా |
+| నహ | naha-gaNamu | `\|\|\|U\|` | న + హ |
+| సలల | salala-gaNamu | `\|\|U\|\|` | స + లల |
+| భల | bhala-gaNamu | `U\|\|\|` | భ + ల |
+| భగురు | bhaguru-gaNamu | `U\|\|U` | భ + గ |
+| మలఘు | malaghu-gaNamu | `UUU\|` | మ + ల |
+| సవ | sava-gaNamu | `\|\|U\|U` | స + వ |
+| సహ | saha-gaNamu | `\|\|UU\|` | స + హ |
+| తల | tala-gaNamu | `UU\|\|` | త + ల |
+| రల | rala-gaNamu | `U\|U\|` | ర + ల |
+| నవ | nava-gaNamu | `\|\|\|\|U` | నల + గ |
+| నలల | nalala-gaNamu | `\|\|\|\|\|` | నల + ల |
+| రగురు | raguru-gaNamu | `U\|UU` | ర + గ |
+| తగ | taga-gaNamu | `UU\|U` | త + గ |
 
 ### Reading a Chandam Rule Pattern
 
-When a chandam rule says the pattern is `భ ర న భ భ ర ల గ`, expand it using the table above:
+When a chandam rule says the pattern is `భ ర న భ భ ర ల గ`, expand it:
 
 ```
 భ  = U||
@@ -614,63 +105,531 @@ When a chandam rule says the pattern is `భ ర న భ భ ర ల గ`, expan
 
 Full line pattern: `U|| U|U ||| U|| U|| U|U | U` (20 syllables per line)
 
-Multi-character symbols in rules are read left to right. For example, `నగగ` is a single 5-syllable gaNa (`|||UU`), not three separate symbols.
+Multi-character symbols are read as single gaNAs. For example, `నగగ` is one 5-syllable gaNa (`|||UU`), not three separate symbols.
 
 ### GaNA Categories
 
-Syllable groups are classified into categories that determine **yati compatibility**. Two gaNAs at a yati boundary must belong to the same category for yati to be valid.
+GaNAs are classified into categories that determine **yati compatibility** at gaNa boundaries.
 
-#### Surya (సూర్య) - Solar
+| Category | GaNAs | Syllable Count |
+|----------|-------|----------------|
+| **Surya (సూర్య)** | హ (`U\|`), న (`\|\|\|`) | 2-3 |
+| **Indra (ఇంద్ర)** | భ, ర, త, నల, నగ, సల | 3-4 |
+| **Chandra (చంద్ర)** | నగగ, నహ, సలల, భల, భగురు, మలఘు, సవ, సహ, తల, రల, నవ, నలల, రగురు, తగ | 5 |
 
-| GaNAs | Patterns |
-|-------|----------|
-| హ (ha) | `U\|` |
-| న (na) | `\|\|\|` |
-| Raw patterns | `U\|`, `\|\|\|` |
-
-#### Indra (ఇంద్ర) - Balanced
-
-| GaNAs | Patterns |
-|-------|----------|
-| భ, ర, త | `U\|\|`, `U\|U`, `UU\|` |
-| నల, నగ, సల | `\|\|\|\|`, `\|\|\|U`, `\|\|U\|` |
-| Raw 4-syllable patterns | `\|\|\|\|`, `\|\|\|U`, `\|\|U\|`, `U\|\|`, `U\|U`, `UU\|` |
-
-#### Chandra (చంద్ర) - Lunar
-
-| GaNAs | Patterns |
-|-------|----------|
-| నగగ, నహ, సలల, భల, భగురు, మలఘు | 5-syllable compounds |
-| సవ, సహ, తల, రల, నవ, నలల, రగురు, తగ | 5-syllable compounds |
-| Raw 5-syllable patterns | `\|\|\|UU`, `\|\|\|U\|`, `\|\|U\|\|`, `U\|\|\|`, `U\|\|U`, `UUU\|`, etc. |
-
-### SubCategories
-
-Some gaNAs have further sub-classification:
+**SubCategories:**
 
 | Pattern | Telugu Name | SubCategory |
 |---------|-------------|-------------|
-| `\|\|\|` | న (na) | **LaghuSurya** - All-laghu surya group |
-| `\|\|\|\|\|` | నలల (nalala) | **Laghu5** - Five consecutive laghus |
-
-### How This Applies to Writing
-
-1. **During Phase 3** - When studying a chandam's rule, the gaNA pattern tells you the exact sequence of these groups each line must follow. For example, a rule might require: `భ ర న భ భ ర ల గ` - meaning bhagaNa, ragaNa, nagaNa, bhagaNa, bhagaNa, ragaNa, laghuvu, guruvu in sequence.
-
-2. **During Phase 4** - When drafting, think of each word's syllable weight. Telugu vowels like ఆ, ఈ, ఊ, ఏ, ఐ, ఓ, ఔ are guru (long). Short vowels అ, ఇ, ఉ, ఋ are laghu (short). A consonant followed by a conjunct also makes the preceding syllable guru.
-
-3. **During Phase 6** - When fixing mismatches, the category system helps with yati. If the engine reports a yati failure, check that the gaNAs at the yati boundary belong to the same category (both Surya, both Indra, or both Chandra).
+| `\|\|\|` | న (na) | **LaghuSurya** — All-laghu surya group |
+| `\|\|\|\|\|` | నలల (nalala) | **Laghu5** — Five consecutive laghus |
 
 ---
 
-## Quick Tool Reference
+## 3. యతి (Yati) Matching
 
-| Tool                   | Purpose                                    | When to Use                        |
-|------------------------|--------------------------------------------|------------------------------------|
-| `list_rules`           | Browse all available meters                | Phase 1: choosing a chandam        |
-| `get_rule_info`        | Detailed meter rules and pattern           | Phase 1 & 3: understanding meters  |
-| `get_examples`         | Classical example poems                    | Phase 3: studying the form         |
-| `get_word_meaning`     | Telugu dictionary lookup (multi-source)    | Phase 2: word exploration (sparse) |
-| `try_match_chandam`    | Validate poem against a specific meter     | Phase 5 & 6: scoring and iteration |
-| `determine_chandam`    | Auto-detect the meter of a poem            | Ad-hoc: if meter is unknown        |
-| `calculate_scores`     | Score against all meters (ranked)          | Ad-hoc: exploring best-fit meters  |
+యతి is the caesura — a sound-match between the line's first akshar and an akshar at a specific position within the line.
+
+### Yati Position Modes
+
+| Mode | How Position is Determined | Used By |
+|------|---------------------------|---------|
+| **CharPosition** | Nth character/akshar in the line | వృత్తం meters (e.g., 10th syllable in ఉత్పలమాల) |
+| **GPosition** | First akshar of the Nth గణం | జాతి meters (e.g., 4th గణం in కందం) |
+
+### Yati Types by Meter
+
+| Meter Type | యతి Position | What Must Match |
+|------------|-------------|-----------------|
+| **వృత్తం** (e.g., ఉత్పలమాల) | Fixed character position (e.g., 10th syllable) | Letter at that position ↔ line's 1st letter |
+| **జాతి** (e.g., కందం) | Start of a specific గణం (e.g., 4th గణం) | Letter at గణం boundary ↔ line's 1st letter |
+| **ఉపజాతి** (e.g., ఆటవెలది) | Varies by line | Check `get_rule_info` for each line's rule |
+
+### Two-Phase Matching Algorithm
+
+The engine checks యతి in **two phases**: first a consonant/vowel match, then (for consonant matches) a finish-group confirmation. Both must pass.
+
+#### Phase 1: Consonant or Vowel Match
+
+Checked **in order** — first match wins:
+
+| Step | Name | Condition | Match Logic |
+|------|------|-----------|-------------|
+| 1 | **ౠత్వసౌమ్యవళి** | Both contain ృ | Always match |
+| 2 | **ఋత్వసంబంధవళి** | One has ృ | Other must be in {ఇ,ఈ,ఋ,ౠ,ఎ,ఏ,ి,ీ,ృ,ౄ,ె,ే} |
+| 3 | **ఋవళి** | One has ఋ or ృ | Other must start with ర and end with {ి,ీ,ె,ే} |
+| 4 | **స్వరప్రధానవళి** | Extract vowels/finishes | Must be in same VowelAndFinishGroup. Does NOT match if both are pure finishes only |
+| 5 | **ప్రత్యేక యతి** | One consonant is య or హ | Other must contain అ |
+| 6 | **సమాన హల్లు** | Extract consonants | Exact same consonant found |
+| 7 | **ConsoGroups** | Extract consonants | At least one consonant from each side belongs to the same group (18 groups) |
+| 8 | **విశేషవళి** | One contains ఙ | Other must be ంక, ంఖ, ంగ, or ంఘ |
+| 9 | **తద్భవవ్యాజ విశ్రమములు** | One has న or ణ | Other must contain ఙ |
+| 10 | **బిందు యతులు** | One starts with ం | ం+consonant matched against nasal of that consonant's వర్గ (ంక↔ఙ, ంచ↔ఞ, ంట↔ణ, ంత↔న, ంప↔మ). Also: అనుస్వార సంబంధ యతులు, అనునాసికాక్షర యతులు, మువర్ణ విరామం |
+| 11 | **Finish group confirmation** | Steps 6-10 matched | **Required second check** — see Phase 2 below |
+| 12 | **మువిభక్తియతి / ముకారయతి** | One is మ+{ు,ూ,ొ,ో} | Other must be {ప,ఫ,భ,బ,మ}+{ు,ూ,ొ,ో} |
+| 13 | **అంత్యోష్మ సంధి కళులు** | One contains హ | Other has a specific aspirate conjunct (క్ఖ, గ్ఘ, చ్ఛ, etc.) |
+| 14 | **SoundexSandhi** | Flag enabled on engine | Match FinishGroups only (no consonant check) |
+
+**Input Preprocessing:** Before matching, the engine replaces variant ై with normalized form and ఽ (avagraha) with అ.
+
+#### Phase 2: Finish Group Confirmation
+
+After a consonant match (steps 6-10), the engine **also checks** that the vowel markings are compatible. This is the most common cause of unexpected యతి failures.
+
+| Finish Group | Members | Compatible with no-finish? |
+|-------------|---------|---------------------------|
+| **అ-group** | ా, ై, ౌ, ం | Yes — no finish defaults to అ-group |
+| **ఇ-group** | ి, ీ, ృ, ౄ, ె, ే | No |
+| **ఉ-group** | ు, ూ, ొ, ో | No |
+
+**Rules:**
+- If neither side has a finish → match (both are అ-group by default)
+- If one side has no finish, the other must be in the **అ-group** (ా, ై, ౌ, ం)
+- If both have finishes, they must be in the **same group**
+
+### Consonant Groups (ConsoGroups)
+
+All 18 groups accepted by the engine for yati matching:
+
+| Group Name | Letters | Notes |
+|-----------|---------|-------|
+| **క-వర్గ** | క, ఖ, గ, ఘ | Standard వర్గ |
+| **చ-వర్గ** | చ, ఛ, జ, ఝ | Standard వర్గ |
+| **ట-వర్గ** | ట, ఠ, డ, ఢ | Standard వర్గ |
+| **త-వర్గ** | త, థ, ద, ధ | Standard వర్గ |
+| **ప-వర్గ** | ప, ఫ, బ, భ | Standard వర్గ |
+| **ఋజు యతులు** | య, హ | Also part of ప్రత్యేక యతి with అ |
+| **ఏకతరయతులు** | ర, ఱ | |
+| **అభేద విరతులు** | వ-బ, ల-ళ, ల-డ | Cross-వర్గ pairs |
+| **అభేద వర్గ విరతులు** | ప-వ, ఫ-వ, బ-వ, భ-వ | ప-వర్గ ↔ వ |
+| **ఊష్మ విశ్రాంతులు** | శ, ష, స | Sibilants are interchangeable |
+| **సరసయతి** | చ-ఛ-జ-ఝ-శ-ష-స | చ-వర్గ + sibilants combined |
+| **సరసయతి** | న, ణ | Nasals across వర్గs |
+| **Special** | ల, ళ, డ, ర | Extended lateral/retroflex group |
+
+> **Note:** The standard 5 వర్గ groups do **not** include the 5th letter (nasal): ఙ, ఞ, ణ, న, మ are handled separately via బిందు యతులు and other special rules. This differs from classical prosody where the nasal is part of the వర్గ.
+
+### Vowel/Finish Groups (VowelAndFinishGroups)
+
+Used for స్వరప్రధానవళి matching (checked before consonants):
+
+| Group | Vowels | Finishes |
+|-------|--------|----------|
+| **అ-group** | అ, ఆ, ఐ, ఔ | ా, ై, ౌ |
+| **ఇ-group** | ఇ, ఈ, ఋ, ౠ, ఎ, ఏ | ి, ీ, ృ, ౄ, ె, ే |
+| **ఉ-group** | ఉ, ఊ, ఒ, ఓ | ు, ూ, ొ, ో |
+
+---
+
+## 4. ప్రాస (Prasa) Matching
+
+ప్రాస is the **2nd akshar** (syllable) of each line. All lines must share the same consonant at this position.
+
+### What the Engine Extracts
+
+- `Prasa.Value` — the akshar string at position 2
+- `Prasa.Poorva` — the 1st akshar string (context for special rules)
+- `Prasa.Symbol` — guru/laghu weight of the 1st akshar
+
+Line 1's prasa is compared against all other lines. All must match.
+
+### Matching Algorithm (`IsPrasaMatched3`)
+
+The engine calls `IsPrasaMatched(s1, s2)` first, then falls back to `IsPrasaMatched2(P1, P2)` if that fails.
+
+#### Step 1: Basic Consonant Match (`IsPrasaMatched`)
+
+1. **Vowel bypass** — If either prasa akshar is a pure vowel, match succeeds
+2. **Extract consonants** — If multi-akshar (conjunct), use only the first akshar's consonants
+3. **Same consonant count** — Compare using PrasaGroups (see below)
+4. **Different consonant count** — **సంయుతాసంయుత ప్రాసము**: If one has 2 consonants and the 2nd is ల or ర, drop it and retry
+5. **శాంతిప్రాసము** (only if `AllowSantiPrasa=true`) — First OR last consonant matches
+
+### Prasa Consonant Groups (PrasaGroups)
+
+These are **different from** the yati ConsoGroups — prasa uses individual pairs, not full వర్గ groups.
+
+| Group Name | Letters | Type |
+|-----------|---------|------|
+| ప్రాసవైరము | ఱ, ర | |
+| ప్రాది ప్రాసము | న, ణ | |
+| శ-ప్రాసము | స, ష, శ | |
+| అభేద ప్రాస | ల, ళ, డ, ర | |
+| అభేద ప్రాస | ప, వ | |
+| వికల్ప ప్రాస | గ-ఙ, జ-ఞ, డ-ణ, ద-న, బ-మ | 5 pairs |
+| అప్రశస్త ప్రాస | ద, డ | |
+| స్వవర్గజ ప్రాసము | క-గ, ఖ-ఘ, గ-ఘ, చ-జ, ఛ-ఝ, జ-ఝ, ట-డ, ఠ-ఢ, డ-ఢ, త-ద, థ-ధ, ద-ధ, ప-బ, ఫ-భ, బ-భ | 15 pairs |
+
+Special: **వలపలిగిలక ప్రాస** — ర+X+X ↔ X+X pattern (e.g., ర్జ ↔ జ్జ)
+
+#### Step 2: Poorva-Aware Match (`IsPrasaMatched2`)
+
+If Step 1 fails, checks using the 1st akshar (Poorva) context:
+
+| Rule | Condition | Match |
+|------|-----------|-------|
+| **వికల్ప ప్రాస** | ం+హ on one side | హ+వ on other |
+| **అనునాసిక ప్రాసము** | ం+న or ం+మ on one side | న+న or మ+మ on other |
+| **ప్రాసమైత్రి ప్రాస** | ం+బ on one side | మ+మ on other; or ం+బ ↔ ం+మ |
+| **బిందు ప్రాసము** | న+consonant on one side | ం+same consonant on other |
+
+#### Step 3: Poorva Validation (`CheckPrasaPoorva2`)
+
+After consonant matching succeeds, the engine validates the 1st akshar context:
+
+| Rule | Condition | Requirement |
+|------|-----------|-------------|
+| **బిందుపూర్వక ప్రాసము** | Line 1's Poorva ends with ం | ALL lines' Poorva must end with ం |
+| **విసర్గపూర్వక ప్రాసము** | Line 1's Poorva ends with ః | ALL lines' Poorva must end with ః |
+| **Symbol matching** | Line 1's 1st akshar is guru (not laghu) | ALL lines' 1st akshar must have same guru/laghu weight |
+
+---
+
+## 5. Meter-Specific Constraints
+
+These constraints are NOT always obvious from the basic description but the validation engine WILL check them:
+
+| Constraint | Applies To | What It Means | Validation Error |
+|------------|-----------|---------------|-----------------|
+| **OddNonJa** | కందం, other జాతి | Odd-positioned గణాలు (1st, 3rd, 5th) must NOT be జ (`\|U\|`) | `OddNonJa` |
+| **Sixth rule** | కందం even lines | The 3rd గణం in even lines must be జ or నల only | `Sixth` |
+| **GCount** | All meters | Each line must have exactly the specified number of గణాలు | `GCount` |
+| **Weight** | జాతి meters | Each గణం must have exactly the specified matra count (typically 4) | `Weight` |
+| **Character count** | వృత్తం meters | Each line must have exactly N syllables (e.g., 20 for ఉత్పలమాల) | `Weight` / `GCount` |
+
+---
+
+## 6. Validation Error Reference
+
+| Error Type | Meaning | Fix Strategy |
+|------------|---------|-------------|
+| `Weight` | A గణం has wrong matra count | Add/remove syllables, swap guru↔laghu words, or shift a word to an adjacent group |
+| `Yati` | Letter at యతి position doesn't match line start | Check **two things**: (1) consonants in same group? (2) vowel/finish in same FinishGroup? Most failures are finish-group mismatches (e.g., కి↔గు fails because ి and ు are different groups — fix: కి↔గి) |
+| `OddNonJa` | Odd-positioned గణం is జ (`\|U\|`) | Rearrange so it becomes భ (`U\|\|`), స (`\|\|U`), నల (`\|\|\|\|`), or గగ (`UU`) |
+| `Sixth` | Even-line 3rd group isn't జ or నల | Force that group to be `\|U\|` or `\|\|\|\|` |
+| `GCount` | Wrong number of groups in the line | Line is too long or short — add/remove matras |
+| `Prasa` | 2nd syllable consonant doesn't match | Change the starting word of the offending line |
+
+---
+
+## 7. Tool Reference
+
+| Tool | Purpose | When to Use |
+|------|---------|-------------|
+| `list_rules` | Browse all available meters | Phase 1: choosing a chandam |
+| `get_rule_info` | Detailed meter rules and pattern | Phase 1 & 3: understanding meters |
+| `get_examples` | Classical example poems | Phase 3: studying the form |
+| `get_word_meaning` | Telugu dictionary lookup (multi-source) | Phase 2: word exploration (sparse use) |
+| `try_match_chandam` | Validate poem against a specific meter | Phase 5 & 6: scoring and iteration |
+| `determine_chandam` | Auto-detect the meter of a poem | Ad-hoc: if meter is unknown |
+| `calculate_scores` | Score against all meters (ranked) | Ad-hoc: exploring best-fit meters |
+
+**Important:** `get_word_meaning` queries external sources. It is **rate-limited and expensive**. Use only when you genuinely need to explore a word's meaning or find alternatives.
+
+---
+
+# Part II: Workflow
+
+Step-by-step process for composing a Telugu padyam. Each phase references the Knowledge section above for detailed rules.
+
+---
+
+## Phase 1: Brainstorm
+
+**Goal:** Understand the theme and intent, explore ideas, and pick a target chandam.
+
+1. Discuss the **theme** — What is the poem about? What emotion or message should it carry?
+2. Explore **narrative ideas** — What imagery, metaphors, or story arc will the poem use?
+3. **Select a target chandam** (meter) that suits the theme and tone.
+4. **Run a feasibility check** — Before committing, verify that the chosen meter can accommodate your key theme words.
+
+### Meter-Theme Feasibility Check
+
+After selecting a candidate meter, run `get_rule_info` and check whether your most important theme words can physically fit. This catches showstopper conflicts *before* you invest in constraint design.
+
+**Process:**
+1. Identify the meter's guru/laghu pattern and note which positions allow guru syllables.
+2. For each key theme word, compute its guru positions (long vowels, anusvara, conjuncts).
+3. Check: can each word's guru syllables land on the meter's guru-allowed positions?
+
+**Red flags that require action:**
+- A word has a guru syllable that cannot land on ANY guru-allowed position → shorten it, find a synonym, or change the meter.
+- The meter is **laghu-dominant** (>70% laghu) → most Sanskrit-origin and long-vowel Telugu words won't fit in the laghu zone. Build a **laghu word bank** (Phase 2) and accept that some words may need shortened forms.
+- The meter is **guru-dominant** → short, common Telugu particles and verb forms may not fit.
+
+If the feasibility check fails and no adaptation is acceptable, return to step 3 and pick a different meter **now**.
+
+### Output
+- A clear theme statement
+- 2-3 candidate meters with brief rationale
+- One selected chandam to proceed with
+
+---
+
+## Phase 2: Plan
+
+**Goal:** Lock the high-level idea and build a vocabulary palette.
+
+1. **Finalize the core idea** — Write a one-line summary of what each line/section will convey.
+2. **Identify key words** — List the essential words that carry the poem's meaning.
+3. **Explore alternatives** — Use `get_word_meaning` to find synonyms, related forms, or verify meanings.
+
+### For Laghu-Dominant Meters: Build a Laghu Word Bank
+
+If the meter has >70% laghu positions, build a dedicated bank of all-laghu words relevant to your theme before proceeding.
+
+**What qualifies as all-laghu:** Every syllable has a short vowel (అ, ఇ, ఉ, ఋ), no anusvara, no visarga, and no following conjunct consonant.
+
+Words with guru syllables can only be placed where their guru syllable lands on one of the meter's guru-allowed positions. Pre-plan these placements.
+
+### Output
+- A structured outline (what each line will say)
+- A vocabulary palette of candidate words with syllable counts
+- (If laghu-dominant meter) A laghu word bank
+
+---
+
+## Phase 2B: Design Constraints
+
+**Goal:** Make the structural decisions that constrain every line — ప్రాస, యతి anchors, and word-to-group alignment — BEFORE drafting.
+
+These are the highest-leverage decisions in padyam writing. Getting them wrong costs multiple iteration rounds; getting them right makes drafting almost mechanical.
+
+> **Prerequisite:** You must deeply understand the meter's structure before designing constraints. Run `get_rule_info(rule_identifier="...", include_examples=true)` and `get_examples(...)` first. You need the exact gaNA pattern, యతి position, and meter-specific rules (like OddNonJa for కందం).
+
+### Step 1: Choose the ప్రాస Consonant
+
+The 2nd syllable of every line must share the same consonant. This must be a deliberate upfront choice.
+
+**Process:**
+1. List the key words from your vocabulary palette.
+2. For each word, note its 2nd syllable's consonant.
+3. Identify which consonant gives the most line-starting options across all 4 lines.
+4. Verify: can you find at least 4 natural line-starters using this consonant?
+
+**Output:** One confirmed ప్రాస consonant with 4+ viable line-starter words.
+
+### Step 2: Plan యతి Anchors
+
+Failing to plan for యతి is the #1 cause of iteration waste.
+
+**2a: Identify యతి requirements** — Use `get_rule_info` to find the exact యతి position for your meter. See [Knowledge > యతి Matching > Yati Types by Meter](#yati-types-by-meter) for the lookup table.
+
+**2b: Understand compatibility** — The engine uses two-phase matching. See [Knowledge > యతి Matching](#3-యతి-yati-matching) for the full algorithm. Key points for planning:
+- **Safest:** Exact same consonant + same vowel group (e.g., క↔కా, స↔సా)
+- **Reliable:** Same వర్గ + same finish group (e.g., క↔గా — both క-వర్గ, both అ-group finish)
+- **Extended:** Cross-వర్గ groups the engine accepts (వ↔బ, ల↔ళ, శ↔స, న↔ణ, etc.)
+- **Special:** ప్రత్యేక యతి (య/హ ↔ అ), బిందు యతులు (ం-based)
+- **Critical:** Consonant match alone is NOT enough — the finish groups must also match
+
+**2c: Build anchor pairs** — For each line with యతి, plan the line-start letter and the యతి-position letter. Verify both consonant AND finish group compatibility.
+
+**2d: Pre-check feasibility** — Sketch rough line shapes. If you can't imagine words fitting, revisit Step 1 or Phase 1 **now**.
+
+### Step 3: Analyze Word-to-Group Alignment
+
+Key vocabulary must fit within or across the meter's group boundaries.
+
+**Process:**
+1. For each key word, compute the guru/laghu breakdown (see [Knowledge > Syllable Basics](#1-syllable-basics-guru-and-laghu)).
+2. Check the total matra count against your meter's group size.
+3. For words that don't fit a single group, find where they can span across two groups cleanly. Verify the split creates valid group types.
+4. Flag problem words that can't be placed. Find alternatives.
+
+### Step 3B: Theme Word Feasibility Check
+
+For each theme word with guru syllables, verify it can fit somewhere in the line.
+
+**Adaptation strategies:**
+
+| Adaptation | When to Use |
+|-----------|-------------|
+| **Shorten** | Drop a long vowel to make it laghu |
+| **Synonym** | Replace with an all-laghu word of similar meaning |
+| **Split across lines** | Enjambment — end one line with first half, start next with rest |
+| **Change the meter** | If the word is essential and no adaptation works |
+
+Document every adaptation — these become "Deviations & Notes" in the final result.
+
+### Step 4: Compile the Constraint Sheet
+
+Write a single reference capturing all design decisions: chandam, ప్రాస consonant, line starters, per-line constraints (group count, యతి pairs, meter-specific rules), and key word placements.
+
+### Output
+- Confirmed ప్రాస consonant with line-starter words
+- యతి anchor pairs for each line that requires యతి
+- Word-group alignment analysis for all key vocabulary
+- A complete constraint sheet ready for drafting
+
+---
+
+## Phase 3: Understand the Chandam Rules
+
+**Goal:** Deeply understand the chosen meter's structure and extract ALL constraints.
+
+> **Phase ordering note:** This phase and Phase 2B are interdependent. In practice, do an initial pass of Phase 3 (get rule info + examples) before Phase 2B, then return here to verify your constraint decisions.
+
+1. **Study the rule definition** — gaNA pattern, line count, syllables per line.
+2. **Verify yati and prasa** — Confirm Phase 2B decisions match the rule definition.
+3. **Extract meter-specific constraints** — See [Knowledge > Meter-Specific Constraints](#5-meter-specific-constraints).
+4. **Read classical examples** — Study how master poets handled yati transitions and ప్రాస placement.
+
+### Output
+- A cheat sheet: gaNA pattern, line structure, yati position, prasa rule
+- Meter-specific constraints added to the constraint sheet
+- 2-3 annotated examples showing how the rules apply in practice
+
+---
+
+## Phase 4: Draft
+
+**Goal:** Compose the first draft of the padyam.
+
+1. **Write line by line**, keeping the gaNA pattern in mind.
+2. **Prioritize meaning and flow** — Get the poetry right first; syllable adjustments come next.
+3. **Apply yati and prasa** as you write, using the constraint sheet.
+4. **Use the vocabulary palette** from Phase 2 to swap words for better metrical fit.
+
+### Guidelines
+- **Draft the most constrained lines first:**
+  - **కందం / జాతి:** Even lines have యతి + special rules. Draft them first; odd lines are free.
+  - **వృత్తం:** ALL lines have యతి, so prioritize lines where యతి + ప్రాస + theme word all intersect.
+  - **General rule:** If a line must contain a specific theme word AND satisfy యతి, draft it first.
+- **Use the constraint sheet** as your blueprint. Check each group's matra count as you write.
+- **Validate early.** After drafting 2 lines, run `try_match_chandam` to catch issues before they compound.
+- Mark lines you're unsure about for revision in Phase 6.
+
+### Output
+- A full first draft of the padyam
+
+---
+
+## Phase 5: Validate
+
+**Goal:** Check the draft against the target chandam and get a concrete score.
+
+```
+try_match_chandam(
+  poem_text="<your padyam text>",
+  rule_identifier="utpalamaala",
+  match_yati=true,
+  match_prasa=true
+)
+```
+
+### What to Review
+- **Overall match score** — How closely does the poem follow the meter?
+- **Per-line results** — Which lines match and which don't?
+- **Yati compliance** — Are pauses at the correct positions?
+- **Prasa compliance** — Do the rhyme patterns hold?
+
+### Output
+- Match score and detailed per-line breakdown
+- A list of lines that need revision, with specific issues noted
+
+---
+
+## Phase 6: Iterate
+
+**Goal:** Revise problem lines and re-validate until the score is strong.
+
+### Process
+1. **Classify the error** — Use the [Validation Error Reference](#6-validation-error-reference) to diagnose. Is it incremental (Weight, Yati) or structural (Prasa, GCount)?
+2. **For incremental fixes:** Swap words, rearrange phrases, or adjust sandhi.
+3. **For structural problems:** Loop back to Phase 2B to change ప్రాస or యతి anchors. Expect temporary score regression.
+4. **Re-run validation** after each round of changes.
+5. **If score regresses**, revert and try a different approach.
+6. **Repeat** for a reasonable number of rounds.
+
+### Stopping Criteria
+- **Stop when:** Score is clear and strong (high match percentage, yati and prasa pass).
+- **Also stop when:** 3-5 rounds done and further changes would compromise meaning or beauty.
+- **Never sacrifice quality for score.** A poem with minor metrical liberty but powerful meaning is better than a metrically perfect but lifeless verse.
+
+### Output
+- Revised padyam after each iteration
+- Corresponding match scores showing improvement
+
+---
+
+## Phase 7: Final Result
+
+**Goal:** Present the finished padyam with a complete summary.
+
+### Deliverables
+
+1. **The final padyam** — Clean text, properly formatted.
+2. **Summary table:**
+
+   | Item | Detail |
+   |------|--------|
+   | Chandam | Name of the meter used |
+   | Language | te / sa / kn / etc. |
+   | Match Score | Final percentage |
+   | Yati | Pass / Fail (with notes) |
+   | Prasa | Pass / Fail (with notes) |
+   | Iterations | Number of revision rounds |
+
+3. **Notes on deviations** — If any intentional metrical liberties were taken, explain the poetic justification.
+4. **Verdict** — Is the padyam ready, or does it need further expert review?
+5. **Learnings** - Critical Learnings
+
+### Save Results
+
+Save each run to **`results/<YYYY-MM-DD>T<HH-MM-SS>.md`** using the current date-time.
+
+```
+results/
+  2026-03-17T14-30-00.md    <- first attempt
+  2026-03-17T15-45-12.md    <- second attempt, different theme
+  2026-03-18T09-00-00.md    <- next day
+```
+
+Each file should follow this structure:
+
+~~~~markdown
+# Padyam Results — {YYYY-MM-DD}T{HH-MM-SS}
+
+## Theme
+{One-line theme description}
+
+## Chandam
+{Name of the chosen meter}
+
+## Final Padyam
+```
+{The final poem text}
+```
+
+## Design Constraints (from Phase 2B)
+| Constraint | Decision |
+|------------|----------|
+| ప్రాస       | {consonant and line starters} |
+| యతి        | {anchor pairs per line} |
+| Key words  | {word-group alignment notes} |
+
+## Score Summary
+| Item | Detail |
+|------|--------|
+| Chandam | ... |
+| Language | ... |
+| Match Score | ... |
+| Yati | Pass / Fail (with notes) |
+| Prasa | Pass / Fail (with notes) |
+| Iterations | ... |
+
+## Iteration History
+| Round | Key Changes Made | Score |
+|-------|-----------------|-------|
+| 1 | Initial draft | ... |
+| 2 | Fixed lines X, Y | ... |
+
+## Deviations & Notes
+{Any intentional metrical liberties and their justification}
+
+## Verdict
+{Final assessment: Ready / Needs expert review}
+~~~~
+
+
+
