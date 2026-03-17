@@ -6,7 +6,7 @@ FROM mcr.microsoft.com/dotnet/runtime:8.0 AS runtime
 WORKDIR /app
 
 COPY Publish/chandam-mcp-stdio .
-COPY Chandam.Config ./Chandam.Config
+COPY Chandam.Config/Rules/*.yaml ./Chandam.Config/Rules/
 
 VOLUME ["/app/Chandam.Config/Rules"]
 

@@ -117,7 +117,11 @@ public class ChandamToolsTests
         var result = _tools.ListRules("te");
         var json = JsonDocument.Parse(result);
 
-        Assert.True(json.RootElement.GetArrayLength() > 100);
+        // Response is now grouped by Type > SubType > ChandamName
+        Assert.True(json.RootElement.GetArrayLength() > 0);
+        var firstType = json.RootElement[0];
+        Assert.True(firstType.TryGetProperty("Type", out _));
+        Assert.True(firstType.TryGetProperty("SubTypes", out _));
     }
 
     [Theory]

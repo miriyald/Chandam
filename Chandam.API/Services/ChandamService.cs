@@ -476,7 +476,7 @@ public class ChandamService
         sb.AppendLine();
         sb.AppendLine($"- **ఛందం**: {rule.Name} ({rule.Identifier})");
         sb.AppendLine($"- **రకం**: {rule.PadyamType}");
-        sb.AppendLine($"- **స్కోరు**: {matchResult.Score}/{matchResult.Total} ({matchResult.Percentage}%)");
+        sb.AppendLine($"- **గణన**: {matchResult.Score}/{matchResult.Total} ({matchResult.Percentage}%)");
         sb.AppendLine($"- **సరిపోలిక**: {(matchResult.IsMatched ? "అవును" : "కాదు")}");
         sb.AppendLine();
 

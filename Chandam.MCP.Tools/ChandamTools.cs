@@ -123,17 +123,34 @@ public class ChandamTools
         var lang = LanguageCodeMapper.ParseLanguage(language);
         var allRules = _ruleLoader.GetAllRules(lang);
 
-        var ruleList = allRules.Select(r => new
-        {
-            r.Identifier,
-            r.Name,
-            PadyamType = r.PadyamType.ToString(),
-            PadyamSubType = r.PadyamSubType.ToString(),
-            Frequency = r.Frequency.ToString(),
-            r.Lines
-        });
+        var grouped = allRules
+            .GroupBy(r => r.PadyamType.ToString())
+            .OrderBy(g => g.Key)
+            .Select(typeGroup => new
+            {
+                Type = typeGroup.Key,
+                SubTypes = typeGroup
+                    .GroupBy(r => r.PadyamSubType.ToString())
+                    .OrderBy(sg => sg.Key)
+                    .Select(subGroup => new
+                    {
+                        SubType = subGroup.Key,
+                        Rules = subGroup
+                            .GroupBy(r => r.ChandamName ?? "")
+                            .OrderBy(cg => cg.Key)
+                            .Select(chandamGroup => new
+                            {
+                                ChandamName = chandamGroup.Key,
+                                Items = chandamGroup.Select(r => new
+                                {
+                                    r.Name,
+                                    r.Identifier
+                                }).OrderBy(r => r.Name).ToArray()
+                            }).ToArray()
+                    }).ToArray()
+            });
 
-        return JsonSerializer.Serialize(ruleList, JsonOptions);
+        return JsonSerializer.Serialize(grouped, JsonOptions);
     }
 
     [McpServerTool, Description("Look up the meaning of a Telugu word from multiple dictionary sources (Andhrabharati, Wiktionary, Shabdkosh). Returns definitions from all available sources.")]

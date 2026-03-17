@@ -52,10 +52,10 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Production
     volumes:
-      - ./Chandam.Config:/app/Chandam.Config:ro
+      - ./Chandam.Config/Rules:/app/Chandam.Config/Rules:ro
     restart: unless-stopped
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:3001/sse", "-m", "2"]
+      test: ["CMD", "curl", "-f", "http://localhost:3001/health", "-m", "2"]
       interval: 30s
       timeout: 5s
       retries: 3

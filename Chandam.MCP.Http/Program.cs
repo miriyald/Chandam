@@ -12,4 +12,5 @@ builder.Services
 
 var app = builder.Build();
 app.MapMcp();
+app.MapGet("/health", () => Results.Ok(new { Status = "Healthy", Service = "Chandam.MCP.Http" }));
 app.Run();
