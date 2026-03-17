@@ -29,17 +29,4 @@ public class ExampleDto
     /// Additional notes/remarks (optional)
     /// </summary>
     public string? Notes { get; set; }
-
-    /// <summary>
-    /// Create ExampleDto from legacy string (poem text only)
-    /// </summary>
-    public static ExampleDto FromLegacyString(string poemText)
-    {
-        return new ExampleDto
-        {
-            Text = poemText,
-            Author = "మహానుభావుడు.",  // Great scholar/person
-            Date = "తెలియదు"            // Unknown
-        };
-    }
 }

@@ -41,7 +41,8 @@ public class ChandamTools
             PoemText = poem_text,
             MatchYati = match_yati,
             MatchPrasa = match_prasa,
-            Language = lang
+            Language = lang,
+            RenderFormat = RenderFormat.Text
         };
         var result = _service.Determine(request);
         return JsonSerializer.Serialize(result, JsonOptions);
@@ -59,7 +60,8 @@ public class ChandamTools
             PoemText = poem_text,
             RuleIdentifier = rule_identifier,
             MatchYati = match_yati,
-            MatchPrasa = match_prasa
+            MatchPrasa = match_prasa,
+            RenderFormat = RenderFormat.Text
         };
         var result = _service.TryMatch(request);
         return JsonSerializer.Serialize(result, JsonOptions);

@@ -2,8 +2,13 @@
 name: సాధారణ ఛందస్సులు
 description: తెలుగులో అత్యంత వాడుకలో ఉన్న ఛందస్సులు (Most frequently used Telugu Chandam meters)
 rules:
-- name: ఇంద్రవజ్రము
-  identifier: iMdravajramu
+- identifier: iMdravajramu
+  name: ఇంద్రవజ్రము
+  language: Telugu
+  padyamType: Vruttam
+  padyamSubType: Vruttam
+  ruleType: Name
+  frequency: Frequent
   lines: 4
   threshold: 3
   rules:
@@ -13,7 +18,19 @@ rules:
     - గా
   yati:
   - - 8
+  yatiMode: CharPosition
   prasa: true
+  shortName: ఇంద్రవజ్రము
+  alias: ''
+  chandamName: త్రిష్టుప్పు
+  charLength: 11
+  matraLength: 18
+  min: 11
+  max: 11
+  chandamNumber: 357
+  chandamOrder: 2403
+  sequence: UU|-UU|-|U|-UU
+  matraSeries: 4-3 , 4-5 , 5-4
   examples:
   - text: >-
       సామర్థ్యలీలన్ తతజద్విగంబుల్
@@ -35,14 +52,13 @@ rules:
       వృత్తంబగున్ సన్నుత - వృత్తరేచా !
     author: మహానుభావుడు.
     date: తెలియదు
-  ruleType: Name
+- identifier: utpalamaala
+  name: ఉత్పలమాల
+  language: Telugu
   padyamType: Vruttam
   padyamSubType: Vruttam
-  yatiMode: CharPosition
-  language: Telugu
+  ruleType: Name
   frequency: Frequent
-- name: ఉత్పలమాల
-  identifier: utpalamaala
   lines: 4
   threshold: 3
   rules:
@@ -55,7 +71,19 @@ rules:
     - వ
   yati:
   - - 10
+  yatiMode: CharPosition
   prasa: true
+  shortName: ఉత్పలమాల
+  alias: ''
+  chandamName: కృతి
+  charLength: 20
+  matraLength: 28
+  min: 20
+  max: 20
+  chandamNumber: 355799
+  chandamOrder: 1404373
+  sequence: U||-U|U-|||-U||-U||-U|U-|U
+  matraSeries: ''
   examples:
   - text: >-
       పుణ్యుడు రామచంద్రుడట వోయి ముదంబున గాంచె దండకా
@@ -107,14 +135,13 @@ rules:
       గారవమొప్పఁ జెప్పుదురు కావ్యవిదుల్‌ యతి తొమ్మిదింటఁగాన్‌.
     author: మహానుభావుడు.
     date: తెలియదు
-  ruleType: Name
+- identifier: upEMdravajramu
+  name: ఉపేంద్రవజ్రము
+  language: Telugu
   padyamType: Vruttam
   padyamSubType: Vruttam
-  yatiMode: CharPosition
-  language: Telugu
+  ruleType: Name
   frequency: Frequent
-- name: ఉపేంద్రవజ్రము
-  identifier: upEMdravajramu
   lines: 4
   threshold: 3
   rules:
@@ -124,7 +151,19 @@ rules:
     - గా
   yati:
   - - 8
+  yatiMode: CharPosition
   prasa: true
+  shortName: ఉపేంద్రవజ్రము
+  alias: ''
+  chandamName: త్రిష్టుప్పు
+  charLength: 11
+  matraLength: 17
+  min: 11
+  max: 11
+  chandamNumber: 358
+  chandamOrder: 2404
+  sequence: '|U|-UU|-|U|-UU'
+  matraSeries: 3 , 4 , 6 , 4-5
   examples:
   - text: >-
       పురారి ముఖ్యామరపూజనీయున్
@@ -156,14 +195,13 @@ rules:
       ఇరాసుతాధీశు నుపేంద్రవజ్రన్‌.
     author: మహానుభావుడు.
     date: తెలియదు
-  ruleType: Name
+- identifier: kaviraajaviraajitamu
+  name: కవిరాజవిరాజితము (హంసగతి , మహాతరుణీదయిత , శ్రవణాభరణమ్)
+  language: Telugu
   padyamType: Vruttam
   padyamSubType: Vruttam
-  yatiMode: CharPosition
-  language: Telugu
+  ruleType: Name
   frequency: Frequent
-- name: కవిరాజవిరాజితము (హంసగతి , మహాతరుణీదయిత , శ్రవణాభరణమ్)
-  identifier: kaviraajaviraajitamu
   lines: 4
   threshold: 3
   rules:
@@ -179,7 +217,19 @@ rules:
   - - 8
     - 14
     - 20
+  yatiMode: CharPosition
   prasa: true
+  shortName: 'కవిరాజవిరాజితము '
+  alias: హంసగతి , మహాతరుణీదయిత , శ్రవణాభరణమ్
+  chandamName: వికృతి
+  charLength: 23
+  matraLength: 30
+  min: 23
+  max: 23
+  chandamNumber: 3595120
+  chandamOrder: 11983726
+  sequence: '|||-|U|-|U|-|U|-|U|-|U|-|U|-|U'
+  matraSeries: 4 , 6 , 3-5
   examples:
   - text: >-
       సరససమాసవిలాసవిభాసము సాధునుతంబు  సుసంధిగమున్
@@ -222,14 +272,13 @@ rules:
     author: మహానుభావుడు.
     date: తెలియదు
     reference: శ్రీ పిరాట్ల వెంకట శివరామకృష్ణ ప్రసాద్ గారిచే విరచితం.
-  ruleType: Name
+- identifier: krauMchapadaM
+  name: క్రౌంచపదం (పంచశిర , కోకపదమ్)
+  language: Telugu
   padyamType: Vruttam
   padyamSubType: Vruttam
-  yatiMode: CharPosition
-  language: Telugu
+  ruleType: Name
   frequency: Frequent
-- name: క్రౌంచపదం (పంచశిర , కోకపదమ్)
-  identifier: krauMchapadaM
   lines: 4
   threshold: 3
   rules:
@@ -244,7 +293,19 @@ rules:
   yati:
   - - 11
     - 19
+  yatiMode: CharPosition
   prasa: true
+  shortName: 'క్రౌంచపదం '
+  alias: పంచశిర , కోకపదమ్
+  chandamName: సంకృతి
+  charLength: 24
+  matraLength: 32
+  min: 24
+  max: 24
+  chandamNumber: 4193479
+  chandamOrder: 20970693
+  sequence: U||-UUU-||U-U||-|||-|||-|||-|UU
+  matraSeries: 4 , 6 , 3-5
   examples:
   - text: >-
       కాంచనభూషాసంచయ మొప్పన్‌ ఘనకుచభరమునఁ గవు నసియాడన్‌
@@ -266,14 +327,13 @@ rules:
       యంచలు మ్రేయన్‌గొంచలుగూయన్ వ్యవహితపరరవమయినకొలంకున్
     author: మహానుభావుడు.
     date: తెలియదు
-  ruleType: Name
+- identifier: chaMpakamaala
+  name: చంపకమాల (సరసీ)
+  language: Telugu
   padyamType: Vruttam
   padyamSubType: Vruttam
-  yatiMode: CharPosition
-  language: Telugu
+  ruleType: Name
   frequency: Frequent
-- name: చంపకమాల (సరసీ)
-  identifier: chaMpakamaala
   lines: 4
   threshold: 3
   rules:
@@ -286,7 +346,19 @@ rules:
     - ర
   yati:
   - - 11
+  yatiMode: CharPosition
   prasa: true
+  shortName: 'చంపకమాల '
+  alias: సరసీ
+  chandamName: ప్రకృతి
+  charLength: 21
+  matraLength: 28
+  min: 21
+  max: 21
+  chandamNumber: 711600
+  chandamOrder: 2808750
+  sequence: '|||-|U|-U||-|U|-|U|-|U|-U|U'
+  matraSeries: ''
   examples:
   - text: >-
       పదముల బట్టినం దలకుబా టొకయింతయు లేక శూరతన్
@@ -358,14 +430,13 @@ rules:
       జభములు జాజరేఫములుఁ జంపకమాల కగున్‌ దిశాయతిన్‌.
     author: మహానుభావుడు.
     date: తెలియదు
-  ruleType: Name
+- identifier: taralamu
+  name: తరళము (ధ్రువకోకిల)
+  language: Telugu
   padyamType: Vruttam
   padyamSubType: Vruttam
-  yatiMode: CharPosition
-  language: Telugu
+  ruleType: Name
   frequency: Frequent
-- name: తరళము (ధ్రువకోకిల)
-  identifier: taralamu
   lines: 4
   threshold: 3
   rules:
@@ -378,7 +449,19 @@ rules:
     - గ
   yati:
   - - 12
+  yatiMode: CharPosition
   prasa: true
+  shortName: 'తరళము '
+  alias: ధ్రువకోకిల
+  chandamName: అతిధృతి
+  charLength: 19
+  matraLength: 26
+  min: 19
+  max: 19
+  chandamNumber: 186040
+  chandamOrder: 710326
+  sequence: '|||-U||-U|U-||U-|U|-|U|-U'
+  matraSeries: 3-4
   examples:
   - text: >-
       పరమపూరుషుఁ డొక్కఁ డాఢ్యుఁడు పాలనోద్భవ నాశముల్
@@ -440,14 +523,13 @@ rules:
       జెలువుగా దరళంబునోలి రచింతు రంధకజిద్యతిన్‌.
     author: మహానుభావుడు.
     date: తెలియదు
-  ruleType: Name
+- identifier: tOTakamu
+  name: తోటకము (ఛిత్తక , భ్రమరావళి , నందినీ)
+  language: Telugu
   padyamType: Vruttam
   padyamSubType: Vruttam
-  yatiMode: CharPosition
-  language: Telugu
+  ruleType: Name
   frequency: Frequent
-- name: తోటకము (ఛిత్తక , భ్రమరావళి , నందినీ)
-  identifier: tOTakamu
   lines: 4
   threshold: 3
   rules:
@@ -457,7 +539,19 @@ rules:
     - స
   yati:
   - - 9
+  yatiMode: CharPosition
   prasa: true
+  shortName: 'తోటకము '
+  alias: ఛిత్తక , భ్రమరావళి , నందినీ
+  chandamName: జగతి
+  charLength: 12
+  matraLength: 16
+  min: 12
+  max: 12
+  chandamNumber: 1756
+  chandamOrder: 5850
+  sequence: '||U-||U-||U-||U'
+  matraSeries: 4 , 5 , 6 , 5-3 , 4-5 , 5-4
   examples:
   - text: >-
       జగదీశ్వర  నాకు  బ్ర సన్నుఁ డవే
@@ -489,14 +583,13 @@ rules:
       లలనాజనతాఝుషలక్ష్మనుభా
     author: మహానుభావుడు.
     date: తెలియదు
-  ruleType: Name
+- identifier: paMchaamaramu
+  name: పంచచామరము (నారాచ , మహోత్సవ)
+  language: Telugu
   padyamType: Vruttam
   padyamSubType: Vruttam
-  yatiMode: CharPosition
-  language: Telugu
+  ruleType: Name
   frequency: Frequent
-- name: పంచచామరము (నారాచ , మహోత్సవ)
-  identifier: paMchaamaramu
   lines: 4
   threshold: 3
   rules:
@@ -508,7 +601,19 @@ rules:
     - గ
   yati:
   - - 10
+  yatiMode: CharPosition
   prasa: true
+  shortName: 'పంచచామరము '
+  alias: నారాచ , మహోత్సవ
+  chandamName: అష్టి
+  charLength: 16
+  matraLength: 24
+  min: 16
+  max: 16
+  chandamNumber: 21846
+  chandamOrder: 87380
+  sequence: '|U|-U|U-|U|-U|U-|U|-U'
+  matraSeries: 3 , 6 , 4-5
   examples:
   - text: >-
       ఇ టా చతుర్ముఖుం డరాగఁ నిష్ట శిష్టపాళితోఁ
@@ -550,14 +655,13 @@ rules:
       స్ఫురద్విరావనర్తితోప భూవనీశిఖావళా
     author: మహానుభావుడు.
     date: తెలియదు
-  ruleType: Name
+- identifier: bhujaMgaprayaatamu
+  name: భుజంగప్రయాతము (అప్రమేయా)
+  language: Telugu
   padyamType: Vruttam
   padyamSubType: Vruttam
-  yatiMode: CharPosition
-  language: Telugu
+  ruleType: Name
   frequency: Frequent
-- name: భుజంగప్రయాతము (అప్రమేయా)
-  identifier: bhujaMgaprayaatamu
   lines: 4
   threshold: 3
   rules:
@@ -567,7 +671,19 @@ rules:
     - య
   yati:
   - - 8
+  yatiMode: CharPosition
   prasa: true
+  shortName: 'భుజంగప్రయాతము '
+  alias: అప్రమేయా
+  chandamName: జగతి
+  charLength: 12
+  matraLength: 20
+  min: 12
+  max: 12
+  chandamNumber: 586
+  chandamOrder: 4680
+  sequence: '|UU-|UU-|UU-|UU'
+  matraSeries: 5 , 3-5 , 5-3
   examples:
   - text: >-
       హరించుం గలిప్రేరితాఘంబులెల్లన్
@@ -609,14 +725,13 @@ rules:
       స్వభక్తాగ్రభూపారి జాతావతారా
     author: మహానుభావుడు.
     date: తెలియదు
-  ruleType: Name
+- identifier: mattakOkilamu
+  name: మత్తకోకిల (చర్చరీ , మల్లికామాల , మాలికోత్తరమాలికా , విబుధప్రియా , హరనర్తన , ఉజ్జ్వల)
+  language: Telugu
   padyamType: Vruttam
   padyamSubType: Vruttam
-  yatiMode: CharPosition
-  language: Telugu
+  ruleType: Name
   frequency: Frequent
-- name: మత్తకోకిల (చర్చరీ , మల్లికామాల , మాలికోత్తరమాలికా , విబుధప్రియా , హరనర్తన , ఉజ్జ్వల)
-  identifier: mattakOkilamu
   lines: 4
   threshold: 3
   rules:
@@ -628,7 +743,19 @@ rules:
     - ర
   yati:
   - - 11
+  yatiMode: CharPosition
   prasa: true
+  shortName: 'మత్తకోకిల '
+  alias: చర్చరీ , మల్లికామాల , మాలికోత్తరమాలికా , విబుధప్రియా , హరనర్తన , ఉజ్జ్వల
+  chandamName: ధృతి
+  charLength: 18
+  matraLength: 26
+  min: 18
+  max: 18
+  chandamNumber: 93019
+  chandamOrder: 355161
+  sequence: U|U-||U-|U|-|U|-U||-U|U
+  matraSeries: 3-4
   examples:
   - text: >-
       బల్లిదుం డగు కంసుచేతను బాధ నొందుచుచున్న మీ
@@ -690,14 +817,13 @@ rules:
       మక్కువందగఁ బాడి రార్యులు మత్తకోకిల వృత్తమున్‌.
     author: మహానుభావుడు.
     date: తెలియదు
-  ruleType: Name
+- identifier: maththEbhaM
+  name: మత్తేభవిక్రీడితము
+  language: Telugu
   padyamType: Vruttam
   padyamSubType: Vruttam
-  yatiMode: CharPosition
-  language: Telugu
+  ruleType: Name
   frequency: Frequent
-- name: మత్తేభవిక్రీడితము
-  identifier: maththEbhaM
   lines: 4
   threshold: 3
   rules:
@@ -710,7 +836,19 @@ rules:
     - వ
   yati:
   - - 14
+  yatiMode: CharPosition
   prasa: true
+  shortName: మత్తేభవిక్రీడితము
+  alias: ''
+  chandamName: కృతి
+  charLength: 20
+  matraLength: 30
+  min: 20
+  max: 20
+  chandamNumber: 298676
+  chandamOrder: 1347250
+  sequence: '||U-U||-U|U-|||-UUU-|UU-|U'
+  matraSeries: ''
   examples:
   - text: >-
       సవరక్షార్థము దండ్రి పంప జని విశ్వామిత్రుడుం దోడరా
@@ -762,14 +900,13 @@ rules:
       వేఁడి నుతింతురు భారసంబుల వెంట జాగము లొందఁగాన్‌.
     author: మహానుభావుడు.
     date: తెలియదు
-  ruleType: Name
+- identifier: mahaasragdhara
+  name: మహాస్రగ్ధర
+  language: Telugu
   padyamType: Vruttam
   padyamSubType: Vruttam
-  yatiMode: CharPosition
-  language: Telugu
+  ruleType: Name
   frequency: Frequent
-- name: మహాస్రగ్ధర
-  identifier: mahaasragdhara
   lines: 4
   threshold: 3
   rules:
@@ -784,7 +921,19 @@ rules:
   yati:
   - - 9
     - 16
+  yatiMode: CharPosition
   prasa: true
+  shortName: మహాస్రగ్ధర
+  alias: ''
+  chandamName: ఆకృతి
+  charLength: 22
+  matraLength: 33
+  min: 22
+  max: 22
+  chandamNumber: 605988
+  chandamOrder: 4800290
+  sequence: '||U-UU|-UU|-|||-||U-U|U-U|U-U'
+  matraSeries: ''
   examples:
   - text: >-
       జయ భూపా! కృష్ణరాయా! జయ సరసగుణా! శత్రుగర్వాపహారీ!
@@ -866,14 +1015,13 @@ rules:
       జ్జ్వలసోద్యద్రేఫయుగ్మాశ్రయగురుల మహాస్రగ్ధరం జెప్ప నొప్పున్‌.
     author: మహానుభావుడు.
     date: తెలియదు
-  ruleType: Name
+- identifier: maanini
+  name: మానిని (మదిరా , లతాకుసుమ , సంగతా)
+  language: Telugu
   padyamType: Vruttam
   padyamSubType: Vruttam
-  yatiMode: CharPosition
-  language: Telugu
+  ruleType: Name
   frequency: Frequent
-- name: మానిని (మదిరా , లతాకుసుమ , సంగతా)
-  identifier: maanini
   lines: 4
   threshold: 3
   rules:
@@ -889,7 +1037,19 @@ rules:
   - - 7
     - 13
     - 19
+  yatiMode: CharPosition
   prasa: true
+  shortName: 'మానిని '
+  alias: మదిరా , లతాకుసుమ , సంగతా
+  chandamName: ఆకృతి
+  charLength: 22
+  matraLength: 30
+  min: 22
+  max: 22
+  chandamNumber: 1797559
+  chandamOrder: 5991861
+  sequence: U||-U||-U||-U||-U||-U||-U||-U
+  matraSeries: 4 , 6 , 3-5
   examples:
   - text: >-
       కొన్నెలపువ్వును గోఱలపాఁగయుఁ గూర్చిన కెంజడ కొప్పునకున్‌
@@ -911,9 +1071,3 @@ rules:
       ద్రంగశయానుఁది రంబుగఁజూచికరంబిదివోచతురత్వమనున్
     author: మహానుభావుడు.
     date: తెలియదు
-  ruleType: Name
-  padyamType: Vruttam
-  padyamSubType: Vruttam
-  yatiMode: CharPosition
-  language: Telugu
-  frequency: Frequent

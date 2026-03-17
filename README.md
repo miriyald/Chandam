@@ -251,3 +251,6 @@ bash scripts/test-api.sh http://localhost:5000
 ## License
 
 Copyright 2013-2026 Chandam-ఛందం (http://chandam.apphb.com)
+
+
+claude mcp add --transport http chandam-mcp-http https://localhost:3001

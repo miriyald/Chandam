@@ -18,7 +18,7 @@ namespace Verifier
     {
         private readonly string _outputDirectory;
 
-        public GenerateRulesJSON(string outputDirectory = @"..\..\..\Chandam.Config\Rules")
+        public GenerateRulesJSON(string outputDirectory = @"Chandam.Config\Rules")
         {
             _outputDirectory = outputDirectory;
         }
@@ -36,7 +36,6 @@ namespace Verifier
             // Generate different rule sets
             GenerateFrequentRules();
             GenerateTeluguComplete();
-            // GenerateSanskritRules(); // TODO: if Sanskrit rules exist
 
             Console.WriteLine("=== JSON Generation Complete ===");
         }
@@ -103,30 +102,58 @@ namespace Verifier
             {
                 var dto = new RuleDto
                 {
+                    // Identifiers
                     Identifier = rule.Identifier,
                     Name = rule.Name,
+
+                    // Classifications
+                    Language = rule.Language.ToString(),
+                    PadyamType = rule.PadyamType.ToString(),
+                    PadyamSubType = rule.PadyamSubType.ToString(),
+                    RuleType = rule.RuleType.ToString(),
+                    Frequency = rule.Frequency.ToString(),
+
+                    // Rules
                     Lines = rule.Lines,
                     Threshold = rule.Threshold,
                     Rules = ConvertRulesToStringArray(rule.Rules),
                     Yati = rule.Yati,
+                    YatiMode = rule.YatiMode.ToString(),
                     Prasa = rule.Prasa,
                     PrasaYati = rule.PrasaYati,
                     AnthyaPrasa = rule.AnthyaPrasa,
-                    RuleType = rule.RuleType.ToString(),
-                    PadyamType = rule.PadyamType.ToString(),
-                    PadyamSubType = rule.PadyamSubType.ToString(),
-                    YatiMode = rule.YatiMode.ToString(),
-                    Language = rule.Language.ToString(),
-                    Frequency = rule.Frequency.ToString(),
                     ReverseYati = rule.ReverseYati,
                     OnlyPrasaYati = rule.OnlyPrasaYati,
                     YatiRecycle = rule.YatiRecycle,
                     DeferThresold = rule.DeferThresold,
                     InfiniteLength = rule.InfiniteLength,
-                    References = rule.References,
                     RuleText = rule.RuleText,
-                    Examples = ConvertExamplesToDto(rule.Examples)
+                    References = rule.References,
                 };
+
+                // Calculated fields - some rules (infinite length, DaMDakamu) can overflow
+                try
+                {
+                    dto.ShortName = rule.ShortName;
+                    dto.Alias = rule.Alias;
+                    dto.ChandamName = rule.ChandamName;
+                    dto.CharLength = rule.CharLength;
+                    dto.MatraLength = rule.MatraLength;
+                    dto.Min = rule.Min;
+                    dto.Max = rule.Max;
+                    dto.ChandamNumber = rule.ChandamNumber;
+                    dto.ChandamOrder = rule.ChandamOrder;
+                    dto.Sequence = rule.Sequence;
+                    dto.MatraSeries = rule.MatraSeries;
+                    dto.RowWiseRules = rule.RowWiseRules;
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"  ! Calculated fields partial for {rule.Identifier}: {ex.Message}");
+                }
+
+                // Examples last
+                dto.Examples = ConvertExamplesToDto(rule.Examples);
 
                 ruleDtos.Add(dto);
             }
@@ -170,7 +197,6 @@ namespace Verifier
 
             foreach (var exampleText in examples)
             {
-                // Parse tilde notation: text after ~ goes to Reference field
                 var text = exampleText;
                 string reference = null;
 
@@ -182,17 +208,15 @@ namespace Verifier
                 }
                 else
                 {
-                    // No tilde, but still trim leading/trailing whitespace
                     text = exampleText.Trim();
                 }
 
                 var dto = new ExampleDto
                 {
                     Text = text,
-                    Author = "మహానుభావుడు.",  // Default: "Great scholar"
-                    Date = "తెలియదు",          // Default: "Unknown"
-                    Reference = reference,      // Text after ~ goes here
-                    Notes = null
+                    Author = "మహానుభావుడు.",
+                    Date = "తెలియదు",
+                    Reference = reference,
                 };
 
                 exampleDtos.Add(dto);
@@ -236,70 +260,6 @@ namespace Verifier
 
             Console.WriteLine($"  ✓ Saved YAML: {filePath}");
         }
-
-        /// <summary>
-        /// Simple JSON formatter for readability
-        /// </summary>
-        private string FormatJson(string json)
-        {
-            var indent = 0;
-            var quoted = false;
-            var sb = new StringBuilder();
-
-            for (var i = 0; i < json.Length; i++)
-            {
-                var ch = json[i];
-
-                switch (ch)
-                {
-                    case '{':
-                    case '[':
-                        sb.Append(ch);
-                        if (!quoted)
-                        {
-                            sb.AppendLine();
-                            sb.Append(new string(' ', ++indent * 2));
-                        }
-                        break;
-                    case '}':
-                    case ']':
-                        if (!quoted)
-                        {
-                            sb.AppendLine();
-                            sb.Append(new string(' ', --indent * 2));
-                        }
-                        sb.Append(ch);
-                        break;
-                    case '"':
-                        sb.Append(ch);
-                        bool escaped = false;
-                        var index = i;
-                        while (index > 0 && json[--index] == '\\')
-                            escaped = !escaped;
-                        if (!escaped)
-                            quoted = !quoted;
-                        break;
-                    case ',':
-                        sb.Append(ch);
-                        if (!quoted)
-                        {
-                            sb.AppendLine();
-                            sb.Append(new string(' ', indent * 2));
-                        }
-                        break;
-                    case ':':
-                        sb.Append(ch);
-                        if (!quoted)
-                            sb.Append(" ");
-                        break;
-                    default:
-                        sb.Append(ch);
-                        break;
-                }
-            }
-
-            return sb.ToString();
-        }
     }
 
     #region DTOs for JSON Serialization
@@ -314,29 +274,50 @@ namespace Verifier
 
     public class RuleDto
     {
-        public string Name { get; set; } = string.Empty;
+        // Identifiers
         public string Identifier { get; set; } = string.Empty;
+        public string Name { get; set; } = string.Empty;
+
+        // Classifications
+        public string Language { get; set; }
+        public string PadyamType { get; set; }
+        public string PadyamSubType { get; set; }
+        public string RuleType { get; set; }
+        public string Frequency { get; set; }
+
+        // Rules
         public int Lines { get; set; }
         public int Threshold { get; set; }
         public string[][] Rules { get; set; }
         public int[][] Yati { get; set; }
+        public string YatiMode { get; set; }
         public bool Prasa { get; set; }
         public bool PrasaYati { get; set; }
         public bool AnthyaPrasa { get; set; }
-        public List<ExampleDto> Examples { get; set; }
-        public string RuleType { get; set; }
-        public string PadyamType { get; set; }
-        public string PadyamSubType { get; set; }
-        public string YatiMode { get; set; }
-        public string Language { get; set; }
-        public string Frequency { get; set; }
         public bool ReverseYati { get; set; }
         public bool OnlyPrasaYati { get; set; }
         public bool YatiRecycle { get; set; }
         public bool DeferThresold { get; set; }
         public bool InfiniteLength { get; set; }
-        public string[] References { get; set; }
         public string RuleText { get; set; }
+        public string[] References { get; set; }
+
+        // Calculated fields
+        public string ShortName { get; set; }
+        public string Alias { get; set; }
+        public string ChandamName { get; set; }
+        public int CharLength { get; set; }
+        public int MatraLength { get; set; }
+        public int Min { get; set; }
+        public int Max { get; set; }
+        public decimal ChandamNumber { get; set; }
+        public decimal ChandamOrder { get; set; }
+        public string Sequence { get; set; }
+        public string MatraSeries { get; set; }
+        public bool RowWiseRules { get; set; }
+
+        // Examples
+        public List<ExampleDto> Examples { get; set; }
     }
 
     public class ExampleDto

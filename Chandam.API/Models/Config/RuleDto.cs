@@ -3,49 +3,54 @@ using System.Collections.Generic;
 namespace Chandam.API.Models.Config;
 
 /// <summary>
-/// JSON-serializable rule definition (matches Rule2 structure from External.cs)
+/// JSON-serializable rule definition
 /// </summary>
 public class RuleDto
 {
-    public string Name { get; set; } = string.Empty;
+    // Identifiers
     public string Identifier { get; set; } = string.Empty;
+    public string Name { get; set; } = string.Empty;
+
+    // Classifications
+    public string? Language { get; set; }
+    public string? PadyamType { get; set; }
+    public string? PadyamSubType { get; set; }
+    public string? RuleType { get; set; }
+    public string? Frequency { get; set; }
+
+    // Rules
     public int Lines { get; set; }
     public int Threshold { get; set; }
-
-    /// <summary>
-    /// Gana patterns (e.g., [["మ", "స", "జ", "స", "తత", "గా"]])
-    /// </summary>
     public string[][]? Rules { get; set; }
-
-    /// <summary>
-    /// Yati (caesura) positions (e.g., [[6, 13]])
-    /// </summary>
     public int[][]? Yati { get; set; }
-
+    public string? YatiMode { get; set; }
     public bool Prasa { get; set; }
     public bool PrasaYati { get; set; }
     public bool AnthyaPrasa { get; set; }
-
-    /// <summary>
-    /// Enhanced examples with metadata
-    /// </summary>
-    public List<ExampleDto>? Examples { get; set; }
-
-    public string? RuleType { get; set; }      // "Name", "Gana", "Custom"
-    public string? PadyamType { get; set; }    // "Vruttam", "Jati", etc.
-    public string? PadyamSubType { get; set; }
-    public string? YatiMode { get; set; }      // "CharPosition", "GanaPosition"
-    public string? Language { get; set; }      // "Telugu", "Sanskrit"
-    public string? Frequency { get; set; }     // "Frequent", "Rare"
-
     public bool ReverseYati { get; set; }
     public bool OnlyPrasaYati { get; set; }
     public bool YatiRecycle { get; set; }
     public bool DeferThresold { get; set; }
     public bool InfiniteLength { get; set; }
-
-    public string[]? References { get; set; }
     public string? RuleText { get; set; }
+    public string[]? References { get; set; }
+
+    // Calculated fields
+    public string? ShortName { get; set; }
+    public string? Alias { get; set; }
+    public string? ChandamName { get; set; }
+    public int CharLength { get; set; }
+    public int MatraLength { get; set; }
+    public int Min { get; set; }
+    public int Max { get; set; }
+    public decimal ChandamNumber { get; set; }
+    public decimal ChandamOrder { get; set; }
+    public string? Sequence { get; set; }
+    public string? MatraSeries { get; set; }
+    public bool RowWiseRules { get; set; }
+
+    // Examples
+    public List<ExampleDto>? Examples { get; set; }
 }
 
 /// <summary>
@@ -53,8 +58,8 @@ public class RuleDto
 /// </summary>
 public class RuleSetDto
 {
-    public string Identifier { get; set; } = string.Empty;  // "default", "telugu-complete", etc.
-    public string Name { get; set; } = string.Empty;        // Human-readable name
+    public string Identifier { get; set; } = string.Empty;
+    public string Name { get; set; } = string.Empty;
     public string? Description { get; set; }
     public List<RuleDto> Rules { get; set; } = new();
 }

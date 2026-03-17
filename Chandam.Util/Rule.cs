@@ -166,7 +166,7 @@ namespace Chandam.Rules
 		{
 			get
 			{
-				//When has rowwise rules then charlength could differ
+				// When has rowwise rules then charlength could differ
 				return Helper.MinCharLength(this.Rules, this.RuleType);
 
 			}
@@ -195,7 +195,7 @@ namespace Chandam.Rules
 		{
 			get
 			{
-				//When has rowwise rules then charlength could differ
+				// When has rowwise rules then charlength could differ
 				if (this.PadyamType != PadyamType.Vruttam || this.RowWiseRules || this.InfiniteLength)
 				{
 					return -1;

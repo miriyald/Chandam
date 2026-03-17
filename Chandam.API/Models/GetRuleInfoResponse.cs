@@ -7,84 +7,53 @@ namespace Chandam.API.Models;
 /// </summary>
 public class GetRuleInfoResponse
 {
-    /// <summary>
-    /// Rule identifier
-    /// </summary>
+    // Identifiers
     public string Identifier { get; set; } = string.Empty;
-
-    /// <summary>
-    /// Rule name in Telugu
-    /// </summary>
     public string Name { get; set; } = string.Empty;
 
-    /// <summary>
-    /// Number of lines in this Chandam
-    /// </summary>
-    public int Lines { get; set; }
-
-    /// <summary>
-    /// Type of Chandam (Vruttam, Jati, UpaJati)
-    /// </summary>
-    public string PadyamType { get; set; } = string.Empty;
-
-    /// <summary>
-    /// Subtype classification
-    /// </summary>
-    public string PadyamSubType { get; set; } = string.Empty;
-
-    /// <summary>
-    /// Language (Telugu, Sanskrit, Kannada, etc.)
-    /// </summary>
+    // Classifications
     public string Language { get; set; } = string.Empty;
-
-    /// <summary>
-    /// Frequency (Frequent, Rare)
-    /// </summary>
+    public string PadyamType { get; set; } = string.Empty;
+    public string PadyamSubType { get; set; } = string.Empty;
+    public string RuleType { get; set; } = string.Empty;
     public string Frequency { get; set; } = string.Empty;
 
-    /// <summary>
-    /// Gana pattern rules (e.g., [["త", "త", "జ", "గా"]])
-    /// </summary>
+    // Rules
+    public int Lines { get; set; }
+    public int Threshold { get; set; }
     public string[][]? Rules { get; set; }
-
-    /// <summary>
-    /// Yati (caesura) positions
-    /// </summary>
     public int[][]? Yati { get; set; }
-
-    /// <summary>
-    /// Whether Prasa (rhyme) is required
-    /// </summary>
+    public string YatiMode { get; set; } = string.Empty;
     public bool Prasa { get; set; }
-
-    /// <summary>
-    /// Whether PrasaYati is required
-    /// </summary>
     public bool PrasaYati { get; set; }
-
-    /// <summary>
-    /// Whether AnthyaPrasa (end rhyme) is required
-    /// </summary>
     public bool AnthyaPrasa { get; set; }
-
-    /// <summary>
-    /// Description/explanation in Telugu
-    /// </summary>
-    public string? Description { get; set; }
-
-    /// <summary>
-    /// Reference texts or sources
-    /// </summary>
+    public bool ReverseYati { get; set; }
+    public bool OnlyPrasaYati { get; set; }
+    public bool YatiRecycle { get; set; }
+    public bool DeferThresold { get; set; }
+    public bool InfiniteLength { get; set; }
+    public string? RuleText { get; set; }
     public string[]? References { get; set; }
 
-    /// <summary>
-    /// Example poems demonstrating this Chandam
-    /// </summary>
+    // Calculated fields
+    public string? ShortName { get; set; }
+    public string? Alias { get; set; }
+    public string? ChandamName { get; set; }
+    public int CharLength { get; set; }
+    public int MatraLength { get; set; }
+    public int Min { get; set; }
+    public int Max { get; set; }
+    public decimal ChandamNumber { get; set; }
+    public decimal ChandamOrder { get; set; }
+    public string? Sequence { get; set; }
+    public string? MatraSeries { get; set; }
+    public bool RowWiseRules { get; set; }
+    public string? Description { get; set; }
+
+    // Examples
     public List<ExamplePoem>? Examples { get; set; }
 
-    /// <summary>
-    /// Error message if rule not found
-    /// </summary>
+    // Error
     public string? ErrorMessage { get; set; }
 }
 
@@ -93,28 +62,9 @@ public class GetRuleInfoResponse
 /// </summary>
 public class ExamplePoem
 {
-    /// <summary>
-    /// The poem text
-    /// </summary>
     public string Text { get; set; } = string.Empty;
-
-    /// <summary>
-    /// Author name
-    /// </summary>
     public string Author { get; set; } = string.Empty;
-
-    /// <summary>
-    /// Date/period
-    /// </summary>
     public string Date { get; set; } = string.Empty;
-
-    /// <summary>
-    /// Reference source (book, collection, etc.)
-    /// </summary>
     public string? Reference { get; set; }
-
-    /// <summary>
-    /// Additional notes
-    /// </summary>
     public string? Notes { get; set; }
 }

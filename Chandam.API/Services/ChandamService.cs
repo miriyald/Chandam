@@ -390,20 +390,47 @@ public class ChandamService
     {
         return new GetRuleInfoResponse
         {
+            // Identifiers
             Identifier = rule.Identifier,
             Name = rule.Name,
-            Lines = rule.Lines,
+
+            // Classifications
+            Language = rule.Language.ToString(),
             PadyamType = rule.PadyamType.ToString(),
             PadyamSubType = rule.PadyamSubType.ToString(),
-            Language = rule.Language.ToString(),
+            RuleType = rule.RuleType.ToString(),
             Frequency = rule.Frequency.ToString(),
+
+            // Rules
+            Lines = rule.Lines,
+            Threshold = rule.Threshold,
             Rules = ConvertRulesToStringArray(rule.Rules),
             Yati = rule.Yati,
+            YatiMode = rule.YatiMode.ToString(),
             Prasa = rule.Prasa,
             PrasaYati = rule.PrasaYati,
             AnthyaPrasa = rule.AnthyaPrasa,
+            ReverseYati = rule.ReverseYati,
+            OnlyPrasaYati = rule.OnlyPrasaYati,
+            YatiRecycle = rule.YatiRecycle,
+            DeferThresold = rule.DeferThresold,
+            InfiniteLength = rule.InfiniteLength,
+            RuleText = rule.RuleText,
+            References = rule.References,
+
+            // Calculated fields
+            Alias = rule.Alias,
+            ChandamName = rule.ChandamName,
+            CharLength = rule.CharLength,
+            MatraLength = rule.MatraLength,
+            Min = rule.Min,
+            Max = rule.Max,
+            ChandamNumber = rule.ChandamNumber,
+            ChandamOrder = rule.ChandamOrder,
+            Sequence = rule.Sequence,
+            MatraSeries = rule.MatraSeries,
+            RowWiseRules = rule.RowWiseRules,
             Description = DescriptionBuilder.BuildDescription(rule),
-            References = rule.References
         };
     }
 
