@@ -53,7 +53,7 @@ public static class RuleDtoConverter
             PrasaYati = dto.PrasaYati,
             References = dto.References,
             // Note: RuleText has protected setter, cannot set from here
-            Rules = ConvertRulesArray(dto.Rules),
+            Rules = ConvertRulesArray(dto.Rules, ParseRuleType(dto.RuleType)),
             // Note: ReverseYati has protected setter, cannot set from here (defaults to false)
             RuleType = ParseRuleType(dto.RuleType),
             Threshold = dto.Threshold,
@@ -220,7 +220,7 @@ public static class RuleDtoConverter
     /// Converts Category enum names (e.g., "Surya", "Indra") to Category enums
     /// Keeps Gana names (e.g., "త", "జ", "గా") as strings
     /// </summary>
-    private static object[][]? ConvertRulesArray(string[][]? rules)
+    private static object[][]? ConvertRulesArray(string[][]? rules, RuleType ruleType)
     {
         if (rules == null || rules.Length == 0)
             return null;
@@ -239,25 +239,32 @@ public static class RuleDtoConverter
             {
                 var value = rules[i][j];
 
-                // Try to parse as Category enum
-                if (Enum.TryParse<Category>(value, ignoreCase: true, out var category))
+                switch (ruleType)
                 {
-                    result[i][j] = category;
-                }
-                // Try to parse as SubCategory enum
-                else if (Enum.TryParse<SubCategory>(value, ignoreCase: true, out var subCategory))
-                {
-                    result[i][j] = subCategory;
-                }
-                // Try to parse as Category2 enum
-                else if (Enum.TryParse<Category2>(value, ignoreCase: true, out var category2))
-                {
-                    result[i][j] = category2;
-                }
-                else
-                {
-                    // Keep as string (Gana name)
-                    result[i][j] = value;
+                    case RuleType.Weight:
+                        // Weight rules use numeric values (e.g., 3, 4, 5)
+                        if (int.TryParse(value, out var weight))
+                            result[i][j] = weight;
+                        else
+                            result[i][j] = value;
+                        break;
+
+                    case RuleType.Custom:
+                        // Custom rules keep original string as-is
+                        result[i][j] = value;
+                        break;
+
+                    default:
+                        // Name/Type/Type2/SubType: parse as Category/SubCategory/Category2 enums
+                        if (Enum.TryParse<Category>(value, ignoreCase: true, out var category))
+                            result[i][j] = category;
+                        else if (Enum.TryParse<SubCategory>(value, ignoreCase: true, out var subCategory))
+                            result[i][j] = subCategory;
+                        else if (Enum.TryParse<Category2>(value, ignoreCase: true, out var category2))
+                            result[i][j] = category2;
+                        else
+                            result[i][j] = value;
+                        break;
                 }
             }
         }
