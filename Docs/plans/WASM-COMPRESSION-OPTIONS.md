@@ -98,7 +98,9 @@ var json = JsonSerializer.Serialize(ruleSet, new JsonSerializerOptions
 
 ---
 
-### 5. **Differential Loading**
+### 5. **Differential Loading** ⏭️ FUTURE
+
+**Status**: Deferred to future implementation. A web UI feature is planned to allow users to choose rule sets on demand.
 
 Load rules on-demand instead of all upfront.
 
@@ -127,7 +129,9 @@ if (showExamples)
 
 ---
 
-### 6. **IndexedDB Caching**
+### 6. **IndexedDB Caching** ⏭️ FUTURE
+
+**Status**: Deferred to future implementation.
 
 Cache rules in browser storage after first load.
 
@@ -154,19 +158,27 @@ await SaveToIndexedDB("telugu-complete", rules, currentVersion);
 
 ## Recommended Approach
 
-### **Phase 1: Quick Wins (No Code Changes)**
+### **Phase 1: Quick Wins** ✅ IMPLEMENTED
 
-1. **Brotli compression** - 80% reduction → ~160KB
-2. **JSON minification** - Build with `WriteIndented = false`
-3. **Server configuration** - Enable Brotli/Gzip serving
+1. **JSON minification** - Generate both pretty and `.min.json` versions
+2. **Brotli compression** - Compress `.min.json` → `.min.json.br` using built-in .NET Brotli
+3. **Multiple formats** - Applied to JSON, YAML, Rules, and Examples
 
-**Total**: ~160KB download (from 806KB)
+**Implementation**: Modified `Chandam.Tasks/GenerateRulesJSON.cs` to generate:
+- `.json` (pretty-printed for debugging)
+- `.min.json` (minified for production)
+- `.min.json.br` (Brotli compressed)
+- `.yaml` (human-editable)
+- `.yaml.br` (Brotli compressed YAML)
 
-### **Phase 2: Smart Loading**
+**Expected Total**: ~160KB download (from 806KB) - **80% reduction**
+
+### **Phase 2: Smart Loading** ⏭️ FUTURE
 
 1. **Differential loading** - Start with frequent rules (19KB)
 2. **Lazy load** full rules when needed
 3. **IndexedDB caching** - Cache after first load
+4. **Web UI feature** - User selects rule sets on demand
 
 **Total**: 19KB initial, cached thereafter
 

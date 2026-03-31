@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using System.IO.Compression;
 using System.Text;
 using System.Text.Json;
 using YamlDotNet.Serialization;
@@ -75,7 +76,7 @@ namespace Verifier
         }
 
         /// <summary>
-        /// Convert a single YAML file to JSON
+        /// Convert a single YAML file to JSON (generates both pretty and minified + compressed versions)
         /// </summary>
         public void ConvertFile(string yamlFilePath)
         {
@@ -88,7 +89,7 @@ namespace Verifier
             var jsonFileName = $"{fileName}.json";
             var jsonFilePath = Path.Combine(_outputDirectory, jsonFileName);
 
-            Console.WriteLine($"Converting {Path.GetFileName(yamlFilePath)} → {jsonFileName}...");
+            Console.WriteLine($"Converting {Path.GetFileName(yamlFilePath)} → JSON...");
 
             // Read YAML
             var yamlContent = File.ReadAllText(yamlFilePath, Encoding.UTF8);
@@ -100,27 +101,32 @@ namespace Verifier
 
             var yamlObject = deserializer.Deserialize(yamlContent);
 
-            // Serialize to JSON
-            var jsonOptions = new JsonSerializerOptions
+            // YamlDotNet deserializes to Dictionary<object, object>, need to normalize
+            var normalizedObject = NormalizeYamlObject(yamlObject);
+
+            // 1. Pretty-printed JSON
+            var jsonOptionsPretty = new JsonSerializerOptions
             {
                 WriteIndented = true,
                 Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping
             };
+            var jsonContentPretty = JsonSerializer.Serialize(normalizedObject, jsonOptionsPretty);
+            File.WriteAllText(jsonFilePath, jsonContentPretty, Encoding.UTF8);
+            Console.WriteLine($"  ✓ {jsonFileName} ({GetFileSize(jsonFilePath)})");
 
-            // YamlDotNet deserializes to Dictionary<object, object>, need to normalize
-            var normalizedObject = NormalizeYamlObject(yamlObject);
+            // 2. Minified JSON
+            var minJsonFilePath = Path.Combine(_outputDirectory, $"{fileName}.min.json");
+            var jsonOptionsMinified = new JsonSerializerOptions
+            {
+                WriteIndented = false,
+                Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping
+            };
+            var jsonContentMinified = JsonSerializer.Serialize(normalizedObject, jsonOptionsMinified);
+            File.WriteAllText(minJsonFilePath, jsonContentMinified, Encoding.UTF8);
+            Console.WriteLine($"  ✓ {Path.GetFileName(minJsonFilePath)} ({GetFileSize(minJsonFilePath)})");
 
-            var jsonContent = JsonSerializer.Serialize(normalizedObject, jsonOptions);
-
-            // Write JSON
-            File.WriteAllText(jsonFilePath, jsonContent, Encoding.UTF8);
-
-            var yamlSize = new FileInfo(yamlFilePath).Length;
-            var jsonSize = new FileInfo(jsonFilePath).Length;
-            var sizeDiff = jsonSize - yamlSize;
-            var diffSign = sizeDiff >= 0 ? "+" : "";
-
-            Console.WriteLine($"  ✓ {jsonFileName} ({jsonSize:N0} bytes, {diffSign}{sizeDiff:N0} bytes vs YAML)");
+            // 3. Brotli compressed
+            CompressToBrotli(minJsonFilePath);
         }
 
         /// <summary>
@@ -156,6 +162,50 @@ namespace Verifier
 
             // Primitives and strings
             return obj;
+        }
+
+        /// <summary>
+        /// Compress file using Brotli compression (quality 11 = maximum compression)
+        /// </summary>
+        private void CompressToBrotli(string filePath)
+        {
+            var brFilePath = filePath + ".br";
+
+            try
+            {
+                using (var inputStream = File.OpenRead(filePath))
+                using (var outputStream = File.Create(brFilePath))
+                using (var brotliStream = new BrotliStream(outputStream, CompressionLevel.SmallestSize))
+                {
+                    inputStream.CopyTo(brotliStream);
+                }
+
+                // File must be fully closed before reading size
+                Console.WriteLine($"  ✓ Compressed to Brotli: {Path.GetFileName(brFilePath)} ({GetFileSize(brFilePath)})");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"  ! Failed to compress {Path.GetFileName(filePath)}: {ex.Message}");
+            }
+        }
+
+        /// <summary>
+        /// Get human-readable file size
+        /// </summary>
+        private string GetFileSize(string filePath)
+        {
+            if (!File.Exists(filePath))
+                return "N/A";
+
+            var fileInfo = new FileInfo(filePath);
+            var bytes = fileInfo.Length;
+
+            if (bytes < 1024)
+                return $"{bytes}B";
+            else if (bytes < 1024 * 1024)
+                return $"{bytes / 1024.0:F1}KB";
+            else
+                return $"{bytes / (1024.0 * 1024.0):F1}MB";
         }
     }
 }

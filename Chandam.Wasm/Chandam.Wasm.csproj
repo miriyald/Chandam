@@ -17,4 +17,23 @@
     <ProjectReference Include="..\Chandam.API\Chandam.API.csproj" />
   </ItemGroup>
 
+  <!-- NPM build integration -->
+  <Target Name="NpmInstall" BeforeTargets="BeforeBuild" Condition="!Exists('Client\node_modules')">
+    <Exec Command="npm install" WorkingDirectory="Client" />
+  </Target>
+
+  <Target Name="NpmBuild" BeforeTargets="Build">
+    <Exec Command="npm run build" WorkingDirectory="Client" />
+  </Target>
+
+  <!-- Copy compressed rule files from Chandam.Config/Rules/ to wwwroot/data/ -->
+  <Target Name="CopyCompressedRules" BeforeTargets="Build">
+    <ItemGroup>
+      <CompressedRuleFiles Include="..\Chandam.Config\Rules\*.min.json" />
+      <CompressedRuleFiles Include="..\Chandam.Config\Rules\*.min.json.br" />
+    </ItemGroup>
+    <Copy SourceFiles="@(CompressedRuleFiles)" DestinationFolder="wwwroot\data\" SkipUnchangedFiles="true" />
+    <Message Text="Copied compressed rule files to wwwroot/data/" Importance="high" />
+  </Target>
+
 </Project>

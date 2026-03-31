@@ -2,6 +2,7 @@ using Chandam.Rules;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.IO.Compression;
 using System.Linq;
 using System.Text;
 using System.Text.Json;
@@ -309,25 +310,37 @@ namespace Verifier
         }
 
         /// <summary>
-        /// Save RuleSetDto to JSON file
+        /// Save RuleSetDto to JSON file (generates both pretty and minified + compressed versions)
         /// </summary>
         private void SaveRuleSet(RuleSetDto ruleSet, string filename)
         {
             var filePath = Path.Combine(_outputDirectory, filename);
 
-            var json = JsonSerializer.Serialize(ruleSet, new JsonSerializerOptions
+            // 1. Save pretty-printed JSON for debugging
+            var jsonPretty = JsonSerializer.Serialize(ruleSet, new JsonSerializerOptions
             {
                 WriteIndented = true,
                 Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping
             });
+            File.WriteAllText(filePath, jsonPretty, Encoding.UTF8);
+            Console.WriteLine($"  ✓ Saved JSON: {filePath} ({GetFileSize(filePath)})");
 
-            File.WriteAllText(filePath, json, Encoding.UTF8);
+            // 2. Save minified JSON
+            var minFilePath = filePath.Replace(".json", ".min.json");
+            var jsonMinified = JsonSerializer.Serialize(ruleSet, new JsonSerializerOptions
+            {
+                WriteIndented = false,
+                Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping
+            });
+            File.WriteAllText(minFilePath, jsonMinified, Encoding.UTF8);
+            Console.WriteLine($"  ✓ Saved Minified JSON: {minFilePath} ({GetFileSize(minFilePath)})");
 
-            Console.WriteLine($"  ✓ Saved JSON: {filePath}");
+            // 3. Compress minified JSON to .br
+            CompressToBrotli(minFilePath);
         }
 
         /// <summary>
-        /// Save RuleSetDto to YAML file (human-editable format)
+        /// Save RuleSetDto to YAML file (human-editable format) + compressed version
         /// </summary>
         private void SaveRuleSetYaml(RuleSetDto ruleSet, string filename)
         {
@@ -341,29 +354,44 @@ namespace Verifier
             var yaml = serializer.Serialize(ruleSet);
             File.WriteAllText(filePath, yaml, Encoding.UTF8);
 
-            Console.WriteLine($"  ✓ Saved YAML: {filePath}");
+            Console.WriteLine($"  ✓ Saved YAML: {filePath} ({GetFileSize(filePath)})");
+
+            // Compress YAML to .br
+            CompressToBrotli(filePath);
         }
 
         /// <summary>
-        /// Save ExampleSetDto to JSON file
+        /// Save ExampleSetDto to JSON file (generates both pretty and minified + compressed versions)
         /// </summary>
         private void SaveExampleSet(ExampleSetDto exampleSet, string filename)
         {
             var filePath = Path.Combine(_outputDirectory, filename);
 
-            var json = JsonSerializer.Serialize(exampleSet, new JsonSerializerOptions
+            // 1. Save pretty-printed JSON for debugging
+            var jsonPretty = JsonSerializer.Serialize(exampleSet, new JsonSerializerOptions
             {
                 WriteIndented = true,
                 Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping
             });
+            File.WriteAllText(filePath, jsonPretty, Encoding.UTF8);
+            Console.WriteLine($"  ✓ Saved JSON: {filePath} ({GetFileSize(filePath)})");
 
-            File.WriteAllText(filePath, json, Encoding.UTF8);
+            // 2. Save minified JSON
+            var minFilePath = filePath.Replace(".json", ".min.json");
+            var jsonMinified = JsonSerializer.Serialize(exampleSet, new JsonSerializerOptions
+            {
+                WriteIndented = false,
+                Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping
+            });
+            File.WriteAllText(minFilePath, jsonMinified, Encoding.UTF8);
+            Console.WriteLine($"  ✓ Saved Minified JSON: {minFilePath} ({GetFileSize(minFilePath)})");
 
-            Console.WriteLine($"  ✓ Saved JSON: {filePath}");
+            // 3. Compress minified JSON to .br
+            CompressToBrotli(minFilePath);
         }
 
         /// <summary>
-        /// Save ExampleSetDto to YAML file (human-editable format with literal block scalars for poems)
+        /// Save ExampleSetDto to YAML file (human-editable format with literal block scalars for poems) + compressed version
         /// </summary>
         private void SaveExampleSetYaml(ExampleSetDto exampleSet, string filename)
         {
@@ -378,7 +406,10 @@ namespace Verifier
             var yaml = serializer.Serialize(exampleSet);
             File.WriteAllText(filePath, yaml, Encoding.UTF8);
 
-            Console.WriteLine($"  ✓ Saved YAML: {filePath}");
+            Console.WriteLine($"  ✓ Saved YAML: {filePath} ({GetFileSize(filePath)})");
+
+            // Compress YAML to .br
+            CompressToBrotli(filePath);
         }
 
         /// <summary>
@@ -402,6 +433,50 @@ namespace Verifier
 
                 base.Emit(eventInfo, emitter);
             }
+        }
+
+        /// <summary>
+        /// Compress file using Brotli compression (quality 11 = maximum compression)
+        /// </summary>
+        private void CompressToBrotli(string filePath)
+        {
+            var brFilePath = filePath + ".br";
+
+            try
+            {
+                using (var inputStream = File.OpenRead(filePath))
+                using (var outputStream = File.Create(brFilePath))
+                using (var brotliStream = new BrotliStream(outputStream, CompressionLevel.SmallestSize))
+                {
+                    inputStream.CopyTo(brotliStream);
+                }
+
+                // File must be fully closed before reading size
+                Console.WriteLine($"  ✓ Compressed to Brotli: {Path.GetFileName(brFilePath)} ({GetFileSize(brFilePath)})");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"  ! Failed to compress {Path.GetFileName(filePath)}: {ex.Message}");
+            }
+        }
+
+        /// <summary>
+        /// Get human-readable file size
+        /// </summary>
+        private string GetFileSize(string filePath)
+        {
+            if (!File.Exists(filePath))
+                return "N/A";
+
+            var fileInfo = new FileInfo(filePath);
+            var bytes = fileInfo.Length;
+
+            if (bytes < 1024)
+                return $"{bytes}B";
+            else if (bytes < 1024 * 1024)
+                return $"{bytes / 1024.0:F1}KB";
+            else
+                return $"{bytes / (1024.0 * 1024.0):F1}MB";
         }
     }
 
