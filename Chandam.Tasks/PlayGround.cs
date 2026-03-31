@@ -35,6 +35,16 @@ namespace Verifier
             new GenerateRulesJSON().GenerateAllRuleSets();
             Console.WriteLine("\n=== Generation Complete ===\n");
         }
+
+        /// <summary>
+        /// Convert YAML rule/example files to JSON
+        /// </summary>
+        internal void ConvertYamlToJson()
+        {
+            Console.WriteLine("=== Converting YAML Files to JSON ===\n");
+            new ConvertYamlToJson().ConvertAll();
+            Console.WriteLine();
+        }
         private void Identifier(string s)
         {
             MatchOptions Options = MatchOptions.QucikMatchSettings;

@@ -56,7 +56,7 @@ namespace Chandam.Rules.Rare
 
 			PadyamSubType = PadyamSubType.Vruttam;
 			Identifier = "naaree";
-			Name = "నారీ (జన , పుష్ప , మద , మధు , బలి)";
+			Name = "నారీ (జన, పుష్ప, మద, మధు, బలి)";
 			Examples = new string[] { "నారీవృ\nత్తారంభం\nబారున్మా\nకారం బై", "నారీలో\nకారాధ్యా\nసారస్యా\nధారాధ్యా" };
 		}
 	}

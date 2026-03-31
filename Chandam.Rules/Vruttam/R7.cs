@@ -31,7 +31,7 @@ namespace Chandam.Rules.Rare
 
 
 			Identifier = "suruchira1";
-			Name = "సురుచిర-1 (సరసిజ , మదలేఖా , విధువక్త్రా , రుచిరమ్)";
+			Name = "సురుచిర-1 (సరసిజ, మదలేఖా, విధువక్త్రా, రుచిరమ్)";
 
 			Rules = new string[][] { new string[] { "భ", "స", "గ" } };
 			Yati = new int[][] { };
@@ -179,7 +179,7 @@ namespace Chandam.Rules.Rare
 
 			PadyamSubType = PadyamSubType.Vruttam;
 			Identifier = "madanavilasitamu";
-			Name = "మదనవిలసిత (ద్రుతగతి , చపలా , మధుమతి , లటహ , హరివిలసిత)";
+			Name = "మదనవిలసిత (ద్రుతగతి, చపలా, మధుమతి, లటహ, హరివిలసిత)";
 			Examples = new string[] {   "పదపడి ననగల్\nగదసి వెలసినన్\nమదనవిలసితం\nబది యదుతిలకా.",
 										"మధురిపుఁ డనినన్‌\nమధురపుననగల్‌\nమధురము లగుచున్‌\nమధుమతి నమరున్‌."
 									};

@@ -31,7 +31,7 @@ namespace Chandam.Rules.Rare
 			Yati = new int[][] { };
 
 			Identifier = "suralata";
-			Name = "సురలత (శశివదన , కనకలతా , చతురంశా , మకరశీర్షా , ముకులితా)";
+			Name = "సురలత (శశివదన, కనకలతా, చతురంశా, మకరశీర్షా, ముకులితా)";
 			Examples = new string[] { "శశివదనాభన్\nశశధరుఁడోటన్\nదశఁజూటన్\nవిశయమునందెన్", "సురలతఁ జెప్పన్ \n సొరిది నయంబుల్.\nసురలతఁ జెప్పన్ \n సొరిది నయంబుల్." };
 		}
 	}
@@ -100,7 +100,7 @@ namespace Chandam.Rules.Rare
 			Yati = new int[][] { };
 
 			Identifier = "vasudha";
-			Name = "వసుధ (కిసలయ , తిలకా)";
+			Name = "వసుధ (కిసలయ, తిలకా)";
 
 			Examples = new string[] { "వసుధాపతియౌ\nవసుదేవసుతున్\nబసుకాపరిగా\nససిఁబిల్తురిలన్" };
 		}

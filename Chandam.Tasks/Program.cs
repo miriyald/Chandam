@@ -11,120 +11,131 @@
 //---------------------------------------------------------------------------------------------
 
 using System;
+using System.Linq;
 using Chandam.Rules;
 
-//Known Issues:
-//1.Try a kavirajaviraajitam  with a line that has less gana in no.
-//2.For the same  yati matching y1,y2,y3,y4==> y1 & y2 and y3 & y4 are groups.
 namespace Verifier
 {
 	class Program
 	{
-		static void Main(string[] args)
+		static int Main(string[] args)
 		{
-			// Initialize compiled rules (moved from Manager static constructor)
+			// Initialize compiled rules
 			Manager.Register(TeluguRules.Rules);
 			RuleHelper.RegisterSanskritRules(SanskritRules.Rules);
 
 			Console.ForegroundColor = ConsoleColor.White;
-			Console.Title = "Chandam-Verifier";
-			StopWatch G = new StopWatch();
-			G.Start();
+			Console.Title = "Chandam Tasks";
+
 			try
 			{
-				StopWatch S = new StopWatch();
-				S.Start();
+				// Parse command line arguments
+				if (args.Length == 0)
+				{
+					ShowHelp();
+					return 0;
+				}
 
-				//const string root = @"C:\Working\Chandam\Web\js\";
-				//new GenerateRulesJS(root).Go();
+				var command = args[0].ToLowerInvariant();
+				var options = args.Skip(1).ToArray();
 
-				//new Chandassu().BuildNotes();
-				//new ExtractServerData().Dump();
-				//new Chandassu().Analysis();
-				//new Vruttam2Jati().Go();
-				//new Jati2Vruttam2().Go();
-				//new Jati2Vruttam2().Go3();
-				new PlayGround().Play();
-				//new Seq2Music().Go();
+				StopWatch timer = new StopWatch();
+				timer.Start();
 
-				S.Reset();
+				int exitCode = command switch
+				{
+					"generate" or "gen" => GenerateRules(options),
+					"convert" or "yaml2json" => ConvertYamlToJson(options),
+					"help" or "--help" or "-h" or "/?" => ShowHelp(),
+					_ => ShowUnknownCommand(command)
+				};
+
+				timer.Reset();
+				return exitCode;
 			}
 			catch (Exception ex)
 			{
-
-				Console.WriteLine(ex.Message);
-				Console.ReadKey();
+				Console.ForegroundColor = ConsoleColor.Red;
+				Console.WriteLine($"\nError: {ex.Message}");
+				Console.WriteLine(ex.StackTrace);
+				Console.ResetColor();
+				return 1;
 			}
+		}
 
-			Console.WriteLine("----------------------------------");
-			G.Reset();
-			Console.WriteLine("----------------DONE--------------");
-			Console.Write("Press any Key to Exit.....");
-			Console.ReadKey();
-			//Console.Beep ( );
+		/// <summary>
+		/// Generate rules and examples from class files (JSON + YAML)
+		/// </summary>
+		static int GenerateRules(string[] options)
+		{
+			Console.WriteLine("=== Generating Rules and Examples ===\n");
+
+			var outputDir = options.Length > 0 ? options[0] : @"Chandam.Config\Rules";
+
+			new GenerateRulesJSON(outputDir).GenerateAllRuleSets();
+
+			Console.WriteLine("\n=== Generation Complete ===");
+			return 0;
+		}
+
+		/// <summary>
+		/// Convert YAML files to JSON
+		/// </summary>
+		static int ConvertYamlToJson(string[] options)
+		{
+			Console.WriteLine("=== Converting YAML to JSON ===\n");
+
+			var inputDir = options.Length > 0 ? options[0] : @"Chandam.Config\Rules";
+			var outputDir = options.Length > 1 ? options[1] : inputDir;
+
+			new ConvertYamlToJson(inputDir, outputDir).ConvertAll();
+
+			Console.WriteLine();
+			return 0;
+		}
+
+		/// <summary>
+		/// Show help/usage information
+		/// </summary>
+		static int ShowHelp()
+		{
+			Console.WriteLine("Chandam Tasks - Rule and Example Generation Utilities");
+			Console.WriteLine("======================================================\n");
+			Console.WriteLine("Usage: Chandam.Tasks <command> [options]\n");
+			Console.WriteLine("Commands:");
+			Console.WriteLine("  generate, gen          Generate rules and examples from class files");
+			Console.WriteLine("                         Outputs: JSON + YAML format");
+			Console.WriteLine("                         Usage: gen [output-directory]");
+			Console.WriteLine("                         Default: Chandam.Config\\Rules\n");
+			Console.WriteLine("  convert, yaml2json     Convert YAML files to JSON");
+			Console.WriteLine("                         Usage: convert [input-dir] [output-dir]");
+			Console.WriteLine("                         Default: Chandam.Config\\Rules\n");
+			Console.WriteLine("  help, --help, -h, /?   Show this help message\n");
+			Console.WriteLine("Examples:");
+			Console.WriteLine("  Chandam.Tasks gen");
+			Console.WriteLine("  Chandam.Tasks generate C:\\Output\\Rules");
+			Console.WriteLine("  Chandam.Tasks convert");
+			Console.WriteLine("  Chandam.Tasks yaml2json C:\\Rules C:\\Output\n");
+			Console.WriteLine("Generated Files:");
+			Console.WriteLine("  Rules:");
+			Console.WriteLine("    - chandam-rules.json/yaml         (frequent rules)");
+			Console.WriteLine("    - telugu-complete.json/yaml       (all Telugu rules)\n");
+			Console.WriteLine("  Examples:");
+			Console.WriteLine("    - chandam-examples.json/yaml      (frequent examples)");
+			Console.WriteLine("    - telugu-complete-examples.json/yaml (all examples)\n");
+			return 0;
+		}
+
+		/// <summary>
+		/// Show error for unknown command
+		/// </summary>
+		static int ShowUnknownCommand(string command)
+		{
+			Console.ForegroundColor = ConsoleColor.Red;
+			Console.WriteLine($"Unknown command: {command}\n");
+			Console.ResetColor();
+			ShowHelp();
+			return 1;
 		}
 	}
-
 }
-
-
-
-
-//StreamWriter SW = new StreamWriter("ExampleStats.txt", false, Encoding.UTF8);
-//List<Rule> Rules=RuleHelper.GetAllRules(true);
-//foreach (Rule R in Rules)
-//{
-//    SW.WriteLine(R.ShortName + "," + R.ChandamName + "(" + R.CharLength + ")" + "," + R.Examples.Length + "," + Helper.GetPadyamTypeString(R.PadyamType, R.PadyamSubType));
-//}
-
-//SW.Close();
-//string s = Converter.Convert(File.ReadAllText(@"Telugu.txt", Encoding.UTF8), Indic.Language.Telugu, Indic.Language.DevaNagari);
-//File.WriteAllText(@"Hindi.txt", s, Encoding.UTF8);
-//string s = "పీడి౦తు";
-//Debug.WriteLine(s.Length);
-
-//IndicParser P = new IndicParser(new DevanagariCharSet());
-//IndicAkshar[] A = P.Split("(हिन्दी),");
-//foreach (IndicAkshar a in A)
-//{
-//    Debug.WriteLine(a.ToString());
-//}
-
-//new DBWorker().DumpMeanings();
-//string s=Converter.Convert(File.ReadAllText(@"D:\Working\Chandam\Strings\TeluguBase\TeluguCharSet.cs",Encoding.UTF8),Indic.Language.Telugu,Indic.Language.Kannda);
-//File.WriteAllText(@"D:\Working\Chandam\Strings\KannadaBase\KannadaCharSet.cs", s,Encoding.UTF8);
-
-//Annamaya.Mallina();
-//Annamaya.Go();
-//Annamaya.CalcMatras2();
-//Annamaya.BuildDict3();
-//new DBWorker().Go ( );
-//new DBWorker ( ).GenerateXmls ( );
-//SELECT id,first FROM potana.names;
-
-//string insert="insert into names(first,id) values("SSSSS','12')";
-//MySqlConnection conn=Connection.GetConnection2 ( ) ;
-//conn.Open ( );
-//DBUtil.ExecuteNonQuery2 ( insert , null , "potana" ,conn , null );
-//conn.Close ( );
-
-
-//	Downloads.All ( );
-//SearchCriteria SC= new SearchCriteria ( );
-//SC.CharLength = 0;
-//SC.IncludeSans = false;
-//SC.MatraLength = 0;
-//SC.MatraSreni = "";
-//SC.NameLike = "ఆ";
-//SC.PadyamType = PadyamType.Unspecified;
-
-//Rule[] R=Helper.GetRules7 ( SC );
-//Console.WriteLine ( R.Length );
-
-#region...
-//string dir=@"D:\Working\Chandam\Verifier\bin\Debug\11-Apr-14";
-//new Worker ( ).Dump2 ( dir + "\\PotanaExtras2.xlsx" );
-//new Worker ( ).Verify3 (dir );
-//new Worker ( ).ExtractYati ( );
-//new Worker ( ).VerifyYati ( );
-#endregion

@@ -5,7 +5,9 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Text.Json;
+using YamlDotNet.Core;
 using YamlDotNet.Serialization;
+using YamlDotNet.Serialization.EventEmitters;
 using YamlDotNet.Serialization.NamingConventions;
 
 namespace Verifier
@@ -36,6 +38,10 @@ namespace Verifier
             // Generate different rule sets
             GenerateFrequentRules();
             GenerateTeluguComplete();
+
+            // Generate example sets
+            GenerateFrequentExamples();
+            GenerateTeluguCompleteExamples();
 
             Console.WriteLine("=== JSON Generation Complete ===");
         }
@@ -92,6 +98,83 @@ namespace Verifier
         }
 
         /// <summary>
+        /// Generate chandam-examples.json - Examples for frequent rules only
+        /// </summary>
+        private void GenerateFrequentExamples()
+        {
+            Console.WriteLine("\nGenerating chandam-examples.json (frequent rules examples)...");
+
+            var allRules = Manager.Rules();
+            var frequentRules = allRules
+                .Where(r => r.Language == RuleLanguage.Telugu && r.Frequency == Frequency.Frequent)
+                .Take(15)
+                .ToArray();
+
+            var exampleSet = CreateExampleSet(
+                "default-examples",
+                "సాధారణ ఛందస్సుల ఉదాహరణలు",
+                "తెలుగులో అత్యంత వాడుకలో ఉన్న ఛందస్సుల ఉదాహరణలు (Examples for most frequently used Telugu Chandam meters)",
+                frequentRules
+            );
+
+            SaveExampleSet(exampleSet, "chandam-examples.json");
+            SaveExampleSetYaml(exampleSet, "chandam-examples.yaml");
+            Console.WriteLine($"  ✓ Generated examples for {exampleSet.Examples.Count} rules (JSON + YAML)");
+        }
+
+        /// <summary>
+        /// Generate telugu-complete-examples.json - Examples for all Telugu rules
+        /// </summary>
+        private void GenerateTeluguCompleteExamples()
+        {
+            Console.WriteLine("\nGenerating telugu-complete-examples.json (all Telugu examples)...");
+
+            var allRules = Manager.Rules();
+            var teluguRules = allRules
+                .Where(r => r.Language == RuleLanguage.Telugu)
+                .ToArray();
+
+            var exampleSet = CreateExampleSet(
+                "telugu-complete-examples",
+                "తెలుగు ఛందస్సుల ఉదాహరణలు - సంపూర్ణం",
+                "అన్ని తెలుగు ఛందస్సుల ఉదాహరణలు (Examples for all Telugu Chandam meters)",
+                teluguRules
+            );
+
+            SaveExampleSet(exampleSet, "telugu-complete-examples.json");
+            SaveExampleSetYaml(exampleSet, "telugu-complete-examples.yaml");
+            Console.WriteLine($"  ✓ Generated examples for {exampleSet.Examples.Count} rules (JSON + YAML)");
+        }
+
+        /// <summary>
+        /// Create ExampleSetDto from Rule array
+        /// </summary>
+        private ExampleSetDto CreateExampleSet(string identifier, string name, string description, Rule[] rules)
+        {
+            var exampleSet = new ExampleSetDto
+            {
+                Identifier = identifier,
+                Name = name,
+                Description = description,
+                Examples = new Dictionary<string, List<ExampleDto>>()
+            };
+
+            foreach (var rule in rules)
+            {
+                if (rule.Examples != null && rule.Examples.Length > 0)
+                {
+                    var exampleDtos = ConvertExamplesToDto(rule.Examples);
+                    if (exampleDtos != null && exampleDtos.Count > 0)
+                    {
+                        exampleSet.Examples[rule.Identifier] = exampleDtos;
+                    }
+                }
+            }
+
+            return exampleSet;
+        }
+
+        /// <summary>
         /// Convert Rule[] to List<RuleDto>
         /// </summary>
         private List<RuleDto> ConvertRulesToDto(Rule[] rules)
@@ -134,17 +217,17 @@ namespace Verifier
                 // Calculated fields - some rules (infinite length, DaMDakamu) can overflow
                 try
                 {
-                    dto.ShortName = rule.ShortName;
-                    dto.Alias = rule.Alias;
-                    dto.ChandamName = rule.ChandamName;
+                    dto.ShortName = rule.ShortName?.Trim();
+                    dto.Alias = rule.Alias?.Trim();
+                    dto.ChandamName = rule.ChandamName?.Trim();
                     dto.CharLength = rule.CharLength;
                     dto.MatraLength = rule.MatraLength;
                     dto.Min = rule.Min;
                     dto.Max = rule.Max;
                     dto.ChandamNumber = rule.ChandamNumber;
                     dto.ChandamOrder = rule.ChandamOrder;
-                    dto.Sequence = rule.Sequence;
-                    dto.MatraSeries = rule.MatraSeries;
+                    dto.Sequence = rule.Sequence?.Trim();
+                    dto.MatraSeries = rule.MatraSeries?.Trim();
                     dto.RowWiseRules = rule.RowWiseRules;
                 }
                 catch (Exception ex)
@@ -152,8 +235,8 @@ namespace Verifier
                     Console.WriteLine($"  ! Calculated fields partial for {rule.Identifier}: {ex.Message}");
                 }
 
-                // Examples last
-                dto.Examples = ConvertExamplesToDto(rule.Examples);
+                // Examples moved to separate files
+                dto.Examples = null;
 
                 ruleDtos.Add(dto);
             }
@@ -260,6 +343,66 @@ namespace Verifier
 
             Console.WriteLine($"  ✓ Saved YAML: {filePath}");
         }
+
+        /// <summary>
+        /// Save ExampleSetDto to JSON file
+        /// </summary>
+        private void SaveExampleSet(ExampleSetDto exampleSet, string filename)
+        {
+            var filePath = Path.Combine(_outputDirectory, filename);
+
+            var json = JsonSerializer.Serialize(exampleSet, new JsonSerializerOptions
+            {
+                WriteIndented = true,
+                Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping
+            });
+
+            File.WriteAllText(filePath, json, Encoding.UTF8);
+
+            Console.WriteLine($"  ✓ Saved JSON: {filePath}");
+        }
+
+        /// <summary>
+        /// Save ExampleSetDto to YAML file (human-editable format with literal block scalars for poems)
+        /// </summary>
+        private void SaveExampleSetYaml(ExampleSetDto exampleSet, string filename)
+        {
+            var filePath = Path.Combine(_outputDirectory, filename);
+
+            var serializer = new SerializerBuilder()
+                .WithNamingConvention(CamelCaseNamingConvention.Instance)
+                .ConfigureDefaultValuesHandling(DefaultValuesHandling.OmitNull | DefaultValuesHandling.OmitDefaults)
+                .WithEventEmitter(nextEmitter => new MultilineScalarFlowStyleEmitter(nextEmitter))
+                .Build();
+
+            var yaml = serializer.Serialize(exampleSet);
+            File.WriteAllText(filePath, yaml, Encoding.UTF8);
+
+            Console.WriteLine($"  ✓ Saved YAML: {filePath}");
+        }
+
+        /// <summary>
+        /// Custom YAML emitter to use literal block style (|-) for multiline strings (better for poems)
+        /// </summary>
+        private class MultilineScalarFlowStyleEmitter : ChainedEventEmitter
+        {
+            public MultilineScalarFlowStyleEmitter(IEventEmitter nextEmitter) : base(nextEmitter) { }
+
+            public override void Emit(ScalarEventInfo eventInfo, IEmitter emitter)
+            {
+                if (typeof(string).IsAssignableFrom(eventInfo.Source.Type))
+                {
+                    var value = eventInfo.Source.Value as string;
+                    if (!string.IsNullOrEmpty(value) && value.Contains('\n'))
+                    {
+                        // Use literal block scalar (|-) for multiline strings (poems)
+                        eventInfo.Style = YamlDotNet.Core.ScalarStyle.Literal;
+                    }
+                }
+
+                base.Emit(eventInfo, emitter);
+            }
+        }
     }
 
     #region DTOs for JSON Serialization
@@ -270,6 +413,14 @@ namespace Verifier
         public string Name { get; set; } = string.Empty;
         public string Description { get; set; }
         public List<RuleDto> Rules { get; set; } = new List<RuleDto>();
+    }
+
+    public class ExampleSetDto
+    {
+        public string Identifier { get; set; } = string.Empty;
+        public string Name { get; set; } = string.Empty;
+        public string Description { get; set; }
+        public Dictionary<string, List<ExampleDto>> Examples { get; set; } = new Dictionary<string, List<ExampleDto>>();
     }
 
     public class RuleDto

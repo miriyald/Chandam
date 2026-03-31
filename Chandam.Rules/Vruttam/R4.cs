@@ -33,7 +33,7 @@ namespace Chandam.Rules.Rare
 
 
 			Identifier = "sukaaMti";
-			Name = "సుకాంతి (జయా , నగానితా , నగణికా , లాసినీ , విలాసినీ , కలా)";
+			Name = "సుకాంతి (జయా, నగానితా, నగణికా, లాసినీ, విలాసినీ, కలా)";
 			Examples = new string[] {   "జగంబులం\nదగున్ సుకాం\nతి గల్పిత\nప్రగల్భతన్",
 										"అగున్‌ సుకాం\nతి గూర్పఁగా\nజగంబులన్‌\nజగత్పతీ." };
 		}
@@ -57,7 +57,7 @@ namespace Chandam.Rules.Rare
 			Yati = new int[][] { };
 
 			Identifier = "vreeDa";
-			Name = "వ్రీడ (వ్రీళ , క్రీడా)";
+			Name = "వ్రీడ (వ్రీళ, క్రీడా)";
 			Examples = new string[] { "సురారాతి\nస్ఫురత్సైన్యం\nబురోఽసృగ్ధా\nర రాదీయన్" };
 		}
 	}

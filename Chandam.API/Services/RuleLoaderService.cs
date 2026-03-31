@@ -20,6 +20,7 @@ namespace Chandam.API.Services;
 public class RuleLoaderService
 {
     private readonly Dictionary<string, Rule[]> _loadedRuleSets = new();
+    private readonly Dictionary<string, ExampleSetDto> _loadedExampleSets = new();
     private string _currentRuleSetId = "default";
     private string _rulesDirectory = "Chandam.Config/Rules";
 
@@ -106,6 +107,15 @@ public class RuleLoaderService
                     .First().Key;
                 _currentRuleSetId = largestRuleSet;
                 Console.WriteLine($"Set default rule set to '{largestRuleSet}' ({_loadedRuleSets[largestRuleSet].Length} rules)");
+            }
+
+            // Load example sets from the same directory
+            LoadAllExampleSets();
+
+            // Merge examples into loaded rule sets
+            foreach (var ruleSet in _loadedRuleSets.Values)
+            {
+                MergeExamplesIntoRules(ruleSet);
             }
 
             // Register current rule set with Manager
@@ -217,6 +227,167 @@ public class RuleLoaderService
         {
             Console.WriteLine($"JSON deserialization error: {ex.Message}");
             return null;
+        }
+    }
+
+    /// <summary>
+    /// Load all example sets from the rules directory
+    /// </summary>
+    private void LoadAllExampleSets()
+    {
+        if (!Directory.Exists(_rulesDirectory))
+            return;
+
+        // Look for *-examples.yaml and *-examples.json files
+        var yamlFiles = Directory.GetFiles(_rulesDirectory, "*-examples.yaml");
+        var jsonFiles = Directory.GetFiles(_rulesDirectory, "*-examples.json");
+        var allFiles = yamlFiles.Concat(jsonFiles).ToArray();
+
+        if (allFiles.Length == 0)
+        {
+            Console.WriteLine("No example files found.");
+            return;
+        }
+
+        // Track which identifiers we've already loaded (YAML takes precedence)
+        var loadedIdentifiers = new HashSet<string>();
+
+        foreach (var filePath in allFiles)
+        {
+            try
+            {
+                var identifier = Path.GetFileNameWithoutExtension(filePath);
+
+                // Skip if we already loaded this identifier
+                if (loadedIdentifiers.Contains(identifier))
+                {
+                    continue;
+                }
+
+                var exampleSet = LoadExampleSetFromFile(filePath);
+                if (exampleSet != null && exampleSet.Examples.Count > 0)
+                {
+                    _loadedExampleSets[identifier] = exampleSet;
+                    loadedIdentifiers.Add(identifier);
+                    var fileType = Path.GetExtension(filePath).ToUpper();
+                    Console.WriteLine($"Loaded example set '{identifier}' with {exampleSet.Examples.Count} rule examples ({fileType})");
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error loading example set from {filePath}: {ex.Message}");
+            }
+        }
+    }
+
+    /// <summary>
+    /// Load example set from file (JSON or YAML)
+    /// </summary>
+    private ExampleSetDto? LoadExampleSetFromFile(string filePath)
+    {
+        if (!File.Exists(filePath))
+            return null;
+
+        var extension = Path.GetExtension(filePath).ToLower();
+        var content = File.ReadAllText(filePath);
+
+        return extension switch
+        {
+#if !EXCLUDE_YAML
+            ".yaml" or ".yml" => LoadExampleSetFromYamlString(content),
+#endif
+            ".json" => LoadExampleSetFromJsonString(content),
+            _ => null
+        };
+    }
+
+    /// <summary>
+    /// Load example set from JSON string
+    /// </summary>
+    private ExampleSetDto? LoadExampleSetFromJsonString(string json)
+    {
+        if (string.IsNullOrWhiteSpace(json))
+            return null;
+
+        try
+        {
+            var options = new JsonSerializerOptions
+            {
+                PropertyNameCaseInsensitive = true,
+                AllowTrailingCommas = true,
+                ReadCommentHandling = JsonCommentHandling.Skip
+            };
+
+            return JsonSerializer.Deserialize<ExampleSetDto>(json, options);
+        }
+        catch (JsonException ex)
+        {
+            Console.WriteLine($"JSON deserialization error for examples: {ex.Message}");
+            return null;
+        }
+    }
+
+#if !EXCLUDE_YAML
+    /// <summary>
+    /// Load example set from YAML string
+    /// </summary>
+    private ExampleSetDto? LoadExampleSetFromYamlString(string yaml)
+    {
+        if (string.IsNullOrWhiteSpace(yaml))
+            return null;
+
+        try
+        {
+            var deserializer = new DeserializerBuilder()
+                .WithNamingConvention(CamelCaseNamingConvention.Instance)
+                .Build();
+
+            return deserializer.Deserialize<ExampleSetDto>(yaml);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"YAML deserialization error for examples: {ex.Message}");
+            return null;
+        }
+    }
+#endif
+
+    /// <summary>
+    /// Merge all loaded example sets into rules array
+    /// </summary>
+    private void MergeExamplesIntoRules(Rule[] rules)
+    {
+        if (_loadedExampleSets.Count == 0)
+            return;
+
+        // Build lookup dictionary for fast access
+        var ruleLookup = rules.ToDictionary(r => r.Identifier, r => r);
+
+        // Merge examples from all loaded example sets
+        foreach (var exampleSet in _loadedExampleSets.Values)
+        {
+            foreach (var kvp in exampleSet.Examples)
+            {
+                var ruleId = kvp.Key;
+                var exampleDtos = kvp.Value;
+
+                if (ruleLookup.TryGetValue(ruleId, out var rule))
+                {
+                    // Convert ExampleDto[] to Example[]
+                    var exampleArray = RuleDtoConverter.ConvertExamples(exampleDtos);
+
+                    // Append or replace examples
+                    if (rule.Examples2 == null || rule.Examples2.Length == 0)
+                    {
+                        rule.Examples2 = exampleArray;
+                    }
+                    else
+                    {
+                        // Append to existing examples
+                        rule.Examples2 = rule.Examples2.Concat(exampleArray).ToArray();
+                    }
+                }
+            }
         }
     }
 
