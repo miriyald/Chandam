@@ -5,20 +5,41 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Chandam - Telugu Poetry Meter Analysis</title>
     <base href="/" />
-    <link href="css/app.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Telugu:wght@400;700&display=swap" rel="stylesheet" />
+    <link href="css/chandam.css" rel="stylesheet" />
 </head>
 <body>
-    <div id="app">
-        <div class="loading">
-            <p>Loading Chandam...</p>
-            <p>ఛందం లోడ్ అవుతోంది...</p>
+    <header>
+        <div class="container">
+            <h1>ఛందం</h1>
+            <nav id="main-nav">
+                <a href="/">Home</a>
+                <a href="/analyze">Analyze</a>
+                <a href="/about">About</a>
+                <a href="/credits">Credits</a>
+                <a href="/contact">Contact</a>
+            </nav>
+            <button id="nav-toggle" aria-label="Toggle navigation">☰</button>
         </div>
-    </div>
+    </header>
 
-    <div id="blazor-error-ui">
-        An unhandled error has occurred.
-        <a href="" class="reload">Reload</a>
-    </div>
+    <main id="content">
+        <p>Loading...</p>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>© 2026 Chandam | <a href="https://github.com/chandamu/chandam" target="_blank">GitHub</a></p>
+        </div>
+    </footer>
+
+    <!-- Hidden Blazor bootstrap container -->
+    <div id="app" style="display: none;"></div>
+
+    <!-- Blazor WASM runtime -->
     <script src="_framework/blazor.webassembly.js"></script>
+
+    <!-- TypeScript app bundle -->
+    <script type="module" src="js/chandam-app.js"></script>
 </body>
 </html>

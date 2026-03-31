@@ -1,9 +1,13 @@
 # Chandam WASM - Multi-Stage Build
-# Builds Blazor WASM app and serves as static files via nginx
+# Builds Blazor WASM app with TypeScript/Vite frontend and serves as static files via nginx
 # Compatible with GitHub Pages-style static hosting
 
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /src
+
+# Install Node.js for TypeScript/Vite build
+RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash - && \
+    apt-get install -y nodejs
 
 # Copy project files for restore
 COPY ["Chandam.Wasm/Chandam.Wasm.csproj", "Chandam.Wasm/"]
@@ -20,13 +24,19 @@ RUN dotnet restore "Chandam.Wasm/Chandam.Wasm.csproj" -p:ExcludeYaml=true
 # Copy source code
 COPY Chandam.Wasm/ Chandam.Wasm/
 COPY Chandam.API/ Chandam.API/
+COPY Chandam.Config/Rules/ Chandam.Config/Rules/
 COPY Core/ Core/
 COPY Rules/ Rules/
 COPY Util/ Util/
 COPY Strings/ Strings/
 COPY Samples/ Samples/
 
-# Publish with YamlDotNet excluded
+# Build TypeScript/Vite (MSBuild will handle this, but copy Client separately for clarity)
+WORKDIR /src/Chandam.Wasm/Client
+RUN npm install && npm run build
+
+# Publish with YamlDotNet excluded (npm build already ran above)
+WORKDIR /src
 RUN dotnet publish "Chandam.Wasm/Chandam.Wasm.csproj" -c Release -p:ExcludeYaml=true -o /app/publish
 
 # Serve with nginx

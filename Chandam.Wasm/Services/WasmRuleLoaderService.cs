@@ -29,50 +29,55 @@ public class WasmRuleLoaderService
     {
         if (_initialized) return;
 
+        // Load default rule set (Frequent - 9.3KB compressed)
+        await LoadRuleSetAsync("data/chandam-rules.min.json", "data/chandam-examples.min.json");
+        _initialized = true;
+    }
+
+    public async Task LoadRuleSetAsync(string rulesFile, string examplesFile)
+    {
         try
         {
             // Load rules
-            var rulesJson = await _httpClient.GetStringAsync("data/telugu-complete.json");
+            var rulesJson = await _httpClient.GetStringAsync(rulesFile);
             var rules = _ruleLoader.LoadFromJsonString(rulesJson);
 
             if (rules != null && rules.Length > 0)
             {
-                // Load examples
-                var exampleFiles = new[] { "data/telugu-complete-examples.json" };
-                foreach (var exampleFile in exampleFiles)
+                // Load examples if provided
+                if (!string.IsNullOrEmpty(examplesFile))
                 {
                     try
                     {
-                        var examplesJson = await _httpClient.GetStringAsync(exampleFile);
+                        var examplesJson = await _httpClient.GetStringAsync(examplesFile);
                         var exampleSet = LoadExampleSetFromJson(examplesJson);
 
                         if (exampleSet != null)
                         {
                             MergeExamplesIntoRules(rules, exampleSet);
-                            Console.WriteLine($"WASM: Merged examples for {exampleSet.Examples.Count} rules from {exampleFile}");
+                            Console.WriteLine($"WASM: Merged examples for {exampleSet.Examples.Count} rules from {examplesFile}");
                         }
                     }
                     catch (Exception ex)
                     {
-                        Console.WriteLine($"WASM: Failed to load examples from {exampleFile}: {ex.Message}");
+                        Console.WriteLine($"WASM: Failed to load examples from {examplesFile}: {ex.Message}");
                     }
                 }
 
                 Manager.Clear();
                 Manager.Register(rules);
-                Console.WriteLine($"WASM: Loaded {rules.Length} rules with examples");
+                Console.WriteLine($"WASM: Loaded {rules.Length} rules from {rulesFile}");
             }
             else
             {
-                Console.WriteLine("WASM: JSON rules empty, using compiled rules");
+                Console.WriteLine($"WASM: No rules loaded from {rulesFile}");
             }
         }
         catch (Exception ex)
         {
-            Console.WriteLine($"WASM: Failed to load JSON rules ({ex.Message}), using compiled rules");
+            Console.WriteLine($"WASM: Failed to load rules from {rulesFile}: {ex.Message}");
+            throw;
         }
-
-        _initialized = true;
     }
 
     private ExampleSetDto? LoadExampleSetFromJson(string json)
