@@ -94,7 +94,13 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 // Global function called by Blazor WASM when ready
-(window as any).onWasmReady = () => {
+declare global {
+  interface Window {
+    onWasmReady?: () => void;
+  }
+}
+
+window.onWasmReady = () => {
   console.log('WASM ready, initializing router');
   router.init();
 };

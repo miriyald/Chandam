@@ -7,7 +7,7 @@ import type {
 } from './types';
 
 declare const DotNet: {
-  invokeMethodAsync<T>(assemblyName: string, methodName: string, ...args: any[]): Promise<T>;
+  invokeMethodAsync<T>(assemblyName: string, methodName: string, ...args: unknown[]): Promise<T>;
 };
 
 export class WasmBridge {

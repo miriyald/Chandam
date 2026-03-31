@@ -11,11 +11,13 @@
 
 | Package | Version | Notes |
 |---------|---------|-------|
-| vite | 5.4.21 | Build tool and dev server |
-| typescript | 5.9.3 | TypeScript compiler |
-| @typescript-eslint/eslint-plugin | 6.21.0 | TypeScript linting rules |
-| @typescript-eslint/parser | 6.21.0 | TypeScript parser for ESLint |
-| eslint | 8.57.1 | ⚠️ **Deprecated** - consider upgrading to v9.x |
+| vite | 8.0.3 | ✨ Latest stable - Build tool and dev server |
+| typescript | 6.0.2 | ✨ Latest stable - TypeScript compiler |
+| eslint | 10.1.0 | ✨ Latest stable - JavaScript/TypeScript linter |
+| @eslint/js | 10.0.1 | ESLint JavaScript rules (required for ESLint 10+) |
+| @typescript-eslint/eslint-plugin | 8.58.0 | TypeScript-specific linting rules |
+| @typescript-eslint/parser | 8.58.0 | TypeScript parser for ESLint |
+| typescript-eslint | 8.58.0 | Unified TypeScript-ESLint config helper |
 
 ## Node.js Requirements
 
@@ -48,12 +50,13 @@ npm install vite@5.4.22 --save-exact
 3. Run full test suite
 4. Update this VERSIONS.md file
 
-**Known upgrade paths:**
+**Major version changes applied:**
 
-- **ESLint 8 → 9**: Major breaking changes in config format (flat config mandatory)
-  - Requires updating `eslint.config.js` to new format
-  - Update `@typescript-eslint/*` to v7.x or v8.x
-  - See: https://eslint.org/docs/latest/use/migrate-to-9.0.0
+- ✅ **Vite 5 → 8**: Updated successfully, using latest stable
+- ✅ **TypeScript 5 → 6**: Requires explicit `rootDir` in tsconfig.json
+- ✅ **ESLint 8 → 10**: Flat config format (already implemented)
+  - Requires `@eslint/js` and `typescript-eslint` packages
+  - Updated `eslint.config.js` to use new unified config API
 
 ### Checking for Updates
 
