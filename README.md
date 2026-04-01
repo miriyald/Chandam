@@ -1,36 +1,76 @@
-# Chandam API & MCP Servers
+# Chandam (ఛందం) - Telugu Poetry Meter Analysis
 
-> Telugu/Sanskrit/Kannada poetry meter (Chandam/ఛందం) analysis system with AI-friendly APIs
-
-[![Phase 1](https://img.shields.io/badge/Phase%201-Complete-brightgreen)](Docs/execution/PHASE1-COMPLETION-SUMMARY.md)
-[![Phase 2](https://img.shields.io/badge/Phase%202-Complete-brightgreen)](Docs/plans/phase2-mcp-servers.md)
-[![Phase 3](https://img.shields.io/badge/Phase%203-Planned-blue)](Docs/plans/phase3-wasm.md)
-[![Phase 4](https://img.shields.io/badge/Phase%204-Complete-brightgreen)](Docs/plans/phase4-dictionary.md)
+> Analyze the meter (prosody) of Telugu, Sanskrit, and Kannada poetry
 
 **Website**: https://chandamu.github.io/
 
-## What is Chandam?
+Chandam is a comprehensive system for analyzing **prosody** (meter/ఛందం) in Indian classical poetry. It identifies which metrical pattern a poem follows from a database of 379 rules with 96% accuracy.
 
-Chandam (ఛందం) is the prosody/meter system used in Telugu, Sanskrit, and Kannada poetry. This project provides:
+## 🌟 What is This For?
 
-- **API Layer** for programmatic access to Chandam analysis
-- **MCP Servers** for AI agent integration (Claude Desktop, remote agents)
-- **Blazor WASM** for browser-based offline usage - *Planned*
+- **Poets & Students**: Verify if your Telugu poems follow proper meter rules
+- **Researchers**: Analyze classical poetry and identify metrical patterns
+- **Educators**: Teach prosody with interactive examples
+- **Developers**: Build poetry apps with Chandam API
+- **AI Agents**: Integrate Telugu poetry analysis into Claude and other AI systems
 
-### Key Features
+## 🚀 Quick Start
 
-- **379 Telugu Chandam rules** with 554 tested examples
-- **96.09% average match accuracy** across all examples
-- **7 MCP tools** for AI agent integration (stdio + HTTP/SSE)
-- **REST API** with 8 endpoints and ISO 639 language code support
-- **Docker containers** for API, MCP HTTP, and MCP Stdio servers
-- **Dual format config** - JSON & YAML (YAML preferred for Telugu text)
+### Option 1: Web Application (Easiest)
 
-## Quick Start
+**Run locally:**
+```bash
+dotnet run --project Chandam.Wasm
+```
+Then open http://localhost:5000 in your browser.
 
-### MCP Server (Claude Desktop)
+**Using Docker:**
+```bash
+docker-compose up chandam-wasm
+```
+Access at http://localhost:8082
 
-Add to `claude_desktop_config.json`:
+**Features:**
+- ✅ Analyze poems in your browser
+- ✅ Switch between 14 frequent rules (9KB) or all 379 rules (65KB)
+- ✅ View detailed mismatch analysis
+- ✅ Get random example poems
+- ✅ Works offline (after initial load)
+- ✅ Mobile-friendly interface
+
+### Option 2: REST API (For Developers)
+
+**Start the API server:**
+```bash
+dotnet run --project Chandam.API.WebApi
+```
+API available at http://localhost:5000
+
+**Example - Analyze a poem:**
+```bash
+curl -X POST http://localhost:5000/api/determine \
+  -H "Content-Type: application/json" \
+  -d '{
+    "poemText": "తేనెలేని తేటతేనె దొరకునె ధరణిపై",
+    "language": "te",
+    "matchYati": true,
+    "matchPrasa": true
+  }'
+```
+
+**Using Docker:**
+```bash
+docker-compose up chandam-api
+```
+Access at http://localhost:8080
+
+See [API Documentation](Chandam.API.WebApi/README.md) for all endpoints.
+
+### Option 3: AI Agent Integration (Claude Desktop)
+
+**Install the MCP server:**
+
+Add to your `claude_desktop_config.json`:
 ```json
 {
   "mcpServers": {
@@ -54,203 +94,314 @@ Or with Docker:
 }
 ```
 
-### MCP Server (HTTP/SSE)
+**Available AI Tools:**
+- `determine_chandam` - Auto-detect meter
+- `try_match_chandam` - Test against specific rule
+- `calculate_scores` - Get ranked match scores
+- `get_rule_info` - Learn about a meter
+- `get_examples` - See example poems
+- `list_rules` - Browse available meters
+- `get_word_meaning` - Look up Telugu word meanings
 
-```bash
-dotnet run --project Chandam.MCP.Http
-# SSE endpoint: http://localhost:3001/sse
+See [MCP Server Documentation](Docs/plans/phase2-mcp-servers.md) for details.
+
+## 📚 What Can It Do?
+
+### 1. Auto-Detect Meter (Determine)
+Paste a Telugu poem and Chandam identifies which meter it follows:
+- ✅ Matches against 379 known patterns
+- ✅ Shows match percentage
+- ✅ Highlights mismatches with explanations
+- ✅ Provides rule descriptions in Telugu
+
+### 2. Validate Against Specific Meter (Try Match)
+Test if your poem follows a specific meter like *Utpalalmala* or *Sragdhara*:
+- ✅ Detailed line-by-line analysis
+- ✅ Yati (caesura) checking
+- ✅ Prasa (rhyme) verification
+- ✅ Gana pattern validation
+
+### 3. Score All Meters (Calculate Scores)
+Get a ranked list of how well your poem matches all 379 meters:
+- ✅ Useful for finding similar meters
+- ✅ Helps when poems partially match multiple patterns
+- ✅ Configurable minimum match threshold
+
+### 4. Browse Meters & Examples
+Explore the database of classical meters:
+- ✅ Filter by type (Vruttam, Jati, UpaJati)
+- ✅ Filter by frequency (Frequent, Common, Rare)
+- ✅ View example poems with authors
+- ✅ Learn pattern structures (Gana, Yati, Prasa)
+
+### 5. Look Up Word Meanings
+Get Telugu word definitions from multiple sources:
+- ✅ Andhrabharati dictionary
+- ✅ Wiktionary
+- ✅ Shabdkosh
+- ✅ Cached for offline use
+
+## 🌍 Supported Languages
+
+| Language | Code | Native | Rules |
+|----------|------|--------|-------|
+| **Telugu** | `te` | తెలుగు | 379 |
+| Kannada | `kn` | ಕನ್ನಡ | Coming soon |
+| Sanskrit | `sa` | संस्कृतम् | Coming soon |
+| Hindi | `hi` | हिन्दी | Planned |
+| Malayalam | `ml` | മലയാളം | Planned |
+
+*Currently focused on Telugu with 96.09% accuracy across 554 test examples.*
+
+## 📖 Example Usage
+
+### Web Interface
+
+1. Open http://localhost:5000
+2. Navigate to "Analyze"
+3. Paste your Telugu poem:
+   ```
+   సామర్థ్యలీలన్ తతజద్విగంబుల్
+   భూమిధ్రవిశ్రాంతుల బొంది యొప్పున్
+   ```
+4. Click "Determine" to auto-detect the meter
+5. Or select a specific rule and click "Match"
+
+### API Example (Python)
+
+```python
+import requests
+
+response = requests.post('http://localhost:5000/api/determine', json={
+    'poemText': 'తేనెలేని తేటతేనె దొరకునె ధరణిపై',
+    'language': 'te',
+    'matchYati': True,
+    'matchPrasa': True
+})
+
+result = response.json()
+if result['success']:
+    match = result['matches'][0]
+    print(f"Detected: {match['rule']['name']}")
+    print(f"Match: {match['matchPercentage']}%")
 ```
 
-Or with Docker:
-```bash
-docker compose up chandam-mcp-http
-# SSE endpoint: http://localhost:3001/sse
+### Claude Desktop Example
+
+Simply ask Claude:
+```
+Can you analyze this Telugu poem and tell me which meter it follows?
+
+తేనెలేని తేటతేనె దొరకునె ధరణిపై
+జానకీవరుండు లేని జగమందు నెవ్వరున్
 ```
 
-### REST API
+Claude will use the Chandam MCP tools automatically.
 
-```bash
-dotnet run --project Chandam.API.WebApi
-# API at http://localhost:5000
-
-# Auto-detect meter
-curl -X POST http://localhost:5000/api/determine \
-  -H "Content-Type: application/json" \
-  -d '{"poemText":"సామర్థ్యలీలన్ తతజద్విగంబుల్\nభూమిధ్రవిశ్రాంతుల బొంది యొప్పున్\nప్రేమంబుతో నైందవబింబవక్త్రున్\nహేమాంబురుం బాడుదు రింద్రవజ్రన్","language":"te","matchYati":true,"matchPrasa":true}'
-```
-
-### Docker
-
-```bash
-# Publish first (required - core projects target net4.8)
-dotnet publish Chandam.MCP.Http/Chandam.MCP.Http.csproj -c Release -o Publish/chandam-mcp-http
-dotnet publish Chandam.MCP.Stdio/Chandam.MCP.Stdio.csproj -c Release -o Publish/chandam-mcp-stdio
-dotnet publish Chandam.API.WebApi/Chandam.API.WebApi.csproj -c Release -o Publish/chandam-api
-
-# Build & run
-docker compose up chandam-mcp-http    # MCP HTTP/SSE on port 3001
-docker compose up chandam-api         # REST API on port 8080
-docker run -i chandam-mcp-stdio       # MCP Stdio (interactive)
-```
-
-## MCP Tools
-
-7 tools available via both stdio and HTTP/SSE transports:
-
-| Tool | Description |
-|------|-------------|
-| `determine_chandam` | Auto-detect best matching meter for a poem |
-| `try_match_chandam` | Match poem against a specific Chandam rule |
-| `calculate_scores` | Score poem against all rules (ranked list) |
-| `get_rule_info` | Get rule details, patterns, description |
-| `get_examples` | Get example poems for a Chandam |
-| `list_rules` | List all available rules (with language filter) |
-| `get_word_meaning` | Look up Telugu word meanings from multiple dictionaries |
-
-## REST API Endpoints
-
-| Endpoint | Method | Description |
-|----------|--------|-------------|
-| `/health` | GET | Health check + loaded rule sets |
-| `/api/languages` | GET | List supported languages with ISO codes |
-| `/api/rules` | GET | List all rules (with language filter) |
-| `/api/rules/{id}` | GET | Get rule details + examples |
-| `/api/rules/{id}/samples` | GET | Get example poems only |
-| `/api/determine` | POST | Auto-detect best matching Chandam |
-| `/api/try-match` | POST | Match against specific rule |
-| `/api/scores` | POST | Calculate match scores for all rules |
-
-## Language Support
-
-| Language | ISO 639-1 | ISO 639-2 | Numeric | Native |
-|----------|-----------|-----------|---------|--------|
-| Telugu | `te` | `tel` | 0 | తెలుగు |
-| Kannada | `kn` | `kan` | 1 | ಕನ್ನಡ |
-| Sanskrit | `sa` | `san` | 2 | संस्कृतम् |
-| Hindi | `hi` | `hin` | 3 | हिन्दी |
-| Malayalam | `ml` | `mal` | 4 | മലയാളം |
-
-All formats accepted in API and MCP requests.
-
-## Project Status
-
-### Phase 1: API Layer - COMPLETE
-- 5 core Chandam analysis functions
-- HTTP REST API with 8 endpoints
-- 379 Telugu rules (JSON & YAML formats)
-- ISO 639 language code support
-- Docker containerization
-- Integration tests (554 examples, 96.09% accuracy)
-
-### Phase 2: MCP Servers - COMPLETE
-- Stdio MCP server (Claude Desktop)
-- HTTP/SSE MCP server (remote access)
-- 7 MCP tools with full JSON schemas
-- 13 integration tests (all passing)
-- Docker containers for both servers
-- Telugu text preserved in all responses
-
-### Phase 4: Dictionary/Word Meanings - COMPLETE
-- Word meaning lookup from 3 external sources (Andhrabharati, Wiktionary, Shabdkosh)
-- Disk-based caching (one JSON file per word)
-- New MCP tool: `get_word_meaning`
-- Ported from existing Python implementations
-
-### Phase 3: Blazor WASM - PLANNED
-- Browser-based WASM app
-- Offline usage with embedded rules
-- Static site deployment
-
-## Project Structure
-
-### Solution Groups
-
-```
-Core/
-  Chandam.Util                    # Contracts, enums, Manager (Rule, Example, RuleLanguage)
-  Chandam.Indic                   # Indic script processing (Telugu, Devanagari, Kannada)
-  Chandam.Rules                   # 343+ Chandam rule data classes + RuleHelper/SortHelper
-  Chandam.Samples                 # Sample poems (Bhaskara, Vemana, Sumati, etc.)
-  Chandam.Core                    # Business logic — matching, scoring (DO NOT MODIFY)
-  Chandam.Dictionary              # Word meaning lookup (3 sources + disk cache)
-
-API/
-  Chandam.API                     # Service layer (ChandamService, RuleLoader)
-  Chandam.API.WebApi              # HTTP REST API (8 endpoints)
-  Chandam.API.Demo                # Console demo app
-  Chandam.API.Tests               # API unit tests
-  Chandam.API.IntegrationTests    # Integration tests (554 examples)
-
-MCP/
-  Chandam.MCP.Tools               # Shared MCP tool definitions (7 tools)
-  Chandam.MCP.Stdio               # MCP Stdio server (Claude Desktop)
-  Chandam.MCP.Http                # MCP HTTP/SSE server (remote access)
-  Chandam.MCP.Tests               # MCP integration tests (13 tests)
-
-Web/
-  Chandam.Wasm                    # Blazor WASM app (planned)
-
-Tasks/
-  Chandam.Tasks                   # Rule generation, verification, utilities
-```
-
-### Project Dependencies
-
-```
-Chandam.Util        ← no dependencies (contracts, Manager, RuleHelper, SortHelper)
-Chandam.Indic       ← Util
-Chandam.Rules       ← Util                    (343+ data classes only)
-Chandam.Samples     ← (standalone)             (sample poem data)
-Chandam.Core        ← Util, Indic              (business logic — no Rules/Samples)
-Chandam.API         ← Core, Util, Indic        (service layer — no Rules/Samples)
-Chandam.Tasks       ← Core, Rules, Samples, Util, Indic
-```
-
-### Config & Docs
-
-```
-Chandam.Config/Rules/             # Rule config files (JSON/YAML)
-Chandam.Config/Baselines/         # Baseline test data
-Docs/                             # Documentation & plans
-Docs/Scripts/                     # Test & utility scripts
-```
-
-## Development
+## 🛠️ Installation & Development
 
 ### Prerequisites
-- .NET 8.0 SDK
-- Docker (optional)
+- **.NET 8.0 SDK** - [Download](https://dotnet.microsoft.com/download/dotnet/8.0)
+- **Node.js 20+** (for web UI development) - [Download](https://nodejs.org/)
+- **Docker** (optional) - [Download](https://www.docker.com/)
 
-### Running Tests
+### Build from Source
 
 ```bash
-# MCP tool tests (13 tests)
+# Clone the repository
+git clone https://github.com/yourusername/chandam.git
+cd chandam
+
+# Build everything
+dotnet build Chandam.sln
+
+# Run tests
+dotnet test Chandam.MCP.Tests              # 13 MCP tests
+dotnet test Chandam.API.IntegrationTests   # 554 example tests
+```
+
+### Web UI Development
+
+**Two development modes:**
+
+#### Option 1: Full-Stack Development (.NET + TypeScript)
+```bash
+# Runs Blazor WASM + serves TypeScript bundle
+dotnet run --project Chandam.Wasm
+
+# Open http://localhost:5000
+# - Blazor WASM runtime provides C# backend
+# - TypeScript UI calls C# methods via JSInvokable
+# - Rule loading and analysis happens in C#
+```
+
+#### Option 2: Frontend-Only Development (TypeScript hot reload)
+```bash
+cd Chandam.Wasm/Client
+
+# Install dependencies (first time only)
+npm install
+
+# Start Vite dev server with hot reload
+npm run dev
+
+# Open http://localhost:5173 (Vite default)
+# ⚠️ WASM backend won't be available - frontend only!
+# - Use this for UI/CSS/layout work
+# - Mock data or use external API for testing
+```
+
+**Production build:**
+```bash
+# Build TypeScript bundle (integrated with .NET build)
+cd Chandam.Wasm/Client
+npm run build
+# → Outputs to ../wwwroot/js/chandam-app.js
+
+# Or build everything together
+dotnet build Chandam.Wasm
+# → Automatically runs npm build via MSBuild
+
+# Serve production build
+dotnet run --project Chandam.Wasm --configuration Release
+```
+
+**Linting:**
+```bash
+cd Chandam.Wasm/Client
+npm run lint  # ESLint 10 with TypeScript rules
+```
+
+### Docker Deployment
+
+```bash
+# Build all images
+docker-compose build
+
+# Start all services
+docker-compose up -d
+
+# Individual services
+docker-compose up chandam-wasm         # Web UI on port 8082
+docker-compose up chandam-api          # REST API on port 8080
+docker-compose up chandam-mcp-http     # MCP HTTP on port 3001
+
+# View logs
+docker-compose logs -f chandam-wasm
+```
+
+## 📁 Project Structure
+
+```
+Chandam/
+├── Chandam.Wasm/              # Web application (TypeScript + Blazor WASM)
+├── Chandam.API.WebApi/        # REST API server
+├── Chandam.MCP.Stdio/         # MCP server for Claude Desktop
+├── Chandam.MCP.Http/          # MCP HTTP/SSE server for remote agents
+├── Chandam.Core/              # Core meter analysis engine (DO NOT MODIFY)
+├── Chandam.Rules/             # 379 meter rule definitions
+├── Chandam.Dictionary/        # Telugu word meaning lookup
+├── Chandam.Config/Rules/      # JSON/YAML rule configurations
+└── Docs/                      # Documentation & plans
+```
+
+See [Project Status](Docs/project-status.md) for detailed architecture.
+
+## 🧪 Testing
+
+```bash
+# Quick smoke test (13 tests, ~5 seconds)
 dotnet test Chandam.MCP.Tests
 
-# API integration tests (554 examples across 379 rules)
+# Full validation (554 examples, ~2 minutes)
 dotnet test Chandam.API.IntegrationTests
 
 # API endpoint tests
-bash scripts/test-api.sh http://localhost:5000
+bash Docs/Scripts/test-api.sh http://localhost:5000
+
+# Web UI tests (Playwright - coming soon)
+# dotnet test Chandam.Wasm.Tests
 ```
 
-## Key Constraints
+## 📖 Documentation
 
-- **DO NOT modify** Core/ or Rules/ - contains undocumented domain knowledge
-- **Preserve Telugu authenticity** - no forced English translations
-- **No backward compatibility concerns** - building from scratch
+### User Guides
+- **[Web UI Guide](Docs/guides/web-ui-guide.md)** - Using the web interface *(coming soon)*
+- **[API Guide](Chandam.API.WebApi/README.md)** - REST API reference
+- **[MCP Guide](Docs/plans/phase2-mcp-servers.md)** - Claude Desktop integration
 
-## Documentation
+### Developer Docs
+- **[Project Status](Docs/project-status.md)** - Current state & architecture
+- **[Project Rules](PROJECT_RULES.md)** - Code organization standards
+- **[Docker Guide](Docs/DOCKER.md)** - Container deployment
+- **[Implementation Plans](Docs/plans/)** - Detailed phase plans
 
-- [PROJECT_RULES.md](PROJECT_RULES.md) - Organization standards
-- [Phase 2 Plan](Docs/plans/phase2-mcp-servers.md) - MCP server details
-- [Phase 4 Plan](Docs/plans/phase4-dictionary.md) - Dictionary/word meanings
-- [Docker Guide](Docs/DOCKER.md) - Docker deployment
-- [API Reference](Chandam.API.WebApi/README.md) - REST API docs
+### Technical Deep Dives
+- **[WASM Compression](Docs/plans/WASM-COMPRESSION-OPTIONS.md)** - Size optimization (92% reduction)
+- **[Dictionary System](Docs/plans/phase4-dictionary.md)** - Word lookup implementation
+- **[MCP Protocol](Docs/plans/phase2-mcp-servers.md)** - AI agent integration details
 
-## License
+## 🤝 Contributing
+
+This project contains 10+ years of domain expertise in Telugu prosody. **Please do not modify** the core analysis engine (`Chandam.Core/`) or rule definitions (`Chandam.Rules/`) without deep domain knowledge.
+
+**Safe areas for contribution:**
+- Web UI improvements (Chandam.Wasm)
+- API enhancements (Chandam.API)
+- Documentation
+- Test coverage
+- New language support
+- Performance optimization
+
+See [PROJECT_RULES.md](PROJECT_RULES.md) for detailed guidelines.
+
+## 🎯 Roadmap
+
+- [x] **Phase 1**: REST API with 379 Telugu rules ✅
+- [x] **Phase 2**: MCP servers for AI agent integration ✅
+- [x] **Phase 4**: Dictionary/word meaning lookup ✅
+- [x] **Phase 5**: Web UI with TypeScript/WASM ✅
+- [ ] **Phase 5b**: UI/UX polish (design, animations, accessibility)
+- [ ] **Phase 6**: Mobile apps (iOS/Android via MAUI)
+- [ ] **Phase 7**: Kannada & Sanskrit rule sets
+- [ ] **Phase 8**: Collaborative features (annotations, sharing)
+
+See [Project Status](Docs/project-status.md) for details.
+
+## ❓ FAQ
+
+**Q: Do I need internet connection?**  
+A: No! The web app works offline after initial load. Rule files are cached locally.
+
+**Q: Which meter should I use for my poem?**  
+A: Use "Determine" mode - it will automatically detect the best matching meter from all 379 options.
+
+**Q: Why does my poem show 85% match instead of 100%?**  
+A: Classical meters have strict rules. The tool highlights exactly where mismatches occur (syllable count, Yati position, Prasa, etc.) so you can adjust your poem.
+
+**Q: Can I add my own custom meters?**  
+A: Currently no - the rule definitions require deep domain expertise. File an issue if you have a valid meter to contribute.
+
+**Q: Is this accurate?**  
+A: 96.09% accuracy across 554 tested examples from classical Telugu literature. Some edge cases may require manual verification.
+
+**Q: Can I use this for other languages?**  
+A: Kannada and Sanskrit support is planned. The architecture supports multiple Indic languages.
+
+## 📜 License
 
 Copyright 2013-2026 Chandam-ఛందం (http://chandam.apphb.com)
 
+## 🙏 Acknowledgments
 
-claude mcp add --transport http chandam-mcp-http https://localhost:3001
+Built upon 10+ years of classical Telugu prosody research and domain expertise.
+
+Special thanks to the original Chandam team and contributors from the Telugu literary community.
+
+---
+
+**Need help?** Open an issue on GitHub or check the [documentation](Docs/).
+
+**Building AI apps?** See [MCP Integration Guide](Docs/plans/phase2-mcp-servers.md).
+
+**Want to contribute?** Read [PROJECT_RULES.md](PROJECT_RULES.md) first.

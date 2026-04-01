@@ -1,10 +1,25 @@
 export function initAccordions() {
   document.querySelectorAll('.accordion-header').forEach(header => {
+    const content = header.nextElementSibling as HTMLElement;
+
+    // Initialize to closed state
+    if (!content.style.maxHeight) {
+      content.style.maxHeight = '0px';
+    }
+
     header.addEventListener('click', () => {
-      const content = header.nextElementSibling as HTMLElement;
-      const isOpen = content.style.maxHeight !== '0px';
-      content.style.maxHeight = isOpen ? '0px' : `${content.scrollHeight}px`;
-      header.classList.toggle('open');
+      const isOpen = header.classList.contains('open');
+
+      if (isOpen) {
+        // Close
+        content.style.maxHeight = '0px';
+        header.classList.remove('open');
+      } else {
+        // Open - temporarily add padding to calculate correct height
+        header.classList.add('open');
+        const fullHeight = content.scrollHeight;
+        content.style.maxHeight = `${fullHeight}px`;
+      }
     });
   });
 }

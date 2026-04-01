@@ -1,5 +1,6 @@
 import type {
   RuleSummary,
+  RuleSummaryDetailed,
   DetermineResponse,
   TryMatchResponse,
   ScoresResponse,
@@ -17,6 +18,15 @@ export class WasmBridge {
     const json = await DotNet.invokeMethodAsync<string>(
       this.ASSEMBLY,
       'GetAllRules',
+      language
+    );
+    return JSON.parse(json);
+  }
+
+  static async getAllRulesDetailed(language: string = 'te'): Promise<RuleSummaryDetailed[]> {
+    const json = await DotNet.invokeMethodAsync<string>(
+      this.ASSEMBLY,
+      'GetAllRulesDetailed',
       language
     );
     return JSON.parse(json);
@@ -87,6 +97,14 @@ export class WasmBridge {
       this.ASSEMBLY,
       'GetRandomPoem',
       ruleId
+    );
+  }
+
+  static async getRandomPoemFromRuleSet(language: string = 'te'): Promise<string> {
+    return await DotNet.invokeMethodAsync<string>(
+      this.ASSEMBLY,
+      'GetRandomPoemFromRuleSet',
+      language
     );
   }
 

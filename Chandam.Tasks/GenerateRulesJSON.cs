@@ -57,7 +57,6 @@ namespace Verifier
             var allRules = Manager.Rules();
             var frequentRules = allRules
                 .Where(r => r.Language == RuleLanguage.Telugu && r.Frequency == Frequency.Frequent)
-                .Take(15) // Limit to 15 most common
                 .ToArray();
 
             var ruleSet = new RuleSetDto

@@ -7,6 +7,15 @@ export interface RuleSummary {
   lines: number;
 }
 
+export interface RuleSummaryDetailed extends RuleSummary {
+  chandamName?: string;
+  charLength?: number;
+  matraLength?: number;
+  sequence?: string;
+  shortName?: string;
+  alias?: string;
+}
+
 export interface DetermineResponse {
   matches: ChandamMatch[];
   success: boolean;
@@ -34,6 +43,7 @@ export interface RuleInfo {
   frequency: string;
   lines: number;
   ganas?: string;
+  sequence?: string;
   yati?: string;
   prasa?: string;
   examples?: PoemExample[];
@@ -52,6 +62,7 @@ export interface MatchError {
 export interface PoemExample {
   text: string;
   author?: string;
+  date?: string;
   source?: string;
 }
 

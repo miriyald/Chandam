@@ -1,7 +1,7 @@
 import { WasmBridge } from '../wasm-bridge';
 import { getEditorText, setEditorText, clearEditor } from './editor';
 import { getSelectedRule } from './rule-picker';
-import { renderResults, clearResults } from './results';
+import { renderFirstMatch, hideResults } from './results';
 
 export async function handleDetermine() {
   const poemText = getEditorText();
@@ -16,7 +16,8 @@ export async function handleDetermine() {
   try {
     const response = await WasmBridge.determine(poemText, yati, prasa);
     if (response.success && response.matches.length > 0) {
-      renderResults(response.matches, 'results-container');
+      // Show only the first (best) match
+      renderFirstMatch(response.matches[0], 'results-container');
     } else {
       alert(response.errorMessage || 'సరిపోలికలు దొరకలేదు (No matches found)');
     }
@@ -41,7 +42,7 @@ export async function handleMatch() {
   try {
     const response = await WasmBridge.tryMatch(poemText, ruleId, yati, prasa);
     if (response.success) {
-      renderResults([response.match], 'results-container');
+      renderFirstMatch(response.match, 'results-container');
     } else {
       alert(response.errorMessage || 'సరిపోలలేదు (No match)');
     }
@@ -72,5 +73,5 @@ export async function handleRandom() {
 
 export function handleClear() {
   clearEditor();
-  clearResults();
+  hideResults();
 }
