@@ -14,7 +14,7 @@ echo "Preparing GitHub Pages deployment from: $PUBLISH_DIR"
 
 # Update base href in index.html
 if [ -f "$PUBLISH_DIR/index.html" ]; then
-  sed -i 's|<base href="/" />|<base href="/Chandam/" />|g' "$PUBLISH_DIR/index.html"
+  sed -i 's|<base href="/" />|<base href="/chandam/" />|g' "$PUBLISH_DIR/index.html"
   echo "✓ Updated base href in index.html"
 else
   echo "✗ index.html not found"
@@ -23,7 +23,7 @@ fi
 
 # Update base href in 404.html
 if [ -f "$PUBLISH_DIR/404.html" ]; then
-  sed -i 's|<base href="/" />|<base href="/Chandam/" />|g' "$PUBLISH_DIR/404.html"
+  sed -i 's|<base href="/" />|<base href="/chandam/" />|g' "$PUBLISH_DIR/404.html"
   echo "✓ Updated base href in 404.html"
 fi
 
