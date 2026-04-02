@@ -3,6 +3,7 @@
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
     <Nullable>enable</Nullable>
+    <Version>0.0.2</Version>
     <!-- Use browser's JS Intl APIs for globalization - drops ~400KB of ICU data -->
     <HybridGlobalization>true</HybridGlobalization>
     <!-- Build with: dotnet publish -p:ExcludeYaml=true to strip YamlDotNet (~300KB savings) -->
@@ -34,6 +35,25 @@
     </ItemGroup>
     <Copy SourceFiles="@(CompressedRuleFiles)" DestinationFolder="wwwroot\data\" SkipUnchangedFiles="true" />
     <Message Text="Copied compressed rule files to wwwroot/data/" Importance="high" />
+  </Target>
+
+  <!-- Inject version into published index.html -->
+  <Target Name="InjectVersionIntoHtml" AfterTargets="Publish" Condition="'$(PublishDir)' != ''">
+    <PropertyGroup>
+      <IndexHtmlPath>$(PublishDir)wwwroot/index.html</IndexHtmlPath>
+      <BuildDate>$([System.DateTime]::UtcNow.ToString("yyyy-MM-dd"))</BuildDate>
+      <VersionString>v$(Version) ($(BuildDate))</VersionString>
+    </PropertyGroup>
+
+    <!-- Linux/Mac (GitHub Actions uses ubuntu-latest) -->
+    <Exec Command="sed -i 's|v0\.0\.0 (dev)|$(VersionString)|g' '$(IndexHtmlPath)'"
+          Condition="!$([MSBuild]::IsOSPlatform('Windows'))" />
+
+    <!-- Windows local development -->
+    <Exec Command="powershell -NoProfile -Command &quot;&amp;{ (Get-Content '$(IndexHtmlPath)' -Raw) -replace 'v0\.0\.0 \(dev\)', '$(VersionString)' | Set-Content '$(IndexHtmlPath)' -NoNewline }&quot;"
+          Condition="$([MSBuild]::IsOSPlatform('Windows'))" />
+
+    <Message Text="✓ Injected version into index.html: $(VersionString)" Importance="high" />
   </Target>
 
 </Project>

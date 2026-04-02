@@ -41,3 +41,4 @@ touch "$PUBLISH_DIR/.nojekyll"
 echo "✓ Created .nojekyll"
 
 echo "✓ GitHub Pages preparation complete!"
+echo "Note: Version is injected by MSBuild during 'dotnet publish'"

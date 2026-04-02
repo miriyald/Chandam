@@ -2,6 +2,7 @@
 
 > Analyze the meter (prosody) of Telugu, Sanskrit, and Kannada poetry
 
+**Live Site**: https://miriyald.github.io/chandam  
 **Website**: https://chandamu.github.io/
 
 Chandam is a comprehensive system for analyzing **prosody** (meter/ఛందం) in Indian classical poetry. It identifies which metrical pattern a poem follows from a database of 379 rules with 96% accuracy.
@@ -15,6 +16,14 @@ Chandam is a comprehensive system for analyzing **prosody** (meter/ఛందం)
 - **AI Agents**: Integrate Telugu poetry analysis into Claude and other AI systems
 
 ## 🚀 Quick Start
+
+### Try Online (No Installation)
+
+**Visit the live site:** https://miriyald.github.io/chandam
+
+The web application is automatically deployed from the `beta` branch and requires no installation. Just open the URL and start analyzing Telugu poetry!
+
+### Run Locally
 
 ### Option 1: Web Application (Easiest)
 
@@ -367,6 +376,53 @@ See [PROJECT_RULES.md](PROJECT_RULES.md) for detailed guidelines.
 - [ ] **Phase 8**: Collaborative features (annotations, sharing)
 
 See [Project Status](Docs/project-status.md) for details.
+
+## 🌐 GitHub Pages Deployment
+
+The web application is automatically deployed to GitHub Pages on every push to the `beta` branch.
+
+**Live Site**: https://miriyald.github.io/chandam
+
+### Versioning
+
+Version is defined in [Chandam.Wasm/Chandam.Wasm.csproj](Chandam.Wasm/Chandam.Wasm.csproj):
+
+```xml
+<PropertyGroup>
+  <Version>0.0.2</Version>
+</PropertyGroup>
+```
+
+**During local development:** Footer shows `v0.0.0 (dev)`  
+**After publish:** MSBuild automatically injects `v0.0.2 (2026-04-02)`
+
+To release a new version, just update the `<Version>` in the .csproj file.
+
+### Deployment Workflow
+
+```bash
+# Make changes on beta branch
+git checkout beta
+
+# Update version if needed (optional)
+# Edit Chandam.Wasm/Chandam.Wasm.csproj: <Version>0.0.3</Version>
+
+git commit -m "Your changes"
+git push origin beta
+
+# GitHub Actions automatically:
+# 1. Builds TypeScript + .NET (with version injection)
+# 2. Deploys to gh-pages branch
+# 3. Site updates at miriyald.github.io/chandam (~5 min)
+```
+
+**Workflow status**: https://github.com/miriyald/chandam/actions
+
+### Files
+
+- **[Chandam.Wasm/Chandam.Wasm.csproj](Chandam.Wasm/Chandam.Wasm.csproj)** - Version number + MSBuild injection target
+- **[.github/workflows/deploy-pages.yml](.github/workflows/deploy-pages.yml)** - Deployment workflow
+- **[.github/scripts/prepare-github-pages.sh](.github/scripts/prepare-github-pages.sh)** - Post-publish script (base href, navigation)
 
 ## ❓ FAQ
 
