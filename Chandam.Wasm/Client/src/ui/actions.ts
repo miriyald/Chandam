@@ -18,6 +18,18 @@ export async function handleDetermine() {
     if (response.success && response.matches.length > 0) {
       // Show only the first (best) match
       renderFirstMatch(response.matches[0], 'results-container');
+
+      // Auto-select best match in dropdown
+      const ruleSelect = document.getElementById('rule-select') as HTMLSelectElement;
+      if (ruleSelect) {
+        ruleSelect.value = response.matches[0].rule.identifier;
+      }
+
+      // Switch to Match tab so user can see the selection
+      const matchTab = document.getElementById('tab-match');
+      if (matchTab) {
+        matchTab.click();
+      }
     } else {
       alert(response.errorMessage || 'సరిపోలికలు దొరకలేదు (No matches found)');
     }
@@ -41,7 +53,7 @@ export async function handleMatch() {
 
   try {
     const response = await WasmBridge.tryMatch(poemText, ruleId, yati, prasa);
-    if (response.success) {
+    if (response.isMatch && response.match) {
       renderFirstMatch(response.match, 'results-container');
     } else {
       alert(response.errorMessage || 'సరిపోలలేదు (No match)');

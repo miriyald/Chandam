@@ -44,7 +44,7 @@ function renderLearnDetailPageHtml(
   content.innerHTML = `
     <div class="learn-detail-page">
       <div class="page-links">
-        <a href="/compute/${ruleSetId}/${ruleInfo.identifier}" class="compute-link">✏️ Try in Analyzer</a>
+        <a href="/compute/${ruleSetId}/${ruleInfo.identifier}" class="compute-link">Try in Compute</a>
         <a href="/learn/${ruleSetId}/" class="browse-link">← Back to Browse</a>
       </div>
 
@@ -63,10 +63,10 @@ function renderLearnDetailPageHtml(
       <section class="technical-details">
         <h2>Technical Details</h2>
         <dl>
-          ${ruleInfo.ganas ? `<dt>Pattern (Ganas):</dt><dd>${ruleInfo.ganas}</dd>` : ''}
-          ${ruleInfo.sequence ? `<dt>Sequence:</dt><dd><code>${ruleInfo.sequence}</code></dd>` : ''}
-          ${ruleInfo.yati ? `<dt>Yati (Caesura):</dt><dd>${ruleInfo.yati}</dd>` : ''}
-          ${ruleInfo.prasa ? `<dt>Prasa (Rhyme):</dt><dd>${ruleInfo.prasa}</dd>` : ''}
+          ${ruleInfo.sequence ? `<dt>Pattern (Sequence):</dt><dd><code>${ruleInfo.sequence}</code></dd>` : ''}
+          ${ruleInfo.matraSeries ? `<dt>Matra Series:</dt><dd><code>${ruleInfo.matraSeries}</code></dd>` : ''}
+          ${ruleInfo.yatiMode ? `<dt>Yati (Caesura):</dt><dd>${ruleInfo.yatiMode}</dd>` : ''}
+          ${ruleInfo.prasa !== undefined ? `<dt>Prasa (Rhyme):</dt><dd>${ruleInfo.prasa ? 'Yes' : 'No'}</dd>` : ''}
         </dl>
       </section>
 

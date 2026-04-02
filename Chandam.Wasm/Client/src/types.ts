@@ -11,6 +11,8 @@ export interface RuleSummaryDetailed extends RuleSummary {
   chandamName?: string;
   charLength?: number;
   matraLength?: number;
+  min?: number;
+  max?: number;
   sequence?: string;
   shortName?: string;
   alias?: string;
@@ -37,15 +39,37 @@ export interface ChandamMatch {
 export interface RuleInfo {
   identifier: string;
   name: string;
-  description: string;
+  description?: string;
   padyamType: string;
   padyamSubType: string;
+  ruleType?: string;
   frequency: string;
   lines: number;
-  ganas?: string;
+  threshold?: number;
+
+  // Pattern properties
   sequence?: string;
-  yati?: string;
-  prasa?: string;
+  matraSeries?: string;
+
+  // Yati/Prasa properties
+  yati?: number[][];
+  yatiMode?: string;
+  prasa?: boolean;
+  prasaYati?: boolean;
+  anthyaPrasa?: boolean;
+  reverseYati?: boolean;
+  onlyPrasaYati?: boolean;
+  yatiRecycle?: boolean;
+
+  // Calculated fields
+  shortName?: string;
+  alias?: string;
+  chandamName?: string;
+  charLength?: number;
+  matraLength?: number;
+  min?: number;
+  max?: number;
+
   examples?: PoemExample[];
 }
 
@@ -63,26 +87,26 @@ export interface PoemExample {
   text: string;
   author?: string;
   date?: string;
-  source?: string;
+  reference?: string;
+  notes?: string;
 }
 
 export interface TryMatchResponse {
-  match: ChandamMatch;
-  success: boolean;
+  isMatch: boolean;
+  match?: ChandamMatch;
   errorMessage?: string;
 }
 
 export interface ScoresResponse {
-  scores: ScoreEntry[];
+  scores: ChandamScore[];
   totalRulesEvaluated: number;
-  success: boolean;
   errorMessage?: string;
 }
 
-export interface ScoreEntry {
-  ruleId: string;
-  ruleName: string;
-  score: number;
-  total: number;
+export interface ChandamScore {
+  identifier: string;
+  name: string;
   matchPercentage: number;
+  padyamType: string;
+  frequency: string;
 }

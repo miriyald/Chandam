@@ -132,18 +132,23 @@ function renderRulePageHtml(
       </div>
 
       <div class="page-links">
-        <a href="/learn/${ruleSetId}/${ruleId}" class="learn-link">📖 Learn More</a>
-        <a href="/learn/${ruleSetId}/" class="browse-link">📚 Browse All Rules</a>
+        <a href="/learn/${ruleSetId}/${ruleId}" class="learn-link">Learn More</a>
+        <a href="/learn/${ruleSetId}/" class="browse-link">Browse All Rules</a>
       </div>
 
       <div class="quick-actions">
         <button id="btn-random" title="Random example">🎲</button>
-        <button id="btn-clear" title="Clear">✕</button>
+        <button id="btn-clear" title="Clear">🧹</button>
       </div>
 
       <div class="editor-section">
         <label for="poem-editor">Telugu poem:</label>
         <textarea id="poem-editor" rows="8">${exampleText}</textarea>
+      </div>
+
+      <div class="match-options">
+        <label><input type="checkbox" id="match-yati" checked> Yati (యతి)</label>
+        <label><input type="checkbox" id="match-prasa" checked> Prasa (ప్రాస)</label>
       </div>
 
       <div class="main-actions">
@@ -170,9 +175,13 @@ function attachEventHandlers(ruleSet: string, ruleId: string) {
       return;
     }
 
+    // Read checkbox state instead of hardcoding true
+    const yati = (document.getElementById('match-yati') as HTMLInputElement)?.checked ?? true;
+    const prasa = (document.getElementById('match-prasa') as HTMLInputElement)?.checked ?? true;
+
     try {
-      const response = await WasmBridge.tryMatch(poemText, ruleId, true, true);
-      if (response.success) {
+      const response = await WasmBridge.tryMatch(poemText, ruleId, yati, prasa);
+      if (response.isMatch && response.match) {
         renderFirstMatch(response.match, 'results-container');
       } else {
         alert(response.errorMessage || 'సరిపోలలేదు (No match)');

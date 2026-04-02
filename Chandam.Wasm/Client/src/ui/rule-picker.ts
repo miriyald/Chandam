@@ -1,30 +1,37 @@
-import type { RuleSummary } from '../types';
+import type { RuleSummaryDetailed } from '../types';
+import { groupRulesByCategory, getSortedGroupKeys } from '../utils/rule-grouping';
 
-export function renderRulePicker(rules: RuleSummary[], containerId: string) {
+export function renderRulePicker(rules: RuleSummaryDetailed[], containerId: string) {
   const container = document.getElementById(containerId);
   if (!container) return;
 
-  // Group by type
-  const grouped = rules.reduce((acc, rule) => {
-    const type = rule.padyamType;
-    if (!acc[type]) acc[type] = [];
-    acc[type].push(rule);
-    return acc;
-  }, {} as Record<string, RuleSummary[]>);
+  // Group rules by category using shared utility
+  const grouped = groupRulesByCategory(rules);
+  const sortedKeys = getSortedGroupKeys(grouped);
 
   // Build select dropdown
   const select = document.createElement('select');
   select.id = 'rule-select';
   select.className = 'rule-picker';
 
-  Object.keys(grouped).sort().forEach(type => {
-    const optgroup = document.createElement('optgroup');
-    optgroup.label = type;
+  // Add default option
+  const defaultOption = document.createElement('option');
+  defaultOption.value = '';
+  defaultOption.textContent = '-- Select a rule --';
+  select.appendChild(defaultOption);
 
-    grouped[type].forEach(rule => {
+  // Render groups
+  sortedKeys.forEach(groupKey => {
+    const groupRules = grouped.get(groupKey)!;
+
+    const optgroup = document.createElement('optgroup');
+    optgroup.label = groupKey; // Just chandamName, no suffix
+
+    groupRules.forEach(rule => {
       const option = document.createElement('option');
       option.value = rule.identifier;
-      option.textContent = `${rule.name} (${rule.frequency})`;
+      // Use shortName if available, else name (no frequency)
+      option.textContent = rule.shortName || rule.name;
       optgroup.appendChild(option);
     });
 

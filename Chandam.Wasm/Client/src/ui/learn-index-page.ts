@@ -1,6 +1,7 @@
 import { WasmBridge } from '../wasm-bridge';
 import { getRuleSet } from '../config';
 import type { RuleSummaryDetailed } from '../types';
+import { groupRulesByCategory, getSortedGroupKeys } from '../utils/rule-grouping';
 
 // Main function: Render learn index page
 export async function renderLearnIndexPage(ruleSet: string) {
@@ -16,8 +17,8 @@ export async function renderLearnIndexPage(ruleSet: string) {
   // Step 2: Get all rules with detailed metadata
   const rules = await WasmBridge.getAllRulesDetailed();
 
-  // Step 3: Group rules by chandamName, then by padyamType
-  const grouped = groupRules(rules);
+  // Step 3: Group rules by category using shared utility
+  const grouped = groupRulesByCategory(rules);
 
   // Step 4: Render page HTML
   renderLearnIndexPageHtml(ruleSetConfig.name, rules.length, ruleSet, grouped);
@@ -35,35 +36,13 @@ async function loadRuleSet(rulesFile: string, examplesFile: string) {
   }
 }
 
-// Helper: Group rules by chandamName, then by padyamType
-function groupRules(rules: RuleSummaryDetailed[]): Map<string, Map<string, RuleSummaryDetailed[]>> {
-  const grouped = new Map<string, Map<string, RuleSummaryDetailed[]>>();
-
-  rules.forEach(rule => {
-    const chandamName = rule.chandamName || 'Unknown';
-    const padyamType = rule.padyamType;
-
-    if (!grouped.has(chandamName)) {
-      grouped.set(chandamName, new Map());
-    }
-
-    const chandamGroup = grouped.get(chandamName)!;
-    if (!chandamGroup.has(padyamType)) {
-      chandamGroup.set(padyamType, []);
-    }
-
-    chandamGroup.get(padyamType)!.push(rule);
-  });
-
-  return grouped;
-}
 
 // Helper: Render page HTML
 function renderLearnIndexPageHtml(
   ruleSetName: string,
   ruleCount: number,
   ruleSetId: string,
-  grouped: Map<string, Map<string, RuleSummaryDetailed[]>>
+  grouped: Map<string, RuleSummaryDetailed[]>
 ) {
   const content = document.getElementById('content');
   if (!content) return;
@@ -74,7 +53,7 @@ function renderLearnIndexPageHtml(
       <div class="rule-count">${ruleCount} Rules</div>
 
       <div class="page-links">
-        <a href="/compute/${ruleSetId}/" class="compute-link">✏️ Go to Analyzer</a>
+        <a href="/compute/${ruleSetId}/" class="compute-link">Go to Compute</a>
       </div>
 
       <div class="chandam-groups">
@@ -84,56 +63,54 @@ function renderLearnIndexPageHtml(
   `;
 }
 
-// Helper: Render all chandamName groups
+// Helper: Render all chandam groups
 function renderChandamGroups(
-  grouped: Map<string, Map<string, RuleSummaryDetailed[]>>,
+  grouped: Map<string, RuleSummaryDetailed[]>,
   ruleSetId: string
 ): string {
-  const sortedChandamNames = Array.from(grouped.keys()).sort();
+  const sortedKeys = getSortedGroupKeys(grouped);
 
-  return sortedChandamNames.map(chandamName => {
-    const typeGroups = grouped.get(chandamName)!;
+  return sortedKeys.map(groupKey => {
+    const rules = grouped.get(groupKey)!;
     return `
       <div class="chandam-group">
-        <h2>${chandamName}</h2>
-        ${renderTypeGroups(typeGroups, ruleSetId)}
-      </div>
-    `;
-  }).join('');
-}
-
-// Helper: Render type groups within a chandamName group
-function renderTypeGroups(
-  typeGroups: Map<string, RuleSummaryDetailed[]>,
-  ruleSetId: string
-): string {
-  const sortedTypes = Array.from(typeGroups.keys()).sort();
-
-  return sortedTypes.map(padyamType => {
-    const rules = typeGroups.get(padyamType)!;
-    return `
-      <div class="type-group">
-        <h3>${padyamType}</h3>
+        <h2>${groupKey}</h2>
         ${rules.map(rule => renderRuleListItem(rule, ruleSetId)).join('')}
       </div>
     `;
   }).join('');
 }
 
+
 // Helper: Render a single rule list item
 function renderRuleListItem(rule: RuleSummaryDetailed, ruleSetId: string): string {
   const metadata = [];
-  if (rule.charLength) metadata.push(`${rule.charLength} chars`);
-  if (rule.matraLength) metadata.push(`${rule.matraLength} matras`);
-  if (rule.frequency) metadata.push(rule.frequency);
+
+  // Show char length range (if available and not -1)
+  if (rule.min && rule.max && rule.min !== -1 && rule.max !== -1) {
+    if (rule.min === rule.max) {
+      metadata.push(`${rule.min} chars`);
+    } else {
+      metadata.push(`${rule.min}-${rule.max} chars`);
+    }
+  } else if (rule.charLength && rule.charLength !== -1) {
+    metadata.push(`${rule.charLength} chars`);
+  }
+
+  // Show matra length (if available and not -1)
+  if (rule.matraLength && rule.matraLength !== -1) {
+    metadata.push(`${rule.matraLength} matras`);
+  }
+
+  // Don't show frequency (removed per user request)
 
   return `
     <div class="rule-list-item">
       <div class="rule-name">${rule.name}</div>
       <div class="rule-meta">${metadata.join(' | ')}</div>
       <div class="rule-links">
-        <a href="/learn/${ruleSetId}/${rule.identifier}" class="learn-more-link">Learn</a>
-        <a href="/compute/${ruleSetId}/${rule.identifier}" class="try-link">Try</a>
+        <a href="/learn/${ruleSetId}/${rule.identifier}">Learn</a>
+        <a href="/compute/${ruleSetId}/${rule.identifier}">Try</a>
       </div>
     </div>
   `;

@@ -52,6 +52,8 @@ public static class JsBridge
             r.ChandamName,
             r.CharLength,
             r.MatraLength,
+            r.Min,
+            r.Max,
             r.Sequence,
             r.ShortName,
             r.Alias

@@ -710,3 +710,84 @@ footer a {
 .rule-list-item .try-link:hover {
   opacity: 0.9;
 }
+
+/* Mode tabs */
+.mode-tabs {
+  display: flex;
+  gap: 0;
+  margin: 1.5rem 0 0 0;
+  border-bottom: 2px solid #e0e0e0;
+}
+
+.mode-tab {
+  padding: 0.75rem 2rem;
+  font-family: var(--font-main);
+  font-size: 1rem;
+  font-weight: bold;
+  background: #f5f5f5;
+  color: #666;
+  border: none;
+  border-bottom: 3px solid transparent;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.mode-tab:hover {
+  background: #e8e8e8;
+}
+
+.mode-tab.active {
+  background: white;
+  color: var(--color-header-bg);
+  border-bottom-color: var(--color-header-bg);
+}
+
+/* Mode content */
+.mode-content {
+  display: none;
+  padding: 1.5rem 0;
+}
+
+.mode-content.active {
+  display: block;
+}
+
+/* Match section - keep dropdown and button together */
+.match-section {
+  display: flex;
+  gap: 1rem;
+  align-items: flex-end;
+  flex-wrap: wrap;
+}
+
+.match-section .rule-selection {
+  flex: 1;
+  min-width: 300px;
+}
+
+.match-section .main-actions {
+  margin: 0;
+}
+
+/* Match options */
+.match-options {
+  display: flex;
+  gap: 2rem;
+  margin: 1rem 0;
+  padding: 0.75rem;
+  background: #f9f9f9;
+  border-radius: 4px;
+}
+
+.match-options label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+}
+
+.match-options input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+}

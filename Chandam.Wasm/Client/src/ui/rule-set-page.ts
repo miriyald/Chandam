@@ -2,7 +2,7 @@ import { WasmBridge } from '../wasm-bridge';
 import { getRuleSet } from '../config';
 import { renderRulePicker } from './rule-picker';
 import { handleDetermine, handleMatch, handleClear } from './actions';
-import type { RuleSummary } from '../types';
+import type { RuleSummaryDetailed } from '../types';
 
 // Main function: Render rule set page
 export async function renderRuleSetPage(ruleSet: string) {
@@ -16,7 +16,7 @@ export async function renderRuleSetPage(ruleSet: string) {
   await loadRuleSet(ruleSetConfig.rulesFile, ruleSetConfig.examplesFile);
 
   // Step 2: Get all rules
-  const rules = await WasmBridge.getAllRules();
+  const rules = await WasmBridge.getAllRulesDetailed();
 
   // Step 3: Render page HTML
   renderRuleSetPageHtml(ruleSetConfig.name, rules.length, ruleSet);
@@ -54,12 +54,12 @@ function renderRuleSetPageHtml(ruleSetName: string, ruleCount: number, ruleSetId
       </div>
 
       <div class="page-links">
-        <a href="/learn/${ruleSetId}/" class="learn-link">📖 Browse Rules</a>
+        <a href="/learn/${ruleSetId}/" class="learn-link">Browse Rules</a>
       </div>
 
       <div class="quick-actions">
         <button id="btn-random" title="Random example">🎲</button>
-        <button id="btn-clear" title="Clear">✕</button>
+        <button id="btn-clear" title="Clear">🧹</button>
       </div>
 
       <div class="editor-section">
@@ -67,14 +67,35 @@ function renderRuleSetPageHtml(ruleSetName: string, ruleCount: number, ruleSetId
         <textarea id="poem-editor" rows="8" placeholder="పద్యం ఇక్కడ టైప్ చేయండి..."></textarea>
       </div>
 
-      <div class="rule-selection">
-        <label for="rule-select">Select Rule (optional for Match):</label>
-        <div id="rule-picker-container"></div>
+      <div class="match-options">
+        <label><input type="checkbox" id="match-yati" checked> Yati (యతి)</label>
+        <label><input type="checkbox" id="match-prasa" checked> Prasa (ప్రాస)</label>
       </div>
 
-      <div class="main-actions">
-        <button id="btn-determine">Determine</button>
-        <button id="btn-match">Match</button>
+      <!-- Tabbed interface -->
+      <div class="mode-tabs">
+        <button id="tab-determine" class="mode-tab active">Determine</button>
+        <button id="tab-match" class="mode-tab">Match</button>
+      </div>
+
+      <!-- Determine mode content -->
+      <div id="determine-mode" class="mode-content active">
+        <div class="main-actions">
+          <button id="btn-determine">Determine</button>
+        </div>
+      </div>
+
+      <!-- Match mode content -->
+      <div id="match-mode" class="mode-content">
+        <div class="match-section">
+          <div class="rule-selection">
+            <label for="rule-select">Select Rule:</label>
+            <div id="rule-picker-container"></div>
+          </div>
+          <div class="main-actions">
+            <button id="btn-match">Match</button>
+          </div>
+        </div>
       </div>
 
       <div id="results-section" style="display: none;">
@@ -87,6 +108,16 @@ function renderRuleSetPageHtml(ruleSetName: string, ruleCount: number, ruleSetId
 
 // Step 5: Attach event handlers
 function attachEventHandlers(ruleSet: string) {
+  // Tab switching
+  document.getElementById('tab-determine')?.addEventListener('click', () => {
+    switchToTab('determine');
+  });
+
+  document.getElementById('tab-match')?.addEventListener('click', () => {
+    switchToTab('match');
+  });
+
+  // Action handlers
   document.getElementById('btn-determine')?.addEventListener('click', handleDetermine);
   document.getElementById('btn-match')?.addEventListener('click', handleMatch);
   document.getElementById('btn-clear')?.addEventListener('click', handleClear);
@@ -105,4 +136,31 @@ function attachEventHandlers(ruleSet: string) {
       console.error('Random poem failed:', err);
     }
   });
+}
+
+// Helper: Switch between tabs
+function switchToTab(mode: 'determine' | 'match') {
+  // Update tab buttons
+  const determineTab = document.getElementById('tab-determine');
+  const matchTab = document.getElementById('tab-match');
+
+  if (mode === 'determine') {
+    determineTab?.classList.add('active');
+    matchTab?.classList.remove('active');
+  } else {
+    determineTab?.classList.remove('active');
+    matchTab?.classList.add('active');
+  }
+
+  // Update content visibility
+  const determineMode = document.getElementById('determine-mode');
+  const matchMode = document.getElementById('match-mode');
+
+  if (mode === 'determine') {
+    determineMode?.classList.add('active');
+    matchMode?.classList.remove('active');
+  } else {
+    determineMode?.classList.remove('active');
+    matchMode?.classList.add('active');
+  }
 }
