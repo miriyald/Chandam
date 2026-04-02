@@ -152,7 +152,6 @@ footer a {
   padding: 0.75rem;
   font-family: var(--font-main);
   font-size: 1.1rem;
-  border: 2px solid var(--color-border);
   border-radius: 4px;
   resize: vertical;
 }
@@ -711,83 +710,358 @@ footer a {
   opacity: 0.9;
 }
 
-/* Mode tabs */
-.mode-tabs {
+/* ========================================
+   EDITOR SECTION WITH CONTEXTUAL TOOLBAR
+   ======================================== */
+.editor-section {
+  background: #fafafa;
+  border: 1px solid #e0e0e0;
+  border-radius: 12px;
+  padding: 1rem;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  margin-bottom: 1rem;
+}
+
+.editor-toolbar {
   display: flex;
-  gap: 0;
-  margin: 1.5rem 0 0 0;
-  border-bottom: 2px solid #e0e0e0;
+  justify-content: space-between;
+  align-items: center;
 }
 
-.mode-tab {
-  padding: 0.75rem 2rem;
-  font-family: var(--font-main);
-  font-size: 1rem;
-  font-weight: bold;
-  background: #f5f5f5;
-  color: #666;
-  border: none;
-  border-bottom: 3px solid transparent;
-  cursor: pointer;
-  transition: all 0.2s;
-}
-
-.mode-tab:hover {
-  background: #e8e8e8;
-}
-
-.mode-tab.active {
-  background: white;
-  color: var(--color-header-bg);
-  border-bottom-color: var(--color-header-bg);
-}
-
-/* Mode content */
-.mode-content {
-  display: none;
-  padding: 1.5rem 0;
-}
-
-.mode-content.active {
-  display: block;
-}
-
-/* Match section - keep dropdown and button together */
-.match-section {
+.editor-context-group {
   display: flex;
-  gap: 1rem;
-  align-items: flex-end;
-  flex-wrap: wrap;
-}
-
-.match-section .rule-selection {
+  align-items: center;
+  gap: 0.75rem;
   flex: 1;
+}
+
+.editor-context-group .separator {
+  color: #ccc;
+  font-size: 1.2rem;
+  margin: 0 0.25rem;
+}
+
+/* Context label - subtle indication */
+.editor-context {
+  color: #666;
+  font-size: 0.9rem;
+  font-weight: normal;
+  font-style: italic;
+}
+
+/* Rule picker inline */
+.rule-picker-inline {
+  position: relative;
+  display: inline-block;
+}
+
+.rule-picker-inline summary {
+  cursor: pointer;
+  color: #666;
+  font-size: 0.9rem;
+  list-style: none;
+  user-select: none;
+}
+
+.rule-picker-inline summary::-webkit-details-marker {
+  display: none;
+}
+
+.rule-picker-inline[open] summary {
+  color: var(--color-header-bg);
+  font-weight: 500;
+}
+
+.picker-dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
   min-width: 300px;
+  max-height: 400px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #d0d0d0;
+  border-radius: 10px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+  z-index: 100;
+  margin-top: 0.5rem;
 }
 
-.match-section .main-actions {
-  margin: 0;
+.rule-list {
+  padding: 0.5rem;
 }
 
-/* Match options */
-.match-options {
-  display: flex;
-  gap: 2rem;
-  margin: 1rem 0;
-  padding: 0.75rem;
-  background: #f9f9f9;
+.rule-group-header {
+  font-weight: bold;
+  color: var(--color-header-bg);
+  padding: 0.5rem;
+  margin-top: 0.5rem;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.rule-item {
+  padding: 0.5rem 1rem;
+  cursor: pointer;
   border-radius: 4px;
+  transition: background 0.2s;
 }
 
-.match-options label {
+.rule-item:hover {
+  background: #f0f0f0;
+}
+
+/* Error state for rule picker validation */
+.rule-picker-inline.error summary {
+  color: #d32f2f;
+  border: 2px solid #d32f2f;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  animation: shake 0.3s;
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-5px); }
+  75% { transform: translateX(5px); }
+}
+
+.editor-actions {
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  cursor: pointer;
 }
 
-.match-options input[type="checkbox"] {
-  width: 18px;
-  height: 18px;
+.editor-actions .action-separator {
+  color: #ccc;
+  font-size: 1.1rem;
+  margin: 0 0.25rem;
+  user-select: none;
+}
+
+.editor-actions button {
+  background: white;
+  border: 1px solid #d0d0d0;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  font-weight: 500;
   cursor: pointer;
+  padding: 0.4rem 0.75rem;
+  color: #555;
+  transition: all 0.2s;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+}
+
+.editor-actions button:hover {
+  background: #f5f5f5;
+  border-color: #b0b0b0;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.editor-actions button:active {
+  transform: scale(0.97);
+  box-shadow: 0 1px 2px rgba(0,0,0,0.08);
+}
+
+#poem-editor {
+  width: 100%;
+  min-height: 200px;
+  padding: 0.875rem;
+  margin: 1rem 0;
+  font-family: var(--font-main);
+  font-size: 1.1rem;
+  line-height: 1.8; /* Generous for Telugu script */
+  border: 1px solid #d8d8d8;
+  border-radius: 8px;
+  resize: vertical;
+  background: white;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+#poem-editor:focus {
+  outline: none;
+  border-color: var(--color-header-bg);
+  box-shadow: 0 0 0 3px rgba(139, 0, 0, 0.08);
+}
+
+/* ========================================
+   TOGGLE SWITCH COMPONENT
+   ======================================== */
+.toggle-switch {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  cursor: pointer;
+  user-select: none;
+  padding: 0.25rem 0;
+}
+
+.toggle-switch input[type="checkbox"] {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.toggle-slider {
+  position: relative;
+  display: inline-block;
+  width: 48px;
+  height: 26px;
+  background: #d0d0d0;
+  border-radius: 13px;
+  transition: background 0.25s ease;
+  border: 1px solid #bbb;
+}
+
+.toggle-slider::after {
+  content: '';
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: white;
+  top: 2px;
+  left: 2px;
+  transition: left 0.25s ease;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+.toggle-switch input[type="checkbox"]:checked + .toggle-slider {
+  background: var(--color-header-bg);
+  border-color: var(--color-header-bg);
+}
+
+.toggle-switch input[type="checkbox"]:checked + .toggle-slider::after {
+  left: 24px;
+}
+
+.toggle-switch:hover .toggle-slider {
+  box-shadow: 0 0 0 2px rgba(139, 0, 0, 0.1);
+}
+
+.toggle-label {
+  font-weight: 500;
+  color: #444;
+  font-size: 0.95rem;
+}
+
+/* ========================================
+   CONTROLS BAR (Below Editor)
+   ======================================== */
+.controls-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 0;
+  background: transparent;
+}
+
+.toggle-group {
+  display: flex;
+  gap: 2rem;
+  align-items: center;
+}
+
+/* Primary action button */
+.main-actions {
+  margin: 0;
+}
+
+.btn-primary {
+  padding: 0.75rem 2rem;
+  font-size: 1.05rem;
+  font-weight: 600;
+  background: var(--color-header-bg);
+  color: var(--color-header-text);
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.12);
+}
+
+.btn-primary:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.18);
+  background: #9b0000;
+}
+
+.btn-primary:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 4px rgba(0,0,0,0.12);
+}
+
+/* ========================================
+   RESPONSIVE (MOBILE)
+   ======================================== */
+@media (max-width: 768px) {
+  .editor-section {
+    padding: 0.875rem;
+    border-radius: 10px;
+  }
+
+  .editor-toolbar {
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    padding-bottom: 0.875rem;
+  }
+
+  .editor-context-group {
+    width: 100%;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .editor-context-group .separator {
+    display: none;  /* Hide separator on mobile */
+  }
+
+  .editor-context,
+  .rule-picker-inline {
+    font-size: 0.85rem;
+  }
+
+  .editor-actions {
+    margin-left: auto;
+  }
+
+  .editor-actions button {
+    padding: 0.35rem 0.6rem;
+    font-size: 0.85rem;
+  }
+
+  .controls-bar {
+    flex-direction: column;
+    gap: 1rem;
+    padding-top: 0.875rem;
+    padding-bottom: 0;
+  }
+
+  .toggle-group {
+    width: 100%;
+    display: flex;
+    gap: 1.5rem;
+    justify-content: center;
+  }
+
+  .toggle-switch {
+    gap: 0.4rem;
+  }
+
+  .toggle-label {
+    font-size: 0.9rem;
+  }
+
+  .main-actions {
+    width: 100%;
+  }
+
+  .main-actions button {
+    width: 100%;
+    padding: 0.875rem;
+    font-size: 1rem;
+  }
+
+  .picker-dropdown {
+    min-width: 250px;
+  }
 }

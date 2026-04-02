@@ -61,39 +61,62 @@ Think of it as a spell-checker, but for poetic rhythm and structure.
 
 ## Proposed Solution (Future State)
 
-### Desktop View - Proposed (CORRECTED)
+### Desktop View - Proposed (FINAL)
+
+**Rule Set Page - Auto-detect ON:**
 ```
 ┌──────────────────────────────────────────────────────┐
-│ Auto-detect [⚪────] ON                               │
-│ Matching with: Utpalamala ▼  (when OFF)             │
-├──────────────────────────────────────────────────────┤
-│ Enter Telugu poem:                    🎲 Random 🧹 Clear │ ← Editor toolbar
+│ Auto-detecting best match...          🎲 Random 🧹 Clear │ ← Subtle context label
 │ ┌──────────────────────────────────────────────────┐ │
 │ │ పద్యం ఇక్కడ టైప్ చేయండి...                      │ │
-│ │                                                  │ │
 │ └──────────────────────────────────────────────────┘ │
 ├──────────────────────────────────────────────────────┤
-│ Yati [⚪──]  Prasa [⚪──]              [Analyze Poem] │
+│ Yati [⚪──]  Prasa [⚪──]  Auto-detect [⚪──]  [Analyze] │ ← All options together
 └──────────────────────────────────────────────────────┘
 ```
 
-**Key correction:** Random/Clear belong to the **editor toolbar** (top-right of editor), not mode controls. This positioning:
-- Groups utilities with the content they act upon (editor)
-- Leaves room for future editor tools (keyboard selector, copy, paste, font size)
-- Separates mode configuration (top) from content tools (middle) from analysis (bottom)
+**Rule Set Page - Auto-detect OFF:**
+```
+┌──────────────────────────────────────────────────────┐
+│ Matching with: Utpalamala ▼           🎲 Random 🧹 Clear │ ← Rule picker integrated
+│ ┌──────────────────────────────────────────────────┐ │
+│ │ పద్యం ఇక్కడ టైప్ చేయండి...                      │ │
+│ └──────────────────────────────────────────────────┘ │
+├──────────────────────────────────────────────────────┤
+│ Yati [⚪──]  Prasa [⚪──]  Auto-detect [──⚪]  [Analyze] │
+└──────────────────────────────────────────────────────┘
+```
 
-### Mobile View - Proposed (CORRECTED)
+**Single Rule Page:**
+```
+┌──────────────────────────────────────────────────────┐
+│ Matching with: Utpalamala             🎲 Random 🧹 Clear │ ← Static context
+│ ┌──────────────────────────────────────────────────┐ │
+│ │ పద్యం ఇక్కడ టైప్ చేయండి...                      │ │
+│ └──────────────────────────────────────────────────┘ │
+├──────────────────────────────────────────────────────┤
+│ Yati [⚪──]  Prasa [⚪──]              [Analyze Poem] │ ← No auto-detect
+└──────────────────────────────────────────────────────┘
+```
+
+**Key design principles:**
+- Context shown as **subtle label** in editor toolbar (light gray, smaller font)
+- Auto-detect toggle **moved to controls bar** with Yati/Prasa
+- Rule picker **integrated in editor toolbar** when auto-detect OFF
+- **No separate mode header** - everything compact
+- **Both pages identical structure** - only context differs
+
+### Mobile View - Proposed (FINAL)
 ```
 ┌────────────────────────────┐
-│ Auto-detect [⚪────] ON     │
-│ Matching with: Rule ▼      │
-├────────────────────────────┤
-│ Enter poem:      🎲 🧹     │ ← Editor toolbar
+│ Auto-detect...   🎲 🧹     │ ← Shortened label
+│ (or: Match: Rule ▼)        │
 │ ┌────────────────────────┐ │
 │ │ పద్యం...              │ │
 │ └────────────────────────┘ │
 ├────────────────────────────┤
-│  Yati [⚪──]  Prasa [⚪──]  │
+│ Yati [⚪──]  Prasa [⚪──]   │
+│ Auto-detect [⚪──]          │ ← Stacked
 ├────────────────────────────┤
 │     [Analyze Poem]         │
 └────────────────────────────┘
@@ -127,14 +150,24 @@ Think of it as a spell-checker, but for poetic rhythm and structure.
 
 **Why:** Clear visual hierarchy, all controls in one scannable location.
 
-### 5. Editor Toolbar (NEW)
-**Before:** Random/Clear at bottom, separated from editor  
-**After:** Toolbar above editor with utility actions
+### 5. Context in Editor Toolbar (NEW)
+**Before:** Separate mode header section  
+**After:** Subtle context label in editor toolbar
 
 **Why:** 
-- Utilities belong with the content they modify
-- Extensible for future tools (keyboard selector, copy/paste, font controls)
-- Clearer information architecture
+- Saves vertical space (no separate header)
+- Context shown where it matters (with the editor)
+- Subtle styling (doesn't compete with content)
+- Utilities grouped with content they modify
+
+### 6. All Options Together
+**Before:** Options scattered (mode header, below editor)  
+**After:** All toggles (Yati, Prasa, Auto-detect) in controls bar
+
+**Why:**
+- Single location for all analysis options
+- Easy to scan left-to-right
+- Clear grouping: options + action button
 
 ---
 

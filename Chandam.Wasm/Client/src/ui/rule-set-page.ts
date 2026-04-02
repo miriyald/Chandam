@@ -1,11 +1,22 @@
 import { WasmBridge } from '../wasm-bridge';
 import { getRuleSet } from '../config';
-import { renderRulePicker } from './rule-picker';
-import { handleDetermine, handleMatch, handleClear } from './actions';
+import { renderRulePicker, setSelectedRule, getSelectedRule } from './rule-picker';
+import { clearEditor } from './editor';
+import { renderEditorCard, showRulePicker, hideRulePicker } from './shared-components';
+import { renderFirstMatch } from './results';
+import { getEditorText } from './editor';
 import type { RuleSummaryDetailed } from '../types';
+
+// Track last analyzed rule (from either Determine or Match) for smart auto-select
+let lastAnalyzedRule: { id: string; name: string } | null = null;
+
+// Store rules for lookup by ID
+let allRules: RuleSummaryDetailed[] = [];
 
 // Main function: Render rule set page
 export async function renderRuleSetPage(ruleSet: string) {
+  // Reset last analyzed rule on page load
+  lastAnalyzedRule = null;
   // Step 1: Validate and load rule set
   const ruleSetConfig = getRuleSet(ruleSet);
   if (!ruleSetConfig) {
@@ -17,6 +28,9 @@ export async function renderRuleSetPage(ruleSet: string) {
 
   // Step 2: Get all rules
   const rules = await WasmBridge.getAllRulesDetailed();
+
+  // Store rules for lookup
+  allRules = rules;
 
   // Step 3: Render page HTML
   renderRuleSetPageHtml(ruleSetConfig.name, rules.length, ruleSet);
@@ -57,46 +71,11 @@ function renderRuleSetPageHtml(ruleSetName: string, ruleCount: number, ruleSetId
         <a href="/learn/${ruleSetId}/" class="learn-link">Browse Rules</a>
       </div>
 
-      <div class="quick-actions">
-        <button id="btn-random" title="Random example">🎲</button>
-        <button id="btn-clear" title="Clear">🧹</button>
-      </div>
-
-      <div class="editor-section">
-        <label for="poem-editor">Enter Telugu poem:</label>
-        <textarea id="poem-editor" rows="8" placeholder="పద్యం ఇక్కడ టైప్ చేయండి..."></textarea>
-      </div>
-
-      <div class="match-options">
-        <label><input type="checkbox" id="match-yati" checked> Yati (యతి)</label>
-        <label><input type="checkbox" id="match-prasa" checked> Prasa (ప్రాస)</label>
-      </div>
-
-      <!-- Tabbed interface -->
-      <div class="mode-tabs">
-        <button id="tab-determine" class="mode-tab active">Determine</button>
-        <button id="tab-match" class="mode-tab">Match</button>
-      </div>
-
-      <!-- Determine mode content -->
-      <div id="determine-mode" class="mode-content active">
-        <div class="main-actions">
-          <button id="btn-determine">Determine</button>
-        </div>
-      </div>
-
-      <!-- Match mode content -->
-      <div id="match-mode" class="mode-content">
-        <div class="match-section">
-          <div class="rule-selection">
-            <label for="rule-select">Select Rule:</label>
-            <div id="rule-picker-container"></div>
-          </div>
-          <div class="main-actions">
-            <button id="btn-match">Match</button>
-          </div>
-        </div>
-      </div>
+      ${renderEditorCard({
+        contextText: 'Auto-detecting best match...',
+        showRulePicker: true,
+        showAutoDetect: true
+      })}
 
       <div id="results-section" style="display: none;">
         <h3>Results</h3>
@@ -108,19 +87,33 @@ function renderRuleSetPageHtml(ruleSetName: string, ruleCount: number, ruleSetId
 
 // Step 5: Attach event handlers
 function attachEventHandlers(ruleSet: string) {
-  // Tab switching
-  document.getElementById('tab-determine')?.addEventListener('click', () => {
-    switchToTab('determine');
+  // Auto-detect toggle handler
+  document.getElementById('auto-detect')?.addEventListener('change', (e) => {
+    const isAutoDetect = (e.target as HTMLInputElement).checked;
+
+    if (isAutoDetect) {
+      hideRulePicker();  // Use shared utility
+    } else {
+      showRulePicker();  // Use shared utility
+
+      // Smart auto-select: Use last analyzed rule (from Determine OR Match) or first rule
+      if (lastAnalyzedRule) {
+        setSelectedRule(lastAnalyzedRule.id, lastAnalyzedRule.name);
+      }
+      // If no lastAnalyzedRule, first rule is already selected by renderRulePicker
+    }
   });
 
-  document.getElementById('tab-match')?.addEventListener('click', () => {
-    switchToTab('match');
-  });
+  // Smart analyze button (context-aware)
+  document.getElementById('btn-analyze')?.addEventListener('click', async () => {
+    const isAutoDetect = (document.getElementById('auto-detect') as HTMLInputElement)?.checked;
 
-  // Action handlers
-  document.getElementById('btn-determine')?.addEventListener('click', handleDetermine);
-  document.getElementById('btn-match')?.addEventListener('click', handleMatch);
-  document.getElementById('btn-clear')?.addEventListener('click', handleClear);
+    if (isAutoDetect) {
+      await handleDetermineWithTracking();
+    } else {
+      await handleMatchWithTracking();
+    }
+  });
 
   // Random button - picks from any rule in the set
   document.getElementById('btn-random')?.addEventListener('click', async () => {
@@ -136,31 +129,96 @@ function attachEventHandlers(ruleSet: string) {
       console.error('Random poem failed:', err);
     }
   });
+
+  // Clear button
+  document.getElementById('btn-clear')?.addEventListener('click', () => {
+    clearEditor();
+  });
 }
 
-// Helper: Switch between tabs
-function switchToTab(mode: 'determine' | 'match') {
-  // Update tab buttons
-  const determineTab = document.getElementById('tab-determine');
-  const matchTab = document.getElementById('tab-match');
-
-  if (mode === 'determine') {
-    determineTab?.classList.add('active');
-    matchTab?.classList.remove('active');
-  } else {
-    determineTab?.classList.remove('active');
-    matchTab?.classList.add('active');
+// Custom determine handler that tracks last analyzed rule
+async function handleDetermineWithTracking() {
+  const poemText = getEditorText();
+  if (!poemText.trim()) {
+    alert('దయచేసి పద్యం టెక్స్ట్ ఇవ్వండి (Please enter poem text)');
+    return;
   }
 
-  // Update content visibility
-  const determineMode = document.getElementById('determine-mode');
-  const matchMode = document.getElementById('match-mode');
+  const yati = (document.getElementById('match-yati') as HTMLInputElement)?.checked ?? true;
+  const prasa = (document.getElementById('match-prasa') as HTMLInputElement)?.checked ?? true;
 
-  if (mode === 'determine') {
-    determineMode?.classList.add('active');
-    matchMode?.classList.remove('active');
-  } else {
-    determineMode?.classList.remove('active');
-    matchMode?.classList.add('active');
+  try {
+    const response = await WasmBridge.determine(poemText, yati, prasa);
+    if (response.success && response.matches.length > 0) {
+      const bestMatch = response.matches[0];
+
+      // Track the analyzed rule (detected by Determine) for smart auto-select
+      lastAnalyzedRule = {
+        id: bestMatch.rule.identifier,
+        name: bestMatch.rule.shortName || bestMatch.rule.name
+      };
+
+      // Show only the first (best) match
+      renderFirstMatch(bestMatch, 'results-container');
+
+      // Show results section
+      const resultsSection = document.getElementById('results-section');
+      if (resultsSection) resultsSection.style.display = 'block';
+    } else {
+      alert(response.errorMessage || 'సరిపోలికలు దొరకలేదు (No matches found)');
+    }
+  } catch (err) {
+    console.error('Determine failed:', err);
+    alert('లోపం సంభవించింది (Error occurred)');
+  }
+}
+
+// Custom match handler that tracks last analyzed rule
+async function handleMatchWithTracking() {
+  const poemText = getEditorText();
+  const ruleId = getSelectedRule();
+
+  if (!poemText.trim()) {
+    alert('దయచేసి పద్యం టెక్స్ట్ ఇవ్వండి (Please enter poem text)');
+    return;
+  }
+
+  if (!ruleId) {
+    alert('దయచేసి ఛందం ఎంచుకోండి (Please select a rule)');
+    // Add visual feedback to rule picker
+    const rulePicker = document.getElementById('rule-picker-inline');
+    if (rulePicker) {
+      rulePicker.classList.add('error');
+      setTimeout(() => rulePicker.classList.remove('error'), 2000);
+    }
+    return;
+  }
+
+  // Track the analyzed rule (manually selected for Match) for smart auto-select
+  const selectedRule = allRules.find(r => r.identifier === ruleId);
+  if (selectedRule) {
+    lastAnalyzedRule = {
+      id: selectedRule.identifier,
+      name: selectedRule.shortName || selectedRule.name
+    };
+  }
+
+  const yati = (document.getElementById('match-yati') as HTMLInputElement)?.checked ?? true;
+  const prasa = (document.getElementById('match-prasa') as HTMLInputElement)?.checked ?? true;
+
+  try {
+    const response = await WasmBridge.tryMatch(poemText, ruleId, yati, prasa);
+    if (response.isMatch && response.match) {
+      renderFirstMatch(response.match, 'results-container');
+
+      // Show results section
+      const resultsSection = document.getElementById('results-section');
+      if (resultsSection) resultsSection.style.display = 'block';
+    } else {
+      alert(response.errorMessage || 'సరిపోలలేదు (No match)');
+    }
+  } catch (err) {
+    console.error('Match failed:', err);
+    alert('లోపం సంభవించింది (Error occurred)');
   }
 }

@@ -1,0 +1,142 @@
+# Chandam WASM Editor - UI Redesign Proposal
+**Design Review Document for External Team**
+
+---
+
+## Executive Summary
+
+This proposal redesigns the Chandam poetry meter analyzer interface from a **tabbed navigation model** to a **streamlined, context-aware interaction model**. The redesign eliminates unnecessary navigation, maximizes space for Telugu text, and creates a cleaner visual hierarchy.
+
+**Key Goals:**
+- Reduce cognitive load (from "which tab?" to "analyze my poem")
+- Maximize editor space for Telugu poetry text
+- Modernize interaction patterns (toggle switches, inline dropdowns)
+- Improve mobile experience
+- Maintain all existing functionality
+
+---
+
+## What is Chandam?
+
+Chandam (ఛందం) is a Telugu poetry meter analysis system. Users enter a Telugu poem, and the system either:
+1. **Auto-detects** which meter pattern it matches (like "iambic pentameter" but for Telugu)
+2. **Tests** if it matches a specific meter the user selects
+
+Think of it as a spell-checker, but for poetic rhythm and structure.
+
+---
+
+## Current State (Problem)
+
+### Desktop View - Current
+```
+┌────────────────────────────────────────────┐
+│ Rule Set: Telugu Frequent [379 Rules]     │
+├────────────────────────────────────────────┤
+│ [Determine Tab] [Match Tab]  ← Navigation │
+├────────────────────────────────────────────┤
+│ Text editor                                │
+│                                            │
+│ పద్యం ఇక్కడ టైప్ చేయండి...               │
+│                                            │
+├────────────────────────────────────────────┤
+│ ☑ Yati  ☑ Prasa  ← Options                │
+├────────────────────────────────────────────┤
+│ [Select Rule ▼]  ← Only visible in Match   │
+├────────────────────────────────────────────┤
+│ [Determine] or [Match]  ← Button changes   │
+│ 🎲 Random  🧹 Clear                        │
+└────────────────────────────────────────────┘
+```
+
+### Issues Identified
+
+1. **Tab Navigation Friction** - Users must click tabs to switch between modes
+2. **Hidden Context** - Rule selection hidden in Match tab
+3. **Changing Button Labels** - Button says "Determine" or "Match" depending on tab
+4. **Scattered Controls** - Options spread across interface
+5. **Mobile Challenges** - Tabs take vertical space, checkboxes are small touch targets
+
+---
+
+## Proposed Solution (Future State)
+
+### Desktop View - Proposed
+```
+┌──────────────────────────────────────────────────────┐
+│ Auto-detect [⚪────] ON                🎲 Random 🧹 Clear │
+│ Matching with: Utpalamala ▼  (when OFF)             │
+├──────────────────────────────────────────────────────┤
+│ Text editor (FULL WIDTH)                             │
+│ ┌──────────────────────────────────────────────────┐ │
+│ │ పద్యం ఇక్కడ టైప్ చేయండి...                      │ │
+│ └──────────────────────────────────────────────────┘ │
+├──────────────────────────────────────────────────────┤
+│ Yati [⚪──]  Prasa [⚪──]              [Analyze Poem] │
+└──────────────────────────────────────────────────────┘
+```
+
+### Mobile View - Proposed
+```
+┌────────────────────────────┐
+│ Auto-detect [⚪────] 🎲 🧹  │
+│ Matching with: Rule ▼      │
+├────────────────────────────┤
+│ Text editor                │
+│ ┌────────────────────────┐ │
+│ │ పద్యం ఇక్కడ...        │ │
+│ └────────────────────────┘ │
+├────────────────────────────┤
+│  Yati [⚪──]  Prasa [⚪──]  │
+├────────────────────────────┤
+│     [Analyze Poem]         │
+└────────────────────────────┘
+```
+
+---
+
+## Key Design Changes
+
+### 1. Tabs → Toggle Switch
+**Before:** Two tabs (Determine / Match)  
+**After:** One toggle switch (Auto-detect ON/OFF)
+
+### 2. Checkboxes → Toggle Switches
+**Before:** `☑ Yati  ☑ Prasa`  
+**After:** `Yati [⚪──]  Prasa [⚪──]` (Larger touch targets, clearer state)
+
+### 3. Dropdown → Inline Label Picker
+**Before:** Large `<select>` dropdown buried in Match tab  
+**After:** Clickable "Matching with: Utpalamala ▼" that expands inline
+
+### 4. Scattered → Grouped Controls Bar
+**Before:** Options above editor, button below, utilities at bottom  
+**After:** Single controls bar below editor (options left, button right)
+
+### 5. Button Label Consistency
+**Before:** "Determine" or "Match" (changes per tab)  
+**After:** "Analyze Poem" (always the same, context-aware)
+
+---
+
+## Design Inspiration
+
+- **LangChain Agent Chat UI** - Single focused input, inline options
+- **Google Material Design** - Toggle switches, elevation
+- **iOS Human Interface Guidelines** - Toggle pattern, clear hierarchy
+- **Poetry Foundation** - Content-first layout
+
+---
+
+## Success Metrics
+
+- Reduce clicks to analyze: 3-4 → 2-3 clicks
+- Mode switching: 2 seconds → <1 second  
+- Reduce "no rule selected" errors
+- Pass WCAG AA accessibility audit
+
+---
+
+*Document created: 2026-04-01*  
+*Status: Awaiting design team review*  
+*Technical plan: composed-mapping-kernighan.md*

@@ -29,40 +29,60 @@
 
 ### Visual Layout
 
+**Rule Set Page - Auto-detect ON:**
 ```
 ┌──────────────────────────────────────────────────────┐
-│ Auto-detect [⚪────] ON                               │ ← Mode control
-│ Matching with: Utpalamala ▼  (when OFF)             │ ← Rule picker (progressive)
-├──────────────────────────────────────────────────────┤
-│ Enter Telugu poem:                    🎲 Random 🧹 Clear │ ← Editor toolbar
+│ Auto-detecting best match...          🎲 Random 🧹 Clear │ ← Subtle context
 │ ┌──────────────────────────────────────────────────┐ │
 │ │ పద్యం ఇక్కడ టైప్ చేయండి...                      │ │ ← Full-width editor
 │ │ (line-height: 1.8 for Telugu script)            │ │
 │ └──────────────────────────────────────────────────┘ │
 ├──────────────────────────────────────────────────────┤
-│ Yati [⚪──]  Prasa [⚪──]              [Analyze Poem] │ ← Controls bar
-│ ← Left aligned                        Right aligned → │
+│ Yati [⚪──]  Prasa [⚪──]  Auto-detect [⚪──]  [Analyze] │ ← All options
+└──────────────────────────────────────────────────────┘
+```
+
+**Rule Set Page - Auto-detect OFF:**
+```
+┌──────────────────────────────────────────────────────┐
+│ Matching with: Utpalamala ▼           🎲 Random 🧹 Clear │ ← Rule picker
+│ ┌──────────────────────────────────────────────────┐ │
+│ │ పద్యం...                                        │ │
+│ └──────────────────────────────────────────────────┘ │
+├──────────────────────────────────────────────────────┤
+│ Yati [⚪──]  Prasa [⚪──]  Auto-detect [──⚪]  [Analyze] │
+└──────────────────────────────────────────────────────┘
+```
+
+**Single Rule Page:**
+```
+┌──────────────────────────────────────────────────────┐
+│ Matching with: Utpalamala             🎲 Random 🧹 Clear │ ← Static
+│ ┌──────────────────────────────────────────────────┐ │
+│ │ పద్యం...                                        │ │
+│ └──────────────────────────────────────────────────┘ │
+├──────────────────────────────────────────────────────┤
+│ Yati [⚪──]  Prasa [⚪──]              [Analyze Poem] │ ← No auto-detect
 └──────────────────────────────────────────────────────┘
 ```
 
 ### Key Elements
 
-1. **Mode Control (Top)**
-   - Auto-detect toggle switch
-   - Rule picker appears when toggle OFF
-
-2. **Editor Toolbar (Above Editor)**
-   - Random / Clear utilities
+1. **Editor Toolbar (Above Editor)**
+   - **Subtle context label**: "Auto-detecting..." or "Matching with: Rule"
+   - **Rule picker**: Integrated when auto-detect OFF
+   - **Utilities**: Random / Clear (top-right)
    - Future: keyboard selector, copy, paste, font size
 
-3. **Content Area (Middle)**
+2. **Content Area (Middle)**
    - Full-width textarea
    - Generous spacing for Telugu script
    - Min-height: 200px, line-height: 1.8
 
-4. **Controls Bar (Bottom)**
-   - Yati/Prasa toggle switches (left)
-   - Analyze Poem button (right)
+3. **Controls Bar (Bottom)**
+   - **All toggles together**: Yati, Prasa, Auto-detect
+   - **Analyze button**: Right-aligned
+   - Single rule page: No auto-detect toggle
 
 ---
 
@@ -81,12 +101,15 @@
 
 | Decision | Rationale |
 |----------|-----------|
-| Tabs → Toggle | Mode is preference, not navigation |
-| Checkboxes → Toggles | Larger targets, clearer state |
+| Tabs → Toggle in controls bar | Mode is preference, not navigation; grouped with other options |
+| Checkboxes → Toggles | Larger targets (44px+), clearer state |
+| Context in editor toolbar | Subtle indication, no separate header, saves vertical space |
+| Rule picker integrated | Shows in editor toolbar when needed, not separate section |
 | Random/Clear in editor toolbar | Utilities belong with content they modify |
 | Full-width editor | Maximize space for Telugu text |
-| Controls bar below | Natural flow: mode → content → action |
+| All options in controls bar | Single location to scan, easy to understand |
 | Single "Analyze" button | Context-aware, consistent label |
+| Both pages identical structure | Easier maintenance, shared components |
 
 ---
 
@@ -97,7 +120,10 @@
 ✓ **Hidden rule risk** - Rule picker completely hidden when auto-detect ON  
 ✓ **Extensibility** - Editor toolbar designed for future tools  
 ✓ **Performance visibility** - Roadmap includes "Analyzed in Xms" display  
-✓ **Real-time analysis** - Phase 2 feature, debounced  
+✓ **Real-time analysis** - Phase 2 feature, debounced
+✓ **Context label subtlety** - Light gray, smaller font, italic
+✓ **Component sharing** - Both pages use identical structure
+✓ **Future rule details** - Deferred to Phase 5 (not now)
 
 ---
 

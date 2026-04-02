@@ -3,7 +3,7 @@ import { getEditorText, setEditorText, clearEditor } from './editor';
 import { getSelectedRule } from './rule-picker';
 import { renderFirstMatch, hideResults } from './results';
 
-export async function handleDetermine() {
+export async function handleDetermineAndShowResults() {
   const poemText = getEditorText();
   if (!poemText.trim()) {
     alert('దయచేసి పద్యం టెక్స్ట్ ఇవ్వండి (Please enter poem text)');
@@ -16,20 +16,12 @@ export async function handleDetermine() {
   try {
     const response = await WasmBridge.determine(poemText, yati, prasa);
     if (response.success && response.matches.length > 0) {
-      // Show only the first (best) match
+      // Show only the first (best) match - NO TAB SWITCHING
       renderFirstMatch(response.matches[0], 'results-container');
 
-      // Auto-select best match in dropdown
-      const ruleSelect = document.getElementById('rule-select') as HTMLSelectElement;
-      if (ruleSelect) {
-        ruleSelect.value = response.matches[0].rule.identifier;
-      }
-
-      // Switch to Match tab so user can see the selection
-      const matchTab = document.getElementById('tab-match');
-      if (matchTab) {
-        matchTab.click();
-      }
+      // Show results section
+      const resultsSection = document.getElementById('results-section');
+      if (resultsSection) resultsSection.style.display = 'block';
     } else {
       alert(response.errorMessage || 'సరిపోలికలు దొరకలేదు (No matches found)');
     }
@@ -39,12 +31,26 @@ export async function handleDetermine() {
   }
 }
 
+// Keep old function name for backward compatibility
+export const handleDetermine = handleDetermineAndShowResults;
+
 export async function handleMatch() {
   const poemText = getEditorText();
   const ruleId = getSelectedRule();
 
-  if (!poemText.trim() || !ruleId) {
-    alert('దయచేసి పద్యం మరియు ఛందం ఎంచుకోండి (Please select poem and rule)');
+  if (!poemText.trim()) {
+    alert('దయచేసి పద్యం టెక్స్ట్ ఇవ్వండి (Please enter poem text)');
+    return;
+  }
+
+  if (!ruleId) {
+    alert('దయచేసి ఛందం ఎంచుకోండి (Please select a rule)');
+    // Add visual feedback to rule picker
+    const rulePicker = document.getElementById('rule-picker-inline');
+    if (rulePicker) {
+      rulePicker.classList.add('error');
+      setTimeout(() => rulePicker.classList.remove('error'), 2000);
+    }
     return;
   }
 
@@ -55,6 +61,10 @@ export async function handleMatch() {
     const response = await WasmBridge.tryMatch(poemText, ruleId, yati, prasa);
     if (response.isMatch && response.match) {
       renderFirstMatch(response.match, 'results-container');
+
+      // Show results section
+      const resultsSection = document.getElementById('results-section');
+      if (resultsSection) resultsSection.style.display = 'block';
     } else {
       alert(response.errorMessage || 'సరిపోలలేదు (No match)');
     }

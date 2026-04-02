@@ -1,7 +1,8 @@
 import { WasmBridge } from '../wasm-bridge';
 import { getRuleSet } from '../config';
-import { handleMatch, handleClear } from './actions';
 import { renderFirstMatch, hideResults } from './results';
+import { clearEditor } from './editor';
+import { renderEditorCard } from './shared-components';
 
 // Main function: Render specific rule page
 export async function renderRulePage(params: Record<string, string>) {
@@ -136,24 +137,11 @@ function renderRulePageHtml(
         <a href="/learn/${ruleSetId}/" class="browse-link">Browse All Rules</a>
       </div>
 
-      <div class="quick-actions">
-        <button id="btn-random" title="Random example">🎲</button>
-        <button id="btn-clear" title="Clear">🧹</button>
-      </div>
-
-      <div class="editor-section">
-        <label for="poem-editor">Telugu poem:</label>
-        <textarea id="poem-editor" rows="8">${exampleText}</textarea>
-      </div>
-
-      <div class="match-options">
-        <label><input type="checkbox" id="match-yati" checked> Yati (యతి)</label>
-        <label><input type="checkbox" id="match-prasa" checked> Prasa (ప్రాస)</label>
-      </div>
-
-      <div class="main-actions">
-        <button id="btn-match">Match</button>
-      </div>
+      ${renderEditorCard({
+        contextText: `Matching with: ${ruleName}`,
+        showRulePicker: false,
+        showAutoDetect: false
+      })}
 
       <div id="results-section" style="display: none;">
         <h3>Results</h3>
@@ -161,12 +149,18 @@ function renderRulePageHtml(
       </div>
     </div>
   `;
+
+  // Set example text if available
+  if (exampleText) {
+    const editor = document.getElementById('poem-editor') as HTMLTextAreaElement;
+    if (editor) editor.value = exampleText;
+  }
 }
 
 // Step 5: Attach event handlers
 function attachEventHandlers(ruleSet: string, ruleId: string) {
-  // Match button - uses current rule
-  document.getElementById('btn-match')?.addEventListener('click', async () => {
+  // Analyze button - always calls Match with fixed ruleId
+  document.getElementById('btn-analyze')?.addEventListener('click', async () => {
     const editor = document.getElementById('poem-editor') as HTMLTextAreaElement;
     const poemText = editor?.value || '';
 
@@ -175,7 +169,6 @@ function attachEventHandlers(ruleSet: string, ruleId: string) {
       return;
     }
 
-    // Read checkbox state instead of hardcoding true
     const yati = (document.getElementById('match-yati') as HTMLInputElement)?.checked ?? true;
     const prasa = (document.getElementById('match-prasa') as HTMLInputElement)?.checked ?? true;
 
@@ -183,6 +176,10 @@ function attachEventHandlers(ruleSet: string, ruleId: string) {
       const response = await WasmBridge.tryMatch(poemText, ruleId, yati, prasa);
       if (response.isMatch && response.match) {
         renderFirstMatch(response.match, 'results-container');
+
+        // Show results section
+        const resultsSection = document.getElementById('results-section');
+        if (resultsSection) resultsSection.style.display = 'block';
       } else {
         alert(response.errorMessage || 'సరిపోలలేదు (No match)');
       }
@@ -190,13 +187,6 @@ function attachEventHandlers(ruleSet: string, ruleId: string) {
       console.error('Match failed:', err);
       alert('లోపం సంభవించింది (Error occurred)');
     }
-  });
-
-  // Clear button
-  document.getElementById('btn-clear')?.addEventListener('click', () => {
-    const editor = document.getElementById('poem-editor') as HTMLTextAreaElement;
-    if (editor) editor.value = '';
-    hideResults();
   });
 
   // Random button - picks from this rule's examples only
@@ -212,5 +202,11 @@ function attachEventHandlers(ruleSet: string, ruleId: string) {
     } catch (err) {
       console.error('Random poem failed:', err);
     }
+  });
+
+  // Clear button
+  document.getElementById('btn-clear')?.addEventListener('click', () => {
+    clearEditor();
+    hideResults();
   });
 }
