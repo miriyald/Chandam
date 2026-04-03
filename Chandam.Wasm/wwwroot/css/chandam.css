@@ -9,6 +9,7 @@
   --color-error: #c1121f;
   --color-border: #cccccc;
   --font-main: 'Noto Sans Telugu', sans-serif;
+  --font-display: 'Timmana', 'Noto Sans Telugu', sans-serif;
 }
 
 * {
@@ -234,44 +235,259 @@ footer a {
   border-radius: 4px;
 }
 
-/* Results */
+/* ========================================
+   RESULTS CARD (REDESIGNED)
+   ======================================== */
+
+/* Results Card Container */
 .match-card {
-  border: 2px solid var(--color-border);
-  border-radius: 8px;
-  padding: 1rem;
-  margin-bottom: 1rem;
+  background: white;
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  border: 2px solid transparent;
+  transition: all 0.3s;
 }
 
 .match-card.match-success {
-  border-color: var(--color-success);
-  background: rgba(45, 106, 79, 0.05);
+  border-color: #2d6a4f;
+  background: linear-gradient(to bottom, rgba(45, 106, 79, 0.02), white);
 }
 
 .match-card.match-failure {
-  border-color: var(--color-error);
-  background: rgba(193, 18, 31, 0.05);
+  border-color: #c1121f;
+  background: linear-gradient(to bottom, rgba(193, 18, 31, 0.02), white);
 }
 
-.match-card h3 {
-  margin-bottom: 0.5rem;
-  color: var(--color-text);
+/* Match Header */
+.match-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid #e8e8e8;
 }
 
-.errors {
-  margin-top: 1rem;
+.match-title-group {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex: 1;
+}
+
+.match-icon {
+  font-size: 1.5rem;
+  width: 32px;
+  height: 32px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.match-success .match-icon {
+  background: #d8f3dc;
+  color: #2d6a4f;
+}
+
+.match-failure .match-icon {
+  background: #ffe5e5;
+  color: #c1121f;
+}
+
+.match-title-group .meter-name {
+  margin: 0;
+  font-size: 1.5rem;
+}
+
+/* Rule Details Link (opens in new tab) */
+.rule-details-link {
+  color: var(--color-header-bg);
+  text-decoration: none;
+  font-size: 0.95rem;
+  font-weight: 600;
+  white-space: nowrap;
+  padding: 0.5rem 1rem;
+  border: 1px solid currentColor;
+  border-radius: 6px;
+  transition: all 0.2s;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.rule-details-link:hover {
+  background: var(--color-header-bg);
+  color: white;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+/* Score Badge */
+.match-score {
+  font-size: 1.25rem;
+  font-weight: 700;
+  padding: 0.25rem 0.75rem;
+  border-radius: 20px;
+  font-family: 'Segoe UI', system-ui, sans-serif;
+  flex-shrink: 0;
+}
+
+.match-score-high {
+  background: #d8f3dc;
+  color: #2d6a4f;
+}
+
+.match-score-medium {
+  background: #ffe5cc;
+  color: #d97706;
+}
+
+.match-score-low {
+  background: #ffe5e5;
+  color: #c1121f;
+}
+
+/* Split View Layout */
+.match-body-split {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  margin: 1rem 0;
+  align-items: flex-start;
+}
+
+.match-body-full {
+  margin: 1rem 0;
+}
+
+.match-table-container {
+  flex: 1 1 55%;
+  min-width: 400px;
+  overflow-x: auto;
+  border-radius: 8px;
+}
+
+.match-errors-container {
+  flex: 1 1 40%;
+  min-width: 350px;
+}
+
+/* Errors Section */
+.errors-section {
+  padding: 1rem;
+  background: #fff9f0;
+  border: 1px solid #ffe5cc;
+  border-left: 4px solid #ff8000;
+  border-radius: 8px;
+  height: fit-content;
+}
+
+.errors-header {
+  margin: 0 0 1rem 0;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #333;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* Errors Table */
+.errors-table-wrapper {
+  overflow-x: auto;
+  border-radius: 6px;
+}
+
+.errors-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+  background: white;
+}
+
+.errors-table thead {
+  background: #f5f5f5;
+  font-weight: 600;
+  color: #555;
+}
+
+.errors-table th {
   padding: 0.5rem;
-  background: rgba(193, 18, 31, 0.1);
-  border-radius: 4px;
+  text-align: left;
+  border-bottom: 2px solid #e0e0e0;
+  font-size: 0.85rem;
+  white-space: nowrap;
 }
 
-.errors h4 {
-  margin-bottom: 0.25rem;
-  font-size: 0.9rem;
+.errors-table td {
+  padding: 0.5rem;
+  border-bottom: 1px solid #f0f0f0;
+  vertical-align: top;
 }
 
-.errors ul {
-  margin-left: 1.5rem;
-  font-size: 0.9rem;
+.errors-table tbody tr:hover {
+  background: #fef9f0;
+}
+
+.errors-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+/* Error Table Columns */
+.error-line,
+.error-position {
+  text-align: center;
+  font-weight: 600;
+  color: #666;
+  font-family: monospace;
+  width: 50px;
+}
+
+.error-type {
+  font-weight: 600;
+  color: #d97706;
+  font-family: var(--font-main);
+  white-space: nowrap;
+  min-width: 80px;
+}
+
+.error-expected {
+  background: #d8f3dc;
+  color: #2d6a4f;
+  font-weight: 600;
+  font-family: var(--font-main);
+  padding: 0.25rem 0.5rem;
+  border-radius: 3px;
+  text-align: center;
+  min-width: 60px;
+}
+
+.error-actual {
+  background: #ffe5e5;
+  color: #c1121f;
+  font-weight: 700;
+  font-family: var(--font-main);
+  padding: 0.25rem 0.5rem;
+  border-radius: 3px;
+  text-align: center;
+  min-width: 60px;
+}
+
+.error-description {
+  color: #555;
+  line-height: 1.5;
+}
+
+.error-description em {
+  display: block;
+  margin-top: 0.25rem;
+  color: #666;
+  font-size: 0.85rem;
 }
 
 /* Utility */
@@ -288,6 +504,108 @@ footer a {
 .btn-primary:hover {
   opacity: 0.9;
 }
+
+/* Meter Name Typography - Telugu Display Font */
+.meter-name {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: 700;
+  line-height: 1.3;
+}
+
+/* ========================================
+   LEGACY TABLE CLASSES (Core-generated HTML)
+   ======================================== */
+
+/* Results table - Core-generated HTML */
+.tab {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1rem 0;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+}
+
+.stamper {
+  background: #f5f5f5;
+  color: #666;
+  width: 40px;
+  text-align: center;
+  border-right: 2px solid #e0e0e0;
+  font-size: 1.2rem;
+  padding: 0.5rem 0.25rem;
+}
+
+/* Gana row (pattern names) */
+.ga {
+  background: #f9f9f9;
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: #2d6a4f;
+}
+
+/* Matra pattern row */
+.up {
+  background: #fef9f9;
+  font-size: 0.9rem;
+  color: #c1121f;
+  font-family: 'Courier New', monospace;
+}
+
+/* Text row */
+.dw {
+  background: #ffffff;
+  font-size: 1.05rem;
+  font-family: var(--font-main);
+  font-weight: 500;
+  padding: 0.5rem 0.75rem;
+}
+
+/* Table cells */
+.X, .X3 {
+  border: 1px solid #e8e8e8;
+  padding: 0.4rem 0.6rem;
+  text-align: center;
+  transition: background-color 0.2s;
+}
+
+.X3 {
+  border-bottom: 2px solid #ddd;
+}
+
+/* Match status */
+.gOk {
+  background-color: rgba(45, 106, 79, 0.05);
+}
+
+.gErr {
+  background-color: rgba(193, 18, 31, 0.08);
+  color: #c1121f;
+  font-weight: 600;
+}
+
+.X.gErr {
+  border-color: #c1121f;
+  box-shadow: inset 0 0 0 1px rgba(193, 18, 31, 0.2);
+}
+
+/* Yati marker */
+.yati {
+  color: #ff8000;
+  font-weight: 700;
+  text-decoration: underline;
+  text-decoration-color: rgba(255, 128, 0, 0.4);
+  text-underline-offset: 2px;
+}
+
+/* Prasa marks */
+.y1 u {
+  color: #6a4c93;
+  text-decoration: underline;
+  text-decoration-style: double;
+}
+
 /* ========================================
    NEW PAGES STYLES (Phase 5-11)
    ======================================== */
@@ -1063,5 +1381,61 @@ footer a {
 
   .picker-dropdown {
     min-width: 250px;
+  }
+
+  /* Results Mobile Responsive */
+  /* Force stacking on mobile by reducing min-widths */
+  .match-table-container {
+    min-width: 100%;
+    flex: 1 1 100%;
+  }
+
+  .match-errors-container {
+    min-width: 100%;
+    flex: 1 1 100%;
+  }
+
+  .match-body-split {
+    gap: 1rem;
+  }
+
+  .match-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  .match-title-group {
+    width: 100%;
+  }
+
+  .match-title-group .meter-name {
+    font-size: 1.25rem;
+  }
+
+  .match-score {
+    font-size: 1rem;
+  }
+
+  .rule-details-link {
+    width: 100%;
+    text-align: center;
+  }
+
+  /* Make errors table scrollable on mobile */
+  .errors-table {
+    font-size: 0.85rem;
+  }
+
+  .errors-table th,
+  .errors-table td {
+    padding: 0.375rem 0.25rem;
+  }
+}
+
+/* Hide less critical columns on very small screens */
+@media (max-width: 480px) {
+  .error-position {
+    display: none;
   }
 }

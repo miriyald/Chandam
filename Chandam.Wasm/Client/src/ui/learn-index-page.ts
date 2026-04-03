@@ -106,7 +106,7 @@ function renderRuleListItem(rule: RuleSummaryDetailed, ruleSetId: string): strin
 
   return `
     <div class="rule-list-item">
-      <div class="rule-name">${rule.name}</div>
+      <div class="rule-name meter-name">${rule.name}</div>
       <div class="rule-meta">${metadata.join(' | ')}</div>
       <div class="rule-links">
         <a href="/learn/${ruleSetId}/${rule.identifier}">Learn</a>

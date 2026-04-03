@@ -23,7 +23,7 @@ function renderRuleSetCard(ruleSet: { id: string; name: string; description: str
 
   return `
     <div class="rule-set-card">
-      <h2>${ruleSet.name}</h2>
+      <h2 class="meter-name">${ruleSet.name}</h2>
       <div class="rule-count">${ruleCount} Rules</div>
       <p class="description">${ruleSet.description}</p>
       <div class="card-actions">

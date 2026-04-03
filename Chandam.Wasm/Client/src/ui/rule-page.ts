@@ -129,7 +129,7 @@ function renderRulePageHtml(
 
       <div class="current-rule-info">
         <span class="label">Rule:</span>
-        <span class="name">${ruleName}</span>
+        <span class="name meter-name">${ruleName}</span>
       </div>
 
       <div class="page-links">

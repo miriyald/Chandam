@@ -48,7 +48,7 @@ function renderLearnDetailPageHtml(
         <a href="/learn/${ruleSetId}/" class="browse-link">← Back to Browse</a>
       </div>
 
-      <h1>${ruleInfo.name}</h1>
+      <h1 class="meter-name">${ruleInfo.name}</h1>
       <div class="rule-metadata">
         <span>Rule Set: ${ruleSetName}</span> |
         <span>Type: ${ruleInfo.padyamType}</span> |

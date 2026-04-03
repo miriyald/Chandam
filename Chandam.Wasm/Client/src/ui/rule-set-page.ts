@@ -13,10 +13,17 @@ let lastAnalyzedRule: { id: string; name: string } | null = null;
 // Store rules for lookup by ID
 let allRules: RuleSummaryDetailed[] = [];
 
+// Store current rule set for generating learn page links
+let currentRuleSet: string = '';
+
 // Main function: Render rule set page
 export async function renderRuleSetPage(ruleSet: string) {
   // Reset last analyzed rule on page load
   lastAnalyzedRule = null;
+
+  // Store current rule set for learn page links
+  currentRuleSet = ruleSet;
+
   // Step 1: Validate and load rule set
   const ruleSetConfig = getRuleSet(ruleSet);
   if (!ruleSetConfig) {
@@ -159,7 +166,7 @@ async function handleDetermineWithTracking() {
       };
 
       // Show only the first (best) match
-      renderFirstMatch(bestMatch, 'results-container');
+      renderFirstMatch(bestMatch, 'results-container', currentRuleSet);
 
       // Show results section
       const resultsSection = document.getElementById('results-section');
@@ -209,7 +216,7 @@ async function handleMatchWithTracking() {
   try {
     const response = await WasmBridge.tryMatch(poemText, ruleId, yati, prasa);
     if (response.isMatch && response.match) {
-      renderFirstMatch(response.match, 'results-container');
+      renderFirstMatch(response.match, 'results-container', currentRuleSet);
 
       // Show results section
       const resultsSection = document.getElementById('results-section');
