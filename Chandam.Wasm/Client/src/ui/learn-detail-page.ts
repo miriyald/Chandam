@@ -1,6 +1,7 @@
 import { WasmBridge } from '../wasm-bridge';
 import { getRuleSet } from '../config';
 import type { RuleInfo } from '../types';
+import { makeUrl, makeUrlWithParams } from '../utils/url-helpers';
 
 // Main function: Render learn detail page
 export async function renderLearnDetailPage(ruleSet: string, ruleId: string) {
@@ -44,8 +45,8 @@ function renderLearnDetailPageHtml(
   content.innerHTML = `
     <div class="learn-detail-page">
       <div class="page-links">
-        <a href="/compute/${ruleSetId}/${ruleInfo.identifier}" class="compute-link">Try in Compute</a>
-        <a href="/learn/${ruleSetId}/" class="browse-link">← Back to Browse</a>
+        <a href="${makeUrl(`/compute/${ruleSetId}/${ruleInfo.identifier}`)}" class="compute-link">Try in Compute</a>
+        <a href="${makeUrl(`/learn/${ruleSetId}/`)}" class="browse-link">← Back to Browse</a>
       </div>
 
       <h1 class="meter-name">${ruleInfo.name}</h1>
@@ -96,7 +97,7 @@ function renderExamples(
         <pre class="poem-text">${escapeHtml(example.text)}</pre>
         ${example.author ? `<p class="metadata"><strong>Author:</strong> ${escapeHtml(example.author)}</p>` : ''}
         ${example.date ? `<p class="metadata"><strong>Date:</strong> ${escapeHtml(example.date)}</p>` : ''}
-        <a href="/compute/${ruleSetId}/${ruleId}?example=${exampleNumber}" class="try-example-btn">
+        <a href="${makeUrlWithParams(`/compute/${ruleSetId}/${ruleId}`, { example: exampleNumber })}" class="try-example-btn">
           Try This Example
         </a>
       </div>

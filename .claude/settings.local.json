@@ -1,36 +1,7 @@
 {
   "permissions": {
     "allow": [
-      "Bash(dotnet new classlib -n Chandam.API -f net8.0)",
-      "Bash(dotnet new xunit -n Chandam.API.Tests -f net8.0)",
-      "Bash(dotnet add reference ../Core/Chandam.Core.csproj)",
-      "Bash(dotnet add reference ../Rules/Chandam.Rules.csproj)",
-      "Bash(dotnet add reference ../Util/Chandam.Util.csproj)",
-      "Bash(dotnet add reference ../Strings/Chandam.Indic.csproj)",
-      "Bash(dotnet add reference ../Samples/Chandam.Samples.csproj)",
-      "Bash(dotnet add reference ../Chandam.API/Chandam.API.csproj)",
-      "Bash(dotnet build)",
-      "Bash(mkdir -p Models/Requests Models/Responses/Common Models/Config Services Converters)",
-      "Bash(rm Class1.cs)",
-      "Bash(./Verifier.exe --generate-json)",
-      "Bash(sed '31,42s/.*/        internal void Play\\(\\)\\\\n        {\\\\n            \\\\/\\\\/ Generate JSON rule files for Chandam.API\\\\n            Console.WriteLine\\(\"\"=== Generating JSON Rule Files for Chandam.API ===\\\\\\\\n\"\"\\);\\\\n            new GenerateRulesJSON\\(\\).GenerateAllRuleSets\\(\\);\\\\n            Console.WriteLine\\(\"\"\\\\\\\\n=== Generation Complete ===\\\\\\\\n\"\"\\);\\\\n        }/')",
-      "Bash(\"c:\\\\Working\\\\Experiments\\\\Chandam3\\\\Verifier\\\\PlayGround_new.cs\")",
-      "Bash(sed -i.bak '31,42d' PlayGround.cs)",
-      "Bash(sed -i '30r temp_play.txt' PlayGround.cs)",
-      "Bash(dotnet build Verifier/Verifier.csproj)",
-      "Bash(dotnet restore)",
-      "Bash(./Verifier.exe)",
-      "Bash(dotnet build Chandam.API/Chandam.API.csproj)",
-      "Bash(dotnet build Chandam.API.Demo/Chandam.API.Demo.csproj)",
-      "Bash(curl -s -X POST http://localhost:8080/api/try-match -H \"Content-Type: application/json\" -d '{:*)",
-      "Bash(curl -s -X POST http://localhost:8080/api/determine -H \"Content-Type: application/json\" -d '{:*)",
-      "Bash(curl -s -X POST http://localhost:8080/api/scores -H \"Content-Type: application/json\" -d '{:*)",
-      "Bash(docker run -d -p 8080:8080 -e CHANDAM_RULESET=chandam-rules --name chandam-api-test chandam-api)",
-      "Bash(docker exec chandam-api-test ls -la /app/Config/Rules)",
-      "Bash(docker exec chandam-api-test ls /app/Config/Rules)",
-      "Bash(docker exec chandam-api-test sh -c \"ls -la /app/Config/Rules 2>&1\")",
-      "Bash(docker exec chandam-api-test sh -c \"curl -s -X POST http://localhost:8080/api/determine -H ''Content-Type: application/json'' -d ''{\"\"poemText\"\":\"\"test\"\",\"\"language\"\":0,\"\"matchYati\"\":true,\"\"matchPrasa\"\":true}'' 2>&1\")",
-      "Bash(docker exec chandam-api-test sh -c 'curl -s -X POST http://localhost:8080/api/determine -H \"\"Content-Type: application/json\"\" -d \"\"{\\\\\"\"poemText\\\\\"\":\\\\\"\"సామర్థ్యలీలన్ తతజద్విగంబుల్\\\\\\\\nభూమిధ్రవిశ్రాంతుల బొంది యొప్పున్\\\\\\\\nప్రేమంబుతో నైందవబింబవక్త్రున్\\\\\\\\nహేమాంబురుం బాడుదు రింద్రవజ్రన్\\\\\"\",\\\\\"\"language\\\\\"\":0,\\\\\"\"matchYati\\\\\"\":true,\\\\\"\"matchPrasa\\\\\"\":true}\"\"')"
+   
     ]
   }
 }

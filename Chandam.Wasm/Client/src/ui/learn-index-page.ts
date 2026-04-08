@@ -2,6 +2,7 @@ import { WasmBridge } from '../wasm-bridge';
 import { getRuleSet } from '../config';
 import type { RuleSummaryDetailed } from '../types';
 import { groupRulesByCategory, getSortedGroupKeys } from '../utils/rule-grouping';
+import { makeUrl } from '../utils/url-helpers';
 
 // Main function: Render learn index page
 export async function renderLearnIndexPage(ruleSet: string) {
@@ -53,7 +54,7 @@ function renderLearnIndexPageHtml(
       <div class="rule-count">${ruleCount} Rules</div>
 
       <div class="page-links">
-        <a href="/compute/${ruleSetId}/" class="compute-link">Go to Compute</a>
+        <a href="${makeUrl(`/compute/${ruleSetId}/`)}" class="compute-link">Go to Compute</a>
       </div>
 
       <div class="chandam-groups">
@@ -109,8 +110,8 @@ function renderRuleListItem(rule: RuleSummaryDetailed, ruleSetId: string): strin
       <div class="rule-name meter-name">${rule.name}</div>
       <div class="rule-meta">${metadata.join(' | ')}</div>
       <div class="rule-links">
-        <a href="/learn/${ruleSetId}/${rule.identifier}">Learn</a>
-        <a href="/compute/${ruleSetId}/${rule.identifier}">Try</a>
+        <a href="${makeUrl(`/learn/${ruleSetId}/${rule.identifier}`)}">Learn</a>
+        <a href="${makeUrl(`/compute/${ruleSetId}/${rule.identifier}`)}">Try</a>
       </div>
     </div>
   `;

@@ -37,6 +37,16 @@
     <Message Text="Copied compressed rule files to wwwroot/data/" Importance="high" />
   </Target>
 
+  <!-- Copy branding assets (favicon GIFs) from Chandam.Branding/out/ to wwwroot/images/ -->
+  <Target Name="CopyBrandingAssets" BeforeTargets="Build">
+    <ItemGroup>
+      <!-- Only copy the optimized favicon (2.9 KB), not the large icon variants (114-945 KB) -->
+      <BrandingGifFiles Include="..\Chandam.Branding\out\favicon-animated-32.gif" />
+    </ItemGroup>
+    <Copy SourceFiles="@(BrandingGifFiles)" DestinationFolder="wwwroot\images\" SkipUnchangedFiles="true" />
+    <Message Text="Copied optimized favicon to wwwroot/images/" Importance="high" />
+  </Target>
+
   <!-- Inject version into published index.html -->
   <Target Name="InjectVersionIntoHtml" AfterTargets="Publish" Condition="'$(PublishDir)' != ''">
     <PropertyGroup>

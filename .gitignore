@@ -35,3 +35,8 @@ Chandam.Wasm/wwwroot/js/
 Chandam.Wasm/wwwroot/data/*.min.json
 Chandam.Wasm/wwwroot/data/*.min.json.br
 Chandam.Wasm/wwwroot/data/*.min.json.gz
+
+
+# Code Assistants
+.claude
+.cursor

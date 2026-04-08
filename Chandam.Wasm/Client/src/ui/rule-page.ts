@@ -3,6 +3,7 @@ import { getRuleSet } from '../config';
 import { renderFirstMatch, hideResults } from './results';
 import { clearEditor } from './editor';
 import { renderEditorCard } from './shared-components';
+import { makeUrl } from '../utils/url-helpers';
 
 // Main function: Render specific rule page
 export async function renderRulePage(params: Record<string, string>) {
@@ -103,7 +104,7 @@ async function getExampleByNumber(ruleId: string, exampleNumber: number): Promis
 
 // Helper: Clean invalid example parameter from URL
 function cleanExampleFromUrl(ruleSet: string, ruleId: string) {
-  const cleanUrl = `/compute/${ruleSet}/${ruleId}`;
+  const cleanUrl = makeUrl(`/compute/${ruleSet}/${ruleId}`);
   window.history.replaceState(null, '', cleanUrl);
 }
 
@@ -133,8 +134,8 @@ function renderRulePageHtml(
       </div>
 
       <div class="page-links">
-        <a href="/learn/${ruleSetId}/${ruleId}" class="learn-link">Learn More</a>
-        <a href="/learn/${ruleSetId}/" class="browse-link">Browse All Rules</a>
+        <a href="${makeUrl(`/learn/${ruleSetId}/${ruleId}`)}" class="learn-link">Learn More</a>
+        <a href="${makeUrl(`/learn/${ruleSetId}/`)}" class="browse-link">Browse All Rules</a>
       </div>
 
       ${renderEditorCard({

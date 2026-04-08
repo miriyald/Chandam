@@ -1,4 +1,5 @@
 import { RULE_SETS } from '../config';
+import { makeUrl } from '../utils/url-helpers';
 
 // Main function: Render homepage with rule set cards
 export function renderHomePage() {
@@ -27,8 +28,8 @@ function renderRuleSetCard(ruleSet: { id: string; name: string; description: str
       <div class="rule-count">${ruleCount} Rules</div>
       <p class="description">${ruleSet.description}</p>
       <div class="card-actions">
-        <a href="/compute/${ruleSet.id}/" class="btn-analyze">✏️ Analyze</a>
-        <a href="/learn/${ruleSet.id}/" class="btn-learn">📖 Learn</a>
+        <a href="${makeUrl(`/compute/${ruleSet.id}/`)}" class="btn-analyze">✏️ Analyze</a>
+        <a href="${makeUrl(`/learn/${ruleSet.id}/`)}" class="btn-learn">📖 Learn</a>
       </div>
     </div>
   `;

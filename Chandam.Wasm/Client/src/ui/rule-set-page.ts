@@ -6,6 +6,7 @@ import { renderEditorCard, showRulePicker, hideRulePicker } from './shared-compo
 import { renderFirstMatch } from './results';
 import { getEditorText } from './editor';
 import type { RuleSummaryDetailed } from '../types';
+import { makeUrl } from '../utils/url-helpers';
 
 // Track last analyzed rule (from either Determine or Match) for smart auto-select
 let lastAnalyzedRule: { id: string; name: string } | null = null;
@@ -75,7 +76,7 @@ function renderRuleSetPageHtml(ruleSetName: string, ruleCount: number, ruleSetId
       </div>
 
       <div class="page-links">
-        <a href="/learn/${ruleSetId}/" class="learn-link">Browse Rules</a>
+        <a href="${makeUrl(`/learn/${ruleSetId}/`)}" class="learn-link">Browse Rules</a>
       </div>
 
       ${renderEditorCard({

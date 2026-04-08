@@ -1,5 +1,6 @@
 import type { ChandamMatch, MatchError } from '../types';
 import { openAccordion } from './accordion';
+import { makeUrl } from '../utils/url-helpers';
 
 export function renderResults(matches: ChandamMatch[], containerId: string, ruleSet?: string) {
   const container = document.getElementById(containerId);
@@ -38,7 +39,7 @@ function renderMatchCard(match: ChandamMatch, ruleSet?: string): string {
 
   // Generate rule details link (opens in new tab)
   const ruleLink = ruleSet && match.rule.identifier
-    ? `<a href="/learn/${ruleSet}/${match.rule.identifier}/" class="rule-details-link" target="_blank" rel="noopener noreferrer">View Rule Details ↗</a>`
+    ? `<a href="${makeUrl(`/learn/${ruleSet}/${match.rule.identifier}/`)}" class="rule-details-link" target="_blank" rel="noopener noreferrer">View Rule Details ↗</a>`
     : '';
 
   // Enhanced error display (table format)

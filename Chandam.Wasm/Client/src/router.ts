@@ -9,11 +9,41 @@ interface Route {
 
 export class Router {
   private routes: Route[] = [];
+  private basePath: string = '';
+
+  constructor() {
+    this.basePath = this.detectBasePath();
+  }
 
   register(pattern: string, handler: RouteHandler) {
     // Convert pattern like "/compute/:ruleSet/:ruleId" to regex
     const { regex, paramNames } = this.patternToRegex(pattern);
     this.routes.push({ pattern, regex, paramNames, handler });
+  }
+
+  // Detect base path from <base href> tag
+  private detectBasePath(): string {
+    const baseElement = document.querySelector('base');
+    if (!baseElement || !baseElement.href) return '';
+
+    const url = new URL(baseElement.href);
+    let path = url.pathname;
+
+    if (path.endsWith('/') && path.length > 1) {
+      path = path.slice(0, -1);
+    }
+
+    return path === '/' ? '' : path;
+  }
+
+  // Strip base path from pathname
+  private stripBasePath(path: string): string {
+    if (!this.basePath || !path.startsWith(this.basePath)) {
+      return path;
+    }
+
+    const strippedPath = path.slice(this.basePath.length);
+    return strippedPath || '/';
   }
 
   // Convert URL pattern to regex and extract parameter names
@@ -52,13 +82,18 @@ export class Router {
   }
 
   async navigate(path: string) {
-    history.pushState(null, '', path);
+    const fullPath = this.basePath && !path.startsWith(this.basePath)
+      ? this.basePath + path
+      : path;
+
+    history.pushState(null, '', fullPath);
     await this.route();
   }
 
   async route() {
     const url = new URL(window.location.href);
-    const path = url.pathname;
+    const rawPath = url.pathname;
+    const path = this.stripBasePath(rawPath);
 
     // Also extract query parameters
     const queryParams: Record<string, string> = {};
@@ -93,7 +128,8 @@ export class Router {
       const target = (e.target as HTMLElement).closest('a');
       if (target && target.href && target.origin === location.origin) {
         e.preventDefault();
-        this.navigate(new URL(target.href).pathname);
+        const url = new URL(target.href);
+        this.navigate(this.stripBasePath(url.pathname));
       }
     });
 
