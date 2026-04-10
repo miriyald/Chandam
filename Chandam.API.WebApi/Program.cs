@@ -80,13 +80,15 @@ app.MapGet("/health", (RuleLoaderService loader) => new
 // API endpoints
 app.MapPost("/api/determine", (DetermineRequest request, ChandamService service) =>
 {
-    var response = service.Determine(request);
+    // Use new method that returns BOTH table and beautified
+    var response = service.DetermineWithBeautified(request);
     return Results.Ok(response);
 });
 
 app.MapPost("/api/try-match", (TryMatchRequest request, ChandamService service) =>
 {
-    var response = service.TryMatch(request);
+    // Use new method that returns BOTH table and beautified
+    var response = service.TryMatchWithBeautified(request);
     return Results.Ok(response);
 });
 

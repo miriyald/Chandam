@@ -30,9 +30,9 @@ public class ChandamMatch
     public List<MatchError>? Errors { get; set; }
 
     // --- Rendered output (optional, per request) ---
-    public string? RenderedHtml { get; set; }
-    public string? RenderedText { get; set; }
-    public string? RenderedMarkdown { get; set; }
+    public string? Html { get; set; }           // Gana vibhajana table
+    public string? Markdown { get; set; }       // Structured summary
+    public string? Beautified { get; set; }     // Decorated poem HTML
 }
 
 /// <summary>

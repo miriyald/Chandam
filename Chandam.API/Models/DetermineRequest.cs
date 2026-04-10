@@ -33,7 +33,7 @@ public class DetermineRequest
     public int TopMatches { get; set; } = 5;
 
     /// <summary>
-    /// Optional: Rendered output format (None, Html, Text, Markdown, Both)
+    /// Optional: Rendered output format (None, Html, Markdown)
     /// </summary>
-    public RenderFormat RenderFormat { get; set; } = RenderFormat.Text;
+    public RenderFormat RenderFormat { get; set; } = RenderFormat.Html;
 }

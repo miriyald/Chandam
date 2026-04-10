@@ -73,7 +73,7 @@ public static class JsBridge
             Language = langEnum,
             RenderFormat = RenderFormat.Html
         };
-        var response = service.Determine(request);
+        var response = service.DetermineWithBeautified(request);
         return JsonSerializer.Serialize(response, JsonOptions);
     }
 
@@ -88,7 +88,7 @@ public static class JsBridge
             MatchPrasa = matchPrasa,
             RenderFormat = RenderFormat.Html
         };
-        var response = service.TryMatch(request);
+        var response = service.TryMatchWithBeautified(request);
         return JsonSerializer.Serialize(response, JsonOptions);
     }
 

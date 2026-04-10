@@ -43,7 +43,7 @@ export function renderEditorCard(config: EditorCardConfig): string {
         </div>
       </div>
 
-      <textarea id="poem-editor" rows="8" placeholder="పద్యం ఇక్కడ టైప్ చేయండి..."></textarea>
+      <textarea id="poem-editor" rows="5" placeholder="పద్యం ఇక్కడ టైప్ చేయండి..."></textarea>
 
       <div class="controls-bar">
         <div class="toggle-group">

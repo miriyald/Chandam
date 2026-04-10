@@ -47,9 +47,35 @@ function renderMatchCard(match: ChandamMatch, ruleSet?: string): string {
     ? renderErrorsTable(match.errors)
     : '';
 
-  // Split view: table on left, errors on right (desktop), stacked (mobile)
-  const hasErrors = match.errors && match.errors.length > 0;
-  const layoutClass = hasErrors ? 'match-body-split' : 'match-body-full';
+  // CONDITIONAL RENDERING based on match percentage
+  let bodyHtml = '';
+
+  if (match.matchPercentage === 100 && match.beautified) {
+    // 100% match: Show beautified poem (left) + gana vibhajana table (right)
+    bodyHtml = `
+      <div class="match-body-split">
+        <div class="padyam">
+          <div class="poem">
+            ${match.beautified}
+          </div>
+        </div>
+        <div class="ganaVibhajana">
+          ${match.html || ''}
+        </div>
+      </div>
+    `;
+  } else {
+    // < 100% match: Show gana vibhajana table (left) + errors (right) — EXISTING BEHAVIOR
+    const hasErrors = match.errors && match.errors.length > 0;
+    bodyHtml = `
+      <div class="match-body-split">
+        <div class="match-table-container">
+          ${match.html || ''}
+        </div>
+        ${hasErrors ? `<div class="match-errors-container">${errorsHtml}</div>` : ''}
+      </div>
+    `;
+  }
 
   return `
     <div class="match-card ${statusClass}">
@@ -61,14 +87,7 @@ function renderMatchCard(match: ChandamMatch, ruleSet?: string): string {
         </div>
         ${ruleLink}
       </div>
-
-      <div class="${layoutClass}">
-        <div class="match-table-container">
-          ${match.renderedHtml || ''}
-        </div>
-
-        ${hasErrors ? `<div class="match-errors-container">${errorsHtml}</div>` : ''}
-      </div>
+      ${bodyHtml}
     </div>
   `;
 }

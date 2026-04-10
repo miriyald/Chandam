@@ -138,6 +138,61 @@ public class ChandamService
     }
 
     /// <summary>
+    /// Determine best matching chandam and return BOTH requested format (Html/Markdown) AND beautified.
+    /// Used by WASM frontend (Html + Beautified) and MCP tools (Markdown + Beautified).
+    /// </summary>
+    public DetermineResponse DetermineWithBeautified(DetermineRequest request)
+    {
+        var response = Determine(request);  // Get standard response with requested format
+
+        // Also populate beautified HTML for all matches
+        foreach (var match in response.Matches)
+        {
+            // Get the rule and create padyam
+            var rule = Manager.FetchRule(match.Rule.Identifier);
+            if (rule != null)
+            {
+                var padyam = new Padyam
+                {
+                    MatchYati = request.MatchYati,
+                    MatchPrasa = request.MatchPrasa
+                };
+                var matchResult = padyam.Match(request.PoemText, rule);
+                match.Beautified = padyam.Beautify(matchResult);
+            }
+        }
+
+        return response;
+    }
+
+    /// <summary>
+    /// Try match against specific rule and return BOTH requested format (Html/Markdown) AND beautified.
+    /// Used by WASM frontend (Html + Beautified) and MCP tools (Markdown + Beautified).
+    /// </summary>
+    public TryMatchResponse TryMatchWithBeautified(TryMatchRequest request)
+    {
+        var response = TryMatch(request);  // Get standard response with requested format
+
+        // Also populate beautified HTML if match exists
+        if (response.Match != null)
+        {
+            var rule = Manager.FetchRule(request.RuleIdentifier);
+            if (rule != null)
+            {
+                var padyam = new Padyam
+                {
+                    MatchYati = request.MatchYati,
+                    MatchPrasa = request.MatchPrasa
+                };
+                var matchResult = padyam.Match(request.PoemText, rule);
+                response.Match.Beautified = padyam.Beautify(matchResult);
+            }
+        }
+
+        return response;
+    }
+
+    /// <summary>
     /// Match a poem against a custom (unregistered) Chandam rule
     /// </summary>
     public TryMatchResponse TryMatchCustom(TryMatchCustomRequest request)
@@ -459,12 +514,10 @@ public class ChandamService
             }).ToList();
         }
 
-        if (renderFormat == RenderFormat.Html )
-            match.RenderedHtml = padyam.Build(matchResult);
-        if (renderFormat == RenderFormat.Text )
-            match.RenderedText = padyam.Build2(matchResult);
+        if (renderFormat == RenderFormat.Html)
+            match.Html = padyam.Build(matchResult);
         if (renderFormat == RenderFormat.Markdown)
-            match.RenderedMarkdown = BuildMarkdown(matchResult, rule);
+            match.Markdown = BuildMarkdown(matchResult, rule);
 
         return match;
     }

@@ -174,9 +174,10 @@ footer a {
 
 #poem-editor {
   width: 100%;
+  min-height: 10rem;  /* Start with ~5 lines height */
   padding: 0.75rem;
   font-family: var(--font-editor);  /* Suranna serif font for poetry */
-  font-size: 1.15rem;
+  font-size: 1.75rem;
   line-height: 1.9;
   border-radius: 4px;
   resize: vertical;
@@ -513,6 +514,61 @@ footer a {
   margin-top: 0.25rem;
   color: #666;
   font-size: 0.85rem;
+}
+
+/* ========================================
+   LEGACY CLASSES FOR 100% MATCH VIEW
+   (Beautified poem + Gana vibhajana side-by-side)
+   ======================================== */
+
+/* Outer wrapper for decorated poem section */
+.padyam {
+  flex: 1 1 45%;
+  min-width: 350px;
+  padding: 1.25rem;
+  background: #fafff9;         /* Light green tint */
+  border-left: 5px solid #2d6a4f;  /* Thick left border like quote */
+  border-top: 1px solid #d8f3dc;
+  border-right: 1px solid #d8f3dc;
+  border-bottom: 1px solid #d8f3dc;
+  border-radius: 4px;
+  overflow-x: auto;
+}
+
+/* Inner poem text container */
+.poem {
+  font-family: var(--font-editor);  /* Suranna serif for poetry */
+  font-size: 1.75rem;
+  line-height: 1.9;
+  color: #1a1a1a;
+  white-space: normal;
+  word-wrap: break-word;
+}
+
+/* Preserve decorations from Beautify() method */
+.poem u {
+  text-decoration: underline;
+  text-decoration-color: #ff8000;  /* Yati underline - orange */
+  text-underline-offset: 2px;
+  text-decoration-thickness: 1.5px;
+}
+
+.poem b {
+  font-weight: 700;
+  color: #6a4c93;  /* Prasa bold - purple */
+}
+
+/* Gana vibhajana table wrapper (100% match scenario) */
+.ganaVibhajana {
+  flex: 1 1 50%;
+  min-width: 400px;
+  overflow-x: auto;
+  border-radius: 8px;
+}
+
+/* Ensure table inside ganaVibhajana has proper styling */
+.ganaVibhajana .tab {
+  margin: 0;  /* Remove default margin when inside wrapper */
 }
 
 /* Utility */
@@ -1211,7 +1267,7 @@ footer a {
   padding: 0.875rem;
   margin: 1rem 0;
   font-family: var(--font-editor);  /* Suranna serif font for poetry */
-  font-size: 1.15rem;  /* Slightly larger for readability */
+  font-size: 1.75rem;  /* Slightly larger for readability */
   line-height: 1.9;  /* More generous line height for long poems */
   border: 1px solid #d8d8d8;
   border-radius: 8px;
@@ -1455,6 +1511,27 @@ footer a {
   .errors-table th,
   .errors-table td {
     padding: 0.375rem 0.25rem;
+  }
+
+  /* ========================================
+     LEGACY CLASSES MOBILE RESPONSIVE
+     ======================================== */
+
+  .padyam {
+    min-width: 100%;
+    flex: 1 1 100%;
+    padding: 0.75rem;
+    margin-bottom: 1rem;  /* Space between stacked items */
+  }
+
+  .poem {
+    font-size: 1.75rem;
+    line-height: 1.8;
+  }
+
+  .ganaVibhajana {
+    min-width: 100%;
+    flex: 1 1 100%;
   }
 }
 

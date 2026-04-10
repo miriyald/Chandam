@@ -31,9 +31,9 @@ export interface ChandamMatch {
   matchPercentage: number;
   isMatched: boolean;
   errors?: MatchError[];
-  renderedHtml?: string;
-  renderedText?: string;
-  renderedMarkdown?: string;
+  html?: string;        // Gana vibhajana table
+  markdown?: string;    // Structured summary
+  beautified?: string;  // Decorated poem HTML
 }
 
 export interface RuleInfo {
