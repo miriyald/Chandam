@@ -1,7 +1,7 @@
 ﻿//---------------------------------------------------------------------------------------------
 // <copyright file="AssemblyInfo.cs" company="Chandam-ఛందం">
-//    Copyright © 2013 - 2018 'Chandam-ఛందం' : http://chandam.apphb.com
-//    Original Author : Dileep Miriyala (m.dileep@gmail.com)
+//    Copyright © Since 2013  'Chandam-ఛందం' : https://github.com/miriyald/chandam
+//    Original Author : Dileep Miriyala
 //    Last Updated    : 03-Feb-2018 21:34EST
 //    Revisions:
 //       Version    | Author                   | Email                     | Remarks

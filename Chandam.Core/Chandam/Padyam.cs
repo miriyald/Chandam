@@ -1,12 +1,8 @@
 ﻿//---------------------------------------------------------------------------------------------
 // <copyright file="Padyam.cs" company="Chandam-ఛందం">
-//    Copyright © 2013 - 2018 'Chandam-ఛందం' : http://chandam.apphb.com
-//    Original Author : Dileep Miriyala (m.dileep@gmail.com)
-//    Last Updated    : 03-Feb-2018 21:28EST
-//    Revisions:
-//       Version    | Author                   | Email                     | Remarks
-//       1.0        | Dileep Miriyala          | m.dileep@gmail.com        | Initial Commit
-//       _._        | <TODO>                   |   <TODO>                  | <TODO>
+//    Copyright © Since 2013  'Chandam-ఛందం' : https://github.com/miriyald/chandam
+//    Original Author : Dileep Miriyala
+//
 // </copyright>
 //---------------------------------------------------------------------------------------------
 
@@ -516,7 +512,7 @@ namespace Chandam.Core
 				{
 					case RuleType.Name:
 						int thresold = 3;
-						//Not Good idea need to follow other "switch cases"
+						// Not Good idea need to follow other "switch cases"
 						if (R.DeferThresold)
 						{
 							//Blind & Hard Fix ..As there are only specfic cases.
@@ -1665,6 +1661,24 @@ namespace Chandam.Core
 				MR = _MR;
 			}
 			return BuildText(R);
+		}
+
+		/// <summary>
+		/// Returns beautified/decorated poem HTML with yati (caesura) underlines and prasa (rhyme) bold marks.
+		/// </summary>
+		/// <param name="_MR">Match result containing yati/prasa information</param>
+		/// <returns>HTML string with decorated poem using &lt;u&gt; and &lt;b&gt; tags</returns>
+		public string Beautify(MatchResult _MR)
+		{
+			if (_MR == null)
+			{
+				throw new Exception("Matching object can't be null..");
+			}
+			else
+			{
+				MR = _MR;
+			}
+			return BuildText(R);  // Uses existing BuildText() method
 		}
 
 		public string Build3()

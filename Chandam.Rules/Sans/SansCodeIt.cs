@@ -1,7 +1,7 @@
 //---------------------------------------------------------------------------------------------
 // <copyright file="SansCodeIt.cs" company="Chandam-ఛందం">
-//    Copyright © 2013 - 2018 'Chandam-ఛందం' : http://chandam.apphb.com
-//    Original Author : Dileep Miriyala (m.dileep@gmail.com)
+//    Copyright © Since 2013  'Chandam-ఛందం' : https://github.com/miriyald/chandam
+//    Original Author : Dileep Miriyala
 namespace Chandam.Rules.Sans
 {
 	public class kinnaTakaH : Rule

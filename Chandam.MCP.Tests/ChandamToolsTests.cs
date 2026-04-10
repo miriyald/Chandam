@@ -145,6 +145,53 @@ public class ChandamToolsTests
         Assert.Contains("ఇంద్రవజ్ర", result);
     }
 
+    [Fact]
+    public void DetermineChandam_ReturnsBothMarkdownAndBeautified()
+    {
+        var result = _tools.DetermineChandam(TestPoem);
+        var json = JsonDocument.Parse(result);
+
+        Assert.True(json.RootElement.GetProperty("Success").GetBoolean());
+        var matches = json.RootElement.GetProperty("Matches");
+        Assert.True(matches.GetArrayLength() > 0);
+
+        var firstMatch = matches[0];
+
+        // Verify both Markdown and Beautified fields are populated
+        Assert.True(firstMatch.TryGetProperty("Markdown", out var markdown));
+        Assert.False(string.IsNullOrEmpty(markdown.GetString()));
+
+        Assert.True(firstMatch.TryGetProperty("Beautified", out var beautified));
+        Assert.False(string.IsNullOrEmpty(beautified.GetString()));
+
+        // Beautified should contain HTML tags for decorations
+        var beautifiedHtml = beautified.GetString();
+        Assert.Contains("<u>", beautifiedHtml);  // Yati underlines
+        Assert.Contains("<b>", beautifiedHtml);  // Prasa bold marks
+    }
+
+    [Fact]
+    public void TryMatchChandam_ReturnsBothMarkdownAndBeautified()
+    {
+        var result = _tools.TryMatchChandam(TestPoem, "iMdravajramu");
+        var json = JsonDocument.Parse(result);
+
+        Assert.True(json.RootElement.GetProperty("IsMatch").GetBoolean());
+        var match = json.RootElement.GetProperty("Match");
+
+        // Verify both Markdown and Beautified fields are populated
+        Assert.True(match.TryGetProperty("Markdown", out var markdown));
+        Assert.False(string.IsNullOrEmpty(markdown.GetString()));
+
+        Assert.True(match.TryGetProperty("Beautified", out var beautified));
+        Assert.False(string.IsNullOrEmpty(beautified.GetString()));
+
+        // Beautified should contain HTML tags
+        var beautifiedHtml = beautified.GetString();
+        Assert.Contains("<u>", beautifiedHtml);
+        Assert.Contains("<b>", beautifiedHtml);
+    }
+
     /// <summary>
     /// Walk up from test bin directory to find Chandam.Config/Rules
     /// </summary>

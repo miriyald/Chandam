@@ -28,7 +28,7 @@ public class ChandamTools
         _dictionaryService = dictionaryService;
     }
 
-    [McpServerTool, Description("Auto-detect the best matching Chandam (meter/prosody) for a Telugu/Sanskrit poem. Returns the closest matching meter with confidence percentage.")]
+    [McpServerTool, Description("Auto-detect the best matching Chandam (meter/prosody) for a Telugu/Sanskrit poem. Returns matches with both Markdown summary and beautified HTML for display.")]
     public string DetermineChandam(
         [Description("The poem text to analyze (Telugu/Sanskrit/Kannada)")] string poem_text,
         [Description("Check caesura (yati) matching")] bool match_yati = true,
@@ -42,13 +42,14 @@ public class ChandamTools
             MatchYati = match_yati,
             MatchPrasa = match_prasa,
             Language = lang,
-            RenderFormat = RenderFormat.Text
+            RenderFormat = RenderFormat.Markdown  // Request Markdown format
         };
-        var result = _service.Determine(request);
+        // Call new combined method that returns BOTH Markdown and Beautified
+        var result = _service.DetermineWithBeautified(request);
         return JsonSerializer.Serialize(result, JsonOptions);
     }
 
-    [McpServerTool, Description("Match a poem against a specific Chandam rule. Use this when you know which meter to test against.")]
+    [McpServerTool, Description("Match a poem against a specific Chandam rule. Returns match with both Markdown summary and beautified HTML for display.")]
     public string TryMatchChandam(
         [Description("The poem text to analyze")] string poem_text,
         [Description("Rule identifier (e.g., 'kandam', 'utpalamaala', 'iMdravajramu')")] string rule_identifier,
@@ -61,9 +62,10 @@ public class ChandamTools
             RuleIdentifier = rule_identifier,
             MatchYati = match_yati,
             MatchPrasa = match_prasa,
-            RenderFormat = RenderFormat.Text
+            RenderFormat = RenderFormat.Markdown  // Request Markdown format
         };
-        var result = _service.TryMatch(request);
+        // Call new combined method that returns BOTH Markdown and Beautified
+        var result = _service.TryMatchWithBeautified(request);
         return JsonSerializer.Serialize(result, JsonOptions);
     }
 
