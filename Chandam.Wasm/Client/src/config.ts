@@ -23,6 +23,14 @@ export const RULE_SETS: RuleSet[] = [
     examplesFile: 'data/telugu-complete-examples.min.json',
     description: '379 rules with examples',
     sizeKB: 65
+  },
+  {
+    id: 'topella',
+    name: 'Topella Collection',
+    rulesFile: 'data/topella.min.json',
+    examplesFile: '',
+    description: '2337 rare Telugu Vruttam meters (comprehensive)',
+    sizeKB: 106
   }
 ];
 

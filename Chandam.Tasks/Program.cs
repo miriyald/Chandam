@@ -45,6 +45,7 @@ namespace Verifier
 				int exitCode = command switch
 				{
 					"generate" or "gen" => GenerateRules(options),
+					"topella" => GenerateTopellaOnly(options),
 					"convert" or "yaml2json" => ConvertYamlToJson(options),
 					"help" or "--help" or "-h" or "/?" => ShowHelp(),
 					_ => ShowUnknownCommand(command)
@@ -79,6 +80,21 @@ namespace Verifier
 		}
 
 		/// <summary>
+		/// Generate Topella rules from CSV (2337 Telugu Vruttam meters)
+		/// </summary>
+		static int GenerateTopellaOnly(string[] options)
+		{
+			Console.WriteLine("=== Generating Topella Rules ===\n");
+
+			var outputDir = options.Length > 0 ? options[0] : @"Chandam.Config\Rules";
+
+			new GenerateRulesJSON(outputDir).GenerateTopellaRules();
+
+			Console.WriteLine("\n=== Topella Generation Complete ===");
+			return 0;
+		}
+
+		/// <summary>
 		/// Convert YAML files to JSON
 		/// </summary>
 		static int ConvertYamlToJson(string[] options)
@@ -107,6 +123,10 @@ namespace Verifier
 			Console.WriteLine("                         Outputs: JSON + YAML format");
 			Console.WriteLine("                         Usage: gen [output-directory]");
 			Console.WriteLine("                         Default: Chandam.Config\\Rules\n");
+			Console.WriteLine("  topella                Generate Topella rules from CSV (2337 meters)");
+			Console.WriteLine("                         Outputs: topella.json/yaml + compressed versions");
+			Console.WriteLine("                         Usage: topella [output-directory]");
+			Console.WriteLine("                         Default: Chandam.Config\\Rules\n");
 			Console.WriteLine("  convert, yaml2json     Convert YAML files to JSON");
 			Console.WriteLine("                         Usage: convert [input-dir] [output-dir]");
 			Console.WriteLine("                         Default: Chandam.Config\\Rules\n");
@@ -119,7 +139,8 @@ namespace Verifier
 			Console.WriteLine("Generated Files:");
 			Console.WriteLine("  Rules:");
 			Console.WriteLine("    - chandam-rules.json/yaml         (frequent rules)");
-			Console.WriteLine("    - telugu-complete.json/yaml       (all Telugu rules)\n");
+			Console.WriteLine("    - telugu-complete.json/yaml       (all Telugu rules)");
+			Console.WriteLine("    - topella.json/yaml               (Topella's 2337 meters)\n");
 			Console.WriteLine("  Examples:");
 			Console.WriteLine("    - chandam-examples.json/yaml      (frequent examples)");
 			Console.WriteLine("    - telugu-complete-examples.json/yaml (all examples)\n");

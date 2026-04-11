@@ -1,6 +1,7 @@
 using Chandam.Rules;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
@@ -476,6 +477,211 @@ namespace Verifier
                 return $"{bytes / 1024.0:F1}KB";
             else
                 return $"{bytes / (1024.0 * 1024.0):F1}MB";
+        }
+
+        /// <summary>
+        /// Generate topella.json - All rules from Topella CSV (2337 Telugu Vruttam meters)
+        /// </summary>
+        public void GenerateTopellaRules()
+        {
+            Console.WriteLine("\nGenerating topella.json (Topella's 2337 Telugu meters)...");
+
+            var csvPath = Path.Combine(_outputDirectory, "Topella.csv");
+            if (!File.Exists(csvPath))
+            {
+                Console.WriteLine($"  ! CSV file not found: {csvPath}");
+                return;
+            }
+
+            var rules = ParseTopellaCSV(csvPath);
+
+            var ruleSet = new RuleSetDto
+            {
+                Identifier = "topella",
+                Name = "తోపెల్ల వృత్తములు",
+                Description = "శ్రీతోపెల్ల బాలసుబ్రహ్మణ్య శర్మగారి 2337 తెలుగు వృత్తములు (Topella's comprehensive collection of 2337 Telugu Vruttam meters)",
+                Rules = ConvertRulesToDto(rules)
+            };
+
+            SaveRuleSet(ruleSet, "topella.json");
+            SaveRuleSetYaml(ruleSet, "topella.yaml");
+            Console.WriteLine($"  ✓ Generated {rules.Length} Topella rules (JSON + YAML)");
+        }
+
+        /// <summary>
+        /// Parse Topella CSV and convert to Rule objects
+        /// </summary>
+        private Rule[] ParseTopellaCSV(string csvPath)
+        {
+            var rules = new List<Rule>();
+            var lines = File.ReadAllLines(csvPath, Encoding.UTF8);
+
+            Console.WriteLine($"  Reading CSV with {lines.Length} lines...");
+
+            // Skip header row
+            for (int i = 1; i < lines.Length; i++)
+            {
+                try
+                {
+                    var rule = ParseTopellaCsvRow(lines[i], i + 1);
+                    if (rule != null)
+                        rules.Add(rule);
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"  ! Error parsing row {i + 1}: {ex.Message}");
+                }
+            }
+
+            Console.WriteLine($"  Parsed {rules.Count} rules successfully");
+            return rules.ToArray();
+        }
+
+        /// <summary>
+        /// Parse single CSV row into Rule object
+        /// </summary>
+        private Rule ParseTopellaCsvRow(string line, int rowNumber)
+        {
+            var fields = ParseCsvLine(line);
+
+            // Ensure we have all 8 fields
+            if (fields.Length < 8)
+            {
+                Console.WriteLine($"  ! Row {rowNumber}: Expected 8 fields, got {fields.Length}");
+                return null;
+            }
+
+            // CSV columns: No, Rules, PrasaYati, Yathi, Reference, Name, Identifier, Full Name
+            var rulesText = fields[1];
+            var yatiText = fields[3];
+            var reference = fields[4];
+            var name = fields[5];
+            var identifier = fields[6];
+            var fullName = fields[7];
+
+            // Format name with alias: "name (alias)" if alias exists
+            var formattedName = FormatNameWithAlias(name, fullName, rowNumber);
+
+            var rule = new Rule
+            {
+                Identifier = identifier,
+                Name = formattedName,
+                Language = RuleLanguage.Telugu,
+                PadyamType = PadyamType.Vruttam,
+                PadyamSubType = PadyamSubType.Vruttam,
+                RuleType = RuleType.Name,
+                Frequency = Frequency.Rare,
+                Lines = 4,
+                YatiMode = YatiMode.CharPosition,
+                Prasa = true,
+                PrasaYati = false,
+
+                Rules = ParseRulesColumn(rulesText),
+                Yati = ParseYatiColumn(yatiText),
+                References = string.IsNullOrWhiteSpace(reference) ? null : new string[] { reference }
+            };
+
+            // Calculate threshold based on gana count
+            var charLength = rule.Rules[0].Length;
+            rule.Threshold = charLength >= 3 ? 3 : charLength;
+
+            return rule;
+        }
+
+        /// <summary>
+        /// Parse CSV line handling quoted fields with commas
+        /// </summary>
+        private string[] ParseCsvLine(string line)
+        {
+            var fields = new List<string>();
+            var inQuotes = false;
+            var field = new StringBuilder();
+
+            for (int i = 0; i < line.Length; i++)
+            {
+                if (line[i] == '"')
+                {
+                    inQuotes = !inQuotes;
+                }
+                else if (line[i] == ',' && !inQuotes)
+                {
+                    fields.Add(field.ToString());
+                    field.Clear();
+                }
+                else
+                {
+                    field.Append(line[i]);
+                }
+            }
+            fields.Add(field.ToString());
+
+            return fields.ToArray();
+        }
+
+        /// <summary>
+        /// Split Telugu gana string into individual characters
+        /// </summary>
+        private object[][] ParseRulesColumn(string rulesText)
+        {
+            if (string.IsNullOrWhiteSpace(rulesText))
+                return new object[0][];
+
+            var ganas = new List<string>();
+            var si = new StringInfo(rulesText);
+
+            for (int i = 0; i < si.LengthInTextElements; i++)
+            {
+                ganas.Add(si.SubstringByTextElements(i, 1));
+            }
+
+            // Return as single row (Lines=4 handles repetition)
+            return new object[][] { ganas.ToArray() };
+        }
+
+        /// <summary>
+        /// Parse Yati column into int array
+        /// </summary>
+        private int[][] ParseYatiColumn(string yatiText)
+        {
+            if (yatiText == "No" || string.IsNullOrWhiteSpace(yatiText))
+                return new int[0][];
+
+            var numbers = yatiText.Split(',')
+                .Select(s => int.Parse(s.Trim()))
+                .ToArray();
+
+            return new int[][] { numbers };
+        }
+
+        /// <summary>
+        /// Format name with alias in parentheses: "name (alias)"
+        /// Alias is extracted from Full Name (text after first comma)
+        /// </summary>
+        private string FormatNameWithAlias(string name, string fullName, int rowNumber)
+        {
+            if (string.IsNullOrWhiteSpace(fullName))
+                return name;
+
+            // Validate name matches the main part of fullName (before comma)
+            var commaIndex = fullName.IndexOf(',');
+            var mainName = commaIndex > 0 ? fullName.Substring(0, commaIndex).Trim() : fullName.Trim();
+
+            if (name != mainName)
+            {
+                Console.WriteLine($"  ! Row {rowNumber}: Name '{name}' doesn't match Full Name main part '{mainName}'");
+            }
+
+            // Extract alias (text after comma)
+            if (commaIndex > 0 && commaIndex < fullName.Length - 1)
+            {
+                var alias = fullName.Substring(commaIndex + 1).Trim();
+                if (!string.IsNullOrWhiteSpace(alias))
+                {
+                    return $"{name} ({alias})";
+                }
+            }
+
+            return name;
         }
     }
 
