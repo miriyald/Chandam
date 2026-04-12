@@ -1,5 +1,6 @@
 import type { RuleSummaryDetailed } from '../types';
 import { groupRulesByCategory, getSortedGroupKeys } from '../utils/rule-grouping';
+import { t } from '../i18n';
 
 /**
  * Renders rule picker list inside the <details> dropdown container
@@ -71,13 +72,13 @@ function initializeRulePicker(defaultRule?: { id: string; name: string } | null)
     // Auto-select first rule by default
     details.dataset.selectedRule = defaultRule.id;
     if (summary) {
-      summary.textContent = `Matching with: ${defaultRule.name} ▼`;
+      summary.textContent = `${t('editor_matching_with')} ${defaultRule.name} ▼`;
     }
   } else if (details) {
     // No selection
     details.dataset.selectedRule = '';
     if (summary) {
-      summary.textContent = 'Matching with: Select a rule ▼';
+      summary.textContent = `${t('editor_matching_with')} ${t('editor_select_rule')}`;
     }
   }
 
@@ -116,7 +117,7 @@ export function setSelectedRule(ruleId: string, ruleName: string): void {
   // Update summary text to show selected rule
   const summary = document.getElementById('selected-rule-name');
   if (summary) {
-    summary.textContent = `Matching with: ${ruleName} ▼`;
+    summary.textContent = `${t('editor_matching_with')} ${ruleName} ▼`;
   }
 
   // Store selected rule ID in dataset

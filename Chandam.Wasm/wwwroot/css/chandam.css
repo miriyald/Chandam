@@ -97,6 +97,24 @@ nav a:hover {
   float: right;
 }
 
+.lang-toggle {
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  color: var(--color-header-text);
+  font-family: var(--font-main);
+  font-size: 0.85rem;
+  padding: 0.25rem 0.6rem;
+  cursor: pointer;
+  border-radius: 3px;
+  margin-left: 0.5rem;
+  vertical-align: middle;
+  transition: background 0.15s;
+}
+
+.lang-toggle:hover {
+  background: rgba(255, 255, 255, 0.15);
+}
+
 @media (max-width: 768px) {
   #nav-toggle {
     display: block;

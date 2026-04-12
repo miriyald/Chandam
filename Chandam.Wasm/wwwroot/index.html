@@ -15,17 +15,20 @@
         <div class="container">
             <h1>ఛందం</h1>
             <nav id="main-nav">
-                <a href="/">Home</a>
-                <a href="/about">About</a>
-                <a href="/credits">Credits</a>
-                <a href="/contact">Contact</a>
+                <a href="/" data-i18n="nav_home">Home</a>
+                <a href="/about" data-i18n="nav_about">About</a>
+                <a href="/credits" data-i18n="nav_credits">Credits</a>
+                <a href="/contact" data-i18n="nav_contact">Contact</a>
             </nav>
+            <button id="lang-toggle" class="lang-toggle" title="Switch language / భాష మార్చండి" aria-label="Switch interface language">
+                <span class="lang-current">EN</span>
+            </button>
             <button id="nav-toggle" aria-label="Toggle navigation">☰</button>
         </div>
     </header>
 
     <main id="content">
-        <p>Loading...</p>
+        <p data-i18n="loading">Loading...</p>
     </main>
 
     <footer>

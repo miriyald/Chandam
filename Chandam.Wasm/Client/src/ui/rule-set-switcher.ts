@@ -1,6 +1,7 @@
 import { RULE_SETS, getRuleSet } from '../config';
 import { WasmBridge } from '../wasm-bridge';
 import { renderRulePicker } from './rule-picker';
+import { t } from '../i18n';
 
 export function renderRuleSetSwitcher(containerId: string) {
   const container = document.getElementById(containerId);
@@ -53,7 +54,7 @@ export async function switchRuleSet(ruleSetId: string) {
     }
   } catch (err) {
     console.error('Failed to switch rule set:', err);
-    alert('లోపం సంభవించింది (Error occurred)');
+    alert(t('alert_error'));
   } finally {
     // Hide loading indicator
     if (indicator) indicator.style.display = 'none';

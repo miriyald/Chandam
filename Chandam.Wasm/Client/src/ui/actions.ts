@@ -2,11 +2,12 @@ import { WasmBridge } from '../wasm-bridge';
 import { getEditorText, setEditorText, clearEditor } from './editor';
 import { getSelectedRule } from './rule-picker';
 import { renderFirstMatch, hideResults } from './results';
+import { t } from '../i18n';
 
 export async function handleDetermineAndShowResults() {
   const poemText = getEditorText();
   if (!poemText.trim()) {
-    alert('దయచేసి పద్యం టెక్స్ట్ ఇవ్వండి (Please enter poem text)');
+    alert(t('alert_enter_poem'));
     return;
   }
 
@@ -23,11 +24,11 @@ export async function handleDetermineAndShowResults() {
       const resultsSection = document.getElementById('results-section');
       if (resultsSection) resultsSection.style.display = 'block';
     } else {
-      alert(response.errorMessage || 'సరిపోలికలు దొరకలేదు (No matches found)');
+      alert(response.errorMessage || t('alert_no_matches'));
     }
   } catch (err) {
     console.error('Determine failed:', err);
-    alert('లోపం సంభవించింది (Error occurred)');
+    alert(t('alert_error'));
   }
 }
 
@@ -39,12 +40,12 @@ export async function handleMatch() {
   const ruleId = getSelectedRule();
 
   if (!poemText.trim()) {
-    alert('దయచేసి పద్యం టెక్స్ట్ ఇవ్వండి (Please enter poem text)');
+    alert(t('alert_enter_poem'));
     return;
   }
 
   if (!ruleId) {
-    alert('దయచేసి ఛందం ఎంచుకోండి (Please select a rule)');
+    alert(t('alert_select_rule'));
     // Add visual feedback to rule picker
     const rulePicker = document.getElementById('rule-picker-inline');
     if (rulePicker) {
@@ -66,18 +67,18 @@ export async function handleMatch() {
       const resultsSection = document.getElementById('results-section');
       if (resultsSection) resultsSection.style.display = 'block';
     } else {
-      alert(response.errorMessage || 'సరిపోలలేదు (No match)');
+      alert(response.errorMessage || t('alert_no_match'));
     }
   } catch (err) {
     console.error('Match failed:', err);
-    alert('లోపం సంభవించింది (Error occurred)');
+    alert(t('alert_error'));
   }
 }
 
 export async function handleRandom() {
   const ruleId = getSelectedRule();
   if (!ruleId) {
-    alert('దయచేసి ఛందం ఎంచుకోండి (Please select a rule)');
+    alert(t('alert_select_rule'));
     return;
   }
 
@@ -86,7 +87,7 @@ export async function handleRandom() {
     if (poem) {
       setEditorText(poem);
     } else {
-      alert('ఉదాహరణలు అందుబాటులో లేవు (No examples available)');
+      alert(t('alert_no_examples'));
     }
   } catch (err) {
     console.error('Random poem failed:', err);

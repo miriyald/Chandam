@@ -2,6 +2,8 @@ import { WasmBridge } from '../wasm-bridge';
 import { getRuleSet } from '../config';
 import type { RuleInfo } from '../types';
 import { makeUrl, makeUrlWithParams } from '../utils/url-helpers';
+import { loadRuleSet } from '../utils/rule-loader';
+import { t } from '../i18n';
 
 // Main function: Render learn detail page
 export async function renderLearnDetailPage(ruleSet: string, ruleId: string) {
@@ -21,18 +23,6 @@ export async function renderLearnDetailPage(ruleSet: string, ruleId: string) {
   renderLearnDetailPageHtml(ruleSetConfig.name, ruleSet, ruleInfo);
 }
 
-// Helper: Load rule set if needed
-async function loadRuleSet(rulesFile: string, examplesFile: string) {
-  try {
-    const result = await WasmBridge.reloadRules(rulesFile, examplesFile);
-    if (!result.success) {
-      console.error('Failed to load rules:', result.errorMessage);
-    }
-  } catch (err) {
-    console.error('Failed to load rule set:', err);
-  }
-}
-
 // Helper: Render page HTML
 function renderLearnDetailPageHtml(
   ruleSetName: string,
@@ -45,34 +35,34 @@ function renderLearnDetailPageHtml(
   content.innerHTML = `
     <div class="learn-detail-page">
       <div class="page-links">
-        <a href="${makeUrl(`/compute/${ruleSetId}/${ruleInfo.identifier}`)}" class="compute-link">Try in Compute</a>
-        <a href="${makeUrl(`/learn/${ruleSetId}/`)}" class="browse-link">← Back to Browse</a>
+        <a href="${makeUrl(`/compute/${ruleSetId}/${ruleInfo.identifier}`)}" class="compute-link">${t('link_try_in_compute')}</a>
+        <a href="${makeUrl(`/learn/${ruleSetId}/`)}" class="browse-link">${t('link_back_to_browse')}</a>
       </div>
 
       <h1 class="meter-name">${ruleInfo.name}</h1>
       <div class="rule-metadata">
-        <span>Rule Set: ${ruleSetName}</span> |
-        <span>Type: ${ruleInfo.padyamType}</span> |
-        <span>Frequency: ${ruleInfo.frequency}</span>
+        <span>${t('label_rule_set')} ${ruleSetName}</span> |
+        <span>${t('label_type')} ${ruleInfo.padyamType}</span> |
+        <span>${t('label_frequency')} ${ruleInfo.frequency}</span>
       </div>
 
       <section class="description">
-        <h2>Description</h2>
-        <p>${ruleInfo.description || 'No description available'}</p>
+        <h2>${t('section_description')}</h2>
+        <p>${ruleInfo.description || t('no_description')}</p>
       </section>
 
       <section class="technical-details">
-        <h2>Technical Details</h2>
+        <h2>${t('section_technical')}</h2>
         <dl>
-          ${ruleInfo.sequence ? `<dt>Pattern (Sequence):</dt><dd><code>${ruleInfo.sequence}</code></dd>` : ''}
-          ${ruleInfo.matraSeries ? `<dt>Matra Series:</dt><dd><code>${ruleInfo.matraSeries}</code></dd>` : ''}
-          ${ruleInfo.yatiMode ? `<dt>Yati (Caesura):</dt><dd>${ruleInfo.yatiMode}</dd>` : ''}
-          ${ruleInfo.prasa !== undefined ? `<dt>Prasa (Rhyme):</dt><dd>${ruleInfo.prasa ? 'Yes' : 'No'}</dd>` : ''}
+          ${ruleInfo.sequence ? `<dt>${t('label_pattern_sequence')}</dt><dd><code>${ruleInfo.sequence}</code></dd>` : ''}
+          ${ruleInfo.matraSeries ? `<dt>${t('label_matra_series')}</dt><dd><code>${ruleInfo.matraSeries}</code></dd>` : ''}
+          ${ruleInfo.yatiMode ? `<dt>${t('label_yati_caesura')}</dt><dd>${ruleInfo.yatiMode}</dd>` : ''}
+          ${ruleInfo.prasa !== undefined ? `<dt>${t('label_prasa_rhyme')}</dt><dd>${ruleInfo.prasa ? t('label_yes') : t('label_no')}</dd>` : ''}
         </dl>
       </section>
 
       <section class="examples">
-        <h2>Examples (${ruleInfo.examples?.length || 0})</h2>
+        <h2>${t('section_examples')} (${ruleInfo.examples?.length || 0})</h2>
         ${renderExamples(ruleInfo.examples, ruleSetId, ruleInfo.identifier)}
       </section>
     </div>
@@ -86,19 +76,19 @@ function renderExamples(
   ruleId: string
 ): string {
   if (!examples || examples.length === 0) {
-    return '<p>No examples available</p>';
+    return `<p>${t('no_examples')}</p>`;
   }
 
   return examples.map((example, idx) => {
     const exampleNumber = idx + 1; // 1-based numbering
     return `
       <div class="example-card">
-        <h3>Example ${exampleNumber}</h3>
+        <h3>${t('label_example_n')} ${exampleNumber}</h3>
         <pre class="poem-text">${escapeHtml(example.text)}</pre>
-        ${example.author ? `<p class="metadata"><strong>Author:</strong> ${escapeHtml(example.author)}</p>` : ''}
-        ${example.date ? `<p class="metadata"><strong>Date:</strong> ${escapeHtml(example.date)}</p>` : ''}
+        ${example.author ? `<p class="metadata"><strong>${t('label_author')}</strong> ${escapeHtml(example.author)}</p>` : ''}
+        ${example.date ? `<p class="metadata"><strong>${t('label_date')}</strong> ${escapeHtml(example.date)}</p>` : ''}
         <a href="${makeUrlWithParams(`/compute/${ruleSetId}/${ruleId}`, { example: exampleNumber })}" class="try-example-btn">
-          Try This Example
+          ${t('btn_try_example')}
         </a>
       </div>
     `;

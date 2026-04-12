@@ -1,6 +1,7 @@
 import type { ChandamMatch, MatchError } from '../types';
 import { openAccordion } from './accordion';
 import { makeUrl } from '../utils/url-helpers';
+import { t } from '../i18n';
 
 export function renderResults(matches: ChandamMatch[], containerId: string, ruleSet?: string) {
   const container = document.getElementById(containerId);
@@ -39,7 +40,7 @@ function renderMatchCard(match: ChandamMatch, ruleSet?: string): string {
 
   // Generate rule details link (opens in new tab)
   const ruleLink = ruleSet && match.rule.identifier
-    ? `<a href="${makeUrl(`/learn/${ruleSet}/${match.rule.identifier}/`)}" class="rule-details-link" target="_blank" rel="noopener noreferrer">View Rule Details ↗</a>`
+    ? `<a href="${makeUrl(`/learn/${ruleSet}/${match.rule.identifier}/`)}" class="rule-details-link" target="_blank" rel="noopener noreferrer">${t('results_view_details')}</a>`
     : '';
 
   // Enhanced error display (table format)
@@ -48,7 +49,7 @@ function renderMatchCard(match: ChandamMatch, ruleSet?: string): string {
     : '';
 
   // CONDITIONAL RENDERING based on match percentage
-  let bodyHtml = '';
+  let bodyHtml: string;
 
   if (match.matchPercentage === 100 && match.beautified) {
     // 100% match: Show beautified poem (left) + gana vibhajana table (right)
@@ -101,7 +102,7 @@ function getScoreLevel(percentage: number): string {
 // Render errors as a table
 function renderErrorsTable(errors: MatchError[]): string {
   const errorCount = errors.length;
-  const errorLabel = errorCount === 1 ? 'Mismatch' : 'Mismatches';
+  const errorLabel = errorCount === 1 ? t('results_mismatch_singular') : t('results_mismatch_plural');
 
   const errorRows = errors.map(err => `
     <tr>
@@ -121,12 +122,12 @@ function renderErrorsTable(errors: MatchError[]): string {
         <table class="errors-table">
           <thead>
             <tr>
-              <th>Line</th>
-              <th>Pos</th>
-              <th>Type</th>
-              <th>Expected</th>
-              <th>Actual</th>
-              <th>Description</th>
+              <th>${t('results_line')}</th>
+              <th>${t('results_position')}</th>
+              <th>${t('results_type')}</th>
+              <th>${t('results_expected')}</th>
+              <th>${t('results_actual')}</th>
+              <th>${t('results_description')}</th>
             </tr>
           </thead>
           <tbody>

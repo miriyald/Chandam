@@ -5,6 +5,8 @@ import { renderRulePage } from './ui/rule-page';
 import { renderLearnIndexPage } from './ui/learn-index-page';
 import { renderLearnDetailPage } from './ui/learn-detail-page';
 import { validateRuleSet, validateRule, handleInvalidRuleSet, handleInvalidRule } from './utils/error-handlers';
+import { initLanguage, toggleLanguage, getLanguage, t } from './i18n';
+import type { Translations } from './i18n';
 
 const router = new Router();
 
@@ -66,10 +68,42 @@ router.register('/about', () => loadStaticPage('pages/about.html'));
 router.register('/credits', () => loadStaticPage('pages/credits.html'));
 router.register('/contact', () => loadStaticPage('pages/contact.html'));
 
-// Nav toggle for mobile
+// Apply current language to static nav elements and lang toggle button
+function applyLanguageToPage(): void {
+  document.documentElement.lang = getLanguage();
+
+  // Update elements with data-i18n attribute (static nav links, loading text)
+  document.querySelectorAll<HTMLElement>('[data-i18n]').forEach(el => {
+    const key = el.getAttribute('data-i18n') as keyof Translations;
+    el.textContent = t(key);
+  });
+
+  // Update language toggle button label
+  const langToggle = document.getElementById('lang-toggle');
+  if (langToggle) {
+    langToggle.title = t('lang_toggle_title');
+    const span = langToggle.querySelector('.lang-current');
+    if (span) span.textContent = t('lang_name');
+  }
+}
+
+// Re-render current page when the user switches languages
+window.addEventListener('languagechange', () => {
+  applyLanguageToPage();
+  router.route();
+});
+
+// Nav toggle for mobile and language toggle initialization
 document.addEventListener('DOMContentLoaded', () => {
+  initLanguage();
+  applyLanguageToPage();
+
   document.getElementById('nav-toggle')?.addEventListener('click', () => {
     document.getElementById('main-nav')?.classList.toggle('open');
+  });
+
+  document.getElementById('lang-toggle')?.addEventListener('click', () => {
+    toggleLanguage();
   });
 });
 

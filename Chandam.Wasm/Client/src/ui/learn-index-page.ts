@@ -3,6 +3,8 @@ import { getRuleSet } from '../config';
 import type { RuleSummaryDetailed } from '../types';
 import { groupRulesByCategory, getSortedGroupKeys } from '../utils/rule-grouping';
 import { makeUrl } from '../utils/url-helpers';
+import { loadRuleSet } from '../utils/rule-loader';
+import { t } from '../i18n';
 
 // Main function: Render learn index page
 export async function renderLearnIndexPage(ruleSet: string) {
@@ -25,18 +27,6 @@ export async function renderLearnIndexPage(ruleSet: string) {
   renderLearnIndexPageHtml(ruleSetConfig.name, rules.length, ruleSet, grouped);
 }
 
-// Helper: Load rule set if needed
-async function loadRuleSet(rulesFile: string, examplesFile: string) {
-  try {
-    const result = await WasmBridge.reloadRules(rulesFile, examplesFile);
-    if (!result.success) {
-      console.error('Failed to load rules:', result.errorMessage);
-    }
-  } catch (err) {
-    console.error('Failed to load rule set:', err);
-  }
-}
-
 
 // Helper: Render page HTML
 function renderLearnIndexPageHtml(
@@ -50,11 +40,11 @@ function renderLearnIndexPageHtml(
 
   content.innerHTML = `
     <div class="learn-index-page">
-      <h1>Learn: ${ruleSetName}</h1>
-      <div class="rule-count">${ruleCount} Rules</div>
+      <h1>${t('learn_title_prefix')} ${ruleSetName}</h1>
+      <div class="rule-count">${ruleCount} ${t('label_rules_count')}</div>
 
       <div class="page-links">
-        <a href="${makeUrl(`/compute/${ruleSetId}/`)}" class="compute-link">Go to Compute</a>
+        <a href="${makeUrl(`/compute/${ruleSetId}/`)}" class="compute-link">${t('link_go_to_compute')}</a>
       </div>
 
       <div class="chandam-groups">
@@ -90,17 +80,17 @@ function renderRuleListItem(rule: RuleSummaryDetailed, ruleSetId: string): strin
   // Show char length range (if available and not -1)
   if (rule.min && rule.max && rule.min !== -1 && rule.max !== -1) {
     if (rule.min === rule.max) {
-      metadata.push(`${rule.min} chars`);
+      metadata.push(`${rule.min} ${t('metric_chars')}`);
     } else {
-      metadata.push(`${rule.min}-${rule.max} chars`);
+      metadata.push(`${rule.min}-${rule.max} ${t('metric_chars')}`);
     }
   } else if (rule.charLength && rule.charLength !== -1) {
-    metadata.push(`${rule.charLength} chars`);
+    metadata.push(`${rule.charLength} ${t('metric_chars')}`);
   }
 
   // Show matra length (if available and not -1)
   if (rule.matraLength && rule.matraLength !== -1) {
-    metadata.push(`${rule.matraLength} matras`);
+    metadata.push(`${rule.matraLength} ${t('metric_matras')}`);
   }
 
   // Don't show frequency (removed per user request)
@@ -110,8 +100,8 @@ function renderRuleListItem(rule: RuleSummaryDetailed, ruleSetId: string): strin
       <div class="rule-name meter-name">${rule.name}</div>
       <div class="rule-meta">${metadata.join(' | ')}</div>
       <div class="rule-links">
-        <a href="${makeUrl(`/learn/${ruleSetId}/${rule.identifier}`)}">Learn</a>
-        <a href="${makeUrl(`/compute/${ruleSetId}/${rule.identifier}`)}">Try</a>
+        <a href="${makeUrl(`/learn/${ruleSetId}/${rule.identifier}`)}">${t('link_learn')}</a>
+        <a href="${makeUrl(`/compute/${ruleSetId}/${rule.identifier}`)}">${t('link_try')}</a>
       </div>
     </div>
   `;

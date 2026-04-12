@@ -7,6 +7,8 @@ import { renderFirstMatch } from './results';
 import { getEditorText } from './editor';
 import type { RuleSummaryDetailed } from '../types';
 import { makeUrl } from '../utils/url-helpers';
+import { loadRuleSet } from '../utils/rule-loader';
+import { t } from '../i18n';
 
 // Track last analyzed rule (from either Determine or Match) for smart auto-select
 let lastAnalyzedRule: { id: string; name: string } | null = null;
@@ -47,19 +49,7 @@ export async function renderRuleSetPage(ruleSet: string) {
   renderRulePicker(rules, 'rule-picker-container');
 
   // Step 5: Attach event handlers
-  attachEventHandlers(ruleSet);
-}
-
-// Step 1: Load rule set if needed
-async function loadRuleSet(rulesFile: string, examplesFile: string) {
-  try {
-    const result = await WasmBridge.reloadRules(rulesFile, examplesFile);
-    if (!result.success) {
-      console.error('Failed to load rules:', result.errorMessage);
-    }
-  } catch (err) {
-    console.error('Failed to load rule set:', err);
-  }
+  attachEventHandlers();
 }
 
 // Step 3: Render page HTML
@@ -70,23 +60,23 @@ function renderRuleSetPageHtml(ruleSetName: string, ruleCount: number, ruleSetId
   content.innerHTML = `
     <div class="compute-rule-set-page">
       <div class="rule-set-info">
-        <span class="label">Rule Set:</span>
+        <span class="label">${t('label_rule_set')}</span>
         <span class="name">${ruleSetName}</span>
-        <span class="count">[${ruleCount} Rules]</span>
+        <span class="count">[${ruleCount} ${t('label_rules_count')}]</span>
       </div>
 
       <div class="page-links">
-        <a href="${makeUrl(`/learn/${ruleSetId}/`)}" class="learn-link">Browse Rules</a>
+        <a href="${makeUrl(`/learn/${ruleSetId}/`)}" class="learn-link">${t('link_browse_rules')}</a>
       </div>
 
       ${renderEditorCard({
-        contextText: 'Auto-detecting best match...',
+        contextText: t('editor_auto_detect_context'),
         showRulePicker: true,
         showAutoDetect: true
       })}
 
       <div id="results-section" style="display: none;">
-        <h3>Results</h3>
+        <h3>${t('results_title')}</h3>
         <div id="results-container"></div>
       </div>
     </div>
@@ -94,7 +84,7 @@ function renderRuleSetPageHtml(ruleSetName: string, ruleCount: number, ruleSetId
 }
 
 // Step 5: Attach event handlers
-function attachEventHandlers(ruleSet: string) {
+function attachEventHandlers() {
   // Auto-detect toggle handler
   document.getElementById('auto-detect')?.addEventListener('change', (e) => {
     const isAutoDetect = (e.target as HTMLInputElement).checked;
@@ -131,7 +121,7 @@ function attachEventHandlers(ruleSet: string) {
         const editor = document.getElementById('poem-editor') as HTMLTextAreaElement;
         if (editor) editor.value = poem;
       } else {
-        alert('ఉదాహరణలు అందుబాటులో లేవు (No examples available)');
+        alert(t('alert_no_examples'));
       }
     } catch (err) {
       console.error('Random poem failed:', err);
@@ -148,7 +138,7 @@ function attachEventHandlers(ruleSet: string) {
 async function handleDetermineWithTracking() {
   const poemText = getEditorText();
   if (!poemText.trim()) {
-    alert('దయచేసి పద్యం టెక్స్ట్ ఇవ్వండి (Please enter poem text)');
+    alert(t('alert_enter_poem'));
     return;
   }
 
@@ -173,11 +163,11 @@ async function handleDetermineWithTracking() {
       const resultsSection = document.getElementById('results-section');
       if (resultsSection) resultsSection.style.display = 'block';
     } else {
-      alert(response.errorMessage || 'సరిపోలికలు దొరకలేదు (No matches found)');
+      alert(response.errorMessage || t('alert_no_matches'));
     }
   } catch (err) {
     console.error('Determine failed:', err);
-    alert('లోపం సంభవించింది (Error occurred)');
+    alert(t('alert_error'));
   }
 }
 
@@ -187,12 +177,12 @@ async function handleMatchWithTracking() {
   const ruleId = getSelectedRule();
 
   if (!poemText.trim()) {
-    alert('దయచేసి పద్యం టెక్స్ట్ ఇవ్వండి (Please enter poem text)');
+    alert(t('alert_enter_poem'));
     return;
   }
 
   if (!ruleId) {
-    alert('దయచేసి ఛందం ఎంచుకోండి (Please select a rule)');
+    alert(t('alert_select_rule'));
     // Add visual feedback to rule picker
     const rulePicker = document.getElementById('rule-picker-inline');
     if (rulePicker) {
@@ -223,10 +213,10 @@ async function handleMatchWithTracking() {
       const resultsSection = document.getElementById('results-section');
       if (resultsSection) resultsSection.style.display = 'block';
     } else {
-      alert(response.errorMessage || 'సరిపోలలేదు (No match)');
+      alert(response.errorMessage || t('alert_no_match'));
     }
   } catch (err) {
     console.error('Match failed:', err);
-    alert('లోపం సంభవించింది (Error occurred)');
+    alert(t('alert_error'));
   }
 }

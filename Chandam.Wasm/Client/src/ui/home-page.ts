@@ -1,5 +1,6 @@
 import { RULE_SETS } from '../config';
 import { makeUrl } from '../utils/url-helpers';
+import { t } from '../i18n';
 
 // Main function: Render homepage with rule set cards
 export function renderHomePage() {
@@ -8,8 +9,8 @@ export function renderHomePage() {
 
   content.innerHTML = `
     <div class="home-page">
-      <h1>ఛందం - Telugu Poetry Meter Analysis</h1>
-      <p class="subtitle">Select a rule set to begin analyzing or learning about Telugu poetry meters</p>
+      <h1>${t('home_title')}</h1>
+      <p class="subtitle">${t('home_subtitle')}</p>
 
       <div class="rule-set-cards">
         ${RULE_SETS.map(ruleSet => renderRuleSetCard(ruleSet)).join('')}
@@ -25,11 +26,11 @@ function renderRuleSetCard(ruleSet: { id: string; name: string; description: str
   return `
     <div class="rule-set-card">
       <h2 class="meter-name">${ruleSet.name}</h2>
-      <div class="rule-count">${ruleCount} Rules</div>
+      <div class="rule-count">${ruleCount} ${t('label_rules_count')}</div>
       <p class="description">${ruleSet.description}</p>
       <div class="card-actions">
-        <a href="${makeUrl(`/compute/${ruleSet.id}/`)}" class="btn-analyze">✏️ Analyze</a>
-        <a href="${makeUrl(`/learn/${ruleSet.id}/`)}" class="btn-learn">📖 Learn</a>
+        <a href="${makeUrl(`/compute/${ruleSet.id}/`)}" class="btn-analyze">${t('home_btn_analyze')}</a>
+        <a href="${makeUrl(`/learn/${ruleSet.id}/`)}" class="btn-learn">${t('home_btn_learn')}</a>
       </div>
     </div>
   `;

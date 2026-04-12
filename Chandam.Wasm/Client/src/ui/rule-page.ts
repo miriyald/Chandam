@@ -4,6 +4,8 @@ import { renderFirstMatch, hideResults } from './results';
 import { clearEditor } from './editor';
 import { renderEditorCard } from './shared-components';
 import { makeUrl } from '../utils/url-helpers';
+import { loadRuleSet } from '../utils/rule-loader';
+import { t } from '../i18n';
 
 // Main function: Render specific rule page
 export async function renderRulePage(params: Record<string, string>) {
@@ -37,19 +39,7 @@ export async function renderRulePage(params: Record<string, string>) {
   );
 
   // Step 5: Attach event handlers
-  attachEventHandlers(ruleSet, ruleId);
-}
-
-// Helper: Load rule set if needed
-async function loadRuleSet(rulesFile: string, examplesFile: string) {
-  try {
-    const result = await WasmBridge.reloadRules(rulesFile, examplesFile);
-    if (!result.success) {
-      console.error('Failed to load rules:', result.errorMessage);
-    }
-  } catch (err) {
-    console.error('Failed to load rule set:', err);
-  }
+  attachEventHandlers(ruleId);
 }
 
 // Helper: Get example text based on URL params or random
@@ -123,29 +113,29 @@ function renderRulePageHtml(
   content.innerHTML = `
     <div class="compute-rule-page">
       <div class="rule-set-info">
-        <span class="label">Rule Set:</span>
+        <span class="label">${t('label_rule_set')}</span>
         <span class="name">${ruleSetName}</span>
-        <span class="count">[${ruleCount} Rules]</span>
+        <span class="count">[${ruleCount} ${t('label_rules_count')}]</span>
       </div>
 
       <div class="current-rule-info">
-        <span class="label">Rule:</span>
+        <span class="label">${t('label_rule')}</span>
         <span class="name meter-name">${ruleName}</span>
       </div>
 
       <div class="page-links">
-        <a href="${makeUrl(`/learn/${ruleSetId}/${ruleId}`)}" class="learn-link">Learn More</a>
-        <a href="${makeUrl(`/learn/${ruleSetId}/`)}" class="browse-link">Browse All Rules</a>
+        <a href="${makeUrl(`/learn/${ruleSetId}/${ruleId}`)}" class="learn-link">${t('link_learn_more')}</a>
+        <a href="${makeUrl(`/learn/${ruleSetId}/`)}" class="browse-link">${t('link_browse_all_rules')}</a>
       </div>
 
       ${renderEditorCard({
-        contextText: `Matching with: ${ruleName}`,
+        contextText: `${t('editor_matching_with')} ${ruleName}`,
         showRulePicker: false,
         showAutoDetect: false
       })}
 
       <div id="results-section" style="display: none;">
-        <h3>Results</h3>
+        <h3>${t('results_title')}</h3>
         <div id="results-container"></div>
       </div>
     </div>
@@ -159,14 +149,14 @@ function renderRulePageHtml(
 }
 
 // Step 5: Attach event handlers
-function attachEventHandlers(ruleSet: string, ruleId: string) {
+function attachEventHandlers(ruleId: string) {
   // Analyze button - always calls Match with fixed ruleId
   document.getElementById('btn-analyze')?.addEventListener('click', async () => {
     const editor = document.getElementById('poem-editor') as HTMLTextAreaElement;
     const poemText = editor?.value || '';
 
     if (!poemText.trim()) {
-      alert('దయచేసి పద్యం టెక్స్ట్ ఇవ్వండి (Please enter poem text)');
+      alert(t('alert_enter_poem'));
       return;
     }
 
@@ -182,11 +172,11 @@ function attachEventHandlers(ruleSet: string, ruleId: string) {
         const resultsSection = document.getElementById('results-section');
         if (resultsSection) resultsSection.style.display = 'block';
       } else {
-        alert(response.errorMessage || 'సరిపోలలేదు (No match)');
+        alert(response.errorMessage || t('alert_no_match'));
       }
     } catch (err) {
       console.error('Match failed:', err);
-      alert('లోపం సంభవించింది (Error occurred)');
+      alert(t('alert_error'));
     }
   });
 
@@ -198,7 +188,7 @@ function attachEventHandlers(ruleSet: string, ruleId: string) {
         const editor = document.getElementById('poem-editor') as HTMLTextAreaElement;
         if (editor) editor.value = poem;
       } else {
-        alert('ఉదాహరణలు అందుబాటులో లేవు (No examples available)');
+        alert(t('alert_no_examples'));
       }
     } catch (err) {
       console.error('Random poem failed:', err);
