@@ -201,7 +201,7 @@ const translations: Record<Language, Translations> = {
     label_rule: 'నియమం:',
     label_rules_count: 'నియమాలు',
     label_type: 'రకం:',
-    label_frequency: 'వారంవారిక:',
+    label_frequency: 'తరచుదనం:',
     label_yes: 'అవును',
     label_no: 'కాదు',
     label_example_n: 'ఉదాహరణ',

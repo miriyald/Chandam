@@ -49,6 +49,7 @@ function renderMatchCard(match: ChandamMatch, ruleSet?: string): string {
     : '';
 
   // CONDITIONAL RENDERING based on match percentage
+  // Declared without initializer — both branches assign before use; initializing '' would trigger no-useless-assignment lint error
   let bodyHtml: string;
 
   if (match.matchPercentage === 100 && match.beautified) {
