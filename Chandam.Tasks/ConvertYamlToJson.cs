@@ -125,8 +125,8 @@ namespace Verifier
             File.WriteAllText(minJsonFilePath, jsonContentMinified, Encoding.UTF8);
             Console.WriteLine($"  ✓ {Path.GetFileName(minJsonFilePath)} ({GetFileSize(minJsonFilePath)})");
 
-            // 3. Brotli compressed
-            CompressToBrotli(minJsonFilePath);
+            // 3. Gzip compressed (universal browser support)
+            CompressToGzip(minJsonFilePath);
         }
 
         /// <summary>
@@ -165,23 +165,23 @@ namespace Verifier
         }
 
         /// <summary>
-        /// Compress file using Brotli compression (quality 11 = maximum compression)
+        /// Compress file using Gzip compression (universal browser support via DecompressionStream API)
         /// </summary>
-        private void CompressToBrotli(string filePath)
+        private void CompressToGzip(string filePath)
         {
-            var brFilePath = filePath + ".br";
+            var gzFilePath = filePath + ".gz";
 
             try
             {
                 using (var inputStream = File.OpenRead(filePath))
-                using (var outputStream = File.Create(brFilePath))
-                using (var brotliStream = new BrotliStream(outputStream, CompressionLevel.SmallestSize))
+                using (var outputStream = File.Create(gzFilePath))
+                using (var gzipStream = new GZipStream(outputStream, CompressionLevel.SmallestSize))
                 {
-                    inputStream.CopyTo(brotliStream);
+                    inputStream.CopyTo(gzipStream);
                 }
 
                 // File must be fully closed before reading size
-                Console.WriteLine($"  ✓ Compressed to Brotli: {Path.GetFileName(brFilePath)} ({GetFileSize(brFilePath)})");
+                Console.WriteLine($"  ✓ Compressed to Gzip: {Path.GetFileName(gzFilePath)} ({GetFileSize(gzFilePath)})");
             }
             catch (Exception ex)
             {

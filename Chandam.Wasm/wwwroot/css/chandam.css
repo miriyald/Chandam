@@ -27,6 +27,11 @@
   --font-display: 'Timmana', 'Noto Sans Telugu', sans-serif;    /* 2. Display/Headers (meter names) */
   --font-editor: 'Suranna', 'Noto Sans Telugu', serif;          /* 3. Editor text */
   --font-main: 'Noto Sans Telugu', sans-serif;                  /* 4. Body/Table text */
+
+  /* Suranna font styling variables */
+  --font-editor-size: 1.1rem;
+  --font-editor-letter-spacing: 0.05em;
+  --font-editor-line-height: 1.8;
 }
 
 * {
@@ -168,6 +173,89 @@ footer a {
   font-size: 0.9rem;
 }
 
+/* ========================================
+   ANIMATED BRAND LOADERS
+   ======================================== */
+
+/* Container for loading animation - ALWAYS CENTERED */
+.loader-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.9);
+
+  /* Flexbox centering */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  z-index: 9999;
+  opacity: 1;
+  transition: opacity 0.5s ease-out;
+}
+
+/* Fade-out animation */
+.loader-container.fade-out {
+  opacity: 0;
+}
+
+/* Loader GIF - centered by parent flexbox */
+.loader-gif {
+  width: 128px;
+  height: 128px;
+
+  /* Preserve GIF quality */
+  image-rendering: crisp-edges;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: -webkit-optimize-contrast;
+
+  /* Prevent unwanted margins */
+  margin: 0;
+  display: block;
+}
+
+/* Fallback text (if GIF fails to load) */
+.loader-fallback {
+  color: #ffffff;
+  font-family: var(--font-main);
+  font-size: 1.2rem;
+  margin-top: 1rem;
+  text-align: center;
+}
+
+/* Initial loader specific styling */
+#initial-loader .loader-container {
+  background: var(--color-header-bg); /* Black background for initial load */
+}
+
+/* Dynamic loader overlay (appears over content) */
+#dynamic-loader-container .loader-container {
+  background: rgba(0, 0, 0, 0.95); /* Slightly more opaque */
+}
+
+/* Mobile responsive */
+@media (max-width: 768px) {
+  .loader-gif {
+    width: 96px;
+    height: 96px;
+  }
+
+  .loader-fallback {
+    font-size: 1rem;
+  }
+}
+
+/* Tablet */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .loader-gif {
+    width: 112px;
+    height: 112px;
+  }
+}
+
 .editor-section {
   margin-bottom: 1.5rem;
 }
@@ -177,8 +265,9 @@ footer a {
   min-height: 10rem;  /* Start with ~5 lines height */
   padding: 0.75rem;
   font-family: var(--font-editor);  /* Suranna serif font for poetry */
-  font-size: 1.75rem;
-  line-height: 1.9;
+  font-size: var(--font-editor-size);
+  letter-spacing: var(--font-editor-letter-spacing);
+  line-height: var(--font-editor-line-height);
   border-radius: 4px;
   resize: vertical;
 }
@@ -538,8 +627,9 @@ footer a {
 /* Inner poem text container */
 .poem {
   font-family: var(--font-editor);  /* Suranna serif for poetry */
-  font-size: 1.75rem;
-  line-height: 1.9;
+  font-size: var(--font-editor-size);
+  letter-spacing: var(--font-editor-letter-spacing);
+  line-height: var(--font-editor-line-height);
   color: #1a1a1a;
   white-space: normal;
   word-wrap: break-word;
@@ -1267,8 +1357,9 @@ footer a {
   padding: 0.875rem;
   margin: 1rem 0;
   font-family: var(--font-editor);  /* Suranna serif font for poetry */
-  font-size: 1.75rem;  /* Slightly larger for readability */
-  line-height: 1.9;  /* More generous line height for long poems */
+  font-size: var(--font-editor-size);
+  letter-spacing: var(--font-editor-letter-spacing);
+  line-height: var(--font-editor-line-height);
   border: 1px solid #d8d8d8;
   border-radius: 8px;
   resize: vertical;
@@ -1539,5 +1630,288 @@ footer a {
 @media (max-width: 480px) {
   .error-position {
     display: none;
+  }
+}
+
+/* ========== HTML Description Content ========== */
+.description-content {
+  line-height: 1.8;
+  color: var(--color-text);
+}
+
+.description-content h2 {
+  font-family: var(--font-main);
+  font-size: 1.35rem;
+  margin-top: 1.5rem;
+  margin-bottom: 0.75rem;
+  color: var(--color-header-bg);
+  border-bottom: 2px solid var(--color-header-bg);
+  padding-bottom: 0.5rem;
+}
+
+.description-content ul,
+.description-content ol {
+  margin-left: 1.5rem;
+  margin-bottom: 1rem;
+  list-style-position: outside;
+}
+
+.description-content ul {
+  list-style-type: disc;
+}
+
+.description-content li {
+  margin-bottom: 0.5rem;
+  line-height: 1.7;
+}
+
+.description-content code {
+  background: #f5f5f5;
+  padding: 0.25rem 0.5rem;
+  border-radius: 3px;
+  font-family: monospace;
+  font-size: 0.9em;
+  color: #c7254e;
+  border: 1px solid #e1e8ed;
+}
+
+.description-content p {
+  margin-bottom: 1rem;
+}
+
+.description-content strong {
+  font-weight: 700;
+}
+
+/* ========== Breadcrumb Navigation ========== */
+.breadcrumbs {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  padding: 0.75rem 0;
+  margin-bottom: 1.5rem;
+  font-size: 0.9rem;
+}
+
+.breadcrumb-link {
+  color: #0066cc;  /* Blue color for better visibility */
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.breadcrumb-link:hover {
+  color: var(--color-header-bg);
+  text-decoration: underline;
+}
+
+.breadcrumb-separator {
+  margin: 0 0.5rem;
+  color: #666;
+  user-select: none;
+}
+
+.breadcrumb-current {
+  color: var(--color-header-bg);
+  font-weight: 600;
+}
+
+/* Breadcrumb mode indicators (Learn/Compute) */
+.breadcrumb-modes {
+  display: inline-flex;
+  gap: 0.5rem;
+  margin-left: 0.5rem;
+}
+
+.breadcrumb-mode-link {
+  color: #0066cc;
+  text-decoration: none;
+  font-size: 0.85rem;
+  padding: 0.2rem 0.5rem;
+  border: 1px solid #0066cc;
+  border-radius: 3px;
+  transition: all 0.2s;
+}
+
+.breadcrumb-mode-link:hover {
+  background: #0066cc;
+  color: white;
+}
+
+.breadcrumb-mode-current {
+  background: var(--color-header-bg);
+  color: white;
+  font-size: 0.85rem;
+  padding: 0.2rem 0.5rem;
+  border: 1px solid var(--color-header-bg);
+  border-radius: 3px;
+}
+
+/* ========== Home Page Landing ========== */
+.home-page-landing {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+}
+
+.hero-section {
+  text-align: center;
+  margin-bottom: 4rem;
+}
+
+.hero-title {
+  font-family: var(--font-logo);
+  font-size: 4rem;
+  margin-bottom: 0.5rem;
+  text-shadow: -1px -1px 0 rgba(0, 0, 0, 0.3),
+    1px 1px 0 rgba(255, 255, 255, 0.8),
+    2px 2px 3px rgba(0, 0, 0, 0.2);
+}
+
+.hero-subtitle {
+  font-family: var(--font-display);
+  font-size: 1.75rem;
+  color: #555;
+  margin-bottom: 1.5rem;
+}
+
+.hero-description {
+  font-size: 1.15rem;
+  line-height: 1.8;
+  color: #666;
+  max-width: 700px;
+  margin: 0 auto 2rem;
+}
+
+.hero-actions {
+  margin-top: 2rem;
+}
+
+.btn-large {
+  font-size: 1.25rem;
+  padding: 1rem 2.5rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* ========== Quick Links Section ========== */
+.quick-links-section {
+  margin-top: 3rem;
+}
+
+.quick-links-section h3 {
+  text-align: center;
+  font-size: 1.5rem;
+  margin-bottom: 2rem;
+  color: var(--color-header-bg);
+}
+
+.quick-links-grid {
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.quick-link-card {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1rem 1.5rem;
+  background: #f9f9f9;
+  border: 2px solid #e0e0e0;
+  border-radius: 8px;
+  text-decoration: none;
+  color: var(--color-text);
+  transition: all 0.3s;
+  min-width: 150px;
+}
+
+.quick-link-card:hover {
+  border-color: var(--color-header-bg);
+  transform: translateY(-4px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.quick-link-icon {
+  font-size: 1.5rem;
+  flex-shrink: 0;
+}
+
+.quick-link-title {
+  font-size: 1rem;
+  font-weight: bold;
+  color: var(--color-header-bg);
+  white-space: nowrap;
+}
+
+.quick-link-desc {
+  display: none; /* Hide descriptions in horizontal layout */
+}
+
+/* ========== Rule Sets Page ========== */
+.rule-sets-page {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.rule-sets-page h1 {
+  text-align: center;
+  margin-bottom: 0.5rem;
+}
+
+.rule-sets-page .subtitle {
+  text-align: center;
+  font-size: 1.1rem;
+  color: #666;
+  margin-bottom: 2rem;
+}
+
+/* ========== Mobile Responsive Adjustments ========== */
+@media (max-width: 768px) {
+  .hero-title {
+    font-size: 2.5rem;
+  }
+
+  .hero-subtitle {
+    font-size: 1.35rem;
+  }
+
+  .hero-description {
+    font-size: 1rem;
+  }
+
+  .btn-large {
+    font-size: 1.1rem;
+    padding: 0.9rem 2rem;
+  }
+
+  .quick-links-grid {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .quick-link-card {
+    width: 100%;
+    max-width: 300px;
+    justify-content: center;
+  }
+
+  .breadcrumbs {
+    font-size: 0.85rem;
+  }
+
+  .breadcrumb-separator {
+    margin: 0 0.35rem;
+  }
+
+  .breadcrumb-modes {
+    margin-left: 0.35rem;
+    gap: 0.35rem;
+  }
+
+  .breadcrumb-mode-link,
+  .breadcrumb-mode-current {
+    font-size: 0.75rem;
+    padding: 0.15rem 0.4rem;
   }
 }

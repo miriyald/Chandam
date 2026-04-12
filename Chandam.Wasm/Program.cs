@@ -22,9 +22,8 @@ var host = builder.Build();
 // Store IServiceProvider for JsBridge
 ServiceAccessor.Services = host.Services;
 
-// Load rules before app starts
-var wasmLoader = host.Services.GetRequiredService<WasmRuleLoaderService>();
-await wasmLoader.InitializeAsync();
+// Don't load rules on startup - lazy load when needed!
+// Rules will be loaded when user navigates to compute/learn pages
 
 // Signal JavaScript that WASM is ready
 await host.Services.GetRequiredService<IJSRuntime>()

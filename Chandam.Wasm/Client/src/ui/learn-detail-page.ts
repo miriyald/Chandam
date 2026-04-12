@@ -2,6 +2,7 @@ import { WasmBridge } from '../wasm-bridge';
 import { getRuleSet } from '../config';
 import type { RuleInfo } from '../types';
 import { makeUrl, makeUrlWithParams } from '../utils/url-helpers';
+import { renderBreadcrumbs, buildRuleBreadcrumbs } from './breadcrumbs';
 
 // Main function: Render learn detail page
 export async function renderLearnDetailPage(ruleSet: string, ruleId: string) {
@@ -42,8 +43,12 @@ function renderLearnDetailPageHtml(
   const content = document.getElementById('content');
   if (!content) return;
 
+  const breadcrumbs = buildRuleBreadcrumbs(ruleSetId, ruleInfo.identifier, ruleInfo.name, 'learn');
+
   content.innerHTML = `
     <div class="learn-detail-page">
+      ${renderBreadcrumbs(breadcrumbs)}
+
       <div class="page-links">
         <a href="${makeUrl(`/compute/${ruleSetId}/${ruleInfo.identifier}`)}" class="compute-link">Try in Compute</a>
         <a href="${makeUrl(`/learn/${ruleSetId}/`)}" class="browse-link">← Back to Browse</a>
@@ -58,7 +63,9 @@ function renderLearnDetailPageHtml(
 
       <section class="description">
         <h2>Description</h2>
-        <p>${ruleInfo.description || 'No description available'}</p>
+        <div class="description-content">
+          ${ruleInfo.description || '<p>No description available</p>'}
+        </div>
       </section>
 
       <section class="technical-details">

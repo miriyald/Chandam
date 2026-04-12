@@ -148,7 +148,13 @@ export async function loadStaticPage(url: string) {
     if (response.ok) {
       content.innerHTML = await response.text();
     } else {
-      content.innerHTML = '<p>Page not found</p>';
+      // Load 404 page instead of inline text
+      const notFoundResponse = await fetch('pages/404.html');
+      if (notFoundResponse.ok) {
+        content.innerHTML = await notFoundResponse.text();
+      } else {
+        content.innerHTML = '<p>Page not found</p>';
+      }
     }
   } catch (err) {
     console.error('Failed to load page:', err);

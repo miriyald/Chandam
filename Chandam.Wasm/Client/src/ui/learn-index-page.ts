@@ -3,6 +3,7 @@ import { getRuleSet } from '../config';
 import type { RuleSummaryDetailed } from '../types';
 import { groupRulesByCategory, getSortedGroupKeys } from '../utils/rule-grouping';
 import { makeUrl } from '../utils/url-helpers';
+import { renderBreadcrumbs, buildRuleSetBreadcrumbs } from './breadcrumbs';
 
 // Main function: Render learn index page
 export async function renderLearnIndexPage(ruleSet: string) {
@@ -48,8 +49,12 @@ function renderLearnIndexPageHtml(
   const content = document.getElementById('content');
   if (!content) return;
 
+  const breadcrumbs = buildRuleSetBreadcrumbs(ruleSetId, 'learn');
+
   content.innerHTML = `
     <div class="learn-index-page">
+      ${renderBreadcrumbs(breadcrumbs)}
+
       <h1>Learn: ${ruleSetName}</h1>
       <div class="rule-count">${ruleCount} Rules</div>
 

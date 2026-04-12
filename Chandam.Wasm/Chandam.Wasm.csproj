@@ -4,8 +4,20 @@
     <TargetFramework>net8.0</TargetFramework>
     <Nullable>enable</Nullable>
     <Version>0.0.2</Version>
+
     <!-- Use browser's JS Intl APIs for globalization - drops ~400KB of ICU data -->
     <HybridGlobalization>true</HybridGlobalization>
+
+    <!-- Enable IL trimming (tree-shaking) to reduce size from ~9MB to ~4-5MB -->
+    <PublishTrimmed>true</PublishTrimmed>
+    <TrimMode>partial</TrimMode>
+
+    <!-- Compress Blazor assemblies using Brotli -->
+    <BlazorEnableCompression>true</BlazorEnableCompression>
+
+    <!-- Don't require wasm-tools workload (AOT is optional for production) -->
+    <RunAOTCompilation>false</RunAOTCompilation>
+
     <!-- Build with: dotnet publish -p:ExcludeYaml=true to strip YamlDotNet (~300KB savings) -->
   </PropertyGroup>
 
@@ -30,21 +42,25 @@
   <!-- Copy compressed rule files from Chandam.Config/Rules/ to wwwroot/data/ -->
   <Target Name="CopyCompressedRules" BeforeTargets="Build">
     <ItemGroup>
+      <!-- Only copy .min.json (fallback) and .gz (compressed) files -->
       <CompressedRuleFiles Include="..\Chandam.Config\Rules\*.min.json" />
-      <CompressedRuleFiles Include="..\Chandam.Config\Rules\*.min.json.br" />
+      <CompressedRuleFiles Include="..\Chandam.Config\Rules\*.min.json.gz" />
     </ItemGroup>
     <Copy SourceFiles="@(CompressedRuleFiles)" DestinationFolder="wwwroot\data\" SkipUnchangedFiles="true" />
-    <Message Text="Copied compressed rule files to wwwroot/data/" Importance="high" />
+    <Message Text="Copied rule files (uncompressed + gzip) to wwwroot/data/" Importance="high" />
   </Target>
 
-  <!-- Copy branding assets (favicon GIFs) from Chandam.Branding/out/ to wwwroot/images/ -->
-  <Target Name="CopyBrandingAssets" BeforeTargets="Build">
+  <!-- Copy branding loader GIFs from Chandam.Branding/out/ to wwwroot/images/ -->
+  <Target Name="CopyBrandingAssets" BeforeTargets="Build" Condition="Exists('..\Chandam.Branding\out\')">
     <ItemGroup>
-      <!-- Only copy the optimized favicon (2.9 KB), not the large icon variants (114-945 KB) -->
-      <BrandingGifFiles Include="..\Chandam.Branding\out\favicon-animated-32.gif" />
+      <!-- Loader animations for WASM (114-945 KB) - only copy if source exists -->
+      <BrandingGifFiles Include="..\Chandam.Branding\out\chandam-icon-circles.gif" Condition="Exists('..\Chandam.Branding\out\chandam-icon-circles.gif')" />
+      <BrandingGifFiles Include="..\Chandam.Branding\out\chandam-icon-squares.gif" Condition="Exists('..\Chandam.Branding\out\chandam-icon-squares.gif')" />
+      <BrandingGifFiles Include="..\Chandam.Branding\out\chandam-icon-telugu.gif" Condition="Exists('..\Chandam.Branding\out\chandam-icon-telugu.gif')" />
     </ItemGroup>
-    <Copy SourceFiles="@(BrandingGifFiles)" DestinationFolder="wwwroot\images\" SkipUnchangedFiles="true" />
-    <Message Text="Copied optimized favicon to wwwroot/images/" Importance="high" />
+    <Copy SourceFiles="@(BrandingGifFiles)" DestinationFolder="wwwroot\images\" SkipUnchangedFiles="true" ContinueOnError="true" />
+    <Message Text="Copied branding loader GIFs to wwwroot/images/" Importance="high" Condition="'@(BrandingGifFiles)' != ''" />
+    <Message Text="Branding assets not found - using pre-committed files in wwwroot/images/" Importance="normal" Condition="'@(BrandingGifFiles)' == ''" />
   </Target>
 
   <!-- Inject version into published index.html -->

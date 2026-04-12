@@ -39,7 +39,7 @@ export interface ChandamMatch {
 export interface RuleInfo {
   identifier: string;
   name: string;
-  description?: string;
+  description?: string;  // Contains HTML when DescriptionFormat.Html is used, Markdown otherwise
   padyamType: string;
   padyamSubType: string;
   ruleType?: string;

@@ -256,4 +256,175 @@ public static class DescriptionBuilder
         8 => "ఎనిమిది",
         _ => num.ToString()
     };
+
+    /// <summary>
+    /// Build an HTML description for a Chandam rule in Telugu.
+    /// Same content as BuildDescription but formatted as semantic HTML.
+    /// </summary>
+    public static string BuildDescriptionHtml(Rule rule)
+    {
+        if (rule == null)
+            return string.Empty;
+
+        var sb = new StringBuilder();
+        var listItems = new List<string>();
+
+        void FlushListItems()
+        {
+            if (listItems.Count > 0)
+            {
+                sb.AppendLine("<ul>");
+                foreach (var item in listItems)
+                {
+                    sb.AppendLine($"  <li>{item}</li>");
+                }
+                sb.AppendLine("</ul>");
+                listItems.Clear();
+            }
+        }
+
+        // Title
+        sb.AppendLine($"<h2>{rule.ShortName} పద్య లక్షణములు</h2>");
+
+        // Alias
+        if (!string.IsNullOrEmpty(rule.Alias))
+        {
+            var plural = rule.Alias.Contains(',');
+            listItems.Add($"ఈ పద్య ఛందస్సుకే '{rule.Alias}' అనే ఇతర నామము{(plural ? "లు" : "")} కూడా కల{(plural ? "వు" : "దు")}.");
+        }
+
+        // Padyam type
+        var padyamType = Helper.GetPadyamTypeString(rule.PadyamType, rule.PadyamSubType);
+        listItems.Add($"{padyamType} రకానికి చెందినది.");
+
+        // Chandam name and number (only for Vruttam, non-rowwise, non-infinite)
+        if (rule.PadyamType == PadyamType.Vruttam && !rule.RowWiseRules && rule.ChandamNumber != -1)
+        {
+            listItems.Add($"{rule.ChandamName} ఛందమునకు చెందిన {rule.ChandamNumber} వ వృత్తము.");
+            listItems.Add($"{rule.CharLength} అక్షరములు ఉండును.");
+        }
+
+        // Char length range (for non-uniform rules)
+        if (rule.CharLength == -1 && !rule.InfiniteLength)
+        {
+            if (rule.Min == rule.Max)
+                listItems.Add($"{rule.Max} అక్షరములు ఉండును.");
+            else
+                listItems.Add($"{rule.Min} నుండి {rule.Max} అక్షరములు ఉండును.");
+        }
+
+        // Matra length and series
+        if (rule.PadyamType == PadyamType.Vruttam && !rule.RowWiseRules && rule.MatraLength != -1)
+        {
+            listItems.Add($"{rule.MatraLength} మాత్రలు ఉండును.");
+            var matraInfo = $"మాత్రా శ్రేణి: <code>{rule.Sequence}</code>";
+            if (!string.IsNullOrEmpty(rule.MatraSeries))
+            {
+                matraInfo += $" (<code>{rule.MatraSeries}</code>)";
+            }
+            listItems.Add(matraInfo);
+        }
+
+        // Lines
+        listItems.Add($"{rule.Lines} {(rule.Lines != 1 ? "పాదములు" : "పాదము")} ఉండును.");
+
+        // Prasa
+        listItems.Add(rule.Prasa
+            ? "ప్రాస నియమం కలదు."
+            : "ప్రాస నియమం లేదు.");
+
+        if (rule.AnthyaPrasa)
+            listItems.Add("అంత్య ప్రాస నియమం కలదు.");
+
+        if (rule.PrasaYati)
+            listItems.Add("ప్రాస యతి నియమం కలదు.");
+
+        // Flush basic info list
+        FlushListItems();
+
+        // Yati
+        AppendYatiDescriptionHtml(sb, rule, ref listItems);
+        FlushListItems();
+
+        // Gana rules
+        AppendGanaDescriptionHtml(sb, rule, ref listItems);
+        FlushListItems();
+
+        // Rule text (original laxanam if available)
+        if (!string.IsNullOrEmpty(rule.RuleText))
+        {
+            sb.AppendLine($"<p>{rule.RuleText}</p>");
+        }
+
+        return sb.ToString().TrimEnd();
+    }
+
+    private static void AppendYatiDescriptionHtml(StringBuilder sb, Rule rule, ref List<string> listItems)
+    {
+        if (rule.Yati == null || rule.Yati.Length == 0)
+            return;
+
+        if (rule.Yati.Length == rule.Rules.Length && rule.Yati.Length > 1)
+        {
+            // Row-wise yati (different per line)
+            for (int i = 0; i < rule.Yati.Length; i++)
+            {
+                var lineRule = rule.Yati[i];
+                if (lineRule.Length > 0)
+                {
+                    var padamName = GetPadamName(i + 1);
+                    var positions = string.Join(", ", lineRule);
+                    var suffix = GetYatiSuffix(rule.YatiMode, rule.ReverseYati, lineRule.Length);
+                    listItems.Add($"{padamName} పాదమునందు {positions}{suffix} యతి స్థాన{(lineRule.Length == 1 ? "ము" : "ములు")}.");
+                }
+            }
+        }
+        else
+        {
+            if (rule.Yati.Length > 0 && rule.Yati[0].Length > 0)
+            {
+                var lineRule = rule.Yati[0];
+                var positions = string.Join(", ", lineRule);
+                var suffix = GetYatiSuffix(rule.YatiMode, rule.ReverseYati, lineRule.Length);
+                listItems.Add($"ప్రతి పాదమునందు {positions}{suffix} యతి స్థాన{(lineRule.Length == 1 ? "ము" : "ములు")}.");
+            }
+        }
+    }
+
+    private static void AppendGanaDescriptionHtml(StringBuilder sb, Rule rule, ref List<string> listItems)
+    {
+        if (rule.Rules == null || rule.Rules.Length == 0)
+            return;
+
+        if (rule.RowWiseRules)
+        {
+            listItems.Add("గణ లక్షణాలు:");
+            // Flush the header
+            if (listItems.Count > 0)
+            {
+                sb.AppendLine("<ul>");
+                foreach (var item in listItems)
+                {
+                    sb.AppendLine($"  <li>{item}</li>");
+                }
+                listItems.Clear();
+
+                // Add nested list for gana details
+                sb.AppendLine("  <ul>");
+                for (int i = 0; i < rule.Rules.Length; i++)
+                {
+                    var padamName = GetPadamName(i + 1);
+                    var ganaText = GetGanaText(rule.Rules[i], rule.RuleType, rule.InfiniteLength);
+                    sb.AppendLine($"    <li>{padamName} పాదమునందు {ganaText} గణములుండును.</li>");
+                }
+                sb.AppendLine("  </ul>");
+                sb.AppendLine("</ul>");
+            }
+        }
+        else
+        {
+            var ganaText = GetGanaText(rule.Rules[0], rule.RuleType, rule.InfiniteLength);
+            listItems.Add($"ప్రతి పాదమునందు {ganaText} గణములుండును.");
+        }
+    }
 }

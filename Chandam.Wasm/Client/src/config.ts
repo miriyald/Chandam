@@ -4,33 +4,34 @@ export interface RuleSet {
   rulesFile: string;
   examplesFile: string;
   description: string;
-  sizeKB: number;
+  ruleCount: number;
 }
 
 export const RULE_SETS: RuleSet[] = [
   {
     id: 'frequent',
     name: 'Frequent Rules',
-    rulesFile: 'data/chandam-rules.min.json',
-    examplesFile: 'data/chandam-examples.min.json',
-    description: '14 most common rules (fast)',
-    sizeKB: 9.3
+    rulesFile: 'data/chandam-rules.min.json.gz',
+    examplesFile: 'data/chandam-examples.min.json.gz',
+    description: 'Most common Telugu poetry meters',
+    ruleCount: 14
   },
+
   {
     id: 'complete',
     name: 'Complete Telugu',
-    rulesFile: 'data/telugu-complete.min.json',
-    examplesFile: 'data/telugu-complete-examples.min.json',
-    description: '379 rules with examples',
-    sizeKB: 65
+    rulesFile: 'data/telugu-complete.min.json.gz',
+    examplesFile: 'data/telugu-complete-examples.min.json.gz',
+    description: 'Comprehensive collection with examples',
+    ruleCount: 379
   },
   {
     id: 'topella',
     name: 'Topella Collection',
-    rulesFile: 'data/topella.min.json',
+    rulesFile: 'data/topella.min.json.gz',
     examplesFile: '',
-    description: '2337 rare Telugu Vruttam meters (comprehensive)',
-    sizeKB: 106
+    description: '2337 rare Telugu Vruttam meters',
+    ruleCount: 2337
   }
 ];
 

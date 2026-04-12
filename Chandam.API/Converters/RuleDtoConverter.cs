@@ -13,62 +13,85 @@ namespace Chandam.API.Converters;
 public static class RuleDtoConverter
 {
     /// <summary>
-    /// Convert array of RuleDto to array of Rule
+    /// Convert array of RuleDto to array of Rule with error handling
+    /// Skips rules that fail to convert instead of throwing
     /// </summary>
     public static Rule[] ConvertToRules(List<RuleDto> ruleDtos)
     {
         if (ruleDtos == null || ruleDtos.Count == 0)
             return Array.Empty<Rule>();
 
-        var rules = new Rule[ruleDtos.Count];
-        int cnt = 0;
+        var validRules = new List<Rule>();
+        int skippedCount = 0;
 
         foreach (var dto in ruleDtos)
         {
-            rules[cnt++] = ConvertToRule(dto);
+            try
+            {
+                var rule = ConvertToRule(dto);
+                validRules.Add(rule);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"SKIPPING rule '{dto.Identifier}': {ex.Message}");
+                skippedCount++;
+            }
         }
 
-        return rules;
+        if (skippedCount > 0)
+        {
+            Console.WriteLine($"WARNING: Skipped {skippedCount} invalid rules out of {ruleDtos.Count} total");
+        }
+
+        return validRules.ToArray();
     }
 
     /// <summary>
-    /// Convert single RuleDto to Rule
+    /// Convert single RuleDto to Rule with error handling
     /// </summary>
     public static Rule ConvertToRule(RuleDto dto)
     {
-        var rule = new Rule
+        try
         {
-            AnthyaPrasa = dto.AnthyaPrasa,
-            DeferThresold = dto.DeferThresold,
-            Frequency = ParseFrequency(dto.Frequency),
-            Identifier = dto.Identifier ?? string.Empty,
-            InfiniteLength = dto.InfiniteLength,
-            Language = ParseLanguage(dto.Language),
-            Lines = dto.Lines,
-            Name = dto.Name ?? string.Empty,
-            OnlyPrasaYati = dto.OnlyPrasaYati,
-            PadyamSubType = ParsePadyamSubType(dto.PadyamSubType),
-            PadyamType = ParsePadyamType(dto.PadyamType),
-            Prasa = dto.Prasa,
-            PrasaYati = dto.PrasaYati,
-            References = dto.References,
-            // Note: RuleText has protected setter, cannot set from here
-            Rules = ConvertRulesArray(dto.Rules, ParseRuleType(dto.RuleType)),
-            // Note: ReverseYati has protected setter, cannot set from here (defaults to false)
-            RuleType = ParseRuleType(dto.RuleType),
-            Threshold = dto.Threshold,
-            Yati = dto.Yati ?? Array.Empty<int[]>(),
-            YatiMode = ParseYatiMode(dto.YatiMode),
-            // Note: YatiRecycle has protected setter, cannot set from here (defaults to false)
-        };
+            var rule = new Rule
+            {
+                AnthyaPrasa = dto.AnthyaPrasa,
+                DeferThresold = dto.DeferThresold,
+                Frequency = ParseFrequency(dto.Frequency),
+                Identifier = dto.Identifier ?? string.Empty,
+                InfiniteLength = dto.InfiniteLength,
+                Language = ParseLanguage(dto.Language),
+                Lines = dto.Lines,
+                Name = dto.Name ?? string.Empty,
+                OnlyPrasaYati = dto.OnlyPrasaYati,
+                PadyamSubType = ParsePadyamSubType(dto.PadyamSubType),
+                PadyamType = ParsePadyamType(dto.PadyamType),
+                Prasa = dto.Prasa,
+                PrasaYati = dto.PrasaYati,
+                References = dto.References,
+                // Note: RuleText has protected setter, cannot set from here
+                Rules = ConvertRulesArray(dto.Rules, ParseRuleType(dto.RuleType)),
+                // Note: ReverseYati has protected setter, cannot set from here (defaults to false)
+                RuleType = ParseRuleType(dto.RuleType),
+                Threshold = dto.Threshold,
+                Yati = dto.Yati ?? Array.Empty<int[]>(),
+                YatiMode = ParseYatiMode(dto.YatiMode),
+                // Note: YatiRecycle has protected setter, cannot set from here (defaults to false)
+            };
 
-        // Convert enhanced examples
-        if (dto.Examples != null && dto.Examples.Count > 0)
-        {
-            rule.Examples2 = ConvertExamples(dto.Examples);
+            // Convert enhanced examples
+            if (dto.Examples != null && dto.Examples.Count > 0)
+            {
+                rule.Examples2 = ConvertExamples(dto.Examples);
+            }
+
+            return rule;
         }
-
-        return rule;
+        catch (Exception ex)
+        {
+            Console.WriteLine($"ERROR converting rule '{dto.Identifier}' ({dto.Name}): {ex.Message}");
+            throw new InvalidOperationException($"Failed to convert rule '{dto.Identifier}': {ex.Message}", ex);
+        }
     }
 
     /// <summary>

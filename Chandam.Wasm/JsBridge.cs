@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
 using System.Threading.Tasks;
@@ -42,23 +43,69 @@ public static class JsBridge
         var ruleLoader = ServiceAccessor.Services!.GetRequiredService<RuleLoaderService>();
         var langEnum = LanguageCodeMapper.ParseLanguage(language) ?? RuleLanguage.Telugu;
         var rules = ruleLoader.GetAllRules(langEnum);
-        var detailed = rules.Select(r => new {
-            r.Identifier,
-            r.Name,
-            PadyamType = r.PadyamType.ToString(),
-            PadyamSubType = r.PadyamSubType.ToString(),
-            Frequency = r.Frequency.ToString(),
-            r.Lines,
-            r.ChandamName,
-            r.CharLength,
-            r.MatraLength,
-            r.Min,
-            r.Max,
-            r.Sequence,
-            r.ShortName,
-            r.Alias
-        });
-        return JsonSerializer.Serialize(detailed, JsonOptions);
+
+        // Debug: Check first rule's Rules array types
+        if (rules.Count > 0 && rules[0].Rules != null && rules[0].Rules.Length > 0 && rules[0].Rules[0] != null && rules[0].Rules[0].Length > 0)
+        {
+            var firstRuleElement = rules[0].Rules[0][0];
+            Console.WriteLine($"WASM DEBUG: First rule '{rules[0].Identifier}', RuleType={rules[0].RuleType}, First Rules element type: {firstRuleElement?.GetType().Name ?? "null"}");
+            if (firstRuleElement != null)
+            {
+                Console.WriteLine($"WASM DEBUG: Value: {firstRuleElement}");
+            }
+        }
+
+        var resultList = new List<object>();
+        int skippedCount = 0;
+
+        foreach (var r in rules)
+        {
+            try
+            {
+                var detail = new {
+                    r.Identifier,
+                    r.Name,
+                    PadyamType = r.PadyamType.ToString(),
+                    PadyamSubType = r.PadyamSubType.ToString(),
+                    Frequency = r.Frequency.ToString(),
+                    r.Lines,
+                    r.ChandamName,
+                    r.CharLength,
+                    r.MatraLength,
+                    Min = r.Min,  // This line might throw
+                    Max = r.Max,  // This line might throw
+                    r.Sequence,
+                    r.ShortName,
+                    r.Alias
+                };
+                resultList.Add(detail);
+            }
+            catch (InvalidCastException ex)
+            {
+                Console.WriteLine($"WASM: SKIPPING rule '{r.Identifier}' ({r.Name}) - InvalidCastException: {ex.Message}");
+                if (r.Rules != null && r.Rules.Length > 0 && r.Rules[0] != null && r.Rules[0].Length > 0)
+                {
+                    var firstElem = r.Rules[0][0];
+                    Console.WriteLine($"  RuleType={r.RuleType}, First element type: {firstElem?.GetType().Name ?? "null"}");
+                    Console.WriteLine($"  First element value: {firstElem}");
+                }
+                skippedCount++;
+                // Don't re-throw - skip this rule and continue
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"WASM: SKIPPING rule '{r.Identifier}' ({r.Name}) - {ex.GetType().Name}: {ex.Message}");
+                skippedCount++;
+                // Don't re-throw - skip this rule and continue
+            }
+        }
+
+        if (skippedCount > 0)
+        {
+            Console.WriteLine($"WASM: Skipped {skippedCount} problematic rules, loaded {resultList.Count} successfully");
+        }
+
+        return JsonSerializer.Serialize(resultList, JsonOptions);
     }
 
     [JSInvokable]
@@ -112,7 +159,8 @@ public static class JsBridge
         var service = ServiceAccessor.Services!.GetRequiredService<ChandamService>();
         var request = new GetRuleInfoRequest {
             RuleIdentifier = ruleId,
-            IncludeExamples = true
+            IncludeExamples = true,
+            DescriptionFormat = RenderFormat.Html  // WASM needs HTML for browser rendering
         };
         var response = service.GetRuleInfo(request);
         return JsonSerializer.Serialize(response, JsonOptions);
@@ -161,6 +209,37 @@ public static class JsBridge
             var wasmLoader = ServiceAccessor.Services!.GetRequiredService<WasmRuleLoaderService>();
             await wasmLoader.LoadRuleSetAsync(rulesFile, examplesFile);
             return JsonSerializer.Serialize(new { success = true, message = "Rules reloaded successfully" }, JsonOptions);
+        }
+        catch (Exception ex)
+        {
+            return JsonSerializer.Serialize(new { success = false, errorMessage = ex.Message }, JsonOptions);
+        }
+    }
+
+    [JSInvokable]
+    public static string ReloadRulesFromJson(string rulesJson, string examplesJson)
+    {
+        try
+        {
+            var ruleLoader = ServiceAccessor.Services!.GetRequiredService<RuleLoaderService>();
+            var rules = ruleLoader.LoadFromJsonString(rulesJson);
+
+            if (rules != null && rules.Length > 0)
+            {
+                // Load examples if provided
+                if (!string.IsNullOrEmpty(examplesJson))
+                {
+                    // Simple merge - this would need proper implementation
+                    // For now, just log
+                    Console.WriteLine($"WASM: Would merge {examplesJson.Length} bytes of examples");
+                }
+
+                Manager.Clear();
+                Manager.Register(rules);
+                Console.WriteLine($"WASM: Loaded {rules.Length} rules from JSON strings");
+            }
+
+            return JsonSerializer.Serialize(new { success = true, message = $"Loaded {rules?.Length ?? 0} rules"}, JsonOptions);
         }
         catch (Exception ex)
         {

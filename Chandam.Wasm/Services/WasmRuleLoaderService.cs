@@ -7,6 +7,7 @@ using Chandam.API.Converters;
 using Chandam.API.Models.Config;
 using Chandam.API.Services;
 using Chandam.Rules;
+using Microsoft.JSInterop;
 
 namespace Chandam.Wasm.Services;
 
@@ -17,29 +18,23 @@ public class WasmRuleLoaderService
 {
     private readonly HttpClient _httpClient;
     private readonly RuleLoaderService _ruleLoader;
-    private bool _initialized;
+    private readonly IJSRuntime _jsRuntime;
 
-    public WasmRuleLoaderService(HttpClient httpClient, RuleLoaderService ruleLoader)
+    public WasmRuleLoaderService(HttpClient httpClient, RuleLoaderService ruleLoader, IJSRuntime jsRuntime)
     {
         _httpClient = httpClient;
         _ruleLoader = ruleLoader;
+        _jsRuntime = jsRuntime;
     }
 
-    public async Task InitializeAsync()
-    {
-        if (_initialized) return;
-
-        // Load default rule set (Frequent - 9.3KB compressed)
-        await LoadRuleSetAsync("data/chandam-rules.min.json", "data/chandam-examples.min.json");
-        _initialized = true;
-    }
+    // No InitializeAsync() - rules loaded on demand when user navigates to compute/learn pages
 
     public async Task LoadRuleSetAsync(string rulesFile, string examplesFile)
     {
         try
         {
-            // Load rules
-            var rulesJson = await _httpClient.GetStringAsync(rulesFile);
+            // Load rules (with .br compression support)
+            var rulesJson = await LoadFileWithBrotliSupportAsync(rulesFile);
             var rules = _ruleLoader.LoadFromJsonString(rulesJson);
 
             if (rules != null && rules.Length > 0)
@@ -49,7 +44,7 @@ public class WasmRuleLoaderService
                 {
                     try
                     {
-                        var examplesJson = await _httpClient.GetStringAsync(examplesFile);
+                        var examplesJson = await LoadFileWithBrotliSupportAsync(examplesFile);
                         var exampleSet = LoadExampleSetFromJson(examplesJson);
 
                         if (exampleSet != null)
@@ -76,6 +71,51 @@ public class WasmRuleLoaderService
         catch (Exception ex)
         {
             Console.WriteLine($"WASM: Failed to load rules from {rulesFile}: {ex.Message}");
+            throw;
+        }
+    }
+
+    /// <summary>
+    /// Loads a file with browser-native Gzip decompression via JavaScript interop
+    /// Falls back to .min.json if .gz file fails
+    /// </summary>
+    private async Task<string> LoadFileWithBrotliSupportAsync(string filePath)
+    {
+        try
+        {
+            // If path ends with .gz, use browser's native DecompressionStream API
+            if (filePath.EndsWith(".gz", StringComparison.OrdinalIgnoreCase))
+            {
+                Console.WriteLine($"WASM: Loading compressed file {filePath}");
+
+                // Call JavaScript to decompress using browser's native API
+                var json = await _jsRuntime.InvokeAsync<string>("decompressGzip", filePath);
+
+                if (!string.IsNullOrEmpty(json))
+                {
+                    Console.WriteLine($"WASM: Successfully decompressed {filePath} → {json.Length} chars");
+                    return json;
+                }
+
+                throw new InvalidOperationException("Decompression returned empty string");
+            }
+            else
+            {
+                // Uncompressed .min.json file
+                Console.WriteLine($"WASM: Loading uncompressed file {filePath}");
+                return await _httpClient.GetStringAsync(filePath);
+            }
+        }
+        catch (Exception ex)
+        {
+            // If .gz file fails, try fallback to .min.json
+            if (filePath.EndsWith(".gz", StringComparison.OrdinalIgnoreCase))
+            {
+                var fallbackPath = filePath.Replace(".gz", "");
+                Console.WriteLine($"WASM: Failed to load {filePath}, trying fallback {fallbackPath}: {ex.Message}");
+                return await _httpClient.GetStringAsync(fallbackPath);
+            }
+
             throw;
         }
     }

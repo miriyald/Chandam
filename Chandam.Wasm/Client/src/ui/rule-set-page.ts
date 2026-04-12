@@ -7,6 +7,7 @@ import { renderFirstMatch } from './results';
 import { getEditorText } from './editor';
 import type { RuleSummaryDetailed } from '../types';
 import { makeUrl } from '../utils/url-helpers';
+import { renderBreadcrumbs, buildRuleSetBreadcrumbs } from './breadcrumbs';
 
 // Track last analyzed rule (from either Determine or Match) for smart auto-select
 let lastAnalyzedRule: { id: string; name: string } | null = null;
@@ -67,8 +68,12 @@ function renderRuleSetPageHtml(ruleSetName: string, ruleCount: number, ruleSetId
   const content = document.getElementById('content');
   if (!content) return;
 
+  const breadcrumbs = buildRuleSetBreadcrumbs(ruleSetId, 'compute');
+
   content.innerHTML = `
     <div class="compute-rule-set-page">
+      ${renderBreadcrumbs(breadcrumbs)}
+
       <div class="rule-set-info">
         <span class="label">Rule Set:</span>
         <span class="name">${ruleSetName}</span>

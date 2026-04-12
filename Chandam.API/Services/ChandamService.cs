@@ -345,7 +345,7 @@ public class ChandamService
                 };
             }
 
-            var response = BuildRuleInfo(rule);
+            var response = BuildRuleInfo(rule, request.DescriptionFormat);
 
             if (request.IncludeExamples && rule.Examples2 != null && rule.Examples2.Length > 0)
             {
@@ -441,7 +441,7 @@ public class ChandamService
         }
     }
 
-    private GetRuleInfoResponse BuildRuleInfo(Rule rule)
+    private GetRuleInfoResponse BuildRuleInfo(Rule rule, RenderFormat descriptionFormat = RenderFormat.Markdown)
     {
         return new GetRuleInfoResponse
         {
@@ -485,7 +485,9 @@ public class ChandamService
             Sequence = rule.Sequence,
             MatraSeries = rule.MatraSeries,
             RowWiseRules = rule.RowWiseRules,
-            Description = DescriptionBuilder.BuildDescription(rule),
+            Description = descriptionFormat == RenderFormat.Html
+                ? DescriptionBuilder.BuildDescriptionHtml(rule)
+                : DescriptionBuilder.BuildDescription(rule),
         };
     }
 

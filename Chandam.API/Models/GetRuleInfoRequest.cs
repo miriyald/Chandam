@@ -14,4 +14,9 @@ public class GetRuleInfoRequest
     /// Whether to include example poems
     /// </summary>
     public bool IncludeExamples { get; set; } = true;
+
+    /// <summary>
+    /// Description format: Html for browser rendering, Markdown for MCP/AI clients
+    /// </summary>
+    public RenderFormat DescriptionFormat { get; set; } = RenderFormat.Markdown;
 }

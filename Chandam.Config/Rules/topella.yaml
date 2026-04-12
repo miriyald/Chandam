@@ -62068,13 +62068,6 @@ rules:
     - జ
     - ల
     - గ
-    - (
-    - గ
-    - గ
-    - +
-    - 7
-    - స
-    - )
   yati:
   - - 8
     - 15
@@ -62084,15 +62077,15 @@ rules:
   - హేమచంద్ర 2-360, జయకీర్తి ఛంశా. 2-252 రణపింగళ
   shortName: శంఖ
   alias: డంబలయ
-  chandamName: ఉద్ధురమాల
-  charLength: 40
-  matraLength: 40
-  min: 40
-  max: 40
-  chandamNumber: 104258413
-  chandamOrder: 1099615886187
-  sequence: UU|-|U|-|U|-|U|-|U|-|U|-|U|-|-U-?-U-U-?-?-||U-?
-  matraSeries: 4 , 6
+  chandamName: వికృతి
+  charLength: 23
+  matraLength: 32
+  min: 23
+  max: 23
+  chandamNumber: 3595117
+  chandamOrder: 11983723
+  sequence: UU|-|U|-|U|-|U|-|U|-|U|-|U|-|-U
+  matraSeries: 4 , 6 , 5-3
 - identifier: SaMkhadyuti
   name: శంఖద్యుతి
   language: Telugu

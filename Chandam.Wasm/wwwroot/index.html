@@ -5,10 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Chandam - Telugu Poetry Meter Analysis</title>
     <base href="/" />
-    <link rel="icon" type="image/gif" href="/images/favicon-animated-32.gif?v=1" />
-    <link rel="apple-touch-icon" href="/images/favicon-animated-32.gif" />
+    <link rel="icon" type="image/svg+xml" href="/images/favicon.svg" />
+    <link rel="apple-touch-icon" href="/images/favicon.svg" />
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Telugu:wght@400;700&family=Timmana&family=Suranna&display=swap" rel="stylesheet" />
     <link href="css/chandam.css" rel="stylesheet" />
+    <!-- Preload loader GIF to browser cache for instant display -->
+    <link rel="preload" href="/images/chandam-icon-telugu.gif" as="image" type="image/gif" />
 </head>
 <body>
     <header>
@@ -16,6 +18,7 @@
             <h1>ఛందం</h1>
             <nav id="main-nav">
                 <a href="/">Home</a>
+                <a href="/rule-sets">Rule Sets</a>
                 <a href="/about">About</a>
                 <a href="/credits">Credits</a>
                 <a href="/contact">Contact</a>
@@ -25,7 +28,16 @@
     </header>
 
     <main id="content">
-        <p>Loading...</p>
+        <div id="initial-loader">
+            <!-- Loader will be injected here, but show static version initially -->
+            <div class="loader-container">
+                <img src="/images/chandam-icon-telugu.gif"
+                     alt="Loading Chandam..."
+                     class="loader-gif"
+                     onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                <p class="loader-fallback" style="display:none;">Loading...</p>
+            </div>
+        </div>
     </main>
 
     <footer>

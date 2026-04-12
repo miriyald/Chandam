@@ -4,6 +4,7 @@ import { renderFirstMatch, hideResults } from './results';
 import { clearEditor } from './editor';
 import { renderEditorCard } from './shared-components';
 import { makeUrl } from '../utils/url-helpers';
+import { renderBreadcrumbs, buildRuleBreadcrumbs } from './breadcrumbs';
 
 // Main function: Render specific rule page
 export async function renderRulePage(params: Record<string, string>) {
@@ -120,8 +121,12 @@ function renderRulePageHtml(
   const content = document.getElementById('content');
   if (!content) return;
 
+  const breadcrumbs = buildRuleBreadcrumbs(ruleSetId, ruleId, ruleName, 'compute');
+
   content.innerHTML = `
     <div class="compute-rule-page">
+      ${renderBreadcrumbs(breadcrumbs)}
+
       <div class="rule-set-info">
         <span class="label">Rule Set:</span>
         <span class="name">${ruleSetName}</span>
