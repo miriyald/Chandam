@@ -11,18 +11,46 @@
     <link href="css/chandam.css" rel="stylesheet" />
     <!-- Preload loader GIF to browser cache for instant display -->
     <link rel="preload" href="/images/chandam-icon-telugu.gif" as="image" type="image/gif" />
+
+    <!-- Google Analytics 4 -->
+    <!-- SINGLE SOURCE OF TRUTH: GA4_MEASUREMENT_ID is defined once and reused -->
+    <script>
+      // GA4 Measurement ID - SINGLE SOURCE OF TRUTH
+      window.GA4_MEASUREMENT_ID = 'G-2531395';
+    </script>
+    <script>
+      // Load gtag.js with measurement ID
+      (function() {
+        var script = document.createElement('script');
+        script.async = true;
+        script.src = 'https://www.googletagmanager.com/gtag/js?id=' + window.GA4_MEASUREMENT_ID;
+        document.head.appendChild(script);
+      })();
+
+      // Initialize gtag
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', window.GA4_MEASUREMENT_ID, {
+        anonymize_ip: true,
+        send_page_view: false  // We handle page views manually for SPA
+      });
+    </script>
 </head>
 <body>
     <header>
         <div class="container">
             <h1>ఛందం</h1>
             <nav id="main-nav">
-                <a href="/">Home</a>
+                <a href="/" data-i18n="nav_home">Home</a>
                 <a href="/rule-sets">Rule Sets</a>
-                <a href="/about">About</a>
-                <a href="/credits">Credits</a>
-                <a href="/contact">Contact</a>
+                <a href="/about" data-i18n="nav_about">About</a>
+                <a href="/credits" data-i18n="nav_credits">Credits</a>
+                <a href="/contact" data-i18n="nav_contact">Contact</a>
             </nav>
+            <button id="lang-toggle" class="lang-toggle" title="Switch language / భాష మార్చండి" aria-label="Switch interface language">
+                <span class="lang-current">EN</span>
+            </button>
             <button id="nav-toggle" aria-label="Toggle navigation">☰</button>
         </div>
     </header>
@@ -35,14 +63,14 @@
                      alt="Loading Chandam..."
                      class="loader-gif"
                      onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
-                <p class="loader-fallback" style="display:none;">Loading...</p>
+                <p class="loader-fallback" style="display:none;" data-i18n="loading">Loading...</p>
             </div>
         </div>
     </main>
 
     <footer>
         <div class="container">
-            <p>© 2026 Chandam | <a href="https://github.com/chandamu/chandam" target="_blank">GitHub</a> | <span id="version-info">v0.0.0 (dev)</span></p>
+            <p>© 2026 ఛందం | <a href="https://github.com/chandamu/chandam" target="_blank">GitHub</a> | <span id="version-info">v0.0.0 (dev)</span></p>
         </div>
     </footer>
 

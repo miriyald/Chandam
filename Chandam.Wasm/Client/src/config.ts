@@ -40,3 +40,32 @@ export const DEFAULT_RULE_SET = 'frequent';
 export function getRuleSet(id: string): RuleSet | undefined {
   return RULE_SETS.find(rs => rs.id === id);
 }
+
+/**
+ * Get ruleset configuration (predefined or custom)
+ * Async version that checks IndexedDB for custom rulesets
+ */
+export async function getRuleSetAsync(id: string): Promise<RuleSet | undefined> {
+  // First check predefined rulesets
+  const predefined = getRuleSet(id);
+  if (predefined) return predefined;
+
+  // Check custom rulesets in IndexedDB
+  const { storageService } = await import('./services/storage/storage-service');
+  await storageService.init();
+  const customRuleset = await storageService.indexedDB.getCustomRuleset(id);
+
+  if (customRuleset) {
+    // Convert CustomRuleset to RuleSet format
+    return {
+      id: customRuleset.id,
+      name: customRuleset.name,
+      rulesFile: '', // Custom rulesets don't have files
+      examplesFile: '',
+      description: customRuleset.description,
+      ruleCount: customRuleset.rules.length
+    };
+  }
+
+  return undefined;
+}

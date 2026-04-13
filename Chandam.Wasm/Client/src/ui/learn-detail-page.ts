@@ -1,37 +1,36 @@
 import { WasmBridge } from '../wasm-bridge';
-import { getRuleSet } from '../config';
+import { getRuleSet, getRuleSetAsync } from '../config';
+import { CustomRulesLoader } from '../services/custom-rules-loader';
 import type { RuleInfo } from '../types';
 import { makeUrl, makeUrlWithParams } from '../utils/url-helpers';
 import { renderBreadcrumbs, buildRuleBreadcrumbs } from './breadcrumbs';
+import { renderRuleActions } from './rule-actions';
+import { loadRuleSet } from '../utils/rule-loader';
+import { t } from '../i18n';
 
 // Main function: Render learn detail page
 export async function renderLearnDetailPage(ruleSet: string, ruleId: string) {
-  // Step 1: Validate and load rule set
-  const ruleSetConfig = getRuleSet(ruleSet);
+  // Step 1: Validate and load rule set (supports both predefined and custom)
+  const ruleSetConfig = await getRuleSetAsync(ruleSet);
   if (!ruleSetConfig) {
     console.error(`Rule set not found: ${ruleSet}`);
     return;
   }
 
-  await loadRuleSet(ruleSetConfig.rulesFile, ruleSetConfig.examplesFile);
+  // Step 2: Load rules based on type
+  if (ruleSetConfig.rulesFile) {
+    // Predefined ruleset - load from files
+    await loadRuleSet(ruleSetConfig.rulesFile, ruleSetConfig.examplesFile);
+  } else {
+    // Custom ruleset - load from IndexedDB
+    await CustomRulesLoader.loadCustomRuleset(ruleSet);
+  }
 
-  // Step 2: Get rule info with examples
+  // Step 3: Get rule info with examples
   const ruleInfo = await WasmBridge.getRuleInfo(ruleId);
 
   // Step 3: Render page HTML
   renderLearnDetailPageHtml(ruleSetConfig.name, ruleSet, ruleInfo);
-}
-
-// Helper: Load rule set if needed
-async function loadRuleSet(rulesFile: string, examplesFile: string) {
-  try {
-    const result = await WasmBridge.reloadRules(rulesFile, examplesFile);
-    if (!result.success) {
-      console.error('Failed to load rules:', result.errorMessage);
-    }
-  } catch (err) {
-    console.error('Failed to load rule set:', err);
-  }
 }
 
 // Helper: Render page HTML
@@ -50,26 +49,30 @@ function renderLearnDetailPageHtml(
       ${renderBreadcrumbs(breadcrumbs)}
 
       <div class="page-links">
-        <a href="${makeUrl(`/compute/${ruleSetId}/${ruleInfo.identifier}`)}" class="compute-link">Try in Compute</a>
-        <a href="${makeUrl(`/learn/${ruleSetId}/`)}" class="browse-link">← Back to Browse</a>
+        <a href="${makeUrl(`/compute/${ruleSetId}/${ruleInfo.identifier}`)}" class="compute-link">${t('link_try_in_compute')}</a>
+        <a href="${makeUrl(`/learn/${ruleSetId}/`)}" class="browse-link">${t('link_back_to_browse')}</a>
       </div>
 
-      <h1 class="meter-name">${ruleInfo.name}</h1>
+      <div class="page-header">
+        <h1 class="meter-name">${ruleInfo.name}</h1>
+        <div id="rule-actions-container"></div>
+      </div>
+
       <div class="rule-metadata">
-        <span>Rule Set: ${ruleSetName}</span> |
-        <span>Type: ${ruleInfo.padyamType}</span> |
-        <span>Frequency: ${ruleInfo.frequency}</span>
+        <span>${t('label_rule_set')} ${ruleSetName}</span> |
+        <span>${t('label_type')} ${ruleInfo.padyamType}</span> |
+        <span>${t('label_frequency')} ${ruleInfo.frequency}</span>
       </div>
 
       <section class="description">
-        <h2>Description</h2>
+        <h2>${t('section_description')}</h2>
         <div class="description-content">
           ${ruleInfo.description || '<p>No description available</p>'}
         </div>
       </section>
 
       <section class="technical-details">
-        <h2>Technical Details</h2>
+        <h2>${t('section_technical')}</h2>
         <dl>
           ${ruleInfo.sequence ? `<dt>Pattern (Sequence):</dt><dd><code>${ruleInfo.sequence}</code></dd>` : ''}
           ${ruleInfo.matraSeries ? `<dt>Matra Series:</dt><dd><code>${ruleInfo.matraSeries}</code></dd>` : ''}
@@ -79,11 +82,14 @@ function renderLearnDetailPageHtml(
       </section>
 
       <section class="examples">
-        <h2>Examples (${ruleInfo.examples?.length || 0})</h2>
+        <h2>${t('section_examples')} (${ruleInfo.examples?.length || 0})</h2>
         ${renderExamples(ruleInfo.examples, ruleSetId, ruleInfo.identifier)}
       </section>
     </div>
   `;
+
+  // Render action toolbar (currently just favorite button, future: share, print, etc.)
+  renderRuleActions('rule-actions-container', ruleSetId, ruleInfo.identifier);
 }
 
 // Helper: Render examples section
@@ -100,12 +106,12 @@ function renderExamples(
     const exampleNumber = idx + 1; // 1-based numbering
     return `
       <div class="example-card">
-        <h3>Example ${exampleNumber}</h3>
+        <h3>${t('label_example_n')} ${exampleNumber}</h3>
         <pre class="poem-text">${escapeHtml(example.text)}</pre>
-        ${example.author ? `<p class="metadata"><strong>Author:</strong> ${escapeHtml(example.author)}</p>` : ''}
-        ${example.date ? `<p class="metadata"><strong>Date:</strong> ${escapeHtml(example.date)}</p>` : ''}
+        ${example.author ? `<p class="metadata"><strong>${t('label_author')}</strong> ${escapeHtml(example.author)}</p>` : ''}
+        ${example.date ? `<p class="metadata"><strong>${t('label_date')}</strong> ${escapeHtml(example.date)}</p>` : ''}
         <a href="${makeUrlWithParams(`/compute/${ruleSetId}/${ruleId}`, { example: exampleNumber })}" class="try-example-btn">
-          Try This Example
+          ${t('btn_try_example')}
         </a>
       </div>
     `;

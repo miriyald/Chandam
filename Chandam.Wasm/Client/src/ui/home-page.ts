@@ -1,4 +1,5 @@
 import { makeUrl } from '../utils/url-helpers';
+import { t } from '../i18n';
 
 // Main function: Render landing page
 export function renderHomePage() {
@@ -9,11 +10,10 @@ export function renderHomePage() {
     <div class="home-page-landing">
       <div class="hero-section">
         <h1 class="hero-title">ఛందం</h1>
-        <h2 class="hero-subtitle">Telugu Poetry Meter Analysis</h2>
+        <h2 class="hero-subtitle">${t('home_title')}</h2>
 
         <p class="hero-description">
-          Discover, analyze, and learn about Telugu poetry meters (Chandam).
-          Our comprehensive collection includes 379 rules covering classical and modern meters.
+          ${t('home_subtitle')}
         </p>
 
         <div class="hero-actions">

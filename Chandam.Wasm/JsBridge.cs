@@ -246,6 +246,53 @@ public static class JsBridge
             return JsonSerializer.Serialize(new { success = false, errorMessage = ex.Message }, JsonOptions);
         }
     }
+
+    [JSInvokable]
+    public static string LoadCustomRules(string customRulesJson)
+    {
+        try
+        {
+            var ruleLoader = ServiceAccessor.Services!.GetRequiredService<RuleLoaderService>();
+            var rules = ruleLoader.LoadFromJsonString(customRulesJson);
+
+            if (rules == null || rules.Length == 0)
+            {
+                return JsonSerializer.Serialize(new {
+                    success = false,
+                    errorMessage = "Invalid custom ruleset: no rules found"
+                }, JsonOptions);
+            }
+
+            // Enforce max 20 rules limit for custom rulesets (favorites can exceed this)
+            // Note: favorites collection is validated client-side at max 50
+            if (rules.Length > 50)
+            {
+                return JsonSerializer.Serialize(new {
+                    success = false,
+                    errorMessage = $"Custom ruleset cannot exceed 50 rules (got {rules.Length})"
+                }, JsonOptions);
+            }
+
+            // Clear existing rules and register custom rules
+            Manager.Clear();
+            Manager.Register(rules);
+            Console.WriteLine($"WASM: Loaded {rules.Length} custom rules");
+
+            return JsonSerializer.Serialize(new {
+                success = true,
+                message = $"Loaded {rules.Length} custom rules",
+                ruleCount = rules.Length
+            }, JsonOptions);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"WASM: Failed to load custom rules: {ex.Message}");
+            return JsonSerializer.Serialize(new {
+                success = false,
+                errorMessage = ex.Message
+            }, JsonOptions);
+        }
+    }
 }
 
 // Static accessor for DI services

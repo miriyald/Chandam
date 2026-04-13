@@ -1,26 +1,39 @@
 import { WasmBridge } from '../wasm-bridge';
-import { getRuleSet } from '../config';
+import { getRuleSet, getRuleSetAsync } from '../config';
+import { CustomRulesLoader } from '../services/custom-rules-loader';
 import { renderFirstMatch, hideResults } from './results';
-import { clearEditor } from './editor';
+import { clearEditor, enableEditorAutoSave } from './editor';
 import { renderEditorCard } from './shared-components';
 import { makeUrl } from '../utils/url-helpers';
 import { renderBreadcrumbs, buildRuleBreadcrumbs } from './breadcrumbs';
+import { renderRuleActions } from './rule-actions';
+import { loadRuleSet } from '../utils/rule-loader';
+import { storageService } from '../services/storage/storage-service';
+import { t } from '../i18n';
+import { analyticsService } from '../services/analytics-service';
 
 // Main function: Render specific rule page
 export async function renderRulePage(params: Record<string, string>) {
   const ruleSet = params.ruleSet;
   const ruleId = params.ruleId;
 
-  // Step 1: Validate and load rule set
-  const ruleSetConfig = getRuleSet(ruleSet);
+  // Step 1: Validate and load rule set (supports both predefined and custom)
+  const ruleSetConfig = await getRuleSetAsync(ruleSet);
   if (!ruleSetConfig) {
     console.error(`Rule set not found: ${ruleSet}`);
     return;
   }
 
-  await loadRuleSet(ruleSetConfig.rulesFile, ruleSetConfig.examplesFile);
+  // Step 2: Load rules based on type
+  if (ruleSetConfig.rulesFile) {
+    // Predefined ruleset - load from files
+    await loadRuleSet(ruleSetConfig.rulesFile, ruleSetConfig.examplesFile);
+  } else {
+    // Custom ruleset - load from IndexedDB
+    await CustomRulesLoader.loadCustomRuleset(ruleSet);
+  }
 
-  // Step 2: Get rule info
+  // Step 3: Get rule info
   const ruleInfo = await WasmBridge.getRuleInfo(ruleId);
   const rules = await WasmBridge.getAllRules();
 
@@ -39,18 +52,6 @@ export async function renderRulePage(params: Record<string, string>) {
 
   // Step 5: Attach event handlers
   attachEventHandlers(ruleSet, ruleId);
-}
-
-// Helper: Load rule set if needed
-async function loadRuleSet(rulesFile: string, examplesFile: string) {
-  try {
-    const result = await WasmBridge.reloadRules(rulesFile, examplesFile);
-    if (!result.success) {
-      console.error('Failed to load rules:', result.errorMessage);
-    }
-  } catch (err) {
-    console.error('Failed to load rule set:', err);
-  }
 }
 
 // Helper: Get example text based on URL params or random
@@ -128,39 +129,56 @@ function renderRulePageHtml(
       ${renderBreadcrumbs(breadcrumbs)}
 
       <div class="rule-set-info">
-        <span class="label">Rule Set:</span>
+        <span class="label">${t('label_rule_set')}</span>
         <span class="name">${ruleSetName}</span>
-        <span class="count">[${ruleCount} Rules]</span>
+        <span class="count">[${ruleCount} ${t('label_rules_count')}]</span>
       </div>
 
       <div class="current-rule-info">
-        <span class="label">Rule:</span>
+        <span class="label">${t('label_rule')}</span>
         <span class="name meter-name">${ruleName}</span>
+        <div id="rule-actions-container"></div>
       </div>
 
       <div class="page-links">
-        <a href="${makeUrl(`/learn/${ruleSetId}/${ruleId}`)}" class="learn-link">Learn More</a>
-        <a href="${makeUrl(`/learn/${ruleSetId}/`)}" class="browse-link">Browse All Rules</a>
+        <a href="${makeUrl(`/learn/${ruleSetId}/${ruleId}`)}" class="learn-link">${t('link_learn_more')}</a>
+        <a href="${makeUrl(`/learn/${ruleSetId}/`)}" class="browse-link">${t('link_browse_all_rules')}</a>
       </div>
 
       ${renderEditorCard({
-        contextText: `Matching with: ${ruleName}`,
+        contextText: `${t('editor_matching_with')} ${ruleName}`,
         showRulePicker: false,
         showAutoDetect: false
       })}
 
       <div id="results-section" style="display: none;">
-        <h3>Results</h3>
+        <h3>${t('results_title')}</h3>
         <div id="results-container"></div>
       </div>
     </div>
   `;
 
-  // Set example text if available
-  if (exampleText) {
-    const editor = document.getElementById('poem-editor') as HTMLTextAreaElement;
-    if (editor) editor.value = exampleText;
+  // Render action toolbar (currently just favorite button, future: share, print, etc.)
+  renderRuleActions('rule-actions-container', ruleSetId, ruleId);
+
+  // Set editor text: example text takes priority, then saved state
+  const editor = document.getElementById('poem-editor') as HTMLTextAreaElement;
+  if (editor) {
+    if (exampleText) {
+      // Example text from URL param (highest priority)
+      editor.value = exampleText;
+    } else {
+      // Fallback to saved editor state
+      const editorState = storageService.loadEditorState();
+      if (editorState.text) {
+        editor.value = editorState.text;
+        console.log('Restored editor text from previous session');
+      }
+    }
   }
+
+  // Enable auto-save for editor
+  enableEditorAutoSave();
 }
 
 // Step 5: Attach event handlers
@@ -171,12 +189,20 @@ function attachEventHandlers(ruleSet: string, ruleId: string) {
     const poemText = editor?.value || '';
 
     if (!poemText.trim()) {
-      alert('దయచేసి పద్యం టెక్స్ట్ ఇవ్వండి (Please enter poem text)');
+      alert(t('alert_enter_poem'));
       return;
     }
 
     const yati = (document.getElementById('match-yati') as HTMLInputElement)?.checked ?? true;
     const prasa = (document.getElementById('match-prasa') as HTMLInputElement)?.checked ?? true;
+
+    // Track analyze button click
+    analyticsService.trackEvent('analyze_click', {
+      mode: 'specific_rule',
+      ruleSet: ruleSet,
+      ruleId: ruleId,
+      autoDetect: false
+    });
 
     try {
       const response = await WasmBridge.tryMatch(poemText, ruleId, yati, prasa);
@@ -187,23 +213,29 @@ function attachEventHandlers(ruleSet: string, ruleId: string) {
         const resultsSection = document.getElementById('results-section');
         if (resultsSection) resultsSection.style.display = 'block';
       } else {
-        alert(response.errorMessage || 'సరిపోలలేదు (No match)');
+        alert(response.errorMessage || t('alert_no_match'));
       }
     } catch (err) {
       console.error('Match failed:', err);
-      alert('లోపం సంభవించింది (Error occurred)');
+      alert(t('alert_error'));
     }
   });
 
   // Random button - picks from this rule's examples only
   document.getElementById('btn-random')?.addEventListener('click', async () => {
+    // Track random button click
+    analyticsService.trackEvent('random_click', {
+      ruleSet: ruleSet,
+      ruleId: ruleId
+    });
+
     try {
       const poem = await WasmBridge.getRandomPoem(ruleId);
       if (poem) {
         const editor = document.getElementById('poem-editor') as HTMLTextAreaElement;
         if (editor) editor.value = poem;
       } else {
-        alert('ఉదాహరణలు అందుబాటులో లేవు (No examples available)');
+        alert(t('alert_no_examples'));
       }
     } catch (err) {
       console.error('Random poem failed:', err);
@@ -212,6 +244,15 @@ function attachEventHandlers(ruleSet: string, ruleId: string) {
 
   // Clear button
   document.getElementById('btn-clear')?.addEventListener('click', () => {
+    const editor = document.getElementById('poem-editor') as HTMLTextAreaElement;
+    const hadContent = editor ? editor.value.length > 0 : false;
+
+    // Track clear button click
+    analyticsService.trackEvent('clear_click', {
+      ruleSet: ruleSet,
+      hadContent
+    });
+
     clearEditor();
     hideResults();
   });

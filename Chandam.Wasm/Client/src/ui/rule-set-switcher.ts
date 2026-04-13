@@ -3,6 +3,7 @@ import { WasmBridge } from '../wasm-bridge';
 import { renderRulePicker } from './rule-picker';
 import { createDynamicLoader } from '../utils/loader';
 import { LoadingEvents, LoadingEventType } from '../utils/loading-events';
+import { t } from '../i18n';
 
 // Lazy initialization of dynamic loader (only created on first use)
 let dynamicLoaderInitialized = false;
@@ -85,7 +86,7 @@ export async function switchRuleSet(ruleSetId: string) {
         message: result.errorMessage || 'Unknown error'
       });
 
-      alert(`Failed to load rules: ${result.errorMessage}`);
+      alert(`${t('alert_error')}: ${result.errorMessage}`);
     }
   } catch (err) {
     console.error('Failed to switch rule set:', err);
@@ -96,6 +97,6 @@ export async function switchRuleSet(ruleSetId: string) {
       message: err instanceof Error ? err.message : 'Unknown error'
     });
 
-    alert('లోపం సంభవించింది (Error occurred)');
+    alert(t('alert_error'));
   }
 }

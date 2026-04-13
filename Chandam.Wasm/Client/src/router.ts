@@ -1,3 +1,5 @@
+import { analyticsService } from './services/analytics-service';
+
 type RouteHandler = (params: Record<string, string>) => void | Promise<void>;
 
 interface Route {
@@ -94,6 +96,9 @@ export class Router {
     const url = new URL(window.location.href);
     const rawPath = url.pathname;
     const path = this.stripBasePath(rawPath);
+
+    // Track page view for SPA navigation
+    analyticsService.trackPageView(path);
 
     // Also extract query parameters
     const queryParams: Record<string, string> = {};

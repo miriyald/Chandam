@@ -1,8 +1,11 @@
 import type { ChandamMatch, MatchError } from '../types';
 import { openAccordion } from './accordion';
 import { makeUrl } from '../utils/url-helpers';
+import { t } from '../i18n';
+import { analyticsService } from '../services/analytics-service';
+import { generateShortHash } from '../utils/hash-utils';
 
-export function renderResults(matches: ChandamMatch[], containerId: string, ruleSet?: string) {
+export async function renderResults(matches: ChandamMatch[], containerId: string, ruleSet?: string) {
   const container = document.getElementById(containerId);
   if (!container) return;
 
@@ -10,10 +13,15 @@ export function renderResults(matches: ChandamMatch[], containerId: string, rule
 
   // Auto-open results section
   openAccordion('results-section');
+
+  // Track each result
+  for (const match of matches) {
+    await trackAnalysisResult(match);
+  }
 }
 
 // Render only the first (best) match
-export function renderFirstMatch(match: ChandamMatch, containerId: string, ruleSet?: string) {
+export async function renderFirstMatch(match: ChandamMatch, containerId: string, ruleSet?: string) {
   const container = document.getElementById(containerId);
   if (!container) return;
 
@@ -24,6 +32,9 @@ export function renderFirstMatch(match: ChandamMatch, containerId: string, ruleS
   if (resultsSection) {
     resultsSection.style.display = 'block';
   }
+
+  // Track analysis result
+  await trackAnalysisResult(match);
 }
 
 // Render a single match card with split-view layout
@@ -39,7 +50,7 @@ function renderMatchCard(match: ChandamMatch, ruleSet?: string): string {
 
   // Generate rule details link (opens in new tab)
   const ruleLink = ruleSet && match.rule.identifier
-    ? `<a href="${makeUrl(`/learn/${ruleSet}/${match.rule.identifier}/`)}" class="rule-details-link" target="_blank" rel="noopener noreferrer">View Rule Details ↗</a>`
+    ? `<a href="${makeUrl(`/learn/${ruleSet}/${match.rule.identifier}/`)}" class="rule-details-link" target="_blank" rel="noopener noreferrer">${t('results_view_details')}</a>`
     : '';
 
   // Enhanced error display (table format)
@@ -48,7 +59,8 @@ function renderMatchCard(match: ChandamMatch, ruleSet?: string): string {
     : '';
 
   // CONDITIONAL RENDERING based on match percentage
-  let bodyHtml = '';
+  // Declared without initializer — both branches assign before use; initializing '' would trigger no-useless-assignment lint error
+  let bodyHtml: string;
 
   if (match.matchPercentage === 100 && match.beautified) {
     // 100% match: Show beautified poem (left) + gana vibhajana table (right)
@@ -101,7 +113,7 @@ function getScoreLevel(percentage: number): string {
 // Render errors as a table
 function renderErrorsTable(errors: MatchError[]): string {
   const errorCount = errors.length;
-  const errorLabel = errorCount === 1 ? 'Mismatch' : 'Mismatches';
+  const errorLabel = errorCount === 1 ? t('results_mismatch_singular') : t('results_mismatch_plural');
 
   const errorRows = errors.map(err => `
     <tr>
@@ -121,12 +133,12 @@ function renderErrorsTable(errors: MatchError[]): string {
         <table class="errors-table">
           <thead>
             <tr>
-              <th>Line</th>
-              <th>Pos</th>
-              <th>Type</th>
-              <th>Expected</th>
-              <th>Actual</th>
-              <th>Description</th>
+              <th>${t('results_line')}</th>
+              <th>${t('results_position')}</th>
+              <th>${t('results_type')}</th>
+              <th>${t('results_expected')}</th>
+              <th>${t('results_actual')}</th>
+              <th>${t('results_description')}</th>
             </tr>
           </thead>
           <tbody>
@@ -152,4 +164,39 @@ export function hideResults() {
 export function clearResults() {
   const container = document.getElementById('results-container');
   if (container) container.innerHTML = '';
+}
+
+/**
+ * Track analysis result in Google Analytics
+ * Tracks both regular results and perfect matches (100%) with content hash
+ */
+async function trackAnalysisResult(match: ChandamMatch) {
+  // Track analysis result with basic metrics
+  analyticsService.trackEvent('analysis_result', {
+    ruleId: match.rule.identifier,
+    matchPercentage: match.matchPercentage,
+    score: match.score,
+    total: match.total
+  });
+
+  // Track perfect match with content hash
+  if (match.matchPercentage === 100) {
+    try {
+      // Get poem text from editor
+      const editor = document.getElementById('poem-editor') as HTMLTextAreaElement;
+      const poemText = editor?.value || '';
+
+      if (poemText) {
+        // Generate short hash (first 64 bits)
+        const contentHash = await generateShortHash(match.rule.identifier, poemText);
+
+        analyticsService.trackEvent('perfect_match', {
+          ruleId: match.rule.identifier,
+          contentHash
+        });
+      }
+    } catch (err) {
+      console.error('Failed to track perfect match:', err);
+    }
+  }
 }

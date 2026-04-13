@@ -1,13 +1,18 @@
 import { WasmBridge } from '../wasm-bridge';
-import { getRuleSet } from '../config';
+import { getRuleSet, getRuleSetAsync } from '../config';
 import { renderRulePicker, setSelectedRule, getSelectedRule } from './rule-picker';
-import { clearEditor } from './editor';
+import { clearEditor, enableEditorAutoSave } from './editor';
 import { renderEditorCard, showRulePicker, hideRulePicker } from './shared-components';
 import { renderFirstMatch } from './results';
 import { getEditorText } from './editor';
 import type { RuleSummaryDetailed } from '../types';
 import { makeUrl } from '../utils/url-helpers';
 import { renderBreadcrumbs, buildRuleSetBreadcrumbs } from './breadcrumbs';
+import { loadRuleSet } from '../utils/rule-loader';
+import { t } from '../i18n';
+import { CustomRulesLoader } from '../services/custom-rules-loader';
+import { storageService } from '../services/storage/storage-service';
+import { analyticsService } from '../services/analytics-service';
 
 // Track last analyzed rule (from either Determine or Match) for smart auto-select
 let lastAnalyzedRule: { id: string; name: string } | null = null;
@@ -26,16 +31,23 @@ export async function renderRuleSetPage(ruleSet: string) {
   // Store current rule set for learn page links
   currentRuleSet = ruleSet;
 
-  // Step 1: Validate and load rule set
-  const ruleSetConfig = getRuleSet(ruleSet);
+  // Step 1: Validate and load rule set (supports both predefined and custom)
+  const ruleSetConfig = await getRuleSetAsync(ruleSet);
   if (!ruleSetConfig) {
     console.error(`Rule set not found: ${ruleSet}`);
     return;
   }
 
-  await loadRuleSet(ruleSetConfig.rulesFile, ruleSetConfig.examplesFile);
+  // Step 2: Load rules based on type
+  if (ruleSetConfig.rulesFile) {
+    // Predefined ruleset - load from files
+    await loadRuleSet(ruleSetConfig.rulesFile, ruleSetConfig.examplesFile);
+  } else {
+    // Custom ruleset - load from IndexedDB
+    await CustomRulesLoader.loadCustomRuleset(ruleSet);
+  }
 
-  // Step 2: Get all rules
+  // Step 3: Get all rules
   const rules = await WasmBridge.getAllRulesDetailed();
 
   // Store rules for lookup
@@ -44,23 +56,24 @@ export async function renderRuleSetPage(ruleSet: string) {
   // Step 3: Render page HTML
   renderRuleSetPageHtml(ruleSetConfig.name, rules.length, ruleSet);
 
-  // Step 4: Populate rule picker
+  // Step 4: Restore editor state (if saved)
+  const editorState = storageService.loadEditorState();
+  if (editorState.text) {
+    const editor = document.getElementById('poem-editor') as HTMLTextAreaElement;
+    if (editor) {
+      editor.value = editorState.text;
+      console.log('Restored editor text from previous session');
+    }
+  }
+
+  // Step 4b: Enable auto-save for editor
+  enableEditorAutoSave();
+
+  // Step 5: Populate rule picker
   renderRulePicker(rules, 'rule-picker-container');
 
-  // Step 5: Attach event handlers
+  // Step 6: Attach event handlers
   attachEventHandlers(ruleSet);
-}
-
-// Step 1: Load rule set if needed
-async function loadRuleSet(rulesFile: string, examplesFile: string) {
-  try {
-    const result = await WasmBridge.reloadRules(rulesFile, examplesFile);
-    if (!result.success) {
-      console.error('Failed to load rules:', result.errorMessage);
-    }
-  } catch (err) {
-    console.error('Failed to load rule set:', err);
-  }
 }
 
 // Step 3: Render page HTML
@@ -75,23 +88,23 @@ function renderRuleSetPageHtml(ruleSetName: string, ruleCount: number, ruleSetId
       ${renderBreadcrumbs(breadcrumbs)}
 
       <div class="rule-set-info">
-        <span class="label">Rule Set:</span>
+        <span class="label">${t('label_rule_set')}</span>
         <span class="name">${ruleSetName}</span>
-        <span class="count">[${ruleCount} Rules]</span>
+        <span class="count">[${ruleCount} ${t('label_rules_count')}]</span>
       </div>
 
       <div class="page-links">
-        <a href="${makeUrl(`/learn/${ruleSetId}/`)}" class="learn-link">Browse Rules</a>
+        <a href="${makeUrl(`/learn/${ruleSetId}/`)}" class="learn-link">${t('link_browse_rules')}</a>
       </div>
 
       ${renderEditorCard({
-        contextText: 'Auto-detecting best match...',
+        contextText: t('editor_auto_detect_context'),
         showRulePicker: true,
         showAutoDetect: true
       })}
 
       <div id="results-section" style="display: none;">
-        <h3>Results</h3>
+        <h3>${t('results_title')}</h3>
         <div id="results-container"></div>
       </div>
     </div>
@@ -121,6 +134,14 @@ function attachEventHandlers(ruleSet: string) {
   document.getElementById('btn-analyze')?.addEventListener('click', async () => {
     const isAutoDetect = (document.getElementById('auto-detect') as HTMLInputElement)?.checked;
 
+    // Track analyze button click
+    analyticsService.trackEvent('analyze_click', {
+      mode: isAutoDetect ? 'auto_detect' : 'specific_rule',
+      ruleSet: currentRuleSet,
+      ruleId: isAutoDetect ? null : getSelectedRule(),
+      autoDetect: isAutoDetect
+    });
+
     if (isAutoDetect) {
       await handleDetermineWithTracking();
     } else {
@@ -130,13 +151,19 @@ function attachEventHandlers(ruleSet: string) {
 
   // Random button - picks from any rule in the set
   document.getElementById('btn-random')?.addEventListener('click', async () => {
+    // Track random button click
+    analyticsService.trackEvent('random_click', {
+      ruleSet: currentRuleSet,
+      ruleId: 'auto_detect'  // Random from entire set
+    });
+
     try {
       const poem = await WasmBridge.getRandomPoemFromRuleSet();
       if (poem) {
         const editor = document.getElementById('poem-editor') as HTMLTextAreaElement;
         if (editor) editor.value = poem;
       } else {
-        alert('ఉదాహరణలు అందుబాటులో లేవు (No examples available)');
+        alert(t('alert_no_examples'));
       }
     } catch (err) {
       console.error('Random poem failed:', err);
@@ -145,6 +172,15 @@ function attachEventHandlers(ruleSet: string) {
 
   // Clear button
   document.getElementById('btn-clear')?.addEventListener('click', () => {
+    const editor = document.getElementById('poem-editor') as HTMLTextAreaElement;
+    const hadContent = editor ? editor.value.length > 0 : false;
+
+    // Track clear button click
+    analyticsService.trackEvent('clear_click', {
+      ruleSet: currentRuleSet,
+      hadContent
+    });
+
     clearEditor();
   });
 }
@@ -153,7 +189,7 @@ function attachEventHandlers(ruleSet: string) {
 async function handleDetermineWithTracking() {
   const poemText = getEditorText();
   if (!poemText.trim()) {
-    alert('దయచేసి పద్యం టెక్స్ట్ ఇవ్వండి (Please enter poem text)');
+    alert(t('alert_enter_poem'));
     return;
   }
 
@@ -178,11 +214,11 @@ async function handleDetermineWithTracking() {
       const resultsSection = document.getElementById('results-section');
       if (resultsSection) resultsSection.style.display = 'block';
     } else {
-      alert(response.errorMessage || 'సరిపోలికలు దొరకలేదు (No matches found)');
+      alert(response.errorMessage || t('alert_no_matches'));
     }
   } catch (err) {
     console.error('Determine failed:', err);
-    alert('లోపం సంభవించింది (Error occurred)');
+    alert(t('alert_error'));
   }
 }
 
@@ -192,12 +228,12 @@ async function handleMatchWithTracking() {
   const ruleId = getSelectedRule();
 
   if (!poemText.trim()) {
-    alert('దయచేసి పద్యం టెక్స్ట్ ఇవ్వండి (Please enter poem text)');
+    alert(t('alert_enter_poem'));
     return;
   }
 
   if (!ruleId) {
-    alert('దయచేసి ఛందం ఎంచుకోండి (Please select a rule)');
+    alert(t('alert_select_rule'));
     // Add visual feedback to rule picker
     const rulePicker = document.getElementById('rule-picker-inline');
     if (rulePicker) {
@@ -228,10 +264,10 @@ async function handleMatchWithTracking() {
       const resultsSection = document.getElementById('results-section');
       if (resultsSection) resultsSection.style.display = 'block';
     } else {
-      alert(response.errorMessage || 'సరిపోలలేదు (No match)');
+      alert(response.errorMessage || t('alert_no_match'));
     }
   } catch (err) {
     console.error('Match failed:', err);
-    alert('లోపం సంభవించింది (Error occurred)');
+    alert(t('alert_error'));
   }
 }

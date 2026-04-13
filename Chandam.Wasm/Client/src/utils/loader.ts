@@ -63,10 +63,15 @@ export class LoadingAnimationManager {
   private createLoaderHTML(): string {
     return `
       <div class="loader-container">
-        <img src="${this.config.gifPath}"
-             alt="${this.config.fallbackText}"
-             class="loader-gif"
-             onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+        <picture>
+          <source media="(min-width: 1025px)" srcset="/images/chandam-icon-telugu-148.gif">
+          <source media="(min-width: 769px) and (max-width: 1024px)" srcset="/images/chandam-icon-telugu-130.gif">
+          <source media="(max-width: 768px)" srcset="/images/chandam-icon-telugu-112.gif">
+          <img src="/images/chandam-icon-telugu-148.gif"
+               alt="${this.config.fallbackText}"
+               class="loader-gif"
+               onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+        </picture>
         <p class="loader-fallback" style="display:none;">${this.config.fallbackText}</p>
       </div>
     `;

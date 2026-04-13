@@ -1,4 +1,4 @@
-import type { RuleSummaryDetailed } from '../types';
+import { t } from '../i18n';
 
 export interface EditorCardConfig {
   contextText: string;
@@ -21,11 +21,11 @@ export function renderEditorCard(config: EditorCardConfig): string {
             <label class="toggle-switch">
               <input type="checkbox" id="auto-detect" checked>
               <span class="toggle-slider"></span>
-              <span class="toggle-label">Auto-detect</span>
+              <span class="toggle-label">${t('editor_auto_detect')}</span>
             </label>
             <span class="separator">|</span>
             <details class="rule-picker-inline" id="rule-picker-inline" style="display: none;">
-              <summary id="selected-rule-name">Matching with: Select a rule ▼</summary>
+              <summary id="selected-rule-name">${t('editor_matching_with')} ${t('editor_select_rule')}</summary>
               <div class="picker-dropdown" id="rule-picker-container"></div>
             </details>
             <span id="editor-context-label" class="editor-context" style="display: inline;">
@@ -37,31 +37,31 @@ export function renderEditorCard(config: EditorCardConfig): string {
         </div>
 
         <div class="editor-actions">
-          <button id="btn-random" title="Random example">🎲 Random</button>
+          <button id="btn-random" title="${t('editor_btn_random')}">${t('editor_btn_random')}</button>
           <span class="action-separator">|</span>
-          <button id="btn-clear" title="Clear">🧹 Clear</button>
+          <button id="btn-clear" title="${t('editor_btn_clear')}">${t('editor_btn_clear')}</button>
         </div>
       </div>
 
-      <textarea id="poem-editor" rows="5" placeholder="పద్యం ఇక్కడ టైప్ చేయండి..."></textarea>
+      <textarea id="poem-editor" rows="5" placeholder="${t('editor_placeholder')}"></textarea>
 
       <div class="controls-bar">
         <div class="toggle-group">
           <label class="toggle-switch">
             <input type="checkbox" id="match-yati" checked>
             <span class="toggle-slider"></span>
-            <span class="toggle-label">Yati</span>
+            <span class="toggle-label">${t('editor_yati')}</span>
           </label>
           <span class="separator">|</span>
           <label class="toggle-switch">
             <input type="checkbox" id="match-prasa" checked>
             <span class="toggle-slider"></span>
-            <span class="toggle-label">Prasa</span>
+            <span class="toggle-label">${t('editor_prasa')}</span>
           </label>
         </div>
 
         <div class="main-actions">
-          <button id="btn-analyze" class="btn-primary">Analyze Poem</button>
+          <button id="btn-analyze" class="btn-primary">${t('editor_btn_analyze')}</button>
         </div>
       </div>
     </div>
