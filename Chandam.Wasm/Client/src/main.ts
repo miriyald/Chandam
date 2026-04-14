@@ -175,3 +175,43 @@ window.onWasmReady = async () => {
   console.log('Initializing router');
   router.init();
 };
+
+// Safety net: detect if WASM fails to load within timeout
+const INIT_TIMEOUT_MS = 10000; // 10 seconds
+let initComplete = false;
+
+const initTimeout = setTimeout(() => {
+  if (!initComplete) {
+    console.error('[Chandam] WASM initialization timeout - check browser console');
+    const loader = document.getElementById('initial-loader');
+    if (loader) {
+      loader.innerHTML = `
+        <div class="loader-container error" style="text-align: center; padding: 2rem;">
+          <h2 style="color: #d32f2f;">Failed to Load Application</h2>
+          <p>The application failed to initialize. Please try:</p>
+          <button onclick="location.reload()"
+                  style="margin-top: 1rem; padding: 0.5rem 1rem; cursor: pointer; font-size: 1rem;">
+            Reload Page
+          </button>
+        </div>
+      `;
+    }
+    // Track failure in analytics if available
+    if (typeof window.gtag === 'function') {
+      window.gtag('event', 'exception', {
+        description: 'wasm_init_timeout',
+        fatal: true
+      });
+    }
+  }
+}, INIT_TIMEOUT_MS);
+
+// Wrap existing onWasmReady to mark completion and clear timeout
+const originalHandler = window.onWasmReady;
+window.onWasmReady = async () => {
+  initComplete = true;
+  clearTimeout(initTimeout);
+  if (originalHandler) {
+    await originalHandler();
+  }
+};

@@ -181,7 +181,7 @@ const translations: Record<Language, Translations> = {
 
     loading: 'లోడవుతోంది...',
 
-    home_title: 'ఛందం - తెలుగు పద్య మీటర్ విశ్లేషణ',
+    home_title: 'ఛందం - తెలుగు పద్య ఛందస్సు విశ్లేషణ',
     home_subtitle: 'తెలుగు పద్య మీటర్లను విశ్లేషించడానికి లేదా నేర్చుకోవడానికి ఒక నియమ సమూహాన్ని ఎంచుకోండి',
     home_btn_analyze: '✏️ విశ్లేషించు',
     home_btn_learn: '📖 నేర్చుకో',

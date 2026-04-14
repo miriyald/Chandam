@@ -20,7 +20,7 @@ export const RULE_SETS: RuleSet[] = [
   {
     id: 'complete',
     name: 'చంధోరత్నావళి',
-    description: 'దిలీపు మిరియాల సంకలనం: అనేక చంధస్సు వనరులు మరియూ ముఖ్యంగా కోవెల సంపత్కుమారాచార్య రచనలు',
+    description: 'దిలీపు మిరియాల సంకలనం: అనేక ఛందస్సు వనరులు మరియూ ముఖ్యంగా కోవెల సంపత్కుమారాచార్య రచనలు',
     rulesFile: 'data/chandam.min.json.gz',
     examplesFile: 'data/chandam-examples.min.json.gz',
     ruleCount: 380
@@ -28,7 +28,7 @@ export const RULE_SETS: RuleSet[] = [
   {
     id: 'topella',
     name: 'అనంతచ్చంధము',
-    description: 'శ్రీ తోపెల్ల బాలసుబ్రహ్మణ్య శర్మగారి సంకలనం: అనేక చంధస్సు వనరులు మరియూ స్వయంగా సృజించినవి.',
+    description: 'శ్రీ తోపెల్ల బాలసుబ్రహ్మణ్య శర్మగారి సంకలనం: అనేక ఛందస్సు వనరులు మరియూ స్వయంగా సృజించినవి.',
     rulesFile: 'data/topella.min.json.gz',
     examplesFile: '',
     ruleCount: 2337

@@ -63,6 +63,12 @@
     <Message Text="Branding assets not found - using pre-committed files in wwwroot/images/" Importance="normal" Condition="'@(BrandingGifFiles)' == ''" />
   </Target>
 
+  <!-- Sync 404.html with index.html for GitHub Pages SPA fallback -->
+  <Target Name="Sync404Html" BeforeTargets="Build">
+    <Copy SourceFiles="wwwroot\index.html" DestinationFiles="wwwroot\404.html" SkipUnchangedFiles="false" />
+    <Message Text="✓ Synced 404.html from index.html" Importance="high" />
+  </Target>
+
   <!-- Inject version into published index.html -->
   <Target Name="InjectVersionIntoHtml" AfterTargets="Publish" Condition="'$(PublishDir)' != ''">
     <PropertyGroup>
