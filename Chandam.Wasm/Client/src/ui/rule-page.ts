@@ -6,6 +6,7 @@ import { clearEditor, enableEditorAutoSave } from './editor';
 import { renderEditorCard } from './shared-components';
 import { makeUrl } from '../utils/url-helpers';
 import { renderBreadcrumbs, buildRuleBreadcrumbs } from './breadcrumbs';
+import { renderModeSwitcher } from './mode-switcher';
 import { renderRuleActions } from './rule-actions';
 import { loadRuleSet } from '../utils/rule-loader';
 import { storageService } from '../services/storage/storage-service';
@@ -140,8 +141,8 @@ function renderRulePageHtml(
         <div id="rule-actions-container"></div>
       </div>
 
-      <div class="page-links">
-        <a href="${makeUrl(`/learn/${ruleSetId}/${ruleId}`)}" class="learn-link">${t('link_learn_more')}</a>
+      <div class="page-header-controls">
+        ${renderModeSwitcher({ ruleSetId, ruleId, currentMode: 'compute' })}
         <a href="${makeUrl(`/learn/${ruleSetId}/`)}" class="browse-link">${t('link_browse_all_rules')}</a>
       </div>
 

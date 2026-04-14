@@ -8,6 +8,7 @@ import { getEditorText } from './editor';
 import type { RuleSummaryDetailed } from '../types';
 import { makeUrl } from '../utils/url-helpers';
 import { renderBreadcrumbs, buildRuleSetBreadcrumbs } from './breadcrumbs';
+import { renderModeSwitcher } from './mode-switcher';
 import { loadRuleSet } from '../utils/rule-loader';
 import { t } from '../i18n';
 import { CustomRulesLoader } from '../services/custom-rules-loader';
@@ -93,9 +94,7 @@ function renderRuleSetPageHtml(ruleSetName: string, ruleCount: number, ruleSetId
         <span class="count">[${ruleCount} ${t('label_rules_count')}]</span>
       </div>
 
-      <div class="page-links">
-        <a href="${makeUrl(`/learn/${ruleSetId}/`)}" class="learn-link">${t('link_browse_rules')}</a>
-      </div>
+      ${renderModeSwitcher({ ruleSetId, currentMode: 'compute' })}
 
       ${renderEditorCard({
         contextText: t('editor_auto_detect_context'),

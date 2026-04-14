@@ -4,6 +4,7 @@ import { CustomRulesLoader } from '../services/custom-rules-loader';
 import type { RuleInfo } from '../types';
 import { makeUrl, makeUrlWithParams } from '../utils/url-helpers';
 import { renderBreadcrumbs, buildRuleBreadcrumbs } from './breadcrumbs';
+import { renderModeSwitcher } from './mode-switcher';
 import { renderRuleActions } from './rule-actions';
 import { loadRuleSet } from '../utils/rule-loader';
 import { t } from '../i18n';
@@ -48,8 +49,8 @@ function renderLearnDetailPageHtml(
     <div class="learn-detail-page">
       ${renderBreadcrumbs(breadcrumbs)}
 
-      <div class="page-links">
-        <a href="${makeUrl(`/compute/${ruleSetId}/${ruleInfo.identifier}`)}" class="compute-link">${t('link_try_in_compute')}</a>
+      <div class="page-header-controls">
+        ${renderModeSwitcher({ ruleSetId, ruleId: ruleInfo.identifier, currentMode: 'learn' })}
         <a href="${makeUrl(`/learn/${ruleSetId}/`)}" class="browse-link">${t('link_back_to_browse')}</a>
       </div>
 

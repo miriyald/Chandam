@@ -66,6 +66,10 @@ export interface Translations {
   link_learn: string;
   link_try: string;
 
+  // Mode switcher
+  mode_learn: string;
+  mode_compute: string;
+
   // Learn sections
   learn_title_prefix: string;
   section_description: string;
@@ -152,6 +156,9 @@ const translations: Record<Language, Translations> = {
     link_learn: 'Learn',
     link_try: 'Try',
 
+    mode_learn: 'Learn',
+    mode_compute: 'Compute',
+
     learn_title_prefix: 'Learn:',
     section_description: 'Description',
     section_technical: 'Technical Details',
@@ -231,6 +238,9 @@ const translations: Record<Language, Translations> = {
     link_back_to_browse: '← వెనక్కి వెళ్ళు',
     link_learn: 'నేర్చుకో',
     link_try: 'ప్రయత్నించు',
+
+    mode_learn: 'నేర్చుకోండి',
+    mode_compute: 'విశ్లేషణ',
 
     learn_title_prefix: 'నేర్చుకో:',
     section_description: 'వివరణ',

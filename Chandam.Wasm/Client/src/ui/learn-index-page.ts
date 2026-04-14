@@ -4,6 +4,7 @@ import type { RuleSummaryDetailed } from '../types';
 import { groupRulesByCategory, getSortedGroupKeys, getGroupDisplayName } from '../utils/rule-grouping';
 import { makeUrl } from '../utils/url-helpers';
 import { renderBreadcrumbs, buildRuleSetBreadcrumbs } from './breadcrumbs';
+import { renderModeSwitcher } from './mode-switcher';
 import { loadRuleSet } from '../utils/rule-loader';
 import { t } from '../i18n';
 import { CustomRulesLoader } from '../services/custom-rules-loader';
@@ -70,9 +71,7 @@ function renderLearnIndexPageHtml(
       <h1>${t('learn_title_prefix')} ${ruleSetName}</h1>
       <div class="rule-count">${ruleCount} ${t('label_rules_count')}</div>
 
-      <div class="page-links">
-        <a href="${makeUrl(`/compute/${ruleSetId}/`)}" class="compute-link">${t('link_go_to_compute')}</a>
-      </div>
+      ${renderModeSwitcher({ ruleSetId, currentMode: 'learn' })}
 
       <div class="chandam-groups">
         ${renderChandamGroups(grouped, ruleSetId, favoriteIds)}
