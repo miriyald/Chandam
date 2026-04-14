@@ -1,5 +1,5 @@
 import type { RuleSummaryDetailed } from '../types';
-import { groupRulesByCategory, getSortedGroupKeys } from '../utils/rule-grouping';
+import { groupRulesByCategory, getSortedGroupKeys, getGroupDisplayName } from '../utils/rule-grouping';
 import { t } from '../i18n';
 
 /**
@@ -25,7 +25,7 @@ export function renderRulePicker(rules: RuleSummaryDetailed[], containerId: stri
 
     const groupHeader = document.createElement('div');
     groupHeader.className = 'rule-group-header';
-    groupHeader.textContent = groupKey;
+    groupHeader.textContent = getGroupDisplayName(groupKey);
     ruleList.appendChild(groupHeader);
 
     groupRules.forEach(rule => {

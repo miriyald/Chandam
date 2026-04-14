@@ -9,28 +9,28 @@ export interface RuleSet {
 
 export const RULE_SETS: RuleSet[] = [
   {
-    id: 'frequent',
-    name: 'Frequent Rules',
-    rulesFile: 'data/chandam-rules.min.json.gz',
-    examplesFile: 'data/chandam-examples.min.json.gz',
-    description: 'Most common Telugu poetry meters',
+    id: 'popular',
+    name: 'ప్రముఖ ఛందస్సులు',
+    description: 'తెలుగులో అత్యంత వాడుకలో ఉన్న ఛందస్సులు',
+    rulesFile: 'data/popular-rules.min.json.gz',
+    examplesFile: 'data/popular-examples.min.json.gz',
     ruleCount: 14
   },
 
   {
     id: 'complete',
-    name: 'Complete Telugu',
-    rulesFile: 'data/telugu-complete.min.json.gz',
-    examplesFile: 'data/telugu-complete-examples.min.json.gz',
-    description: 'Comprehensive collection with examples',
-    ruleCount: 379
+    name: 'చంధోరత్నావళి',
+    description: 'దిలీపు మిరియాల సంకలనం: అనేక చంధస్సు వనరులు మరియూ ముఖ్యంగా కోవెల సంపత్కుమారాచార్య రచనలు',
+    rulesFile: 'data/chandam.min.json.gz',
+    examplesFile: 'data/chandam-complete-examples.min.json.gz',
+    ruleCount: 317
   },
   {
     id: 'topella',
-    name: 'Topella Collection',
+    name: 'అనంతచ్చంధము',
+    description: 'శ్రీ తోపెల్ల బాలసుబ్రహ్మణ్య శర్మగారి సంకలనం: అనేక చంధస్సు వనరులు మరియూ స్వయంగా సృజించినవి.',
     rulesFile: 'data/topella.min.json.gz',
     examplesFile: '',
-    description: '2337 rare Telugu Vruttam meters',
     ruleCount: 2337
   }
 ];

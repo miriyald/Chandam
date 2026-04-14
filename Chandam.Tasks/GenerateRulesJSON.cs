@@ -32,121 +32,93 @@ namespace Verifier
         /// </summary>
         public void GenerateAllRuleSets()
         {
-            Console.WriteLine("=== Generating JSON Rule Files ===");
+            Console.WriteLine("=== Generating Rulesets ===");
 
             // Ensure output directory exists
             Directory.CreateDirectory(_outputDirectory);
 
-            // Generate different rule sets
-            GenerateFrequentRules();
-            GenerateTeluguComplete();
 
-            // Generate example sets
-            GenerateFrequentExamples();
-            GenerateTeluguCompleteExamples();
+            GeneratePopularRules();
+           
 
-            Console.WriteLine("=== JSON Generation Complete ===");
+  
+            GenerateChandamRules();
+
+
+            Console.WriteLine("=== Generated Rulesets ===");
         }
 
         /// <summary>
         /// Generate chandam-rules.json - Most frequent/common rules only
         /// </summary>
-        private void GenerateFrequentRules()
+        private void GeneratePopularRules()
         {
-            Console.WriteLine("\nGenerating chandam-rules.json (frequent rules only)...");
+
+            Console.WriteLine("\nGenerating Popular Rules");
 
             var allRules = Manager.Rules();
-            var frequentRules = allRules
+            var selectedRules = allRules
                 .Where(r => r.Language == RuleLanguage.Telugu && r.Frequency == Frequency.Frequent)
                 .ToArray();
 
             var ruleSet = new RuleSetDto
             {
-                Identifier = "default",
-                Name = "సాధారణ ఛందస్సులు",
-                Description = "తెలుగులో అత్యంత వాడుకలో ఉన్న ఛందస్సులు (Most frequently used Telugu Chandam meters)",
-                Rules = ConvertRulesToDto(frequentRules)
+                Identifier = "popular",
+                Name = "ప్రముఖ ఛందస్సులు",
+                Description = "తెలుగులో అత్యంత వాడుకలో ఉన్న ఛందస్సులు",
+                Rules = ConvertRulesToDto(selectedRules)
             };
+            
+            var exampleSet = CreateExampleSet($"{ruleSet.Identifier}-examples",
+                                                "ప్రముఖ ఛందస్సుల ఉదాహరణలు",
+                                                "తెలుగులో అత్యంత వాడుకలో ఉన్న ఛందస్సుల ఉదాహరణలు",
+                                                selectedRules);
 
-            SaveRuleSet(ruleSet, "chandam-rules.json");
-            SaveRuleSetYaml(ruleSet, "chandam-rules.yaml");
-            Console.WriteLine($"  ✓ Generated {frequentRules.Length} frequent rules (JSON + YAML)");
+            SaveRuleSet(ruleSet, $"{ruleSet}.json");
+            SaveRuleSetYaml(ruleSet, $"{ruleSet}.yaml");
+            Console.WriteLine($"  ✓ Generated {selectedRules.Length} for {ruleSet.Identifier} rules (JSON + YAML)");
         }
-
+        
+      
         /// <summary>
         /// Generate telugu-complete.json - All Telugu rules
         /// </summary>
-        private void GenerateTeluguComplete()
+        private void GenerateChandamRules()
         {
-            Console.WriteLine("\nGenerating telugu-complete.json (all Telugu rules)...");
+            Console.WriteLine("\nGenerating Popular Rules");
 
             var allRules = Manager.Rules();
-            var teluguRules = allRules
+            var selectedRules = allRules
                 .Where(r => r.Language == RuleLanguage.Telugu)
                 .ToArray();
 
             var ruleSet = new RuleSetDto
             {
-                Identifier = "telugu-complete",
-                Name = "తెలుగు ఛందస్సులు - సంపూర్ణం",
-                Description = "అన్ని తెలుగు ఛందస్సులు (All Telugu Chandam meters)",
-                Rules = ConvertRulesToDto(teluguRules)
+                Identifier = "chandam",
+                Name = "చంధోరత్నావళి",
+                Description = "దిలీపు మిరియాల సంకలనం: అనేక చంధస్సు వనరులు మరియూ ముఖ్యంగా కోవెల సంపత్కుమారాచార్య రచనలు",
+                Rules = ConvertRulesToDto(selectedRules)
             };
 
-            SaveRuleSet(ruleSet, "telugu-complete.json");
-            SaveRuleSetYaml(ruleSet, "telugu-complete.yaml");
-            Console.WriteLine($"  ✓ Generated {teluguRules.Length} Telugu rules (JSON + YAML)");
-        }
-
-        /// <summary>
-        /// Generate chandam-examples.json - Examples for frequent rules only
-        /// </summary>
-        private void GenerateFrequentExamples()
-        {
-            Console.WriteLine("\nGenerating chandam-examples.json (frequent rules examples)...");
-
-            var allRules = Manager.Rules();
-            var frequentRules = allRules
-                .Where(r => r.Language == RuleLanguage.Telugu && r.Frequency == Frequency.Frequent)
-                .Take(15)
-                .ToArray();
-
-            var exampleSet = CreateExampleSet(
-                "default-examples",
-                "సాధారణ ఛందస్సుల ఉదాహరణలు",
-                "తెలుగులో అత్యంత వాడుకలో ఉన్న ఛందస్సుల ఉదాహరణలు (Examples for most frequently used Telugu Chandam meters)",
-                frequentRules
-            );
-
-            SaveExampleSet(exampleSet, "chandam-examples.json");
-            SaveExampleSetYaml(exampleSet, "chandam-examples.yaml");
-            Console.WriteLine($"  ✓ Generated examples for {exampleSet.Examples.Count} rules (JSON + YAML)");
-        }
-
-        /// <summary>
-        /// Generate telugu-complete-examples.json - Examples for all Telugu rules
-        /// </summary>
-        private void GenerateTeluguCompleteExamples()
-        {
-            Console.WriteLine("\nGenerating telugu-complete-examples.json (all Telugu examples)...");
-
-            var allRules = Manager.Rules();
-            var teluguRules = allRules
-                .Where(r => r.Language == RuleLanguage.Telugu)
-                .ToArray();
-
-            var exampleSet = CreateExampleSet(
+             var exampleSet = CreateExampleSet(
                 "telugu-complete-examples",
-                "తెలుగు ఛందస్సుల ఉదాహరణలు - సంపూర్ణం",
-                "అన్ని తెలుగు ఛందస్సుల ఉదాహరణలు (Examples for all Telugu Chandam meters)",
-                teluguRules
+                "చంధోరత్నావళి",
+                "తెలుగు ఛందస్సుల ఉదాహరణలు",
+                selectedRules
             );
 
-            SaveExampleSet(exampleSet, "telugu-complete-examples.json");
-            SaveExampleSetYaml(exampleSet, "telugu-complete-examples.yaml");
-            Console.WriteLine($"  ✓ Generated examples for {exampleSet.Examples.Count} rules (JSON + YAML)");
+           
+
+            SaveRuleSet(ruleSet, $"{ruleSet.Identifier}.json");
+            SaveRuleSetYaml(ruleSet, $"{ruleSet.Identifier}.yaml");
+
+            SaveExampleSet(exampleSet, $"{ruleSet.Identifier}.-examples.json");
+            SaveExampleSetYaml(exampleSet, $"{ruleSet.Identifier}.-examples.yaml");
+
+            Console.WriteLine($"  ✓ Generated {selectedRules.Length} for {ruleSet.Identifier} rules (JSON + YAML)");
         }
 
+       
         /// <summary>
         /// Create ExampleSetDto from Rule array
         /// </summary>
@@ -498,8 +470,8 @@ namespace Verifier
             var ruleSet = new RuleSetDto
             {
                 Identifier = "topella",
-                Name = "తోపెల్ల వృత్తములు",
-                Description = "శ్రీతోపెల్ల బాలసుబ్రహ్మణ్య శర్మగారి 2337 తెలుగు వృత్తములు (Topella's comprehensive collection of 2337 Telugu Vruttam meters)",
+                Name = "అనంతచ్చంధము",
+                Description = "శ్రీ తోపెల్ల బాలసుబ్రహ్మణ్య శర్మగారి సంకలనం: అనేక చంధస్సు వనరులు మరియూ స్వయంగా సృజించినవి.",
                 Rules = ConvertRulesToDto(rules)
             };
 
@@ -551,13 +523,18 @@ namespace Verifier
                 return null;
             }
 
-            // CSV columns: No, Rules, PrasaYati, Yathi, Reference, Name, Identifier, Full Name
-            var rulesText = fields[1];
-            var yatiText = fields[3];
-            var reference = fields[4];
-            var name = fields[5];
-            var identifier = fields[6];
-            var fullName = fields[7];
+            // CSV columns: No,Identifier,Name,Rules,PrasaYati,Yathi,Full Name,Reference
+
+
+
+
+            var identifier = fields[1];
+            var name = fields[2];
+            var rulesText = fields[3];
+            var prasaYatiText = fields[4];
+            var yatiText = fields[5];
+            var fullName = fields[6];
+            var reference = fields[7];
 
             // Format name with alias: "name (alias)" if alias exists
             var formattedName = FormatNameWithAlias(name, fullName, rowNumber);
@@ -574,7 +551,9 @@ namespace Verifier
                 Lines = 4,
                 YatiMode = YatiMode.CharPosition,
                 Prasa = true,
-                PrasaYati = false,
+                PrasaYati = prasaYatiText.Equals("Yes", StringComparison.OrdinalIgnoreCase),
+
+
 
                 Rules = ParseRulesColumn(rulesText),
                 Yati = ParseYatiColumn(yatiText),

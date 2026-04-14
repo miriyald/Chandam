@@ -1,7 +1,7 @@
 ﻿{
-  "Identifier": "default",
-  "Name": "సాధారణ ఛందస్సులు",
-  "Description": "తెలుగులో అత్యంత వాడుకలో ఉన్న ఛందస్సులు (Most frequently used Telugu Chandam meters)",
+  "Identifier": "popular",
+  "Name": "ప్రముఖ ఛందస్సులు",
+  "Description": "తెలుగులో అత్యంత వాడుకలో ఉన్న ఛందస్సులు",
   "Rules": [
     {
       "Identifier": "iMdravajramu",

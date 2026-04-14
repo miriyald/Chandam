@@ -1,7 +1,7 @@
 import { WasmBridge } from '../wasm-bridge';
 import { getRuleSet, getRuleSetAsync } from '../config';
 import type { RuleSummaryDetailed } from '../types';
-import { groupRulesByCategory, getSortedGroupKeys } from '../utils/rule-grouping';
+import { groupRulesByCategory, getSortedGroupKeys, getGroupDisplayName } from '../utils/rule-grouping';
 import { makeUrl } from '../utils/url-helpers';
 import { renderBreadcrumbs, buildRuleSetBreadcrumbs } from './breadcrumbs';
 import { loadRuleSet } from '../utils/rule-loader';
@@ -93,7 +93,7 @@ function renderChandamGroups(
     const rules = grouped.get(groupKey)!;
     return `
       <div class="chandam-group">
-        <h2>${groupKey}</h2>
+        <h2>${getGroupDisplayName(groupKey)}</h2>
         ${rules.map(rule => renderRuleListItem(rule, ruleSetId, favoriteIds)).join('')}
       </div>
     `;

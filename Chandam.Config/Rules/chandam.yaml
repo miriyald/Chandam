@@ -1,6 +1,6 @@
-﻿identifier: telugu-complete
-name: తెలుగు ఛందస్సులు - సంపూర్ణం
-description: అన్ని తెలుగు ఛందస్సులు (All Telugu Chandam meters)
+﻿identifier: chandam
+name: చంధోరత్నావళి
+description: 'దిలీపు మిరియాల సంకలనం: అనేక చంధస్సు వనరులు మరియూ ముఖ్యంగా కోవెల సంపత్కుమారాచార్య రచనలు'
 rules:
 - identifier: aaTaveladi
   name: ఆటవెలది
@@ -12166,3 +12166,22 @@ rules:
   chandamOrder: 98426332
   sequence: '|U|-||U-|||-U||-|U|-||U-|||-U||-|U'
   matraSeries: 5 , 5-3
+- identifier: GenricVruttam
+  name: ఏదేని సమ వృత్తం
+  language: Telugu
+  padyamType: Vruttam
+  padyamSubType: GenricVruttam
+  ruleType: Name
+  frequency: Rare
+  lines: 4
+  threshold: 3
+  rules:
+  - []
+  yati: []
+  yatiMode: CharPosition
+  shortName: ఏదేని సమ వృత్తం
+  alias: ''
+  chandamName: ఉద్ధురమాల
+  chandamNumber: 1
+  sequence: ''
+  matraSeries: ''

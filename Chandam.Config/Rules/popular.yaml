@@ -1,6 +1,6 @@
-﻿identifier: default
-name: సాధారణ ఛందస్సులు
-description: తెలుగులో అత్యంత వాడుకలో ఉన్న ఛందస్సులు (Most frequently used Telugu Chandam meters)
+﻿identifier: popular
+name: ప్రముఖ ఛందస్సులు
+description: తెలుగులో అత్యంత వాడుకలో ఉన్న ఛందస్సులు
 rules:
 - identifier: iMdravajramu
   name: ఇంద్రవజ్రము

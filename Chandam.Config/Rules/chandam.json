@@ -1,7 +1,7 @@
 ﻿{
-  "Identifier": "telugu-complete",
-  "Name": "తెలుగు ఛందస్సులు - సంపూర్ణం",
-  "Description": "అన్ని తెలుగు ఛందస్సులు (All Telugu Chandam meters)",
+  "Identifier": "chandam",
+  "Name": "చంధోరత్నావళి",
+  "Description": "దిలీపు మిరియాల సంకలనం: అనేక చంధస్సు వనరులు మరియూ ముఖ్యంగా కోవెల సంపత్కుమారాచార్య రచనలు",
   "Rules": [
     {
       "Identifier": "aaTaveladi",
@@ -19285,6 +19285,45 @@
       "ChandamOrder": 98426332,
       "Sequence": "|U|-||U-|||-U||-|U|-||U-|||-U||-|U",
       "MatraSeries": "5 , 5-3",
+      "RowWiseRules": false,
+      "Examples": null
+    },
+    {
+      "Identifier": "GenricVruttam",
+      "Name": "ఏదేని సమ వృత్తం",
+      "Language": "Telugu",
+      "PadyamType": "Vruttam",
+      "PadyamSubType": "GenricVruttam",
+      "RuleType": "Name",
+      "Frequency": "Rare",
+      "Lines": 4,
+      "Threshold": 3,
+      "Rules": [
+        []
+      ],
+      "Yati": [],
+      "YatiMode": "CharPosition",
+      "Prasa": false,
+      "PrasaYati": false,
+      "AnthyaPrasa": false,
+      "ReverseYati": false,
+      "OnlyPrasaYati": false,
+      "YatiRecycle": false,
+      "DeferThresold": false,
+      "InfiniteLength": false,
+      "RuleText": null,
+      "References": null,
+      "ShortName": "ఏదేని సమ వృత్తం",
+      "Alias": "",
+      "ChandamName": "ఉద్ధురమాల",
+      "CharLength": 0,
+      "MatraLength": 0,
+      "Min": 0,
+      "Max": 0,
+      "ChandamNumber": 1,
+      "ChandamOrder": 0,
+      "Sequence": "",
+      "MatraSeries": "",
       "RowWiseRules": false,
       "Examples": null
     }

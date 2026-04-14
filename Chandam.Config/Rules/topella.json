@@ -1,7 +1,7 @@
 ﻿{
   "Identifier": "topella",
-  "Name": "తోపెల్ల వృత్తములు",
-  "Description": "శ్రీతోపెల్ల బాలసుబ్రహ్మణ్య శర్మగారి 2337 తెలుగు వృత్తములు (Topella's comprehensive collection of 2337 Telugu Vruttam meters)",
+  "Name": "అనంతచ్చంధము",
+  "Description": "శ్రీ తోపెల్ల బాలసుబ్రహ్మణ్య శర్మగారి సంకలనం: అనేక చంధస్సు వనరులు మరియూ స్వయంగా సృజించినవి.",
   "Rules": [
     {
       "Identifier": "aMgana",
@@ -19396,8 +19396,8 @@
       "Examples": null
     },
     {
-      "Identifier": "కామానంద",
-      "Name": "వృమౌచం, రణపింగళ",
+      "Identifier": "kaamaanaMda",
+      "Name": "కామానంద (శంభు)",
       "Language": "Telugu",
       "PadyamType": "Vruttam",
       "PadyamSubType": "Vruttam",
@@ -19420,7 +19420,8 @@
       ],
       "Yati": [
         [
-          13
+          13,
+          19
         ]
       ],
       "YatiMode": "CharPosition",
@@ -19434,10 +19435,10 @@
       "InfiniteLength": false,
       "RuleText": null,
       "References": [
-        "19"
+        "వృమౌచం, రణపింగళ"
       ],
-      "ShortName": "వృమౌచం, రణపింగళ",
-      "Alias": "",
+      "ShortName": "కామానంద",
+      "Alias": "శంభు",
       "ChandamName": "అభికృతి",
       "CharLength": 25,
       "MatraLength": 50,
@@ -25344,7 +25345,7 @@
     },
     {
       "Identifier": "krauMchapadamu-",
-      "Name": "క్రౌంచపదము  (కోకపదం, హంసపదం)",
+      "Name": "క్రౌంచపదము (కోకపదం, హంసపదం)",
       "Language": "Telugu",
       "PadyamType": "Vruttam",
       "PadyamSubType": "Vruttam",
@@ -38814,7 +38815,7 @@
       ],
       "YatiMode": "CharPosition",
       "Prasa": true,
-      "PrasaYati": false,
+      "PrasaYati": true,
       "AnthyaPrasa": false,
       "ReverseYati": false,
       "OnlyPrasaYati": false,
@@ -43833,8 +43834,8 @@
       "Examples": null
     },
     {
-      "Identifier": "నతి",
-      "Name": "మోడేకుర్తి , కొక్కొండ ",
+      "Identifier": "nati",
+      "Name": "నతి",
       "Language": "Telugu",
       "PadyamType": "Vruttam",
       "PadyamSubType": "Vruttam",
@@ -43856,7 +43857,8 @@
       ],
       "Yati": [
         [
-          9
+          9,
+          15
         ]
       ],
       "YatiMode": "CharPosition",
@@ -43870,9 +43872,9 @@
       "InfiniteLength": false,
       "RuleText": null,
       "References": [
-        "15"
+        "మోడేకుర్తి , కొక్కొండ "
       ],
-      "ShortName": "మోడేకుర్తి , కొక్కొండ",
+      "ShortName": "నతి",
       "Alias": "",
       "ChandamName": "ఆకృతి",
       "CharLength": 22,
@@ -56790,8 +56792,8 @@
       "Examples": null
     },
     {
-      "Identifier": "priyaMvada-mattakOkila-",
-      "Name": "ప్రియంవద మత్తకోకిల  (నిరుపమ)",
+      "Identifier": "priyaMvada",
+      "Name": "ప్రియంవద (మత్తకోకిల, నిరుపమ)",
       "Language": "Telugu",
       "PadyamType": "Vruttam",
       "PadyamSubType": "Vruttam",
@@ -56825,8 +56827,8 @@
       "References": [
         "200, వృరక 3-172 మా.పట్వర్థన్"
       ],
-      "ShortName": "ప్రియంవద మత్తకోకిల",
-      "Alias": "నిరుపమ",
+      "ShortName": "ప్రియంవద",
+      "Alias": "మత్తకోకిల, నిరుపమ",
       "ChandamName": "జగతి",
       "CharLength": 12,
       "MatraLength": 16,
@@ -81289,7 +81291,7 @@
       ],
       "YatiMode": "CharPosition",
       "Prasa": true,
-      "PrasaYati": false,
+      "PrasaYati": true,
       "AnthyaPrasa": false,
       "ReverseYati": false,
       "OnlyPrasaYati": false,
@@ -87016,7 +87018,7 @@
     },
     {
       "Identifier": "vaaTikaavikaaSa@h-",
-      "Name": "వాటికావికాశః  (వాటికావిలాసః, వాటికా)",
+      "Name": "వాటికావికాశః (వాటికావిలాసః, వాటికా)",
       "Language": "Telugu",
       "PadyamType": "Vruttam",
       "PadyamSubType": "Vruttam",
@@ -88596,8 +88598,8 @@
       "Examples": null
     },
     {
-      "Identifier": "viMdu\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0",
-      "Name": "విందు\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0",
+      "Identifier": "viMdu",
+      "Name": "విందు",
       "Language": "Telugu",
       "PadyamType": "Vruttam",
       "PadyamSubType": "Vruttam",

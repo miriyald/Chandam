@@ -40,9 +40,9 @@ public static class JsBridge
     [JSInvokable]
     public static string GetAllRulesDetailed(string language = "te")
     {
-        var ruleLoader = ServiceAccessor.Services!.GetRequiredService<RuleLoaderService>();
         var langEnum = LanguageCodeMapper.ParseLanguage(language) ?? RuleLanguage.Telugu;
-        var rules = ruleLoader.GetAllRules(langEnum);
+        var allRules = Manager.Rules();
+        var rules = allRules.Where(r => r.Language == langEnum).ToList();
 
         // Debug: Check first rule's Rules array types
         if (rules.Count > 0 && rules[0].Rules != null && rules[0].Rules.Length > 0 && rules[0].Rules[0] != null && rules[0].Rules[0].Length > 0)

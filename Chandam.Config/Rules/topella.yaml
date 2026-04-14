@@ -1,6 +1,6 @@
 ﻿identifier: topella
-name: తోపెల్ల వృత్తములు
-description: శ్రీతోపెల్ల బాలసుబ్రహ్మణ్య శర్మగారి 2337 తెలుగు వృత్తములు (Topella's comprehensive collection of 2337 Telugu Vruttam meters)
+name: అనంతచ్చంధము
+description: 'శ్రీ తోపెల్ల బాలసుబ్రహ్మణ్య శర్మగారి సంకలనం: అనేక చంధస్సు వనరులు మరియూ స్వయంగా సృజించినవి.'
 rules:
 - identifier: aMgana
   name: అంగన
@@ -12363,8 +12363,8 @@ rules:
   chandamOrder: 635
   sequence: UU|-|||-|UU
   matraSeries: 4 , 6 , 4-3 , 5-3 , 4-5 , 5-4
-- identifier: కామానంద
-  name: వృమౌచం, రణపింగళ
+- identifier: kaamaanaMda
+  name: కామానంద (శంభు)
   language: Telugu
   padyamType: Vruttam
   padyamSubType: Vruttam
@@ -12384,12 +12384,13 @@ rules:
     - గ
   yati:
   - - 13
+    - 19
   yatiMode: CharPosition
   prasa: true
   references:
-  - 19
-  shortName: వృమౌచం, రణపింగళ
-  alias: ''
+  - వృమౌచం, రణపింగళ
+  shortName: కామానంద
+  alias: శంభు
   chandamName: అభికృతి
   charLength: 25
   matraLength: 50
@@ -16145,7 +16146,7 @@ rules:
   sequence: U||-UUU-UU|-UU|-|||-|||-|||-U
   matraSeries: ''
 - identifier: krauMchapadamu-
-  name: క్రౌంచపదము  (కోకపదం, హంసపదం)
+  name: క్రౌంచపదము (కోకపదం, హంసపదం)
   language: Telugu
   padyamType: Vruttam
   padyamSubType: Vruttam
@@ -24748,6 +24749,7 @@ rules:
     - 18
   yatiMode: CharPosition
   prasa: true
+  prasaYati: true
   references:
   - మోడేకుర్తి ప్రాకృతపైంగలం
   shortName: త్రిభంగి
@@ -27943,8 +27945,8 @@ rules:
   chandamOrder: 6066
   sequence: '||U-U||-U||-||U'
   matraSeries: 4 , 6 , 4-3
-- identifier: నతి
-  name: 'మోడేకుర్తి , కొక్కొండ '
+- identifier: nati
+  name: నతి
   language: Telugu
   padyamType: Vruttam
   padyamSubType: Vruttam
@@ -27963,11 +27965,12 @@ rules:
     - గ
   yati:
   - - 9
+    - 15
   yatiMode: CharPosition
   prasa: true
   references:
-  - 15
-  shortName: మోడేకుర్తి , కొక్కొండ
+  - 'మోడేకుర్తి , కొక్కొండ '
+  shortName: నతి
   alias: ''
   chandamName: ఆకృతి
   charLength: 22
@@ -36186,8 +36189,8 @@ rules:
   chandamOrder: 2339
   sequence: UU|-UU|-UU|-U-U
   matraSeries: 5 , 5-4
-- identifier: priyaMvada-mattakOkila-
-  name: ప్రియంవద మత్తకోకిల  (నిరుపమ)
+- identifier: priyaMvada
+  name: ప్రియంవద (మత్తకోకిల, నిరుపమ)
   language: Telugu
   padyamType: Vruttam
   padyamSubType: Vruttam
@@ -36206,8 +36209,8 @@ rules:
   prasa: true
   references:
   - 200, వృరక 3-172 మా.పట్వర్థన్
-  shortName: ప్రియంవద మత్తకోకిల
-  alias: నిరుపమ
+  shortName: ప్రియంవద
+  alias: మత్తకోకిల, నిరుపమ
   chandamName: జగతి
   charLength: 12
   matraLength: 16
@@ -51830,6 +51833,7 @@ rules:
     - 33
   yatiMode: CharPosition
   prasa: true
+  prasaYati: true
   references:
   - 'కావ్యాలంకార చూడామణి '
   shortName: లయహారి
@@ -55470,7 +55474,7 @@ rules:
   sequence: UUU-||U-||U-UU|-|U|-|
   matraSeries: 4 , 6
 - identifier: vaaTikaavikaaSa@h-
-  name: వాటికావికాశః  (వాటికావిలాసః, వాటికా)
+  name: వాటికావికాశః (వాటికావిలాసః, వాటికా)
   language: Telugu
   padyamType: Vruttam
   padyamSubType: Vruttam
@@ -56476,8 +56480,8 @@ rules:
   chandamOrder: 8894
   sequence: '|||-|||-U|U-|UU-U'
   matraSeries: 4 , 6 , 3-5 , 5-4
-- identifier: viMdu          
-  name: విందు          
+- identifier: viMdu
+  name: విందు
   language: Telugu
   padyamType: Vruttam
   padyamSubType: Vruttam

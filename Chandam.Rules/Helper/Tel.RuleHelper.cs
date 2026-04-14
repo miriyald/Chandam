@@ -20,6 +20,7 @@ using Chandam.Rules.Tel;
 using Chandam.Rules.Tel.Kokkonda;
 using Chandam.Rules.UpaJati;
 using Chandam.Rules.UpaJati.Seesamu;
+using Chandam.Rules.Vruttam;
 
 namespace Chandam.Rules
 {
@@ -214,7 +215,7 @@ namespace Chandam.Rules
 										new chaMDavRshTiprayaata(),new arNa(),new arNava(),new vyaaLa(),new jeemoota(),new leelaakara(),new uddaama(),new SaMkha(),new nanahata(),new sanahata(),new nanata(),new nanaya(),new nata(),new sata(),new ragaNa(),new tagaNa(),new nagaNa(),new hagaNa(),new nasahata(),
 										new taaLaragaDa(),
 										new lalita2(),new naaraayaNa(),new gaNanaatha(),new Sreekara(),new daeva(),new paramaeSa(),new DiMDima(),new sannuta(),new mahaamaMgaLamaNi(),new chaMdraSaekhara(),new SaMkara1(),new chaMdraSree2(),new kamalaakara(),new SaMkara2(),new vaamadaeva(),new chaMchala(),new maMgaLamaNi(),new Damaruka(),new j_naana(),new Sreemati(),new jaagrati(),new taaraka(),new tanumadhyamaa(),new taaMDavajava(),new SivaSaMkara(),new vaaNi(),new maNideepti(),new prabhaakalita(),new mattakeera(),new yaSasvi(),new lakshmee(),new nati(),new mattaebha(),new tulya2(),new gaayaka(),new tulya1(),new SObhanamahaaSree(),new kalyaaNa(),new SaMbhunaTanamu(),
-										//new Genric(),//It should be the last One always....
+										new GenricVruttam() // It should be the last One always....
 						};
 
 	}
