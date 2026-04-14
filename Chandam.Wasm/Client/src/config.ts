@@ -12,7 +12,7 @@ export const RULE_SETS: RuleSet[] = [
     id: 'popular',
     name: 'ప్రముఖ ఛందస్సులు',
     description: 'తెలుగులో అత్యంత వాడుకలో ఉన్న ఛందస్సులు',
-    rulesFile: 'data/popular-rules.min.json.gz',
+    rulesFile: 'data/popular.min.json.gz',
     examplesFile: 'data/popular-examples.min.json.gz',
     ruleCount: 14
   },
@@ -22,8 +22,8 @@ export const RULE_SETS: RuleSet[] = [
     name: 'చంధోరత్నావళి',
     description: 'దిలీపు మిరియాల సంకలనం: అనేక చంధస్సు వనరులు మరియూ ముఖ్యంగా కోవెల సంపత్కుమారాచార్య రచనలు',
     rulesFile: 'data/chandam.min.json.gz',
-    examplesFile: 'data/chandam-complete-examples.min.json.gz',
-    ruleCount: 317
+    examplesFile: 'data/chandam-examples.min.json.gz',
+    ruleCount: 380
   },
   {
     id: 'topella',

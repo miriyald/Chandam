@@ -14,8 +14,8 @@ const SUBTYPE_ORDER: Record<string, number> = {
   'UpaJati': 7,
   'Sisamu': 8,
   'Vruttam': 9,
-  'ArdhaVruttam': 10,
-  'DaMDakamu': 11,
+  'DaMDakamu': 10,
+  'ArdhaVruttam': 11,
   'VishamaVruttam': 12,
   'GenricVruttam': 99,
   'Other': 100
@@ -34,9 +34,10 @@ const SUBTYPE_TELUGU_NAMES: Record<string, string> = {
   'UpaJati': 'ఉపజాతి',
   'Sisamu': 'ఉపజాతి(సీసములు)',
   'Vruttam': 'వృత్తం',
-  'ArdhaVruttam': 'అర్ధ సమవృత్తం',
   'DaMDakamu': 'దండకము',
+  'ArdhaVruttam': 'అర్ధ సమవృత్తం',
   'VishamaVruttam': 'విషమవృత్తం',
+  'GenricVruttam': 'ఏదేని సమ వృత్తం',
   'Other': 'ఇతర'
 };
 
@@ -79,11 +80,16 @@ export function groupRulesByCategory(rules: RuleSummaryDetailed[]): Map<string, 
  * Sort group keys by SubType order and character length for Vruttams
  * - SubTypes ordered by SUBTYPE_ORDER (Jati types, then UpaJati, then Vruttams, then special types)
  * - Vruttam ChandamName groups ordered by character length (gayatri=6 before trishtup=11)
+ * - GenricVruttam always comes last (after everything)
  */
 export function getSortedGroupKeys(grouped: Map<string, RuleSummaryDetailed[]>): string[] {
   return Array.from(grouped.keys()).sort((a, b) => {
     const [typeA, valueA] = a.split(':');
     const [typeB, valueB] = b.split(':');
+
+    // GenricVruttam always comes last
+    if (typeA === 'subtype' && valueA === 'GenricVruttam') return 1;
+    if (typeB === 'subtype' && valueB === 'GenricVruttam') return -1;
 
     // Both are Vruttam ChandamName groups - sort by character length
     if (typeA === 'vruttam' && typeB === 'vruttam') {
@@ -101,7 +107,7 @@ export function getSortedGroupKeys(grouped: Map<string, RuleSummaryDetailed[]>):
       return orderA - orderB;
     }
 
-    // SubType groups come before Vruttam groups
+    // SubType groups come before Vruttam groups (except GenricVruttam handled above)
     if (typeA === 'subtype') return -1;
     if (typeB === 'subtype') return 1;
 
@@ -111,14 +117,20 @@ export function getSortedGroupKeys(grouped: Map<string, RuleSummaryDetailed[]>):
 
 /**
  * Convert group key to Telugu display name
- * - For Vruttam groups: returns the ChandamName (already in Telugu)
+ * - For Vruttam groups: returns the ChandamName with character count (e.g., "గాయత్రి (6)")
  * - For SubType groups: returns the Telugu name from SUBTYPE_TELUGU_NAMES
  */
-export function getGroupDisplayName(groupKey: string): string {
+export function getGroupDisplayName(groupKey: string, grouped: Map<string, RuleSummaryDetailed[]>): string {
   const [type, value] = groupKey.split(':');
 
   if (type === 'vruttam') {
-    return value; // ChandamName is already in Telugu
+    // ChandamName is already in Telugu, append character count
+    const rules = grouped.get(groupKey);
+    const charLength = rules?.[0]?.charLength;
+    if (charLength !== undefined && charLength !== -1) {
+      return `${value} (${charLength})`;
+    }
+    return value;
   }
 
   if (type === 'subtype') {

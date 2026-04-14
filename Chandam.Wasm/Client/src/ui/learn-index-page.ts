@@ -93,7 +93,7 @@ function renderChandamGroups(
     const rules = grouped.get(groupKey)!;
     return `
       <div class="chandam-group">
-        <h2>${getGroupDisplayName(groupKey)}</h2>
+        <h2>${getGroupDisplayName(groupKey, grouped)}</h2>
         ${rules.map(rule => renderRuleListItem(rule, ruleSetId, favoriteIds)).join('')}
       </div>
     `;

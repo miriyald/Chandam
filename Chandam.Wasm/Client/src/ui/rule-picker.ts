@@ -25,7 +25,7 @@ export function renderRulePicker(rules: RuleSummaryDetailed[], containerId: stri
 
     const groupHeader = document.createElement('div');
     groupHeader.className = 'rule-group-header';
-    groupHeader.textContent = getGroupDisplayName(groupKey);
+    groupHeader.textContent = getGroupDisplayName(groupKey, grouped);
     ruleList.appendChild(groupHeader);
 
     groupRules.forEach(rule => {
