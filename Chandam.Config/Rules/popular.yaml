@@ -20,17 +20,6 @@ rules:
   - - 8
   yatiMode: CharPosition
   prasa: true
-  shortName: ఇంద్రవజ్రము
-  alias: ''
-  chandamName: త్రిష్టుప్పు
-  charLength: 11
-  matraLength: 18
-  min: 11
-  max: 11
-  chandamNumber: 357
-  chandamOrder: 2403
-  sequence: UU|-UU|-|U|-UU
-  matraSeries: 4-3 , 4-5 , 5-4
 - identifier: utpalamaala
   name: ఉత్పలమాల
   language: Telugu
@@ -52,17 +41,6 @@ rules:
   - - 10
   yatiMode: CharPosition
   prasa: true
-  shortName: ఉత్పలమాల
-  alias: ''
-  chandamName: కృతి
-  charLength: 20
-  matraLength: 28
-  min: 20
-  max: 20
-  chandamNumber: 355799
-  chandamOrder: 1404373
-  sequence: U||-U|U-|||-U||-U||-U|U-|U
-  matraSeries: ''
 - identifier: upEMdravajramu
   name: ఉపేంద్రవజ్రము
   language: Telugu
@@ -81,17 +59,6 @@ rules:
   - - 8
   yatiMode: CharPosition
   prasa: true
-  shortName: ఉపేంద్రవజ్రము
-  alias: ''
-  chandamName: త్రిష్టుప్పు
-  charLength: 11
-  matraLength: 17
-  min: 11
-  max: 11
-  chandamNumber: 358
-  chandamOrder: 2404
-  sequence: '|U|-UU|-|U|-UU'
-  matraSeries: 3 , 4 , 6 , 4-5
 - identifier: kaviraajaviraajitamu
   name: కవిరాజవిరాజితము (హంసగతి, మహాతరుణీదయిత, శ్రవణాభరణమ్)
   language: Telugu
@@ -116,17 +83,6 @@ rules:
     - 20
   yatiMode: CharPosition
   prasa: true
-  shortName: కవిరాజవిరాజితము
-  alias: హంసగతి, మహాతరుణీదయిత, శ్రవణాభరణమ్
-  chandamName: వికృతి
-  charLength: 23
-  matraLength: 30
-  min: 23
-  max: 23
-  chandamNumber: 3595120
-  chandamOrder: 11983726
-  sequence: '|||-|U|-|U|-|U|-|U|-|U|-|U|-|U'
-  matraSeries: 4 , 6 , 3-5
 - identifier: krauMchapadaM
   name: క్రౌంచపదం (పంచశిర, కోకపదమ్)
   language: Telugu
@@ -150,17 +106,6 @@ rules:
     - 19
   yatiMode: CharPosition
   prasa: true
-  shortName: క్రౌంచపదం
-  alias: పంచశిర, కోకపదమ్
-  chandamName: సంకృతి
-  charLength: 24
-  matraLength: 32
-  min: 24
-  max: 24
-  chandamNumber: 4193479
-  chandamOrder: 20970693
-  sequence: U||-UUU-||U-U||-|||-|||-|||-|UU
-  matraSeries: 4 , 6 , 3-5
 - identifier: chaMpakamaala
   name: చంపకమాల (సరసీ)
   language: Telugu
@@ -182,17 +127,6 @@ rules:
   - - 11
   yatiMode: CharPosition
   prasa: true
-  shortName: చంపకమాల
-  alias: సరసీ
-  chandamName: ప్రకృతి
-  charLength: 21
-  matraLength: 28
-  min: 21
-  max: 21
-  chandamNumber: 711600
-  chandamOrder: 2808750
-  sequence: '|||-|U|-U||-|U|-|U|-|U|-U|U'
-  matraSeries: ''
 - identifier: taralamu
   name: తరళము (ధ్రువకోకిల)
   language: Telugu
@@ -214,17 +148,6 @@ rules:
   - - 12
   yatiMode: CharPosition
   prasa: true
-  shortName: తరళము
-  alias: ధ్రువకోకిల
-  chandamName: అతిధృతి
-  charLength: 19
-  matraLength: 26
-  min: 19
-  max: 19
-  chandamNumber: 186040
-  chandamOrder: 710326
-  sequence: '|||-U||-U|U-||U-|U|-|U|-U'
-  matraSeries: 3-4
 - identifier: tOTakamu
   name: తోటకము (ఛిత్తక, భ్రమరావళి, నందినీ)
   language: Telugu
@@ -243,17 +166,6 @@ rules:
   - - 9
   yatiMode: CharPosition
   prasa: true
-  shortName: తోటకము
-  alias: ఛిత్తక, భ్రమరావళి, నందినీ
-  chandamName: జగతి
-  charLength: 12
-  matraLength: 16
-  min: 12
-  max: 12
-  chandamNumber: 1756
-  chandamOrder: 5850
-  sequence: '||U-||U-||U-||U'
-  matraSeries: 4 , 5 , 6 , 5-3 , 4-5 , 5-4
 - identifier: paMchaamaramu
   name: పంచచామరము (నారాచ, మహోత్సవ)
   language: Telugu
@@ -274,17 +186,6 @@ rules:
   - - 10
   yatiMode: CharPosition
   prasa: true
-  shortName: పంచచామరము
-  alias: నారాచ, మహోత్సవ
-  chandamName: అష్టి
-  charLength: 16
-  matraLength: 24
-  min: 16
-  max: 16
-  chandamNumber: 21846
-  chandamOrder: 87380
-  sequence: '|U|-U|U-|U|-U|U-|U|-U'
-  matraSeries: 3 , 6 , 4-5
 - identifier: bhujaMgaprayaatamu
   name: భుజంగప్రయాతము (అప్రమేయా)
   language: Telugu
@@ -303,17 +204,6 @@ rules:
   - - 8
   yatiMode: CharPosition
   prasa: true
-  shortName: భుజంగప్రయాతము
-  alias: అప్రమేయా
-  chandamName: జగతి
-  charLength: 12
-  matraLength: 20
-  min: 12
-  max: 12
-  chandamNumber: 586
-  chandamOrder: 4680
-  sequence: '|UU-|UU-|UU-|UU'
-  matraSeries: 5 , 3-5 , 5-3
 - identifier: mattakOkilamu
   name: మత్తకోకిల (చర్చరీ, మల్లికామాల, మాలికోత్తరమాలికా, విబుధప్రియా, హరనర్తన, ఉజ్జ్వల)
   language: Telugu
@@ -334,17 +224,6 @@ rules:
   - - 11
   yatiMode: CharPosition
   prasa: true
-  shortName: మత్తకోకిల
-  alias: చర్చరీ, మల్లికామాల, మాలికోత్తరమాలికా, విబుధప్రియా, హరనర్తన, ఉజ్జ్వల
-  chandamName: ధృతి
-  charLength: 18
-  matraLength: 26
-  min: 18
-  max: 18
-  chandamNumber: 93019
-  chandamOrder: 355161
-  sequence: U|U-||U-|U|-|U|-U||-U|U
-  matraSeries: 3-4
 - identifier: maththEbhaM
   name: మత్తేభవిక్రీడితము
   language: Telugu
@@ -366,17 +245,6 @@ rules:
   - - 14
   yatiMode: CharPosition
   prasa: true
-  shortName: మత్తేభవిక్రీడితము
-  alias: ''
-  chandamName: కృతి
-  charLength: 20
-  matraLength: 30
-  min: 20
-  max: 20
-  chandamNumber: 298676
-  chandamOrder: 1347250
-  sequence: '||U-U||-U|U-|||-UUU-|UU-|U'
-  matraSeries: ''
 - identifier: mahaasragdhara
   name: మహాస్రగ్ధర
   language: Telugu
@@ -400,17 +268,6 @@ rules:
     - 16
   yatiMode: CharPosition
   prasa: true
-  shortName: మహాస్రగ్ధర
-  alias: ''
-  chandamName: ఆకృతి
-  charLength: 22
-  matraLength: 33
-  min: 22
-  max: 22
-  chandamNumber: 605988
-  chandamOrder: 4800290
-  sequence: '||U-UU|-UU|-|||-||U-U|U-U|U-U'
-  matraSeries: ''
 - identifier: maanini
   name: మానిని (మదిరా, లతాకుసుమ, సంగతా)
   language: Telugu
@@ -435,14 +292,3 @@ rules:
     - 19
   yatiMode: CharPosition
   prasa: true
-  shortName: మానిని
-  alias: మదిరా, లతాకుసుమ, సంగతా
-  chandamName: ఆకృతి
-  charLength: 22
-  matraLength: 30
-  min: 22
-  max: 22
-  chandamNumber: 1797559
-  chandamOrder: 5991861
-  sequence: U||-U||-U||-U||-U||-U||-U||-U
-  matraSeries: 4 , 6 , 3-5

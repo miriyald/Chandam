@@ -1,3 +1,4 @@
+using Chandam.API.Models.Config;
 using Chandam.Rules;
 using System;
 using System.Collections.Generic;
@@ -74,8 +75,8 @@ namespace Verifier
                                                 "తెలుగులో అత్యంత వాడుకలో ఉన్న ఛందస్సుల ఉదాహరణలు",
                                                 selectedRules);
 
-            SaveRuleSet(ruleSet, $"{ruleSet}.json");
-            SaveRuleSetYaml(ruleSet, $"{ruleSet}.yaml");
+            SaveRuleSet(ruleSet, $"{ruleSet.Identifier}.json");
+            SaveRuleSetYaml(ruleSet, $"{ruleSet.Identifier}.yaml");
             Console.WriteLine($"  ✓ Generated {selectedRules.Length} for {ruleSet.Identifier} rules (JSON + YAML)");
         }
         
@@ -101,7 +102,7 @@ namespace Verifier
             };
 
              var exampleSet = CreateExampleSet(
-                "telugu-complete-examples",
+                "chandam-examples",
                 "చంధోరత్నావళి",
                 "తెలుగు ఛందస్సుల ఉదాహరణలు",
                 selectedRules
@@ -112,8 +113,8 @@ namespace Verifier
             SaveRuleSet(ruleSet, $"{ruleSet.Identifier}.json");
             SaveRuleSetYaml(ruleSet, $"{ruleSet.Identifier}.yaml");
 
-            SaveExampleSet(exampleSet, $"{ruleSet.Identifier}.-examples.json");
-            SaveExampleSetYaml(exampleSet, $"{ruleSet.Identifier}.-examples.yaml");
+            SaveExampleSet(exampleSet, $"{exampleSet.Identifier}.json");
+            SaveExampleSetYaml(exampleSet, $"{exampleSet.Identifier}.yaml");
 
             Console.WriteLine($"  ✓ Generated {selectedRules.Length} for {ruleSet.Identifier} rules (JSON + YAML)");
         }
@@ -270,9 +271,10 @@ namespace Verifier
                 var dto = new ExampleDto
                 {
                     Text = text,
-                    Author = "మహానుభావుడు.",
-                    Date = "తెలియదు",
+                    Author = null,
+                    Date = null,
                     Reference = reference,
+                    Notes = null
                 };
 
                 exampleDtos.Add(dto);
@@ -682,62 +684,7 @@ namespace Verifier
         public Dictionary<string, List<ExampleDto>> Examples { get; set; } = new Dictionary<string, List<ExampleDto>>();
     }
 
-    public class RuleDto
-    {
-        // Identifiers
-        public string Identifier { get; set; } = string.Empty;
-        public string Name { get; set; } = string.Empty;
-
-        // Classifications
-        public string Language { get; set; }
-        public string PadyamType { get; set; }
-        public string PadyamSubType { get; set; }
-        public string RuleType { get; set; }
-        public string Frequency { get; set; }
-
-        // Rules
-        public int Lines { get; set; }
-        public int Threshold { get; set; }
-        public string[][] Rules { get; set; }
-        public int[][] Yati { get; set; }
-        public string YatiMode { get; set; }
-        public bool Prasa { get; set; }
-        public bool PrasaYati { get; set; }
-        public bool AnthyaPrasa { get; set; }
-        public bool ReverseYati { get; set; }
-        public bool OnlyPrasaYati { get; set; }
-        public bool YatiRecycle { get; set; }
-        public bool DeferThresold { get; set; }
-        public bool InfiniteLength { get; set; }
-        public string RuleText { get; set; }
-        public string[] References { get; set; }
-
-        // Calculated fields
-        public string ShortName { get; set; }
-        public string Alias { get; set; }
-        public string ChandamName { get; set; }
-        public int CharLength { get; set; }
-        public int MatraLength { get; set; }
-        public int Min { get; set; }
-        public int Max { get; set; }
-        public decimal ChandamNumber { get; set; }
-        public decimal ChandamOrder { get; set; }
-        public string Sequence { get; set; }
-        public string MatraSeries { get; set; }
-        public bool RowWiseRules { get; set; }
-
-        // Examples
-        public List<ExampleDto> Examples { get; set; }
-    }
-
-    public class ExampleDto
-    {
-        public string Text { get; set; } = string.Empty;
-        public string Author { get; set; }
-        public string Date { get; set; }
-        public string Reference { get; set; }
-        public string Notes { get; set; }
-    }
+    // RuleDto and ExampleDto are now imported from Chandam.API.Models.Config
 
     #endregion
 }

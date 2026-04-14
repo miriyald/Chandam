@@ -47,7 +47,6 @@ namespace Verifier
 				{
 					"generate" or "gen" => GenerateRules(options),
 					"topella" => GenerateTopellaOnly(options),
-					"test-topella" => TestTopellaLoading(options),
 					"convert" or "yaml2json" => ConvertYamlToJson(options),
 					"help" or "--help" or "-h" or "/?" => ShowHelp(),
 					_ => ShowUnknownCommand(command)
@@ -94,110 +93,6 @@ namespace Verifier
 
 			Console.WriteLine("\n=== Topella Generation Complete ===");
 			return 0;
-		}
-
-		/// <summary>
-		/// Test loading Topella rules and accessing Min/Max properties
-		/// </summary>
-		static int TestTopellaLoading(string[] options)
-		{
-			Console.WriteLine("=== Testing Topella Rule Loading ===\n");
-
-			var rulesDir = options.Length > 0 ? options[0] : @"Chandam.Config\Rules";
-			var testFile = options.Length > 1 ? options[1] : "topella-test.min.json";
-			var filePath = System.IO.Path.Combine(rulesDir, testFile);
-
-			if (!System.IO.File.Exists(filePath))
-			{
-				Console.ForegroundColor = ConsoleColor.Red;
-				Console.WriteLine($"File not found: {filePath}");
-				Console.ResetColor();
-				return 1;
-			}
-
-			try
-			{
-				// Load using API RuleLoaderService
-				var ruleLoader = new RuleLoaderService(rulesDir);
-				var json = System.IO.File.ReadAllText(filePath);
-				var rules = ruleLoader.LoadFromJsonString(json);
-
-				if (rules == null || rules.Length == 0)
-				{
-					Console.WriteLine("No rules loaded!");
-					return 1;
-				}
-
-				Console.WriteLine($"✓ Loaded {rules.Length} rules from {testFile}");
-				Console.WriteLine("\nTesting each rule's properties:\n");
-
-				int successCount = 0;
-				int failCount = 0;
-
-				foreach (var rule in rules)
-				{
-					Console.Write($"  Rule '{rule.Identifier}' ({rule.Name})...");
-
-					try
-					{
-						// This is where the error happens - accessing Min property
-						var min = rule.Min;
-						var max = rule.Max;
-						var charLength = rule.CharLength;
-
-						Console.ForegroundColor = ConsoleColor.Green;
-						Console.WriteLine($" ✓ OK (Min={min}, Max={max}, Len={charLength})");
-						Console.ResetColor();
-
-						// Debug: Check Rules array types
-						if (rule.Rules != null && rule.Rules.Length > 0 && rule.Rules[0] != null && rule.Rules[0].Length > 0)
-						{
-							var firstElem = rule.Rules[0][0];
-							Console.WriteLine($"      RuleType={rule.RuleType}, First element type: {firstElem?.GetType().Name}, Value: {firstElem}");
-						}
-
-						successCount++;
-					}
-					catch (Exception ex)
-					{
-						Console.ForegroundColor = ConsoleColor.Red;
-						Console.WriteLine($" ✗ FAILED");
-						Console.WriteLine($"      Error: {ex.GetType().Name}: {ex.Message}");
-						Console.ResetColor();
-
-						// Debug info
-						if (rule.Rules != null && rule.Rules.Length > 0 && rule.Rules[0] != null && rule.Rules[0].Length > 0)
-						{
-							var firstElem = rule.Rules[0][0];
-							Console.WriteLine($"      RuleType={rule.RuleType}");
-							Console.WriteLine($"      First Rules element type: {firstElem?.GetType().Name}");
-							Console.WriteLine($"      First Rules element value: {firstElem}");
-
-							// Check all elements in first row
-							Console.Write($"      All types in first row: ");
-							foreach (var elem in rule.Rules[0])
-							{
-								Console.Write($"{elem?.GetType().Name} ");
-							}
-							Console.WriteLine();
-						}
-
-						failCount++;
-					}
-				}
-
-				Console.WriteLine($"\n=== Test Complete ===");
-				Console.WriteLine($"Success: {successCount}, Failed: {failCount}");
-				return failCount > 0 ? 1 : 0;
-			}
-			catch (Exception ex)
-			{
-				Console.ForegroundColor = ConsoleColor.Red;
-				Console.WriteLine($"\nFailed to load rules: {ex.Message}");
-				Console.WriteLine(ex.StackTrace);
-				Console.ResetColor();
-				return 1;
-			}
 		}
 
 		/// <summary>

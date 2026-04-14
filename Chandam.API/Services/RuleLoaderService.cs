@@ -118,8 +118,7 @@ public class RuleLoaderService
                 MergeExamplesIntoRules(ruleSet);
             }
 
-            // Register current rule set with Manager
-            RegisterCurrentRuleSet();
+            RegisterRuleSet("chandam");
         }
     }
 
@@ -461,6 +460,39 @@ public class RuleLoaderService
             Manager.Clear();  // Clear existing rules
             Manager.Register(currentRules);
             Console.WriteLine($"Registered {currentRules.Length} rules from '{_currentRuleSetId}' rule set");
+        }
+    }
+
+    /// <summary>
+    /// Register chandam rule set with Manager (default for business logic and tests)
+    /// </summary>
+    private void RegisterRuleSet(string ruleSetId)
+    {
+        Manager.Clear();  // Clear existing rules
+
+        Rule[]? rulesToRegister = null;
+
+        // Try to register chandam ruleset (preferred for tests and general use)
+        if (_loadedRuleSets.ContainsKey(ruleSetId))
+        {
+            rulesToRegister = _loadedRuleSets[ruleSetId];
+            Console.WriteLine($"Using {rulesToRegister.Length} rules from '{ruleSetId}'");
+        }
+        else if (_loadedRuleSets.ContainsKey($"{ruleSetId}.min"))
+        {
+            rulesToRegister = _loadedRuleSets[$"{ruleSetId}.min"];
+            Console.WriteLine($"Using {rulesToRegister.Length} rules from '{ruleSetId}.min'");
+        }
+        else
+        {
+            // Fallback to current rule set
+            rulesToRegister = GetCurrentRuleSet();
+            Console.WriteLine($"Using {rulesToRegister.Length} rules Fallback (current rule set)");
+        }
+
+        if (rulesToRegister != null && rulesToRegister.Length > 0)
+        {
+            Manager.Register(rulesToRegister);
         }
     }
 

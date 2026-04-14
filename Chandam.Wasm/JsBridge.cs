@@ -44,17 +44,6 @@ public static class JsBridge
         var allRules = Manager.Rules();
         var rules = allRules.Where(r => r.Language == langEnum).ToList();
 
-        // Debug: Check first rule's Rules array types
-        if (rules.Count > 0 && rules[0].Rules != null && rules[0].Rules.Length > 0 && rules[0].Rules[0] != null && rules[0].Rules[0].Length > 0)
-        {
-            var firstRuleElement = rules[0].Rules[0][0];
-            Console.WriteLine($"WASM DEBUG: First rule '{rules[0].Identifier}', RuleType={rules[0].RuleType}, First Rules element type: {firstRuleElement?.GetType().Name ?? "null"}");
-            if (firstRuleElement != null)
-            {
-                Console.WriteLine($"WASM DEBUG: Value: {firstRuleElement}");
-            }
-        }
-
         var resultList = new List<object>();
         int skippedCount = 0;
 

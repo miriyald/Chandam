@@ -1,4 +1,6 @@
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
+using YamlDotNet.Serialization;
 
 namespace Chandam.API.Models.Config;
 
@@ -35,18 +37,53 @@ public class RuleDto
     public string? RuleText { get; set; }
     public string[]? References { get; set; }
 
-    // Calculated fields
+    // Calculated fields (excluded from serialization - computed at runtime)
+    [JsonIgnore]
+    [YamlIgnore]
     public string? ShortName { get; set; }
+
+    [JsonIgnore]
+    [YamlIgnore]
     public string? Alias { get; set; }
+
+    [JsonIgnore]
+    [YamlIgnore]
     public string? ChandamName { get; set; }
+
+    [JsonIgnore]
+    [YamlIgnore]
     public int CharLength { get; set; }
+
+    [JsonIgnore]
+    [YamlIgnore]
     public int MatraLength { get; set; }
+
+    [JsonIgnore]
+    [YamlIgnore]
     public int Min { get; set; }
+
+    [JsonIgnore]
+    [YamlIgnore]
     public int Max { get; set; }
+
+    [JsonIgnore]
+    [YamlIgnore]
     public decimal ChandamNumber { get; set; }
+
+    [JsonIgnore]
+    [YamlIgnore]
     public decimal ChandamOrder { get; set; }
+
+    [JsonIgnore]
+    [YamlIgnore]
     public string? Sequence { get; set; }
+
+    [JsonIgnore]
+    [YamlIgnore]
     public string? MatraSeries { get; set; }
+
+    [JsonIgnore]
+    [YamlIgnore]
     public bool RowWiseRules { get; set; }
 
     // Examples

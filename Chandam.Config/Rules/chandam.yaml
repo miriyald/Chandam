@@ -37,18 +37,6 @@ rules:
   yatiMode: GPosition
   prasaYati: true
   ruleText: <div><b>పద్య లక్షణములు</b>:<ol><li> <span class="gName">4</span> పాదములు ఉండును.</li><li>ప్రాస నియమం <span class="gName">లేదు</span></li><li>ప్రతి పాదమునందు <span class="gName">4</span> వ గణము యొక్క మొదటి అక్షరము యతి స్థానము</li><li> ఒకటవ పాదమునందు <span class="gName">మూడు సూర్య , రెండు ఇంద్ర</span>  గణములుండును.</li><li> రెండవ పాదమునందు <span class="gName"> ఐదు సూర్య</span>  గణములుండును.</li><li> మూడవ పాదమునందు <span class="gName">మూడు సూర్య , రెండు ఇంద్ర</span>  గణములుండును.</li><li> నాలుగవ పాదమునందు <span class="gName"> ఐదు సూర్య</span>  గణములుండును.</li></ol></div>
-  shortName: ఆటవెలది
-  alias: ''
-  chandamName: ''
-  charLength: -1
-  matraLength: -1
-  min: 10
-  max: 17
-  chandamNumber: -1
-  chandamOrder: -1
-  sequence: ''
-  matraSeries: ''
-  rowWiseRules: true
 - identifier: taeTageeti
   name: తేటగీతి
   language: Telugu
@@ -69,17 +57,6 @@ rules:
   yatiMode: GPosition
   prasaYati: true
   ruleText: <div><b>పద్య లక్షణములు</b>:<ol><li> <span class="gName">4</span> పాదములు ఉండును.</li><li>ప్రాస నియమం <span class="gName">లేదు</span></li><li>ప్రతి పాదమునందు <span class="gName">4</span> వ గణము యొక్క మొదటి అక్షరము యతి స్థానము</li><li>ప్రతి పాదమునందు <span class="gName">ఒక సూర్య , రెండు ఇంద్ర , రెండు సూర్య</span> గణములుండును.</li></ol></div>
-  shortName: తేటగీతి
-  alias: ''
-  chandamName: ''
-  charLength: -1
-  matraLength: -1
-  min: 12
-  max: 17
-  chandamNumber: 1
-  chandamOrder: -1
-  sequence: ''
-  matraSeries: ''
 - identifier: shaTpadamu
   name: షట్పదము
   language: Telugu
@@ -112,18 +89,6 @@ rules:
   - []
   - - 3
   yatiMode: GPosition
-  shortName: షట్పదము
-  alias: ''
-  chandamName: ''
-  charLength: -1
-  matraLength: -1
-  min: 6
-  max: 13
-  chandamNumber: -1
-  chandamOrder: -1
-  sequence: ''
-  matraSeries: ''
-  rowWiseRules: true
 - identifier: sarvalaghusIsamu
   name: సర్వలఘుసీసము-పూర్వభాగము
   language: Telugu
@@ -171,18 +136,6 @@ rules:
   yatiMode: GPosition
   prasaYati: true
   ruleText: <div><b>పద్య లక్షణములు</b>:<ol><li> <span class="gName">4</span> పాదములు ఉండును.</li><li>ప్రాస నియమం <span class="gName">లేదు</span></li><li> ఒకటవ పాదమునందు <span class="gName">3</span> వ గణము యొక్క మొదటి అక్షరము యతి స్థానము</li><li> రెండవ పాదమునందు <span class="gName">3</span> వ గణము యొక్క మొదటి అక్షరము యతి స్థానము</li><li> మూడవ పాదమునందు <span class="gName">3</span> వ గణము యొక్క మొదటి అక్షరము యతి స్థానము</li><li> నాలుగవ పాదమునందు <span class="gName">3</span> వ గణము యొక్క మొదటి అక్షరము యతి స్థానము</li><li> ఒకటవ పాదమునందు <span class="gName">ఆరు ఐదు అక్షరముల గణములు , రెండు సూర్య</span>  గణములుండును.</li><li> రెండవ పాదమునందు <span class="gName">ఆరు ఐదు అక్షరముల గణములు , రెండు సూర్య</span>  గణములుండును.</li><li> మూడవ పాదమునందు <span class="gName">ఆరు ఐదు అక్షరముల గణములు , రెండు సూర్య</span>  గణములుండును.</li><li> నాలుగవ పాదమునందు <span class="gName">ఆరు ఐదు అక్షరముల గణములు , రెండు సూర్య</span>  గణములుండును.</li></ol></div>
-  shortName: సర్వలఘుసీసము-పూర్వభాగము
-  alias: ''
-  chandamName: ''
-  charLength: -1
-  matraLength: -1
-  min: 16
-  max: 20
-  chandamNumber: -1
-  chandamOrder: -1
-  sequence: ''
-  matraSeries: ''
-  rowWiseRules: true
 - identifier: sarvalaghusIsamu2
   name: సర్వలఘుసీసము2-పూర్వభాగము
   language: Telugu
@@ -209,17 +162,6 @@ rules:
   prasaYati: true
   yatiRecycle: true
   ruleText: <div><b>పద్య లక్షణములు</b>:<ol><li> <span class="gName">4</span> పాదములు ఉండును.</li><li>ప్రాస నియమం <span class="gName">లేదు</span></li><li> ఒకటవ పాదమునందు <span class="gName">3,5,7</span> వ గణముల యొక్క మొదటి అక్షరము యతి స్థానము</li><li> రెండవ పాదమునందు <span class="gName">3</span> వ గణము యొక్క మొదటి అక్షరము యతి స్థానము</li><li> మూడవ పాదమునందు <span class="gName">3</span> వ గణము యొక్క మొదటి అక్షరము యతి స్థానము</li><li> నాలుగవ పాదమునందు <span class="gName">3</span> వ గణము యొక్క మొదటి అక్షరము యతి స్థానము</li><li> ఒకటవ పాదమునందు <span class="gName">ఆరు ఐదు అక్షరముల గణములు , రెండు సూర్య</span>  గణములుండును.</li><li> రెండవ పాదమునందు <span class="gName">ఆరు ఐదు అక్షరముల గణములు , రెండు సూర్య</span>  గణములుండును.</li><li> మూడవ పాదమునందు <span class="gName">ఆరు ఐదు అక్షరముల గణములు , రెండు సూర్య</span>  గణములుండును.</li><li> నాలుగవ పాదమునందు <span class="gName">ఆరు ఐదు అక్షరముల గణములు , రెండు సూర్య</span>  గణములుండును.</li></ol></div>
-  shortName: సర్వలఘుసీసము2-పూర్వభాగము
-  alias: ''
-  chandamName: ''
-  charLength: -1
-  matraLength: -1
-  min: 36
-  max: 36
-  chandamNumber: 1
-  chandamOrder: -1
-  sequence: ''
-  matraSeries: ''
 - identifier: seesaM
   name: సీసం-పూర్వభాగము
   language: Telugu
@@ -267,18 +209,6 @@ rules:
   yatiMode: GPosition
   prasaYati: true
   ruleText: <div><b>పద్య లక్షణములు</b>:<ol><li> <span class="gName">8</span> పాదములు ఉండును.</li><li>ప్రాస నియమం <span class="gName">లేదు</span></li><li> ప్రతి పాదమునందు <span class="gName">3</span> వ గణము యొక్క మొదటి అక్షరము యతి స్థానము</li><li> ఒకటవ , మూడవ , ఐదవ , ఏడవ పాదములందు <span class="gName">  నాలుగు ఇంద్ర</span>  గణములుండును.</li><li> రెండవ , నాలుగవ , ఆరవ , ఎనిమిదవ  పాదములందు <span class="gName">రెండు ఇంద్ర , రెండు సూర్య</span>  గణములుండును.</li></ol></div>
-  shortName: సీసం-పూర్వభాగము
-  alias: ''
-  chandamName: ''
-  charLength: -1
-  matraLength: -1
-  min: 10
-  max: 16
-  chandamNumber: -1
-  chandamOrder: -1
-  sequence: ''
-  matraSeries: ''
-  rowWiseRules: true
 - identifier: seesaM2
   name: సీసం2-పూర్వభాగము
   language: Telugu
@@ -329,18 +259,6 @@ rules:
   prasaYati: true
   yatiRecycle: true
   ruleText: <div><b>పద్య లక్షణములు</b>:<ol><li> <span class="gName">4</span> పాదములు ఉండును.</li><li>ప్రాస నియమం <span class="gName">లేదు</span></li><li> ప్రతి పాదమునందు <span class="gName">3,5,7</span> వ గణముల యొక్క మొదటి అక్షరము యతి స్థానము</li><li> ఒకటవ పాదమునందు <span class="gName">ఆరు ఇంద్ర , రెండు సూర్య</span>  గణములుండును.</li><li> రెండవ పాదమునందు <span class="gName">ఆరు ఇంద్ర , రెండు సూర్య</span>  గణములుండును.</li><li> మూడవ పాదమునందు <span class="gName">ఆరు ఇంద్ర , రెండు సూర్య</span>  గణములుండును.</li><li> నాలుగవ పాదమునందు <span class="gName">ఆరు ఇంద్ర , రెండు సూర్య</span>  గణములుండును.</li></ol></div>
-  shortName: సీసం2-పూర్వభాగము
-  alias: ''
-  chandamName: ''
-  charLength: -1
-  matraLength: -1
-  min: 22
-  max: 30
-  chandamNumber: -1
-  chandamOrder: -1
-  sequence: ''
-  matraSeries: ''
-  rowWiseRules: true
 - identifier: utsaahamu
   name: ఉత్సాహము
   language: Telugu
@@ -364,17 +282,6 @@ rules:
   yatiMode: GPosition
   prasa: true
   ruleText: <div><b>పద్య లక్షణములు</b>:<ol><li> <span class="gName">4</span> పాదములు ఉండును.</li><li> ప్రాస నియమం <span class="gName">కలదు</span></li><li>ప్రతి పాదమునందు <span class="gName">5</span> వ గణము యొక్క మొదటి అక్షరము యతి స్థానము</li><li>ప్రతి పాదమునందు <span class="gName">ఏడు సూర్య గణములు, చివర ఒక గురువు</span> ఉండును.</li></ol></div>
-  shortName: ఉత్సాహము
-  alias: ''
-  chandamName: ''
-  charLength: -1
-  matraLength: -1
-  min: 15
-  max: 22
-  chandamNumber: 1
-  chandamOrder: -1
-  sequence: ''
-  matraSeries: ''
 - identifier: kandam
   name: కందం
   language: Telugu
@@ -409,18 +316,6 @@ rules:
   yatiMode: GPosition
   prasa: true
   ruleText: <div><b>పద్య లక్షణములు:</b><ol><li><span class="gName">4</span> పాదములు ఉండును.</li><li>ప్రాస నియమం <span class="gName">కలదు</span></li><li> రెండవ పాదమునందు <span class="gName">4</span> వ గణము యొక్క మొదటి అక్షరము యతి స్థానము</li><li> నాలుగవ పాదమునందు <span class="gName">4</span> వ గణము యొక్క మొదటి అక్షరము యతి స్థానము</li><li> ఒకటవ పాదమునందు <span class="gName">మూడు 4 మాత్రల</span>  గణములుండును.</li><li> రెండవ పాదమునందు <span class="gName">ఐదు 4 మాత్రల</span>  గణములుండును.</li><li> మూడవ పాదమునందు <span class="gName">మూడు 4 మాత్రల</span>  గణములుండును.</li><li> నాలుగవ పాదమునందు <span class="gName">ఐదు 4 మాత్రల</span>  గణములుండును.</li><li>6వ గణము <span class='gName'>నల</span> లేదా <span class='gName'>జ</span> కావలెను.</li><li>చివరి అక్షరం <span class='gName'>గురువు</span> కావలెను.</li><li>బేసి గణం <span class='gName'>జ</span> కూడదు</li></ol></div>
-  shortName: కందం
-  alias: ''
-  chandamName: ''
-  charLength: -1
-  matraLength: -1
-  min: 6
-  max: 20
-  chandamNumber: -1
-  chandamOrder: -1
-  sequence: ''
-  matraSeries: ''
-  rowWiseRules: true
 - identifier: taruvOja
   name: తరువోజ
   language: Telugu
@@ -448,17 +343,6 @@ rules:
   ruleText: <div><b>పద్య లక్షణములు</b>:<ol><li> <span class="gName">4</span> పాదములు ఉండును.</li><li> ప్రాస నియమం <span class="gName">కలదు</span></li><li> ప్రతి పాదమునందు <span class="gName">3,5,7</span> గణముల మొదటి అక్షరములు యతి స్థానములు.</li><li>ప్రతి పాదమునందు <span class="gName">మూడు ఇంద్ర , ఒక సూర్య , మూడు ఇంద్ర , ఒక సూర్య</span> గణములుండును.</li></ol></div>
   references:
   - http://andhramahabharatam.blogspot.in/2006/06/16102.html
-  shortName: తరువోజ
-  alias: ''
-  chandamName: ''
-  charLength: -1
-  matraLength: -1
-  min: 22
-  max: 30
-  chandamNumber: 1
-  chandamOrder: -1
-  sequence: ''
-  matraSeries: ''
 - identifier: tripadi
   name: త్రిపది
   language: Telugu
@@ -485,18 +369,6 @@ rules:
   prasa: true
   references:
   - http://andhramahabharatam.blogspot.in/2006/06/16102.html
-  shortName: త్రిపది
-  alias: ''
-  chandamName: ''
-  charLength: -1
-  matraLength: -1
-  min: 8
-  max: 16
-  chandamNumber: -1
-  chandamOrder: -1
-  sequence: ''
-  matraSeries: ''
-  rowWiseRules: true
 - identifier: aMtaraakkara
   name: అంతరాక్కర
   language: Telugu
@@ -519,17 +391,6 @@ rules:
   ruleText: <div><b>పద్య లక్షణములు</b>:<ol><li> <span class="gName">4</span> పాదములు ఉండును.</li><li> ప్రాస నియమం <span class="gName">కలదు</span></li><li> ప్రతి పాదమునందు <span class="gName">3</span> వ గణము యొక్క చివరి అక్షరము యతి స్థానము</li><li>ప్రతి పాదమునందు <span class="gName">ఒక సూర్య , రెండు ఇంద్ర , ఒక చంద్ర</span> గణములుండును.</li></ol></div>
   references:
   - https://groups.google.com/forum/#!topic/telugu-unicode/WCB3vugeOPA
-  shortName: అంతరాక్కర
-  alias: ''
-  chandamName: ''
-  charLength: -1
-  matraLength: -1
-  min: 12
-  max: 16
-  chandamNumber: 1
-  chandamOrder: -1
-  sequence: ''
-  matraSeries: ''
 - identifier: alpaakkara
   name: అల్పాక్కర
   language: Telugu
@@ -548,17 +409,6 @@ rules:
   yatiMode: GPosition
   prasa: true
   ruleText: <div><b>పద్య లక్షణములు</b>:<ol><li> <span class="gName">4</span> పాదములు ఉండును.</li><li> ప్రాస నియమం <span class="gName">కలదు</span></li><li> ప్రతి పాదమునందు <span class="gName">3</span> వ గణము యొక్క మొదటి అక్షరము యతి స్థానము</li><li>ప్రతి పాదమునందు <span class="gName">రెండు ఇంద్ర , ఒక చంద్ర</span> గణములుండును.</li></ol></div>
-  shortName: అల్పాక్కర
-  alias: ''
-  chandamName: ''
-  charLength: -1
-  matraLength: -1
-  min: 10
-  max: 13
-  chandamNumber: 1
-  chandamOrder: -1
-  sequence: ''
-  matraSeries: ''
 - identifier: madhuraakkara
   name: మధురాక్కర
   language: Telugu
@@ -581,17 +431,6 @@ rules:
   ruleText: <div><b>పద్య లక్షణములు</b>:<ol><li> <span class="gName">4</span> పాదములు ఉండును.</li><li> ప్రాస నియమం <span class="gName">కలదు</span></li><li> ప్రతి పాదమునందు <span class="gName">4</span> వ గణము యొక్క మొదటి అక్షరము యతి స్థానము</li><li>ప్రతి పాదమునందు <span class="gName">ఒక సూర్య , మూడు ఇంద్ర , ఒక చంద్ర</span> గణములుండును.</li></ol></div>
   references:
   - http://andhramahabharatam.blogspot.in/2005/11/1449.html
-  shortName: మధురాక్కర
-  alias: ''
-  chandamName: ''
-  charLength: -1
-  matraLength: -1
-  min: 15
-  max: 20
-  chandamNumber: 1
-  chandamOrder: -1
-  sequence: ''
-  matraSeries: ''
 - identifier: madhyaakkara
   name: మధ్యాక్కర
   language: Telugu
@@ -613,17 +452,6 @@ rules:
   yatiMode: GPosition
   prasa: true
   ruleText: <div><b>పద్య లక్షణములు</b>:<ol><li> <span class="gName">4</span> పాదములు ఉండును.</li><li> ప్రాస నియమం <span class="gName">కలదు</span></li><li> ప్రతి పాదమునందు <span class="gName">4</span> వ గణము యొక్క మొదటి అక్షరము యతి స్థానము</li><li>ప్రతి పాదమునందు <span class="gName">రెండు ఇంద్ర , ఒక సూర్య , రెండు ఇంద్ర , ఒక సూర్య</span> గణములుండును.</li></ol></div>
-  shortName: మధ్యాక్కర
-  alias: ''
-  chandamName: ''
-  charLength: -1
-  matraLength: -1
-  min: 16
-  max: 22
-  chandamNumber: 1
-  chandamOrder: -1
-  sequence: ''
-  matraSeries: ''
 - identifier: mahaaakkara
   name: మహాక్కర
   language: Telugu
@@ -646,17 +474,6 @@ rules:
   yatiMode: GPosition
   prasa: true
   ruleText: <div><b>పద్య లక్షణములు</b>:<ol><li> <span class="gName">4</span> పాదములు ఉండును.</li><li> ప్రాస నియమం <span class="gName">కలదు</span></li><li> ప్రతి పాదమునందు <span class="gName">5</span> వ గణము యొక్క మొదటి అక్షరము యతి స్థానము</li><li>ప్రతి పాదమునందు <span class="gName">ఒక సూర్య ,ఐదు ఇంద్ర , ఒక చంద్ర</span> గణములుండును.</li></ol></div>
-  shortName: మహాక్కర
-  alias: ''
-  chandamName: ''
-  charLength: -1
-  matraLength: -1
-  min: 21
-  max: 28
-  chandamNumber: 1
-  chandamOrder: -1
-  sequence: ''
-  matraSeries: ''
 - identifier: dvipada
   name: ద్విపద
   language: Telugu
@@ -676,17 +493,6 @@ rules:
   yatiMode: GPosition
   prasa: true
   ruleText: <div><b>పద్య లక్షణములు</b>:<ol><li> <span class="gName">2</span> పాదములు ఉండును.</li><li> ప్రాస నియమం <span class="gName">కలదు</span></li><li> ప్రతి పాదమునందు <span class="gName">3</span> వ గణము యొక్క మొదటి అక్షరము యతి స్థానము</li><li>ప్రతి పాదమునందు <span class="gName">మూడు ఇంద్ర , ఒక సూర్య</span> గణములుండును.</li></ol></div>
-  shortName: ద్విపద
-  alias: ''
-  chandamName: ''
-  charLength: -1
-  matraLength: -1
-  min: 11
-  max: 15
-  chandamNumber: 1
-  chandamOrder: -1
-  sequence: ''
-  matraSeries: ''
 - identifier: dvipadamaalika
   name: ద్విపదమాలిక
   language: Telugu
@@ -706,17 +512,6 @@ rules:
   yatiMode: GPosition
   prasa: true
   ruleText: <div><b>పద్య లక్షణములు</b>:<ol><li> <span class="gName">4</span> పాదములు ఉండును.</li><li> ప్రాస నియమం <span class="gName">కలదు</span></li><li> ప్రతి పాదమునందు <span class="gName">3</span> వ గణము యొక్క మొదటి అక్షరము యతి స్థానము</li><li>ప్రతి పాదమునందు <span class="gName">మూడు ఇంద్ర , ఒక సూర్య</span> గణములుండును.</li></ol></div>
-  shortName: ద్విపదమాలిక
-  alias: ''
-  chandamName: ''
-  charLength: -1
-  matraLength: -1
-  min: 11
-  max: 15
-  chandamNumber: 1
-  chandamOrder: -1
-  sequence: ''
-  matraSeries: ''
 - identifier: maMjareedvipada
   name: మంజరీ ద్విపద
   language: Telugu
@@ -736,17 +531,6 @@ rules:
   yatiMode: GPosition
   prasaYati: true
   ruleText: <div><b>పద్య లక్షణములు</b>:<ol><li> <span class="gName">4</span> పాదములు ఉండును.</li><li>ప్రాస నియమం <span class="gName">లేదు</span></li><li> ప్రతి పాదమునందు <span class="gName">3</span> వ గణము యొక్క మొదటి అక్షరము యతి స్థానము</li><li>ప్రతి పాదమునందు <span class="gName">మూడు ఇంద్ర , ఒక సూర్య</span> గణములుండును.</li></ol></div>
-  shortName: మంజరీ ద్విపద
-  alias: ''
-  chandamName: ''
-  charLength: -1
-  matraLength: -1
-  min: 11
-  max: 15
-  chandamNumber: 1
-  chandamOrder: -1
-  sequence: ''
-  matraSeries: ''
 - identifier: iMdravajramu
   name: ఇంద్రవజ్రము
   language: Telugu
@@ -765,17 +549,6 @@ rules:
   - - 8
   yatiMode: CharPosition
   prasa: true
-  shortName: ఇంద్రవజ్రము
-  alias: ''
-  chandamName: త్రిష్టుప్పు
-  charLength: 11
-  matraLength: 18
-  min: 11
-  max: 11
-  chandamNumber: 357
-  chandamOrder: 2403
-  sequence: UU|-UU|-|U|-UU
-  matraSeries: 4-3 , 4-5 , 5-4
 - identifier: utpalamaala
   name: ఉత్పలమాల
   language: Telugu
@@ -797,17 +570,6 @@ rules:
   - - 10
   yatiMode: CharPosition
   prasa: true
-  shortName: ఉత్పలమాల
-  alias: ''
-  chandamName: కృతి
-  charLength: 20
-  matraLength: 28
-  min: 20
-  max: 20
-  chandamNumber: 355799
-  chandamOrder: 1404373
-  sequence: U||-U|U-|||-U||-U||-U|U-|U
-  matraSeries: ''
 - identifier: upEMdravajramu
   name: ఉపేంద్రవజ్రము
   language: Telugu
@@ -826,17 +588,6 @@ rules:
   - - 8
   yatiMode: CharPosition
   prasa: true
-  shortName: ఉపేంద్రవజ్రము
-  alias: ''
-  chandamName: త్రిష్టుప్పు
-  charLength: 11
-  matraLength: 17
-  min: 11
-  max: 11
-  chandamNumber: 358
-  chandamOrder: 2404
-  sequence: '|U|-UU|-|U|-UU'
-  matraSeries: 3 , 4 , 6 , 4-5
 - identifier: kaviraajaviraajitamu
   name: కవిరాజవిరాజితము (హంసగతి, మహాతరుణీదయిత, శ్రవణాభరణమ్)
   language: Telugu
@@ -861,17 +612,6 @@ rules:
     - 20
   yatiMode: CharPosition
   prasa: true
-  shortName: కవిరాజవిరాజితము
-  alias: హంసగతి, మహాతరుణీదయిత, శ్రవణాభరణమ్
-  chandamName: వికృతి
-  charLength: 23
-  matraLength: 30
-  min: 23
-  max: 23
-  chandamNumber: 3595120
-  chandamOrder: 11983726
-  sequence: '|||-|U|-|U|-|U|-|U|-|U|-|U|-|U'
-  matraSeries: 4 , 6 , 3-5
 - identifier: krauMchapadaM
   name: క్రౌంచపదం (పంచశిర, కోకపదమ్)
   language: Telugu
@@ -895,17 +635,6 @@ rules:
     - 19
   yatiMode: CharPosition
   prasa: true
-  shortName: క్రౌంచపదం
-  alias: పంచశిర, కోకపదమ్
-  chandamName: సంకృతి
-  charLength: 24
-  matraLength: 32
-  min: 24
-  max: 24
-  chandamNumber: 4193479
-  chandamOrder: 20970693
-  sequence: U||-UUU-||U-U||-|||-|||-|||-|UU
-  matraSeries: 4 , 6 , 3-5
 - identifier: chaMpakamaala
   name: చంపకమాల (సరసీ)
   language: Telugu
@@ -927,17 +656,6 @@ rules:
   - - 11
   yatiMode: CharPosition
   prasa: true
-  shortName: చంపకమాల
-  alias: సరసీ
-  chandamName: ప్రకృతి
-  charLength: 21
-  matraLength: 28
-  min: 21
-  max: 21
-  chandamNumber: 711600
-  chandamOrder: 2808750
-  sequence: '|||-|U|-U||-|U|-|U|-|U|-U|U'
-  matraSeries: ''
 - identifier: taralamu
   name: తరళము (ధ్రువకోకిల)
   language: Telugu
@@ -959,17 +677,6 @@ rules:
   - - 12
   yatiMode: CharPosition
   prasa: true
-  shortName: తరళము
-  alias: ధ్రువకోకిల
-  chandamName: అతిధృతి
-  charLength: 19
-  matraLength: 26
-  min: 19
-  max: 19
-  chandamNumber: 186040
-  chandamOrder: 710326
-  sequence: '|||-U||-U|U-||U-|U|-|U|-U'
-  matraSeries: 3-4
 - identifier: tOTakamu
   name: తోటకము (ఛిత్తక, భ్రమరావళి, నందినీ)
   language: Telugu
@@ -988,17 +695,6 @@ rules:
   - - 9
   yatiMode: CharPosition
   prasa: true
-  shortName: తోటకము
-  alias: ఛిత్తక, భ్రమరావళి, నందినీ
-  chandamName: జగతి
-  charLength: 12
-  matraLength: 16
-  min: 12
-  max: 12
-  chandamNumber: 1756
-  chandamOrder: 5850
-  sequence: '||U-||U-||U-||U'
-  matraSeries: 4 , 5 , 6 , 5-3 , 4-5 , 5-4
 - identifier: tOvakamu
   name: తోవకము (తోదకము-2, దోధకము, తామరస, కలరవము)
   language: Telugu
@@ -1017,17 +713,6 @@ rules:
   - - 8
   yatiMode: CharPosition
   prasa: true
-  shortName: తోవకము
-  alias: తోదకము-2, దోధకము, తామరస, కలరవము
-  chandamName: జగతి
-  charLength: 12
-  matraLength: 16
-  min: 12
-  max: 12
-  chandamNumber: 880
-  chandamOrder: 4974
-  sequence: '|||-|U|-|U|-|UU'
-  matraSeries: 4 , 6 , 3-4 , 4-3 , 3-5
 - identifier: paMchaamaramu
   name: పంచచామరము (నారాచ, మహోత్సవ)
   language: Telugu
@@ -1048,17 +733,6 @@ rules:
   - - 10
   yatiMode: CharPosition
   prasa: true
-  shortName: పంచచామరము
-  alias: నారాచ, మహోత్సవ
-  chandamName: అష్టి
-  charLength: 16
-  matraLength: 24
-  min: 16
-  max: 16
-  chandamNumber: 21846
-  chandamOrder: 87380
-  sequence: '|U|-U|U-|U|-U|U-|U|-U'
-  matraSeries: 3 , 6 , 4-5
 - identifier: bhujaMgaprayaatamu
   name: భుజంగప్రయాతము (అప్రమేయా)
   language: Telugu
@@ -1077,17 +751,6 @@ rules:
   - - 8
   yatiMode: CharPosition
   prasa: true
-  shortName: భుజంగప్రయాతము
-  alias: అప్రమేయా
-  chandamName: జగతి
-  charLength: 12
-  matraLength: 20
-  min: 12
-  max: 12
-  chandamNumber: 586
-  chandamOrder: 4680
-  sequence: '|UU-|UU-|UU-|UU'
-  matraSeries: 5 , 3-5 , 5-3
 - identifier: mattakOkilamu
   name: మత్తకోకిల (చర్చరీ, మల్లికామాల, మాలికోత్తరమాలికా, విబుధప్రియా, హరనర్తన, ఉజ్జ్వల)
   language: Telugu
@@ -1108,17 +771,6 @@ rules:
   - - 11
   yatiMode: CharPosition
   prasa: true
-  shortName: మత్తకోకిల
-  alias: చర్చరీ, మల్లికామాల, మాలికోత్తరమాలికా, విబుధప్రియా, హరనర్తన, ఉజ్జ్వల
-  chandamName: ధృతి
-  charLength: 18
-  matraLength: 26
-  min: 18
-  max: 18
-  chandamNumber: 93019
-  chandamOrder: 355161
-  sequence: U|U-||U-|U|-|U|-U||-U|U
-  matraSeries: 3-4
 - identifier: maththEbhaM
   name: మత్తేభవిక్రీడితము
   language: Telugu
@@ -1140,17 +792,6 @@ rules:
   - - 14
   yatiMode: CharPosition
   prasa: true
-  shortName: మత్తేభవిక్రీడితము
-  alias: ''
-  chandamName: కృతి
-  charLength: 20
-  matraLength: 30
-  min: 20
-  max: 20
-  chandamNumber: 298676
-  chandamOrder: 1347250
-  sequence: '||U-U||-U|U-|||-UUU-|UU-|U'
-  matraSeries: ''
 - identifier: mahaasragdhara
   name: మహాస్రగ్ధర
   language: Telugu
@@ -1174,17 +815,6 @@ rules:
     - 16
   yatiMode: CharPosition
   prasa: true
-  shortName: మహాస్రగ్ధర
-  alias: ''
-  chandamName: ఆకృతి
-  charLength: 22
-  matraLength: 33
-  min: 22
-  max: 22
-  chandamNumber: 605988
-  chandamOrder: 4800290
-  sequence: '||U-UU|-UU|-|||-||U-U|U-U|U-U'
-  matraSeries: ''
 - identifier: maanini
   name: మానిని (మదిరా, లతాకుసుమ, సంగతా)
   language: Telugu
@@ -1209,17 +839,6 @@ rules:
     - 19
   yatiMode: CharPosition
   prasa: true
-  shortName: మానిని
-  alias: మదిరా, లతాకుసుమ, సంగతా
-  chandamName: ఆకృతి
-  charLength: 22
-  matraLength: 30
-  min: 22
-  max: 22
-  chandamNumber: 1797559
-  chandamOrder: 5991861
-  sequence: U||-U||-U||-U||-U||-U||-U||-U
-  matraSeries: 4 , 6 , 3-5
 - identifier: maalini
   name: మాలిని (నాందీముఖీ)
   language: Telugu
@@ -1239,17 +858,6 @@ rules:
   - - 9
   yatiMode: CharPosition
   prasa: true
-  shortName: మాలిని
-  alias: నాందీముఖీ
-  chandamName: అతిశక్వరి
-  charLength: 15
-  matraLength: 22
-  min: 15
-  max: 15
-  chandamNumber: 4672
-  chandamOrder: 37438
-  sequence: '|||-|||-UUU-|UU-|UU'
-  matraSeries: 5 , 6
 - identifier: mEghavisphooritaM
   name: మేఘవిస్ఫూర్జితం
   language: Telugu
@@ -1271,17 +879,6 @@ rules:
   - - 13
   yatiMode: CharPosition
   prasa: true
-  shortName: మేఘవిస్ఫూర్జితం
-  alias: ''
-  chandamName: అతిధృతి
-  charLength: 19
-  matraLength: 30
-  min: 19
-  max: 19
-  chandamNumber: 75714
-  chandamOrder: 600000
-  sequence: '|UU-UUU-|||-||U-U|U-U|U-U'
-  matraSeries: ''
 - identifier: layagraahi
   name: లయగ్రాహి
   language: Telugu
@@ -1310,17 +907,6 @@ rules:
   prasa: true
   prasaYati: true
   onlyPrasaYati: true
-  shortName: లయగ్రాహి
-  alias: ''
-  chandamName: ఉద్ధురమాల
-  charLength: 30
-  matraLength: 39
-  min: 30
-  max: 30
-  chandamNumber: 250539759
-  chandamOrder: 1324281581
-  sequence: U||-|U|-||U-|||-U||-|U|-||U-|||-U||-|UU
-  matraSeries: 5
 - identifier: layavibhaati
   name: లయవిభాతి
   language: Telugu
@@ -1351,17 +937,6 @@ rules:
   prasa: true
   prasaYati: true
   onlyPrasaYati: true
-  shortName: లయవిభాతి
-  alias: ''
-  chandamName: ఉద్ధురమాల
-  charLength: 34
-  matraLength: 39
-  min: 34
-  max: 34
-  chandamNumber: -2147483647
-  chandamOrder: 15032385535
-  sequence: '|||-||U-|||-|||-||U-|||-|||-||U-|||-|||-||U-U'
-  matraSeries: 5 , 3-4 , 4-3
 - identifier: vanamayooramu
   name: వనమయూరము(ఇందువదన, ఇన్ద్రవదనా)
   language: Telugu
@@ -1381,17 +956,6 @@ rules:
   - - 9
   yatiMode: CharPosition
   prasa: true
-  shortName: వనమయూరము
-  alias: ఇందువదన, ఇన్ద్రవదనా
-  chandamName: శక్వరి
-  charLength: 14
-  matraLength: 19
-  min: 14
-  max: 14
-  chandamNumber: 3823
-  chandamOrder: 20205
-  sequence: U||-|U|-||U-|||-UU
-  matraSeries: 5 , 3-4 , 4-5 , 5-4
 - identifier: vasaMtatilakamu
   name: వసంతతిలకము (ఉద్ధర్షిణీ, ఔద్ధర్షిణి, కర్ణోత్పలా, మధుమాధవీ, శోభావతీ, సింహోన్నతా, సింహోద్ధతా, మదనము)
   language: Telugu
@@ -1411,17 +975,6 @@ rules:
   - - 8
   yatiMode: CharPosition
   prasa: true
-  shortName: వసంతతిలకము
-  alias: ఉద్ధర్షిణీ, ఔద్ధర్షిణి, కర్ణోత్పలా, మధుమాధవీ, శోభావతీ, సింహోన్నతా, సింహోద్ధతా, మదనము
-  chandamName: శక్వరి
-  charLength: 14
-  matraLength: 21
-  min: 14
-  max: 14
-  chandamNumber: 2933
-  chandamOrder: 19315
-  sequence: UU|-U||-|U|-|U|-UU
-  matraSeries: 4 , 5-3
 - identifier: saardhoolaM
   name: శార్దూలవిక్రీడితము
   language: Telugu
@@ -1443,17 +996,6 @@ rules:
   - - 13
   yatiMode: CharPosition
   prasa: true
-  shortName: శార్దూలవిక్రీడితము
-  alias: ''
-  chandamName: అతిధృతి
-  charLength: 19
-  matraLength: 30
-  min: 19
-  max: 19
-  chandamNumber: 149337
-  chandamOrder: 673623
-  sequence: UUU-||U-|U|-||U-UU|-UU|-U
-  matraSeries: ''
 - identifier: SlOkamu
   name: శ్లోకము
   language: Telugu
@@ -1471,17 +1013,6 @@ rules:
     - హ
   yati: []
   yatiMode: CharPosition
-  shortName: శ్లోకము
-  alias: ''
-  chandamName: శక్వరి
-  charLength: 14
-  matraLength: 20
-  min: 14
-  max: 14
-  chandamNumber: 11125
-  chandamOrder: 27507
-  sequence: UU|-U||-|U|-|U|-U|
-  matraSeries: 4 , 5-3
 - identifier: sragdhara
   name: స్రగ్ధర
   language: Telugu
@@ -1506,17 +1037,6 @@ rules:
   prasa: true
   references:
   - http://kandishankaraiah.blogspot.in/2012/10/27.html
-  shortName: స్రగ్ధర
-  alias: ''
-  chandamName: ప్రకృతి
-  charLength: 21
-  matraLength: 33
-  min: 21
-  max: 21
-  chandamNumber: 302993
-  chandamOrder: 2400143
-  sequence: UUU-U|U-U||-|||-|UU-|UU-|UU
-  matraSeries: ''
 - identifier: sragviNi
   name: స్రగ్విణీ (లక్ష్మీధర, పద్మినీ)
   language: Telugu
@@ -1535,17 +1055,6 @@ rules:
   - - 7
   yatiMode: CharPosition
   prasa: true
-  shortName: స్రగ్విణీ
-  alias: లక్ష్మీధర, పద్మినీ
-  chandamName: జగతి
-  charLength: 12
-  matraLength: 20
-  min: 12
-  max: 12
-  chandamNumber: 1171
-  chandamOrder: 5265
-  sequence: U|U-U|U-U|U-U|U
-  matraSeries: 5
 - identifier: svaagatavRttamu
   name: స్వాగతం
   language: Telugu
@@ -1564,17 +1073,6 @@ rules:
   - - 7
   yatiMode: CharPosition
   prasa: true
-  shortName: స్వాగతం
-  alias: ''
-  chandamName: త్రిష్టుప్పు
-  charLength: 11
-  matraLength: 16
-  min: 11
-  max: 11
-  chandamNumber: 443
-  chandamOrder: 2489
-  sequence: U|U-|||-U||-UU
-  matraSeries: 5 , 6 , 3-4 , 3-5
 - identifier: kshama
   name: క్షమ(క్షప, చంద్రిక-2)
   language: Telugu
@@ -1594,17 +1092,6 @@ rules:
   - - 8
   yatiMode: CharPosition
   prasa: true
-  shortName: క్షమ
-  alias: క్షప, చంద్రిక-2
-  chandamName: అతిజగతి
-  charLength: 13
-  matraLength: 18
-  min: 13
-  max: 13
-  chandamNumber: 2368
-  chandamOrder: 10558
-  sequence: '|||-|||-UU|-UU|-U'
-  matraSeries: 5 , 3-5 , 5-3
 - identifier: khacharaplutamu
   name: ఖచరప్లుతము
   language: Telugu
@@ -1626,17 +1113,6 @@ rules:
   - - 12
   yatiMode: CharPosition
   prasa: true
-  shortName: ఖచరప్లుతము
-  alias: ''
-  chandamName: కృతి
-  charLength: 20
-  matraLength: 28
-  min: 20
-  max: 20
-  chandamNumber: 373176
-  chandamOrder: 1421750
-  sequence: '|||-U||-U||-UUU-||U-||U-|U'
-  matraSeries: ''
 - identifier: geetaalaMbanamu
   name: గీతాలంబనము (కలితాంత, కాంత, కాంతి, మోటనకమ్)
   language: Telugu
@@ -1655,17 +1131,6 @@ rules:
   - - 8
   yatiMode: CharPosition
   prasa: true
-  shortName: గీతాలంబనము
-  alias: కలితాంత, కాంత, కాంతి, మోటనకమ్
-  chandamName: త్రిష్టుప్పు
-  charLength: 11
-  matraLength: 16
-  min: 11
-  max: 11
-  chandamNumber: 877
-  chandamOrder: 2923
-  sequence: UU|-|U|-|U|-|U
-  matraSeries: 4 , 5 , 6 , 5-3 , 4-5 , 5-4
 - identifier: gOvRsha
   name: గోవృష
   language: Telugu
@@ -1685,17 +1150,6 @@ rules:
   - - 5
   yatiMode: CharPosition
   prasa: true
-  shortName: గోవృష
-  alias: ''
-  chandamName: శక్వరి
-  charLength: 14
-  matraLength: 24
-  min: 14
-  max: 14
-  chandamNumber: 1633
-  chandamOrder: 18015
-  sequence: UUU-UU|-|UU-||U-UU
-  matraSeries: 4 , 6
 - identifier: gauri
   name: గౌరి
   language: Telugu
@@ -1714,17 +1168,6 @@ rules:
   yati: []
   yatiMode: CharPosition
   prasa: true
-  shortName: గౌరి
-  alias: ''
-  chandamName: అతిజగతి
-  charLength: 13
-  matraLength: 15
-  min: 13
-  max: 13
-  chandamNumber: 2048
-  chandamOrder: 10238
-  sequence: '|||-|||-|||-||U-U'
-  matraSeries: 5 , 3-4 , 4-3 , 3-5 , 5-3 , 4-5 , 5-4
 - identifier: chaMchareekaavaLi
   name: చంచరీకావళి-1 (చంచరీకాతతి)
   language: Telugu
@@ -1744,17 +1187,6 @@ rules:
   - - 7
   yatiMode: CharPosition
   prasa: true
-  shortName: చంచరీకావళి-1
-  alias: చంచరీకాతతి
-  chandamName: అతిజగతి
-  charLength: 13
-  matraLength: 24
-  min: 13
-  max: 13
-  chandamNumber: 1153
-  chandamOrder: 9343
-  sequence: UUU-UUU-U|U-U|U-U
-  matraSeries: ''
 - identifier: chaMdrakaLa
   name: చంద్రకళ
   language: Telugu
@@ -1776,17 +1208,6 @@ rules:
   - - 11
   yatiMode: CharPosition
   prasa: true
-  shortName: చంద్రకళ
-  alias: ''
-  chandamName: అతిధృతి
-  charLength: 19
-  matraLength: 28
-  min: 19
-  max: 19
-  chandamNumber: 186587
-  chandamOrder: 710873
-  sequence: U|U-||U-||U-UU|-|U|-|U|-U
-  matraSeries: ''
 - identifier: chaMdralaekha
   name: చంద్రలేఖ
   language: Telugu
@@ -1806,17 +1227,6 @@ rules:
   - - 7
   yatiMode: CharPosition
   prasa: true
-  shortName: చంద్రలేఖ
-  alias: ''
-  chandamName: అతిజగతి
-  charLength: 13
-  matraLength: 19
-  min: 13
-  max: 13
-  chandamNumber: 1184
-  chandamOrder: 9374
-  sequence: '|||-||U-U|U-U|U-U'
-  matraSeries: 5 , 3-4 , 5-4
 - identifier: chaMdraSree
   name: చంద్రశ్రీ (ప్రవరలలితమ్)
   language: Telugu
@@ -1837,17 +1247,6 @@ rules:
   - - 12
   yatiMode: CharPosition
   prasa: true
-  shortName: చంద్రశ్రీ
-  alias: ప్రవరలలితమ్
-  chandamName: అష్టి
-  charLength: 16
-  matraLength: 25
-  min: 16
-  max: 16
-  chandamNumber: 10178
-  chandamOrder: 75712
-  sequence: '|UU-UUU-|||-||U-U|U-U'
-  matraSeries: 5-4
 - identifier: chitrapadamu
   name: చిత్రపదము
   language: Telugu
@@ -1864,17 +1263,6 @@ rules:
   yati: []
   yatiMode: CharPosition
   prasa: true
-  shortName: చిత్రపదము
-  alias: ''
-  chandamName: అనుష్టుప్పు
-  charLength: 8
-  matraLength: 12
-  min: 8
-  max: 8
-  chandamNumber: 55
-  chandamOrder: 309
-  sequence: U||-U||-UU
-  matraSeries: 4 , 6 , 3-4 , 4-3 , 3-5
 - identifier: jalaMdharamu
   name: జలంధరము
   language: Telugu
@@ -1894,17 +1282,6 @@ rules:
   - - 11
   yatiMode: CharPosition
   prasa: true
-  shortName: జలంధరము
-  alias: ''
-  chandamName: శక్వరి
-  charLength: 14
-  matraLength: 19
-  min: 14
-  max: 14
-  chandamNumber: 7095
-  chandamOrder: 23477
-  sequence: U||-U||-U||-|U|-|U
-  matraSeries: 4 , 6 , 3-5
 - identifier: jaladamu
   name: జలదము (లవలీలతా)
   language: Telugu
@@ -1924,17 +1301,6 @@ rules:
   - - 10
   yatiMode: CharPosition
   prasa: true
-  shortName: జలదము
-  alias: లవలీలతా
-  chandamName: అతిజగతి
-  charLength: 13
-  matraLength: 18
-  min: 13
-  max: 13
-  chandamNumber: 3543
-  chandamOrder: 11733
-  sequence: U||-U|U-|||-U||-U
-  matraSeries: 3 , 6 , 3-4 , 4-3
 - identifier: jaladharamaala
   name: జలధరమాలా (కాంతోత్పీడా)
   language: Telugu
@@ -1953,17 +1319,6 @@ rules:
   - - 9
   yatiMode: CharPosition
   prasa: true
-  shortName: జలధరమాలా
-  alias: కాంతోత్పీడా
-  chandamName: జగతి
-  charLength: 12
-  matraLength: 20
-  min: 12
-  max: 12
-  chandamNumber: 241
-  chandamOrder: 4335
-  sequence: UUU-U||-||U-UUU
-  matraSeries: 4 , 6
 - identifier: jalOddhatagati
   name: జలోద్ధతగతి
   language: Telugu
@@ -1982,17 +1337,6 @@ rules:
   - - 8
   yatiMode: CharPosition
   prasa: true
-  shortName: జలోద్ధతగతి
-  alias: ''
-  chandamName: జగతి
-  charLength: 12
-  matraLength: 16
-  min: 12
-  max: 12
-  chandamNumber: 1886
-  chandamOrder: 5980
-  sequence: '|U|-||U-|U|-||U'
-  matraSeries: 3 , 4 , 6 , 3-5 , 5-3 , 4-5 , 5-4
 - identifier: tanumadhyaavRttamu
   name: తనుమధ్య
   language: Telugu
@@ -2008,17 +1352,6 @@ rules:
   yati: []
   yatiMode: CharPosition
   prasa: true
-  shortName: తనుమధ్య
-  alias: ''
-  chandamName: గాయత్రి
-  charLength: 6
-  matraLength: 10
-  min: 6
-  max: 6
-  chandamNumber: 13
-  chandamOrder: 75
-  sequence: UU|-|UU
-  matraSeries: 4 , 5 , 6 , 5-3
 - identifier: taraLamu
   name: తరలి
   language: Telugu
@@ -2039,17 +1372,6 @@ rules:
   - - 11
   yatiMode: CharPosition
   prasa: true
-  shortName: తరలి
-  alias: ''
-  chandamName: ధృతి
-  charLength: 18
-  matraLength: 23
-  min: 18
-  max: 18
-  chandamNumber: 97247
-  chandamOrder: 359389
-  sequence: U||-||U-|||-|U|-|||-U|U
-  matraSeries: 3 , 4 , 5 , 6 , 5-4
 - identifier: turagavalgitavRttamu
   name: తురగవల్గిత (తురగ)
   language: Telugu
@@ -2072,17 +1394,6 @@ rules:
   - - 15
   yatiMode: CharPosition
   prasa: true
-  shortName: తురగవల్గిత
-  alias: తురగ
-  chandamName: ఆకృతి
-  charLength: 22
-  matraLength: 26
-  min: 22
-  max: 22
-  chandamNumber: 1490944
-  chandamOrder: 5685246
-  sequence: '|||-|||-|||-|||-||U-|U|-|U|-U'
-  matraSeries: 4 , 3-4 , 3-5 , 5-3
 - identifier: dRtavilaMbitamu
   name: ద్రుతవిలంబితము (సుందరీ, హరిణప్లుతా)
   language: Telugu
@@ -2101,17 +1412,6 @@ rules:
   - - 7
   yatiMode: CharPosition
   prasa: true
-  shortName: ద్రుతవిలంబితము
-  alias: సుందరీ, హరిణప్లుతా
-  chandamName: జగతి
-  charLength: 12
-  matraLength: 16
-  min: 12
-  max: 12
-  chandamNumber: 1464
-  chandamOrder: 5558
-  sequence: '|||-U||-U||-U|U'
-  matraSeries: 5 , 3-4 , 5-4
 - identifier: nadi
   name: నది
   language: Telugu
@@ -2131,17 +1431,6 @@ rules:
   - - 8
   yatiMode: CharPosition
   prasa: true
-  shortName: నది
-  alias: ''
-  chandamName: శక్వరి
-  charLength: 14
-  matraLength: 19
-  min: 14
-  max: 14
-  chandamNumber: 2880
-  chandamOrder: 19262
-  sequence: '|||-|||-UU|-|U|-UU'
-  matraSeries: 5 , 6
 - identifier: nadeepraghOshamu
   name: నదీప్రఘోషము
   language: Telugu
@@ -2175,18 +1464,6 @@ rules:
   - - 8
   yatiMode: CharPosition
   prasa: true
-  shortName: నదీప్రఘోషము
-  alias: ''
-  chandamName: ''
-  charLength: -1
-  matraLength: -1
-  min: 12
-  max: 12
-  chandamNumber: -1
-  chandamOrder: -1
-  sequence: ''
-  matraSeries: ''
-  rowWiseRules: true
 - identifier: narkuTamu
   name: నర్కుటము (కోకిలకాక, నర్దటకమ్)
   language: Telugu
@@ -2207,17 +1484,6 @@ rules:
   - - 11
   yatiMode: CharPosition
   prasa: true
-  shortName: నర్కుటము
-  alias: కోకిలకాక, నర్దటకమ్
-  chandamName: అత్యష్టి
-  charLength: 17
-  matraLength: 22
-  min: 17
-  max: 17
-  chandamNumber: 56240
-  chandamOrder: 187310
-  sequence: '|||-|U|-U||-|U|-|U|-|U'
-  matraSeries: 3 , 6 , 4-3
 - identifier: navanaMdini
   name: నవనందిని
   language: Telugu
@@ -2237,17 +1503,6 @@ rules:
   - - 9
   yatiMode: CharPosition
   prasa: true
-  shortName: నవనందిని
-  alias: ''
-  chandamName: శక్వరి
-  charLength: 14
-  matraLength: 19
-  min: 14
-  max: 14
-  chandamNumber: 3820
-  chandamOrder: 20202
-  sequence: '||U-|U|-||U-|||-UU'
-  matraSeries: 5 , 4-5 , 5-4
 - identifier: naaMdeemukhi
   name: నాందీముఖి
   language: Telugu
@@ -2267,17 +1522,6 @@ rules:
   - - 8
   yatiMode: CharPosition
   prasa: true
-  shortName: నాందీముఖి
-  alias: ''
-  chandamName: శక్వరి
-  charLength: 14
-  matraLength: 21
-  min: 14
-  max: 14
-  chandamNumber: 2336
-  chandamOrder: 18718
-  sequence: '|||-||U-UU|-UU|-UU'
-  matraSeries: ''
 - identifier: naaree
   name: నారీ (జన, పుష్ప, మద, మధు, బలి)
   language: Telugu
@@ -2292,17 +1536,6 @@ rules:
   yati: []
   yatiMode: CharPosition
   prasa: true
-  shortName: నారీ
-  alias: జన, పుష్ప, మద, మధు, బలి
-  chandamName: మధ్య
-  charLength: 3
-  matraLength: 6
-  min: 3
-  max: 3
-  chandamNumber: 1
-  chandamOrder: 7
-  sequence: UUU
-  matraSeries: ''
 - identifier: naareeplutavRttamu
   name: నారీప్లుత
   language: Telugu
@@ -2336,18 +1569,6 @@ rules:
   - - 8
   yatiMode: CharPosition
   prasa: true
-  shortName: నారీప్లుత
-  alias: ''
-  chandamName: ''
-  charLength: -1
-  matraLength: -1
-  min: 11
-  max: 11
-  chandamNumber: -1
-  chandamOrder: -1
-  sequence: ''
-  matraSeries: ''
-  rowWiseRules: true
 - identifier: padmakamu
   name: పద్మకము-1 (పద్మ)
   language: Telugu
@@ -2368,17 +1589,6 @@ rules:
   - - 11
   yatiMode: CharPosition
   prasa: true
-  shortName: పద్మకము-1
-  alias: పద్మ
-  chandamName: అష్టి
-  charLength: 16
-  matraLength: 21
-  min: 16
-  max: 16
-  chandamNumber: 23416
-  chandamOrder: 88950
-  sequence: '|||-U||-|U|-|U|-|U|-U'
-  matraSeries: 5 , 6 , 3-5
 - identifier: padmanaabhamu
   name: పద్మనాభము
   language: Telugu
@@ -2401,17 +1611,6 @@ rules:
   - - 13
   yatiMode: CharPosition
   prasa: true
-  shortName: పద్మనాభము
-  alias: ''
-  chandamName: వికృతి
-  charLength: 23
-  matraLength: 39
-  min: 23
-  max: 23
-  chandamNumber: 1198373
-  chandamOrder: 9586979
-  sequence: UU|-UU|-UU|-UU|-UU|-UU|-UU|-UU
-  matraSeries: 5
 - identifier: paalaaSadaLamu
   name: పాలాశదళము (త్వరితగతి)
   language: Telugu
@@ -2432,17 +1631,6 @@ rules:
   - - 11
   yatiMode: CharPosition
   prasa: true
-  shortName: పాలాశదళము
-  alias: త్వరితగతి
-  chandamName: అత్యష్టి
-  charLength: 17
-  matraLength: 19
-  min: 17
-  max: 17
-  chandamNumber: 32768
-  chandamOrder: 163838
-  sequence: '|||-|||-|||-|||-|||-UU'
-  matraSeries: 3 , 5 , 6 , 3-4 , 4-3 , 4-5 , 5-4
 - identifier: pRthiveevRttamu
   name: పృథ్వి-2
   language: Telugu
@@ -2463,17 +1651,6 @@ rules:
   - - 12
   yatiMode: CharPosition
   prasa: true
-  shortName: పృథ్వి-2
-  alias: ''
-  chandamName: అత్యష్టి
-  charLength: 17
-  matraLength: 24
-  min: 17
-  max: 17
-  chandamNumber: 38750
-  chandamOrder: 169820
-  sequence: '|U|-||U-|U|-||U-|UU-|U'
-  matraSeries: 3-5 , 5-3
 - identifier: praguNa
   name: ప్రగుణ
   language: Telugu
@@ -2489,17 +1666,6 @@ rules:
   yati: []
   yatiMode: CharPosition
   prasa: true
-  shortName: ప్రగుణ
-  alias: ''
-  chandamName: సుప్రతిష్ఠ
-  charLength: 5
-  matraLength: 8
-  min: 5
-  max: 5
-  chandamNumber: 4
-  chandamOrder: 34
-  sequence: '||U-UU'
-  matraSeries: 4
 - identifier: pramaaNi
   name: ప్రమాణి (ప్రమాణికా)
   language: Telugu
@@ -2516,17 +1682,6 @@ rules:
   yati: []
   yatiMode: CharPosition
   prasa: true
-  shortName: ప్రమాణి
-  alias: ప్రమాణికా
-  chandamName: అనుష్టుప్పు
-  charLength: 8
-  matraLength: 12
-  min: 8
-  max: 8
-  chandamNumber: 86
-  chandamOrder: 340
-  sequence: '|U|-U|U-|U'
-  matraSeries: 3 , 6 , 3-4 , 4-3 , 4-5
 - identifier: pramitaaksharamu
   name: ప్రమితాక్షరము
   language: Telugu
@@ -2545,17 +1700,6 @@ rules:
   - - 9
   yatiMode: CharPosition
   prasa: true
-  shortName: ప్రమితాక్షరము
-  alias: ''
-  chandamName: జగతి
-  charLength: 12
-  matraLength: 16
-  min: 12
-  max: 12
-  chandamNumber: 1772
-  chandamOrder: 5866
-  sequence: '||U-|U|-||U-||U'
-  matraSeries: 4 , 5 , 5-3 , 4-5 , 5-4
 - identifier: praharaNakalita
   name: ప్రహరణకలిత (ప్రహరణకలికా)
   language: Telugu
@@ -2576,17 +1720,6 @@ rules:
   yatiMode: CharPosition
   prasa: true
   prasaYati: true
-  shortName: ప్రహరణకలిత
-  alias: ప్రహరణకలికా
-  chandamName: శక్వరి
-  charLength: 14
-  matraLength: 16
-  min: 14
-  max: 14
-  chandamNumber: 8128
-  chandamOrder: 24510
-  sequence: '|||-|||-U||-|||-|U'
-  matraSeries: 3 , 4 , 5 , 6 , 3-5 , 5-3 , 4-5 , 5-4
 - identifier: praharshiNi
   name: ప్రహర్షిణి (మయూరపిచ్ఛ)
   language: Telugu
@@ -2606,17 +1739,6 @@ rules:
   - - 8
   yatiMode: CharPosition
   prasa: true
-  shortName: ప్రహర్షిణి
-  alias: మయూరపిచ్ఛ
-  chandamName: అతిజగతి
-  charLength: 13
-  matraLength: 20
-  min: 13
-  max: 13
-  chandamNumber: 1401
-  chandamOrder: 9591
-  sequence: UUU-|||-|U|-U|U-U
-  matraSeries: 4 , 6 , 4-5
 - identifier: priyaMvada
   name: ప్రియంవద (మత్తకోకిల)
   language: Telugu
@@ -2635,17 +1757,6 @@ rules:
   - - 8
   yatiMode: CharPosition
   prasa: true
-  shortName: ప్రియంవద
-  alias: మత్తకోకిల
-  chandamName: జగతి
-  charLength: 12
-  matraLength: 16
-  min: 12
-  max: 12
-  chandamNumber: 1400
-  chandamOrder: 5494
-  sequence: '|||-U||-|U|-U|U'
-  matraSeries: 5 , 3-4 , 3-5 , 5-3
 - identifier: priyakaaMta
   name: ప్రియకాంత(కాంత)
   language: Telugu
@@ -2666,17 +1777,6 @@ rules:
   - - 11
   yatiMode: CharPosition
   prasa: true
-  shortName: ప్రియకాంత
-  alias: కాంత
-  chandamName: అష్టి
-  charLength: 16
-  matraLength: 22
-  min: 16
-  max: 16
-  chandamNumber: 13264
-  chandamOrder: 78798
-  sequence: '|||-|UU-|||-|UU-||U-U'
-  matraSeries: 4 , 6
 - identifier: phalasadanamu
   name: ఫలసదనము (శిశుభరణమ్)
   language: Telugu
@@ -2697,17 +1797,6 @@ rules:
   - - 10
   yatiMode: CharPosition
   prasa: true
-  shortName: ఫలసదనము
-  alias: శిశుభరణమ్
-  chandamName: అష్టి
-  charLength: 16
-  matraLength: 18
-  min: 16
-  max: 16
-  chandamNumber: 16384
-  chandamOrder: 81918
-  sequence: '|||-|||-|||-|||-||U-U'
-  matraSeries: 4 , 6 , 3-4 , 4-3 , 3-5 , 5-3 , 4-5 , 5-4
 - identifier: baMdhuramu
   name: బంధురము
   language: Telugu
@@ -2733,17 +1822,6 @@ rules:
   - - 16
   yatiMode: CharPosition
   prasa: true
-  shortName: బంధురము
-  alias: ''
-  chandamName: ఉద్ధురమాల
-  charLength: 31
-  matraLength: 38
-  min: 31
-  max: 31
-  chandamNumber: 919453696
-  chandamOrder: 3066937342
-  sequence: '|||-|||-|||-|||-||U-||U-||U-U||-U||-U||-U'
-  matraSeries: 4 , 6 , 3-4 , 4-5
 - identifier: balabhinmaNi
   name: బలభిన్మణి (అర్ధకుసుమితా)
   language: Telugu
@@ -2763,17 +1841,6 @@ rules:
   - - 7
   yatiMode: CharPosition
   prasa: true
-  shortName: బలభిన్మణి
-  alias: అర్ధకుసుమితా
-  chandamName: అతిజగతి
-  charLength: 13
-  matraLength: 16
-  min: 13
-  max: 13
-  chandamNumber: 4063
-  chandamOrder: 12253
-  sequence: U||-||U-|||-|||-U
-  matraSeries: 3 , 4 , 5 , 6 , 3-5 , 5-3 , 4-5 , 5-4
 - identifier: bhadrakamu
   name: భద్రకము-3
   language: Telugu
@@ -2796,17 +1863,6 @@ rules:
   - - 12
   yatiMode: CharPosition
   prasa: true
-  shortName: భద్రకము-3
-  alias: ''
-  chandamName: ఆకృతి
-  charLength: 22
-  matraLength: 30
-  min: 22
-  max: 22
-  chandamNumber: 1930711
-  chandamOrder: 6125013
-  sequence: U||-U|U-|||-U|U-|||-U|U-|||-U
-  matraSeries: ''
 - identifier: bhadrakamu1
   name: భద్రకము-1
   language: Telugu
@@ -2823,17 +1879,6 @@ rules:
   yati: []
   yatiMode: CharPosition
   prasa: true
-  shortName: భద్రకము-1
-  alias: ''
-  chandamName: బృహతి
-  charLength: 9
-  matraLength: 13
-  min: 9
-  max: 9
-  chandamNumber: 187
-  chandamOrder: 697
-  sequence: U|U-|||-U|U
-  matraSeries: 5 , 6 , 3-4 , 3-5 , 5-3
 - identifier: bhadriNeevRttamu
   name: భద్రిణీ
   language: Telugu
@@ -2856,17 +1901,6 @@ rules:
   - - 12
   yatiMode: CharPosition
   prasa: true
-  shortName: భద్రిణీ
-  alias: ''
-  chandamName: ఆకృతి
-  charLength: 22
-  matraLength: 30
-  min: 22
-  max: 22
-  chandamNumber: 1930711
-  chandamOrder: 6125013
-  sequence: U||-U|U-|||-U|U-|||-U|U-|||-U
-  matraSeries: ''
 - identifier: bhaaskaravilasitamu
   name: భాస్కరవిలసితము
   language: Telugu
@@ -2890,17 +1924,6 @@ rules:
   - - 13
   yatiMode: CharPosition
   prasa: true
-  shortName: భాస్కరవిలసితము
-  alias: ''
-  chandamName: అభికృతి
-  charLength: 25
-  matraLength: 32
-  min: 25
-  max: 25
-  chandamNumber: 8381311
-  chandamOrder: 41935741
-  sequence: U||-|||-|U|-|UU-U||-|||-|||-||U-U
-  matraSeries: 4 , 6 , 4-3 , 3-5
 - identifier: bhujaMgavijRMbhitamu
   name: భుజంగవిజృంభితము
   language: Telugu
@@ -2925,17 +1948,6 @@ rules:
     - 19
   yatiMode: CharPosition
   prasa: true
-  shortName: భుజంగవిజృంభితము
-  alias: ''
-  chandamName: ఉత్కృతి
-  charLength: 26
-  matraLength: 38
-  min: 26
-  max: 26
-  chandamNumber: 23854849
-  chandamOrder: 90963711
-  sequence: UUU-UUU-UU|-|||-|||-|||-U|U-||U-|U
-  matraSeries: 4
 - identifier: bhujagaSiSirutamu
   name: భుజంగశిశురుతము
   language: Telugu
@@ -2952,17 +1964,6 @@ rules:
   yati: []
   yatiMode: CharPosition
   prasa: true
-  shortName: భుజంగశిశురుతము
-  alias: ''
-  chandamName: బృహతి
-  charLength: 9
-  matraLength: 11
-  min: 9
-  max: 9
-  chandamNumber: 128
-  chandamOrder: 638
-  sequence: '|||-|||-|UU'
-  matraSeries: 3 , 5 , 6 , 3-4 , 4-3 , 4-5 , 5-4
 - identifier: bhootilakamu
   name: భూతిలకము
   language: Telugu
@@ -2984,17 +1985,6 @@ rules:
   - - 12
   yatiMode: CharPosition
   prasa: true
-  shortName: భూతిలకము
-  alias: ''
-  chandamName: అతిధృతి
-  charLength: 19
-  matraLength: 27
-  min: 19
-  max: 19
-  chandamNumber: 186039
-  chandamOrder: 710325
-  sequence: U||-U||-U|U-||U-|U|-|U|-U
-  matraSeries: 3-4 , 4-3
 - identifier: bhoonutamu
   name: భూనుతము-1 (లతా, వనలతా, వలనా)
   language: Telugu
@@ -3014,17 +2004,6 @@ rules:
   - - 10
   yatiMode: CharPosition
   prasa: true
-  shortName: భూనుతము-1
-  alias: లతా, వనలతా, వలనా
-  chandamName: శక్వరి
-  charLength: 14
-  matraLength: 20
-  min: 14
-  max: 14
-  chandamNumber: 3515
-  chandamOrder: 19897
-  sequence: U|U-|||-U||-U||-UU
-  matraSeries: 5 , 6 , 3-5
 - identifier: maMgaLamahaaSree
   name: మంగళమహాశ్రీ
   language: Telugu
@@ -3049,17 +2028,6 @@ rules:
     - 17
   yatiMode: CharPosition
   prasa: true
-  shortName: మంగళమహాశ్రీ
-  alias: ''
-  chandamName: ఉత్కృతి
-  charLength: 26
-  matraLength: 34
-  min: 26
-  max: 26
-  chandamNumber: 15658735
-  chandamOrder: 82767597
-  sequence: U||-|U|-||U-|||-U||-|U|-||U-|||-UU
-  matraSeries: 5 , 5-4
 - identifier: maMjubhaashiNi
   name: మంజుభాషిణి
   language: Telugu
@@ -3079,17 +2047,6 @@ rules:
   - - 9
   yatiMode: CharPosition
   prasa: true
-  shortName: మంజుభాషిణి
-  alias: ''
-  chandamName: అతిజగతి
-  charLength: 13
-  matraLength: 17
-  min: 13
-  max: 13
-  chandamNumber: 3052
-  chandamOrder: 11242
-  sequence: '||U-|U|-|||-|U|-U'
-  matraSeries: 4 , 5 , 4-3 , 5-4
 - identifier: maMdaakraaMta
   name: మందాక్రాంతము (శ్రీధరా)
   language: Telugu
@@ -3110,17 +2067,6 @@ rules:
   - - 11
   yatiMode: CharPosition
   prasa: true
-  shortName: మందాక్రాంతము
-  alias: శ్రీధరా
-  chandamName: అత్యష్టి
-  charLength: 17
-  matraLength: 27
-  min: 17
-  max: 17
-  chandamNumber: 18929
-  chandamOrder: 149999
-  sequence: UUU-U||-|||-UU|-UU|-UU
-  matraSeries: 4-5
 - identifier: maNikamalavilasitamu
   name: మణికమలవిలసితము
   language: Telugu
@@ -3139,17 +2085,6 @@ rules:
   yati: []
   yatiMode: CharPosition
   prasa: true
-  shortName: మణికమలవిలసితము
-  alias: ''
-  chandamName: శక్వరి
-  charLength: 14
-  matraLength: 20
-  min: 14
-  max: 14
-  chandamNumber: 1756
-  chandamOrder: 18138
-  sequence: '||U-||U-||U-||U-UU'
-  matraSeries: 4 , 6 , 5-3 , 4-5 , 5-4
 - identifier: maNigaNanikaramu
   name: మణిగణనికరము (శశికళ)
   language: Telugu
@@ -3169,17 +2104,6 @@ rules:
   - - 9
   yatiMode: CharPosition
   prasa: true
-  shortName: మణిగణనికరము
-  alias: శశికళ
-  chandamName: అతిశక్వరి
-  charLength: 15
-  matraLength: 16
-  min: 15
-  max: 15
-  chandamNumber: 16384
-  chandamOrder: 49150
-  sequence: '|||-|||-|||-|||-||U'
-  matraSeries: 3 , 4 , 5 , 6 , 3-4 , 4-3 , 3-5 , 5-3 , 4-5 , 5-4
 - identifier: maNibhooshaNamu
   name: మణిభూషణము (మణిభూషణశ్రీ, నూతనమ్, రమణీయక, సుందర, ఉత్సర)
   language: Telugu
@@ -3199,17 +2123,6 @@ rules:
   - - 10
   yatiMode: CharPosition
   prasa: true
-  shortName: మణిభూషణము
-  alias: మణిభూషణశ్రీ, నూతనమ్, రమణీయక, సుందర, ఉత్సర
-  chandamName: అతిశక్వరి
-  charLength: 15
-  matraLength: 21
-  min: 15
-  max: 15
-  chandamNumber: 11707
-  chandamOrder: 44473
-  sequence: U|U-|||-U||-U||-U|U
-  matraSeries: 5 , 6 , 3-5
 - identifier: maNimaala
   name: మణిమాల-2
   language: Telugu
@@ -3231,17 +2144,6 @@ rules:
   - - 11
   yatiMode: CharPosition
   prasa: true
-  shortName: మణిమాల-2
-  alias: ''
-  chandamName: ప్రకృతి
-  charLength: 21
-  matraLength: 28
-  min: 21
-  max: 21
-  chandamNumber: 965356
-  chandamOrder: 3062506
-  sequence: '||U-|U|-||U-|U|-||U-|U|-||U'
-  matraSeries: 4 , 5 , 5-3
 - identifier: maNiraMgamu
   name: మణిరంగము
   language: Telugu
@@ -3260,17 +2162,6 @@ rules:
   - - 6
   yatiMode: CharPosition
   prasa: true
-  shortName: మణిరంగము
-  alias: ''
-  chandamName: పంక్తి
-  charLength: 10
-  matraLength: 15
-  min: 10
-  max: 10
-  chandamNumber: 219
-  chandamOrder: 1241
-  sequence: U|U-||U-||U-U
-  matraSeries: 5 , 3-4 , 5-4
 - identifier: mattamayooramu
   name: మత్తమయూరము (మాయా)
   language: Telugu
@@ -3290,17 +2181,6 @@ rules:
   - - 8
   yatiMode: CharPosition
   prasa: true
-  shortName: మత్తమయూరము
-  alias: మాయా
-  chandamName: అతిజగతి
-  charLength: 13
-  matraLength: 22
-  min: 13
-  max: 13
-  chandamNumber: 1633
-  chandamOrder: 9823
-  sequence: UUU-UU|-|UU-||U-U
-  matraSeries: 4 , 6
 - identifier: mattahaMsini
   name: మత్తహంసిని (మత్తహాసిని)
   language: Telugu
@@ -3320,17 +2200,6 @@ rules:
   - - 7
   yatiMode: CharPosition
   prasa: true
-  shortName: మత్తహంసిని
-  alias: మత్తహాసిని
-  chandamName: అతిజగతి
-  charLength: 13
-  matraLength: 19
-  min: 13
-  max: 13
-  chandamNumber: 2790
-  chandamOrder: 10980
-  sequence: '|U|-UU|-||U-|U|-U'
-  matraSeries: 3-5 , 4-5
 - identifier: madanavilasitamu
   name: మదనవిలసిత (ద్రుతగతి, చపలా, మధుమతి, లటహ, హరివిలసిత)
   language: Telugu
@@ -3347,17 +2216,6 @@ rules:
   yati: []
   yatiMode: CharPosition
   prasa: true
-  shortName: మదనవిలసిత
-  alias: ద్రుతగతి, చపలా, మధుమతి, లటహ, హరివిలసిత
-  chandamName: ఉష్ణిక్కు
-  charLength: 7
-  matraLength: 8
-  min: 7
-  max: 7
-  chandamNumber: 64
-  chandamOrder: 190
-  sequence: '|||-|||-U'
-  matraSeries: 3 , 4 , 5 , 6
 - identifier: madanamu
   name: మదనము
   language: Telugu
@@ -3377,17 +2235,6 @@ rules:
   - - 9
   yatiMode: CharPosition
   prasa: true
-  shortName: మదనము
-  alias: ''
-  chandamName: శక్వరి
-  charLength: 14
-  matraLength: 21
-  min: 14
-  max: 14
-  chandamNumber: 2933
-  chandamOrder: 19315
-  sequence: UU|-U||-|U|-|U|-UU
-  matraSeries: 4 , 5-3
 - identifier: madanaarta
   name: మదనార్త (శారదచన్ద్రః)
   language: Telugu
@@ -3406,17 +2253,6 @@ rules:
   yati: []
   yatiMode: CharPosition
   prasa: true
-  shortName: మదనార్త
-  alias: శారదచన్ద్రః
-  chandamName: శక్వరి
-  charLength: 14
-  matraLength: 22
-  min: 14
-  max: 14
-  chandamNumber: 3277
-  chandamOrder: 19659
-  sequence: UU|-|UU-||U-U||-UU
-  matraSeries: 4 , 6
 - identifier: manOj_namu
   name: మనోజ్ఞము
   language: Telugu
@@ -3436,17 +2272,6 @@ rules:
   - - 10
   yatiMode: CharPosition
   prasa: true
-  shortName: మనోజ్ఞము
-  alias: ''
-  chandamName: అతిశక్వరి
-  charLength: 15
-  matraLength: 20
-  min: 15
-  max: 15
-  chandamNumber: 11632
-  chandamOrder: 44398
-  sequence: '|||-|U|-|U|-U||-U|U'
-  matraSeries: 3-4 , 4-3
 - identifier: mayoorasaari
   name: మయూరసారి(మయూరభాషిణి)
   language: Telugu
@@ -3465,17 +2290,6 @@ rules:
   - - 7
   yatiMode: CharPosition
   prasa: true
-  shortName: మయూరసారి
-  alias: మయూరభాషిణి
-  chandamName: పంక్తి
-  charLength: 10
-  matraLength: 16
-  min: 10
-  max: 10
-  chandamNumber: 171
-  chandamOrder: 1193
-  sequence: U|U-|U|-U|U-U
-  matraSeries: 3 , 6 , 3-5 , 5-4
 - identifier: malayajamu
   name: మలయజము
   language: Telugu
@@ -3501,17 +2315,6 @@ rules:
     - 22
   yatiMode: CharPosition
   prasa: true
-  shortName: మలయజము
-  alias: ''
-  chandamName: ఉత్కృతి
-  charLength: 26
-  matraLength: 30
-  min: 26
-  max: 26
-  chandamNumber: 33290224
-  chandamOrder: 100399086
-  sequence: '|||-|U|-|||-||U-|||-|||-U||-|||-|U'
-  matraSeries: 4 , 6 , 3-5
 - identifier: maedini
   name: మేదిని (వాణి, వాణినీ)
   language: Telugu
@@ -3532,17 +2335,6 @@ rules:
   - - 11
   yatiMode: CharPosition
   prasa: true
-  shortName: మేదిని
-  alias: వాణి, వాణినీ
-  chandamName: అష్టి
-  charLength: 16
-  matraLength: 22
-  min: 16
-  max: 16
-  chandamNumber: 11184
-  chandamOrder: 76718
-  sequence: '|||-|U|-U||-|U|-U|U-U'
-  matraSeries: 3 , 6 , 3-4 , 4-3
 - identifier: vaaraaMgi
   name: వారాంగి
   language: Telugu
@@ -3573,18 +2365,6 @@ rules:
   - - 8
   yatiMode: CharPosition
   prasa: true
-  shortName: వారాంగి
-  alias: ''
-  chandamName: ''
-  charLength: -1
-  matraLength: -1
-  min: 11
-  max: 11
-  chandamNumber: -1
-  chandamOrder: -1
-  sequence: ''
-  matraSeries: ''
-  rowWiseRules: true
 - identifier: mOhapralaapamu
   name: మోహ ప్రలాపము
   language: Telugu
@@ -3604,17 +2384,6 @@ rules:
   - - 5
   yatiMode: CharPosition
   prasa: true
-  shortName: మోహ ప్రలాపము
-  alias: ''
-  chandamName: అతిజగతి
-  charLength: 13
-  matraLength: 20
-  min: 13
-  max: 13
-  chandamNumber: 1335
-  chandamOrder: 9525
-  sequence: U||-U||-UU|-U|U-U
-  matraSeries: 4 , 6
 - identifier: rati
   name: రతి
   language: Telugu
@@ -3634,17 +2403,6 @@ rules:
   - - 5
   yatiMode: CharPosition
   prasa: true
-  shortName: రతి
-  alias: ''
-  chandamName: అతిజగతి
-  charLength: 13
-  matraLength: 17
-  min: 13
-  max: 13
-  chandamNumber: 2036
-  chandamOrder: 10226
-  sequence: '||U-U||-|||-||U-U'
-  matraSeries: 4 , 6 , 4-5
 - identifier: ratipriyavRttamu
   name: రతిప్రియ
   language: Telugu
@@ -3682,18 +2440,6 @@ rules:
   - - 9
   yatiMode: CharPosition
   prasa: true
-  shortName: రతిప్రియ
-  alias: ''
-  chandamName: ''
-  charLength: -1
-  matraLength: -1
-  min: 13
-  max: 13
-  chandamNumber: -1
-  chandamOrder: -1
-  sequence: ''
-  matraSeries: ''
-  rowWiseRules: true
 - identifier: rathOddhatamu
   name: రథోద్ధతము (పరాంతికము)
   language: Telugu
@@ -3712,17 +2458,6 @@ rules:
   - - 7
   yatiMode: CharPosition
   prasa: true
-  shortName: రథోద్ధతము
-  alias: పరాంతికము
-  chandamName: త్రిష్టుప్పు
-  charLength: 11
-  matraLength: 16
-  min: 11
-  max: 11
-  chandamNumber: 699
-  chandamOrder: 2745
-  sequence: U|U-|||-U|U-|U
-  matraSeries: 5 , 3-4 , 3-5 , 5-3
 - identifier: ramaNakamu
   name: రమణకము
   language: Telugu
@@ -3749,17 +2484,6 @@ rules:
     - 25
   yatiMode: CharPosition
   prasa: true
-  shortName: రమణకము
-  alias: ''
-  chandamName: ఉద్ధురమాల
-  charLength: 29
-  matraLength: 30
-  min: 29
-  max: 29
-  chandamNumber: 268435456
-  chandamOrder: 805306366
-  sequence: '|||-|||-|||-|||-|||-|||-|||-|||-|||-|U'
-  matraSeries: 3 , 4 , 5 , 6 , 3-4 , 4-3 , 3-5 , 5-3 , 4-5 , 5-4
 - identifier: raajahaMsa
   name: రాజహంస
   language: Telugu
@@ -3783,17 +2507,6 @@ rules:
   - - 13
   yatiMode: CharPosition
   prasa: true
-  shortName: రాజహంస
-  alias: ''
-  chandamName: అభికృతి
-  charLength: 25
-  matraLength: 42
-  min: 25
-  max: 25
-  chandamNumber: 9586981
-  chandamOrder: 43141411
-  sequence: UU|-UU|-UU|-UU|-UU|-UU|-UU|-UU|-U
-  matraSeries: 5
 - identifier: rugmavati
   name: రుగ్మవతి
   language: Telugu
@@ -3812,17 +2525,6 @@ rules:
   - - 6
   yatiMode: CharPosition
   prasa: true
-  shortName: రుగ్మవతి
-  alias: ''
-  chandamName: పంక్తి
-  charLength: 10
-  matraLength: 16
-  min: 10
-  max: 10
-  chandamNumber: 199
-  chandamOrder: 1221
-  sequence: U||-UUU-||U-U
-  matraSeries: 4 , 6 , 3-5
 - identifier: ruchiramu
   name: రుచిరము (కలావతీ, అతిరుచిరా, సదాగతి)
   language: Telugu
@@ -3842,17 +2544,6 @@ rules:
   - - 9
   yatiMode: CharPosition
   prasa: true
-  shortName: రుచిరము
-  alias: కలావతీ, అతిరుచిరా, సదాగతి
-  chandamName: అతిజగతి
-  charLength: 13
-  matraLength: 18
-  min: 13
-  max: 13
-  chandamNumber: 2806
-  chandamOrder: 10996
-  sequence: '|U|-U||-||U-|U|-U'
-  matraSeries: 3 , 4 , 6 , 4-5
 - identifier: lata
   name: లత (మదనజవనికా)
   language: Telugu
@@ -3872,17 +2563,6 @@ rules:
   - - 8
   yatiMode: CharPosition
   prasa: true
-  shortName: లత
-  alias: మదనజవనికా
-  chandamName: అతిజగతి
-  charLength: 13
-  matraLength: 16
-  min: 13
-  max: 13
-  chandamNumber: 4048
-  chandamOrder: 12238
-  sequence: '|||-|UU-|||-|||-U'
-  matraSeries: 3 , 4 , 6 , 3-5 , 4-5
 - identifier: layahaari
   name: లయహారి
   language: Telugu
@@ -3914,17 +2594,6 @@ rules:
   prasa: true
   prasaYati: true
   onlyPrasaYati: true
-  shortName: లయహారి
-  alias: ''
-  chandamName: ఉద్ధురమాల
-  charLength: 37
-  matraLength: 39
-  min: 37
-  max: 37
-  chandamNumber: -2147483647
-  chandamOrder: 135291469823
-  sequence: '|||-|||-|||-|||-|||-|||-|||-|||-|||-|||-|||-||U-U'
-  matraSeries: 5 , 3-4 , 4-3 , 3-5 , 5-3
 - identifier: laaTeeviTamu
   name: లాటీవిటము
   language: Telugu
@@ -3946,17 +2615,6 @@ rules:
   - - 13
   yatiMode: CharPosition
   prasa: true
-  shortName: లాటీవిటము
-  alias: ''
-  chandamName: ప్రకృతి
-  charLength: 21
-  matraLength: 32
-  min: 21
-  max: 21
-  chandamNumber: 394972
-  chandamOrder: 2492122
-  sequence: '||U-||U-||U-||U-UUU-UU|-|UU'
-  matraSeries: 4 , 6 , 4-5
 - identifier: vaMSasthamu
   name: వంశస్థము
   language: Telugu
@@ -3975,17 +2633,6 @@ rules:
   - - 8
   yatiMode: CharPosition
   prasa: true
-  shortName: వంశస్థము
-  alias: ''
-  chandamName: జగతి
-  charLength: 12
-  matraLength: 18
-  min: 12
-  max: 12
-  chandamNumber: 1382
-  chandamOrder: 5476
-  sequence: '|U|-UU|-|U|-U|U'
-  matraSeries: 3 , 4 , 6 , 4-5
 - identifier: vanamaMjari
   name: వనమంజరి
   language: Telugu
@@ -4007,17 +2654,6 @@ rules:
   - - 14
   yatiMode: CharPosition
   prasa: true
-  shortName: వనమంజరి
-  alias: ''
-  chandamName: ప్రకృతి
-  charLength: 21
-  matraLength: 28
-  min: 21
-  max: 21
-  chandamNumber: 744304
-  chandamOrder: 2841454
-  sequence: '|||-|U|-|U|-|U|-|U|-U||-U|U'
-  matraSeries: 4-3
 - identifier: vasaMtamaMjari
   name: వసంతమంజరి
   language: Telugu
@@ -4039,17 +2675,6 @@ rules:
   - - 13
   yatiMode: CharPosition
   prasa: true
-  shortName: వసంతమంజరి
-  alias: ''
-  chandamName: కృతి
-  charLength: 20
-  matraLength: 26
-  min: 20
-  max: 20
-  chandamNumber: 372664
-  chandamOrder: 1421238
-  sequence: '|||-U||-U||-|||-U|U-||U-|U'
-  matraSeries: 3-4
 - identifier: vaatOrmi
   name: వాతోర్మి
   language: Telugu
@@ -4068,17 +2693,6 @@ rules:
   - - 7
   yatiMode: CharPosition
   prasa: true
-  shortName: వాతోర్మి
-  alias: ''
-  chandamName: త్రిష్టుప్పు
-  charLength: 11
-  matraLength: 18
-  min: 11
-  max: 11
-  chandamNumber: 817
-  chandamOrder: 2863
-  sequence: UUU-U||-UU|-|U
-  matraSeries: 4 , 6
 - identifier: vaasaMti
   name: వాసంతి
   language: Telugu
@@ -4097,17 +2711,6 @@ rules:
   yati: []
   yatiMode: CharPosition
   prasa: true
-  shortName: వాసంతి
-  alias: ''
-  chandamName: శక్వరి
-  charLength: 14
-  matraLength: 24
-  min: 14
-  max: 14
-  chandamNumber: 481
-  chandamOrder: 16863
-  sequence: UUU-UU|-|||-UUU-UU
-  matraSeries: 4 , 6
 - identifier: vichitramu
   name: విచిత్రము (సోమరాజీ)
   language: Telugu
@@ -4123,17 +2726,6 @@ rules:
   yati: []
   yatiMode: CharPosition
   prasa: true
-  shortName: విచిత్రము
-  alias: సోమరాజీ
-  chandamName: గాయత్రి
-  charLength: 6
-  matraLength: 10
-  min: 6
-  max: 6
-  chandamNumber: 10
-  chandamOrder: 72
-  sequence: '|UU-|UU'
-  matraSeries: 3 , 5 , 6 , 3-5 , 5-3
 - identifier: vidyunmaala
   name: విద్యున్మాలా (విద్యుల్లేఖా)
   language: Telugu
@@ -4151,17 +2743,6 @@ rules:
   - - 5
   yatiMode: CharPosition
   prasa: true
-  shortName: విద్యున్మాలా
-  alias: విద్యుల్లేఖా
-  chandamName: అనుష్టుప్పు
-  charLength: 8
-  matraLength: 16
-  min: 8
-  max: 8
-  chandamNumber: 1
-  chandamOrder: 255
-  sequence: UUU-UUU-UU
-  matraSeries: 4 , 6
 - identifier: vidrumalata
   name: విద్రుమలత
   language: Telugu
@@ -4181,17 +2762,6 @@ rules:
   - - 8
   yatiMode: CharPosition
   prasa: true
-  shortName: విద్రుమలత
-  alias: ''
-  chandamName: శక్వరి
-  charLength: 14
-  matraLength: 16
-  min: 14
-  max: 14
-  chandamNumber: 8176
-  chandamOrder: 24558
-  sequence: '|||-|U|-|||-|||-|U'
-  matraSeries: 3 , 4 , 6 , 3-4 , 4-3 , 3-5 , 4-5
 - identifier: vibhootivRttamu
   name: విభూతి (చామరమ్)
   language: Telugu
@@ -4209,17 +2779,6 @@ rules:
   - - 7
   yatiMode: CharPosition
   prasa: true
-  shortName: విభూతి
-  alias: చామరమ్
-  chandamName: ఉష్ణిక్కు
-  charLength: 7
-  matraLength: 11
-  min: 7
-  max: 7
-  chandamNumber: 43
-  chandamOrder: 169
-  sequence: U|U-|U|-U
-  matraSeries: 3 , 5 , 6 , 3-5 , 5-3 , 5-4
 - identifier: viSvadaevi
   name: విశ్వదేవి (వైశ్వదేవీ)
   language: Telugu
@@ -4238,17 +2797,6 @@ rules:
   - - 8
   yatiMode: CharPosition
   prasa: true
-  shortName: విశ్వదేవి
-  alias: వైశ్వదేవీ
-  chandamName: జగతి
-  charLength: 12
-  matraLength: 22
-  min: 12
-  max: 12
-  chandamNumber: 577
-  chandamOrder: 4671
-  sequence: UUU-UUU-|UU-|UU
-  matraSeries: 6
 - identifier: SarabhakreeDaa
   name: శరభక్రీడా
   language: Telugu
@@ -4289,18 +2837,6 @@ rules:
   - - 12
   yatiMode: CharPosition
   prasa: true
-  shortName: శరభక్రీడా
-  alias: ''
-  chandamName: ''
-  charLength: -1
-  matraLength: -1
-  min: 15
-  max: 16
-  chandamNumber: -1
-  chandamOrder: -1
-  sequence: ''
-  matraSeries: ''
-  rowWiseRules: true
 - identifier: Saalini
   name: శాలిని
   language: Telugu
@@ -4319,17 +2855,6 @@ rules:
   - - 7
   yatiMode: CharPosition
   prasa: true
-  shortName: శాలిని
-  alias: ''
-  chandamName: త్రిష్టుప్పు
-  charLength: 11
-  matraLength: 20
-  min: 11
-  max: 11
-  chandamNumber: 289
-  chandamOrder: 2335
-  sequence: UUU-UU|-UU|-UU
-  matraSeries: ''
 - identifier: SikhariNi
   name: శిఖరిణి
   language: Telugu
@@ -4350,17 +2875,6 @@ rules:
   - - 13
   yatiMode: CharPosition
   prasa: true
-  shortName: శిఖరిణి
-  alias: ''
-  chandamName: అత్యష్టి
-  charLength: 17
-  matraLength: 25
-  min: 17
-  max: 17
-  chandamNumber: 59330
-  chandamOrder: 190400
-  sequence: '|UU-UUU-|||-||U-U||-|U'
-  matraSeries: 5-4
 - identifier: SuddhaviraaTi
   name: శుద్ధవిరాటి (విరాట్)
   language: Telugu
@@ -4379,17 +2893,6 @@ rules:
   - - 6
   yatiMode: CharPosition
   prasa: true
-  shortName: శుద్ధవిరాటి
-  alias: విరాట్
-  chandamName: పంక్తి
-  charLength: 10
-  matraLength: 16
-  min: 10
-  max: 10
-  chandamNumber: 345
-  chandamOrder: 1367
-  sequence: UUU-||U-|U|-U
-  matraSeries: 4-3
 - identifier: Syaeni
   name: శ్యేని (సేని)
   language: Telugu
@@ -4408,17 +2911,6 @@ rules:
   - - 7
   yatiMode: CharPosition
   prasa: true
-  shortName: శ్యేని
-  alias: సేని
-  chandamName: త్రిష్టుప్పు
-  charLength: 11
-  matraLength: 17
-  min: 11
-  max: 11
-  chandamNumber: 683
-  chandamOrder: 2729
-  sequence: U|U-|U|-U|U-|U
-  matraSeries: 3 , 6 , 3-5 , 5-4
 - identifier: Sree
   name: శ్రీ (శ్రీః)
   language: Telugu
@@ -4432,17 +2924,6 @@ rules:
   - - గ
   yati: []
   yatiMode: CharPosition
-  shortName: శ్రీ
-  alias: శ్రీః
-  chandamName: ఉక్త
-  charLength: 1
-  matraLength: 2
-  min: 1
-  max: 1
-  chandamNumber: 1
-  chandamOrder: 1
-  sequence: U
-  matraSeries: ''
 - identifier: stree
   name: స్త్రీ
   language: Telugu
@@ -4457,17 +2938,6 @@ rules:
   yati: []
   yatiMode: CharPosition
   prasa: true
-  shortName: స్త్రీ
-  alias: ''
-  chandamName: అత్యుక్త
-  charLength: 2
-  matraLength: 4
-  min: 2
-  max: 2
-  chandamNumber: 1
-  chandamOrder: 3
-  sequence: UU
-  matraSeries: ''
 - identifier: SreeramaNamu
   name: శ్రీరమణము
   language: Telugu
@@ -4501,18 +2971,6 @@ rules:
   - - 7
   yatiMode: CharPosition
   prasa: true
-  shortName: శ్రీరమణము
-  alias: ''
-  chandamName: ''
-  charLength: -1
-  matraLength: -1
-  min: 10
-  max: 11
-  chandamNumber: -1
-  chandamOrder: -1
-  sequence: ''
-  matraSeries: ''
-  rowWiseRules: true
 - identifier: samaani
   name: సమాని (సమానిక, శ్రద్ధరా)
   language: Telugu
@@ -4529,17 +2987,6 @@ rules:
   yati: []
   yatiMode: CharPosition
   prasa: true
-  shortName: సమాని
-  alias: సమానిక, శ్రద్ధరా
-  chandamName: అనుష్టుప్పు
-  charLength: 8
-  matraLength: 12
-  min: 8
-  max: 8
-  chandamNumber: 107
-  chandamOrder: 361
-  sequence: U|U-|U|-|U
-  matraSeries: 3 , 5 , 6 , 3-5 , 5-3 , 5-4
 - identifier: sarasaaMkavRttamu
   name: సరసాంక
   language: Telugu
@@ -4559,17 +3006,6 @@ rules:
   - - 10
   yatiMode: CharPosition
   prasa: true
-  shortName: సరసాంక
-  alias: ''
-  chandamName: అతిశక్వరి
-  charLength: 15
-  matraLength: 21
-  min: 15
-  max: 15
-  chandamNumber: 5868
-  chandamOrder: 38634
-  sequence: '||U-|U|-||U-||U-|UU'
-  matraSeries: 4 , 5-3
 - identifier: sarasijamu
   name: సరసిజము
   language: Telugu
@@ -4593,17 +3029,6 @@ rules:
     - 18
   yatiMode: CharPosition
   prasa: true
-  shortName: సరసిజము
-  alias: ''
-  chandamName: సంకృతి
-  charLength: 24
-  matraLength: 32
-  min: 24
-  max: 24
-  chandamNumber: 8388193
-  chandamOrder: 25165407
-  sequence: UUU-UU|-|UU-|||-|||-|||-|||-||U
-  matraSeries: 4 , 6
 - identifier: saadhveevRttamu
   name: సాధ్వీ
   language: Telugu
@@ -4629,17 +3054,6 @@ rules:
     - 22
   yatiMode: CharPosition
   prasa: true
-  shortName: సాధ్వీ
-  alias: ''
-  chandamName: అభికృతి
-  charLength: 25
-  matraLength: 30
-  min: 25
-  max: 25
-  chandamNumber: 14663551
-  chandamOrder: 48217981
-  sequence: U||-|||-|U|-|||-||U-|||-|||-U||-U
-  matraSeries: 4 , 6 , 3-5 , 5-3
 - identifier: siMharaekha
   name: సింహరేఖ
   language: Telugu
@@ -4656,17 +3070,6 @@ rules:
   yati: []
   yatiMode: CharPosition
   prasa: true
-  shortName: సింహరేఖ
-  alias: ''
-  chandamName: అనుష్టుప్పు
-  charLength: 8
-  matraLength: 13
-  min: 8
-  max: 8
-  chandamNumber: 43
-  chandamOrder: 297
-  sequence: U|U-|U|-UU
-  matraSeries: 3 , 6 , 3-5 , 5-3 , 5-4
 - identifier: sukaaMti
   name: సుకాంతి (జయా, నగానితా, నగణికా, లాసినీ, విలాసినీ, కలా)
   language: Telugu
@@ -4682,17 +3085,6 @@ rules:
   yati: []
   yatiMode: CharPosition
   prasa: true
-  shortName: సుకాంతి
-  alias: జయా, నగానితా, నగణికా, లాసినీ, విలాసినీ, కలా
-  chandamName: ప్రతిష్ఠ
-  charLength: 4
-  matraLength: 6
-  min: 4
-  max: 4
-  chandamNumber: 6
-  chandamOrder: 20
-  sequence: '|U|-U'
-  matraSeries: 3 , 4
 - identifier: suMdari
   name: సుందరి-2
   language: Telugu
@@ -4712,17 +3104,6 @@ rules:
   - - 9
   yatiMode: CharPosition
   prasa: true
-  shortName: సుందరి-2
-  alias: ''
-  chandamName: శక్వరి
-  charLength: 14
-  matraLength: 20
-  min: 14
-  max: 14
-  chandamNumber: 5815
-  chandamOrder: 22197
-  sequence: U||-U||-U|U-||U-|U
-  matraSeries: 3-4 , 4-3
 - identifier: paMkti
   name: పంక్తి-1 (సుందరి-1, అక్షరోపపదా, అక్షరపంక్తి, కాంచనమాలా, కుంతలతన్వీ, భూతలతన్వీ, హంసా, పఙ్క్తిః)
   language: Telugu
@@ -4738,17 +3119,6 @@ rules:
   yati: []
   yatiMode: CharPosition
   prasa: true
-  shortName: పంక్తి-1
-  alias: సుందరి-1, అక్షరోపపదా, అక్షరపంక్తి, కాంచనమాలా, కుంతలతన్వీ, భూతలతన్వీ, హంసా, పఙ్క్తిః
-  chandamName: సుప్రతిష్ఠ
-  charLength: 5
-  matraLength: 8
-  min: 5
-  max: 5
-  chandamNumber: 7
-  chandamOrder: 37
-  sequence: U||-UU
-  matraSeries: 3 , 4
 - identifier: sugaMdhi
   name: సుగంధి (ఉత్సవ, ఉత్సాహ, చామర, తూణక, మహోత్సవ, శాలిని-2, ప్రశాంతి)
   language: Telugu
@@ -4768,17 +3138,6 @@ rules:
   - - 9
   yatiMode: CharPosition
   prasa: true
-  shortName: సుగంధి
-  alias: ఉత్సవ, ఉత్సాహ, చామర, తూణక, మహోత్సవ, శాలిని-2, ప్రశాంతి
-  chandamName: అతిశక్వరి
-  charLength: 15
-  matraLength: 23
-  min: 15
-  max: 15
-  chandamNumber: 10923
-  chandamOrder: 43689
-  sequence: U|U-|U|-U|U-|U|-U|U
-  matraSeries: 3 , 6 , 5-4
 - identifier: matta
   name: మత్త (హంసశ్రేణి)
   language: Telugu
@@ -4797,17 +3156,6 @@ rules:
   - - 7
   yatiMode: CharPosition
   prasa: true
-  shortName: మత్త
-  alias: హంసశ్రేణి
-  chandamName: పంక్తి
-  charLength: 10
-  matraLength: 16
-  min: 10
-  max: 10
-  chandamNumber: 241
-  chandamOrder: 1263
-  sequence: UUU-U||-||U-U
-  matraSeries: 4 , 6
 - identifier: tribhaMgi
   name: త్రిభంగి
   language: Telugu
@@ -4836,17 +3184,6 @@ rules:
     - 34
   yatiMode: CharPosition
   prasa: true
-  shortName: త్రిభంగి
-  alias: ''
-  chandamName: ఉద్ధురమాల
-  charLength: 34
-  matraLength: 42
-  min: 34
-  max: 34
-  chandamNumber: -2147483647
-  chandamOrder: 15032385535
-  sequence: '|||-|||-|||-|||-|||-|||-||U-||U-U||-UUU-||U-U'
-  matraSeries: 4 , 6
 - identifier: vinayaM
   name: వినయము (రమణః)
   language: Telugu
@@ -4861,17 +3198,6 @@ rules:
   yati: []
   yatiMode: CharPosition
   prasa: true
-  shortName: వినయము
-  alias: రమణః
-  chandamName: మధ్య
-  charLength: 3
-  matraLength: 4
-  min: 3
-  max: 3
-  chandamNumber: 4
-  chandamOrder: 10
-  sequence: '||U'
-  matraSeries: 3
 - identifier: biMbamu
   name: బింబము (వలా)
   language: Telugu
@@ -4887,17 +3213,6 @@ rules:
   yati: []
   yatiMode: CharPosition
   prasa: true
-  shortName: బింబము
-  alias: వలా
-  chandamName: ప్రతిష్ఠ
-  charLength: 4
-  matraLength: 6
-  min: 4
-  max: 4
-  chandamNumber: 7
-  chandamOrder: 21
-  sequence: U||-U
-  matraSeries: 3 , 4
 - identifier: madhumati
   name: మధుమతి (స్వనకరీ)
   language: Telugu
@@ -4914,17 +3229,6 @@ rules:
   yati: []
   yatiMode: CharPosition
   prasa: true
-  shortName: మధుమతి
-  alias: స్వనకరీ
-  chandamName: ఉష్ణిక్కు
-  charLength: 7
-  matraLength: 9
-  min: 7
-  max: 7
-  chandamNumber: 56
-  chandamOrder: 182
-  sequence: '|||-U||-U'
-  matraSeries: 3 , 5 , 6 , 3-4
 - identifier: madaraekha
   name: మదరేఖ
   language: Telugu
@@ -4941,17 +3245,6 @@ rules:
   yati: []
   yatiMode: CharPosition
   prasa: true
-  shortName: మదరేఖ
-  alias: ''
-  chandamName: ఉష్ణిక్కు
-  charLength: 7
-  matraLength: 12
-  min: 7
-  max: 7
-  chandamNumber: 25
-  chandamOrder: 151
-  sequence: UUU-||U-U
-  matraSeries: 4 , 6 , 4-3
 - identifier: halamukhi
   name: హలముఖి
   language: Telugu
@@ -4968,17 +3261,6 @@ rules:
   yati: []
   yatiMode: CharPosition
   prasa: true
-  shortName: హలముఖి
-  alias: ''
-  chandamName: బృహతి
-  charLength: 9
-  matraLength: 12
-  min: 9
-  max: 9
-  chandamNumber: 251
-  chandamOrder: 761
-  sequence: U|U-|||-||U
-  matraSeries: 3 , 5 , 6 , 3-4 , 3-5 , 5-3 , 5-4
 - identifier: upajaati
   name: ఉపజాతి
   language: Telugu
@@ -5009,18 +3291,6 @@ rules:
   - - 8
   yatiMode: CharPosition
   prasa: true
-  shortName: ఉపజాతి
-  alias: ''
-  chandamName: ''
-  charLength: -1
-  matraLength: -1
-  min: 11
-  max: 11
-  chandamNumber: -1
-  chandamOrder: -1
-  sequence: ''
-  matraSeries: ''
-  rowWiseRules: true
 - identifier: iMdravaMSamu
   name: ఇంద్రవంశము(ఇన్దువంశా)
   language: Telugu
@@ -5039,17 +3309,6 @@ rules:
   - - 8
   yatiMode: CharPosition
   prasa: true
-  shortName: ఇంద్రవంశము
-  alias: ఇన్దువంశా
-  chandamName: జగతి
-  charLength: 12
-  matraLength: 19
-  min: 12
-  max: 12
-  chandamNumber: 1381
-  chandamOrder: 5475
-  sequence: UU|-UU|-|U|-U|U
-  matraSeries: 4-3 , 4-5 , 5-4
 - identifier: aparaajitamu
   name: అపరాజితము (పరాజితము)
   language: Telugu
@@ -5069,17 +3328,6 @@ rules:
   - - 9
   yatiMode: CharPosition
   prasa: true
-  shortName: అపరాజితము
-  alias: పరాజితము
-  chandamName: శక్వరి
-  charLength: 14
-  matraLength: 18
-  min: 14
-  max: 14
-  chandamNumber: 5824
-  chandamOrder: 22206
-  sequence: '|||-|||-U|U-||U-|U'
-  matraSeries: 3 , 4 , 6 , 3-5 , 5-3 , 4-5
 - identifier: asaMbaadha
   name: అసంబాధ
   language: Telugu
@@ -5099,17 +3347,6 @@ rules:
   - - 12
   yatiMode: CharPosition
   prasa: true
-  shortName: అసంబాధ
-  alias: ''
-  chandamName: శక్వరి
-  charLength: 14
-  matraLength: 22
-  min: 14
-  max: 14
-  chandamNumber: 2017
-  chandamOrder: 18399
-  sequence: UUU-UU|-|||-||U-UU
-  matraSeries: 4 , 6
 - identifier: kamalavilasitamu
   name: కమలవిలసితము(సురుచిర, ఉపచిత్ర, సుపవిత్ర)
   language: Telugu
@@ -5129,17 +3366,6 @@ rules:
   - - 9
   yatiMode: CharPosition
   prasa: true
-  shortName: కమలవిలసితము
-  alias: సురుచిర, ఉపచిత్ర, సుపవిత్ర
-  chandamName: శక్వరి
-  charLength: 14
-  matraLength: 16
-  min: 14
-  max: 14
-  chandamNumber: 4096
-  chandamOrder: 20478
-  sequence: '|||-|||-|||-|||-UU'
-  matraSeries: 3 , 4 , 5 , 6 , 3-4 , 4-3 , 3-5 , 5-4
 - identifier: sukaesaramu
   name: సుకేసరము (ప్రభద్రక, భద్రక-2)
   language: Telugu
@@ -5159,17 +3385,6 @@ rules:
   - - 11
   yatiMode: CharPosition
   prasa: true
-  shortName: సుకేసరము
-  alias: ప్రభద్రక, భద్రక-2
-  chandamName: అతిశక్వరి
-  charLength: 15
-  matraLength: 20
-  min: 15
-  max: 15
-  chandamNumber: 11184
-  chandamOrder: 43950
-  sequence: '|||-|U|-U||-|U|-U|U'
-  matraSeries: 3 , 6 , 3-4 , 4-3
 - identifier: hariNi
   name: హరిణి
   language: Telugu
@@ -5190,17 +3405,6 @@ rules:
   - - 12
   yatiMode: CharPosition
   prasa: true
-  shortName: హరిణి
-  alias: ''
-  chandamName: అత్యష్టి
-  charLength: 17
-  matraLength: 25
-  min: 17
-  max: 17
-  chandamNumber: 46112
-  chandamOrder: 177182
-  sequence: '|||-||U-UUU-U|U-||U-|U'
-  matraSeries: 4-5
 - identifier: kusumitalataavaellita
   name: కుసుమితలతావేల్లిత
   language: Telugu
@@ -5221,17 +3425,6 @@ rules:
   - - 12
   yatiMode: CharPosition
   prasa: true
-  shortName: కుసుమితలతావేల్లిత
-  alias: ''
-  chandamName: ధృతి
-  charLength: 18
-  matraLength: 29
-  min: 18
-  max: 18
-  chandamNumber: 37857
-  chandamOrder: 299999
-  sequence: UUU-UU|-|||-|UU-|UU-|UU
-  matraSeries: ''
 - identifier: aMburuhamu
   name: అంబురుహము
   language: Telugu
@@ -5253,17 +3446,6 @@ rules:
   - - 13
   yatiMode: CharPosition
   prasa: true
-  shortName: అంబురుహము
-  alias: ''
-  chandamName: కృతి
-  charLength: 20
-  matraLength: 28
-  min: 20
-  max: 20
-  chandamNumber: 372151
-  chandamOrder: 1420725
-  sequence: U||-U||-U||-U||-U|U-||U-|U
-  matraSeries: 4-3
 - identifier: aSvalalitamu
   name: అశ్వలలితము (అద్రితనయా)
   language: Telugu
@@ -5286,17 +3468,6 @@ rules:
   - - 13
   yatiMode: CharPosition
   prasa: true
-  shortName: అశ్వలలితము
-  alias: అద్రితనయా
-  chandamName: వికృతి
-  charLength: 23
-  matraLength: 30
-  min: 23
-  max: 23
-  chandamNumber: 3861424
-  chandamOrder: 12250030
-  sequence: '|||-|U|-U||-|U|-U||-|U|-U||-|U'
-  matraSeries: ''
 - identifier: ashTamoorti
   name: అష్టమూర్తి
   language: Telugu
@@ -5320,17 +3491,6 @@ rules:
     - 17
   yatiMode: CharPosition
   prasa: true
-  shortName: అష్టమూర్తి
-  alias: ''
-  chandamName: సంకృతి
-  charLength: 24
-  matraLength: 36
-  min: 24
-  max: 24
-  chandamNumber: 3614521
-  chandamOrder: 20391735
-  sequence: UUU-|||-UU|-||U-U|U-U||-|U|-|UU
-  matraSeries: 4-3
 - identifier: manOharamu
   name: మనోహరము
   language: Telugu
@@ -5364,18 +3524,6 @@ rules:
   - - 9
   yatiMode: CharPosition
   prasa: true
-  shortName: మనోహరము
-  alias: ''
-  chandamName: ''
-  charLength: -1
-  matraLength: -1
-  min: 11
-  max: 12
-  chandamNumber: -1
-  chandamOrder: -1
-  sequence: ''
-  matraSeries: ''
-  rowWiseRules: true
 - identifier: aMgajaastramu
   name: అంగజాస్త్రము
   language: Telugu
@@ -5406,18 +3554,6 @@ rules:
   - - 6
   yatiMode: CharPosition
   prasa: true
-  shortName: అంగజాస్త్రము
-  alias: ''
-  chandamName: ''
-  charLength: -1
-  matraLength: -1
-  min: 10
-  max: 10
-  chandamNumber: -1
-  chandamOrder: -1
-  sequence: ''
-  matraSeries: ''
-  rowWiseRules: true
 - identifier: rathagamanamanOharamu
   name: రథగమన మనోహరము
   language: Telugu
@@ -5455,18 +3591,6 @@ rules:
   - - 10
   yatiMode: CharPosition
   prasa: true
-  shortName: రథగమన మనోహరము
-  alias: ''
-  chandamName: ''
-  charLength: -1
-  matraLength: -1
-  min: 14
-  max: 15
-  chandamNumber: -1
-  chandamOrder: -1
-  sequence: ''
-  matraSeries: ''
-  rowWiseRules: true
 - identifier: veeNaarachanamu
   name: వీణారచనము
   language: Telugu
@@ -5500,18 +3624,6 @@ rules:
   yati: []
   yatiMode: CharPosition
   prasa: true
-  shortName: వీణారచనము
-  alias: ''
-  chandamName: ''
-  charLength: -1
-  matraLength: -1
-  min: 13
-  max: 15
-  chandamNumber: -1
-  chandamOrder: -1
-  sequence: ''
-  matraSeries: ''
-  rowWiseRules: true
 - identifier: iMduvadana
   name: ఇందువదన
   language: Telugu
@@ -5530,17 +3642,6 @@ rules:
   yati: []
   yatiMode: CharPosition
   prasa: true
-  shortName: ఇందువదన
-  alias: ''
-  chandamName: అతిజగతి
-  charLength: 13
-  matraLength: 17
-  min: 13
-  max: 13
-  chandamNumber: 3823
-  chandamOrder: 12013
-  sequence: U||-|U|-||U-|||-U
-  matraSeries: 4 , 5 , 3-4 , 5-3 , 4-5 , 5-4
 - identifier: kuTajagati
   name: కుటజగతి(కుటగతి)
   language: Telugu
@@ -5559,17 +3660,6 @@ rules:
   yati: []
   yatiMode: CharPosition
   prasa: true
-  shortName: కుటజగతి
-  alias: కుటగతి
-  chandamName: అతిజగతి
-  charLength: 13
-  matraLength: 20
-  min: 13
-  max: 13
-  chandamNumber: 2096
-  chandamOrder: 10286
-  sequence: '|||-|U|-UUU-UU|-U'
-  matraSeries: 4-5
 - identifier: kalaravamu
   name: కలరవము
   language: Telugu
@@ -5588,17 +3678,6 @@ rules:
   yati: []
   yatiMode: CharPosition
   prasa: true
-  shortName: కలరవము
-  alias: ''
-  chandamName: శక్వరి
-  charLength: 14
-  matraLength: 16
-  min: 14
-  max: 14
-  chandamNumber: 8188
-  chandamOrder: 24570
-  sequence: '||U-|||-|||-|||-|U'
-  matraSeries: 4 , 5 , 6 , 4-3 , 5-3 , 4-5 , 5-4
 - identifier: kumaari
   name: కుమారి (కురరీరుతా)
   language: Telugu
@@ -5618,17 +3697,6 @@ rules:
   - - 7
   yatiMode: CharPosition
   prasa: true
-  shortName: కుమారి
-  alias: కురరీరుతా
-  chandamName: శక్వరి
-  charLength: 14
-  matraLength: 18
-  min: 14
-  max: 14
-  chandamNumber: 7088
-  chandamOrder: 23470
-  sequence: '|||-|U|-U||-|U|-|U'
-  matraSeries: 3 , 6 , 3-4 , 4-3
 - identifier: kalahaMsi
   name: కలహంసి
   language: Telugu
@@ -5647,17 +3715,6 @@ rules:
   yati: []
   yatiMode: CharPosition
   prasa: true
-  shortName: కలహంసి
-  alias: ''
-  chandamName: అతిజగతి
-  charLength: 13
-  matraLength: 20
-  min: 13
-  max: 13
-  chandamNumber: 3277
-  chandamOrder: 11467
-  sequence: UU|-|UU-||U-U||-U
-  matraSeries: 4 , 6
 - identifier: kumaaralalita
   name: కుమారలలిత-1 (స్విదా)
   language: Telugu
@@ -5674,17 +3731,6 @@ rules:
   yati: []
   yatiMode: CharPosition
   prasa: true
-  shortName: కుమారలలిత-1
-  alias: స్విదా
-  chandamName: ఉష్ణిక్కు
-  charLength: 7
-  matraLength: 9
-  min: 7
-  max: 7
-  chandamNumber: 62
-  chandamOrder: 188
-  sequence: '|U|-|||-U'
-  matraSeries: 3 , 4 , 5 , 6 , 3-4 , 4-3
 - identifier: kOmalavRttamu
   name: కోమలి
   language: Telugu
@@ -5720,18 +3766,6 @@ rules:
   - - 9
   yatiMode: CharPosition
   prasa: true
-  shortName: కోమలి
-  alias: ''
-  chandamName: ''
-  charLength: -1
-  matraLength: -1
-  min: 12
-  max: 13
-  chandamNumber: -1
-  chandamOrder: -1
-  sequence: ''
-  matraSeries: ''
-  rowWiseRules: true
 - identifier: paNavamu
   name: పణవము (ప్రణవ, హీరాఙ్గీ)
   language: Telugu
@@ -5750,17 +3784,6 @@ rules:
   - - 6
   yatiMode: CharPosition
   prasa: true
-  shortName: పణవము
-  alias: ప్రణవ, హీరాఙ్గీ
-  chandamName: పంక్తి
-  charLength: 10
-  matraLength: 16
-  min: 10
-  max: 10
-  chandamNumber: 121
-  chandamOrder: 1143
-  sequence: UUU-|||-|UU-U
-  matraSeries: 4 , 6
 - identifier: suralata
   name: సురలత (శశివదన, కనకలతా, చతురంశా, మకరశీర్షా, ముకులితా)
   language: Telugu
@@ -5776,17 +3799,6 @@ rules:
   yati: []
   yatiMode: CharPosition
   prasa: true
-  shortName: సురలత
-  alias: శశివదన, కనకలతా, చతురంశా, మకరశీర్షా, ముకులితా
-  chandamName: గాయత్రి
-  charLength: 6
-  matraLength: 8
-  min: 6
-  max: 6
-  chandamNumber: 16
-  chandamOrder: 78
-  sequence: '|||-|UU'
-  matraSeries: 3 , 4 , 6
 - identifier: sumaMgali
   name: సుమంగలి-2
   language: Telugu
@@ -5806,17 +3818,6 @@ rules:
   - - 8
   yatiMode: CharPosition
   prasa: true
-  shortName: సుమంగలి-2
-  alias: ''
-  chandamName: శక్వరి
-  charLength: 14
-  matraLength: 20
-  min: 14
-  max: 14
-  chandamNumber: 1772
-  chandamOrder: 18154
-  sequence: '||U-|U|-||U-||U-UU'
-  matraSeries: 4 , 5-3 , 4-5 , 5-4
 - identifier: karibRMhitamu
   name: కరిబృంహితము
   language: Telugu
@@ -5838,17 +3839,6 @@ rules:
   - - 13
   yatiMode: CharPosition
   prasa: true
-  shortName: కరిబృంహితము
-  alias: ''
-  chandamName: ప్రకృతి
-  charLength: 21
-  matraLength: 26
-  min: 21
-  max: 21
-  chandamNumber: 782271
-  chandamOrder: 2879421
-  sequence: U||-|||-U||-|||-U||-|||-U|U
-  matraSeries: 6 , 3-4 , 4-3 , 5-4
 - identifier: kanakaprabha
   name: కనకప్రభ (మంజుభాషిణి, జయా, నందినీ, ప్రబోధితా, మనోవతీ, విలంబితా, సునందినీ, సుమంగలీ)
   language: Telugu
@@ -5868,17 +3858,6 @@ rules:
   - - 9
   yatiMode: CharPosition
   prasa: true
-  shortName: కనకప్రభ
-  alias: మంజుభాషిణి, జయా, నందినీ, ప్రబోధితా, మనోవతీ, విలంబితా, సునందినీ, సుమంగలీ
-  chandamName: అతిజగతి
-  charLength: 13
-  matraLength: 18
-  min: 13
-  max: 13
-  chandamNumber: 2796
-  chandamOrder: 10986
-  sequence: '||U-|U|-||U-|U|-U'
-  matraSeries: 4 , 5 , 5-3 , 4-5
 - identifier: viyOgini
   name: వియోగిని
   language: Telugu
@@ -5912,18 +3891,6 @@ rules:
   - - 7
   yatiMode: CharPosition
   prasa: true
-  shortName: వియోగిని
-  alias: ''
-  chandamName: ''
-  charLength: -1
-  matraLength: -1
-  min: 10
-  max: 11
-  chandamNumber: -1
-  chandamOrder: -1
-  sequence: ''
-  matraSeries: ''
-  rowWiseRules: true
 - identifier: ajitaprataapamu
   name: అజిత ప్రతాపము
   language: Telugu
@@ -5957,18 +3924,6 @@ rules:
   - - 8
   yatiMode: CharPosition
   prasa: true
-  shortName: అజిత ప్రతాపము
-  alias: ''
-  chandamName: ''
-  charLength: -1
-  matraLength: -1
-  min: 12
-  max: 12
-  chandamNumber: -1
-  chandamOrder: -1
-  sequence: ''
-  matraSeries: ''
-  rowWiseRules: true
 - identifier: aMbuja
   name: అంబుజ (మణ్డలమ్)
   language: Telugu
@@ -5984,17 +3939,6 @@ rules:
   yati: []
   yatiMode: CharPosition
   prasa: true
-  shortName: అంబుజ
-  alias: మణ్డలమ్
-  chandamName: సుప్రతిష్ఠ
-  charLength: 5
-  matraLength: 7
-  min: 5
-  max: 5
-  chandamNumber: 15
-  chandamOrder: 45
-  sequence: U||-|U
-  matraSeries: 3 , 4 , 5
 - identifier: tripadi2
   name: త్రిపది2
   language: Telugu
@@ -6019,18 +3963,6 @@ rules:
   yatiMode: GPosition
   prasa: true
   references: []
-  shortName: త్రిపది2
-  alias: ''
-  chandamName: ''
-  charLength: -1
-  matraLength: -1
-  min: 8
-  max: 16
-  chandamNumber: -1
-  chandamOrder: -1
-  sequence: ''
-  matraSeries: ''
-  rowWiseRules: true
 - identifier: utkaLika
   name: ఉత్కళిక
   language: Telugu
@@ -6049,17 +3981,6 @@ rules:
   yatiMode: GPosition
   prasa: true
   anthyaPrasa: true
-  shortName: ఉత్కళిక
-  alias: ''
-  chandamName: ''
-  charLength: -1
-  matraLength: -1
-  min: 8
-  max: 12
-  chandamNumber: 1
-  chandamOrder: -1
-  sequence: ''
-  matraSeries: ''
 - identifier: vijayabhadraragaDa
   name: విజయభద్ర  రగడ
   language: Telugu
@@ -6084,17 +4005,6 @@ rules:
   prasa: true
   prasaYati: true
   anthyaPrasa: true
-  shortName: విజయభద్ర  రగడ
-  alias: ''
-  chandamName: ''
-  charLength: -1
-  matraLength: -1
-  min: 24
-  max: 40
-  chandamNumber: 1
-  chandamOrder: -1
-  sequence: ''
-  matraSeries: ''
 - identifier: haMsagatiragaDa
   name: హంసగతి  రగడ
   language: Telugu
@@ -6115,17 +4025,6 @@ rules:
   prasa: true
   prasaYati: true
   anthyaPrasa: true
-  shortName: హంసగతి  రగడ
-  alias: ''
-  chandamName: ''
-  charLength: -1
-  matraLength: -1
-  min: 10
-  max: 16
-  chandamNumber: 1
-  chandamOrder: -1
-  sequence: ''
-  matraSeries: ''
 - identifier: vRshabhagatiragaDa
   name: వృషభగతి రగడ
   language: Telugu
@@ -6150,17 +4049,6 @@ rules:
   prasa: true
   prasaYati: true
   anthyaPrasa: true
-  shortName: వృషభగతి రగడ
-  alias: ''
-  chandamName: ''
-  charLength: -1
-  matraLength: -1
-  min: 16
-  max: 28
-  chandamNumber: 1
-  chandamOrder: -1
-  sequence: ''
-  matraSeries: ''
 - identifier: dviradagatiragaDa
   name: ద్విరదగతి రగడ
   language: Telugu
@@ -6181,17 +4069,6 @@ rules:
   prasa: true
   prasaYati: true
   anthyaPrasa: true
-  shortName: ద్విరదగతి రగడ
-  alias: ''
-  chandamName: ''
-  charLength: -1
-  matraLength: -1
-  min: 12
-  max: 20
-  chandamNumber: 1
-  chandamOrder: -1
-  sequence: ''
-  matraSeries: ''
 - identifier: hariNagatiragaDa
   name: హరిణగతి రగడ
   language: Telugu
@@ -6211,17 +4088,6 @@ rules:
   yatiMode: GPosition
   prasaYati: true
   anthyaPrasa: true
-  shortName: హరిణగతి రగడ
-  alias: ''
-  chandamName: ''
-  charLength: -1
-  matraLength: -1
-  min: 8
-  max: 14
-  chandamNumber: 1
-  chandamOrder: -1
-  sequence: ''
-  matraSeries: ''
 - identifier: harigatiragaDa
   name: హరిగతి రగడ
   language: Telugu
@@ -6246,17 +4112,6 @@ rules:
   prasa: true
   prasaYati: true
   anthyaPrasa: true
-  shortName: హరిగతి రగడ
-  alias: ''
-  chandamName: ''
-  charLength: -1
-  matraLength: -1
-  min: 16
-  max: 32
-  chandamNumber: 1
-  chandamOrder: -1
-  sequence: ''
-  matraSeries: ''
 - identifier: madhuragatiragaDa
   name: మధురగతి రగడ
   language: Telugu
@@ -6277,17 +4132,6 @@ rules:
   prasa: true
   prasaYati: true
   anthyaPrasa: true
-  shortName: మధురగతి రగడ
-  alias: ''
-  chandamName: ''
-  charLength: -1
-  matraLength: -1
-  min: 8
-  max: 16
-  chandamNumber: 1
-  chandamOrder: -1
-  sequence: ''
-  matraSeries: ''
 - identifier: vijayamaMgaLaragaDa
   name: విజయమంగళ  రగడ
   language: Telugu
@@ -6320,17 +4164,6 @@ rules:
   prasa: true
   prasaYati: true
   anthyaPrasa: true
-  shortName: విజయమంగళ  రగడ
-  alias: ''
-  chandamName: ''
-  charLength: -1
-  matraLength: -1
-  min: 32
-  max: 48
-  chandamNumber: 1
-  chandamOrder: -1
-  sequence: ''
-  matraSeries: ''
 - identifier: hayaprachaararagaDa
   name: హయప్రచార రగడ
   language: Telugu
@@ -6351,17 +4184,6 @@ rules:
   prasa: true
   prasaYati: true
   anthyaPrasa: true
-  shortName: హయప్రచార రగడ
-  alias: ''
-  chandamName: ''
-  charLength: -1
-  matraLength: -1
-  min: 8
-  max: 12
-  chandamNumber: 1
-  chandamOrder: -1
-  sequence: ''
-  matraSeries: ''
 - identifier: turagavalganaragaDa
   name: తురగవల్గన రగడ
   language: Telugu
@@ -6386,17 +4208,6 @@ rules:
   prasa: true
   prasaYati: true
   anthyaPrasa: true
-  shortName: తురగవల్గన రగడ
-  alias: ''
-  chandamName: ''
-  charLength: -1
-  matraLength: -1
-  min: 16
-  max: 24
-  chandamNumber: 1
-  chandamOrder: -1
-  sequence: ''
-  matraSeries: ''
 - identifier: mutyaalasaramu
   name: ముత్యాల సరము
   language: Telugu
@@ -6428,18 +4239,6 @@ rules:
   yatiMode: GPosition
   prasa: true
   anthyaPrasa: true
-  shortName: ముత్యాల సరము
-  alias: ''
-  chandamName: ''
-  charLength: -1
-  matraLength: -1
-  min: 8
-  max: 16
-  chandamNumber: -1
-  chandamOrder: -1
-  sequence: ''
-  matraSeries: ''
-  rowWiseRules: true
 - identifier: mutyaalasaramu2
   name: ముత్యాల సరము2
   language: Telugu
@@ -6468,18 +4267,6 @@ rules:
   yati: []
   yatiMode: GPosition
   prasa: true
-  shortName: ముత్యాల సరము2
-  alias: ''
-  chandamName: ''
-  charLength: -1
-  matraLength: -1
-  min: 5
-  max: 14
-  chandamNumber: -1
-  chandamOrder: -1
-  sequence: ''
-  matraSeries: ''
-  rowWiseRules: true
 - identifier: vaardhakashaTpada
   name: వార్ధక షట్పద
   language: Telugu
@@ -6523,18 +4310,6 @@ rules:
   yati: []
   yatiMode: GPosition
   prasa: true
-  shortName: వార్ధక షట్పద
-  alias: ''
-  chandamName: ''
-  charLength: -1
-  matraLength: -1
-  min: 12
-  max: 32
-  chandamNumber: -1
-  chandamOrder: -1
-  sequence: ''
-  matraSeries: ''
-  rowWiseRules: true
 - identifier: parivardinishaTpada
   name: పరివర్ధినీ షట్పద
   language: Telugu
@@ -6578,18 +4353,6 @@ rules:
   yati: []
   yatiMode: GPosition
   prasa: true
-  shortName: పరివర్ధినీ షట్పద
-  alias: ''
-  chandamName: ''
-  charLength: -1
-  matraLength: -1
-  min: 8
-  max: 26
-  chandamNumber: -1
-  chandamOrder: -1
-  sequence: ''
-  matraSeries: ''
-  rowWiseRules: true
 - identifier: bhaamineeshaTpada
   name: భామినీ షట్పద
   language: Telugu
@@ -6639,18 +4402,6 @@ rules:
   - - 4
   yatiMode: GPosition
   prasa: true
-  shortName: భామినీ షట్పద
-  alias: ''
-  chandamName: ''
-  charLength: -1
-  matraLength: -1
-  min: 8
-  max: 23
-  chandamNumber: -1
-  chandamOrder: -1
-  sequence: ''
-  matraSeries: ''
-  rowWiseRules: true
 - identifier: bhOgashaTpada
   name: భోగ షట్పద
   language: Telugu
@@ -6694,18 +4445,6 @@ rules:
   yati: []
   yatiMode: GPosition
   prasa: true
-  shortName: భోగ షట్పద
-  alias: ''
-  chandamName: ''
-  charLength: -1
-  matraLength: -1
-  min: 8
-  max: 20
-  chandamNumber: -1
-  chandamOrder: -1
-  sequence: ''
-  matraSeries: ''
-  rowWiseRules: true
 - identifier: kusumashaTpada
   name: కుసుమ షట్పద
   language: Telugu
@@ -6734,18 +4473,6 @@ rules:
     - 2
   yati: []
   yatiMode: GPosition
-  shortName: కుసుమ షట్పద
-  alias: ''
-  chandamName: ''
-  charLength: -1
-  matraLength: -1
-  min: 6
-  max: 17
-  chandamNumber: -1
-  chandamOrder: -1
-  sequence: ''
-  matraSeries: ''
-  rowWiseRules: true
 - identifier: SarashaTpada
   name: శర షట్పద
   language: Telugu
@@ -6774,18 +4501,6 @@ rules:
     - 2
   yati: []
   yatiMode: GPosition
-  shortName: శర షట్పద
-  alias: ''
-  chandamName: ''
-  charLength: -1
-  matraLength: -1
-  min: 4
-  max: 14
-  chandamNumber: -1
-  chandamOrder: -1
-  sequence: ''
-  matraSeries: ''
-  rowWiseRules: true
 - identifier: mRgi
   name: మృగీ
   language: Telugu
@@ -6800,17 +4515,6 @@ rules:
   yati: []
   yatiMode: CharPosition
   prasa: true
-  shortName: మృగీ
-  alias: ''
-  chandamName: మధ్య
-  charLength: 3
-  matraLength: 5
-  min: 3
-  max: 3
-  chandamNumber: 3
-  chandamOrder: 9
-  sequence: U|U
-  matraSeries: 3
 - identifier: vreeDa
   name: వ్రీడ (వ్రీళ, క్రీడా)
   language: Telugu
@@ -6826,17 +4530,6 @@ rules:
   yati: []
   yatiMode: CharPosition
   prasa: true
-  shortName: వ్రీడ
-  alias: వ్రీళ, క్రీడా
-  chandamName: ప్రతిష్ఠ
-  charLength: 4
-  matraLength: 7
-  min: 4
-  max: 4
-  chandamNumber: 2
-  chandamOrder: 16
-  sequence: '|UU-U'
-  matraSeries: 3
 - identifier: kanya
   name: కన్య
   language: Telugu
@@ -6852,17 +4545,6 @@ rules:
   yati: []
   yatiMode: CharPosition
   prasa: true
-  shortName: కన్య
-  alias: ''
-  chandamName: ప్రతిష్ఠ
-  charLength: 4
-  matraLength: 8
-  min: 4
-  max: 4
-  chandamNumber: 1
-  chandamOrder: 15
-  sequence: UUU-U
-  matraSeries: 4
 - identifier: sati
   name: సతి (కణ్ఠీ)
   language: Telugu
@@ -6878,17 +4560,6 @@ rules:
   yati: []
   yatiMode: CharPosition
   prasa: true
-  shortName: సతి
-  alias: కణ్ఠీ
-  chandamName: సుప్రతిష్ఠ
-  charLength: 5
-  matraLength: 8
-  min: 5
-  max: 5
-  chandamNumber: 6
-  chandamOrder: 36
-  sequence: '|U|-UU'
-  matraSeries: 3 , 4
 - identifier: preeti
   name: ప్రీతి (సూరిణీ)
   language: Telugu
@@ -6904,17 +4575,6 @@ rules:
   yati: []
   yatiMode: CharPosition
   prasa: true
-  shortName: ప్రీతి
-  alias: సూరిణీ
-  chandamName: సుప్రతిష్ఠ
-  charLength: 5
-  matraLength: 9
-  min: 5
-  max: 5
-  chandamNumber: 3
-  chandamOrder: 33
-  sequence: U|U-UU
-  matraSeries: 5 , 3-4
 - identifier: naMda
   name: నంద (కణికా)
   language: Telugu
@@ -6930,17 +4590,6 @@ rules:
   yati: []
   yatiMode: CharPosition
   prasa: true
-  shortName: నంద
-  alias: కణికా
-  chandamName: సుప్రతిష్ఠ
-  charLength: 5
-  matraLength: 8
-  min: 5
-  max: 5
-  chandamNumber: 13
-  chandamOrder: 43
-  sequence: UU|-|U
-  matraSeries: 4 , 5
 - identifier: valamuri
   name: వలమురి(సులూః)
   language: Telugu
@@ -6956,17 +4605,6 @@ rules:
   yati: []
   yatiMode: CharPosition
   prasa: true
-  shortName: వలమురి
-  alias: సులూః
-  chandamName: సుప్రతిష్ఠ
-  charLength: 5
-  matraLength: 6
-  min: 5
-  max: 5
-  chandamNumber: 16
-  chandamOrder: 46
-  sequence: '|||-|U'
-  matraSeries: 3 , 4 , 5
 - identifier: vasumati
   name: వసుమతి
   language: Telugu
@@ -6982,17 +4620,6 @@ rules:
   yati: []
   yatiMode: CharPosition
   prasa: true
-  shortName: వసుమతి
-  alias: ''
-  chandamName: గాయత్రి
-  charLength: 6
-  matraLength: 9
-  min: 6
-  max: 6
-  chandamNumber: 29
-  chandamOrder: 91
-  sequence: UU|-||U
-  matraSeries: 4 , 5 , 6 , 4-3
 - identifier: vasudha
   name: వసుధ (కిసలయ, తిలకా)
   language: Telugu
@@ -7008,17 +4635,6 @@ rules:
   yati: []
   yatiMode: CharPosition
   prasa: true
-  shortName: వసుధ
-  alias: కిసలయ, తిలకా
-  chandamName: గాయత్రి
-  charLength: 6
-  matraLength: 8
-  min: 6
-  max: 6
-  chandamNumber: 28
-  chandamOrder: 90
-  sequence: '||U-||U'
-  matraSeries: 4 , 5 , 6
 - identifier: chaMdravadana
   name: చంద్రవదన
   language: Telugu
@@ -7034,17 +4650,6 @@ rules:
   yati: []
   yatiMode: CharPosition
   prasa: true
-  shortName: చంద్రవదన
-  alias: ''
-  chandamName: గాయత్రి
-  charLength: 6
-  matraLength: 9
-  min: 6
-  max: 6
-  chandamNumber: 15
-  chandamOrder: 77
-  sequence: U||-|UU
-  matraSeries: 4 , 5 , 3-4 , 4-3
 - identifier: saavitrI
   name: సావిత్రి (విద్యుల్లేఖా)
   language: Telugu
@@ -7060,17 +4665,6 @@ rules:
   yati: []
   yatiMode: CharPosition
   prasa: true
-  shortName: సావిత్రి
-  alias: విద్యుల్లేఖా
-  chandamName: గాయత్రి
-  charLength: 6
-  matraLength: 12
-  min: 6
-  max: 6
-  chandamNumber: 1
-  chandamOrder: 63
-  sequence: UUU-UUU
-  matraSeries: 4 , 6
 - identifier: suruchira1
   name: సురుచిర-1 (సరసిజ, మదలేఖా, విధువక్త్రా, రుచిరమ్)
   language: Telugu
@@ -7087,17 +4681,6 @@ rules:
   yati: []
   yatiMode: CharPosition
   prasa: true
-  shortName: సురుచిర-1
-  alias: సరసిజ, మదలేఖా, విధువక్త్రా, రుచిరమ్
-  chandamName: ఉష్ణిక్కు
-  charLength: 7
-  matraLength: 10
-  min: 7
-  max: 7
-  chandamNumber: 31
-  chandamOrder: 157
-  sequence: U||-||U-U
-  matraSeries: 3 , 4 , 5 , 6 , 3-5 , 5-3
 - identifier: haMsamaala
   name: హంసమాల (భూరిధామా)
   language: Telugu
@@ -7114,17 +4697,6 @@ rules:
   yati: []
   yatiMode: CharPosition
   prasa: true
-  shortName: హంసమాల
-  alias: భూరిధామా
-  chandamName: ఉష్ణిక్కు
-  charLength: 7
-  matraLength: 11
-  min: 7
-  max: 7
-  chandamNumber: 20
-  chandamOrder: 146
-  sequence: '||U-U|U-U'
-  matraSeries: 6 , 4-3 , 4-5
 - identifier: lOla
   name: లోల (అభీకమ్)
   language: Telugu
@@ -7141,17 +4713,6 @@ rules:
   yati: []
   yatiMode: CharPosition
   prasa: true
-  shortName: లోల
-  alias: అభీకమ్
-  chandamName: ఉష్ణిక్కు
-  charLength: 7
-  matraLength: 12
-  min: 7
-  max: 7
-  chandamNumber: 10
-  chandamOrder: 136
-  sequence: '|UU-|UU-U'
-  matraSeries: 5 , 6 , 3-5 , 5-3
 - identifier: kumaaralalita2
   name: కుమారలలిత-2
   language: Telugu
@@ -7168,17 +4729,6 @@ rules:
   yati: []
   yatiMode: CharPosition
   prasa: true
-  shortName: కుమారలలిత-2
-  alias: ''
-  chandamName: ఉష్ణిక్కు
-  charLength: 7
-  matraLength: 10
-  min: 7
-  max: 7
-  chandamNumber: 30
-  chandamOrder: 156
-  sequence: '|U|-||U-U'
-  matraSeries: 3 , 4 , 5 , 6 , 3-5 , 5-3
 - identifier: prasavaSara
   name: ప్రసవశర (దృతిః)
   language: Telugu
@@ -7195,17 +4745,6 @@ rules:
   yati: []
   yatiMode: CharPosition
   prasa: true
-  shortName: ప్రసవశర
-  alias: దృతిః
-  chandamName: ఉష్ణిక్కు
-  charLength: 7
-  matraLength: 9
-  min: 7
-  max: 7
-  chandamNumber: 32
-  chandamOrder: 158
-  sequence: '|||-||U-U'
-  matraSeries: 4 , 5 , 3-4 , 4-3
 - identifier: haMsaruta
   name: హంసరుత
   language: Telugu
@@ -7222,17 +4761,6 @@ rules:
   yati: []
   yatiMode: CharPosition
   prasa: true
-  shortName: హంసరుత
-  alias: ''
-  chandamName: అనుష్టుప్పు
-  charLength: 8
-  matraLength: 13
-  min: 8
-  max: 8
-  chandamNumber: 57
-  chandamOrder: 311
-  sequence: UUU-|||-UU
-  matraSeries: 4 , 6 , 4-3 , 4-5
 - identifier: vimaana
   name: విమాన (వారిశాలా)
   language: Telugu
@@ -7249,17 +4777,6 @@ rules:
   yati: []
   yatiMode: CharPosition
   prasa: true
-  shortName: విమాన
-  alias: వారిశాలా
-  chandamName: అనుష్టుప్పు
-  charLength: 8
-  matraLength: 13
-  min: 8
-  max: 8
-  chandamNumber: 38
-  chandamOrder: 292
-  sequence: '|U|-UU|-UU'
-  matraSeries: 3 , 4 , 6 , 3-5 , 4-5
 - identifier: vitaana
   name: వితాన
   language: Telugu
@@ -7276,17 +4793,6 @@ rules:
   yati: []
   yatiMode: CharPosition
   prasa: true
-  shortName: వితాన
-  alias: ''
-  chandamName: అనుష్టుప్పు
-  charLength: 8
-  matraLength: 14
-  min: 8
-  max: 8
-  chandamNumber: 6
-  chandamOrder: 260
-  sequence: '|U|-UUU-UU'
-  matraSeries: 4 , 6
 - identifier: maaNavaka
   name: మాణవక
   language: Telugu
@@ -7303,17 +4809,6 @@ rules:
   yati: []
   yatiMode: CharPosition
   prasa: true
-  shortName: మాణవక
-  alias: ''
-  chandamName: అనుష్టుప్పు
-  charLength: 8
-  matraLength: 12
-  min: 8
-  max: 8
-  chandamNumber: 103
-  chandamOrder: 357
-  sequence: U||-UU|-|U
-  matraSeries: 3 , 4 , 6 , 3-5 , 4-5
 - identifier: naaraacha
   name: నారాచ (నారాచక)
   language: Telugu
@@ -7330,17 +4825,6 @@ rules:
   yati: []
   yatiMode: CharPosition
   prasa: true
-  shortName: నారాచ
-  alias: నారాచక
-  chandamName: అనుష్టుప్పు
-  charLength: 8
-  matraLength: 13
-  min: 8
-  max: 8
-  chandamNumber: 85
-  chandamOrder: 339
-  sequence: UU|-U|U-|U
-  matraSeries: 4 , 5 , 4-3 , 5-3
 - identifier: naagara
   name: నాగర (నాగరక)
   language: Telugu
@@ -7357,17 +4841,6 @@ rules:
   yati: []
   yatiMode: CharPosition
   prasa: true
-  shortName: నాగర
-  alias: నాగరక
-  chandamName: అనుష్టుప్పు
-  charLength: 8
-  matraLength: 12
-  min: 8
-  max: 8
-  chandamNumber: 87
-  chandamOrder: 341
-  sequence: U||-U|U-|U
-  matraSeries: 3 , 6 , 3-4 , 4-3 , 4-5
 - identifier: bhujaMgaSiSirutamu
   name: భుజగశిశురుతము (భుజగశిశుభృతా)
   language: Telugu
@@ -7384,17 +4857,6 @@ rules:
   yati: []
   yatiMode: CharPosition
   prasa: true
-  shortName: భుజగశిశురుతము
-  alias: భుజగశిశుభృతా
-  chandamName: బృహతి
-  charLength: 9
-  matraLength: 12
-  min: 9
-  max: 9
-  chandamNumber: 64
-  chandamOrder: 574
-  sequence: '|||-|||-UUU'
-  matraSeries: 4 , 5 , 6 , 3-5 , 5-3
 - identifier: chaMpakamaali
   name: చంపకమాలి (రుక్మవతి, చంపకమాలి, చంపకమాలా, పుష్పసమృద్ధి, సుభావా)
   language: Telugu
@@ -7413,17 +4875,6 @@ rules:
   - - 7
   yatiMode: CharPosition
   prasa: true
-  shortName: చంపకమాలి
-  alias: రుక్మవతి, చంపకమాలి, చంపకమాలా, పుష్పసమృద్ధి, సుభావా
-  chandamName: పంక్తి
-  charLength: 10
-  matraLength: 16
-  min: 10
-  max: 10
-  chandamNumber: 199
-  chandamOrder: 1221
-  sequence: U||-UUU-||U-U
-  matraSeries: 4 , 6 , 3-5
 - identifier: bhadrika
   name: భద్రిక-1 (సుభద్రికా, చంద్రిక, అపరవక్త్ర, ప్రసభ)
   language: Telugu
@@ -7442,17 +4893,6 @@ rules:
   - - 7
   yatiMode: CharPosition
   prasa: true
-  shortName: భద్రిక-1
-  alias: సుభద్రికా, చంద్రిక, అపరవక్త్ర, ప్రసభ
-  chandamName: త్రిష్టుప్పు
-  charLength: 11
-  matraLength: 14
-  min: 11
-  max: 11
-  chandamNumber: 704
-  chandamOrder: 2750
-  sequence: '|||-|||-U|U-|U'
-  matraSeries: 3 , 4 , 6 , 3-5 , 5-3 , 4-5 , 5-4
 - identifier: bhadrika2
   name: చంద్రిక (భద్రిక-2)
   language: Telugu
@@ -7471,17 +4911,6 @@ rules:
   - - 9
   yatiMode: CharPosition
   prasa: true
-  shortName: చంద్రిక
-  alias: భద్రిక-2
-  chandamName: త్రిష్టుప్పు
-  charLength: 11
-  matraLength: 14
-  min: 11
-  max: 11
-  chandamNumber: 704
-  chandamOrder: 2750
-  sequence: '|||-|||-U|U-|U'
-  matraSeries: 3 , 4 , 6 , 3-5 , 5-3 , 4-5 , 5-4
 - identifier: dOdakamu
   name: దోదకము (తోధక, తోదక, తోటక, దోధక, తరంగక, బందు, భిత్తక)
   language: Telugu
@@ -7500,17 +4929,6 @@ rules:
   - - 7
   yatiMode: CharPosition
   prasa: true
-  shortName: దోదకము
-  alias: తోధక, తోదక, తోటక, దోధక, తరంగక, బందు, భిత్తక
-  chandamName: త్రిష్టుప్పు
-  charLength: 11
-  matraLength: 16
-  min: 11
-  max: 11
-  chandamNumber: 439
-  chandamOrder: 2485
-  sequence: U||-U||-U||-UU
-  matraSeries: 4 , 6 , 3-4 , 4-3 , 3-5
 - identifier: kOmala
   name: కోమల
   language: Telugu
@@ -7529,17 +4947,6 @@ rules:
   - - 7
   yatiMode: CharPosition
   prasa: true
-  shortName: కోమల
-  alias: ''
-  chandamName: పంక్తి
-  charLength: 10
-  matraLength: 16
-  min: 10
-  max: 10
-  chandamNumber: 55
-  chandamOrder: 1077
-  sequence: U||-U||-UUU-U
-  matraSeries: 4 , 6 , 3-4
 - identifier: kaumidi
   name: కౌముది (చరపదమ్)
   language: Telugu
@@ -7558,17 +4965,6 @@ rules:
   - - 6
   yatiMode: CharPosition
   prasa: true
-  shortName: కౌముది
-  alias: చరపదమ్
-  chandamName: పంక్తి
-  charLength: 10
-  matraLength: 15
-  min: 10
-  max: 10
-  chandamNumber: 296
-  chandamOrder: 1318
-  sequence: '|||-UU|-UU|-U'
-  matraSeries: 5 , 3-4 , 5-3
 - identifier: naMdini
   name: నందిని (నంది)
   language: Telugu
@@ -7587,17 +4983,6 @@ rules:
   - - 6
   yatiMode: CharPosition
   prasa: true
-  shortName: నందిని
-  alias: నంది
-  chandamName: పంక్తి
-  charLength: 10
-  matraLength: 15
-  min: 10
-  max: 10
-  chandamNumber: 359
-  chandamOrder: 1381
-  sequence: U||-UU|-|U|-U
-  matraSeries: 3 , 4 , 6 , 4-5
 - identifier: utsuka
   name: ఉత్సుక (మదనోద్ధురా)
   language: Telugu
@@ -7614,17 +4999,6 @@ rules:
   yati: []
   yatiMode: CharPosition
   prasa: true
-  shortName: ఉత్సుక
-  alias: మదనోద్ధురా
-  chandamName: బృహతి
-  charLength: 9
-  matraLength: 13
-  min: 9
-  max: 9
-  chandamNumber: 183
-  chandamOrder: 693
-  sequence: U||-U||-U|U
-  matraSeries: 4 , 6 , 3-4 , 4-3 , 3-5
 - identifier: kiSOra
   name: కిశోర (కరశయా)
   language: Telugu
@@ -7641,17 +5015,6 @@ rules:
   yati: []
   yatiMode: CharPosition
   prasa: true
-  shortName: కిశోర
-  alias: కరశయా
-  chandamName: బృహతి
-  charLength: 9
-  matraLength: 12
-  min: 9
-  max: 9
-  chandamNumber: 184
-  chandamOrder: 694
-  sequence: '|||-U||-U|U'
-  matraSeries: 3 , 5 , 6 , 3-4 , 5-4
 - identifier: rasaali
   name: రసాలి
   language: Telugu
@@ -7670,17 +5033,6 @@ rules:
   - - 7
   yatiMode: CharPosition
   prasa: true
-  shortName: రసాలి
-  alias: ''
-  chandamName: పంక్తి
-  charLength: 10
-  matraLength: 15
-  min: 10
-  max: 10
-  chandamNumber: 187
-  chandamOrder: 1209
-  sequence: U|U-|||-U|U-U
-  matraSeries: 5 , 3-4 , 3-5 , 5-3
 - identifier: manOrama
   name: మనోరమ
   language: Telugu
@@ -7699,17 +5051,6 @@ rules:
   - - 7
   yatiMode: CharPosition
   prasa: true
-  shortName: మనోరమ
-  alias: ''
-  chandamName: పంక్తి
-  charLength: 10
-  matraLength: 14
-  min: 10
-  max: 10
-  chandamNumber: 344
-  chandamOrder: 1366
-  sequence: '|||-U|U-|U|-U'
-  matraSeries: 3 , 6 , 3-5 , 5-3 , 5-4
 - identifier: paMkti2
   name: పంక్తి-2(విశ్వముఖీ)
   language: Telugu
@@ -7728,17 +5069,6 @@ rules:
   - - 7
   yatiMode: CharPosition
   prasa: true
-  shortName: పంక్తి-2
-  alias: విశ్వముఖీ
-  chandamName: పంక్తి
-  charLength: 10
-  matraLength: 14
-  min: 10
-  max: 10
-  chandamNumber: 439
-  chandamOrder: 1461
-  sequence: U||-U||-U||-U
-  matraSeries: 4 , 6 , 3-4 , 4-3 , 3-5
 - identifier: bhOgavilasita
   name: భోగివిలసిత(కుప్యమ్)
   language: Telugu
@@ -7757,17 +5087,6 @@ rules:
   - - 7
   yatiMode: CharPosition
   prasa: true
-  shortName: భోగివిలసిత
-  alias: కుప్యమ్
-  chandamName: పంక్తి
-  charLength: 10
-  matraLength: 14
-  min: 10
-  max: 10
-  chandamNumber: 351
-  chandamOrder: 1373
-  sequence: U||-||U-|U|-U
-  matraSeries: 3 , 4 , 6 , 3-5 , 5-3 , 4-5 , 5-4
 - identifier: padamaali
   name: పదమాలి (మాలతీ)
   language: Telugu
@@ -7786,17 +5105,6 @@ rules:
   - - 10
   yatiMode: CharPosition
   prasa: true
-  shortName: పదమాలి
-  alias: మాలతీ
-  chandamName: జగతి
-  charLength: 12
-  matraLength: 16
-  min: 12
-  max: 12
-  chandamNumber: 1392
-  chandamOrder: 5486
-  sequence: '|||-|U|-|U|-U|U'
-  matraSeries: 3-4 , 4-3 , 3-5
 - identifier: prabha
   name: ప్రభ (ప్రముదితవదన, ప్రభాత, మందాకినీ, గౌరీ, చంచలాక్షీ)
   language: Telugu
@@ -7815,17 +5123,6 @@ rules:
   - - 8
   yatiMode: CharPosition
   prasa: true
-  shortName: ప్రభ
-  alias: ప్రముదితవదన, ప్రభాత, మందాకినీ, గౌరీ, చంచలాక్షీ
-  chandamName: జగతి
-  charLength: 12
-  matraLength: 16
-  min: 12
-  max: 12
-  chandamNumber: 1216
-  chandamOrder: 5310
-  sequence: '|||-|||-U|U-U|U'
-  matraSeries: 3-5 , 5-3 , 4-5 , 5-4
 - identifier: prahEya
   name: ప్రహేయ (పుటః)
   language: Telugu
@@ -7844,17 +5141,6 @@ rules:
   - - 8
   yatiMode: CharPosition
   prasa: true
-  shortName: ప్రహేయ
-  alias: పుటః
-  chandamName: జగతి
-  charLength: 12
-  matraLength: 17
-  min: 12
-  max: 12
-  chandamNumber: 576
-  chandamOrder: 4670
-  sequence: '|||-|||-UUU-|UU'
-  matraSeries: 4 , 5 , 6 , 5-3
 - identifier: maNimaala1
   name: మణిమాల-1 (అబ్జవిచిత్రా, పుష్పవిచిత్రా)
   language: Telugu
@@ -7873,17 +5159,6 @@ rules:
   - - 7
   yatiMode: CharPosition
   prasa: true
-  shortName: మణిమాల-1
-  alias: అబ్జవిచిత్రా, పుష్పవిచిత్రా
-  chandamName: జగతి
-  charLength: 12
-  matraLength: 20
-  min: 12
-  max: 12
-  chandamNumber: 781
-  chandamOrder: 4875
-  sequence: UU|-|UU-UU|-|UU
-  matraSeries: 4 , 5 , 6
 - identifier: mEghavilasitamu
   name: మేఘవిలసితము
   language: Telugu
@@ -7902,17 +5177,6 @@ rules:
   - - 6
   yatiMode: CharPosition
   prasa: true
-  shortName: మేఘవిలసితము
-  alias: ''
-  chandamName: జగతి
-  charLength: 12
-  matraLength: 16
-  min: 12
-  max: 12
-  chandamNumber: 2041
-  chandamOrder: 6135
-  sequence: UUU-|||-|||-||U
-  matraSeries: 4 , 6 , 4-3 , 4-5
 - identifier: lalita
   name: లలిత
   language: Telugu
@@ -7931,17 +5195,6 @@ rules:
   - - 9
   yatiMode: CharPosition
   prasa: true
-  shortName: లలిత
-  alias: ''
-  chandamName: జగతి
-  charLength: 12
-  matraLength: 18
-  min: 12
-  max: 12
-  chandamNumber: 1397
-  chandamOrder: 5491
-  sequence: UU|-U||-|U|-U|U
-  matraSeries: 4 , 5 , 5-3 , 4-5
 - identifier: navamaalini
   name: నవమాలిని
   language: Telugu
@@ -7960,17 +5213,6 @@ rules:
   - - 8
   yatiMode: CharPosition
   prasa: true
-  shortName: నవమాలిని
-  alias: ''
-  chandamName: జగతి
-  charLength: 12
-  matraLength: 16
-  min: 12
-  max: 12
-  chandamNumber: 944
-  chandamOrder: 5038
-  sequence: '|||-|U|-U||-|UU'
-  matraSeries: 3 , 6 , 3-4 , 4-3
 - identifier: kusuma_vichitra
   name: కుసుమవిచిత్ర (గజలలిత)
   language: Telugu
@@ -7989,17 +5231,6 @@ rules:
   - - 7
   yatiMode: CharPosition
   prasa: true
-  shortName: కుసుమవిచిత్ర
-  alias: గజలలిత
-  chandamName: జగతి
-  charLength: 12
-  matraLength: 16
-  min: 12
-  max: 12
-  chandamNumber: 976
-  chandamOrder: 5070
-  sequence: '|||-|UU-|||-|UU'
-  matraSeries: 3 , 4 , 6 , 3-5
 - identifier: chaMdravartma
   name: చంద్రవర్త్మ
   language: Telugu
@@ -8018,17 +5249,6 @@ rules:
   - - 7
   yatiMode: CharPosition
   prasa: true
-  shortName: చంద్రవర్త్మ
-  alias: ''
-  chandamName: జగతి
-  charLength: 12
-  matraLength: 16
-  min: 12
-  max: 12
-  chandamNumber: 1979
-  chandamOrder: 6073
-  sequence: U|U-|||-U||-||U
-  matraSeries: 5 , 6 , 3-4 , 3-5 , 5-3
 - identifier: vRMta
   name: వృంత (రథపదమ్)
   language: Telugu
@@ -8047,17 +5267,6 @@ rules:
   - - 9
   yatiMode: CharPosition
   prasa: true
-  shortName: వృంత
-  alias: రథపదమ్
-  chandamName: త్రిష్టుప్పు
-  charLength: 11
-  matraLength: 14
-  min: 11
-  max: 11
-  chandamNumber: 256
-  chandamOrder: 2302
-  sequence: '|||-|||-||U-UU'
-  matraSeries: 4 , 5 , 6 , 3-4 , 5-3
 - identifier: maMdaaradaama
   name: మందారదామ (ప్రాకారబన్ధః)
   language: Telugu
@@ -8076,17 +5285,6 @@ rules:
   - - 7
   yatiMode: CharPosition
   prasa: true
-  shortName: మందారదామ
-  alias: ప్రాకారబన్ధః
-  chandamName: త్రిష్టుప్పు
-  charLength: 11
-  matraLength: 19
-  min: 11
-  max: 11
-  chandamNumber: 293
-  chandamOrder: 2339
-  sequence: UU|-UU|-UU|-UU
-  matraSeries: 5 , 5-4
 - identifier: sumukhi
   name: సుముఖి (ద్రుతపాదగతి)
   language: Telugu
@@ -8105,17 +5303,6 @@ rules:
   - - 7
   yatiMode: CharPosition
   prasa: true
-  shortName: సుముఖి
-  alias: ద్రుతపాదగతి
-  chandamName: త్రిష్టుప్పు
-  charLength: 11
-  matraLength: 14
-  min: 11
-  max: 11
-  chandamNumber: 880
-  chandamOrder: 2926
-  sequence: '|||-|U|-|U|-|U'
-  matraSeries: 4 , 6 , 3-4 , 4-3 , 3-5
 - identifier: upasthita2
   name: ఉపస్థిత-2 (స్త్రీ, శిఖండి, విరుత)
   language: Telugu
@@ -8134,17 +5321,6 @@ rules:
   - - 7
   yatiMode: CharPosition
   prasa: true
-  shortName: ఉపస్థిత-2
-  alias: స్త్రీ, శిఖండి, విరుత
-  chandamName: త్రిష్టుప్పు
-  charLength: 11
-  matraLength: 17
-  min: 11
-  max: 11
-  chandamNumber: 286
-  chandamOrder: 2332
-  sequence: '|U|-||U-UU|-UU'
-  matraSeries: 4 , 5 , 6 , 5-3
 - identifier: upasthita1
   name: ఉపస్థిత-1
   language: Telugu
@@ -8163,17 +5339,6 @@ rules:
   - - 8
   yatiMode: CharPosition
   prasa: true
-  shortName: ఉపస్థిత-1
-  alias: ''
-  chandamName: త్రిష్టుప్పు
-  charLength: 11
-  matraLength: 17
-  min: 11
-  max: 11
-  chandamNumber: 365
-  chandamOrder: 2411
-  sequence: UU|-|U|-|U|-UU
-  matraSeries: 4 , 5 , 6 , 5-3 , 4-5
 - identifier: Ekaroopa
   name: ఏకరూప
   language: Telugu
@@ -8192,17 +5357,6 @@ rules:
   - - 8
   yatiMode: CharPosition
   prasa: true
-  shortName: ఏకరూప
-  alias: ''
-  chandamName: త్రిష్టుప్పు
-  charLength: 11
-  matraLength: 18
-  min: 11
-  max: 11
-  chandamNumber: 369
-  chandamOrder: 2415
-  sequence: UUU-U||-|U|-UU
-  matraSeries: 4-5
 - identifier: pRdhivi
   name: పృథివి (పృథ్వి)
   language: Telugu
@@ -8221,17 +5375,6 @@ rules:
   - - 8
   yatiMode: CharPosition
   prasa: true
-  shortName: పృథివి
-  alias: పృథ్వి
-  chandamName: త్రిష్టుప్పు
-  charLength: 11
-  matraLength: 13
-  min: 11
-  max: 11
-  chandamNumber: 896
-  chandamOrder: 2942
-  sequence: '|||-|||-|U|-|U'
-  matraSeries: 3 , 5 , 6 , 3-4 , 4-3 , 4-5 , 5-4
 - identifier: bhramara_vilasita
   name: భ్రమరవిలసిత
   language: Telugu
@@ -8250,17 +5393,6 @@ rules:
   - - 6
   yatiMode: CharPosition
   prasa: true
-  shortName: భ్రమరవిలసిత
-  alias: ''
-  chandamName: త్రిష్టుప్పు
-  charLength: 11
-  matraLength: 16
-  min: 11
-  max: 11
-  chandamNumber: 1009
-  chandamOrder: 3055
-  sequence: UUU-U||-|||-|U
-  matraSeries: 4 , 6 , 4-5
 - identifier: mauktikamaala
   name: మౌక్తికమాల (అనుకూలా)
   language: Telugu
@@ -8279,17 +5411,6 @@ rules:
   - - 7
   yatiMode: CharPosition
   prasa: true
-  shortName: మౌక్తికమాల
-  alias: అనుకూలా
-  chandamName: త్రిష్టుప్పు
-  charLength: 11
-  matraLength: 16
-  min: 11
-  max: 11
-  chandamNumber: 487
-  chandamOrder: 2533
-  sequence: U||-UU|-|||-UU
-  matraSeries: 3 , 4 , 6 , 3-5
 - identifier: sumaMgali1
   name: సుమంగలి-1 (కలహంసః)
   language: Telugu
@@ -8309,17 +5430,6 @@ rules:
   - - 8
   yatiMode: CharPosition
   prasa: true
-  shortName: సుమంగలి-1
-  alias: కలహంసః
-  chandamName: అతిజగతి
-  charLength: 13
-  matraLength: 18
-  min: 13
-  max: 13
-  chandamNumber: 1772
-  chandamOrder: 9962
-  sequence: '||U-|U|-||U-||U-U'
-  matraSeries: 4 , 5-3 , 4-5 , 5-4
 - identifier: prabhaatamu2
   name: ప్రభాతము-2 (మృగేంద్రముఖ, సువక్త్రా, అచల)
   language: Telugu
@@ -8339,17 +5449,6 @@ rules:
   - - 8
   yatiMode: CharPosition
   prasa: true
-  shortName: ప్రభాతము-2
-  alias: మృగేంద్రముఖ, సువక్త్రా, అచల
-  chandamName: అతిజగతి
-  charLength: 13
-  matraLength: 18
-  min: 13
-  max: 13
-  chandamNumber: 1392
-  chandamOrder: 9582
-  sequence: '|||-|U|-|U|-U|U-U'
-  matraSeries: 3-4 , 4-3 , 3-5
 - identifier: chaMcharIkaavali2
   name: చంచరీకావళి-2
   language: Telugu
@@ -8369,17 +5468,6 @@ rules:
   - - 6
   yatiMode: CharPosition
   prasa: true
-  shortName: చంచరీకావళి-2
-  alias: ''
-  chandamName: అతిజగతి
-  charLength: 13
-  matraLength: 23
-  min: 13
-  max: 13
-  chandamNumber: 1154
-  chandamOrder: 9344
-  sequence: '|UU-UUU-U|U-U|U-U'
-  matraSeries: 5-4
 - identifier: bhaMbaragaana
   name: భంభరగానము
   language: Telugu
@@ -8399,17 +5487,6 @@ rules:
   - - 8
   yatiMode: CharPosition
   prasa: true
-  shortName: భంభరగానము
-  alias: ''
-  chandamName: అతిజగతి
-  charLength: 13
-  matraLength: 16
-  min: 13
-  max: 13
-  chandamNumber: 3520
-  chandamOrder: 11710
-  sequence: '|||-|||-U||-U||-U'
-  matraSeries: 3 , 4 , 5 , 6 , 5-3 , 4-5 , 5-4
 - identifier: bhoonuta2
   name: భూనుతము-2
   language: Telugu
@@ -8429,17 +5506,6 @@ rules:
   - - 10
   yatiMode: CharPosition
   prasa: true
-  shortName: భూనుతము-2
-  alias: ''
-  chandamName: శక్వరి
-  charLength: 14
-  matraLength: 19
-  min: 14
-  max: 14
-  chandamNumber: 3579
-  chandamOrder: 19961
-  sequence: U|U-|||-|||-U||-UU
-  matraSeries: 5 , 3-4 , 5-4
 - identifier: aalOla
   name: ఆలోల
   language: Telugu
@@ -8458,17 +5524,6 @@ rules:
   yati: []
   yatiMode: CharPosition
   prasa: true
-  shortName: ఆలోల
-  alias: ''
-  chandamName: శక్వరి
-  charLength: 14
-  matraLength: 24
-  min: 14
-  max: 14
-  chandamNumber: 3097
-  chandamOrder: 19479
-  sequence: UUU-||U-UUU-U||-UU
-  matraSeries: 4 , 6
 - identifier: nalini
   name: నలిని (భ్రమరావలికా, నలినీ, భ్రమరావళి)
   language: Telugu
@@ -8488,17 +5543,6 @@ rules:
   - - 10
   yatiMode: CharPosition
   prasa: true
-  shortName: నలిని
-  alias: భ్రమరావలికా, నలినీ, భ్రమరావళి
-  chandamName: అతిశక్వరి
-  charLength: 15
-  matraLength: 20
-  min: 15
-  max: 15
-  chandamNumber: 14044
-  chandamOrder: 46810
-  sequence: '||U-||U-||U-||U-||U'
-  matraSeries: 4 , 6 , 5-3 , 4-5 , 5-4
 - identifier: chaMdrarEkha
   name: చంద్రరేఖ
   language: Telugu
@@ -8518,17 +5562,6 @@ rules:
   - - 8
   yatiMode: CharPosition
   prasa: true
-  shortName: చంద్రరేఖ
-  alias: ''
-  chandamName: అతిశక్వరి
-  charLength: 15
-  matraLength: 27
-  min: 15
-  max: 15
-  chandamNumber: 4625
-  chandamOrder: 37391
-  sequence: UUU-U|U-UUU-|UU-|UU
-  matraSeries: 4-5
 - identifier: ila
   name: ఇల
   language: Telugu
@@ -8548,17 +5581,6 @@ rules:
   - - 8
   yatiMode: CharPosition
   prasa: true
-  shortName: ఇల
-  alias: ''
-  chandamName: అతిశక్వరి
-  charLength: 15
-  matraLength: 18
-  min: 15
-  max: 15
-  chandamNumber: 16364
-  chandamOrder: 49130
-  sequence: '||U-|U|-|||-|||-||U'
-  matraSeries: 4 , 5 , 4-3 , 5-3 , 4-5 , 5-4
 - identifier: ila2
   name: 'ఇల2 '
   language: Telugu
@@ -8579,17 +5601,6 @@ rules:
     - 8
   yatiMode: CharPosition
   prasa: true
-  shortName: ఇల2
-  alias: ''
-  chandamName: అతిశక్వరి
-  charLength: 15
-  matraLength: 18
-  min: 15
-  max: 15
-  chandamNumber: 16364
-  chandamOrder: 49130
-  sequence: '||U-|U|-|||-|||-||U'
-  matraSeries: 4 , 5 , 4-3 , 5-3 , 4-5 , 5-4
 - identifier: alasagati
   name: 'అలసగతి '
   language: Telugu
@@ -8609,17 +5620,6 @@ rules:
   - - 10
   yatiMode: CharPosition
   prasa: true
-  shortName: అలసగతి
-  alias: ''
-  chandamName: అతిశక్వరి
-  charLength: 15
-  matraLength: 19
-  min: 15
-  max: 15
-  chandamNumber: 7648
-  chandamOrder: 40414
-  sequence: '|||-||U-|||-U||-|UU'
-  matraSeries: 5 , 3-4 , 4-5 , 5-4
 - identifier: padmakamu2
   name: పద్మకము-2 (పద్మ)
   language: Telugu
@@ -8640,17 +5640,6 @@ rules:
   - - 8
   yatiMode: CharPosition
   prasa: true
-  shortName: పద్మకము-2
-  alias: పద్మ
-  chandamName: అష్టి
-  charLength: 16
-  matraLength: 21
-  min: 16
-  max: 16
-  chandamNumber: 23416
-  chandamOrder: 88950
-  sequence: '|||-U||-|U|-|U|-|U|-U'
-  matraSeries: 5 , 6 , 3-5
 - identifier: lalitagati
   name: లలితగతి
   language: Telugu
@@ -8670,17 +5659,6 @@ rules:
   - - 11
   yatiMode: CharPosition
   prasa: true
-  shortName: లలితగతి
-  alias: ''
-  chandamName: అతిశక్వరి
-  charLength: 15
-  matraLength: 17
-  min: 15
-  max: 15
-  chandamNumber: 15360
-  chandamOrder: 48126
-  sequence: '|||-|||-|||-|U|-||U'
-  matraSeries: 3 , 4 , 5 , 6 , 3-4 , 5-3 , 4-5 , 5-4
 - identifier: gajaraaja
   name: గజరాజ
   language: Telugu
@@ -8700,17 +5678,6 @@ rules:
   - - 8
   yatiMode: CharPosition
   prasa: true
-  shortName: గజరాజ
-  alias: ''
-  chandamName: అతిశక్వరి
-  charLength: 15
-  matraLength: 20
-  min: 15
-  max: 15
-  chandamNumber: 15788
-  chandamOrder: 48554
-  sequence: '||U-|U|-U||-U||-||U'
-  matraSeries: 4 , 5 , 4-3
 - identifier: gajavilasita
   name: గజవిలసిత (ఋషభగజవిలసితమ్)
   language: Telugu
@@ -8731,17 +5698,6 @@ rules:
   - - 8
   yatiMode: CharPosition
   prasa: true
-  shortName: గజవిలసిత
-  alias: ఋషభగజవిలసితమ్
-  chandamName: అష్టి
-  charLength: 16
-  matraLength: 20
-  min: 16
-  max: 16
-  chandamNumber: 32727
-  chandamOrder: 98261
-  sequence: U||-U|U-|||-|||-|||-U
-  matraSeries: 3 , 6 , 3-4 , 4-3 , 4-5
 - identifier: aSvagati
   name: అశ్వగతి (ఖగతిః, అశ్వాక్రాంత, పద్మముఖీ, సంగత)
   language: Telugu
@@ -8762,17 +5718,6 @@ rules:
   - - 10
   yatiMode: CharPosition
   prasa: true
-  shortName: అశ్వగతి
-  alias: ఖగతిః, అశ్వాక్రాంత, పద్మముఖీ, సంగత
-  chandamName: అష్టి
-  charLength: 16
-  matraLength: 22
-  min: 16
-  max: 16
-  chandamNumber: 28087
-  chandamOrder: 93621
-  sequence: U||-U||-U||-U||-U||-U
-  matraSeries: 4 , 6 , 4-3 , 3-5
 - identifier: madanadarpaNa
   name: మదనదర్పణ (మదనదర్ప)
   language: Telugu
@@ -8793,17 +5738,6 @@ rules:
   - - 11
   yatiMode: CharPosition
   prasa: true
-  shortName: మదనదర్పణ
-  alias: మదనదర్ప
-  chandamName: అష్టి
-  charLength: 16
-  matraLength: 23
-  min: 16
-  max: 16
-  chandamNumber: 21855
-  chandamOrder: 87389
-  sequence: U||-||U-|U|-U|U-|U|-U
-  matraSeries: 3 , 6 , 5-4
 - identifier: chaMdrabhaanu
   name: చంద్రభాను
   language: Telugu
@@ -8824,17 +5758,6 @@ rules:
   - - 10
   yatiMode: CharPosition
   prasa: true
-  shortName: చంద్రభాను
-  alias: ''
-  chandamName: అష్టి
-  charLength: 16
-  matraLength: 23
-  min: 16
-  max: 16
-  chandamNumber: 21848
-  chandamOrder: 87382
-  sequence: '|||-U|U-|U|-U|U-|U|-U'
-  matraSeries: 3 , 6 , 5-4
 - identifier: padakOkilakaaMka
   name: పదకోకిలకాంక
   language: Telugu
@@ -8856,17 +5779,6 @@ rules:
     - 14
   yatiMode: CharPosition
   prasa: true
-  shortName: పదకోకిలకాంక
-  alias: ''
-  chandamName: అత్యష్టి
-  charLength: 17
-  matraLength: 22
-  min: 17
-  max: 17
-  chandamNumber: 56240
-  chandamOrder: 187310
-  sequence: '|||-|U|-U||-|U|-|U|-|U'
-  matraSeries: 3 , 6 , 4-3
 - identifier: vaMSapattrapatita
   name: వంశపత్రపతిత
   language: Telugu
@@ -8887,17 +5799,6 @@ rules:
   - - 11
   yatiMode: CharPosition
   prasa: true
-  shortName: వంశపత్రపతిత
-  alias: ''
-  chandamName: అత్యష్టి
-  charLength: 17
-  matraLength: 22
-  min: 17
-  max: 17
-  chandamNumber: 64983
-  chandamOrder: 196053
-  sequence: U||-U|U-|||-U||-|||-|U
-  matraSeries: 3 , 6 , 3-4 , 4-3
 - identifier: dhRti
   name: ధృతి (పృథ్వి, విలంబితగతి)
   language: Telugu
@@ -8918,17 +5819,6 @@ rules:
   - - 9
   yatiMode: CharPosition
   prasa: true
-  shortName: ధృతి
-  alias: పృథ్వి, విలంబితగతి
-  chandamName: అత్యష్టి
-  charLength: 17
-  matraLength: 24
-  min: 17
-  max: 17
-  chandamNumber: 38750
-  chandamOrder: 169820
-  sequence: '|U|-||U-|U|-||U-|UU-|U'
-  matraSeries: 3-5 , 5-3
 - identifier: chaMpakakEsari
   name: 'చంపకకేసరి '
   language: Telugu
@@ -8949,17 +5839,6 @@ rules:
   - - 9
   yatiMode: CharPosition
   prasa: true
-  shortName: చంపకకేసరి
-  alias: ''
-  chandamName: అత్యష్టి
-  charLength: 17
-  matraLength: 23
-  min: 17
-  max: 17
-  chandamNumber: 46828
-  chandamOrder: 177898
-  sequence: '||U-|U|-||U-||U-||U-|U'
-  matraSeries: 4 , 5-3 , 4-5 , 5-4
 - identifier: hariNapluta
   name: హరిణప్లుత
   language: Telugu
@@ -8981,17 +5860,6 @@ rules:
     - 14
   yatiMode: CharPosition
   prasa: true
-  shortName: హరిణప్లుత
-  alias: ''
-  chandamName: ధృతి
-  charLength: 18
-  matraLength: 26
-  min: 18
-  max: 18
-  chandamNumber: 93019
-  chandamOrder: 355161
-  sequence: U|U-||U-|U|-|U|-U||-U|U
-  matraSeries: 3-4
 - identifier: tvaritapadagati
   name: 'త్వరితపదగతి '
   language: Telugu
@@ -9012,17 +5880,6 @@ rules:
   - - 11
   yatiMode: CharPosition
   prasa: true
-  shortName: త్వరితపదగతి
-  alias: ''
-  chandamName: ధృతి
-  charLength: 18
-  matraLength: 20
-  min: 18
-  max: 18
-  chandamNumber: 65536
-  chandamOrder: 327678
-  sequence: '|||-|||-|||-|||-|||-|UU'
-  matraSeries: 3 , 4 , 5 , 6 , 4-3 , 3-5 , 5-3 , 4-5 , 5-4
 - identifier: niSa
   name: నిశా-2 (నారాచ, నారాచక, మహామలికా, సింహవిక్రీడిత, వరదా )
   language: Telugu
@@ -9043,17 +5900,6 @@ rules:
   - - 9
   yatiMode: CharPosition
   prasa: true
-  shortName: నిశా-2
-  alias: నారాచ, నారాచక, మహామలికా, సింహవిక్రీడిత, వరదా
-  chandamName: ధృతి
-  charLength: 18
-  matraLength: 26
-  min: 18
-  max: 18
-  chandamNumber: 74944
-  chandamOrder: 337086
-  sequence: '|||-|||-U|U-U|U-U|U-U|U'
-  matraSeries: 3-5 , 5-3 , 5-4
 - identifier: haranartana
   name: 'హరనర్తన '
   language: Telugu
@@ -9074,17 +5920,6 @@ rules:
   - - 9
   yatiMode: CharPosition
   prasa: true
-  shortName: హరనర్తన
-  alias: ''
-  chandamName: ధృతి
-  charLength: 18
-  matraLength: 27
-  min: 18
-  max: 18
-  chandamNumber: 90971
-  chandamOrder: 353113
-  sequence: U|U-||U-|U|-|UU-U||-U|U
-  matraSeries: 6
 - identifier: ativinaya
   name: అతివినయ
   language: Telugu
@@ -9105,17 +5940,6 @@ rules:
   - - 11
   yatiMode: CharPosition
   prasa: true
-  shortName: అతివినయ
-  alias: ''
-  chandamName: ధృతి
-  charLength: 18
-  matraLength: 19
-  min: 18
-  max: 18
-  chandamNumber: 131072
-  chandamOrder: 393214
-  sequence: '|||-|||-|||-|||-|||-||U'
-  matraSeries: 3 , 4 , 5 , 6 , 3-4 , 4-3 , 3-5 , 5-3 , 4-5 , 5-4
 - identifier: dEvaraaja
   name: దేవరాజ
   language: Telugu
@@ -9136,17 +5960,6 @@ rules:
   - - 11
   yatiMode: CharPosition
   prasa: true
-  shortName: దేవరాజ
-  alias: ''
-  chandamName: ధృతి
-  charLength: 18
-  matraLength: 23
-  min: 18
-  max: 18
-  chandamNumber: 125912
-  chandamOrder: 388054
-  sequence: '|||-U|U-|||-|U|-U||-||U'
-  matraSeries: 3 , 5 , 6 , 5-4
 - identifier: kshmaahaara
   name: క్ష్మాహార
   language: Telugu
@@ -9168,17 +5981,6 @@ rules:
     - 13
   yatiMode: CharPosition
   prasa: true
-  shortName: క్ష్మాహార
-  alias: ''
-  chandamName: ధృతి
-  charLength: 18
-  matraLength: 28
-  min: 18
-  max: 18
-  chandamNumber: 30841
-  chandamOrder: 292983
-  sequence: UUU-|||-|UU-UU|-|||-UUU
-  matraSeries: 4 , 6
 - identifier: kavikaMThavibhooShaNa
   name: కవికంఠభూషణ (కవికంఠవిభూషణ)
   language: Telugu
@@ -9200,17 +6002,6 @@ rules:
   - - 9
   yatiMode: CharPosition
   prasa: true
-  shortName: కవికంఠభూషణ
-  alias: కవికంఠవిభూషణ
-  chandamName: అతిధృతి
-  charLength: 19
-  matraLength: 26
-  min: 19
-  max: 19
-  chandamNumber: 177900
-  chandamOrder: 702186
-  sequence: '||U-|U|-||U-||U-||U-|U|-U'
-  matraSeries: 4 , 5-3 , 5-4
 - identifier: SaMbhu
   name: శంభు
   language: Telugu
@@ -9232,17 +6023,6 @@ rules:
   - - 13
   yatiMode: CharPosition
   prasa: true
-  shortName: శంభు
-  alias: ''
-  chandamName: అతిధృతి
-  charLength: 19
-  matraLength: 32
-  min: 19
-  max: 19
-  chandamNumber: 3172
-  chandamOrder: 527458
-  sequence: '||U-UU|-|UU-U||-UUU-UUU-U'
-  matraSeries: 4 , 6
 - identifier: Subhika
   name: శుభిక
   language: Telugu
@@ -9264,17 +6044,6 @@ rules:
   - - 13
   yatiMode: CharPosition
   prasa: true
-  shortName: శుభిక
-  alias: ''
-  chandamName: అతిధృతి
-  charLength: 19
-  matraLength: 26
-  min: 19
-  max: 19
-  chandamNumber: 225265
-  chandamOrder: 749551
-  sequence: UUU-U||-|||-|||-U||-U||-U
-  matraSeries: 4 , 6 , 4-5
 - identifier: durmila
   name: దుర్మిల (ద్విమిలా)
   language: Telugu
@@ -9297,17 +6066,6 @@ rules:
   - - 13
   yatiMode: CharPosition
   prasa: true
-  shortName: దుర్మిల
-  alias: ద్విమిలా
-  chandamName: సంకృతి
-  charLength: 24
-  matraLength: 32
-  min: 24
-  max: 24
-  chandamNumber: 7190236
-  chandamOrder: 23967450
-  sequence: '||U-||U-||U-||U-||U-||U-||U-||U'
-  matraSeries: 4 , 6 , 5-3
 - identifier: SRMgaara
   name: శృంగార
   language: Telugu
@@ -9331,17 +6089,6 @@ rules:
     - 19
   yatiMode: CharPosition
   prasa: true
-  shortName: శృంగార
-  alias: ''
-  chandamName: సంకృతి
-  charLength: 24
-  matraLength: 32
-  min: 24
-  max: 24
-  chandamNumber: 4193380
-  chandamOrder: 20970594
-  sequence: '||U-UU|-|UU-U||-|||-|||-|||-|UU'
-  matraSeries: 4 , 6
 - identifier: kirITa
   name: మేదురదన్తమ్ (కిరీట)
   language: Telugu
@@ -9364,17 +6111,6 @@ rules:
   - - 13
   yatiMode: CharPosition
   prasa: true
-  shortName: మేదురదన్తమ్
-  alias: కిరీట
-  chandamName: సంకృతి
-  charLength: 24
-  matraLength: 32
-  min: 24
-  max: 24
-  chandamNumber: 14380471
-  chandamOrder: 31157685
-  sequence: U||-U||-U||-U||-U||-U||-U||-U||
-  matraSeries: 4 , 6 , 3-5
 - identifier: baMdhura
   name: 'బంధుర '
   language: Telugu
@@ -9398,17 +6134,6 @@ rules:
   - - 16
   yatiMode: CharPosition
   prasa: true
-  shortName: బంధుర
-  alias: ''
-  chandamName: అభికృతి
-  charLength: 25
-  matraLength: 30
-  min: 25
-  max: 25
-  chandamNumber: 14368768
-  chandamOrder: 47923198
-  sequence: '|||-|||-|||-|||-||U-U||-U||-U||-U'
-  matraSeries: 4 , 6 , 3-5 , 4-5 , 5-4
 - identifier: vijaya
   name: విజయ
   language: Telugu
@@ -9433,17 +6158,6 @@ rules:
     - 19
   yatiMode: CharPosition
   prasa: true
-  shortName: విజయ
-  alias: ''
-  chandamName: అభికృతి
-  charLength: 25
-  matraLength: 32
-  min: 25
-  max: 25
-  chandamNumber: 16644511
-  chandamOrder: 50198941
-  sequence: U||-||U-U||-UU|-|||-||U-|||-|||-U
-  matraSeries: 4 , 6 , 3-5
 - identifier: suruchi
   name: సురుచి
   language: Telugu
@@ -9469,17 +6183,6 @@ rules:
     - 21
   yatiMode: CharPosition
   prasa: true
-  shortName: సురుచి
-  alias: ''
-  chandamName: అభికృతి
-  charLength: 25
-  matraLength: 32
-  min: 25
-  max: 25
-  chandamNumber: 4179904
-  chandamOrder: 37734334
-  sequence: '|||-|||-U||-||U-UU|-|||-|||-|UU-U'
-  matraSeries: 4 , 6
 - identifier: vanaruha
   name: వనరుహ
   language: Telugu
@@ -9504,17 +6207,6 @@ rules:
     - 19
   yatiMode: CharPosition
   prasa: true
-  shortName: వనరుహ
-  alias: ''
-  chandamName: అభికృతి
-  charLength: 25
-  matraLength: 32
-  min: 25
-  max: 25
-  chandamNumber: 16776601
-  chandamOrder: 50331031
-  sequence: UUU-||U-U||-U||-|||-|||-|||-|||-U
-  matraSeries: 4 , 6
 - identifier: jaladarava
   name: ధరణిధరగతి (జలదరవ, అలకా)
   language: Telugu
@@ -9539,17 +6231,6 @@ rules:
     - 15
   yatiMode: CharPosition
   prasa: true
-  shortName: ధరణిధరగతి
-  alias: జలదరవ, అలకా
-  chandamName: అభికృతి
-  charLength: 25
-  matraLength: 26
-  min: 25
-  max: 25
-  chandamNumber: 16777216
-  chandamOrder: 50331646
-  sequence: '|||-|||-|||-|||-|||-|||-|||-|||-U'
-  matraSeries: 3 , 4 , 5 , 6 , 3-4 , 4-3 , 3-5 , 5-3 , 4-5 , 5-4
 - identifier: varaha
   name: వరాహ
   language: Telugu
@@ -9574,17 +6255,6 @@ rules:
     - 16
   yatiMode: CharPosition
   prasa: true
-  shortName: వరాహ
-  alias: ''
-  chandamName: ఉత్కృతి
-  charLength: 26
-  matraLength: 32
-  min: 26
-  max: 26
-  chandamNumber: 8388601
-  chandamOrder: 75497463
-  sequence: UUU-|||-|||-|||-|||-|||-|||-||U-UU
-  matraSeries: 4 , 6 , 4-3
 - identifier: prabhu
   name: ప్రభు
   language: Telugu
@@ -9610,17 +6280,6 @@ rules:
     - 21
   yatiMode: CharPosition
   prasa: true
-  shortName: ప్రభు
-  alias: ''
-  chandamName: ఉత్కృతి
-  charLength: 26
-  matraLength: 32
-  min: 26
-  max: 26
-  chandamNumber: 28761088
-  chandamOrder: 95869950
-  sequence: '|||-|||-|||-|U|-|U|-|U|-|U|-|U|-|U'
-  matraSeries: 4 , 6 , 3-4 , 5-3
 - identifier: apavaaha
   name: అపవాహ
   language: Telugu
@@ -9646,17 +6305,6 @@ rules:
     - 22
   yatiMode: CharPosition
   prasa: true
-  shortName: అపవాహ
-  alias: ''
-  chandamName: ఉత్కృతి
-  charLength: 26
-  matraLength: 32
-  min: 26
-  max: 26
-  chandamNumber: 8388601
-  chandamOrder: 75497463
-  sequence: UUU-|||-|||-|||-|||-|||-|||-||U-UU
-  matraSeries: 4 , 6 , 4-3
 - identifier: tanvi
   name: తన్వి
   language: Telugu
@@ -9679,17 +6327,6 @@ rules:
   - - 13
   yatiMode: CharPosition
   prasa: true
-  shortName: తన్వి
-  alias: ''
-  chandamName: సంకృతి
-  charLength: 24
-  matraLength: 32
-  min: 24
-  max: 24
-  chandamNumber: 4155367
-  chandamOrder: 20932581
-  sequence: U||-UU|-|||-||U-U||-U||-|||-|UU
-  matraSeries: 4 , 6 , 3-5 , 4-5
 - identifier: kusuma
   name: కుసుమ
   language: Telugu
@@ -9712,17 +6349,6 @@ rules:
   - - 13
   yatiMode: CharPosition
   prasa: true
-  shortName: కుసుమ
-  alias: ''
-  chandamName: వికృతి
-  charLength: 23
-  matraLength: 26
-  min: 23
-  max: 23
-  chandamNumber: 4193784
-  chandamOrder: 12582390
-  sequence: '|||-U||-|||-U||-|||-|||-|||-|U'
-  matraSeries: 3 , 5 , 6 , 3-4 , 5-3 , 5-4
 - identifier: mattaakrIDa
   name: మత్తాక్రీడ
   language: Telugu
@@ -9746,17 +6372,6 @@ rules:
     - 17
   yatiMode: CharPosition
   prasa: true
-  shortName: మత్తాక్రీడ
-  alias: ''
-  chandamName: వికృతి
-  charLength: 23
-  matraLength: 32
-  min: 23
-  max: 23
-  chandamNumber: 4194049
-  chandamOrder: 12582655
-  sequence: UUU-UUU-UU|-|||-|||-|||-|||-|U
-  matraSeries: 4 , 6
 - identifier: narEMdra
   name: నరేంద్ర
   language: Telugu
@@ -9778,17 +6393,6 @@ rules:
   - - 14
   yatiMode: CharPosition
   prasa: true
-  shortName: నరేంద్ర
-  alias: ''
-  chandamName: ప్రకృతి
-  charLength: 21
-  matraLength: 28
-  min: 21
-  max: 21
-  chandamNumber: 450519
-  chandamOrder: 2547669
-  sequence: U||-U|U-|||-|||-|U|-|U|-|UU
-  matraSeries: 6 , 4-5
 - identifier: surabhoojaraaja
   name: సురభూజరాజ
   language: Telugu
@@ -9810,17 +6414,6 @@ rules:
   - - 12
   yatiMode: CharPosition
   prasa: true
-  shortName: సురభూజరాజ
-  alias: ''
-  chandamName: ప్రకృతి
-  charLength: 21
-  matraLength: 26
-  min: 21
-  max: 21
-  chandamNumber: 786104
-  chandamOrder: 2883254
-  sequence: '|||-U||-U|U-|||-|||-|||-U|U'
-  matraSeries: 3 , 5 , 6 , 3-4 , 5-4
 - identifier: kanakalata
   name: కనకలత
   language: Telugu
@@ -9842,17 +6435,6 @@ rules:
   - - 13
   yatiMode: CharPosition
   prasa: true
-  shortName: కనకలత
-  alias: ''
-  chandamName: ప్రకృతి
-  charLength: 21
-  matraLength: 22
-  min: 21
-  max: 21
-  chandamNumber: 1048576
-  chandamOrder: 3145726
-  sequence: '|||-|||-|||-|||-|||-|||-||U'
-  matraSeries: 3 , 4 , 5 , 6 , 3-4 , 4-3 , 3-5 , 5-3 , 4-5 , 5-4
 - identifier: haMsi
   name: హంసి
   language: Telugu
@@ -9875,17 +6457,6 @@ rules:
   - - 13
   yatiMode: CharPosition
   prasa: true
-  shortName: హంసి
-  alias: ''
-  chandamName: ఆకృతి
-  charLength: 22
-  matraLength: 32
-  min: 22
-  max: 22
-  chandamNumber: 1048321
-  chandamOrder: 5242623
-  sequence: UUU-UUU-UU|-|||-|||-|||-||U-U
-  matraSeries: 4 , 6
 - identifier: vichikilata
   name: విచికిలిత (కనకలతిక, అచలవిరతిః)
   language: Telugu
@@ -9908,17 +6479,6 @@ rules:
   - - 13
   yatiMode: CharPosition
   prasa: true
-  shortName: విచికిలిత
-  alias: కనకలతిక, అచలవిరతిః
-  chandamName: ఆకృతి
-  charLength: 22
-  matraLength: 23
-  min: 22
-  max: 22
-  chandamNumber: 2097152
-  chandamOrder: 6291454
-  sequence: '|||-|||-|||-|||-|||-|||-|||-U'
-  matraSeries: 3 , 4 , 5 , 6 , 3-4 , 4-3 , 3-5 , 5-3 , 4-5 , 5-4
 - identifier: prabhaalalitamu
   name: ప్రభాకలితము
   language: Telugu
@@ -9940,17 +6500,6 @@ rules:
   - - 13
   yatiMode: CharPosition
   prasa: true
-  shortName: ప్రభాకలితము
-  alias: ''
-  chandamName: కృతి
-  charLength: 20
-  matraLength: 27
-  min: 20
-  max: 20
-  chandamNumber: 372080
-  chandamOrder: 1420654
-  sequence: '|||-|U|-|U|-U||-U|U-||U-|U'
-  matraSeries: 3-4 , 4-3
 - identifier: kalita
   name: కలిత
   language: Telugu
@@ -9972,17 +6521,6 @@ rules:
   - - 12
   yatiMode: CharPosition
   prasa: true
-  shortName: కలిత
-  alias: ''
-  chandamName: కృతి
-  charLength: 20
-  matraLength: 23
-  min: 20
-  max: 20
-  chandamNumber: 522176
-  chandamOrder: 1570750
-  sequence: '|||-|||-U||-||U-|||-|||-|U'
-  matraSeries: 3 , 4 , 5 , 6 , 3-5 , 5-4
 - identifier: bhujara
   name: భుజగ
   language: Telugu
@@ -10004,17 +6542,6 @@ rules:
   - - 13
   yatiMode: CharPosition
   prasa: true
-  shortName: భుజగ
-  alias: ''
-  chandamName: కృతి
-  charLength: 20
-  matraLength: 26
-  min: 20
-  max: 20
-  chandamNumber: 372216
-  chandamOrder: 1420790
-  sequence: '|||-U||-|||-U||-U|U-||U-|U'
-  matraSeries: 3-4 , 5-3
 - identifier: chaarumati
   name: శతపత్ర (చారుమతి)
   language: Telugu
@@ -10039,17 +6566,6 @@ rules:
     - 17
   yatiMode: CharPosition
   prasa: true
-  shortName: శతపత్ర
-  alias: చారుమతి
-  chandamName: అభికృతి
-  charLength: 25
-  matraLength: 32
-  min: 25
-  max: 25
-  chandamNumber: 15658735
-  chandamOrder: 49213165
-  sequence: U||-|U|-||U-|||-U||-|U|-||U-|||-U
-  matraSeries: 5 , 4-5 , 5-4
 - identifier: ujjvala
   name: ఉజ్జ్వల
   language: Telugu
@@ -10068,17 +6584,6 @@ rules:
   - - 8
   yatiMode: CharPosition
   prasa: true
-  shortName: ఉజ్జ్వల
-  alias: ''
-  chandamName: జగతి
-  charLength: 12
-  matraLength: 15
-  min: 12
-  max: 12
-  chandamNumber: 1472
-  chandamOrder: 5566
-  sequence: '|||-|||-U||-U|U'
-  matraSeries: 3 , 4 , 5 , 6 , 5-3 , 4-5 , 5-4
 - identifier: vRtta
   name: వృత్త
   language: Telugu
@@ -10097,17 +6602,6 @@ rules:
   - - 7
   yatiMode: CharPosition
   prasa: true
-  shortName: వృత్త
-  alias: ''
-  chandamName: త్రిష్టుప్పు
-  charLength: 11
-  matraLength: 16
-  min: 11
-  max: 11
-  chandamNumber: 288
-  chandamOrder: 2334
-  sequence: '|||-||U-UU|-UU'
-  matraSeries: 4-3 , 5-4
 - identifier: madraka
   name: మద్రక
   language: Telugu
@@ -10130,17 +6624,6 @@ rules:
   - - 11
   yatiMode: CharPosition
   prasa: true
-  shortName: మద్రక
-  alias: ''
-  chandamName: ఆకృతి
-  charLength: 22
-  matraLength: 30
-  min: 22
-  max: 22
-  chandamNumber: 1947095
-  chandamOrder: 6141397
-  sequence: U||-U|U-|||-U|U-||U-||U-|||-U
-  matraSeries: 4-3
 - identifier: laakshaNi
   name: లాక్షణి
   language: Telugu
@@ -10164,17 +6647,6 @@ rules:
   - - 16
   yatiMode: CharPosition
   prasa: true
-  shortName: లాక్షణి
-  alias: ''
-  chandamName: ఉద్ధురమాల
-  charLength: 27
-  matraLength: 30
-  min: 27
-  max: 27
-  chandamNumber: 67076095
-  chandamOrder: 201293821
-  sequence: U||-|||-|||-|||-|||-U||-|||-|||-||U
-  matraSeries: 3 , 4 , 5 , 6 , 4-3 , 3-5 , 5-3 , 4-5 , 5-4
 - identifier: dara
   name: దర
   language: Telugu
@@ -10201,17 +6673,6 @@ rules:
     - 25
   yatiMode: CharPosition
   prasa: true
-  shortName: దర
-  alias: ''
-  chandamName: ఉద్ధురమాల
-  charLength: 30
-  matraLength: 32
-  min: 30
-  max: 30
-  chandamNumber: 520093696
-  chandamOrder: 1593835518
-  sequence: '|||-|||-|||-|||-|||-|||-|||-|||-U||-||U'
-  matraSeries: 3 , 4 , 6 , 3-4 , 3-5 , 5-3 , 4-5 , 5-4
 - identifier: Saaloora
   name: శాలూర
   language: Telugu
@@ -10236,17 +6697,6 @@ rules:
   - - 16
   yatiMode: CharPosition
   prasa: true
-  shortName: శాలూర
-  alias: ''
-  chandamName: ఉద్ధురమాల
-  charLength: 29
-  matraLength: 32
-  min: 29
-  max: 29
-  chandamNumber: 268435453
-  chandamOrder: 805306363
-  sequence: UU|-|||-|||-|||-|||-|||-|||-|||-|||-|U
-  matraSeries: 4 , 5 , 6 , 4-3 , 5-3 , 4-5 , 5-4
 - identifier: chaMDavRshTiprayaata
   name: చండవృష్టిప్రయాత
   language: Telugu
@@ -10267,17 +6717,6 @@ rules:
     - ర
   yati: []
   yatiMode: CharPosition
-  shortName: చండవృష్టిప్రయాత
-  alias: ''
-  chandamName: ''
-  charLength: 24
-  matraLength: 36
-  min: 24
-  max: 24
-  chandamNumber: -1
-  chandamOrder: 21570750
-  sequence: '|||-|||-U|U-U|U-U|U-U|U-U|U-U|U'
-  matraSeries: ''
 - identifier: arNa
   name: అర్ణ
   language: Telugu
@@ -10300,17 +6739,6 @@ rules:
     - ర
   yati: []
   yatiMode: CharPosition
-  shortName: అర్ణ
-  alias: ''
-  chandamName: ''
-  charLength: 30
-  matraLength: 46
-  min: 30
-  max: 30
-  chandamNumber: -1
-  chandamOrder: 1380525246
-  sequence: '|||-|||-U|U-U|U-U|U-U|U-U|U-U|U-U|U-U|U'
-  matraSeries: ''
 - identifier: arNava
   name: అర్ణవ(అర్హవ)
   language: Telugu
@@ -10334,17 +6762,6 @@ rules:
     - ర
   yati: []
   yatiMode: CharPosition
-  shortName: అర్ణవ
-  alias: అర్హవ
-  chandamName: ''
-  charLength: 33
-  matraLength: 51
-  min: 33
-  max: 33
-  chandamNumber: -1
-  chandamOrder: 6442450943
-  sequence: '|||-|||-U|U-U|U-U|U-U|U-U|U-U|U-U|U-U|U-U|U'
-  matraSeries: ''
 - identifier: vyaaLa
   name: వ్యాళ
   language: Telugu
@@ -10369,17 +6786,6 @@ rules:
     - ర
   yati: []
   yatiMode: CharPosition
-  shortName: వ్యాళ
-  alias: ''
-  chandamName: ''
-  charLength: 36
-  matraLength: 56
-  min: 36
-  max: 36
-  chandamNumber: -1
-  chandamOrder: 66571993087
-  sequence: '|||-|||-U|U-U|U-U|U-U|U-U|U-U|U-U|U-U|U-U|U-U|U'
-  matraSeries: ''
 - identifier: jeemoota
   name: జీమూత
   language: Telugu
@@ -10405,17 +6811,6 @@ rules:
     - ర
   yati: []
   yatiMode: CharPosition
-  shortName: జీమూత
-  alias: ''
-  chandamName: ''
-  charLength: 39
-  matraLength: 61
-  min: 39
-  max: 39
-  chandamNumber: -1
-  chandamOrder: 547608330239
-  sequence: '|||-|||-U|U-U|U-U|U-U|U-U|U-U|U-U|U-U|U-U|U-U|U-U|U'
-  matraSeries: ''
 - identifier: leelaakara
   name: లీలాకర
   language: Telugu
@@ -10442,17 +6837,6 @@ rules:
     - ర
   yati: []
   yatiMode: CharPosition
-  shortName: లీలాకర
-  alias: ''
-  chandamName: ''
-  charLength: 42
-  matraLength: 66
-  min: 42
-  max: 42
-  chandamNumber: -1
-  chandamOrder: 4395899027455
-  sequence: '|||-|||-U|U-U|U-U|U-U|U-U|U-U|U-U|U-U|U-U|U-U|U-U|U-U|U'
-  matraSeries: ''
 - identifier: uddaama
   name: ఉద్దామ
   language: Telugu
@@ -10480,17 +6864,6 @@ rules:
     - ర
   yati: []
   yatiMode: CharPosition
-  shortName: ఉద్దామ
-  alias: ''
-  chandamName: ''
-  charLength: 45
-  matraLength: 71
-  min: 45
-  max: 45
-  chandamNumber: -1
-  chandamOrder: 35182224605183
-  sequence: '|||-|||-U|U-U|U-U|U-U|U-U|U-U|U-U|U-U|U-U|U-U|U-U|U-U|U-U|U'
-  matraSeries: ''
 - identifier: SaMkha
   name: శంఖ
   language: Telugu
@@ -10519,17 +6892,6 @@ rules:
     - ర
   yati: []
   yatiMode: CharPosition
-  shortName: శంఖ
-  alias: ''
-  chandamName: ''
-  charLength: 48
-  matraLength: 76
-  min: 48
-  max: 48
-  chandamNumber: -1
-  chandamOrder: 281472829227007
-  sequence: '|||-|||-U|U-U|U-U|U-U|U-U|U-U|U-U|U-U|U-U|U-U|U-U|U-U|U-U|U-U|U'
-  matraSeries: ''
 - identifier: nanahata
   name: ననహత దండకము
   language: Telugu
@@ -10550,17 +6912,6 @@ rules:
   yatiMode: CharPosition
   deferThresold: true
   infiniteLength: true
-  shortName: ననహత దండకము
-  alias: ''
-  chandamName: ''
-  charLength: -1
-  matraLength: -1
-  min: 15
-  max: 999999
-  chandamNumber: -1
-  chandamOrder: -1
-  sequence: ''
-  matraSeries: ''
 - identifier: sanahata
   name: సనహత దండకము
   language: Telugu
@@ -10581,17 +6932,6 @@ rules:
   yatiMode: CharPosition
   deferThresold: true
   infiniteLength: true
-  shortName: సనహత దండకము
-  alias: ''
-  chandamName: ''
-  charLength: -1
-  matraLength: -1
-  min: 15
-  max: 999999
-  chandamNumber: -1
-  chandamOrder: -1
-  sequence: ''
-  matraSeries: ''
 - identifier: nanata
   name: ననత దండకము
   language: Telugu
@@ -10610,17 +6950,6 @@ rules:
   yati: []
   yatiMode: CharPosition
   infiniteLength: true
-  shortName: ననత దండకము
-  alias: ''
-  chandamName: ''
-  charLength: -1
-  matraLength: -1
-  min: 13
-  max: 999999
-  chandamNumber: -1
-  chandamOrder: -1
-  sequence: ''
-  matraSeries: ''
 - identifier: nanaya
   name: ననయ దండకము
   language: Telugu
@@ -10638,17 +6967,6 @@ rules:
   yati: []
   yatiMode: CharPosition
   infiniteLength: true
-  shortName: ననయ దండకము
-  alias: ''
-  chandamName: ''
-  charLength: -1
-  matraLength: -1
-  min: 12
-  max: 999999
-  chandamNumber: -1
-  chandamOrder: -1
-  sequence: ''
-  matraSeries: ''
 - identifier: nata
   name: నత దండకము
   language: Telugu
@@ -10665,17 +6983,6 @@ rules:
   yati: []
   yatiMode: CharPosition
   infiniteLength: true
-  shortName: నత దండకము
-  alias: ''
-  chandamName: ''
-  charLength: -1
-  matraLength: -1
-  min: 9
-  max: 999999
-  chandamNumber: -1
-  chandamOrder: -1
-  sequence: ''
-  matraSeries: ''
 - identifier: sata
   name: సత దండకము
   language: Telugu
@@ -10692,17 +6999,6 @@ rules:
   yati: []
   yatiMode: CharPosition
   infiniteLength: true
-  shortName: సత దండకము
-  alias: ''
-  chandamName: ''
-  charLength: -1
-  matraLength: -1
-  min: 9
-  max: 999999
-  chandamNumber: -1
-  chandamOrder: -1
-  sequence: ''
-  matraSeries: ''
 - identifier: ragaNa
   name: రగణ దండకము
   language: Telugu
@@ -10718,17 +7014,6 @@ rules:
   yati: []
   yatiMode: CharPosition
   infiniteLength: true
-  shortName: రగణ దండకము
-  alias: ''
-  chandamName: ''
-  charLength: -1
-  matraLength: -1
-  min: 4
-  max: 999999
-  chandamNumber: -1
-  chandamOrder: -1
-  sequence: ''
-  matraSeries: ''
 - identifier: tagaNa
   name: తగణ దండకము
   language: Telugu
@@ -10744,17 +7029,6 @@ rules:
   yati: []
   yatiMode: CharPosition
   infiniteLength: true
-  shortName: తగణ దండకము
-  alias: ''
-  chandamName: ''
-  charLength: -1
-  matraLength: -1
-  min: 4
-  max: 999999
-  chandamNumber: -1
-  chandamOrder: -1
-  sequence: ''
-  matraSeries: ''
 - identifier: nagaNa
   name: నగణ దండకము
   language: Telugu
@@ -10770,17 +7044,6 @@ rules:
   yati: []
   yatiMode: CharPosition
   infiniteLength: true
-  shortName: నగణ దండకము
-  alias: ''
-  chandamName: ''
-  charLength: -1
-  matraLength: -1
-  min: 4
-  max: 999999
-  chandamNumber: -1
-  chandamOrder: -1
-  sequence: ''
-  matraSeries: ''
 - identifier: hagaNa
   name: హగణ దండకము
   language: Telugu
@@ -10798,17 +7061,6 @@ rules:
   yatiMode: CharPosition
   deferThresold: true
   infiniteLength: true
-  shortName: హగణ దండకము
-  alias: ''
-  chandamName: ''
-  charLength: -1
-  matraLength: -1
-  min: 5
-  max: 999999
-  chandamNumber: -1
-  chandamOrder: -1
-  sequence: ''
-  matraSeries: ''
 - identifier: nasahata
   name: నసహత దండకము
   language: Telugu
@@ -10829,17 +7081,6 @@ rules:
   yatiMode: CharPosition
   deferThresold: true
   infiniteLength: true
-  shortName: నసహత దండకము
-  alias: ''
-  chandamName: ''
-  charLength: -1
-  matraLength: -1
-  min: 15
-  max: 999999
-  chandamNumber: -1
-  chandamOrder: -1
-  sequence: ''
-  matraSeries: ''
 - identifier: taaLaragaDa
   name: తాళ రగడ
   language: Telugu
@@ -10873,17 +7114,6 @@ rules:
   yatiMode: GPosition
   prasa: true
   prasaYati: true
-  shortName: తాళ రగడ
-  alias: ''
-  chandamName: ''
-  charLength: -1
-  matraLength: -1
-  min: 32
-  max: 64
-  chandamNumber: 1
-  chandamOrder: -1
-  sequence: ''
-  matraSeries: ''
 - identifier: lalita2
   name: లలిత-2 (దయి/పటు)
   language: Telugu
@@ -10901,17 +7131,6 @@ rules:
   yatiMode: CharPosition
   prasa: true
   references: []
-  shortName: లలిత-2
-  alias: దయి/పటు
-  chandamName: ప్రతిష్ఠ
-  charLength: 4
-  matraLength: 4
-  min: 4
-  max: 4
-  chandamNumber: 16
-  chandamOrder: 30
-  sequence: '|||-|'
-  matraSeries: 3 , 4
 - identifier: naaraayaNa
   name: నారాయణ
   language: Telugu
@@ -10930,17 +7149,6 @@ rules:
   yatiMode: CharPosition
   prasa: true
   references: []
-  shortName: నారాయణ
-  alias: ''
-  chandamName: అనుష్టుప్పు
-  charLength: 8
-  matraLength: 13
-  min: 8
-  max: 8
-  chandamNumber: 163
-  chandamOrder: 417
-  sequence: U|U-UU|-U|
-  matraSeries: 5 , 3-4 , 5-4
 - identifier: gaNanaatha
   name: గణనాథ
   language: Telugu
@@ -10960,17 +7168,6 @@ rules:
   yatiMode: CharPosition
   prasa: true
   references: []
-  shortName: గణనాథ
-  alias: ''
-  chandamName: జగతి
-  charLength: 12
-  matraLength: 18
-  min: 12
-  max: 12
-  chandamNumber: 911
-  chandamOrder: 5005
-  sequence: U||-|UU-U||-|UU
-  matraSeries: 4-3 , 4-5 , 5-4
 - identifier: Sreekara
   name: శ్రీకర
   language: Telugu
@@ -10992,17 +7189,6 @@ rules:
   prasa: true
   references:
   - New
-  shortName: శ్రీకర
-  alias: ''
-  chandamName: అతిజగతి
-  charLength: 13
-  matraLength: 19
-  min: 13
-  max: 13
-  chandamNumber: 2732
-  chandamOrder: 10922
-  sequence: '||U-|U|-U|U-|U|-U'
-  matraSeries: 4-3 , 5-3
 - identifier: daeva
   name: దేవ
   language: Telugu
@@ -11023,17 +7209,6 @@ rules:
   yatiMode: CharPosition
   prasa: true
   references: []
-  shortName: దేవ
-  alias: ''
-  chandamName: శక్వరి
-  charLength: 14
-  matraLength: 22
-  min: 14
-  max: 14
-  chandamNumber: 1639
-  chandamOrder: 18021
-  sequence: U||-UU|-|UU-||U-UU
-  matraSeries: 3 , 4 , 6
 - identifier: paramaeSa
   name: పరమేశ
   language: Telugu
@@ -11054,17 +7229,6 @@ rules:
   yatiMode: CharPosition
   prasa: true
   references: []
-  shortName: పరమేశ
-  alias: ''
-  chandamName: శక్వరి
-  charLength: 14
-  matraLength: 19
-  min: 14
-  max: 14
-  chandamNumber: 3452
-  chandamOrder: 19834
-  sequence: '||U-|||-|U|-U||-UU'
-  matraSeries: 5 , 4-3
 - identifier: DiMDima
   name: డిండిమ
   language: Telugu
@@ -11085,17 +7249,6 @@ rules:
   yatiMode: CharPosition
   prasa: true
   references: []
-  shortName: డిండిమ
-  alias: ''
-  chandamName: అతిశక్వరి
-  charLength: 15
-  matraLength: 20
-  min: 15
-  max: 15
-  chandamNumber: 11230
-  chandamOrder: 43996
-  sequence: '|U|-||U-|||-|U|-U|U'
-  matraSeries: 3 , 5 , 6 , 5-4
 - identifier: sannuta
   name: సన్నుత
   language: Telugu
@@ -11117,17 +7270,6 @@ rules:
   prasa: true
   references:
   - New
-  shortName: సన్నుత
-  alias: ''
-  chandamName: అతిశక్వరి
-  charLength: 15
-  matraLength: 20
-  min: 15
-  max: 15
-  chandamNumber: 15851
-  chandamOrder: 48617
-  sequence: U|U-|U|-|||-U||-||U
-  matraSeries: 3 , 5 , 6 , 3-5 , 5-4
 - identifier: mahaamaMgaLamaNi
   name: మహామంగళమణి
   language: Telugu
@@ -11148,17 +7290,6 @@ rules:
   yatiMode: CharPosition
   prasa: true
   references: []
-  shortName: మహామంగళమణి
-  alias: ''
-  chandamName: అతిశక్వరి
-  charLength: 15
-  matraLength: 22
-  min: 15
-  max: 15
-  chandamNumber: 14020
-  chandamOrder: 46786
-  sequence: '||U-UUU-||U-||U-||U'
-  matraSeries: 4 , 6
 - identifier: chaMdraSaekhara
   name: చంద్రశేఖర
   language: Telugu
@@ -11179,17 +7310,6 @@ rules:
   yatiMode: CharPosition
   prasa: true
   references: []
-  shortName: చంద్రశేఖర
-  alias: ''
-  chandamName: అతిశక్వరి
-  charLength: 15
-  matraLength: 21
-  min: 15
-  max: 15
-  chandamNumber: 10928
-  chandamOrder: 43694
-  sequence: '|||-|U|-U|U-|U|-U|U'
-  matraSeries: 3 , 6 , 4-5
 - identifier: SaMkara1
   name: శంకర1
   language: Telugu
@@ -11211,17 +7331,6 @@ rules:
   prasa: true
   references:
   - New
-  shortName: శంకర1
-  alias: ''
-  chandamName: అతిశక్వరి
-  charLength: 15
-  matraLength: 20
-  min: 15
-  max: 15
-  chandamNumber: 7135
-  chandamOrder: 39901
-  sequence: U||-||U-|||-|U|-|UU
-  matraSeries: 3 , 4 , 5 , 6 , 3-5 , 5-4
 - identifier: chaMdraSree2
   name: చంద్రశ్రీ
   language: Telugu
@@ -11242,17 +7351,6 @@ rules:
   yatiMode: CharPosition
   prasa: true
   references: []
-  shortName: చంద్రశ్రీ
-  alias: ''
-  chandamName: అతిశక్వరి
-  charLength: 15
-  matraLength: 24
-  min: 15
-  max: 15
-  chandamNumber: 5058
-  chandamOrder: 37824
-  sequence: '|UU-UUU-|||-|UU-|UU'
-  matraSeries: ''
 - identifier: kamalaakara
   name: కమలాకర
   language: Telugu
@@ -11273,17 +7371,6 @@ rules:
   yatiMode: CharPosition
   prasa: true
   references: []
-  shortName: కమలాకర
-  alias: ''
-  chandamName: అతిశక్వరి
-  charLength: 15
-  matraLength: 20
-  min: 15
-  max: 15
-  chandamNumber: 7036
-  chandamOrder: 39802
-  sequence: '||U-|||-|U|-|U|-|UU'
-  matraSeries: 4 , 5 , 6 , 4-3
 - identifier: SaMkara2
   name: శంకర2
   language: Telugu
@@ -11306,17 +7393,6 @@ rules:
   prasa: true
   references:
   - New
-  shortName: శంకర2
-  alias: ''
-  chandamName: అష్టి
-  charLength: 16
-  matraLength: 20
-  min: 16
-  max: 16
-  chandamNumber: 30703
-  chandamOrder: 96237
-  sequence: U||-|U|-|||-||U-|||-U
-  matraSeries: 4 , 5 , 3-5 , 5-3 , 4-5
 - identifier: vaamadaeva
   name: వామదేవ
   language: Telugu
@@ -11338,17 +7414,6 @@ rules:
   yatiMode: CharPosition
   prasa: true
   references: []
-  shortName: వామదేవ
-  alias: ''
-  chandamName: అష్టి
-  charLength: 16
-  matraLength: 23
-  min: 16
-  max: 16
-  chandamNumber: 21995
-  chandamOrder: 87529
-  sequence: U|U-|U|-|||-U|U-|U|-U
-  matraSeries: 3 , 5 , 6 , 5-4
 - identifier: chaMchala
   name: చంచల (చిత్రశోభ,చిత్రమ్)
   language: Telugu
@@ -11370,17 +7435,6 @@ rules:
   yatiMode: CharPosition
   prasa: true
   references: []
-  shortName: చంచల
-  alias: చిత్రశోభ,చిత్రమ్
-  chandamName: అష్టి
-  charLength: 16
-  matraLength: 24
-  min: 16
-  max: 16
-  chandamNumber: 43691
-  chandamOrder: 109225
-  sequence: U|U-|U|-U|U-|U|-U|U-|
-  matraSeries: 3 , 6 , 5-4
 - identifier: maMgaLamaNi
   name: మంగళమణి
   language: Telugu
@@ -11402,17 +7456,6 @@ rules:
   yatiMode: CharPosition
   prasa: true
   references: []
-  shortName: మంగళమణి
-  alias: ''
-  chandamName: అష్టి
-  charLength: 16
-  matraLength: 20
-  min: 16
-  max: 16
-  chandamNumber: 31711
-  chandamOrder: 97245
-  sequence: U||-||U-|||-|U|-|||-U
-  matraSeries: 3 , 4 , 5 , 6 , 3-5 , 5-4
 - identifier: Damaruka
   name: డమరుక
   language: Telugu
@@ -11434,17 +7477,6 @@ rules:
   yatiMode: CharPosition
   prasa: true
   references: []
-  shortName: డమరుక
-  alias: ''
-  chandamName: అష్టి
-  charLength: 16
-  matraLength: 22
-  min: 16
-  max: 16
-  chandamNumber: 30564
-  chandamOrder: 96098
-  sequence: '||U-UU|-|U|-||U-|||-U'
-  matraSeries: 6 , 4-5
 - identifier: j_naana
   name: జ్ఞాన
   language: Telugu
@@ -11467,17 +7499,6 @@ rules:
   prasa: true
   references:
   - New
-  shortName: జ్ఞాన
-  alias: ''
-  chandamName: అష్టి
-  charLength: 16
-  matraLength: 22
-  min: 16
-  max: 16
-  chandamNumber: 15805
-  chandamOrder: 81339
-  sequence: UU|-|||-U||-U||-||U-U
-  matraSeries: 4 , 5 , 6 , 4-3
 - identifier: Sreemati
   name: శ్రీమతి
   language: Telugu
@@ -11499,17 +7520,6 @@ rules:
   yatiMode: CharPosition
   prasa: true
   references: []
-  shortName: శ్రీమతి
-  alias: ''
-  chandamName: అత్యష్టి
-  charLength: 17
-  matraLength: 27
-  min: 17
-  max: 17
-  chandamNumber: 22115
-  chandamOrder: 153185
-  sequence: U|U-UU|-|UU-||U-|U|-UU
-  matraSeries: 5
 - identifier: jaagrati
   name: జాగ్రత్
   language: Telugu
@@ -11531,17 +7541,6 @@ rules:
   yatiMode: CharPosition
   prasa: true
   references: []
-  shortName: జాగ్రత్
-  alias: ''
-  chandamName: అత్యష్టి
-  charLength: 17
-  matraLength: 22
-  min: 17
-  max: 17
-  chandamNumber: 28540
-  chandamOrder: 159610
-  sequence: '||U-|||-|U|-|||-U||-UU'
-  matraSeries: 4 , 6 , 4-3 , 5-3
 - identifier: taaraka
   name: తారక
   language: Telugu
@@ -11564,17 +7563,6 @@ rules:
   prasa: true
   references:
   - New
-  shortName: తారక
-  alias: ''
-  chandamName: అత్యష్టి
-  charLength: 17
-  matraLength: 22
-  min: 17
-  max: 17
-  chandamNumber: 31612
-  chandamOrder: 162682
-  sequence: '||U-|||-|U|-|U|-|||-UU'
-  matraSeries: 4 , 5 , 6 , 4-3
 - identifier: tanumadhyamaa
   name: తనుమధ్యమా
   language: Telugu
@@ -11598,17 +7586,6 @@ rules:
   prasa: true
   references:
   - New
-  shortName: తనుమధ్యమా
-  alias: ''
-  chandamName: ధృతి
-  charLength: 18
-  matraLength: 29
-  min: 18
-  max: 18
-  chandamNumber: 77378
-  chandamOrder: 339520
-  sequence: '|UU-UUU-|UU-|||-U|U-U|U'
-  matraSeries: ''
 - identifier: taaMDavajava
   name: తాండవజవ
   language: Telugu
@@ -11630,17 +7607,6 @@ rules:
   yatiMode: CharPosition
   prasa: true
   references: []
-  shortName: తాండవజవ
-  alias: ''
-  chandamName: ధృతి
-  charLength: 18
-  matraLength: 22
-  min: 18
-  max: 18
-  chandamNumber: 63484
-  chandamOrder: 325626
-  sequence: '||U-|||-|||-||U-|||-|UU'
-  matraSeries: 4 , 5 , 6 , 4-3 , 5-4
 - identifier: SivaSaMkara
   name: శివశంకర (సురభి)
   language: Telugu
@@ -11663,17 +7629,6 @@ rules:
   prasa: true
   references:
   - New
-  shortName: శివశంకర
-  alias: సురభి
-  chandamName: ధృతి
-  charLength: 18
-  matraLength: 22
-  min: 18
-  max: 18
-  chandamNumber: 126844
-  chandamOrder: 388986
-  sequence: '||U-|||-|U|-|||-U||-||U'
-  matraSeries: 4 , 6 , 4-3 , 5-3
 - identifier: vaaNi
   name: వాణి
   language: Telugu
@@ -11696,17 +7651,6 @@ rules:
   yatiMode: CharPosition
   prasa: true
   references: []
-  shortName: వాణి
-  alias: ''
-  chandamName: అతిధృతి
-  charLength: 19
-  matraLength: 28
-  min: 19
-  max: 19
-  chandamNumber: 106225
-  chandamOrder: 630511
-  sequence: UUU-U||-||U-|||-|UU-||U-U
-  matraSeries: 4 , 6
 - identifier: maNideepti
   name: మణిదీప్తి
   language: Telugu
@@ -11730,17 +7674,6 @@ rules:
   prasa: true
   references:
   - New
-  shortName: మణిదీప్తి
-  alias: ''
-  chandamName: అతిధృతి
-  charLength: 19
-  matraLength: 30
-  min: 19
-  max: 19
-  chandamNumber: 55513
-  chandamOrder: 579799
-  sequence: UUU-||U-||U-UU|-|U|-|UU-U
-  matraSeries: 4 , 6
 - identifier: prabhaakalita
   name: ప్రభాకలిత
   language: Telugu
@@ -11763,17 +7696,6 @@ rules:
   yatiMode: CharPosition
   prasa: true
   references: []
-  shortName: ప్రభాకలిత
-  alias: ''
-  chandamName: అతిధృతి
-  charLength: 19
-  matraLength: 26
-  min: 19
-  max: 19
-  chandamNumber: 175472
-  chandamOrder: 699758
-  sequence: '|||-|U|-|U|-U||-U|U-|U|-U'
-  matraSeries: 3-4 , 4-3
 - identifier: mattakeera
   name: మత్తకీర
   language: Telugu
@@ -11797,17 +7719,6 @@ rules:
   prasa: true
   references:
   - New
-  shortName: మత్తకీర
-  alias: ''
-  chandamName: కృతి
-  charLength: 20
-  matraLength: 26
-  min: 20
-  max: 20
-  chandamNumber: 372096
-  chandamOrder: 1420670
-  sequence: '|||-|||-|U|-U||-U|U-||U-|U'
-  matraSeries: 3-4
 - identifier: yaSasvi
   name: యశస్వి
   language: Telugu
@@ -11833,17 +7744,6 @@ rules:
   yatiMode: CharPosition
   prasa: true
   references: []
-  shortName: యశస్వి
-  alias: ''
-  chandamName: ఆకృతి
-  charLength: 22
-  matraLength: 30
-  min: 22
-  max: 22
-  chandamNumber: 450553
-  chandamOrder: 4644855
-  sequence: UUU-|||-|||-|||-|U|-|U|-|UU-U
-  matraSeries: 4 , 6
 - identifier: lakshmee
   name: లక్ష్మీ
   language: Telugu
@@ -11867,17 +7767,6 @@ rules:
   yatiMode: CharPosition
   prasa: true
   references: []
-  shortName: లక్ష్మీ
-  alias: ''
-  chandamName: ఆకృతి
-  charLength: 22
-  matraLength: 28
-  min: 22
-  max: 22
-  chandamNumber: 1047760
-  chandamOrder: 5242062
-  sequence: '|||-|UU-||U-U||-|||-|||-||U-U'
-  matraSeries: 3 , 4 , 6
 - identifier: nati
   name: నతి
   language: Telugu
@@ -11902,17 +7791,6 @@ rules:
   yatiMode: CharPosition
   prasa: true
   references: []
-  shortName: నతి
-  alias: ''
-  chandamName: ఆకృతి
-  charLength: 22
-  matraLength: 30
-  min: 22
-  max: 22
-  chandamNumber: 2023015
-  chandamOrder: 6217317
-  sequence: U||-UU|-|UU-|||-|U|-|U|-|||-U
-  matraSeries: 3 , 4 , 6
 - identifier: mattaebha
   name: మత్తేభ (అశ్వధాటి,సితస్తవకః)
   language: Telugu
@@ -11937,17 +7815,6 @@ rules:
   yatiMode: CharPosition
   prasa: true
   references: []
-  shortName: మత్తేభ
-  alias: అశ్వధాటి,సితస్తవకః
-  chandamName: ఆకృతి
-  charLength: 22
-  matraLength: 32
-  min: 22
-  max: 22
-  chandamNumber: 1915509
-  chandamOrder: 6109811
-  sequence: UU|-U||-|UU-|U|-||U-U|U-|||-U
-  matraSeries: 5
 - identifier: tulya2
   name: తుల్య2
   language: Telugu
@@ -11971,17 +7838,6 @@ rules:
   yatiMode: CharPosition
   prasa: true
   references: []
-  shortName: తుల్య2
-  alias: ''
-  chandamName: వికృతి
-  charLength: 23
-  matraLength: 32
-  min: 23
-  max: 23
-  chandamNumber: 3395380
-  chandamOrder: 11783986
-  sequence: '||U-U||-UU|-|||-UU|-|||-UU|-|U'
-  matraSeries: 4 , 6
 - identifier: gaayaka
   name: గాయక
   language: Telugu
@@ -12008,17 +7864,6 @@ rules:
   prasa: true
   references:
   - New
-  shortName: గాయక
-  alias: ''
-  chandamName: వికృతి
-  charLength: 23
-  matraLength: 33
-  min: 23
-  max: 23
-  chandamNumber: 1794927
-  chandamOrder: 10183533
-  sequence: U||-|U|-|U|-|UU-U||-U||-U||-UU
-  matraSeries: ''
 - identifier: tulya1
   name: తుల్య1
   language: Telugu
@@ -12044,17 +7889,6 @@ rules:
   yatiMode: CharPosition
   prasa: true
   references: []
-  shortName: తుల్య1
-  alias: ''
-  chandamName: సంకృతి
-  charLength: 24
-  matraLength: 32
-  min: 24
-  max: 24
-  chandamNumber: 15978301
-  chandamOrder: 32755515
-  sequence: UU|-|||-UU|-|||-UU|-|||-UU|-|||
-  matraSeries: 4 , 6 , 5-3
 - identifier: SObhanamahaaSree
   name: శోభనమహాశ్రీ
   language: Telugu
@@ -12082,17 +7916,6 @@ rules:
   prasa: true
   references:
   - New
-  shortName: శోభనమహాశ్రీ
-  alias: ''
-  chandamName: అభికృతి
-  charLength: 25
-  matraLength: 36
-  min: 25
-  max: 25
-  chandamNumber: 14498421
-  chandamOrder: 48052851
-  sequence: UU|-U||-|UU-|U|-||U-U|U-|||-U||-U
-  matraSeries: 5
 - identifier: kalyaaNa
   name: కల్యాణ
   language: Telugu
@@ -12119,17 +7942,6 @@ rules:
   yatiMode: CharPosition
   prasa: true
   references: []
-  shortName: కల్యాణ
-  alias: ''
-  chandamName: ఉత్కృతి
-  charLength: 26
-  matraLength: 39
-  min: 26
-  max: 26
-  chandamNumber: 21845355
-  chandamOrder: 88954217
-  sequence: U|U-|U|-|U|-U|U-|U|-U|U-||U-U|U-|U
-  matraSeries: ''
 - identifier: SaMbhunaTanamu
   name: శంభునటనము
   language: Telugu
@@ -12155,33 +7967,3 @@ rules:
   yatiMode: CharPosition
   prasa: true
   references: []
-  shortName: శంభునటనము
-  alias: ''
-  chandamName: ఉత్కృతి
-  charLength: 26
-  matraLength: 33
-  min: 26
-  max: 26
-  chandamNumber: 31317470
-  chandamOrder: 98426332
-  sequence: '|U|-||U-|||-U||-|U|-||U-|||-U||-|U'
-  matraSeries: 5 , 5-3
-- identifier: GenricVruttam
-  name: ఏదేని సమ వృత్తం
-  language: Telugu
-  padyamType: Vruttam
-  padyamSubType: GenricVruttam
-  ruleType: Name
-  frequency: Rare
-  lines: 4
-  threshold: 3
-  rules:
-  - []
-  yati: []
-  yatiMode: CharPosition
-  shortName: ఏదేని సమ వృత్తం
-  alias: ''
-  chandamName: ఉద్ధురమాల
-  chandamNumber: 1
-  sequence: ''
-  matraSeries: ''
