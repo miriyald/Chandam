@@ -40,9 +40,9 @@ namespace Verifier
 
 
             GeneratePopularRules();
-           
 
-  
+
+
             GenerateChandamRules();
 
 
@@ -69,7 +69,7 @@ namespace Verifier
                 Description = "తెలుగులో అత్యంత వాడుకలో ఉన్న ఛందస్సులు",
                 Rules = ConvertRulesToDto(selectedRules)
             };
-            
+
             var exampleSet = CreateExampleSet($"{ruleSet.Identifier}-examples",
                                                 "ప్రముఖ ఛందస్సుల ఉదాహరణలు",
                                                 "తెలుగులో అత్యంత వాడుకలో ఉన్న ఛందస్సుల ఉదాహరణలు",
@@ -77,16 +77,20 @@ namespace Verifier
 
             SaveRuleSet(ruleSet, $"{ruleSet.Identifier}.json");
             SaveRuleSetYaml(ruleSet, $"{ruleSet.Identifier}.yaml");
+
+            SaveExampleSet(exampleSet, $"{exampleSet.Identifier}.json");
+            SaveExampleSetYaml(exampleSet, $"{exampleSet.Identifier}.yaml");
+
             Console.WriteLine($"  ✓ Generated {selectedRules.Length} for {ruleSet.Identifier} rules (JSON + YAML)");
         }
-        
-      
+
+
         /// <summary>
         /// Generate telugu-complete.json - All Telugu rules
         /// </summary>
         private void GenerateChandamRules()
         {
-            Console.WriteLine("\nGenerating Popular Rules");
+            Console.WriteLine("\nGenerating Chandam Rules");
 
             var allRules = Manager.Rules();
             var selectedRules = allRules
@@ -101,14 +105,12 @@ namespace Verifier
                 Rules = ConvertRulesToDto(selectedRules)
             };
 
-             var exampleSet = CreateExampleSet(
-                "chandam-examples",
-                "చంధోరత్నావళి",
-                "తెలుగు ఛందస్సుల ఉదాహరణలు",
-                selectedRules
-            );
+            var exampleSet = CreateExampleSet("chandam-examples",
+                                               "చంధోరత్నావళి",
+                                               "తెలుగు ఛందస్సుల ఉదాహరణలు",
+                                               selectedRules);
 
-           
+
 
             SaveRuleSet(ruleSet, $"{ruleSet.Identifier}.json");
             SaveRuleSetYaml(ruleSet, $"{ruleSet.Identifier}.yaml");
@@ -119,7 +121,7 @@ namespace Verifier
             Console.WriteLine($"  ✓ Generated {selectedRules.Length} for {ruleSet.Identifier} rules (JSON + YAML)");
         }
 
-       
+
         /// <summary>
         /// Create ExampleSetDto from Rule array
         /// </summary>
