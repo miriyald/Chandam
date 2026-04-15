@@ -2,6 +2,7 @@ import { RULE_SETS } from '../config';
 import { makeUrl } from '../utils/url-helpers';
 import { renderBreadcrumbs, buildStaticPageBreadcrumbs } from './breadcrumbs';
 import { storageService } from '../services/storage/storage-service';
+import { t } from '../i18n';
 
 // Main function: Render rule sets page
 export async function renderRuleSetsPage() {
@@ -14,10 +15,14 @@ export async function renderRuleSetsPage() {
   await storageService.init();
   const customRulesets = await storageService.indexedDB.getAllCustomRulesets();
 
-  // Filter: only show favorites if it has rules
+  // Filter: only show favorites if it has rules, and separate custom-rules
   const customRulesetsWithData = customRulesets.filter(rs =>
-    rs.type !== 'favorites' || rs.rules.length > 0
+    (rs.type === 'favorites' && rs.rules.length > 0) ||
+    (rs.type === 'custom' && rs.id !== 'custom-rules')
   );
+
+  // Get the main custom-rules collection separately
+  const customRulesCollection = customRulesets.find(rs => rs.id === 'custom-rules');
 
   // Convert custom rulesets to display format
   const customAsRuleSet = customRulesetsWithData.map(crs => ({
@@ -41,6 +46,13 @@ export async function renderRuleSetsPage() {
 
       <div class="rule-set-cards">
         ${allRuleSets.map(rs => renderRuleSetCard(rs)).join('')}
+        ${customRulesCollection && customRulesCollection.rules.length > 0 ? renderCustomRulesCard(customRulesCollection) : ''}
+      </div>
+
+      <div style="text-align: center; margin-top: 2rem;">
+        <button class="btn-primary" onclick="window.location.href='${makeUrl('/create-rule')}'">
+          ${t('custom_rules_btn_create')}
+        </button>
       </div>
     </div>
   `;
@@ -59,6 +71,21 @@ function renderRuleSetCard(ruleSet: { id: string; name: string; description: str
       <div class="card-actions">
         <a href="${makeUrl(`/compute/${ruleSet.id}/`)}" class="btn-analyze">✏️ Analyze</a>
         <a href="${makeUrl(`/learn/${ruleSet.id}/`)}" class="btn-learn">📖 Learn</a>
+      </div>
+    </div>
+  `;
+}
+
+// Helper: Render custom rules collection card with distinct styling
+function renderCustomRulesCard(collection: { id: string; name: string; description: string; rules: any[] }) {
+  return `
+    <div class="rule-set-card custom-rules-card">
+      <h2 class="meter-name">${t('custom_rules_title')}</h2>
+      <div class="rule-count">${collection.rules.length} ${t('label_rules_count')}</div>
+      <p class="description">${collection.description}</p>
+      <div class="card-actions">
+        <a href="${makeUrl(`/compute/${collection.id}/`)}" class="btn-analyze">${t('mode_compute')}</a>
+        <a href="${makeUrl(`/learn/${collection.id}/`)}" class="btn-learn">${t('mode_learn')}</a>
       </div>
     </div>
   `;

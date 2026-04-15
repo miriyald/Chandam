@@ -2157,3 +2157,439 @@ footer a {
 .loader-container.error button:hover {
   background-color: #1565c0;
 }
+
+/* ========================================
+   CUSTOM RULES COLLECTION CARD
+   ======================================== */
+.custom-rules-card {
+  border: 3px solid #3498db;
+  background: linear-gradient(to bottom, #f0f8ff, #ffffff);
+  border-radius: 12px;
+  padding: 1.5rem;
+  transition: all 0.3s ease;
+}
+
+.custom-rules-card:hover {
+  box-shadow: 0 4px 12px rgba(52, 152, 219, 0.3);
+  transform: translateY(-2px);
+}
+
+/* ========================================
+   RULE CREATOR PAGE
+   ======================================== */
+.rule-creator-page {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 1rem;
+}
+
+.rule-creator-page h2 {
+  color: var(--color-text);
+  font-family: var(--font-main);
+  margin-bottom: 1.5rem;
+  font-size: 1.8rem;
+}
+
+/* Classification row (side-by-side dropdowns) */
+.classification-row {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
+  background: var(--color-bg);
+  border-top: 1px solid var(--color-border);
+}
+
+.dropdown-group {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.dropdown-group label {
+  font-family: var(--font-main);
+  font-size: 0.9rem;
+  color: var(--color-text);
+  white-space: nowrap;
+}
+
+.dropdown-select {
+  padding: 0.5rem;
+  border: 1px solid var(--color-border);
+  border-radius: 4px;
+  font-family: var(--font-main);
+  font-size: 0.9rem;
+  background: white;
+  cursor: pointer;
+  min-width: 120px;
+}
+
+.dropdown-select:hover {
+  border-color: #3498db;
+}
+
+.dropdown-select:focus {
+  outline: none;
+  border-color: #3498db;
+  box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.1);
+}
+
+/* Compact toolbar styling */
+.editor-toolbar.compact-toolbar {
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.editor-toolbar.compact-toolbar .editor-context-group {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.editor-toolbar.compact-toolbar .editor-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* Name input in toolbar */
+.name-input {
+  padding: 0.5rem;
+  border: 1px solid var(--color-border);
+  border-radius: 4px;
+  font-family: var(--font-main);
+  font-size: 1rem;
+  min-width: 300px;
+  margin-left: 0.5rem;
+}
+
+.name-input.compact {
+  min-width: 200px;
+  max-width: 300px;
+  margin-left: 0;
+}
+
+.name-input:focus {
+  outline: none;
+  border-color: #3498db;
+  box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.1);
+}
+
+/* Compact dropdown styling */
+.dropdown-select.compact {
+  min-width: 100px;
+}
+
+/* Compact toggle switch */
+.toggle-switch.compact {
+  margin-right: 0;
+}
+
+/* ========================================
+   PATTERN ROWS SECTION (INLINE LAYOUT)
+   ======================================== */
+.pattern-section .editor-toolbar {
+  border-bottom: none;
+}
+
+.pattern-rows-container {
+  padding: 1rem;
+  background: var(--color-bg);
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+/* Inline row layout */
+.pattern-row-inline {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem;
+  background: white;
+  border: 1px solid var(--color-border);
+  border-radius: 4px;
+  flex-wrap: wrap;
+  transition: box-shadow 0.2s;
+}
+
+.pattern-row-inline:hover {
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+}
+
+/* Row badge */
+.row-badge {
+  background: #3498db;
+  color: white;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  font-size: 0.9rem;
+  flex-shrink: 0;
+}
+
+/* Gana count label */
+.gana-count {
+  min-width: 80px;
+  font-size: 0.85rem;
+  color: #666;
+  flex-shrink: 0;
+}
+
+/* Row action buttons (inline) */
+.row-gana-actions {
+  display: flex;
+  gap: 0.25rem;
+  flex-shrink: 0;
+}
+
+.btn-icon-sm {
+  background: #f8f9fa;
+  border: 1px solid var(--color-border);
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1rem;
+  line-height: 1;
+  transition: all 0.2s;
+  min-width: 32px;
+  height: 32px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn-icon-sm:hover {
+  background: #e9ecef;
+  border-color: #3498db;
+}
+
+.btn-icon-sm.btn-danger {
+  border-color: #c1121f;
+  color: #c1121f;
+}
+
+.btn-icon-sm.btn-danger:hover {
+  background: #c1121f;
+  color: white;
+}
+
+/* Toolbar icon buttons */
+.btn-icon {
+  background: #f8f9fa;
+  border: 1px solid var(--color-border);
+  padding: 0.4rem 0.6rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1.1rem;
+  line-height: 1;
+  transition: all 0.2s;
+  min-width: 36px;
+  height: 36px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn-icon:hover:not(:disabled) {
+  background: #e9ecef;
+  border-color: #3498db;
+}
+
+.btn-icon.btn-danger {
+  border-color: #c1121f;
+  color: #c1121f;
+}
+
+.btn-icon.btn-danger:hover:not(:disabled) {
+  background: #c1121f;
+  color: white;
+}
+
+.btn-icon:disabled,
+.btn-icon-sm:disabled,
+.btn-icon.disabled,
+.btn-icon-sm.disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Inline gana dropdowns */
+.gana-dropdowns-inline {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  flex: 1;
+  min-width: 200px;
+}
+
+.gana-select {
+  padding: 0.5rem;
+  border: 1px solid var(--color-border);
+  border-radius: 4px;
+  font-family: var(--font-main);
+  font-size: 0.9rem;
+  background: white;
+  cursor: pointer;
+  min-width: 120px;
+  transition: border-color 0.2s;
+}
+
+.gana-select:hover {
+  border-color: #3498db;
+}
+
+.gana-select:focus {
+  outline: none;
+  border-color: #3498db;
+  box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.1);
+}
+
+/* Inline yati input */
+.yati-input-inline {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-shrink: 0;
+}
+
+.yati-label {
+  font-size: 0.85rem;
+  color: #666;
+  white-space: nowrap;
+}
+
+.yati-input-compact {
+  width: 100px;
+  padding: 0.4rem;
+  border: 1px solid var(--color-border);
+  border-radius: 4px;
+  font-size: 0.85rem;
+  font-family: var(--font-main);
+}
+
+.yati-input-compact:focus {
+  outline: none;
+  border-color: #3498db;
+  box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.1);
+}
+
+/* ========================================
+   LINES DROPDOWN (shown when same-rules checked)
+   ======================================== */
+.lines-dropdown-group {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.lines-dropdown-group label {
+  font-size: 0.9rem;
+  color: var(--color-text);
+}
+
+/* ========================================
+   DELETE BUTTON (for custom rules browse)
+   ======================================== */
+.btn-delete {
+  background: #c1121f;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-family: var(--font-main);
+  transition: background 0.2s;
+}
+
+.btn-delete:hover {
+  background: #a00;
+}
+
+/* ========================================
+   SECONDARY BUTTON (add row)
+   ======================================== */
+.btn-secondary {
+  background: #6c757d;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-family: var(--font-main);
+  transition: background 0.2s;
+}
+
+.btn-secondary:hover {
+  background: #5a6268;
+}
+
+/* ========================================
+   RESPONSIVE DESIGN
+   ======================================== */
+@media (max-width: 768px) {
+  .editor-toolbar.compact-toolbar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .editor-toolbar.compact-toolbar .editor-context-group {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .editor-toolbar.compact-toolbar .editor-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .name-input.compact {
+    min-width: 100%;
+    max-width: 100%;
+  }
+
+  .dropdown-select.compact {
+    width: 100%;
+  }
+
+  /* Inline rows stack on mobile */
+  .pattern-row-inline {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.5rem;
+  }
+
+  .row-gana-actions {
+    justify-content: space-between;
+    width: 100%;
+  }
+
+  .btn-icon-sm {
+    flex: 1;
+  }
+
+  .gana-dropdowns-inline {
+    width: 100%;
+    flex-direction: column;
+  }
+
+  .gana-select {
+    width: 100%;
+  }
+
+  .yati-input-inline {
+    width: 100%;
+  }
+
+  .yati-input-compact {
+    flex: 1;
+    width: auto;
+  }
+}

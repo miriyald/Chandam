@@ -94,6 +94,86 @@ export interface Translations {
   // Language switcher
   lang_toggle_title: string;
   lang_name: string;
+
+  // Rule Creator
+  creator_page_title: string;
+  creator_section_basic: string;
+  creator_section_classification: string;
+  creator_section_pattern: string;
+  creator_section_options: string;
+  creator_label_name: string;
+  creator_label_padyam_type: string;
+  creator_label_gana_type: string;
+  creator_label_lines: string;
+  creator_btn_add_row: string;
+  creator_btn_add_row_icon: string;
+  creator_btn_remove_row: string;
+  creator_btn_remove_row_icon: string;
+  creator_btn_add_gana: string;
+  creator_btn_remove_gana: string;
+  creator_label_yati: string;
+  creator_placeholder_yati: string;
+  creator_option_prasa: string;
+  creator_option_prasa_yati: string;
+  creator_option_anthya_prasa: string;
+  creator_option_dandakamu: string;
+  creator_option_same_rules: string;
+  creator_btn_create: string;
+  creator_btn_cancel: string;
+  creator_success: string;
+  creator_error: string;
+  creator_validation_name: string;
+  creator_validation_ganas: string;
+  creator_limit_reached: string;
+  creator_gana_count_singular: string;
+  creator_gana_count_plural: string;
+  creator_delete_confirm: string;
+
+  // PadyamType options
+  padyam_type_jati: string;
+  padyam_type_upajati: string;
+  padyam_type_vruttam: string;
+
+  // GanaType options
+  gana_type_name: string;
+  gana_type_type: string;
+  gana_type_weight: string;
+
+  // Gana names (Vruttam/Name mode)
+  gana_ya: string;
+  gana_ma: string;
+  gana_ta: string;
+  gana_ra: string;
+  gana_ja: string;
+  gana_bha: string;
+  gana_na: string;
+  gana_sa: string;
+  gana_ga: string;
+  gana_gaa: string;
+  gana_va: string;
+  gana_ha: string;
+  gana_lala: string;
+  gana_la: string;
+
+  // Gana types (Jati/Type mode)
+  gana_indra: string;
+  gana_surya: string;
+  gana_chandra: string;
+  gana_guruvu: string;
+  gana_laghuvu: string;
+
+  // Matra unit
+  matra_singular: string;
+  matra_plural: string;
+
+  // Pada unit
+  pada_singular: string;
+  pada_plural: string;
+
+  // Custom Rules Collection
+  custom_rules_title: string;
+  custom_rules_description: string;
+  custom_rules_btn_create: string;
 }
 
 const translations: Record<Language, Translations> = {
@@ -179,6 +259,79 @@ const translations: Record<Language, Translations> = {
 
     lang_toggle_title: 'Switch to Telugu / తెలుగుకు మార్చండి',
     lang_name: 'EN',
+
+    // Rule Creator
+    creator_page_title: 'Create Custom Rule',
+    creator_section_basic: 'Basic Information',
+    creator_section_classification: 'Classification',
+    creator_section_pattern: 'Rule Pattern',
+    creator_section_options: 'Options',
+    creator_label_name: 'Name',
+    creator_label_padyam_type: 'Padyam Type',
+    creator_label_gana_type: 'Gana Type',
+    creator_label_lines: 'Lines',
+    creator_btn_add_row: '➕ Add Pada',
+    creator_btn_add_row_icon: '➕',
+    creator_btn_remove_row: '🗑️ Remove Pada',
+    creator_btn_remove_row_icon: '🗑️',
+    creator_btn_add_gana: '➕',
+    creator_btn_remove_gana: '➖',
+    creator_label_yati: 'Yati',
+    creator_placeholder_yati: 'e.g., 8,14',
+    creator_option_prasa: 'Prasa (Rhyme)',
+    creator_option_prasa_yati: 'Prasa with Yati',
+    creator_option_anthya_prasa: 'Anthya Prasa (End Rhyme)',
+    creator_option_dandakamu: 'Dandakamu (Infinite Length)',
+    creator_option_same_rules: 'Same Rules for All Lines',
+    creator_btn_create: '✅ Create Rule',
+    creator_btn_cancel: '❌ Cancel',
+    creator_success: 'Rule created successfully!',
+    creator_error: 'Failed to create rule',
+    creator_validation_name: 'Please enter a rule name',
+    creator_validation_ganas: 'Please add at least one gana',
+    creator_limit_reached: 'Maximum 50 custom rules reached',
+    creator_gana_count_singular: 'gana',
+    creator_gana_count_plural: 'ganas',
+    creator_delete_confirm: 'Are you sure you want to delete this rule?',
+
+    padyam_type_jati: 'Jati',
+    padyam_type_upajati: 'UpaJati',
+    padyam_type_vruttam: 'Vruttam',
+
+    gana_type_name: 'Name',
+    gana_type_type: 'Type',
+    gana_type_weight: 'Weight',
+
+    gana_ya: 'య (l-g-g)',
+    gana_ma: 'మ (g-g-g)',
+    gana_ta: 'త (g-g-l)',
+    gana_ra: 'ర (g-l-g)',
+    gana_ja: 'జ (l-g-l)',
+    gana_bha: 'భ (g-l-l)',
+    gana_na: 'న (l-l-l)',
+    gana_sa: 'స (l-l-g)',
+    gana_ga: 'గ',
+    gana_gaa: 'గా (g-g)',
+    gana_va: 'వ (l-g)',
+    gana_ha: 'హ (g-l)',
+    gana_lala: 'లల',
+    gana_la: 'ల',
+
+    gana_indra: 'Indra',
+    gana_surya: 'Surya',
+    gana_chandra: 'Chandra',
+    gana_guruvu: 'Guruvu',
+    gana_laghuvu: 'Laghuvu',
+
+    matra_singular: 'matra',
+    matra_plural: 'matras',
+
+    pada_singular: 'pada',
+    pada_plural: 'padas',
+
+    custom_rules_title: '🎨 Custom Rules',
+    custom_rules_description: 'custom rules created',
+    custom_rules_btn_create: 'Create Custom Rule',
   },
   te: {
     nav_home: 'హోమ్',
@@ -262,6 +415,79 @@ const translations: Record<Language, Translations> = {
 
     lang_toggle_title: 'Switch to English / ఇంగ్లీష్‌కు మార్చండి',
     lang_name: 'తె',
+
+    // Rule Creator
+    creator_page_title: 'కొత్త పద్యలక్షణము రూపకల్పన',
+    creator_section_basic: 'ప్రాథమిక సమాచారం',
+    creator_section_classification: 'వర్గీకరణ',
+    creator_section_pattern: 'పద్యలక్షణ నమూనా',
+    creator_section_options: 'ఎంపికలు',
+    creator_label_name: 'పేరు',
+    creator_label_padyam_type: 'పద్య రకం',
+    creator_label_gana_type: 'గణ రకం',
+    creator_label_lines: 'పాదాలు',
+    creator_btn_add_row: '➕ పాదమును కలుపు',
+    creator_btn_add_row_icon: '➕',
+    creator_btn_remove_row: '🗑️ పాదమును తొలగించు',
+    creator_btn_remove_row_icon: '🗑️',
+    creator_btn_add_gana: '➕',
+    creator_btn_remove_gana: '➖',
+    creator_label_yati: 'యతి',
+    creator_placeholder_yati: 'ఉదా., 8,14',
+    creator_option_prasa: 'ప్రాస',
+    creator_option_prasa_yati: 'ప్రాసయతి',
+    creator_option_anthya_prasa: 'అంత్యప్రాస',
+    creator_option_dandakamu: 'దండకము',
+    creator_option_same_rules: 'అన్ని పాదాలకు ఒకే నమూనా',
+    creator_btn_create: '✅ పద్యలక్షణము సృష్టించు',
+    creator_btn_cancel: '❌ రద్దుచేయి',
+    creator_success: 'పద్యలక్షణము విజయవంతంగా సృష్టించబడింది!',
+    creator_error: 'పద్యలక్షణము సృష్టించడంలో విఫలమైంది',
+    creator_validation_name: 'దయచేసి పద్యలక్షణ పేరు ఇవ్వండి',
+    creator_validation_ganas: 'కనీసం ఒక గణము కలపండి',
+    creator_limit_reached: 'గరిష్టంగా 50 అనుకూల పద్యలక్షణాలు చేరుకున్నారు',
+    creator_gana_count_singular: 'గణము',
+    creator_gana_count_plural: 'గణములు',
+    creator_delete_confirm: 'మీరు ఖచ్చితంగా ఈ పద్యలక్షణాన్ని తొలగించాలనుకుంటున్నారా?',
+
+    padyam_type_jati: 'జాతి',
+    padyam_type_upajati: 'ఉపజాతి',
+    padyam_type_vruttam: 'వృత్తం',
+
+    gana_type_name: 'పేరు',
+    gana_type_type: 'రీతి',
+    gana_type_weight: 'మాత్రా',
+
+    gana_ya: 'య(ల-గ-గ)',
+    gana_ma: 'మ(గ-గ-గ)',
+    gana_ta: 'త(గ-గ-ల)',
+    gana_ra: 'ర(గ-ల-గ)',
+    gana_ja: 'జ(ల-గ-ల)',
+    gana_bha: 'భ(గ-ల-ల)',
+    gana_na: 'న(ల-ల-ల)',
+    gana_sa: 'స(ల-ల-గ)',
+    gana_ga: 'గ',
+    gana_gaa: 'గా(గ-గ)',
+    gana_va: 'వ(ల-గ)',
+    gana_ha: 'హ(గ-ల)',
+    gana_lala: 'లల',
+    gana_la: 'ల',
+
+    gana_indra: 'ఇంద్ర',
+    gana_surya: 'సూర్య',
+    gana_chandra: 'చంద్ర',
+    gana_guruvu: 'గురువు',
+    gana_laghuvu: 'లఘువు',
+
+    matra_singular: 'మాత్ర',
+    matra_plural: 'మాత్రలు',
+
+    pada_singular: 'పాదం',
+    pada_plural: 'పాదాలు',
+
+    custom_rules_title: '🎨 అనుకూల పద్యలక్షణాలు',
+    custom_rules_description: 'అనుకూల పద్యలక్షణాలు సృష్టించబడ్డాయి',
+    custom_rules_btn_create: 'కొత్త పద్యలక్షణము రూపకల్పన',
   },
 };
 

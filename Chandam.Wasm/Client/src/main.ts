@@ -5,6 +5,7 @@ import { renderRuleSetPage } from './ui/rule-set-page';
 import { renderRulePage } from './ui/rule-page';
 import { renderLearnIndexPage } from './ui/learn-index-page';
 import { renderLearnDetailPage } from './ui/learn-detail-page';
+import { renderRuleCreatorPage } from './ui/rule-creator-page';
 import { validateRuleSet, validateRuleSetAsync, validateRule, handleInvalidRuleSet, handleInvalidRule } from './utils/error-handlers';
 import { createInitialLoader, preloadLoaderImage } from './utils/loader';
 import { LoadingEvents, LoadingEventType } from './utils/loading-events';
@@ -34,6 +35,11 @@ router.register('/', () => {
 // Rule sets route - browse rule sets
 router.register('/rule-sets', () => {
   renderRuleSetsPage();
+});
+
+// Custom rule creator route
+router.register('/create-rule', async () => {
+  await renderRuleCreatorPage();
 });
 
 // Compute routes with validation

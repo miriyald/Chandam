@@ -222,7 +222,7 @@
 :: ============================================================================
 
 :: 1. Build and run WASM:
-dotnet build Chandam.sln
+:: dotnet build Chandam.sln
 dotnet run --project Chandam.Wasm
 
 :: 2. Or build and run API:
