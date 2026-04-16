@@ -19,4 +19,10 @@ public class GetRuleInfoRequest
     /// Description format: Html for browser rendering, Markdown for MCP/AI clients
     /// </summary>
     public RenderFormat DescriptionFormat { get; set; } = RenderFormat.Markdown;
+
+    /// <summary>
+    /// RuleSet ID to use ("chandam", "popular", "topella", etc.). If null, uses active ruleset.
+    /// Default: "chandam"
+    /// </summary>
+    public string? RuleSetId { get; set; } = "chandam";
 }

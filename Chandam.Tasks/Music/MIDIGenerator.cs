@@ -99,7 +99,8 @@ namespace Verifier
 			}
 			catch (Exception e)
 			{
-				throw e;
+				Console.WriteLine("Error creating MIDI file: " + e.Message);
+				throw;
 			}
 
 		}

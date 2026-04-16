@@ -31,4 +31,10 @@ public class ScoresRequest
     /// Minimum match percentage to include in results (0-100)
     /// </summary>
     public double MinimumMatchPercentage { get; set; } = 0;
+
+    /// <summary>
+    /// RuleSet ID to use ("chandam", "popular", "topella", etc.). If null, uses active ruleset.
+    /// Default: "chandam"
+    /// </summary>
+    public string? RuleSetId { get; set; } = "chandam";
 }

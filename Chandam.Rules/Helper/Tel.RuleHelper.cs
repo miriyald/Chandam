@@ -20,7 +20,6 @@ using Chandam.Rules.Tel;
 using Chandam.Rules.Tel.Kokkonda;
 using Chandam.Rules.UpaJati;
 using Chandam.Rules.UpaJati.Seesamu;
-using Chandam.Rules.Vruttam;
 
 namespace Chandam.Rules
 {

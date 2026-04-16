@@ -1,4 +1,5 @@
 using Chandam.API.Models.Config;
+using Chandam.Rules;
 
 namespace Chandam.API.Models;
 
@@ -31,4 +32,9 @@ public class TryMatchCustomRequest
     /// Optional: Rendered output format (None, Html, Text, Markdown, Both)
     /// </summary>
     public RenderFormat RenderFormat { get; set; } = RenderFormat.None;
+
+    /// <summary>
+    /// Language of the poem (default: te)
+    /// </summary>
+    public RuleLanguage Language { get; set; } = RuleLanguage.Telugu;
 }

@@ -14,8 +14,6 @@ using Chandam.Core;
 using Chandam.Rules;
 using Chandam.Rules.Rare;
 using System;
-using Verifier.Services.Indic;
-using static Verifier.Services.Indic.Indic;
 
 namespace Verifier
 {

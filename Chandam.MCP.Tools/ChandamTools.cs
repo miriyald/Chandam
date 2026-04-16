@@ -33,7 +33,8 @@ public class ChandamTools
         [Description("The poem text to analyze (Telugu/Sanskrit/Kannada)")] string poem_text,
         [Description("Check caesura (yati) matching")] bool match_yati = true,
         [Description("Check rhyme (prasa) matching")] bool match_prasa = true,
-        [Description("Language code: te (Telugu), kn (Kannada), sa (Sanskrit), hi (Hindi), ml (Malayalam)")] string language = "te")
+        [Description("Language code: te (Telugu), kn (Kannada), sa (Sanskrit), hi (Hindi), ml (Malayalam)")] string language = "te",
+        [Description("RuleSet to use: chandam, popular, topella (default: chandam)")] string? ruleset_id = null)
     {
         var lang = LanguageCodeMapper.ParseLanguage(language) ?? Rules.RuleLanguage.Telugu;
         var request = new DetermineRequest
@@ -42,7 +43,8 @@ public class ChandamTools
             MatchYati = match_yati,
             MatchPrasa = match_prasa,
             Language = lang,
-            RenderFormat = RenderFormat.Markdown  // Request Markdown format
+            RenderFormat = RenderFormat.Markdown,  // Request Markdown format
+            RuleSetId = ruleset_id ?? "chandam"
         };
         // Call new combined method that returns BOTH Markdown and Beautified
         var result = _service.DetermineWithBeautified(request);
@@ -54,15 +56,20 @@ public class ChandamTools
         [Description("The poem text to analyze")] string poem_text,
         [Description("Rule identifier (e.g., 'kandam', 'utpalamaala', 'iMdravajramu')")] string rule_identifier,
         [Description("Check caesura (yati) matching")] bool match_yati = true,
-        [Description("Check rhyme (prasa) matching")] bool match_prasa = true)
+        [Description("Check rhyme (prasa) matching")] bool match_prasa = true,
+        [Description("Language code: te (Telugu), kn (Kannada), sa (Sanskrit), hi (Hindi), ml (Malayalam)")] string language = "te",
+        [Description("RuleSet to use: chandam, popular, topella (default: chandam)")] string? ruleset_id = null)
     {
+        var lang = LanguageCodeMapper.ParseLanguage(language) ?? Rules.RuleLanguage.Telugu;
         var request = new TryMatchRequest
         {
             PoemText = poem_text,
             RuleIdentifier = rule_identifier,
             MatchYati = match_yati,
             MatchPrasa = match_prasa,
-            RenderFormat = RenderFormat.Markdown  // Request Markdown format
+            Language = lang,
+            RenderFormat = RenderFormat.Markdown,  // Request Markdown format
+            RuleSetId = ruleset_id ?? "chandam"
         };
         // Call new combined method that returns BOTH Markdown and Beautified
         var result = _service.TryMatchWithBeautified(request);
@@ -75,7 +82,8 @@ public class ChandamTools
         [Description("Check caesura (yati) matching")] bool match_yati = true,
         [Description("Check rhyme (prasa) matching")] bool match_prasa = true,
         [Description("Language code: te, kn, sa, hi, ml")] string language = "te",
-        [Description("Minimum match percentage to include in results (0-100)")] double min_percentage = 0)
+        [Description("Minimum match percentage to include in results (0-100)")] double min_percentage = 0,
+        [Description("RuleSet to use: chandam, popular, topella (default: chandam)")] string? ruleset_id = null)
     {
         var lang = LanguageCodeMapper.ParseLanguage(language);
         var request = new ScoresRequest
@@ -84,7 +92,8 @@ public class ChandamTools
             MatchYati = match_yati,
             MatchPrasa = match_prasa,
             Language = lang,
-            MinimumMatchPercentage = min_percentage
+            MinimumMatchPercentage = min_percentage,
+            RuleSetId = ruleset_id ?? "chandam"
         };
         var result = _service.Scores(request);
         return JsonSerializer.Serialize(result, JsonOptions);
@@ -93,12 +102,14 @@ public class ChandamTools
     [McpServerTool, Description("Get detailed information about a specific Chandam rule including its pattern, description, and optionally examples.")]
     public string GetRuleInfo(
         [Description("Rule identifier (e.g., 'kandam', 'utpalamaala')")] string rule_identifier,
-        [Description("Include example poems in the response")] bool include_examples = false)
+        [Description("Include example poems in the response")] bool include_examples = false,
+        [Description("RuleSet to use: chandam, popular, topella (default: chandam)")] string? ruleset_id = null)
     {
         var request = new GetRuleInfoRequest
         {
             RuleIdentifier = rule_identifier,
-            IncludeExamples = include_examples
+            IncludeExamples = include_examples,
+            RuleSetId = ruleset_id ?? "chandam"
         };
         var result = _service.GetRuleInfo(request);
         return JsonSerializer.Serialize(result, JsonOptions);
@@ -107,12 +118,14 @@ public class ChandamTools
     [McpServerTool, Description("Get example poems for a specific Chandam rule, with author and reference information.")]
     public string GetExamples(
         [Description("Rule identifier (e.g., 'kandam', 'utpalamaala')")] string rule_identifier,
-        [Description("Maximum number of examples to return (0 = all)")] int max_examples = 5)
+        [Description("Maximum number of examples to return (0 = all)")] int max_examples = 5,
+        [Description("RuleSet to use: chandam, popular, topella (default: chandam)")] string? ruleset_id = null)
     {
         var request = new GetSamplesRequest
         {
             RuleIdentifier = rule_identifier,
-            MaxExamples = max_examples
+            MaxExamples = max_examples,
+            RuleSetId = ruleset_id ?? "chandam"
         };
         var result = _service.GetSamples(request);
         return JsonSerializer.Serialize(result, JsonOptions);
@@ -120,8 +133,15 @@ public class ChandamTools
 
     [McpServerTool, Description("List all available Chandam rules. Filter by language to see rules for a specific language.")]
     public string ListRules(
-        [Description("Language code filter: te (Telugu), kn (Kannada), sa (Sanskrit), hi (Hindi), ml (Malayalam)")] string language = "te")
+        [Description("Language code filter: te (Telugu), kn (Kannada), sa (Sanskrit), hi (Hindi), ml (Malayalam)")] string language = "te",
+        [Description("RuleSet to use: chandam, popular, topella (default: chandam)")] string? ruleset_id = null)
     {
+        var ruleSetId = ruleset_id ?? "chandam";
+        if (!string.IsNullOrEmpty(ruleSetId) && ruleSetId != _ruleLoader.GetCurrentRuleSetId())
+        {
+            _ruleLoader.SetActiveRuleSet(ruleSetId);
+        }
+
         var lang = LanguageCodeMapper.ParseLanguage(language);
         var allRules = _ruleLoader.GetAllRules(lang);
 

@@ -10,4 +10,8 @@
     <ProjectReference Include="..\Chandam.API\Chandam.API.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
+  </ItemGroup>
+
 </Project>

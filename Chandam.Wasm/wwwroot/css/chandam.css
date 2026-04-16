@@ -2110,6 +2110,35 @@ footer a {
   animation: heart-pop 0.3s ease;
 }
 
+/* Delete button in action toolbar - matches favorite icon style */
+.action-btn.btn-delete .trash-icon {
+  fill: #c1121f;
+  transition: transform 0.2s ease;
+}
+
+.action-btn.btn-delete:hover .trash-icon {
+  fill: #a00;
+  transform: scale(1.1);
+}
+
+/* Delete button in rule list (inline with links) - matches Learn/Try link style */
+.btn-delete-inline {
+  background: #c1121f;
+  color: white;
+  border: none;
+  padding: 0.4rem 0.8rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-family: var(--font-main);
+  text-decoration: none;
+  transition: all 0.2s;
+}
+
+.btn-delete-inline:hover {
+  background: #a00;
+}
+
 /* Future action buttons (share, print, etc.) */
 /*
 .btn-share .share-icon,
@@ -2591,5 +2620,284 @@ footer a {
   .yati-input-compact {
     flex: 1;
     width: auto;
+  }
+}
+
+/* ========== Rule Description Styling ========== */
+
+/* Matra visualization - laghu and guru symbols */
+.description-content .laghu {
+  color: #e74c3c;
+  font-weight: bold;
+  font-family: monospace;
+  font-size: 1.1em;
+}
+
+.description-content .guru {
+  color: #3498db;
+  font-weight: bold;
+  font-family: monospace;
+  font-size: 1.1em;
+}
+
+/* Highlighted terms in descriptions */
+.description-content .gName {
+  color: #16a085;
+  font-weight: 600;
+}
+
+/* ========== Compact Badge Layout Styles ========== */
+
+/* Aliases - less emphasis */
+.rule-aliases {
+  color: #7f8c8d;
+  font-size: 0.95rem;
+  margin-bottom: 1.5rem;
+}
+
+/* Badge row for primary stats */
+.rule-summary-badges {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  margin-bottom: 1.5rem;
+}
+
+.badge {
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  background: #ecf0f1;
+  transition: all 0.2s;
+}
+
+.badge:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.badge-type {
+  background: #e8daef;
+  color: #6c3483;
+}
+
+.badge-chars {
+  background: #d6eaf8;
+  color: #1f618d;
+}
+
+.badge-matras {
+  background: #d5f4e6;
+  color: #186a3b;
+}
+
+.badge-chandam {
+  background: #fdebd0;
+  color: #935116;
+}
+
+/* Properties grid */
+.rule-properties {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  padding: 1rem;
+  background: #f8f9fa;
+  border-radius: 8px;
+}
+
+.property {
+  display: flex;
+  gap: 0.5rem;
+  align-items: baseline;
+  padding-left: 1rem;
+  border-left: 3px solid #dee2e6;
+}
+
+.property:first-child {
+  padding-left: 0;
+  border-left: none;
+}
+
+.property .label {
+  font-weight: 600;
+  color: #555;
+}
+
+.property .value {
+  color: #2c3e50;
+  font-weight: 500;
+}
+
+/* Color-coded checkmarks */
+.check-yes {
+  color: #27ae60;
+  font-weight: bold;
+  font-size: 1.1em;
+}
+
+.check-no {
+  color: #e74c3c;
+  font-weight: bold;
+  font-size: 1.1em;
+}
+
+/* Gana sequence highlight */
+.gana-sequence {
+  padding: 1rem;
+  background: #fff8dc;
+  border-left: 4px solid #f39c12;
+  border-radius: 4px;
+  margin-bottom: 2rem;
+  font-size: 1.1rem;
+}
+
+.gana-sequence strong {
+  color: #d35400;
+}
+
+.gana-table {
+  width: 100%;
+  margin-top: 1rem;
+  border-collapse: collapse;
+}
+
+.gana-table td {
+  padding: 0.5rem;
+  border-bottom: 1px solid #f5e6c4;
+}
+
+.gana-table .padam-label {
+  font-weight: 600;
+  color: #d35400;
+  width: 140px;
+}
+
+/* Matra details section */
+.matra-details {
+  margin-bottom: 2rem;
+  padding: 1.25rem;
+  background: #f0f8ff;
+  border-radius: 8px;
+  border-left: 4px solid #1abc9c;
+}
+
+.matra-details h3 {
+  font-size: 1.2rem;
+  margin-top: 0;
+  margin-bottom: 1rem;
+  color: #16a085;
+}
+
+.matra-details h4 {
+  font-size: 1rem;
+  margin-top: 1rem;
+  margin-bottom: 0.75rem;
+  color: #117a65;
+}
+
+.matra-details p {
+  margin: 0.75rem 0;
+}
+
+.matra-details ul {
+  list-style: none;
+  padding: 0;
+  margin: 0.5rem 0;
+}
+
+.matra-details ul li {
+  padding: 0.4rem 0;
+  padding-left: 1.5rem;
+  position: relative;
+}
+
+.matra-details ul li::before {
+  content: "▸";
+  position: absolute;
+  left: 0;
+  color: #16a085;
+  font-weight: bold;
+}
+
+/* Keep existing laghu/guru coloring */
+.matra-details .laghu {
+  color: #e74c3c;
+  font-weight: bold;
+  font-family: monospace;
+  font-size: 1.1em;
+}
+
+.matra-details .guru {
+  color: #3498db;
+  font-weight: bold;
+  font-family: monospace;
+  font-size: 1.1em;
+}
+
+/* Original rule section */
+.original-rule {
+  margin-bottom: 2rem;
+  padding: 1.25rem;
+  background: #fdfefe;
+  border-radius: 8px;
+  border-left: 4px solid #7f8c8d;
+}
+
+.original-rule h3 {
+  font-size: 1.2rem;
+  margin-top: 0;
+  margin-bottom: 1rem;
+  color: #34495e;
+}
+
+.original-rule blockquote {
+  margin: 0;
+  padding: 1rem 1.5rem;
+  background: white;
+  border-left: 4px solid #95a5a6;
+  font-style: italic;
+  color: #555;
+  border-radius: 4px;
+}
+
+/* Mobile responsive */
+@media (max-width: 768px) {
+  .rule-summary-badges {
+    gap: 0.5rem;
+  }
+
+  .badge {
+    padding: 0.4rem 0.75rem;
+    font-size: 0.85rem;
+  }
+
+  .rule-properties {
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 0.75rem;
+    padding: 0.75rem;
+  }
+
+  .property {
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  .gana-sequence {
+    padding: 0.75rem;
+    font-size: 1rem;
+  }
+
+  .matra-details,
+  .original-rule {
+    padding: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .rule-properties {
+    grid-template-columns: 1fr;
   }
 }

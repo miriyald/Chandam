@@ -3,6 +3,7 @@
  */
 import { storageService } from './storage-service';
 import type { CustomRuleset } from './models';
+import type { RuleDto } from './rule-dto';
 
 const CUSTOM_RULES_ID = 'custom-rules';
 const MAX_CUSTOM_RULES = 50;
@@ -11,7 +12,7 @@ export class CustomRulesService {
   /**
    * Create a new custom rule and add it to the collection
    */
-  async createCustomRule(ruleData: any): Promise<void> {
+  async createCustomRule(ruleData: RuleDto): Promise<void> {
     await storageService.init();
 
     // Get current collection or create new one
@@ -46,10 +47,10 @@ export class CustomRulesService {
   /**
    * Get all custom rules
    */
-  async getAllCustomRules(): Promise<any[]> {
+  async getAllCustomRules(): Promise<RuleDto[]> {
     await storageService.init();
     const collection = await this.getCustomRulesCollection();
-    return collection ? collection.rules : [];
+    return collection ? (collection.rules as RuleDto[]) : [];
   }
 
   /**
@@ -73,7 +74,7 @@ export class CustomRulesService {
     }
 
     // Remove rule from collection
-    collection.rules = collection.rules.filter((rule: any) => rule.Identifier !== ruleId);
+    collection.rules = collection.rules.filter((rule: RuleDto) => rule.Identifier !== ruleId);
     collection.updatedAt = Date.now();
     collection.description = `${collection.rules.length} custom ${collection.rules.length === 1 ? 'rule' : 'rules'} created`;
 
@@ -104,7 +105,7 @@ export class CustomRulesService {
    */
   async ruleExists(ruleId: string): Promise<boolean> {
     const rules = await this.getAllCustomRules();
-    return rules.some((rule: any) => rule.Identifier === ruleId);
+    return rules.some((rule: RuleDto) => rule.Identifier === ruleId);
   }
 }
 

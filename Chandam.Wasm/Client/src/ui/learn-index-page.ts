@@ -9,6 +9,9 @@ import { loadRuleSet } from '../utils/rule-loader';
 import { t } from '../i18n';
 import { CustomRulesLoader } from '../services/custom-rules-loader';
 import { storageService } from '../services/storage/storage-service';
+import { customRulesService } from '../services/storage/custom-rules-service';
+import { favoritesService } from '../services/storage/favorites-service';
+import { analyticsService } from '../services/analytics-service';
 
 // Main function: Render learn index page
 export async function renderLearnIndexPage(ruleSet: string) {
@@ -127,6 +130,14 @@ function renderRuleListItem(rule: RuleSummaryDetailed, ruleSetId: string, favori
   const isFavorited = favoriteIds.has(compositeId);
   const favoritedClass = isFavorited ? ' favorited' : '';
 
+  // Show delete button for ANY custom rule (identified by "custom-" prefix)
+  // This allows deletion from both /learn/custom-rules/ and /learn/custom-fav/ views
+  const isCustomRule = rule.identifier.startsWith('custom-');
+  const showDelete = isCustomRule;
+  const deleteButton = showDelete
+    ? `<button class="btn-delete-inline" data-rule-id="${rule.identifier}" onclick="handleDeleteFromList('${rule.identifier}', '${rule.name.replace(/'/g, "\\'")}')">Delete</button>`
+    : '';
+
   return `
     <div class="rule-list-item${favoritedClass}">
       <div class="rule-name meter-name">${rule.name}</div>
@@ -134,7 +145,44 @@ function renderRuleListItem(rule: RuleSummaryDetailed, ruleSetId: string, favori
       <div class="rule-links">
         <a href="${makeUrl(`/learn/${ruleSetId}/${rule.identifier}`)}">Learn</a>
         <a href="${makeUrl(`/compute/${ruleSetId}/${rule.identifier}`)}">Try</a>
+        ${deleteButton}
       </div>
     </div>
   `;
 }
+
+// Global delete handler for inline delete buttons
+(window as any).handleDeleteFromList = async function(ruleId: string, ruleName: string) {
+  const confirmed = confirm(
+    `Are you sure you want to delete "${ruleName}"? This action cannot be undone.`
+  );
+
+  if (!confirmed) {
+    return;
+  }
+
+  try {
+    // Delete the rule
+    await customRulesService.deleteCustomRule(ruleId);
+
+    // Also remove from favorites if it exists
+    const isFavorited = await favoritesService.isFavorited('custom-rules', ruleId);
+    if (isFavorited) {
+      const ruleData = await WasmBridge.getRuleInfo(ruleId);
+      await favoritesService.toggleFavorite('custom-rules', ruleId, ruleData);
+    }
+
+    // Track deletion
+    analyticsService.trackEvent('custom_rule_deleted', {
+      ruleId: ruleId,
+      source: 'index_page'
+    });
+
+    // Reload the page to show updated list
+    window.location.reload();
+
+  } catch (error) {
+    console.error('Failed to delete rule:', error);
+    alert('Failed to delete rule. Please try again.');
+  }
+};

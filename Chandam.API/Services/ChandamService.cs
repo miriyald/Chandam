@@ -1,5 +1,4 @@
 using Chandam.API.Models;
-using Chandam.API.Models.Config;
 using Chandam.API.Converters;
 using Chandam.Core;
 using Chandam.Rules;
@@ -23,12 +22,34 @@ public class ChandamService
     }
 
     /// <summary>
+    /// Helper: Ensure the specified ruleset is active. Uses default ("chandam") if null.
+    /// </summary>
+    private string EnsureActiveRuleSet(string? requestedRuleSet)
+    {
+        var ruleSetId = requestedRuleSet ?? "chandam";
+        
+        if (!string.IsNullOrEmpty(ruleSetId) && ruleSetId != _ruleLoader.GetCurrentRuleSetId())
+        {
+            if (!_ruleLoader.SetActiveRuleSet(ruleSetId))
+            {
+                // Fallback to current if requested ruleset doesn't exist
+                ruleSetId = _ruleLoader.GetCurrentRuleSetId();
+            }
+        }
+        
+        return ruleSetId;
+    }
+
+    /// <summary>
     /// Auto-detect the best matching Chandam(s) for a poem
     /// </summary>
     public DetermineResponse Determine(DetermineRequest request)
     {
         try
         {
+            // Ensure requested ruleset is active
+            EnsureActiveRuleSet(request.RuleSetId);
+
             if (string.IsNullOrWhiteSpace(request.PoemText))
             {
                 return new DetermineResponse
@@ -84,6 +105,9 @@ public class ChandamService
     {
         try
         {
+            // Ensure requested ruleset is active
+            EnsureActiveRuleSet(request.RuleSetId);
+
             if (string.IsNullOrWhiteSpace(request.PoemText))
             {
                 return new TryMatchResponse
@@ -263,6 +287,9 @@ public class ChandamService
     {
         try
         {
+            // Ensure requested ruleset is active
+            EnsureActiveRuleSet(request.RuleSetId);
+
             if (string.IsNullOrWhiteSpace(request.PoemText))
             {
                 return new ScoresResponse
@@ -328,6 +355,9 @@ public class ChandamService
     {
         try
         {
+            // Ensure requested ruleset is active
+            EnsureActiveRuleSet(request.RuleSetId);
+
             if (string.IsNullOrWhiteSpace(request.RuleIdentifier))
             {
                 return new GetRuleInfoResponse
@@ -381,6 +411,9 @@ public class ChandamService
     {
         try
         {
+            // Ensure requested ruleset is active
+            EnsureActiveRuleSet(request.RuleSetId);
+
             if (string.IsNullOrWhiteSpace(request.RuleIdentifier))
             {
                 return new GetSamplesResponse

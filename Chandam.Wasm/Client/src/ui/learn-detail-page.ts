@@ -59,28 +59,9 @@ function renderLearnDetailPageHtml(
         <div id="rule-actions-container"></div>
       </div>
 
-      <div class="rule-metadata">
-        <span>${t('label_rule_set')} ${ruleSetName}</span> |
-        <span>${t('label_type')} ${ruleInfo.padyamType}</span> |
-        <span>${t('label_frequency')} ${ruleInfo.frequency}</span>
+      <div class="description-content">
+        ${ruleInfo.description || '<p>No description available</p>'}
       </div>
-
-      <section class="description">
-        <h2>${t('section_description')}</h2>
-        <div class="description-content">
-          ${ruleInfo.description || '<p>No description available</p>'}
-        </div>
-      </section>
-
-      <section class="technical-details">
-        <h2>${t('section_technical')}</h2>
-        <dl>
-          ${ruleInfo.sequence ? `<dt>Pattern (Sequence):</dt><dd><code>${ruleInfo.sequence}</code></dd>` : ''}
-          ${ruleInfo.matraSeries ? `<dt>Matra Series:</dt><dd><code>${ruleInfo.matraSeries}</code></dd>` : ''}
-          ${ruleInfo.yatiMode ? `<dt>Yati (Caesura):</dt><dd>${ruleInfo.yatiMode}</dd>` : ''}
-          ${ruleInfo.prasa !== undefined ? `<dt>Prasa (Rhyme):</dt><dd>${ruleInfo.prasa ? 'Yes' : 'No'}</dd>` : ''}
-        </dl>
-      </section>
 
       <section class="examples">
         <h2>${t('section_examples')} (${ruleInfo.examples?.length || 0})</h2>

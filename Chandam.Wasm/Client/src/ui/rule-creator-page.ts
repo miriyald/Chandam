@@ -4,8 +4,44 @@
 import { t } from '../i18n';
 import { customRulesService } from '../services/storage/custom-rules-service';
 import { makeUrl } from '../utils/url-helpers';
+import type { RuleDto, GanaOption } from '../services/storage/rule-dto';
+import {
+  MAX_LINES,
+  MIN_LINES,
+  DEFAULT_LINE_COUNT,
+  MAX_MATRAS,
+  MIN_THRESHOLD,
+  SELECTORS,
+  ELEMENT_IDS
+} from './rule-creator-constants';
+import {
+  collectYatiFromRows,
+  generateIdentifierFromName,
+  validateRule,
+  getElement,
+  getRequiredElement
+} from './rule-creator-helpers';
 
-let rowCounter = 0;
+/**
+ * State management for row counter
+ */
+class RuleCreatorState {
+  private rowCounter = 0;
+
+  incrementRow(): number {
+    return ++this.rowCounter;
+  }
+
+  reset(): void {
+    this.rowCounter = 0;
+  }
+
+  getCurrentCount(): number {
+    return this.rowCounter;
+  }
+}
+
+const state = new RuleCreatorState();
 
 /**
  * Main function to render the rule creator page
@@ -112,22 +148,24 @@ function renderRuleCreatorHTML(): string {
  * Initialize form with default values
  */
 function initializeForm() {
-  rowCounter = 0;
+  state.reset();
 
   // Populate lines dropdown
-  const linesSelect = document.getElementById('lines') as HTMLSelectElement;
+  const linesSelect = getElement<HTMLSelectElement>(ELEMENT_IDS.LINES);
   if (linesSelect) {
-    for (let i = 1; i <= 8; i++) {
+    for (let i = MIN_LINES; i <= MAX_LINES; i++) {
       const option = document.createElement('option');
       option.value = i.toString();
       option.textContent = `${i} ${i === 1 ? t('pada_singular') : t('pada_plural')}`;
-      if (i === 4) option.selected = true;  // Default to 4 padas
+      if (i === DEFAULT_LINE_COUNT) {
+        option.selected = true;
+      }
       linesSelect.appendChild(option);
     }
   }
 
   // Set Same Rules checked by default
-  const sameRulesCheckbox = document.getElementById('same-rules') as HTMLInputElement;
+  const sameRulesCheckbox = getElement<HTMLInputElement>(ELEMENT_IDS.SAME_RULES);
   if (sameRulesCheckbox) {
     sameRulesCheckbox.checked = true;
   }
@@ -147,7 +185,7 @@ function initializeForm() {
  */
 function attachEventHandlers() {
   // Padyam type change
-  const padyamType = document.getElementById('padyam-type');
+  const padyamType = getElement<HTMLSelectElement>(ELEMENT_IDS.PADYAM_TYPE);
   padyamType?.addEventListener('change', (e) => {
     const value = (e.target as HTMLSelectElement).value;
     updateGanaTypeDropdown(value);
@@ -155,47 +193,91 @@ function attachEventHandlers() {
   });
 
   // Gana type change
-  const ganaType = document.getElementById('gana-type');
+  const ganaType = getElement<HTMLSelectElement>(ELEMENT_IDS.GANA_TYPE);
   ganaType?.addEventListener('change', () => {
     regenerateAllRows();
   });
 
   // Same rules toggle
-  const sameRules = document.getElementById('same-rules');
+  const sameRules = getElement<HTMLInputElement>(ELEMENT_IDS.SAME_RULES);
   sameRules?.addEventListener('change', (e) => {
     const checked = (e.target as HTMLInputElement).checked;
     updateSameRulesState(checked);
   });
 
   // Add pada button (toolbar)
-  const addPadaBtn = document.getElementById('add-pada-btn');
+  const addPadaBtn = getElement<HTMLButtonElement>(ELEMENT_IDS.ADD_PADA_BTN);
   addPadaBtn?.addEventListener('click', () => addPatternRow());
 
   // Remove pada button (toolbar)
-  const removePadaBtn = document.getElementById('remove-pada-btn');
-  removePadaBtn?.addEventListener('click', () => {
-    const container = document.getElementById('pattern-rows-container');
-    const rows = container?.querySelectorAll('.pattern-row-inline');
-    if (rows && rows.length > 1) {
-      // Remove the last row
-      rows[rows.length - 1].remove();
-    }
-  });
+  const removePadaBtn = getElement<HTMLButtonElement>(ELEMENT_IDS.REMOVE_PADA_BTN);
+  removePadaBtn?.addEventListener('click', () => removeLastPatternRow());
 
   // Cancel button
-  const cancelBtn = document.getElementById('cancel-btn');
+  const cancelBtn = getElement<HTMLButtonElement>('cancel-btn');
   cancelBtn?.addEventListener('click', () => window.location.href = makeUrl('/'));
 
   // Create button
-  const createBtn = document.getElementById('create-rule-btn');
+  const createBtn = getElement<HTMLButtonElement>('create-rule-btn');
   createBtn?.addEventListener('click', async () => await handleCreateRule());
+
+  // Event delegation for row actions (prevent memory leaks)
+  attachRowEventDelegation();
+}
+
+/**
+ * Remove the last pattern row from toolbar button
+ */
+function removeLastPatternRow() {
+  const container = getElement(ELEMENT_IDS.PATTERN_ROWS_CONTAINER);
+  const rows = container?.querySelectorAll(SELECTORS.PATTERN_ROW);
+  if (rows && rows.length > 1) {
+    rows[rows.length - 1].remove();
+  }
+}
+
+/**
+ * Attach event delegation for row actions to prevent memory leaks
+ */
+function attachRowEventDelegation() {
+  const container = getElement(ELEMENT_IDS.PATTERN_ROWS_CONTAINER);
+  container?.addEventListener('click', (e) => {
+    const target = e.target as HTMLElement;
+
+    // Add gana button
+    if (target.classList.contains('add-gana-btn') || target.closest('.add-gana-btn')) {
+      const btn = target.closest('.add-gana-btn') as HTMLElement;
+      const rowNum = parseInt(btn?.getAttribute('data-row') || '0');
+      if (rowNum > 0) {
+        addGanaDropdown(rowNum);
+        updateGanaCountDisplay(rowNum);
+      }
+    }
+    // Remove gana button
+    else if (target.classList.contains('remove-gana-btn') || target.closest('.remove-gana-btn')) {
+      const btn = target.closest('.remove-gana-btn') as HTMLElement;
+      const rowNum = parseInt(btn?.getAttribute('data-row') || '0');
+      if (rowNum > 0) {
+        removeLastGana(rowNum);
+        updateGanaCountDisplay(rowNum);
+      }
+    }
+    // Remove row button
+    else if (target.classList.contains('remove-row-btn') || target.closest('.remove-row-btn')) {
+      const btn = target.closest('.remove-row-btn') as HTMLElement;
+      const rowNum = parseInt(btn?.getAttribute('data-row') || '0');
+      if (rowNum > 0) {
+        removePatternRow(rowNum);
+      }
+    }
+  });
 }
 
 /**
  * Update gana type dropdown based on padyam type
  */
 function updateGanaTypeDropdown(padyamType: string) {
-  const ganaTypeSelect = document.getElementById('gana-type') as HTMLSelectElement;
+  const ganaTypeSelect = getElement<HTMLSelectElement>(ELEMENT_IDS.GANA_TYPE);
   if (!ganaTypeSelect) return;
 
   ganaTypeSelect.innerHTML = '';
@@ -227,8 +309,8 @@ function updateGanaTypeDropdown(padyamType: string) {
  * Update UI state based on Same Rules checkbox
  */
 function updateSameRulesState(checked: boolean) {
-  const addPadaBtn = document.getElementById('add-pada-btn') as HTMLButtonElement;
-  const removePadaBtn = document.getElementById('remove-pada-btn') as HTMLButtonElement;
+  const addPadaBtn = getElement<HTMLButtonElement>(ELEMENT_IDS.ADD_PADA_BTN);
+  const removePadaBtn = getElement<HTMLButtonElement>(ELEMENT_IDS.REMOVE_PADA_BTN);
 
   if (checked) {
     // Same Rules ON: disable row add/remove buttons
@@ -242,7 +324,7 @@ function updateSameRulesState(checked: boolean) {
     }
 
     // Hide per-row remove buttons
-    document.querySelectorAll('.remove-row-btn').forEach(btn => {
+    document.querySelectorAll(SELECTORS.REMOVE_ROW_BTN).forEach(btn => {
       (btn as HTMLElement).style.display = 'none';
     });
   } else {
@@ -257,7 +339,7 @@ function updateSameRulesState(checked: boolean) {
     }
 
     // Show per-row remove buttons
-    document.querySelectorAll('.remove-row-btn').forEach(btn => {
+    document.querySelectorAll(SELECTORS.REMOVE_ROW_BTN).forEach(btn => {
       (btn as HTMLElement).style.display = 'inline-block';
     });
   }
@@ -267,10 +349,10 @@ function updateSameRulesState(checked: boolean) {
  * Regenerate all rows with new gana options
  */
 function regenerateAllRows() {
-  const container = document.getElementById('pattern-rows-container');
+  const container = getElement(ELEMENT_IDS.PATTERN_ROWS_CONTAINER);
   if (!container) return;
 
-  const rows = container.querySelectorAll('.pattern-row-card');
+  const rows = container.querySelectorAll(SELECTORS.PATTERN_ROW);
   rows.forEach((_, index) => {
     const rowNum = index + 1;
     const ganaContainer = document.getElementById(`gana-container-${rowNum}`);
@@ -288,11 +370,10 @@ function regenerateAllRows() {
  * Add a new pattern row (inline layout)
  */
 function addPatternRow() {
-  const container = document.getElementById('pattern-rows-container');
+  const container = getElement(ELEMENT_IDS.PATTERN_ROWS_CONTAINER);
   if (!container) return;
 
-  rowCounter++;
-  const rowNum = rowCounter;
+  const rowNum = state.incrementRow();
 
   const rowDiv = document.createElement('div');
   rowDiv.id = `row-${rowNum}`;
@@ -320,38 +401,15 @@ function addPatternRow() {
     <div class="yati-input-inline">
       <label class="yati-label">${t('creator_label_yati')}:</label>
       <input type="text" id="yati-${rowNum}" class="yati-input-compact"
-             placeholder="${t('creator_placeholder_yati')}">
+             placeholder="${t('creator_placeholder_yati')}"
+             aria-label="${t('creator_label_yati')} ${rowNum}">
     </div>
   `;
 
   container.appendChild(rowDiv);
 
-  // Add event listeners for this row
-  const addGanaBtn = rowDiv.querySelector('.add-gana-btn');
-  addGanaBtn?.addEventListener('click', (e) => {
-    e.preventDefault();
-    const btn = e.target as HTMLElement;
-    const rowNum = parseInt(btn.getAttribute('data-row') || '0');
-    addGanaDropdown(rowNum);
-    updateGanaCountDisplay(rowNum);
-  });
-
-  const removeGanaBtn = rowDiv.querySelector('.remove-gana-btn');
-  removeGanaBtn?.addEventListener('click', (e) => {
-    e.preventDefault();
-    const btn = e.target as HTMLElement;
-    const rowNum = parseInt(btn.getAttribute('data-row') || '0');
-    removeLastGana(rowNum);
-    updateGanaCountDisplay(rowNum);
-  });
-
-  const removeRowBtn = rowDiv.querySelector('.remove-row-btn');
-  removeRowBtn?.addEventListener('click', (e) => {
-    e.preventDefault();
-    const btn = e.target as HTMLElement;
-    const rowNum = parseInt(btn.getAttribute('data-row') || '0');
-    removePatternRow(rowNum);
-  });
+  // Event listeners are handled by delegation (attachRowEventDelegation)
+  // No inline event listeners needed
 
   // Add first gana dropdown
   addGanaDropdown(rowNum);
@@ -362,12 +420,12 @@ function addPatternRow() {
  * Remove a pattern row
  */
 function removePatternRow(rowNum: number) {
-  const container = document.getElementById('pattern-rows-container');
+  const container = getElement(ELEMENT_IDS.PATTERN_ROWS_CONTAINER);
   if (!container) return;
 
   // Don't allow removing the last row
-  const rows = container.querySelectorAll('.pattern-row-card');
-  if (rows.length <= 1) {
+  const rows = container.querySelectorAll(SELECTORS.PATTERN_ROW);
+  if (rows.length <= MIN_LINES) {
     return;
   }
 
@@ -429,8 +487,8 @@ function updateGanaCountDisplay(rowNum: number) {
 /**
  * Get gana dropdown options based on current gana type
  */
-function getGanaDropdownOptions(): Array<{ label: string; value: string }> {
-  const ganaTypeSelect = document.getElementById('gana-type') as HTMLSelectElement;
+function getGanaDropdownOptions(): GanaOption[] {
+  const ganaTypeSelect = getElement<HTMLSelectElement>(ELEMENT_IDS.GANA_TYPE);
   if (!ganaTypeSelect) return [];
 
   const ganaType = ganaTypeSelect.value;
@@ -462,7 +520,7 @@ function getGanaDropdownOptions(): Array<{ label: string; value: string }> {
         { label: t('gana_laghuvu'), value: 'Laghuvu' }
       ];
     case 'Weight': // Jati matra
-      return Array.from({ length: 50 }, (_, i) => ({
+      return Array.from({ length: MAX_MATRAS }, (_, i) => ({
         label: `${i + 1} ${i === 0 ? t('matra_singular') : t('matra_plural')}`,
         value: (i + 1).toString()
       }));
@@ -477,8 +535,11 @@ function getGanaDropdownOptions(): Array<{ label: string; value: string }> {
 async function handleCreateRule() {
   const ruleDto = buildRuleDtoFromForm();
 
-  if (!validateRule(ruleDto)) {
-    return; // Validation errors shown to user
+  // Validate using helper function
+  const validationResult = await validateRule(ruleDto);
+  if (!validationResult.isValid) {
+    alert(validationResult.errors.join('\n'));
+    return;
   }
 
   try {
@@ -500,24 +561,32 @@ async function handleCreateRule() {
 /**
  * Build RuleDto object from form data
  */
-function buildRuleDtoFromForm(): any {
-  const name = (document.getElementById('rule-name') as HTMLInputElement).value.trim();
+function buildRuleDtoFromForm(): RuleDto {
+  const ruleName = getRequiredElement<HTMLInputElement>(ELEMENT_IDS.RULE_NAME);
+  const name = ruleName.value.trim();
   const identifier = generateIdentifierFromName(name);
 
-  const padyamType = (document.getElementById('padyam-type') as HTMLSelectElement).value;
-  const ganaType = (document.getElementById('gana-type') as HTMLSelectElement).value;
+  const padyamTypeSelect = getRequiredElement<HTMLSelectElement>(ELEMENT_IDS.PADYAM_TYPE);
+  const ganaTypeSelect = getRequiredElement<HTMLSelectElement>(ELEMENT_IDS.GANA_TYPE);
+  const padyamType = padyamTypeSelect.value as 'Vruttam' | 'Jati' | 'UpaJati';
+  const ganaType = ganaTypeSelect.value;
 
-  const prasa = (document.getElementById('prasa') as HTMLInputElement).checked;
-  const prasaYati = (document.getElementById('prasa-yati') as HTMLInputElement).checked;
-  const anthyaPrasa = (document.getElementById('anthya-prasa') as HTMLInputElement).checked;
-  const dandakamu = (document.getElementById('dandakamu') as HTMLInputElement).checked;
-  const sameRules = (document.getElementById('same-rules') as HTMLInputElement).checked;
-  const lines = sameRules ? parseInt((document.getElementById('lines') as HTMLSelectElement).value) : 0;
+  const prasaInput = getRequiredElement<HTMLInputElement>(ELEMENT_IDS.PRASA);
+  const prasaYatiInput = getRequiredElement<HTMLInputElement>(ELEMENT_IDS.PRASA_YATI);
+  const anthyaPrasaInput = getRequiredElement<HTMLInputElement>(ELEMENT_IDS.ANTHYA_PRASA);
+  const sameRulesInput = getRequiredElement<HTMLInputElement>(ELEMENT_IDS.SAME_RULES);
+  const linesSelect = getRequiredElement<HTMLSelectElement>(ELEMENT_IDS.LINES);
+
+  const prasa = prasaInput.checked;
+  const prasaYati = prasaYatiInput.checked;
+  const anthyaPrasa = anthyaPrasaInput.checked;
+  const sameRules = sameRulesInput.checked;
+  const lines = sameRules ? parseInt(linesSelect.value) : 0;
 
   // Build Rules[][] array from pattern rows
-  const container = document.getElementById('pattern-rows-container');
+  const container = getRequiredElement(ELEMENT_IDS.PATTERN_ROWS_CONTAINER);
   const rules: string[][] = [];
-  const rows = container?.querySelectorAll('.pattern-row-card') || [];
+  const rows = container.querySelectorAll(SELECTORS.PATTERN_ROW);
 
   rows.forEach((_, index) => {
     const rowNum = index + 1;
@@ -534,23 +603,11 @@ function buildRuleDtoFromForm(): any {
     }
   });
 
-  // Build Yati[][] from comma-separated inputs
-  const yati: number[][] = [];
-  rows.forEach((_, index) => {
-    const rowNum = index + 1;
-    const yatiInput = document.getElementById(`yati-${rowNum}`) as HTMLInputElement;
-    if (yatiInput && yatiInput.value.trim()) {
-      const yatiValues = yatiInput.value.split(',')
-        .map(v => parseInt(v.trim()))
-        .filter(v => !isNaN(v));
-      if (yatiValues.length > 0) {
-        yati.push(yatiValues);
-      }
-    }
-  });
+  // Build Yati[][] using helper function
+  const yati = collectYatiFromRows(rows);
 
   const totalLines = sameRules ? lines : rules.length;
-  const threshold = Math.max(1, totalLines - 1);
+  const threshold = Math.max(MIN_THRESHOLD, totalLines - 1);
 
   return {
     Identifier: identifier,
@@ -568,7 +625,7 @@ function buildRuleDtoFromForm(): any {
     Prasa: prasa,
     PrasaYati: prasaYati,
     AnthyaPrasa: anthyaPrasa,
-    InfiniteLength: dandakamu,
+    InfiniteLength: false,
     DeferThresold: false,
     YatiRecycle: false,
     ReverseYati: false,
@@ -580,44 +637,13 @@ function buildRuleDtoFromForm(): any {
 }
 
 /**
- * Generate identifier from name using hash
- */
-function generateIdentifierFromName(name: string): string {
-  let hash = 0;
-  for (let i = 0; i < name.length; i++) {
-    const char = name.charCodeAt(i);
-    hash = ((hash << 5) - hash) + char;
-    hash = hash & hash; // Convert to 32-bit integer
-  }
-  const positiveHash = Math.abs(hash);
-  return `custom-${positiveHash}`;
-}
-
-/**
  * Map GanaType to RuleType enum
  */
-function getRuleTypeFromGanaType(ganaType: string): string {
+function getRuleTypeFromGanaType(ganaType: string): 'Name' | 'Type' | 'Weight' {
   switch (ganaType) {
     case 'Name': return 'Name';
     case 'Type': return 'Type';
     case 'Weight': return 'Weight';
     default: return 'Name';
   }
-}
-
-/**
- * Validate rule before submission
- */
-function validateRule(ruleDto: any): boolean {
-  if (!ruleDto.Name || ruleDto.Name.trim() === '') {
-    alert(t('creator_validation_name'));
-    return false;
-  }
-
-  if (!ruleDto.Rules || ruleDto.Rules.length === 0 || ruleDto.Rules[0].length === 0) {
-    alert(t('creator_validation_ganas'));
-    return false;
-  }
-
-  return true;
 }

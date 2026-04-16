@@ -31,4 +31,15 @@ public class TryMatchRequest
     /// Optional: Rendered output format (None, Html, Text, Markdown, Both)
     /// </summary>
     public RenderFormat RenderFormat { get; set; } = RenderFormat.None;
+
+    /// <summary>
+    /// RuleSet ID to use ("chandam", "popular", "topella", etc.). If null, uses active ruleset.
+    /// Default: "chandam"
+    /// </summary>
+    public string? RuleSetId { get; set; } = "chandam";
+
+    /// <summary>
+    /// Language of the poem. If null, infers from rule or uses default (te).
+    /// </summary>
+    public RuleLanguage? Language { get; set; }
 }

@@ -1,4 +1,3 @@
-using Chandam.API.IntegrationTests.Models;
 using Chandam.API.Services;
 using Chandam.Rules;
 using Xunit;
