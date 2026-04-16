@@ -1,6 +1,8 @@
 using System.Collections.Generic;
 using System.Text.Json.Serialization;
+#if !EXCLUDE_YAML
 using YamlDotNet.Serialization;
+#endif
 
 namespace Chandam.API.Models.Config;
 
@@ -39,51 +41,75 @@ public class RuleDto
 
     // Calculated fields (excluded from serialization - computed at runtime)
     [JsonIgnore]
+#if !EXCLUDE_YAML
     [YamlIgnore]
+#endif
     public string? ShortName { get; set; }
 
     [JsonIgnore]
+#if !EXCLUDE_YAML
     [YamlIgnore]
+#endif
     public string? Alias { get; set; }
 
     [JsonIgnore]
+#if !EXCLUDE_YAML
     [YamlIgnore]
+#endif
     public string? ChandamName { get; set; }
 
     [JsonIgnore]
+#if !EXCLUDE_YAML
     [YamlIgnore]
+#endif
     public int CharLength { get; set; }
 
     [JsonIgnore]
+#if !EXCLUDE_YAML
     [YamlIgnore]
+#endif
     public int MatraLength { get; set; }
 
     [JsonIgnore]
+#if !EXCLUDE_YAML
     [YamlIgnore]
+#endif
     public int Min { get; set; }
 
     [JsonIgnore]
+#if !EXCLUDE_YAML
     [YamlIgnore]
+#endif
     public int Max { get; set; }
 
     [JsonIgnore]
+#if !EXCLUDE_YAML
     [YamlIgnore]
+#endif
     public decimal ChandamNumber { get; set; }
 
     [JsonIgnore]
+#if !EXCLUDE_YAML
     [YamlIgnore]
+#endif
     public decimal ChandamOrder { get; set; }
 
     [JsonIgnore]
+#if !EXCLUDE_YAML
     [YamlIgnore]
+#endif
     public string? Sequence { get; set; }
 
     [JsonIgnore]
+#if !EXCLUDE_YAML
     [YamlIgnore]
+#endif
     public string? MatraSeries { get; set; }
 
     [JsonIgnore]
+#if !EXCLUDE_YAML
     [YamlIgnore]
+#endif
     public bool RowWiseRules { get; set; }
 
     // Examples

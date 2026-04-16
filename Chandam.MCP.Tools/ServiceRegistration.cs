@@ -15,6 +15,7 @@ public static class ServiceRegistration
         ruleLoader.LoadAllRuleSets(rulesDirectory ?? "Chandam.Config/Rules");
         services.AddSingleton(ruleLoader);
         services.AddSingleton<ChandamService>();
+        services.AddSingleton<SearchService>();
 
         // Dictionary services
         services.AddSingleton(new DiskCache("cache"));

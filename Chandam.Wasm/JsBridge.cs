@@ -197,12 +197,46 @@ public static class JsBridge
         {
             var wasmLoader = ServiceAccessor.Services!.GetRequiredService<WasmRuleLoaderService>();
             await wasmLoader.LoadRuleSetAsync(rulesFile, examplesFile);
+
+            var ruleLoader = ServiceAccessor.Services!.GetRequiredService<RuleLoaderService>();
+
+            // IMPORTANT: Sync Manager back to RuleLoaderService with correct ruleset ID
+            // Extract ruleset ID from filename (e.g., "chandam.min.json" → "chandam")
+            var ruleSetId = ExtractRuleSetId(rulesFile);
+            ruleLoader.SyncFromManager(ruleSetId);
+
+            // Clear facet cache when rules are reloaded
+            ruleLoader.ClearFacetCache();
+
             return JsonSerializer.Serialize(new { success = true, message = "Rules reloaded successfully" }, JsonOptions);
         }
         catch (Exception ex)
         {
             return JsonSerializer.Serialize(new { success = false, errorMessage = ex.Message }, JsonOptions);
         }
+    }
+
+    /// <summary>
+    /// Extract ruleset ID from filename
+    /// Examples: "chandam.min.json.gz" → "chandam", "topella.json" → "topella"
+    /// </summary>
+    private static string ExtractRuleSetId(string rulesFile)
+    {
+        var fileName = System.IO.Path.GetFileNameWithoutExtension(rulesFile);
+
+        // Remove .gz extension if present
+        if (fileName.EndsWith(".json", StringComparison.OrdinalIgnoreCase))
+        {
+            fileName = System.IO.Path.GetFileNameWithoutExtension(fileName);
+        }
+
+        // Remove .min suffix if present
+        if (fileName.EndsWith(".min", StringComparison.OrdinalIgnoreCase))
+        {
+            fileName = fileName.Substring(0, fileName.Length - 4);
+        }
+
+        return fileName;
     }
 
     [JSInvokable]
@@ -225,6 +259,13 @@ public static class JsBridge
 
                 Manager.Clear();
                 Manager.Register(rules);
+
+                // Sync Manager back to RuleLoaderService
+                ruleLoader.SyncFromManager();
+
+                // Clear facet cache when rules change
+                ruleLoader.ClearFacetCache();
+
                 Console.WriteLine($"WASM: Loaded {rules.Length} rules from JSON strings");
             }
 
@@ -265,6 +306,14 @@ public static class JsBridge
             // Clear existing rules and register custom rules
             Manager.Clear();
             Manager.Register(rules);
+
+            // IMPORTANT: Sync Manager back to RuleLoaderService
+            // This ensures GetAllRules() returns custom rules, not stale predefined rules
+            ruleLoader.SyncFromManager();
+
+            // Clear facet cache when rules change
+            ruleLoader.ClearFacetCache();
+
             Console.WriteLine($"WASM: Loaded {rules.Length} custom rules");
 
             return JsonSerializer.Serialize(new {
@@ -280,6 +329,95 @@ public static class JsBridge
                 success = false,
                 errorMessage = ex.Message
             }, JsonOptions);
+        }
+    }
+
+    [JSInvokable]
+    public static string SearchRules(
+        string? query,
+        string? categories,
+        string? chandamNames,
+        string? frequencies,
+        int? matraLengthMin,
+        int? matraLengthMax,
+        bool? hasExamples,
+        int maxResults,
+        string language = "te")
+    {
+        try
+        {
+            var lang = LanguageCodeMapper.ParseLanguage(language);
+
+            var filters = new RuleSearchFilters
+            {
+                Query = query,
+                Categories = categories?.Split(',', StringSplitOptions.RemoveEmptyEntries).Select(t => t.Trim()).ToList(),
+                ChandamNames = chandamNames?.Split(',', StringSplitOptions.RemoveEmptyEntries).Select(c => c.Trim()).ToList(),
+                Frequencies = frequencies?.Split(',', StringSplitOptions.RemoveEmptyEntries).Select(f => f.Trim()).ToList(),
+                MatraLengthMin = matraLengthMin,
+                MatraLengthMax = matraLengthMax,
+                HasExamples = hasExamples,
+                MaxResults = maxResults
+            };
+
+            var searchService = ServiceAccessor.Services!.GetRequiredService<SearchService>();
+            var results = searchService.SearchRules(filters, ruleSetId: null, lang);
+
+            return JsonSerializer.Serialize(results, JsonOptions);
+        }
+        catch (Exception ex)
+        {
+            Console.Error.WriteLine($"SearchRules error: {ex.Message}");
+            return JsonSerializer.Serialize(new List<object>(), JsonOptions);
+        }
+    }
+
+    [JSInvokable]
+    public static string GetFacetCounts(string language = "te")
+    {
+        try
+        {
+            var lang = LanguageCodeMapper.ParseLanguage(language);
+            var searchService = ServiceAccessor.Services!.GetRequiredService<SearchService>();
+            var facets = searchService.GetFacetCounts(ruleSetId: null, lang);
+
+            return JsonSerializer.Serialize(facets, JsonOptions);
+        }
+        catch (Exception ex)
+        {
+            Console.Error.WriteLine($"GetFacetCounts error: {ex.Message}");
+            return "{}";
+        }
+    }
+
+    /// <summary>
+    /// OPTIMIZATION: Get both rules and facets in one call
+    /// Avoids duplicate rule conversions (2x faster for large rulesets like topella)
+    /// </summary>
+    [JSInvokable]
+    public static string GetRulesWithFacets(string language = "te")
+    {
+        try
+        {
+            var lang = LanguageCodeMapper.ParseLanguage(language);
+            var searchService = ServiceAccessor.Services!.GetRequiredService<SearchService>();
+
+            // Single call gets both rules and facets (optimized)
+            var (rules, facets) = searchService.GetRulesWithFacets(ruleSetId: null, lang);
+
+            var response = new
+            {
+                Rules = rules,
+                Facets = facets,
+                Count = rules.Count
+            };
+
+            return JsonSerializer.Serialize(response, JsonOptions);
+        }
+        catch (Exception ex)
+        {
+            Console.Error.WriteLine($"GetRulesWithFacets error: {ex.Message}");
+            return JsonSerializer.Serialize(new { Rules = new List<object>(), Facets = new { }, Count = 0 }, JsonOptions);
         }
     }
 }

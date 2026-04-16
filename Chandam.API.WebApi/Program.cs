@@ -4,6 +4,7 @@ using Chandam.API.Models;
 using Chandam.API.Services;
 using Chandam.API.WebApi.Middleware;
 using Chandam.Rules;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.OpenApi.Models;
 using System.Text.Encodings.Web;
 using System.Text.Json.Serialization;
@@ -216,6 +217,83 @@ app.MapGet("/api/rules/{ruleSetId:regex(^(chandam|popular|topella|chandam\\.min|
         })
     });
 });
+
+// Search rules within a ruleset
+app.MapGet("/api/rules/{ruleSetId}/search", (
+    string ruleSetId,
+    [FromQuery] string? query,
+    [FromQuery] string? language,
+    [FromQuery] string? categories,
+    [FromQuery] string? chandam_names,
+    [FromQuery] string? frequencies,
+    [FromQuery] int? matra_length_min,
+    [FromQuery] int? matra_length_max,
+    [FromQuery] bool? has_examples,
+    [FromQuery] int max_results,
+    SearchService searchService) =>
+{
+    try
+    {
+        var lang = !string.IsNullOrEmpty(language)
+            ? LanguageCodeMapper.ParseLanguage(language)
+            : (RuleLanguage?)null;
+
+        var filters = new RuleSearchFilters
+        {
+            Query = query,
+            Categories = categories?.Split(',', StringSplitOptions.RemoveEmptyEntries).Select(t => t.Trim()).ToList(),
+            ChandamNames = chandam_names?.Split(',', StringSplitOptions.RemoveEmptyEntries).Select(c => c.Trim()).ToList(),
+            Frequencies = frequencies?.Split(',', StringSplitOptions.RemoveEmptyEntries).Select(f => f.Trim()).ToList(),
+            MatraLengthMin = matra_length_min,
+            MatraLengthMax = matra_length_max,
+            HasExamples = has_examples,
+            MaxResults = max_results > 0 ? max_results : 0
+        };
+
+        var results = searchService.SearchRules(filters, ruleSetId, lang);
+
+        return Results.Ok(new
+        {
+            Success = true,
+            Count = results.Count,
+            RuleSetId = ruleSetId,
+            Results = results
+        });
+    }
+    catch (Exception ex)
+    {
+        return Results.BadRequest(new { ErrorMessage = ex.Message });
+    }
+})
+.WithName("SearchRules");
+
+// Get facet counts for filter UI
+app.MapGet("/api/rules/{ruleSetId}/facets", (
+    string ruleSetId,
+    [FromQuery] string? language,
+    SearchService searchService) =>
+{
+    try
+    {
+        var lang = !string.IsNullOrEmpty(language)
+            ? LanguageCodeMapper.ParseLanguage(language)
+            : (RuleLanguage?)null;
+
+        var facets = searchService.GetFacetCounts(ruleSetId, lang);
+
+        return Results.Ok(new
+        {
+            Success = true,
+            RuleSetId = ruleSetId,
+            Facets = facets
+        });
+    }
+    catch (Exception ex)
+    {
+        return Results.BadRequest(new { ErrorMessage = ex.Message });
+    }
+})
+.WithName("GetFacetCounts");
 
 // Legacy endpoints (backward compatibility) - uses default "chandam" ruleset
 app.MapGet("/api/rules/{identifier}/samples", (string identifier, int? maxExamples, ChandamService service) =>

@@ -1,4 +1,5 @@
 using System.ComponentModel;
+using System.Linq;
 using System.Text.Json;
 using Chandam.API.Helpers;
 using Chandam.API.Models;
@@ -14,6 +15,7 @@ public class ChandamTools
     private readonly ChandamService _service;
     private readonly RuleLoaderService _ruleLoader;
     private readonly DictionaryService _dictionaryService;
+    private readonly SearchService _searchService;
 
     private static readonly JsonSerializerOptions JsonOptions = new()
     {
@@ -21,11 +23,12 @@ public class ChandamTools
         Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping
     };
 
-    public ChandamTools(ChandamService service, RuleLoaderService ruleLoader, DictionaryService dictionaryService)
+    public ChandamTools(ChandamService service, RuleLoaderService ruleLoader, DictionaryService dictionaryService, SearchService searchService)
     {
         _service = service;
         _ruleLoader = ruleLoader;
         _dictionaryService = dictionaryService;
+        _searchService = searchService;
     }
 
     [McpServerTool, Description("Auto-detect the best matching Chandam (meter/prosody) for a Telugu/Sanskrit poem. Returns matches with both Markdown summary and beautified HTML for display.")]
@@ -181,5 +184,67 @@ public class ChandamTools
     {
         var results = await _dictionaryService.LookupAsync(word);
         return JsonSerializer.Serialize(results, JsonOptions);
+    }
+
+    [McpServerTool, Description("Search for Chandam rules by name, identifier, or characteristics")]
+    public string SearchRules(
+        [Description("Search term for Telugu rule name (optional)")] string? query = null,
+        [Description("Language code: te (Telugu), kn (Kannada), sa (Sanskrit), hi (Hindi), ml (Malayalam)")] string language = "te",
+        [Description("Filter by PadyamSubType categories (comma-separated): Akkara, Divpada, Jati, Ragada, Vruttam, etc. (optional)")] string? categories = null,
+        [Description("Filter by ChandamName for Vruttam (comma-separated): గాయత్రి, త్రిష్టుప్పు, అనుష్టుప్, etc. (optional)")] string? chandam_names = null,
+        [Description("Filter by frequency (comma-separated): Frequent, Rare (optional)")] string? frequencies = null,
+        [Description("Minimum matra length (optional, -1 excluded)")] int? matra_length_min = null,
+        [Description("Maximum matra length (optional, -1 excluded)")] int? matra_length_max = null,
+        [Description("Filter by examples: true=with examples, false=without, null=all (optional)")] bool? has_examples = null,
+        [Description("Maximum results to return (0 = unlimited)")] int max_results = 20,
+        [Description("RuleSet to use: chandam, popular, topella (default: chandam)")] string? ruleset_id = null)
+    {
+        try
+        {
+            var lang = LanguageCodeMapper.ParseLanguage(language);
+
+            var filters = new RuleSearchFilters
+            {
+                Query = query,
+                Categories = categories?.Split(',', StringSplitOptions.RemoveEmptyEntries).Select(t => t.Trim()).ToList(),
+                ChandamNames = chandam_names?.Split(',', StringSplitOptions.RemoveEmptyEntries).Select(c => c.Trim()).ToList(),
+                Frequencies = frequencies?.Split(',', StringSplitOptions.RemoveEmptyEntries).Select(f => f.Trim()).ToList(),
+                MatraLengthMin = matra_length_min,
+                MatraLengthMax = matra_length_max,
+                HasExamples = has_examples,
+                MaxResults = max_results
+            };
+
+            var results = _searchService.SearchRules(filters, ruleset_id, lang);
+
+            var response = new
+            {
+                Success = true,
+                Count = results.Count,
+                Results = results.Select(r => new
+                {
+                    r.Identifier,
+                    r.Name,
+                    r.PadyamType,
+                    r.PadyamSubType,
+                    r.Frequency,
+                    r.Lines,
+                    r.ChandamName,
+                    r.CharLength,
+                    r.MatraLength,
+                    r.ExamplesCount
+                })
+            };
+
+            return JsonSerializer.Serialize(response, JsonOptions);
+        }
+        catch (Exception ex)
+        {
+            return JsonSerializer.Serialize(new
+            {
+                Success = false,
+                ErrorMessage = ex.Message
+            }, JsonOptions);
+        }
     }
 }

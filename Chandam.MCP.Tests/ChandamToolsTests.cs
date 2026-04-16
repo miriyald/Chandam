@@ -22,8 +22,9 @@ public class ChandamToolsTests
         var ruleLoader = new RuleLoaderService(rulesPath);
         ruleLoader.LoadAllRuleSets();
         var service = new ChandamService(ruleLoader);
+        var searchService = new SearchService(ruleLoader);
         var dictionaryService = new DictionaryService([], new DiskCache("test-cache"));
-        _tools = new ChandamTools(service, ruleLoader, dictionaryService);
+        _tools = new ChandamTools(service, ruleLoader, dictionaryService, searchService);
     }
 
     [Fact]
@@ -190,6 +191,95 @@ public class ChandamToolsTests
         var beautifiedHtml = beautified.GetString();
         Assert.Contains("<u>", beautifiedHtml);
         Assert.Contains("<b>", beautifiedHtml);
+    }
+
+    [Fact]
+    public void SearchRules_ByQuery_ReturnsMatches()
+    {
+        // Search by rule name (not ChandamName - use chandam_names parameter for that)
+        var result = _tools.SearchRules(query: "ఉత");  // Partial Telugu rule name search
+        var json = JsonDocument.Parse(result);
+
+        Assert.True(json.RootElement.GetProperty("Success").GetBoolean());
+        var count = json.RootElement.GetProperty("Count").GetInt32();
+        Assert.True(count > 0);
+    }
+
+    [Fact]
+    public void SearchRules_ByCategory_FiltersCorrectly()
+    {
+        var result = _tools.SearchRules(categories: "Vruttam");
+        var json = JsonDocument.Parse(result);
+
+        var results = json.RootElement.GetProperty("Results");
+        foreach (var item in results.EnumerateArray())
+        {
+            Assert.Equal("Vruttam", item.GetProperty("PadyamSubType").GetString());
+        }
+    }
+
+    [Fact]
+    public void SearchRules_ByChandamName_FiltersCorrectly()
+    {
+        // Search by ChandamName (e.g., త్రిష్టుప్పు) - use chandam_names parameter
+        var result = _tools.SearchRules(chandam_names: "త్రిష్టుప్పు");
+        var json = JsonDocument.Parse(result);
+
+        Assert.True(json.RootElement.GetProperty("Success").GetBoolean());
+        var count = json.RootElement.GetProperty("Count").GetInt32();
+        Assert.True(count > 0);
+
+        var results = json.RootElement.GetProperty("Results");
+        foreach (var item in results.EnumerateArray())
+        {
+            // All results should have ChandamName = త్రిష్టుప్పు
+            var chandamName = item.GetProperty("ChandamName").GetString();
+            Assert.Equal("త్రిష్టుప్పు", chandamName);
+        }
+    }
+
+    [Fact]
+    public void SearchRules_WithExamples_FiltersCorrectly()
+    {
+        var result = _tools.SearchRules(has_examples: true);
+        var json = JsonDocument.Parse(result);
+
+        var results = json.RootElement.GetProperty("Results");
+        foreach (var item in results.EnumerateArray())
+        {
+            Assert.True(item.GetProperty("ExamplesCount").GetInt32() > 0);
+        }
+    }
+
+    [Fact]
+    public void SearchRules_MatraLengthRange_FiltersCorrectly()
+    {
+        var result = _tools.SearchRules(matra_length_min: 10, matra_length_max: 20);
+        var json = JsonDocument.Parse(result);
+
+        var results = json.RootElement.GetProperty("Results");
+        foreach (var item in results.EnumerateArray())
+        {
+            var matraLength = item.GetProperty("MatraLength");
+            if (!matraLength.ValueKind.Equals(JsonValueKind.Null))
+            {
+                var length = matraLength.GetInt32();
+                if (length > 0)  // Exclude -1 values
+                {
+                    Assert.InRange(length, 10, 20);
+                }
+            }
+        }
+    }
+
+    [Fact]
+    public void SearchRules_MaxResults_LimitsOutput()
+    {
+        var result = _tools.SearchRules(max_results: 5);
+        var json = JsonDocument.Parse(result);
+
+        var results = json.RootElement.GetProperty("Results");
+        Assert.True(results.GetArrayLength() <= 5);
     }
 
     /// <summary>

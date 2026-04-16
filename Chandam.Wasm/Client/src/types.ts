@@ -110,3 +110,12 @@ export interface ChandamScore {
   padyamType: string;
   frequency: string;
 }
+
+export interface FacetCounts {
+  categories: Record<string, number>;      // PadyamSubType counts (was subTypes)
+  chandamNames: Record<string, number>;    // ChandamName counts for Vruttam only
+  frequencies: Record<string, number>;
+  matraLengthRange: { min: number; max: number };
+  withExamples: number;
+  withoutExamples: number;
+}
