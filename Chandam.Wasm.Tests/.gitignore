@@ -1,0 +1,4 @@
+node_modules/
+.publish/
+playwright-report/
+test-results/
