@@ -366,6 +366,9 @@ public static class JsBridge
     }
 
     [JSInvokable]
+    public static string GetVersion() => AppVersion.Value;
+
+    [JSInvokable]
     public static string GetAvailableFilters(string language = "te")
     {
         try

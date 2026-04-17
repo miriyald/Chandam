@@ -145,6 +145,13 @@ export class WasmBridge {
     return JSON.parse(json);
   }
 
+  static async getVersion(): Promise<string> {
+    return await DotNet.invokeMethodAsync<string>(
+      this.ASSEMBLY,
+      'GetVersion'
+    );
+  }
+
   static async getAvailableFilters(language: string = 'te'): Promise<AvailableFilters> {
     const json = await DotNet.invokeMethodAsync<string>(
       this.ASSEMBLY,

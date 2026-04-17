@@ -46,6 +46,9 @@ export default defineConfig({
         ['list'],
       ],
 
+  // WASM cold-start can take 8-15 s per fresh browser context
+  timeout: 60_000,
+
   use: {
     baseURL: BASE_URL,
 

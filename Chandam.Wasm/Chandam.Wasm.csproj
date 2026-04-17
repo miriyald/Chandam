@@ -30,6 +30,19 @@
     <ProjectReference Include="..\Chandam.API\Chandam.API.csproj" />
   </ItemGroup>
 
+  <!-- Generate version constant at build time (avoids reflection in trimmed WASM) -->
+  <Target Name="GenerateVersionConstant" BeforeTargets="BeforeBuild">
+    <PropertyGroup>
+      <_VersionValue>$(Version)</_VersionValue>
+      <_VersionValue Condition="'$(_VersionValue)' == ''">0.0.0</_VersionValue>
+    </PropertyGroup>
+    <WriteLinesToFile File="$(IntermediateOutputPath)AppVersion.g.cs" Overwrite="true"
+      Lines="namespace Chandam.Wasm%3B%0Ainternal static class AppVersion { public const string Value = &quot;$(_VersionValue)&quot;%3B }" />
+    <ItemGroup>
+      <Compile Include="$(IntermediateOutputPath)AppVersion.g.cs" />
+    </ItemGroup>
+  </Target>
+
   <!-- NPM build integration -->
   <Target Name="NpmInstall" BeforeTargets="BeforeBuild" Condition="!Exists('Client\node_modules')">
     <Exec Command="npm install" WorkingDirectory="Client" />

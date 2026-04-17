@@ -15,6 +15,7 @@ import { initConsoleAPI, getUserId } from './services/console-api';
 import { initLanguage, toggleLanguage, getLanguage, t } from './i18n';
 import type { Translations } from './i18n';
 import { analyticsService } from './services/analytics-service';
+import { WasmBridge } from './wasm-bridge';
 
 const router = new Router();
 
@@ -164,6 +165,13 @@ window.onWasmReady = async () => {
   const userId = getUserId();
   analyticsService.setUserId(userId);
   console.log('Analytics initialized with user ID');
+
+  // Update version display from assembly metadata
+  try {
+    const version = await WasmBridge.getVersion();
+    const versionEl = document.getElementById('version-info');
+    if (versionEl) versionEl.textContent = `v${version}`;
+  } catch { /* non-critical */ }
 
   // Restore editor state (if any)
   const editorState = storageService.loadEditorState();
