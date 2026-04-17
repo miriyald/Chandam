@@ -4,7 +4,9 @@
       "Bash(curl -s http://localhost:5000)",
       "Bash(dotnet build:*)",
       "Bash(dotnet run:*)",
-      "Bash(npm run:*)"
+      "Bash(npm run:*)",
+      "Bash(gh pr *)",
+      "Read(//tmp/**)"
     ]
   }
 }

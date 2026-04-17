@@ -104,6 +104,15 @@ public static class DescriptionBuilder
         }
         sb.AppendLine();
 
+        // Special rules from RuleText
+        if (!string.IsNullOrEmpty(rule.RuleText))
+        {
+            sb.AppendLine("## ప్రత్యేక నియమములు");
+            sb.AppendLine();
+            sb.AppendLine($"> {rule.RuleText}");
+            sb.AppendLine();
+        }
+
         // ✓ Prasa Rules
         sb.AppendLine("## ✓ ప్రాస విధానం");
         sb.AppendLine();
@@ -164,14 +173,6 @@ public static class DescriptionBuilder
                 sb.Append(availableSeries);
                 sb.AppendLine();
             }
-        }
-
-        // Original rule text
-        if (!string.IsNullOrEmpty(rule.RuleText))
-        {
-            sb.AppendLine("## 📚 మూల లక్షణం");
-            sb.AppendLine();
-            sb.AppendLine($"> {rule.RuleText}");
         }
 
         return sb.ToString().TrimEnd();
@@ -525,11 +526,22 @@ public static class DescriptionBuilder
 
         if (rule.Yati != null && rule.Yati.Length > 0 && rule.Yati[0].Length > 0)
         {
-            var positions = string.Join(", ", rule.Yati[0]);
-            sb.AppendLine("<div class='property'>");
-            sb.AppendLine("  <span class='label'>యతి:</span>");
-            sb.AppendLine($"  <span class='value'><span class='check-yes'>✓</span> {positions}</span>");
-            sb.AppendLine("</div>");
+            if (rule.Yati.Length == rule.Rules.Length && rule.Yati.Length > 1)
+            {
+                sb.AppendLine("<div class='property'>");
+                sb.AppendLine("  <span class='label'>యతి:</span>");
+                sb.AppendLine("  <span class='value'><span class='check-yes'>✓</span> పాద-వారీగా</span>");
+                sb.AppendLine("</div>");
+            }
+            else
+            {
+                var positions = string.Join(", ", rule.Yati[0]);
+                var suffix = GetYatiSuffix(rule.YatiMode, rule.ReverseYati, rule.Yati[0].Length);
+                sb.AppendLine("<div class='property'>");
+                sb.AppendLine("  <span class='label'>యతి:</span>");
+                sb.AppendLine($"  <span class='value'><span class='check-yes'>✓</span> {positions}{suffix}</span>");
+                sb.AppendLine("</div>");
+            }
         }
 
         sb.AppendLine("</div>");
@@ -537,6 +549,10 @@ public static class DescriptionBuilder
         // Gana sequence
         if (rule.RowWiseRules && rule.Rules.Length > 1)
         {
+            bool hasRowWiseYati = rule.Yati != null
+                && rule.Yati.Length == rule.Rules.Length
+                && rule.Yati.Length > 1;
+
             sb.AppendLine("<div class='gana-sequence'>");
             sb.AppendLine("<strong>గణములు (పాద-వారీగా):</strong>");
             sb.AppendLine("<table class='gana-table'>");
@@ -544,7 +560,14 @@ public static class DescriptionBuilder
             {
                 var padamName = GetPadamName(i + 1);
                 var ganaText = GetGanaText(rule.Rules[i], rule.RuleType, rule.InfiniteLength);
-                sb.AppendLine($"  <tr><td class='padam-label'>{padamName} పాదం:</td><td>{ganaText}</td></tr>");
+                var yatiCell = "";
+                if (hasRowWiseYati && rule.Yati![i].Length > 0)
+                {
+                    var positions = string.Join(", ", rule.Yati[i]);
+                    var suffix = GetYatiSuffix(rule.YatiMode, rule.ReverseYati, rule.Yati[i].Length);
+                    yatiCell = $"<td class='yati-cell'>యతి: {positions}{suffix}</td>";
+                }
+                sb.AppendLine($"  <tr><td class='padam-label'>{padamName} పాదం:</td><td>{ganaText}</td>{yatiCell}</tr>");
             }
             sb.AppendLine("</table>");
             sb.AppendLine("</div>");
@@ -554,6 +577,15 @@ public static class DescriptionBuilder
             var ganaText = GetGanaText(rule.Rules[0], rule.RuleType, rule.InfiniteLength);
             sb.AppendLine("<div class='gana-sequence'>");
             sb.AppendLine($"<strong>గణములు:</strong> {ganaText}");
+            sb.AppendLine("</div>");
+        }
+
+        // Special rules from RuleText (constraints not expressible in structured properties)
+        if (!string.IsNullOrEmpty(rule.RuleText))
+        {
+            sb.AppendLine("<div class='special-rules'>");
+            sb.AppendLine("<strong>ప్రత్యేక నియమములు:</strong>");
+            sb.AppendLine($"<div class='special-rules-content'>{rule.RuleText}</div>");
             sb.AppendLine("</div>");
         }
 
@@ -571,15 +603,6 @@ public static class DescriptionBuilder
                 sb.AppendLine(availableSeries);
             }
 
-            sb.AppendLine("</section>");
-        }
-
-        // Original rule text
-        if (!string.IsNullOrEmpty(rule.RuleText))
-        {
-            sb.AppendLine("<section class='original-rule'>");
-            sb.AppendLine("<h3>మూల లక్షణం</h3>");
-            sb.AppendLine($"<blockquote>{rule.RuleText}</blockquote>");
             sb.AppendLine("</section>");
         }
 

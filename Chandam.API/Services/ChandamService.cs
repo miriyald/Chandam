@@ -382,9 +382,19 @@ public class ChandamService
                 response.Examples = new List<ExamplePoem>();
                 foreach (var example in rule.Examples2)
                 {
+                    string? beautified = null;
+                    try
+                    {
+                        var padyam = new Padyam { MatchYati = true, MatchPrasa = true };
+                        var matchResult = padyam.Match(example.Text, rule);
+                        beautified = padyam.Beautify(matchResult);
+                    }
+                    catch { }
+
                     response.Examples.Add(new ExamplePoem
                     {
                         Text = example.Text,
+                        Beautified = beautified,
                         Author = example.Author ?? "మహానుభావుడు.",
                         Date = "తెలియదు",
                         Reference = example.Reference,

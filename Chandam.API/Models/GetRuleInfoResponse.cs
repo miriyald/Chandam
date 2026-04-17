@@ -63,6 +63,7 @@ public class GetRuleInfoResponse
 public class ExamplePoem
 {
     public string Text { get; set; } = string.Empty;
+    public string? Beautified { get; set; }
     public string Author { get; set; } = string.Empty;
     public string Date { get; set; } = string.Empty;
     public string? Reference { get; set; }

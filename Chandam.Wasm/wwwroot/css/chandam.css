@@ -1300,10 +1300,11 @@ footer a {
   margin-bottom: 1.5rem;
 }
 
-.example-card h3 {
-  margin-top: 0;
-  margin-bottom: 1rem;
-  color: #333;
+.example-poem-area {
+  background: white;
+  border: 1px solid #e0e0e0;
+  border-radius: 6px;
+  padding: 1.2rem;
 }
 
 .poem-text {
@@ -1318,14 +1319,52 @@ footer a {
   overflow-x: auto;
 }
 
-.example-card .metadata {
+.poem-attribution {
+  text-align: right;
   color: #666;
-  font-size: 0.9rem;
-  margin: 0.5rem 0;
+  font-style: italic;
+  font-size: 0.95rem;
+  margin-top: 0.75rem;
+  padding-top: 0.5rem;
+  border-top: 1px solid #eee;
 }
 
-.example-card .metadata strong {
-  color: #333;
+.example-footer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 0.75rem;
+}
+
+.example-reference {
+  color: #666;
+  font-size: 0.85rem;
+  flex: 1 1 auto;
+}
+
+/* Special rules from RuleText */
+.special-rules {
+  margin: 0.75rem 0;
+}
+
+.special-rules-content {
+  border-left: 3px solid var(--accent, #6a4c93);
+  padding: 0.5rem 1rem;
+  margin-top: 0.5rem;
+}
+
+.special-rules-content .gName {
+  font-weight: 700;
+  color: var(--accent, #6a4c93);
+}
+
+/* Yati cell in row-wise gana table */
+.yati-cell {
+  color: #666;
+  font-size: 0.9rem;
+  padding-left: 1rem;
 }
 
 .try-example-btn {

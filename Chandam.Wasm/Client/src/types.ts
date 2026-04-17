@@ -85,6 +85,7 @@ export interface MatchError {
 
 export interface PoemExample {
   text: string;
+  beautified?: string;
   author?: string;
   date?: string;
   reference?: string;

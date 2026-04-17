@@ -85,16 +85,31 @@ function renderExamples(
   }
 
   return examples.map((example, idx) => {
-    const exampleNumber = idx + 1; // 1-based numbering
+    const exampleNumber = idx + 1;
+    const poemHtml = example.beautified
+      ? `<div class="poem">${example.beautified}</div>`
+      : `<pre class="poem-text">${escapeHtml(example.text)}</pre>`;
+
+    const authorAttribution = example.author
+      ? `<div class="poem-attribution">— ${escapeHtml(example.author)}</div>`
+      : '';
+
+    const referenceHtml = example.reference
+      ? `<div class="example-reference">${escapeHtml(example.reference)}</div>`
+      : '';
+
     return `
       <div class="example-card">
-        <h3>${t('label_example_n')} ${exampleNumber}</h3>
-        <pre class="poem-text">${escapeHtml(example.text)}</pre>
-        ${example.author ? `<p class="metadata"><strong>${t('label_author')}</strong> ${escapeHtml(example.author)}</p>` : ''}
-        ${example.date ? `<p class="metadata"><strong>${t('label_date')}</strong> ${escapeHtml(example.date)}</p>` : ''}
-        <a href="${makeUrlWithParams(`/compute/${ruleSetId}/${ruleId}`, { example: exampleNumber })}" class="try-example-btn">
-          ${t('btn_try_example')}
-        </a>
+        <div class="example-poem-area">
+          ${poemHtml}
+          ${authorAttribution}
+        </div>
+        <div class="example-footer">
+          ${referenceHtml}
+          <a href="${makeUrlWithParams(`/compute/${ruleSetId}/${ruleId}`, { example: exampleNumber })}" class="try-example-btn">
+            ${t('btn_try_example')}
+          </a>
+        </div>
       </div>
     `;
   }).join('');
