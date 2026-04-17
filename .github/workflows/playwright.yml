@@ -86,7 +86,7 @@ jobs:
       # 5. Install Playwright and browsers
       # ------------------------------------------------------------------
       - name: Install Playwright test dependencies
-        run: npm ci
+        run: npm install
         working-directory: Chandam.Wasm.Tests
 
       # Cache the browser binaries to speed up subsequent runs
