@@ -1,0 +1,21 @@
+{
+  "name": "chandam-wasm-tests",
+  "version": "1.0.0",
+  "description": "Playwright automation tests for Chandam WASM app",
+  "scripts": {
+    "test": "playwright test",
+    "test:ui": "playwright test --ui",
+    "test:headed": "playwright test --headed",
+    "test:desktop": "playwright test --project=desktop",
+    "test:mobile": "playwright test --project=mobile",
+    "report": "playwright show-report",
+    "snapshots": "playwright test --update-snapshots",
+    "install-browsers": "playwright install --with-deps chromium webkit"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.49.0"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  }
+}
