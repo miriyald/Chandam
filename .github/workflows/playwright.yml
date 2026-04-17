@@ -1,0 +1,161 @@
+name: Playwright Tests (WASM)
+
+on:
+  push:
+    branches:
+      - copilot/add-pywright-automation-tests
+    paths:
+      - 'Chandam.Wasm/**'
+      - 'Chandam.Wasm.Tests/**'
+      - '.github/workflows/playwright.yml'
+  pull_request:
+    branches: [ beta ]
+    paths:
+      - 'Chandam.Wasm/**'
+      - 'Chandam.Wasm.Tests/**'
+      - '.github/workflows/playwright.yml'
+  # Run the full suite on demand (e.g. to regenerate visual baselines)
+  workflow_dispatch:
+    inputs:
+      update_snapshots:
+        description: 'Update visual baseline screenshots'
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+
+jobs:
+  playwright:
+    name: Run Playwright tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+
+    steps:
+      # ------------------------------------------------------------------
+      # 1. Checkout
+      # ------------------------------------------------------------------
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # ------------------------------------------------------------------
+      # 2. Set up runtimes
+      # ------------------------------------------------------------------
+      - name: Setup .NET 8.0
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.x'
+
+      - name: Setup Node.js 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      # ------------------------------------------------------------------
+      # 3. Cache NuGet packages
+      # ------------------------------------------------------------------
+      - name: Cache NuGet packages
+        uses: actions/cache@v4
+        with:
+          path: ~/.nuget/packages
+          key: nuget-${{ runner.os }}-${{ hashFiles('**/*.csproj', '**/packages.lock.json') }}
+          restore-keys: nuget-${{ runner.os }}-
+
+      # ------------------------------------------------------------------
+      # 4. Build the Blazor WASM app
+      # ------------------------------------------------------------------
+      - name: Restore .NET dependencies
+        run: dotnet restore Chandam.sln
+
+      - name: Install TypeScript client dependencies
+        run: npm install
+        working-directory: Chandam.Wasm/Client
+
+      - name: Build TypeScript bundle
+        run: npm run build
+        working-directory: Chandam.Wasm/Client
+
+      - name: Publish Blazor WASM app (with YAML rules for tests)
+        run: |
+          dotnet publish Chandam.Wasm/Chandam.Wasm.csproj \
+            -c Release \
+            -p:ExcludeYaml=false \
+            -o Chandam.Wasm.Tests/.publish
+
+      # ------------------------------------------------------------------
+      # 5. Install Playwright and browsers
+      # ------------------------------------------------------------------
+      - name: Install Playwright test dependencies
+        run: npm ci
+        working-directory: Chandam.Wasm.Tests
+
+      # Cache the browser binaries to speed up subsequent runs
+      - name: Get installed Playwright version
+        id: playwright-version
+        run: |
+          echo "version=$(node -e "console.log(require('./node_modules/@playwright/test/package.json').version)")" >> "$GITHUB_OUTPUT"
+        working-directory: Chandam.Wasm.Tests
+
+      - name: Cache Playwright browsers
+        id: playwright-cache
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/ms-playwright
+          key: playwright-${{ runner.os }}-${{ steps.playwright-version.outputs.version }}
+
+      - name: Install Playwright browsers (Chromium + WebKit)
+        if: steps.playwright-cache.outputs.cache-hit != 'true'
+        run: npx playwright install --with-deps chromium webkit
+        working-directory: Chandam.Wasm.Tests
+
+      # If browsers came from cache, still install OS-level dependencies
+      - name: Install Playwright OS dependencies (cached browsers)
+        if: steps.playwright-cache.outputs.cache-hit == 'true'
+        run: npx playwright install-deps chromium webkit
+        working-directory: Chandam.Wasm.Tests
+
+      # ------------------------------------------------------------------
+      # 6. Run tests
+      # ------------------------------------------------------------------
+      - name: Run Playwright tests (update snapshots)
+        if: ${{ inputs.update_snapshots == true }}
+        run: npx playwright test --update-snapshots
+        working-directory: Chandam.Wasm.Tests
+        env:
+          CI: true
+
+      - name: Run Playwright tests
+        if: ${{ inputs.update_snapshots != true }}
+        run: npx playwright test
+        working-directory: Chandam.Wasm.Tests
+        env:
+          CI: true
+
+      # ------------------------------------------------------------------
+      # 7. Upload artifacts (always, so failures are debuggable)
+      # ------------------------------------------------------------------
+      - name: Upload Playwright HTML report
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: playwright-report
+          path: Chandam.Wasm.Tests/playwright-report/
+          retention-days: 30
+
+      - name: Upload test results (traces, videos, failure screenshots)
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: test-results
+          path: Chandam.Wasm.Tests/test-results/
+          retention-days: 7
+
+      # Only upload updated snapshots when the workflow was triggered with
+      # update_snapshots=true so reviewers can download and commit them.
+      - name: Upload updated baseline snapshots
+        uses: actions/upload-artifact@v4
+        if: ${{ inputs.update_snapshots == true }}
+        with:
+          name: updated-baselines
+          path: Chandam.Wasm.Tests/baselines/
+          retention-days: 30

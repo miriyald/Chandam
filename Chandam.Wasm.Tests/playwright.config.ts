@@ -34,10 +34,17 @@ export default defineConfig({
   // Retry once in CI to reduce flakiness from slow WASM init
   retries: process.env.CI ? 1 : 0,
 
-  reporter: [
-    ['html', { outputFolder: 'playwright-report', open: 'never' }],
-    ['list'],
-  ],
+  reporter: process.env.CI
+    ? [
+        // Annotates failing tests inline on the GitHub Actions summary page
+        ['github'],
+        ['html', { outputFolder: 'playwright-report', open: 'never' }],
+        ['list'],
+      ]
+    : [
+        ['html', { outputFolder: 'playwright-report', open: 'never' }],
+        ['list'],
+      ],
 
   use: {
     baseURL: BASE_URL,
