@@ -205,8 +205,7 @@ public static class JsBridge
             var ruleSetId = ExtractRuleSetId(rulesFile);
             ruleLoader.SyncFromManager(ruleSetId);
 
-            // Clear facet cache when rules are reloaded
-            ruleLoader.ClearFacetCache();
+            // Indexes will be rebuilt automatically on next access
 
             return JsonSerializer.Serialize(new { success = true, message = "Rules reloaded successfully" }, JsonOptions);
         }
@@ -263,9 +262,6 @@ public static class JsBridge
                 // Sync Manager back to RuleLoaderService
                 ruleLoader.SyncFromManager();
 
-                // Clear facet cache when rules change
-                ruleLoader.ClearFacetCache();
-
                 Console.WriteLine($"WASM: Loaded {rules.Length} rules from JSON strings");
             }
 
@@ -310,9 +306,6 @@ public static class JsBridge
             // IMPORTANT: Sync Manager back to RuleLoaderService
             // This ensures GetAllRules() returns custom rules, not stale predefined rules
             ruleLoader.SyncFromManager();
-
-            // Clear facet cache when rules change
-            ruleLoader.ClearFacetCache();
 
             Console.WriteLine($"WASM: Loaded {rules.Length} custom rules");
 
@@ -373,51 +366,20 @@ public static class JsBridge
     }
 
     [JSInvokable]
-    public static string GetFacetCounts(string language = "te")
+    public static string GetAvailableFilters(string language = "te")
     {
         try
         {
             var lang = LanguageCodeMapper.ParseLanguage(language);
             var searchService = ServiceAccessor.Services!.GetRequiredService<SearchService>();
-            var facets = searchService.GetFacetCounts(ruleSetId: null, lang);
+            var filters = searchService.GetAvailableFilters(ruleSetId: null, lang);
 
-            return JsonSerializer.Serialize(facets, JsonOptions);
+            return JsonSerializer.Serialize(filters, JsonOptions);
         }
         catch (Exception ex)
         {
-            Console.Error.WriteLine($"GetFacetCounts error: {ex.Message}");
+            Console.Error.WriteLine($"GetAvailableFilters error: {ex.Message}");
             return "{}";
-        }
-    }
-
-    /// <summary>
-    /// OPTIMIZATION: Get both rules and facets in one call
-    /// Avoids duplicate rule conversions (2x faster for large rulesets like topella)
-    /// </summary>
-    [JSInvokable]
-    public static string GetRulesWithFacets(string language = "te")
-    {
-        try
-        {
-            var lang = LanguageCodeMapper.ParseLanguage(language);
-            var searchService = ServiceAccessor.Services!.GetRequiredService<SearchService>();
-
-            // Single call gets both rules and facets (optimized)
-            var (rules, facets) = searchService.GetRulesWithFacets(ruleSetId: null, lang);
-
-            var response = new
-            {
-                Rules = rules,
-                Facets = facets,
-                Count = rules.Count
-            };
-
-            return JsonSerializer.Serialize(response, JsonOptions);
-        }
-        catch (Exception ex)
-        {
-            Console.Error.WriteLine($"GetRulesWithFacets error: {ex.Message}");
-            return JsonSerializer.Serialize(new { Rules = new List<object>(), Facets = new { }, Count = 0 }, JsonOptions);
         }
     }
 }

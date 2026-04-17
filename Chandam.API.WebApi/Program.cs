@@ -267,8 +267,8 @@ app.MapGet("/api/rules/{ruleSetId}/search", (
 })
 .WithName("SearchRules");
 
-// Get facet counts for filter UI
-app.MapGet("/api/rules/{ruleSetId}/facets", (
+// Get available filter values (no counts) for filter UI
+app.MapGet("/api/rules/{ruleSetId}/filters", (
     string ruleSetId,
     [FromQuery] string? language,
     SearchService searchService) =>
@@ -279,13 +279,13 @@ app.MapGet("/api/rules/{ruleSetId}/facets", (
             ? LanguageCodeMapper.ParseLanguage(language)
             : (RuleLanguage?)null;
 
-        var facets = searchService.GetFacetCounts(ruleSetId, lang);
+        var filters = searchService.GetAvailableFilters(ruleSetId, lang);
 
         return Results.Ok(new
         {
             Success = true,
             RuleSetId = ruleSetId,
-            Facets = facets
+            Filters = filters
         });
     }
     catch (Exception ex)
@@ -293,7 +293,7 @@ app.MapGet("/api/rules/{ruleSetId}/facets", (
         return Results.BadRequest(new { ErrorMessage = ex.Message });
     }
 })
-.WithName("GetFacetCounts");
+.WithName("GetAvailableFilters");
 
 // Legacy endpoints (backward compatibility) - uses default "chandam" ruleset
 app.MapGet("/api/rules/{identifier}/samples", (string identifier, int? maxExamples, ChandamService service) =>

@@ -5,7 +5,7 @@ import type {
   TryMatchResponse,
   ScoresResponse,
   RuleInfo,
-  FacetCounts
+  AvailableFilters
 } from './types';
 
 declare const DotNet: {
@@ -145,34 +145,12 @@ export class WasmBridge {
     return JSON.parse(json);
   }
 
-  static async getFacetCounts(language: string = 'te'): Promise<FacetCounts> {
+  static async getAvailableFilters(language: string = 'te'): Promise<AvailableFilters> {
     const json = await DotNet.invokeMethodAsync<string>(
       this.ASSEMBLY,
-      'GetFacetCounts',
+      'GetAvailableFilters',
       language
     );
     return JSON.parse(json);
-  }
-
-  /**
-   * OPTIMIZATION: Get both rules and facets in one call
-   * 2x faster for large rulesets (avoids duplicate rule conversions)
-   */
-  static async getRulesWithFacets(language: string = 'te'): Promise<{
-    rules: RuleSummaryDetailed[];
-    facets: FacetCounts;
-    count: number;
-  }> {
-    const json = await DotNet.invokeMethodAsync<string>(
-      this.ASSEMBLY,
-      'GetRulesWithFacets',
-      language
-    );
-    const response = JSON.parse(json);
-    return {
-      rules: response.Rules || response.rules || [],
-      facets: response.Facets || response.facets || {},
-      count: response.Count || response.count || 0
-    };
   }
 }

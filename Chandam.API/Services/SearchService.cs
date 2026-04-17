@@ -206,97 +206,56 @@ namespace Chandam.API.Services
         }
 
         /// <summary>
-        /// Get facet counts for filter UI (cached per ruleset + language)
+        /// Get available filter values (no counts) for filter UI
+        /// Only returns values that exist in the current ruleset
         /// </summary>
-        public FacetCounts GetFacetCounts(string? ruleSetId = null, RuleLanguage? language = null)
+        public AvailableFilters GetAvailableFilters(string? ruleSetId = null, RuleLanguage? language = null)
         {
             if (!string.IsNullOrEmpty(ruleSetId))
             {
                 _ruleLoader.SetActiveRuleSet(ruleSetId);
             }
 
-            // Check cache first
-            var cached = _ruleLoader.GetCachedFacets(language);
-            if (cached is FacetCounts cachedFacets)
-            {
-                return cachedFacets;
-            }
-
-            // Not cached - calculate and cache
-            var allRules = _ruleLoader.GetAllRules(language);
-            var detailedRules = ConvertToDetailed(allRules);
-            var facets = CalculateFacetCounts(detailedRules);
-
-            // Cache for next time
-            _ruleLoader.CacheFacets(facets, language);
-
-            return facets;
-        }
-
-        /// <summary>
-        /// Get rules and facets in one call (optimization for WASM)
-        /// Avoids duplicate rule conversions
-        /// </summary>
-        public (List<RuleSummaryDetailed> Rules, FacetCounts Facets) GetRulesWithFacets(string? ruleSetId = null, RuleLanguage? language = null)
-        {
-            if (!string.IsNullOrEmpty(ruleSetId))
-            {
-                _ruleLoader.SetActiveRuleSet(ruleSetId);
-            }
-
-            // Convert rules once
             var allRules = _ruleLoader.GetAllRules(language);
             var detailedRules = ConvertToDetailed(allRules);
 
-            // Check if facets are cached
-            var cached = _ruleLoader.GetCachedFacets(language);
-            FacetCounts facets;
-
-            if (cached is FacetCounts cachedFacets)
-            {
-                facets = cachedFacets;
-            }
-            else
-            {
-                // Calculate and cache facets
-                facets = CalculateFacetCounts(detailedRules);
-                _ruleLoader.CacheFacets(facets, language);
-            }
-
-            return (detailedRules, facets);
+            return CalculateAvailableFilters(detailedRules);
         }
 
-        private FacetCounts CalculateFacetCounts(List<RuleSummaryDetailed> rules)
+        private AvailableFilters CalculateAvailableFilters(List<RuleSummaryDetailed> rules)
         {
-            var categories = new Dictionary<string, int>();
-            var chandamNames = new Dictionary<string, int>();
-            var frequencies = new Dictionary<string, int>();
+            var categories = new HashSet<string>();
+            var chandamNamesWithLength = new Dictionary<string, int>(); // ChandamName -> CharLength
+            var frequencies = new HashSet<string>();
             int matraLengthMin = int.MaxValue;
             int matraLengthMax = int.MinValue;
-            int withExamples = 0;
-            int withoutExamples = 0;
+            bool hasRulesWithExamples = false;
+            bool hasRulesWithoutExamples = false;
 
             foreach (var rule in rules)
             {
-                // Category counts (PadyamSubType) - exclude "Unspecified"
+                // Collect categories (PadyamSubType) - exclude "Unspecified"
                 if (!string.IsNullOrEmpty(rule.PadyamSubType) && rule.PadyamSubType != "Unspecified")
                 {
-                    categories[rule.PadyamSubType] = categories.GetValueOrDefault(rule.PadyamSubType) + 1;
+                    categories.Add(rule.PadyamSubType);
                 }
 
-                // ChandamName counts (for Vruttam only)
-                // Matches UI grouping: groupKey = `vruttam:${rule.chandamName}`
+                // Collect ChandamNames with CharLength (for Vruttam only)
                 if (rule.PadyamType == "Vruttam" &&
                     rule.PadyamSubType == "Vruttam" &&
                     !string.IsNullOrEmpty(rule.ChandamName))
                 {
-                    chandamNames[rule.ChandamName] = chandamNames.GetValueOrDefault(rule.ChandamName) + 1;
+                    // Store first CharLength encountered for this ChandamName
+                    if (!chandamNamesWithLength.ContainsKey(rule.ChandamName) && rule.CharLength.HasValue)
+                    {
+                        chandamNamesWithLength[rule.ChandamName] = rule.CharLength.Value;
+                    }
                 }
 
-                // Frequency counts
+                // Collect frequencies
                 if (!string.IsNullOrEmpty(rule.Frequency))
                 {
-                    frequencies[rule.Frequency] = frequencies.GetValueOrDefault(rule.Frequency) + 1;
+                    frequencies.Add(rule.Frequency);
                 }
 
                 // Matra length range - exclude -1 and undefined
@@ -306,25 +265,40 @@ namespace Chandam.API.Services
                     matraLengthMax = Math.Max(matraLengthMax, rule.MatraLength.Value);
                 }
 
-                // Examples count
+                // Check if examples exist
                 if (rule.ExamplesCount > 0)
-                    withExamples++;
+                    hasRulesWithExamples = true;
                 else
-                    withoutExamples++;
+                    hasRulesWithoutExamples = true;
             }
 
-            return new FacetCounts
+            // Sort chandams by character length and include length in label
+            // e.g., "గాయత్రి(6)", "ఉష్ణిక్(7)", "అనుష్టుప్(8)"
+            var sortedChandamNames = chandamNamesWithLength
+                .OrderBy(kv => kv.Value)              // Sort by CharLength
+                .ThenBy(kv => kv.Key)                 // Then alphabetically for same length
+                .Select(kv => kv.Key)
+                .ToList();
+
+            var sortedChandamLabels = chandamNamesWithLength
+                .OrderBy(kv => kv.Value)
+                .ThenBy(kv => kv.Key)
+                .Select(kv => $"{kv.Key}({kv.Value})")
+                .ToList();
+
+            return new AvailableFilters
             {
-                Categories = categories,
-                ChandamNames = chandamNames,
-                Frequencies = frequencies,
+                Categories = categories.OrderBy(c => c).ToList(),
+                ChandamNames = sortedChandamNames,
+                ChandamLabels = sortedChandamLabels,
+                Frequencies = frequencies.OrderBy(f => f).ToList(),
                 MatraLengthRange = new Range
                 {
                     Min = matraLengthMin == int.MaxValue ? 0 : matraLengthMin,
                     Max = matraLengthMax == int.MinValue ? 0 : matraLengthMax
                 },
-                WithExamples = withExamples,
-                WithoutExamples = withoutExamples
+                HasRulesWithExamples = hasRulesWithExamples,
+                HasRulesWithoutExamples = hasRulesWithoutExamples
             };
         }
     }
@@ -348,14 +322,15 @@ namespace Chandam.API.Services
         public int ExamplesCount { get; set; }
     }
 
-    public class FacetCounts
+    public class AvailableFilters
     {
-        public Dictionary<string, int> Categories { get; set; }       // PadyamSubType counts (was SubTypes)
-        public Dictionary<string, int> ChandamNames { get; set; }     // ChandamName counts for Vruttam only
-        public Dictionary<string, int> Frequencies { get; set; }
-        public Range MatraLengthRange { get; set; }                   // Keep - independent of character length
-        public int WithExamples { get; set; }
-        public int WithoutExamples { get; set; }
+        public List<string> Categories { get; set; } = new();         // PadyamSubType values that exist
+        public List<string> ChandamNames { get; set; } = new();       // ChandamName values for Vruttam (sorted by charLength)
+        public List<string> ChandamLabels { get; set; } = new();      // Display labels: "గాయత్రి(6)", "ఉష్ణిక్(7)", etc.
+        public List<string> Frequencies { get; set; } = new();        // Frequency values that exist
+        public Range MatraLengthRange { get; set; } = new();          // Min/max matra length
+        public bool HasRulesWithExamples { get; set; }                // At least one rule has examples
+        public bool HasRulesWithoutExamples { get; set; }             // At least one rule has no examples
     }
 
     public class Range

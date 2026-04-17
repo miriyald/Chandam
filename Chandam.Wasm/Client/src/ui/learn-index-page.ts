@@ -1,6 +1,6 @@
 import { WasmBridge } from '../wasm-bridge';
 import { getRuleSet, getRuleSetAsync } from '../config';
-import type { RuleSummaryDetailed, FacetCounts } from '../types';
+import type { RuleSummaryDetailed, AvailableFilters } from '../types';
 import { groupRulesByCategory, getSortedGroupKeys, getGroupDisplayName } from '../utils/rule-grouping';
 import { makeUrl } from '../utils/url-helpers';
 import { renderBreadcrumbs, buildRuleSetBreadcrumbs } from './breadcrumbs';
@@ -32,7 +32,7 @@ let currentFilterState: FilterState = {
   hasExamples: null
 };
 
-let currentFacets: FacetCounts | null = null;
+let currentFilters: AvailableFilters | null = null;
 let allRulesCount = 0;
 
 // Main function: Render learn index page
@@ -53,12 +53,14 @@ export async function renderLearnIndexPage(ruleSet: string) {
     await CustomRulesLoader.loadCustomRuleset(ruleSet);
   }
 
-  // Step 3: Get all rules with detailed metadata and facets (OPTIMIZED - single call)
-  const { rules, facets } = await WasmBridge.getRulesWithFacets('te');
+  // Step 3: Get all rules with detailed metadata
+  const rules = await WasmBridge.getAllRulesDetailed('te');
   allRulesCount = rules.length;
-  currentFacets = facets;
 
-  // Step 3b: Load favorite identifiers from browser storage
+  // Step 3b: Get available filter values (no counts - faster!)
+  currentFilters = await WasmBridge.getAvailableFilters('te');
+
+  // Step 3c: Load favorite identifiers from browser storage
   await storageService.init();
   const allFavorites = await storageService.indexedDB.getAllFavorites();
 
@@ -219,19 +221,28 @@ function renderRuleListItem(rule: RuleSummaryDetailed, ruleSetId: string, favori
   `;
 }
 
-// Map English type names to Telugu
-function getTeluguTypeName(englishType: string): string {
-  const typeMap: Record<string, string> = {
-    'Vruttam': t('padyam_type_vruttam'),
-    'Jati': t('padyam_type_jati'),
-    'UpaJati': t('padyam_type_upajati')
+// Map English category names to Telugu (all 12 PadyamSubType values)
+function getTeluguCategoryName(englishCategory: string): string {
+  const categoryMap: Record<string, string> = {
+    'Akkara': 'అక్కరలు',
+    'Divpada': 'ద్విపదలు',
+    'Jati': 'జాతి',
+    'Ragada': 'రగడలు',
+    'Ragada2': 'రగడలు (2)',
+    'Shatpada': 'షట్పదలు',
+    'UpaJati': 'ఉపజాతి',
+    'Sisamu': 'సీసములు',
+    'Vruttam': 'వృత్తం',
+    'DaMDakamu': 'దండకము',
+    'ArdhaVruttam': 'అర్ధ సమవృత్తం',
+    'VishamaVruttam': 'విషమవృత్తం'
   };
-  return typeMap[englishType] || englishType;
+  return categoryMap[englishCategory] || englishCategory;
 }
 
 // Render filter sidebar
 function renderFilterSidebar(): string {
-  if (!currentFacets) return '';
+  if (!currentFilters) return '';
 
   return `
     <div class="filter-header">
@@ -251,69 +262,74 @@ function renderFilterSidebar(): string {
 
     <div class="filter-section">
       <h4>వర్గం (Category)</h4>
-      ${renderCheckboxFacetWithTelugu('category', currentFacets.categories, currentFilterState.selectedTypes)}
-    </div>
-
-    <div class="filter-section">
-      <h4>ఛందస్సు (Chandam)</h4>
-      ${renderCheckboxFacet('chandam', currentFacets.chandamNames, currentFilterState.selectedChandamNames || new Set())}
+      ${renderCheckboxFilter('category', currentFilters.categories, currentFilterState.selectedTypes)}
+      ${currentFilters.chandamNames.length > 0 ? `
+      <div class="filter-subsection">
+        <h4>ఛందస్సు (Chandam)</h4>
+        ${renderChandamCheckboxes(currentFilters.chandamNames, currentFilters.chandamLabels, currentFilterState.selectedChandamNames || new Set())}
+      </div>
+      ` : ''}
     </div>
 
     <div class="filter-section">
       <h4>${t('filter_has_examples')}</h4>
       <label>
         <input type="radio" name="examples" value="all" ${currentFilterState.hasExamples === null ? 'checked' : ''} data-filter="examples" />
-        ${t('filter_all')} (${currentFacets.withExamples + currentFacets.withoutExamples})
+        ${t('filter_all')}
       </label>
+      ${currentFilters.hasRulesWithExamples ? `
       <label>
         <input type="radio" name="examples" value="true" ${currentFilterState.hasExamples === true ? 'checked' : ''} data-filter="examples" />
-        ${t('filter_with_examples')} (${currentFacets.withExamples})
+        ${t('filter_with_examples')}
       </label>
+      ` : ''}
+      ${currentFilters.hasRulesWithoutExamples ? `
       <label>
         <input type="radio" name="examples" value="false" ${currentFilterState.hasExamples === false ? 'checked' : ''} data-filter="examples" />
-        ${t('filter_without_examples')} (${currentFacets.withoutExamples})
+        ${t('filter_without_examples')}
       </label>
+      ` : ''}
     </div>
 
     <div class="filter-section">
       <h4>${t('filter_matra_length')}</h4>
-      ${renderRangeFilter('matra', currentFacets.matraLengthRange.min, currentFacets.matraLengthRange.max, currentFilterState.matraLengthMin, currentFilterState.matraLengthMax)}
+      ${renderRangeFilter('matra', currentFilters.matraLengthRange.min, currentFilters.matraLengthRange.max, currentFilterState.matraLengthMin, currentFilterState.matraLengthMax)}
     </div>
   `;
 }
 
-// Render checkbox facet group with Telugu translation for types
-function renderCheckboxFacetWithTelugu(filterType: string, facetCounts: Record<string, number>, selectedValues: Set<string>): string {
-  return Object.entries(facetCounts)
-    .sort(([a], [b]) => a.localeCompare(b))
-    .map(([value, count]) => `
-      <label>
-        <input
-          type="checkbox"
-          value="${value}"
-          ${selectedValues.has(value) ? 'checked' : ''}
-          data-filter="${filterType}"
-        />
-        ${getTeluguTypeName(value)} (${count})
-      </label>
-    `).join('');
+// Render chandam checkboxes with labels showing charLength (e.g., "గాయత్రి(6)")
+function renderChandamCheckboxes(values: string[], labels: string[], selectedValues: Set<string>): string {
+  if (values.length === 0) return '';
+
+  return values.map((value, i) => `
+    <label>
+      <input
+        type="checkbox"
+        value="${value}"
+        ${selectedValues.has(value) ? 'checked' : ''}
+        data-filter="chandam"
+      />
+      ${labels[i] || value}
+    </label>
+  `).join('');
 }
 
-// Render checkbox facet group (for subtypes - no translation)
-function renderCheckboxFacet(filterType: string, facetCounts: Record<string, number>, selectedValues: Set<string>): string {
-  return Object.entries(facetCounts)
-    .sort(([a], [b]) => a.localeCompare(b))
-    .map(([value, count]) => `
-      <label>
-        <input
-          type="checkbox"
-          value="${value}"
-          ${selectedValues.has(value) ? 'checked' : ''}
-          data-filter="${filterType}"
-        />
-        ${value} (${count})
-      </label>
-    `).join('');
+// Render checkbox filter group (no counts)
+function renderCheckboxFilter(filterType: string, filterValues: string[], selectedValues: Set<string>): string {
+  if (filterValues.length === 0) return '<p>No values available</p>';
+
+  return filterValues.map(value => `
+    <label>
+      <input
+        type="checkbox"
+        value="${value}"
+        ${selectedValues.has(value) ? 'checked' : ''}
+        data-filter="${filterType}"
+      />
+      ${filterType === 'category' ? getTeluguCategoryName(value) : value}
+    </label>
+  `).join('');
 }
 
 // Render range filter (min/max inputs)

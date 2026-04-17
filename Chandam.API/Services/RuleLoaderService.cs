@@ -21,7 +21,6 @@ public class RuleLoaderService
 {
     private readonly Dictionary<string, Rule[]> _loadedRuleSets = new();
     private readonly Dictionary<string, ExampleSetDto> _loadedExampleSets = new();
-    private readonly Dictionary<string, object> _facetCache = new(); // Cache facets per ruleset
 
     // Reverse indexes for fast lookups (store array indexes for memory efficiency)
     private readonly Dictionary<string, Dictionary<string, List<int>>> _subTypeIndex = new();       // PadyamSubType -> array indexes
@@ -634,32 +633,6 @@ public class RuleLoaderService
         }
 
         return results;
-    }
-
-    /// <summary>
-    /// Get cached facets for current ruleset + language, or null if not cached
-    /// </summary>
-    public object? GetCachedFacets(RuleLanguage? language = null)
-    {
-        var cacheKey = $"{_currentRuleSetId}_{language?.ToString() ?? "all"}";
-        return _facetCache.TryGetValue(cacheKey, out var facets) ? facets : null;
-    }
-
-    /// <summary>
-    /// Cache facets for current ruleset + language
-    /// </summary>
-    public void CacheFacets(object facets, RuleLanguage? language = null)
-    {
-        var cacheKey = $"{_currentRuleSetId}_{language?.ToString() ?? "all"}";
-        _facetCache[cacheKey] = facets;
-    }
-
-    /// <summary>
-    /// Clear facet cache (call when rules change)
-    /// </summary>
-    public void ClearFacetCache()
-    {
-        _facetCache.Clear();
     }
 
     /// <summary>

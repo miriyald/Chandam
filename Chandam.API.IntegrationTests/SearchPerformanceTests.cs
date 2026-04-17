@@ -142,55 +142,25 @@ namespace Chandam.API.IntegrationTests
         }
 
         [Fact]
-        public void GetFacetCounts_Topella_CompletesUnder20ms()
+        public void GetAvailableFilters_Topella_CompletesUnder15ms()
         {
             // Arrange: Load topella
             _ruleLoader.SetActiveRuleSet("topella");
 
             // Warmup
-            _searchService.GetFacetCounts("topella");
+            _searchService.GetAvailableFilters("topella");
 
             // Act
             var sw = Stopwatch.StartNew();
-            var facets = _searchService.GetFacetCounts("topella");
+            var filters = _searchService.GetAvailableFilters("topella");
             sw.Stop();
 
             // Assert
-            _output.WriteLine($"Facet calculation: {sw.ElapsedMilliseconds}ms");
-            _output.WriteLine($"Categories found: {facets.Categories.Count}");
-            _output.WriteLine($"ChandamNames found: {facets.ChandamNames.Count}");
-            Assert.True(sw.ElapsedMilliseconds < 20, $"Facets took {sw.ElapsedMilliseconds}ms, expected <20ms");
-            Assert.NotEmpty(facets.Categories);
-        }
-
-        [Fact]
-        public void GetRulesWithFacets_Topella_FasterThanSeparateCalls()
-        {
-            // Arrange: Load topella
-            _ruleLoader.SetActiveRuleSet("topella");
-
-            // Warmup
-            _searchService.GetRulesWithFacets("topella");
-
-            // Measure combined call
-            var sw1 = Stopwatch.StartNew();
-            var (rules, facets) = _searchService.GetRulesWithFacets("topella");
-            sw1.Stop();
-
-            // Measure separate calls
-            var sw2 = Stopwatch.StartNew();
-            var allRules = _ruleLoader.GetAllRules(RuleLanguage.Telugu);
-            var separateFacets = _searchService.GetFacetCounts("topella");
-            sw2.Stop();
-
-            // Assert
-            _output.WriteLine($"Combined call: {sw1.ElapsedMilliseconds}ms");
-            _output.WriteLine($"Separate calls: {sw2.ElapsedMilliseconds}ms");
-            _output.WriteLine($"Speedup: {(double)sw2.ElapsedMilliseconds / sw1.ElapsedMilliseconds:F2}x");
-
-            Assert.True(sw1.ElapsedMilliseconds < sw2.ElapsedMilliseconds,
-                "Combined call should be faster than separate calls");
-            Assert.Equal(allRules.Count, rules.Count);
+            _output.WriteLine($"Available filters extraction: {sw.ElapsedMilliseconds}ms");
+            _output.WriteLine($"Categories found: {filters.Categories.Count}");
+            _output.WriteLine($"ChandamNames found: {filters.ChandamNames.Count}");
+            Assert.True(sw.ElapsedMilliseconds < 15, $"Filter extraction took {sw.ElapsedMilliseconds}ms, expected <15ms");
+            Assert.NotEmpty(filters.Categories);
         }
 
         [Theory]

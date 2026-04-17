@@ -111,11 +111,12 @@ export interface ChandamScore {
   frequency: string;
 }
 
-export interface FacetCounts {
-  categories: Record<string, number>;      // PadyamSubType counts (was subTypes)
-  chandamNames: Record<string, number>;    // ChandamName counts for Vruttam only
-  frequencies: Record<string, number>;
+export interface AvailableFilters {
+  categories: string[];                    // PadyamSubType values that exist (sorted)
+  chandamNames: string[];                  // ChandamName values for Vruttam (sorted by charLength)
+  chandamLabels: string[];                 // Display labels: "గాయత్రి(6)", "ఉష్ణిక్(7)", etc.
+  frequencies: string[];                   // Frequency values that exist (sorted)
   matraLengthRange: { min: number; max: number };
-  withExamples: number;
-  withoutExamples: number;
+  hasRulesWithExamples: boolean;           // At least one rule has examples
+  hasRulesWithoutExamples: boolean;        // At least one rule has no examples
 }
