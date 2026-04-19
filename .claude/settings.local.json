@@ -25,7 +25,8 @@
       "Bash(curl -sL http://localhost:5080/pages/about.html)",
       "Bash(curl -sL http://localhost:5080/pages/about)",
       "Bash(npx serve@14 --help)",
-      "Bash(taskkill //PID 46000 //F)"
+      "Bash(taskkill //PID 46000 //F)",
+      "Bash(CHANDAM_URL=http://localhost:5080 npx playwright test tests/01-links-and-baselines.spec.ts --project=mobile --update-snapshots)"
     ]
   }
 }

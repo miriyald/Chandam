@@ -51,6 +51,7 @@ export default defineConfig({
 
   use: {
     baseURL: BASE_URL,
+    ignoreHTTPSErrors: true,
 
     // Generous timeouts for WASM initialisation (can take 3-10 s)
     actionTimeout: 20_000,
