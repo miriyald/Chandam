@@ -6,7 +6,26 @@
       "Bash(dotnet run:*)",
       "Bash(npm run:*)",
       "Bash(gh pr *)",
-      "Read(//tmp/**)"
+      "Read(//tmp/**)",
+      "Bash(dotnet test *)",
+      "Bash(git merge *)",
+      "Bash(npm install *)",
+      "Bash(npx playwright *)",
+      "WebFetch(domain:miriyald.github.io)",
+      "Bash(ls tsconfig.json)",
+      "Bash(ls package.json)",
+      "Bash(netstat -ano)",
+      "Bash(tasklist)",
+      "Bash(npx --yes serve@14 .publish/wwwroot -l 5080 --single)",
+      "Bash(npx serve *)",
+      "Bash(CHANDAM_URL=http://localhost:5080 npx playwright test tests/01-links-and-baselines.spec.ts --project=desktop --update-snapshots)",
+      "Bash(CHANDAM_URL=http://localhost:5080 npx playwright test tests/debug-about.spec.ts --project=desktop)",
+      "Bash(curl -s http://localhost:5080/pages/about.html)",
+      "Bash(curl -sI http://localhost:5080/pages/about.html)",
+      "Bash(curl -sL http://localhost:5080/pages/about.html)",
+      "Bash(curl -sL http://localhost:5080/pages/about)",
+      "Bash(npx serve@14 --help)",
+      "Bash(taskkill //PID 46000 //F)"
     ]
   }
 }

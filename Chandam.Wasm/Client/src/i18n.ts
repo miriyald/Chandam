@@ -176,15 +176,9 @@ export interface Translations {
   custom_rules_btn_create: string;
 
   // Rule Filters
-  filter_title: string;
   filter_clear_all: string;
   filter_search_placeholder: string;
-  filter_has_examples: string;
-  filter_with_examples: string;
-  filter_without_examples: string;
-  filter_all: string;
-  filter_char_length: string;
-  filter_matra_length: string;
+  filter_all_categories: string;
   filter_no_results: string;
   filter_try_removing: string;
   filter_showing: string;
@@ -348,15 +342,9 @@ const translations: Record<Language, Translations> = {
     custom_rules_description: 'custom rules created',
     custom_rules_btn_create: 'Create Custom Rule',
 
-    filter_title: 'Filters',
-    filter_clear_all: 'Clear All',
+    filter_clear_all: 'Clear',
     filter_search_placeholder: 'Search rules...',
-    filter_has_examples: 'Examples',
-    filter_with_examples: 'With Examples',
-    filter_without_examples: 'Without Examples',
-    filter_all: 'All',
-    filter_char_length: 'Character Length',
-    filter_matra_length: 'Matra Length',
+    filter_all_categories: 'All Categories',
     filter_no_results: 'No rules match your filters.',
     filter_try_removing: 'Try removing some filters to see more results.',
     filter_showing: 'Showing',
@@ -518,15 +506,9 @@ const translations: Record<Language, Translations> = {
     custom_rules_description: 'అనుకూల పద్యలక్షణాలు సృష్టించబడ్డాయి',
     custom_rules_btn_create: 'కొత్త పద్యలక్షణము రూపకల్పన',
 
-    filter_title: 'వడపోతలు',
-    filter_clear_all: 'అన్నీ తొలగించు',
+    filter_clear_all: 'తొలగించు',
     filter_search_placeholder: 'నియమాలు వెతకండి...',
-    filter_has_examples: 'ఉదాహరణలు',
-    filter_with_examples: 'ఉదాహరణలతో',
-    filter_without_examples: 'ఉదాహరణలు లేకుండా',
-    filter_all: 'అన్నీ',
-    filter_char_length: 'అక్షరాల పొడవు',
-    filter_matra_length: 'మాత్రల పొడవు',
+    filter_all_categories: 'అన్ని వర్గాలు',
     filter_no_results: 'మీ వడపోతలకు సరిపోలే నియమాలు లేవు.',
     filter_try_removing: 'మరిన్ని ఫలితాలను చూడటానికి కొన్ని వడపోతలను తొలగించండి.',
     filter_showing: 'చూపిస్తోంది',

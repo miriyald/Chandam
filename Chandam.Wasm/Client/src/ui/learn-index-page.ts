@@ -13,23 +13,14 @@ import { customRulesService } from '../services/storage/custom-rules-service';
 import { favoritesService } from '../services/storage/favorites-service';
 import { analyticsService } from '../services/analytics-service';
 
-// Filter state
 interface FilterState {
   searchText: string;
-  selectedTypes: Set<string>;           // Now maps to Categories (PadyamSubType)
-  selectedChandamNames: Set<string>;    // New: ChandamName filter for Vruttam
-  matraLengthMin: number | null;
-  matraLengthMax: number | null;
-  hasExamples: boolean | null;
+  selectedCategory: string;
 }
 
 let currentFilterState: FilterState = {
   searchText: '',
-  selectedTypes: new Set(),
-  selectedChandamNames: new Set(),
-  matraLengthMin: null,
-  matraLengthMax: null,
-  hasExamples: null
+  selectedCategory: '',
 };
 
 let currentFilters: AvailableFilters | null = null;
@@ -81,27 +72,15 @@ export async function renderLearnIndexPage(ruleSet: string) {
   renderLearnIndexPageHtml(ruleSetConfig.name, filteredRules.length, ruleSet, grouped, favoriteIds);
 }
 
-// Apply current filters using server-side search
 async function applyFilters(allRules: RuleSummaryDetailed[]): Promise<RuleSummaryDetailed[]> {
-  // If no filters active, return all rules
-  if (currentFilterState.searchText === '' &&
-      currentFilterState.selectedTypes.size === 0 &&
-      currentFilterState.selectedChandamNames.size === 0 &&
-      currentFilterState.matraLengthMin === null &&
-      currentFilterState.matraLengthMax === null &&
-      currentFilterState.hasExamples === null) {
+  if (currentFilterState.searchText === '' && currentFilterState.selectedCategory === '') {
     return allRules;
   }
 
-  // Use server-side search
   return await WasmBridge.searchRules({
     query: currentFilterState.searchText || undefined,
-    categories: currentFilterState.selectedTypes.size > 0 ? Array.from(currentFilterState.selectedTypes) : undefined,
-    chandamNames: currentFilterState.selectedChandamNames.size > 0 ? Array.from(currentFilterState.selectedChandamNames) : undefined,
-    matraLengthMin: currentFilterState.matraLengthMin ?? undefined,
-    matraLengthMax: currentFilterState.matraLengthMax ?? undefined,
-    hasExamples: currentFilterState.hasExamples ?? undefined,
-    maxResults: 0  // No limit
+    categories: currentFilterState.selectedCategory ? [currentFilterState.selectedCategory] : undefined,
+    maxResults: 0
   }, 'te');
 }
 
@@ -134,17 +113,25 @@ function renderLearnIndexPageHtml(
 
       ${renderModeSwitcher({ ruleSetId, currentMode: 'learn' })}
 
-      <div class="learn-content-wrapper">
-        <aside class="filter-sidebar">
-          ${renderFilterSidebar()}
-        </aside>
+      <div class="filter-bar">
+        <div class="filter-bar-row">
+          <input
+            type="text"
+            class="filter-search"
+            placeholder="${t('filter_search_placeholder')}"
+            value="${currentFilterState.searchText}"
+            data-filter="search"
+          />
+          ${renderCategoryDropdown()}
+          <button class="btn-clear-filters" data-action="clear-filters">${t('filter_clear_all')}</button>
+        </div>
+        <div class="results-header">
+          <div class="rule-count">${t('filter_showing')} ${ruleCount} ${t('filter_of')} ${allRulesCount} ${t('label_rules_count')}</div>
+        </div>
+      </div>
 
-        <main class="rules-content">
-          <div class="results-header">
-            <div class="rule-count">${t('filter_showing')} ${ruleCount} ${t('filter_of')} ${allRulesCount} ${t('label_rules_count')}</div>
-          </div>
-          ${resultsSection}
-        </main>
+      <div class="rules-content">
+        ${resultsSection}
       </div>
     </div>
   `;
@@ -240,126 +227,32 @@ function getTeluguCategoryName(englishCategory: string): string {
   return categoryMap[englishCategory] || englishCategory;
 }
 
-// Render filter sidebar
-function renderFilterSidebar(): string {
+function renderCategoryDropdown(): string {
   if (!currentFilters) return '';
 
+  const allLabel = t('filter_all_categories');
+  const selectedLabel = currentFilterState.selectedCategory
+    ? getTeluguCategoryName(currentFilterState.selectedCategory)
+    : allLabel;
+
+  const items = currentFilters.categories.map(cat =>
+    `<div class="rule-item" data-value="${cat}">${getTeluguCategoryName(cat)}</div>`
+  ).join('');
+
   return `
-    <div class="filter-header">
-      <h3>${t('filter_title')}</h3>
-      <button class="btn-clear-filters" data-action="clear-filters">${t('filter_clear_all')}</button>
-    </div>
-
-    <div class="filter-section">
-      <input
-        type="text"
-        class="filter-search"
-        placeholder="${t('filter_search_placeholder')}"
-        value="${currentFilterState.searchText}"
-        data-filter="search"
-      />
-    </div>
-
-    <div class="filter-section">
-      <h4>వర్గం (Category)</h4>
-      ${renderCheckboxFilter('category', currentFilters.categories, currentFilterState.selectedTypes)}
-      ${currentFilters.chandamNames.length > 0 ? `
-      <div class="filter-subsection">
-        <h4>ఛందస్సు (Chandam)</h4>
-        ${renderChandamCheckboxes(currentFilters.chandamNames, currentFilters.chandamLabels, currentFilterState.selectedChandamNames || new Set())}
+    <details class="rule-picker-inline" id="category-picker">
+      <summary id="selected-category-name">${selectedLabel} ▼</summary>
+      <div class="picker-dropdown">
+        <div class="rule-list">
+          <div class="rule-item" data-value="">${allLabel}</div>
+          ${items}
+        </div>
       </div>
-      ` : ''}
-    </div>
-
-    <div class="filter-section">
-      <h4>${t('filter_has_examples')}</h4>
-      <label>
-        <input type="radio" name="examples" value="all" ${currentFilterState.hasExamples === null ? 'checked' : ''} data-filter="examples" />
-        ${t('filter_all')}
-      </label>
-      ${currentFilters.hasRulesWithExamples ? `
-      <label>
-        <input type="radio" name="examples" value="true" ${currentFilterState.hasExamples === true ? 'checked' : ''} data-filter="examples" />
-        ${t('filter_with_examples')}
-      </label>
-      ` : ''}
-      ${currentFilters.hasRulesWithoutExamples ? `
-      <label>
-        <input type="radio" name="examples" value="false" ${currentFilterState.hasExamples === false ? 'checked' : ''} data-filter="examples" />
-        ${t('filter_without_examples')}
-      </label>
-      ` : ''}
-    </div>
-
-    <div class="filter-section">
-      <h4>${t('filter_matra_length')}</h4>
-      ${renderRangeFilter('matra', currentFilters.matraLengthRange.min, currentFilters.matraLengthRange.max, currentFilterState.matraLengthMin, currentFilterState.matraLengthMax)}
-    </div>
+    </details>
   `;
 }
 
-// Render chandam checkboxes with labels showing charLength (e.g., "గాయత్రి(6)")
-function renderChandamCheckboxes(values: string[], labels: string[], selectedValues: Set<string>): string {
-  if (values.length === 0) return '';
-
-  return values.map((value, i) => `
-    <label>
-      <input
-        type="checkbox"
-        value="${value}"
-        ${selectedValues.has(value) ? 'checked' : ''}
-        data-filter="chandam"
-      />
-      ${labels[i] || value}
-    </label>
-  `).join('');
-}
-
-// Render checkbox filter group (no counts)
-function renderCheckboxFilter(filterType: string, filterValues: string[], selectedValues: Set<string>): string {
-  if (filterValues.length === 0) return '<p>No values available</p>';
-
-  return filterValues.map(value => `
-    <label>
-      <input
-        type="checkbox"
-        value="${value}"
-        ${selectedValues.has(value) ? 'checked' : ''}
-        data-filter="${filterType}"
-      />
-      ${filterType === 'category' ? getTeluguCategoryName(value) : value}
-    </label>
-  `).join('');
-}
-
-// Render range filter (min/max inputs)
-function renderRangeFilter(filterType: string, rangeMin: number, rangeMax: number, currentMin: number | null, currentMax: number | null): string {
-  return `
-    <div class="range-filter">
-      <input
-        type="number"
-        placeholder="Min (${rangeMin})"
-        value="${currentMin ?? ''}"
-        min="${rangeMin}"
-        max="${rangeMax}"
-        data-filter="${filterType}-min"
-      />
-      <span>–</span>
-      <input
-        type="number"
-        placeholder="Max (${rangeMax})"
-        value="${currentMax ?? ''}"
-        min="${rangeMin}"
-        max="${rangeMax}"
-        data-filter="${filterType}-max"
-      />
-    </div>
-  `;
-}
-
-// Attach event listeners to filter controls
 function attachFilterEventListeners(ruleSetId: string) {
-  // Search input
   const searchInput = document.querySelector('.filter-search') as HTMLInputElement;
   if (searchInput) {
     searchInput.addEventListener('input', debounce(async (e: Event) => {
@@ -368,75 +261,32 @@ function attachFilterEventListeners(ruleSetId: string) {
     }, 300));
   }
 
-  // Category checkboxes (PadyamSubType)
-  document.querySelectorAll('[data-filter="category"]').forEach(checkbox => {
-    checkbox.addEventListener('change', async (e) => {
-      const input = e.target as HTMLInputElement;
-      if (input.checked) {
-        currentFilterState.selectedTypes.add(input.value);
-      } else {
-        currentFilterState.selectedTypes.delete(input.value);
-      }
-      await refreshResults(ruleSetId);
+  const categoryPicker = document.getElementById('category-picker') as HTMLDetailsElement;
+  if (categoryPicker) {
+    categoryPicker.querySelectorAll('.rule-item').forEach(item => {
+      item.addEventListener('click', async () => {
+        const value = (item as HTMLElement).dataset.value || '';
+        currentFilterState.selectedCategory = value;
+        const summary = document.getElementById('selected-category-name');
+        if (summary) {
+          summary.textContent = (value ? getTeluguCategoryName(value) : t('filter_all_categories')) + ' ▼';
+        }
+        categoryPicker.open = false;
+        await refreshResults(ruleSetId);
+      });
     });
-  });
 
-  // ChandamName checkboxes (for Vruttam)
-  document.querySelectorAll('[data-filter="chandam"]').forEach(checkbox => {
-    checkbox.addEventListener('change', async (e) => {
-      const input = e.target as HTMLInputElement;
-      if (input.checked) {
-        currentFilterState.selectedChandamNames.add(input.value);
-      } else {
-        currentFilterState.selectedChandamNames.delete(input.value);
+    document.addEventListener('click', (e) => {
+      if (categoryPicker.open && !categoryPicker.contains(e.target as Node)) {
+        categoryPicker.open = false;
       }
-      await refreshResults(ruleSetId);
     });
-  });
-
-
-  // Examples radio buttons
-  document.querySelectorAll('[data-filter="examples"]').forEach(radio => {
-    radio.addEventListener('change', async (e) => {
-      const input = e.target as HTMLInputElement;
-      if (input.value === 'all') {
-        currentFilterState.hasExamples = null;
-      } else {
-        currentFilterState.hasExamples = input.value === 'true';
-      }
-      await refreshResults(ruleSetId);
-    });
-  });
-
-  // Matra length range
-  const matraMinInput = document.querySelector('[data-filter="matra-min"]') as HTMLInputElement;
-  const matraMaxInput = document.querySelector('[data-filter="matra-max"]') as HTMLInputElement;
-  if (matraMinInput && matraMaxInput) {
-    matraMinInput.addEventListener('change', debounce(async (e: Event) => {
-      const value = (e.target as HTMLInputElement).value;
-      currentFilterState.matraLengthMin = value ? parseInt(value) : null;
-      await refreshResults(ruleSetId);
-    }, 300));
-
-    matraMaxInput.addEventListener('change', debounce(async (e: Event) => {
-      const value = (e.target as HTMLInputElement).value;
-      currentFilterState.matraLengthMax = value ? parseInt(value) : null;
-      await refreshResults(ruleSetId);
-    }, 300));
   }
 
-  // Clear all button
   const clearButton = document.querySelector('[data-action="clear-filters"]');
   if (clearButton) {
     clearButton.addEventListener('click', async () => {
-      currentFilterState = {
-        searchText: '',
-        selectedTypes: new Set(),
-        selectedChandamNames: new Set(),
-        matraLengthMin: null,
-        matraLengthMax: null,
-        hasExamples: null
-      };
+      currentFilterState = { searchText: '', selectedCategory: '' };
       await refreshResults(ruleSetId);
     });
   }
