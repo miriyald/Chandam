@@ -1,13 +1,20 @@
 import { WasmBridge } from '../wasm-bridge';
-import { getRuleSet, getRuleSetAsync } from '../config';
+import { getRuleSetAsync } from '../config';
 import { CustomRulesLoader } from '../services/custom-rules-loader';
 import type { RuleInfo } from '../types';
-import { makeUrl, makeUrlWithParams } from '../utils/url-helpers';
+import { makeUrlWithParams } from '../utils/url-helpers';
 import { renderBreadcrumbs, buildRuleBreadcrumbs } from './breadcrumbs';
 import { renderModeSwitcher } from './mode-switcher';
 import { renderRuleActions } from './rule-actions';
 import { loadRuleSet } from '../utils/rule-loader';
 import { t } from '../i18n';
+import { analyticsService } from '../services/analytics-service';
+import {
+  submitToGitHub,
+  buildCustomRulePayload,
+  buildExamplePayload,
+  stripHtmlToText
+} from '../utils/github-submit';
 
 // Main function: Render learn detail page
 export async function renderLearnDetailPage(ruleSet: string, ruleId: string) {
@@ -31,12 +38,11 @@ export async function renderLearnDetailPage(ruleSet: string, ruleId: string) {
   const ruleInfo = await WasmBridge.getRuleInfo(ruleId);
 
   // Step 3: Render page HTML
-  renderLearnDetailPageHtml(ruleSetConfig.name, ruleSet, ruleInfo);
+  renderLearnDetailPageHtml(ruleSet, ruleInfo);
 }
 
 // Helper: Render page HTML
 function renderLearnDetailPageHtml(
-  ruleSetName: string,
   ruleSetId: string,
   ruleInfo: RuleInfo
 ) {
@@ -50,13 +56,9 @@ function renderLearnDetailPageHtml(
       ${renderBreadcrumbs(breadcrumbs)}
 
       <div class="page-header-controls">
-        ${renderModeSwitcher({ ruleSetId, ruleId: ruleInfo.identifier, currentMode: 'learn' })}
-        <a href="${makeUrl(`/learn/${ruleSetId}/`)}" class="browse-link">${t('link_back_to_browse')}</a>
-      </div>
-
-      <div class="page-header">
         <h1 class="meter-name">${ruleInfo.name}</h1>
         <div id="rule-actions-container"></div>
+        ${renderModeSwitcher({ ruleSetId, ruleId: ruleInfo.identifier, currentMode: 'learn' })}
       </div>
 
       <div class="description-content">
@@ -66,12 +68,52 @@ function renderLearnDetailPageHtml(
       <section class="examples">
         <h2>${t('section_examples')} (${ruleInfo.examples?.length || 0})</h2>
         ${renderExamples(ruleInfo.examples, ruleSetId, ruleInfo.identifier)}
+        <div class="examples-footer">
+          <button id="btn-submit-github-learn" class="btn-submit-github"
+                  data-rule-id="${escapeHtml(ruleInfo.identifier)}"
+                  data-rule-name="${escapeHtml(ruleInfo.name)}"
+                  data-rule-set="${escapeHtml(ruleSetId)}">
+            ${t('results_submit_github')}
+          </button>
+        </div>
       </section>
     </div>
   `;
 
   // Render action toolbar (currently just favorite button, future: share, print, etc.)
   renderRuleActions('rule-actions-container', ruleSetId, ruleInfo.identifier);
+  attachLearnSubmitHandler(ruleSetId, ruleInfo);
+}
+
+function attachLearnSubmitHandler(ruleSetId: string, ruleInfo: RuleInfo): void {
+  const btn = document.getElementById('btn-submit-github-learn');
+  if (!btn) return;
+
+  btn.addEventListener('click', async () => {
+    const isCustomRule = ruleInfo.identifier.startsWith('custom-');
+
+    if (isCustomRule) {
+      const { customRulesService } = await import('../services/storage/custom-rules-service');
+      const ruleDto = await customRulesService.getCustomRule(ruleInfo.identifier);
+      if (!ruleDto) return;
+
+      const description = ruleInfo.description ? stripHtmlToText(ruleInfo.description) : '';
+      const payload = buildCustomRulePayload(
+        ruleInfo.name, ruleInfo.identifier, ruleDto.Language, description, ruleDto, ruleDto.Examples
+      );
+      submitToGitHub(payload, 'learn_page');
+    } else {
+      const payload = buildExamplePayload(ruleInfo.name, ruleSetId, ruleInfo.identifier, []);
+      submitToGitHub(payload, 'learn_page');
+    }
+
+    analyticsService.trackEvent('submit_github_click', {
+      ruleId: ruleInfo.identifier,
+      ruleSetId,
+      type: isCustomRule ? 'custom-rule' : 'new-example',
+      source: 'learn_page'
+    });
+  });
 }
 
 // Helper: Render examples section

@@ -109,9 +109,11 @@ function renderLearnIndexPageHtml(
     <div class="learn-index-page">
       ${renderBreadcrumbs(breadcrumbs)}
 
-      <h1>${t('learn_title_prefix')} ${ruleSetName}</h1>
-
-      ${renderModeSwitcher({ ruleSetId, currentMode: 'learn' })}
+      <div class="page-header-controls">
+        <h1>${ruleSetName}</h1>
+        ${renderModeSwitcher({ ruleSetId, currentMode: 'learn' })}
+      </div>
+      <div class="page-subtitle">${allRulesCount} ${t('label_rules_count')}</div>
 
       <div class="filter-bar">
         <div class="filter-bar-row">

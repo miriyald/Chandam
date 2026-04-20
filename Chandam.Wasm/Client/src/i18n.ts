@@ -175,6 +175,13 @@ export interface Translations {
   custom_rules_description: string;
   custom_rules_btn_create: string;
 
+  // Examples & GitHub submission
+  results_add_to_examples: string;
+  results_example_added: string;
+  results_example_duplicate: string;
+  results_submit_github: string;
+  results_file_downloaded: string;
+
   // Rule Filters
   filter_clear_all: string;
   filter_search_placeholder: string;
@@ -342,6 +349,12 @@ const translations: Record<Language, Translations> = {
     custom_rules_description: 'custom rules created',
     custom_rules_btn_create: 'Create Custom Rule',
 
+    results_add_to_examples: '+ Add to Examples',
+    results_example_added: 'Added!',
+    results_example_duplicate: 'Already exists',
+    results_submit_github: 'Submit to GitHub',
+    results_file_downloaded: 'File downloaded! Attach it to the GitHub issue.',
+
     filter_clear_all: 'Clear',
     filter_search_placeholder: 'Search rules...',
     filter_all_categories: 'All Categories',
@@ -505,6 +518,12 @@ const translations: Record<Language, Translations> = {
     custom_rules_title: '🎨 అనుకూల పద్యలక్షణాలు',
     custom_rules_description: 'అనుకూల పద్యలక్షణాలు సృష్టించబడ్డాయి',
     custom_rules_btn_create: 'కొత్త పద్యలక్షణము రూపకల్పన',
+
+    results_add_to_examples: '+ ఉదాహరణగా జోడించు',
+    results_example_added: 'జోడించబడింది!',
+    results_example_duplicate: 'ఇప్పటికే ఉంది',
+    results_submit_github: 'GitHub కు పంపు',
+    results_file_downloaded: 'ఫైల్ డౌన్‌లోడ్ అయింది! GitHub సమస్యకు జోడించండి.',
 
     filter_clear_all: 'తొలగించు',
     filter_search_placeholder: 'నియమాలు వెతకండి...',

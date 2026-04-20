@@ -88,13 +88,11 @@ function renderRuleSetPageHtml(ruleSetName: string, ruleCount: number, ruleSetId
     <div class="compute-rule-set-page">
       ${renderBreadcrumbs(breadcrumbs)}
 
-      <div class="rule-set-info">
-        <span class="label">${t('label_rule_set')}</span>
-        <span class="name">${ruleSetName}</span>
-        <span class="count">[${ruleCount} ${t('label_rules_count')}]</span>
+      <div class="page-header-controls">
+        <h1>${ruleSetName}</h1>
+        ${renderModeSwitcher({ ruleSetId, currentMode: 'compute' })}
       </div>
-
-      ${renderModeSwitcher({ ruleSetId, currentMode: 'compute' })}
+      <div class="page-subtitle">${ruleCount} ${t('label_rules_count')}</div>
 
       ${renderEditorCard({
         contextText: t('editor_auto_detect_context'),

@@ -449,6 +449,68 @@ footer a {
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
+/* Match Actions (buttons + link group in results header) */
+.match-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.btn-add-example,
+.btn-submit-github {
+  border: none;
+  border-radius: 6px;
+  padding: 0.4rem 0.75rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+
+.btn-add-example {
+  background: var(--color-header-bg, #2d6a4f);
+  color: white;
+}
+
+.btn-add-example:hover {
+  filter: brightness(0.85);
+}
+
+.btn-add-example.btn-success {
+  background: #40916c;
+  cursor: default;
+}
+
+.btn-add-example.btn-warning {
+  background: #e9c46a;
+  color: #333;
+  cursor: default;
+}
+
+.btn-add-example[disabled],
+.btn-submit-github[disabled] {
+  opacity: 0.7;
+  pointer-events: none;
+}
+
+.btn-submit-github {
+  background: #24292f;
+  color: white;
+}
+
+.btn-submit-github:hover {
+  background: #1a1f23;
+}
+
+/* Examples footer (learn detail page) */
+.examples-footer {
+  margin-top: 1.5rem;
+  display: flex;
+  justify-content: flex-end;
+}
+
 /* Score Badge */
 .match-score {
   font-size: 1.25rem;
@@ -1767,6 +1829,18 @@ footer a {
     font-size: 1rem;
   }
 
+  .match-actions {
+    width: 100%;
+    justify-content: stretch;
+  }
+
+  .match-actions .btn-add-example,
+  .match-actions .btn-submit-github,
+  .match-actions .rule-details-link {
+    flex: 1;
+    text-align: center;
+  }
+
   .rule-details-link {
     width: 100%;
     text-align: center;
@@ -1953,23 +2027,35 @@ footer a {
   align-items: center;
   gap: 1rem;
   flex-wrap: wrap;
+  margin-bottom: 0.5rem;
+}
+
+.page-header-controls h1 {
+  margin: 0;
+  font-size: 1.5rem;
+}
+
+.page-header-controls .mode-switcher {
+  margin-left: auto;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.page-subtitle {
+  color: #666;
+  font-size: 0.95rem;
   margin-bottom: 1rem;
-}
-
-.page-header-controls .browse-link {
-  color: #0066cc;
-  text-decoration: none;
-  font-size: 0.9rem;
-}
-
-.page-header-controls .browse-link:hover {
-  text-decoration: underline;
 }
 
 @media (max-width: 480px) {
   .page-header-controls {
     flex-direction: column;
     align-items: flex-start;
+  }
+
+  .page-header-controls .mode-switcher {
+    margin-left: 0;
+    align-self: flex-end;
   }
 }
 

@@ -101,6 +101,38 @@ export class CustomRulesService {
   }
 
   /**
+   * Add an example poem to an existing custom rule.
+   * Returns true if added, false if duplicate.
+   */
+  async addExampleToRule(ruleId: string, exampleText: string): Promise<boolean> {
+    await storageService.init();
+    const collection = await this.getCustomRulesCollection();
+    if (!collection) return false;
+
+    const rule = collection.rules.find((r: RuleDto) => r.Identifier === ruleId);
+    if (!rule) return false;
+
+    const normalized = exampleText.trim().replace(/\s+/g, ' ');
+    const isDuplicate = rule.Examples.some(
+      (ex: string) => ex.trim().replace(/\s+/g, ' ') === normalized
+    );
+    if (isDuplicate) return false;
+
+    rule.Examples.push(exampleText.trim());
+    collection.updatedAt = Date.now();
+    await storageService.indexedDB.saveCustomRuleset(collection);
+    return true;
+  }
+
+  /**
+   * Get a single custom rule by identifier
+   */
+  async getCustomRule(ruleId: string): Promise<RuleDto | null> {
+    const rules = await this.getAllCustomRules();
+    return rules.find((r: RuleDto) => r.Identifier === ruleId) ?? null;
+  }
+
+  /**
    * Check if a rule with this identifier already exists
    */
   async ruleExists(ruleId: string): Promise<boolean> {

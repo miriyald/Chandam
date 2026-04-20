@@ -4,12 +4,20 @@ import { makeUrl } from '../utils/url-helpers';
 import { t } from '../i18n';
 import { analyticsService } from '../services/analytics-service';
 import { generateShortHash } from '../utils/hash-utils';
+import { WasmBridge } from '../wasm-bridge';
+import {
+  submitToGitHub,
+  buildCustomRulePayload,
+  buildExamplePayload,
+  stripHtmlToText
+} from '../utils/github-submit';
 
 export async function renderResults(matches: ChandamMatch[], containerId: string, ruleSet?: string) {
   const container = document.getElementById(containerId);
   if (!container) return;
 
   container.innerHTML = matches.map(match => renderMatchCard(match, ruleSet)).join('');
+  attachResultActionHandlers(container, ruleSet);
 
   // Auto-open results section
   openAccordion('results-section');
@@ -26,6 +34,7 @@ export async function renderFirstMatch(match: ChandamMatch, containerId: string,
   if (!container) return;
 
   container.innerHTML = renderMatchCard(match, ruleSet);
+  attachResultActionHandlers(container, ruleSet);
 
   // Show results section
   const resultsSection = document.getElementById('results-section');
@@ -51,6 +60,15 @@ function renderMatchCard(match: ChandamMatch, ruleSet?: string): string {
   // Generate rule details link (opens in new tab)
   const ruleLink = ruleSet && match.rule.identifier
     ? `<a href="${makeUrl(`/learn/${ruleSet}/${match.rule.identifier}/`)}" class="rule-details-link" target="_blank" rel="noopener noreferrer">${t('results_view_details')}</a>`
+    : '';
+
+  // Action buttons for 100% matches
+  const isCustomRule = match.rule.identifier.startsWith('custom-');
+  const addExampleBtn = (match.matchPercentage === 100 && isCustomRule)
+    ? `<button class="btn-add-example" data-rule-id="${escapeAttr(match.rule.identifier)}" title="${t('results_add_to_examples')}">${t('results_add_to_examples')}</button>`
+    : '';
+  const submitGithubBtn = (match.matchPercentage === 100 && ruleSet)
+    ? `<button class="btn-submit-github" data-rule-id="${escapeAttr(match.rule.identifier)}" data-rule-name="${escapeAttr(match.rule.name)}" data-rule-set="${escapeAttr(ruleSet)}" title="${t('results_submit_github')}">${t('results_submit_github')}</button>`
     : '';
 
   // Enhanced error display (table format)
@@ -97,7 +115,11 @@ function renderMatchCard(match: ChandamMatch, ruleSet?: string): string {
           <h3 class="meter-name">${match.rule.name}</h3>
           ${scoreHtml}
         </div>
-        ${ruleLink}
+        <div class="match-actions">
+          ${addExampleBtn}
+          ${submitGithubBtn}
+          ${ruleLink}
+        </div>
       </div>
       ${bodyHtml}
     </div>
@@ -150,6 +172,80 @@ function renderErrorsTable(errors: MatchError[]): string {
   `;
 }
 
+let resultActionController: AbortController | null = null;
+
+function attachResultActionHandlers(container: HTMLElement, ruleSet?: string): void {
+  if (resultActionController) {
+    resultActionController.abort();
+  }
+  resultActionController = new AbortController();
+
+  container.addEventListener('click', async (e) => {
+    const target = e.target as HTMLElement;
+    if (target.classList.contains('btn-add-example')) {
+      await handleAddToExamples(target);
+    } else if (target.classList.contains('btn-submit-github')) {
+      await handleSubmitToGitHub(target, ruleSet);
+    }
+  }, { signal: resultActionController.signal });
+}
+
+async function handleAddToExamples(button: HTMLElement): Promise<void> {
+  const ruleId = button.getAttribute('data-rule-id');
+  if (!ruleId) return;
+
+  const editor = document.getElementById('poem-editor') as HTMLTextAreaElement;
+  const poemText = editor?.value?.trim();
+  if (!poemText) return;
+
+  const { customRulesService } = await import('../services/storage/custom-rules-service');
+  const added = await customRulesService.addExampleToRule(ruleId, poemText);
+
+  if (added) {
+    const exampleCount = (await customRulesService.getCustomRule(ruleId))?.Examples.length ?? 0;
+    button.textContent = t('results_example_added');
+    button.classList.add('btn-success');
+    button.setAttribute('disabled', 'true');
+    analyticsService.trackEvent('example_added', { ruleId, exampleCount, source: 'results' });
+  } else {
+    button.textContent = t('results_example_duplicate');
+    button.classList.add('btn-warning');
+    button.setAttribute('disabled', 'true');
+    analyticsService.trackEvent('example_duplicate', { ruleId });
+  }
+}
+
+async function handleSubmitToGitHub(button: HTMLElement, ruleSet?: string): Promise<void> {
+  const ruleId = button.getAttribute('data-rule-id') || '';
+  const ruleName = button.getAttribute('data-rule-name') || '';
+  const ruleSetId = button.getAttribute('data-rule-set') || ruleSet || '';
+
+  const editor = document.getElementById('poem-editor') as HTMLTextAreaElement;
+  const poemText = editor?.value?.trim() || '';
+
+  if (ruleId.startsWith('custom-')) {
+    const { customRulesService } = await import('../services/storage/custom-rules-service');
+    const ruleDto = await customRulesService.getCustomRule(ruleId);
+    if (!ruleDto) return;
+
+    const ruleInfo = await WasmBridge.getRuleInfo(ruleId);
+    const description = ruleInfo?.description ? stripHtmlToText(ruleInfo.description) : '';
+    const examples = [...ruleDto.Examples];
+    if (poemText && !examples.includes(poemText)) {
+      examples.push(poemText);
+    }
+
+    const payload = buildCustomRulePayload(
+      ruleName, ruleId, ruleDto.Language, description, ruleDto, examples
+    );
+    submitToGitHub(payload, 'results');
+  } else {
+    const examples = poemText ? [poemText] : [];
+    const payload = buildExamplePayload(ruleName, ruleSetId, ruleId, examples);
+    submitToGitHub(payload, 'results');
+  }
+}
+
 // Hide results section
 export function hideResults() {
   const resultsSection = document.getElementById('results-section');
@@ -164,6 +260,10 @@ export function hideResults() {
 export function clearResults() {
   const container = document.getElementById('results-container');
   if (container) container.innerHTML = '';
+}
+
+function escapeAttr(value: string): string {
+  return value.replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 }
 
 /**

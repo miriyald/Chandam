@@ -1,5 +1,5 @@
 import { WasmBridge } from '../wasm-bridge';
-import { getRuleSet, getRuleSetAsync } from '../config';
+import { getRuleSetAsync } from '../config';
 import { CustomRulesLoader } from '../services/custom-rules-loader';
 import { renderFirstMatch, hideResults } from './results';
 import { clearEditor, enableEditorAutoSave } from './editor';
@@ -36,15 +36,12 @@ export async function renderRulePage(params: Record<string, string>) {
 
   // Step 3: Get rule info
   const ruleInfo = await WasmBridge.getRuleInfo(ruleId);
-  const rules = await WasmBridge.getAllRules();
 
   // Step 3: Get example text (from URL param or random)
   const exampleText = await getExampleText(params);
 
   // Step 4: Render page HTML
   renderRulePageHtml(
-    ruleSetConfig.name,
-    rules.length,
     ruleSet,
     ruleInfo.name,
     ruleId,
@@ -113,8 +110,6 @@ function cleanExampleFromUrl(ruleSet: string, ruleId: string) {
 
 // Step 4: Render page HTML
 function renderRulePageHtml(
-  ruleSetName: string,
-  ruleCount: number,
   ruleSetId: string,
   ruleName: string,
   ruleId: string,
@@ -129,21 +124,10 @@ function renderRulePageHtml(
     <div class="compute-rule-page">
       ${renderBreadcrumbs(breadcrumbs)}
 
-      <div class="rule-set-info">
-        <span class="label">${t('label_rule_set')}</span>
-        <span class="name">${ruleSetName}</span>
-        <span class="count">[${ruleCount} ${t('label_rules_count')}]</span>
-      </div>
-
-      <div class="current-rule-info">
-        <span class="label">${t('label_rule')}</span>
-        <span class="name meter-name">${ruleName}</span>
-        <div id="rule-actions-container"></div>
-      </div>
-
       <div class="page-header-controls">
+        <h1 class="meter-name">${ruleName}</h1>
+        <div id="rule-actions-container"></div>
         ${renderModeSwitcher({ ruleSetId, ruleId, currentMode: 'compute' })}
-        <a href="${makeUrl(`/learn/${ruleSetId}/`)}" class="browse-link">${t('link_browse_all_rules')}</a>
       </div>
 
       ${renderEditorCard({
