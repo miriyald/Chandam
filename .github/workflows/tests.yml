@@ -1,0 +1,52 @@
+name: .NET Tests
+
+on:
+  push:
+    branches: [ beta ]
+  pull_request:
+    branches: [ beta ]
+  workflow_dispatch: # Allow manual trigger
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    name: Run .NET Tests
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup .NET 8.0
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.x'
+
+      - name: Restore dependencies
+        run: dotnet restore Chandam.sln
+
+      - name: Build solution
+        run: dotnet build Chandam.sln --configuration Release --no-restore
+
+      - name: Run MCP Tests
+        run: dotnet test Chandam.MCP.Tests --configuration Release --no-build --logger "trx" --collect:"XPlat Code Coverage"
+
+      - name: Run API Integration Tests
+        run: dotnet test Chandam.API.IntegrationTests --configuration Release --no-build --logger "trx" --collect:"XPlat Code Coverage"
+
+      - name: Upload test results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-results
+          path: '**/TestResults/**/*.trx'
+          retention-days: 30
+
+      - name: Publish test results
+        if: always()
+        uses: EnricoMi/publish-unit-test-result-action@v2
+        with:
+          files: '**/TestResults/**/*.trx'
+          check_name: '.NET Test Results'

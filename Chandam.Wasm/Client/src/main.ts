@@ -166,11 +166,14 @@ window.onWasmReady = async () => {
   analyticsService.setUserId(userId);
   console.log('Analytics initialized with user ID');
 
-  // Update version display from assembly metadata
+  // Update version and build date display from assembly metadata
   try {
     const version = await WasmBridge.getVersion();
+    const buildDate = await WasmBridge.getBuildDate();
     const versionEl = document.getElementById('version-info');
+    const buildDateEl = document.getElementById('build-date-info');
     if (versionEl) versionEl.textContent = `v${version}`;
+    if (buildDateEl) buildDateEl.textContent = `Published: ${buildDate}`;
   } catch { /* non-critical */ }
 
   // Restore editor state (if any)

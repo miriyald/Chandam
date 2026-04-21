@@ -369,6 +369,9 @@ public static class JsBridge
     public static string GetVersion() => AppVersion.Value;
 
     [JSInvokable]
+    public static string GetBuildDate() => AppBuildDate.Value;
+
+    [JSInvokable]
     public static string GetAvailableFilters(string language = "te")
     {
         try

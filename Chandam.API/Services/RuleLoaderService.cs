@@ -89,6 +89,7 @@ public class RuleLoaderService
                 var ruleSet = LoadRuleSetFromFile(filePath);
                 if (ruleSet != null && ruleSet.Length > 0)
                 {
+                    ruleSet = EnsureGenricVruttam(ruleSet);
                     _loadedRuleSets[identifier] = ruleSet;
                     BuildIndexes(identifier, ruleSet);  // Build indexes after loading
                     loadedIdentifiers.Add(identifier);
@@ -149,6 +150,7 @@ public class RuleLoaderService
             var ruleSet = LoadRuleSetFromFile(filePath);
             if (ruleSet != null && ruleSet.Length > 0)
             {
+                ruleSet = EnsureGenricVruttam(ruleSet);
                 _loadedRuleSets[identifier] = ruleSet;
                 BuildIndexes(identifier, ruleSet);  // Build indexes after loading
                 return ruleSet;
@@ -516,7 +518,7 @@ public class RuleLoaderService
     {
         try
         {
-            var compiledRules = Manager.Rules();
+            var compiledRules = EnsureGenricVruttam(Manager.Rules());
             _loadedRuleSets["default"] = compiledRules;
             BuildIndexes("default", compiledRules);  // Build indexes after loading
             _currentRuleSetId = "default";
@@ -658,18 +660,69 @@ public class RuleLoaderService
             if (managerRules != null && managerRules.Length > 0)
             {
                 var targetId = ruleSetId ?? "default";
+                var extendedRules = EnsureGenricVruttam(managerRules);
 
                 // Store rules with specified ID and set as current
-                _loadedRuleSets[targetId] = managerRules;
-                BuildIndexes(targetId, managerRules);  // Build indexes after syncing
+                _loadedRuleSets[targetId] = extendedRules;
+                BuildIndexes(targetId, extendedRules);  // Build indexes after syncing
                 _currentRuleSetId = targetId;
-                Console.WriteLine($"Synced {managerRules.Length} rules from Manager to RuleLoaderService as '{targetId}'");
+
+                // Re-register GenricVruttam with Manager if it was added
+                if (extendedRules.Length > managerRules.Length)
+                {
+                    Manager.AddRule(extendedRules[extendedRules.Length - 1]);
+                }
+
+                Console.WriteLine($"Synced {extendedRules.Length} rules from Manager to RuleLoaderService as '{targetId}'");
             }
         }
         catch (Exception ex)
         {
             Console.Error.WriteLine($"Failed to sync from Manager: {ex.Message}");
         }
+    }
+
+    /// <summary>
+    /// Create GenricVruttam rule instance — the catch-all "any even Vruttam" fallback.
+    /// Equivalent to: new Chandam.Rules.Vruttam.GenricVruttam()
+    /// Constructed manually because Chandam.API does not reference Chandam.Rules project.
+    /// </summary>
+    private static Rule CreateGenricVruttam()
+    {
+        return new Rule
+        {
+            Lines = 4,
+            Threshold = 3,
+            Identifier = "GenricVruttam",
+            Name = "ఏదేని సమ వృత్తం",
+            Examples = new string[] { },
+            RuleType = RuleType.Name,
+            PadyamType = PadyamType.Vruttam,
+            PadyamSubType = PadyamSubType.GenricVruttam,
+            YatiMode = YatiMode.CharPosition,
+            Rules = new object[][] { new object[] { } },
+            Yati = new int[][] { },
+            Prasa = false,
+            PrasaYati = false,
+        };
+    }
+
+    /// <summary>
+    /// Append GenricVruttam to the end of a rule set if not already present.
+    /// GenricVruttam must always be last — it's a catch-all fallback matcher.
+    /// </summary>
+    private static Rule[] EnsureGenricVruttam(Rule[] rules)
+    {
+        if (rules == null || rules.Length == 0)
+            return new[] { CreateGenricVruttam() };
+
+        if (rules.Any(r => r.Identifier == "GenricVruttam"))
+            return rules;
+
+        var extended = new Rule[rules.Length + 1];
+        Array.Copy(rules, extended, rules.Length);
+        extended[rules.Length] = CreateGenricVruttam();
+        return extended;
     }
 
     /// <summary>

@@ -21,6 +21,7 @@
   --color-success: #2d6a4f;
   --color-error: #c1121f;
   --color-border: #cccccc;
+  --color-poem: darkblue;
 
   /* 4 Font Purposes */
   --font-logo: 'RamaneeyaWin', 'Noto Sans Telugu', sans-serif;  /* 1. Logo/Brand (Ramaneeya - legacy) */
@@ -699,7 +700,7 @@ footer a {
   font-size: var(--font-editor-size);
   letter-spacing: var(--font-editor-letter-spacing);
   line-height: var(--font-editor-line-height);
-  color: #1a1a1a;
+  color: var(--color-poem);
   white-space: normal;
   word-wrap: break-word;
 }
@@ -709,10 +710,6 @@ footer a {
    ======================================== */
 
 .filter-bar {
-  background: #fafafa;
-  border: 1px solid var(--color-border);
-  border-radius: 4px;
-  padding: 1rem 1.5rem;
   margin-bottom: 1.5rem;
 }
 
@@ -720,6 +717,7 @@ footer a {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
+  justify-content: flex-end;
   gap: 1rem;
 }
 
@@ -738,33 +736,33 @@ footer a {
 }
 
 .btn-clear-filters {
-  background: transparent;
-  border: 1px solid var(--color-border);
-  color: var(--color-text);
-  font-size: 0.85rem;
-  padding: 0.25rem 0.5rem;
+  background: white;
+  border: 1px solid #d0d0d0;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  font-weight: 500;
   cursor: pointer;
-  border-radius: 3px;
-  transition: background 0.2s;
+  padding: 0.4rem 0.75rem;
+  color: #555;
+  transition: all 0.2s;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.06);
 }
 
 .btn-clear-filters:hover {
-  background: #e0e0e0;
+  background: #f5f5f5;
+  border-color: #b0b0b0;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
-.filter-bar .results-header {
-  margin-top: 0.75rem;
-  padding-top: 0.75rem;
-  border-top: 1px solid var(--color-border);
+.btn-clear-filters:active {
+  transform: scale(0.97);
+  box-shadow: 0 1px 2px rgba(0,0,0,0.08);
 }
 
-.results-header {
-  margin-bottom: 1rem;
-}
-
-.results-header .rule-count {
-  font-size: 0.95rem;
-  color: #666;
+.filter-bar .rule-count {
+  font-size: 0.8rem;
+  color: #999;
+  white-space: nowrap;
 }
 
 .empty-state {
@@ -1272,6 +1270,7 @@ footer a {
   font-family: var(--font-main);
   font-size: 1.05rem;
   line-height: 1.8;
+  color: var(--color-poem);
   white-space: pre-wrap;
   overflow-x: auto;
 }
@@ -1501,6 +1500,11 @@ footer a {
   font-weight: 500;
 }
 
+.editor-section .rule-picker-inline summary.has-selection {
+  color: var(--color-poem);
+  font-weight: 500;
+}
+
 .picker-dropdown {
   position: absolute;
   top: 100%;
@@ -1521,8 +1525,9 @@ footer a {
 }
 
 .rule-group-header {
-  font-weight: bold;
-  color: var(--color-header-bg);
+  font-weight: normal;
+  color: #666;
+  font-size: 0.9rem;
   padding: 0.5rem;
   margin-top: 0.5rem;
   border-bottom: 1px solid #e0e0e0;
@@ -1600,6 +1605,7 @@ footer a {
   font-size: var(--font-editor-size);
   letter-spacing: var(--font-editor-letter-spacing);
   line-height: var(--font-editor-line-height);
+  color: var(--color-poem);
   border: 1px solid #d8d8d8;
   border-radius: 8px;
   resize: vertical;
@@ -2005,16 +2011,8 @@ footer a {
   background: rgba(0, 0, 0, 0.08);
 }
 
-/* Mobile: Hide inactive tab to save space */
+/* Mobile: Compact mode switcher */
 @media (max-width: 768px) {
-  .mode-tab:not(.mode-tab-active) {
-    display: none;
-  }
-
-  .mode-switcher {
-    width: auto;
-  }
-
   .mode-tab {
     padding: 0.4rem 1rem;
     font-size: 0.85rem;

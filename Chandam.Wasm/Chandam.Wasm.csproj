@@ -33,14 +33,26 @@
   <!-- Generate version constant at build time (avoids reflection in trimmed WASM) -->
   <Target Name="GenerateVersionConstant" BeforeTargets="BeforeBuild">
     <PropertyGroup>
-      <_VersionValue>$(Version)</_VersionValue>
-      <_VersionValue Condition="'$(_VersionValue)' == ''">0.0.0</_VersionValue>
+      <!-- Generate timestamp-based version: YYYYMMdd.HHmmss (UTC) -->
+      <_BuildTimestamp>$([System.DateTime]::UtcNow.ToString("yyyyMMdd.HHmmss"))</_BuildTimestamp>
+      <_BuildDate>$([System.DateTime]::UtcNow.ToString("yyyy-MM-dd"))</_BuildDate>
+      <_VersionValue>$(_BuildTimestamp)</_VersionValue>
     </PropertyGroup>
+
+    <!-- Generate AppVersion.g.cs -->
     <WriteLinesToFile File="$(IntermediateOutputPath)AppVersion.g.cs" Overwrite="true"
       Lines="namespace Chandam.Wasm%3B%0Ainternal static class AppVersion { public const string Value = &quot;$(_VersionValue)&quot;%3B }" />
+    
+    <!-- Generate AppBuildDate.g.cs -->
+    <WriteLinesToFile File="$(IntermediateOutputPath)AppBuildDate.g.cs" Overwrite="true"
+      Lines="namespace Chandam.Wasm%3B%0Ainternal static class AppBuildDate { public const string Value = &quot;$(_BuildDate)&quot;%3B }" />
+    
     <ItemGroup>
       <Compile Include="$(IntermediateOutputPath)AppVersion.g.cs" />
+      <Compile Include="$(IntermediateOutputPath)AppBuildDate.g.cs" />
     </ItemGroup>
+
+    <Message Text="✓ Generated version: $(_VersionValue) | date: $(_BuildDate)" Importance="high" />
   </Target>
 
   <!-- NPM build integration -->
@@ -86,8 +98,9 @@
   <Target Name="InjectVersionIntoHtml" AfterTargets="Publish" Condition="'$(PublishDir)' != ''">
     <PropertyGroup>
       <IndexHtmlPath>$(PublishDir)wwwroot/index.html</IndexHtmlPath>
-      <BuildDate>$([System.DateTime]::UtcNow.ToString("yyyy-MM-dd"))</BuildDate>
-      <VersionString>v$(Version) ($(BuildDate))</VersionString>
+      <_BuildTimestamp>$([System.DateTime]::UtcNow.ToString("yyyyMMdd.HHmmss"))</_BuildTimestamp>
+      <_BuildDate>$([System.DateTime]::UtcNow.ToString("yyyy-MM-dd"))</_BuildDate>
+      <VersionString>v$(_BuildTimestamp) (Published: $(_BuildDate))</VersionString>
     </PropertyGroup>
 
     <!-- Linux/Mac (GitHub Actions uses ubuntu-latest) -->

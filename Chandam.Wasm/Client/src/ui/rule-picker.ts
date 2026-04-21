@@ -118,6 +118,7 @@ export function setSelectedRule(ruleId: string, ruleName: string): void {
   const summary = document.getElementById('selected-rule-name');
   if (summary) {
     summary.textContent = `${t('editor_matching_with')} ${ruleName} ▼`;
+    summary.classList.add('has-selection');
   }
 
   // Store selected rule ID in dataset

@@ -113,8 +113,6 @@ function renderLearnIndexPageHtml(
         <h1>${ruleSetName}</h1>
         ${renderModeSwitcher({ ruleSetId, currentMode: 'learn' })}
       </div>
-      <div class="page-subtitle">${allRulesCount} ${t('label_rules_count')}</div>
-
       <div class="filter-bar">
         <div class="filter-bar-row">
           <input
@@ -125,10 +123,8 @@ function renderLearnIndexPageHtml(
             data-filter="search"
           />
           ${renderCategoryDropdown()}
-          <button class="btn-clear-filters" data-action="clear-filters">${t('filter_clear_all')}</button>
-        </div>
-        <div class="results-header">
-          <div class="rule-count">${t('filter_showing')} ${ruleCount} ${t('filter_of')} ${allRulesCount} ${t('label_rules_count')}</div>
+          <span class="rule-count">${ruleCount} ${t('filter_of')} ${allRulesCount}</span>
+          <button class="btn-clear-filters" data-action="clear-filters">${t('editor_btn_clear')}</button>
         </div>
       </div>
 

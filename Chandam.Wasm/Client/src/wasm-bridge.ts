@@ -152,6 +152,13 @@ export class WasmBridge {
     );
   }
 
+  static async getBuildDate(): Promise<string> {
+    return await DotNet.invokeMethodAsync<string>(
+      this.ASSEMBLY,
+      'GetBuildDate'
+    );
+  }
+
   static async getAvailableFilters(language: string = 'te'): Promise<AvailableFilters> {
     const json = await DotNet.invokeMethodAsync<string>(
       this.ASSEMBLY,
