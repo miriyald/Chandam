@@ -10,6 +10,7 @@ on:
 
 permissions:
   contents: write # Required to push to gh-pages branch
+  checks: write   # Required for test workflow to publish results
 
 jobs:
   test:
