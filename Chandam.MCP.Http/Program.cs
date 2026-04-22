@@ -2,7 +2,10 @@ using Chandam.MCP.Tools;
 
 var builder = WebApplication.CreateBuilder(args);
 
-var rulesDir = builder.Configuration["Chandam:RulesDirectory"] ?? "Chandam.Config/Rules";
+var configuredRulesPath = builder.Configuration["Chandam:RulesDirectory"] ?? "Chandam.Config/Rules";
+var rulesDir = Path.IsPathRooted(configuredRulesPath)
+    ? configuredRulesPath
+    : Path.Combine(Directory.GetParent(builder.Environment.ContentRootPath)!.FullName, configuredRulesPath);
 builder.Services.AddChandamServices(rulesDir);
 
 builder.Services

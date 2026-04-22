@@ -5,7 +5,8 @@ on:
     branches: [ beta ]
   pull_request:
     branches: [ beta ]
-  workflow_dispatch: # Allow manual trigger from Actions tab
+  workflow_dispatch:
+    # Allow manual trigger from Actions tab
 
 permissions:
   contents: write # Required to push to gh-pages branch
@@ -21,50 +22,50 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
-      with:
-        fetch-depth: 0 # Full history for proper git operations
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # Full history for proper git operations
 
-    - name: Setup .NET 8.0
-      uses: actions/setup-dotnet@v4
-      with:
-        dotnet-version: '8.0.x'
+      - name: Setup .NET 8.0
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: "8.0.x"
 
-    - name: Setup Node.js 20
-      uses: actions/setup-node@v4
-      with:
-        node-version: '20'
+      - name: Setup Node.js 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
 
-    - name: Restore .NET dependencies
-      run: dotnet restore Chandam.sln
+      - name: Restore .NET dependencies
+        run: dotnet restore Chandam.sln
 
-    - name: Install npm dependencies
-      run: npm install
-      working-directory: Chandam.Wasm/Client
+      - name: Install npm dependencies
+        run: npm install
+        working-directory: Chandam.Wasm/Client
 
-    - name: Build TypeScript bundle
-      run: npm run build
-      working-directory: Chandam.Wasm/Client
+      - name: Build TypeScript bundle
+        run: npm run build
+        working-directory: Chandam.Wasm/Client
 
-    - name: Publish Blazor WASM
-      run: |
-        dotnet publish Chandam.Wasm/Chandam.Wasm.csproj \
-          -c Release \
-          -p:ExcludeYaml=true \
-          -o publish
+      - name: Publish Blazor WASM
+        run: |
+          dotnet publish Chandam.Wasm/Chandam.Wasm.csproj \
+            -c Release \
+            -p:ExcludeYaml=true \
+            -o publish
 
-    - name: Prepare for GitHub Pages
-      run: bash .github/scripts/prepare-github-pages.sh publish/wwwroot
+      - name: Prepare for GitHub Pages
+        run: bash .github/scripts/prepare-github-pages.sh publish/wwwroot
 
-    - name: Deploy to GitHub Pages
-      uses: peaceiris/actions-gh-pages@v4
-      if: github.ref == 'refs/heads/beta'
-      with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_dir: ./publish/wwwroot
-        publish_branch: gh-pages
-        force_orphan: true # Keep gh-pages branch clean (no history)
-        user_name: 'github-actions[bot]'
-        user_email: 'github-actions[bot]@users.noreply.github.com'
-        commit_message: 'Deploy from ${{ github.sha }}'
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v4
+        if: github.ref == 'refs/heads/beta'
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./publish/wwwroot
+          publish_branch: gh-pages
+          force_orphan: true # Keep gh-pages branch clean (no history)
+          user_name: "github-actions[bot]"
+          user_email: "github-actions[bot]@users.noreply.github.com"
+          commit_message: "Deploy from ${{ github.sha }}"

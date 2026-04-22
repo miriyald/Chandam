@@ -9,9 +9,14 @@ var builder = Host.CreateApplicationBuilder(args);
 builder.Logging.ClearProviders();
 builder.Logging.AddConsole(options => options.LogToStandardErrorThreshold = LogLevel.Trace);
 
-var rulesDir = args
+var rawRulesDir = args
     .FirstOrDefault(a => a.StartsWith("--rules-dir="))
     ?.Split('=', 2)[1];
+var rulesDir = string.IsNullOrWhiteSpace(rawRulesDir)
+    ? null
+    : Path.IsPathRooted(rawRulesDir)
+        ? rawRulesDir
+        : Path.Combine(Directory.GetParent(AppContext.BaseDirectory)!.FullName, rawRulesDir);
 
 // RuleLoaderService uses Console.WriteLine during init.
 // Temporarily redirect Console.Out to stderr to keep stdout clean for MCP protocol.

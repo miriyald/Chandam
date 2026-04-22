@@ -39,11 +39,13 @@ Chandam.Wasm/wwwroot/data/*.min.json.gz
 
 # Python
 .venv/
-__pycache__/
-*.pyc
-*.pyo
-.env
+**/__pycache__/
+**/*.pyc
+**/*.pyo
+**/.env
+
 
 # Code Assistants
 .claude
 .cursor
+.vs

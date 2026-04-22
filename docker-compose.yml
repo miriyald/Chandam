@@ -92,6 +92,31 @@ services:
       retries: 3
       start_period: 5s
 
+  # LangGraph Agent API Server
+  chandam-agent:
+    build:
+      context: ./Chandam.Agent
+      dockerfile: Dockerfile
+    image: chandam-agent:latest
+    container_name: chandam-agent
+    ports:
+      - "8123:8123"
+    environment:
+      - CHANDAM_MCP_URL=http://chandam-mcp-http:3001/sse
+      - DEFAULT_MODEL=claude-sonnet-4
+    env_file:
+      - ./Chandam.Agent/.env
+    depends_on:
+      chandam-mcp-http:
+        condition: service_healthy
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8123/ok"]
+      interval: 30s
+      timeout: 3s
+      retries: 3
+      start_period: 15s
+
 networks:
   default:
     name: chandam-network

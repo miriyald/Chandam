@@ -19,8 +19,8 @@ namespace Chandam.API.IntegrationTests
         public SearchPerformanceTests(ITestOutputHelper output)
         {
             _output = output;
-            var rulesPath = FindProjectRoot() is string root 
-                ? Path.Combine(root, "Chandam.Config", "Rules") 
+            var rulesPath = FindProjectRoot() is string root
+                ? Path.Combine(root, "Chandam.Config", "Rules")
                 : null;
             _ruleLoader = new RuleLoaderService(rulesPath);
             _ruleLoader.LoadAllRuleSets();
@@ -249,7 +249,7 @@ namespace Chandam.API.IntegrationTests
             // This is more reliable when running tests from different working directories
             var assemblyLocation = typeof(SearchPerformanceTests).Assembly.Location;
             var current = Path.GetDirectoryName(assemblyLocation);
-            
+
             while (current != null)
             {
                 var configPath = Path.Combine(current, "Chandam.Config", "Rules");
@@ -261,7 +261,7 @@ namespace Chandam.API.IntegrationTests
                 var parent = Directory.GetParent(current);
                 current = parent?.FullName;
             }
-            
+
             return null;
         }
     }

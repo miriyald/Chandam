@@ -1,4 +1,8 @@
 {
     "dotnet.preferCSharpExtension": true,
-    "dotnet.defaultSolution": "Chandam.sln"
+    "dotnet.defaultSolution": "Chandam.sln",
+    "editor.formatOnSave": true,
+    "cSpell.words": [],
+    "python-envs.defaultEnvManager": "ms-python.python:venv",
+    "autopep8.args": ["--max-line-length=140"]
 }

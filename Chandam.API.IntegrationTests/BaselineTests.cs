@@ -185,7 +185,7 @@ public class BaselineTests
         // This is more reliable when running tests from different working directories
         var assemblyLocation = typeof(BaselineTests).Assembly.Location;
         var current = Path.GetDirectoryName(assemblyLocation);
-        
+
         while (current != null)
         {
             var configPath = Path.Combine(current, "Chandam.Config", "Rules");
@@ -197,7 +197,7 @@ public class BaselineTests
             var parent = Directory.GetParent(current);
             current = parent?.FullName;
         }
-        
+
         return null;
     }
 }

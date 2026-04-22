@@ -2,9 +2,9 @@
 setlocal enabledelayedexpansion
 echo Finding and going to kill processes on ports related to this application
 
-call :KillPort 5000
+call :KillPort 3001
 call :KillPort 5001
-call :KillPort 59694
+
 
 echo Done.
 exit /b
