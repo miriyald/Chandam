@@ -11,6 +11,7 @@
 //---------------------------------------------------------------------------------------------
 
 using System;
+using System.Runtime.InteropServices;
 using System.Threading;
 
 namespace Verifier
@@ -36,7 +37,12 @@ namespace Verifier
 988};
 			foreach (int w in W)
 			{
-				Console.Beep(w, 125 * 3);
+#if !NETSTANDARD2_1
+				if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+#endif
+				{
+					Console.Beep(w, 125 * 3);
+				}
 				Thread.Sleep(60);
 			}
 		}
