@@ -56,7 +56,7 @@
   </Target>
 
   <!-- NPM build integration -->
-  <Target Name="NpmInstall" BeforeTargets="BeforeBuild" Condition="!Exists('Client\node_modules')">
+  <Target Name="NpmInstall" BeforeTargets="BeforeBuild" Condition="!Exists('$(MSBuildProjectDirectory)/Client/node_modules')">
     <Exec Command="npm install" WorkingDirectory="Client" />
   </Target>
 
