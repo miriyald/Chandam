@@ -305,11 +305,11 @@ namespace Chandam.API.Services
 
     public class RuleSummaryDetailed
     {
-        public string Identifier { get; set; } = string.Empty;
-        public string Name { get; set; } = string.Empty;
-        public string PadyamType { get; set; } = string.Empty;
-        public string PadyamSubType { get; set; } = string.Empty;
-        public string Frequency { get; set; } = string.Empty;
+        public string Identifier { get; set; }
+        public string Name { get; set; }
+        public string PadyamType { get; set; }
+        public string PadyamSubType { get; set; }
+        public string Frequency { get; set; }
         public int Lines { get; set; }
         public string? ChandamName { get; set; }
         public int? CharLength { get; set; }
