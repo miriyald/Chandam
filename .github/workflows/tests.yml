@@ -5,8 +5,8 @@ on:
     branches: [ beta ]
   pull_request:
     branches: [ beta ]
-  workflow_dispatch:
-    # Allow manual trigger
+  workflow_dispatch: # Allow manual trigger
+  workflow_call: # Allow calling from other workflows (deploy-pages)
 
 permissions:
   contents: read
