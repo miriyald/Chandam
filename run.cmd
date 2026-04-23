@@ -23,17 +23,35 @@
 :: 2. TEST COMMANDS
 :: ============================================================================
 
-:: Run all MCP tests (13 tests)
+:: Run all MCP tests (20 tests)
 :: dotnet test Chandam.MCP.Tests
 
-:: Run all integration tests (554 examples)
+:: Run all integration tests (615 examples + MCP reliability)
 :: dotnet test Chandam.API.IntegrationTests
 
 :: Run integration tests with verbose output
-:: dotnet test Chandam.API.IntegrationTests -v normal
+:: dotnet test Chandam.API.IntegrationTests --logger "console;verbosity=detailed"
+
+:: Run only baseline regression tests
+:: dotnet test Chandam.API.IntegrationTests --filter "FullyQualifiedName~BaselineTests"
+
+:: Run only MCP reliability tests (TryMatch baseline + Determine + Scores)
+:: dotnet test Chandam.API.IntegrationTests --filter "FullyQualifiedName~McpReliability"
 
 :: Run all tests in solution
 :: dotnet test Chandam.sln
+
+:: ============================================================================
+:: 2a. BASELINE GENERATION (manual, run when rules/examples change)
+:: ============================================================================
+:: To regenerate baseline-results.yaml:
+::   1. In BaselineTests.cs, temporarily change:
+::        [Fact(Skip = "Manual execution only - generates baseline")]
+::      to:
+::        [Fact]
+::   2. Run: dotnet test Chandam.API.IntegrationTests --filter "FullyQualifiedName~GenerateBaselineResults"
+::   3. Restore the Skip attribute
+::   Output: Chandam.Config\Baselines\baseline-results.yaml
 
 :: ============================================================================
 :: 3. RUN COMMANDS - WEB APPLICATION

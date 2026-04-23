@@ -10,6 +10,7 @@ using Xunit.Abstractions;
 
 namespace Chandam.API.IntegrationTests
 {
+    [Collection("ChandamIntegration")]
     public class SearchPerformanceTests : IDisposable
     {
         private readonly ITestOutputHelper _output;

@@ -54,7 +54,7 @@ namespace Chandam.Rules
 				bool maxFalls = (R.RelaxedMin <= max && max <= R.RelaxedMax);
 
 
-				if (lines == 1 && R.PadyamSubType == PadyamSubType.DaMDakamu && minFalls && maxFalls)//Not a good idea...
+				if (lines == 1 && R.PadyamSubType == PadyamSubType.DaMDakamu && minFalls && maxFalls) // Not a good idea...
 				{
 					L.Add(R);
 					continue;

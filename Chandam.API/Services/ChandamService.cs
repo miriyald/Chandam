@@ -59,12 +59,10 @@ public class ChandamService
                 };
             }
 
-            var options = new MatchOptions
-            {
-                Language = request.Language,
-                MatchYati = request.MatchYati,
-                MatchPrasa = request.MatchPrasa
-            };
+            var options = MatchOptions.QucikMatchSettings;
+            options.Language = request.Language;
+            options.MatchYati = request.MatchYati;
+            options.MatchPrasa = request.MatchPrasa;
 
             var probable = Padyam.MostProbable(request.PoemText, options);
 

@@ -234,8 +234,10 @@ namespace Chandam.API.Services
 
             foreach (var rule in rules)
             {
-                // Collect categories (PadyamSubType) - exclude "Unspecified"
-                if (!string.IsNullOrEmpty(rule.PadyamSubType) && rule.PadyamSubType != "Unspecified")
+                // Collect categories (PadyamSubType) - exclude internal-only types
+                if (!string.IsNullOrEmpty(rule.PadyamSubType) &&
+                    rule.PadyamSubType != "Unspecified" &&
+                    rule.PadyamSubType != "GenricVruttam")
                 {
                     categories.Add(rule.PadyamSubType);
                 }

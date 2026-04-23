@@ -8,6 +8,7 @@ namespace Chandam.API.IntegrationTests;
 /// <summary>
 /// Integration tests that verify examples match their baseline results
 /// </summary>
+[Collection("ChandamIntegration")]
 public class BaselineTests
 {
     private readonly ITestOutputHelper _output;
@@ -27,6 +28,7 @@ public class BaselineTests
 
         _ruleLoader = new RuleLoaderService(rulesPath);
         _ruleLoader.LoadAllRuleSets();
+        _ruleLoader.SetActiveRuleSet("chandam");
 
         _service = new ChandamService(_ruleLoader);
         _generator = new BaselineGenerator(_service, _ruleLoader);

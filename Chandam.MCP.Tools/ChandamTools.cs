@@ -142,7 +142,11 @@ public class ChandamTools
         var ruleSetId = ruleset_id ?? "chandam";
         if (!string.IsNullOrEmpty(ruleSetId) && ruleSetId != _ruleLoader.GetCurrentRuleSetId())
         {
-            _ruleLoader.SetActiveRuleSet(ruleSetId);
+            if (!_ruleLoader.SetActiveRuleSet(ruleSetId))
+            {
+                ruleSetId = "chandam";
+                _ruleLoader.SetActiveRuleSet(ruleSetId);
+            }
         }
 
         var lang = LanguageCodeMapper.ParseLanguage(language);
@@ -156,7 +160,8 @@ public class ChandamTools
                 Type = typeGroup.Key,
                 SubTypes = typeGroup
                     .GroupBy(r => r.PadyamSubType.ToString())
-                    .OrderBy(sg => sg.Key)
+                    .OrderBy(sg => sg.Key == "GenricVruttam" ? 1 : 0)
+                    .ThenBy(sg => sg.Key)
                     .Select(subGroup => new
                     {
                         SubType = subGroup.Key,

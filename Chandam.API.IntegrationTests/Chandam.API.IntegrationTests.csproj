@@ -21,6 +21,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Chandam.API\Chandam.API.csproj" />
     <ProjectReference Include="..\Chandam.Core\Chandam.Core.csproj" />
+    <ProjectReference Include="..\Chandam.MCP.Tools\Chandam.MCP.Tools.csproj" />
   </ItemGroup>
 
 </Project>
