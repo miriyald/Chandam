@@ -137,7 +137,7 @@ public class ChandamToolsTests
         Assert.True(json.RootElement.GetProperty("Success").GetBoolean());
     }
 
-    [Fact(Skip = "Telugu text encoding in JSON serialization - display issue, functionality verified")]
+    [Fact]
     public void DetermineChandam_ResultContainsTelugu()
     {
         var result = _tools.DetermineChandam(TestPoem);
@@ -282,6 +282,27 @@ public class ChandamToolsTests
 
         var results = json.RootElement.GetProperty("Results");
         Assert.True(results.GetArrayLength() <= 5);
+    }
+
+    [Fact]
+    public void GetRuleInfo_PaMchaamaramu_LinesIs4_AfterMatching()
+    {
+        // Simulate a multi-line poem that would trigger the mutation in Padyam.cs
+        var multiLinePoem = string.Join("\n", Enumerable.Range(1, 16).Select(_ =>
+            "ఇ టా చతుర్ముఖుం డరాగఁ నిష్ట శిష్టపాళితోఁ"));
+
+        // Run DetermineChandam first — this previously mutated the shared Rule
+        _tools.DetermineChandam(multiLinePoem, ruleset_id: "chandam");
+
+        // Now GetRuleInfo should still return the original Lines=4
+        var result = _tools.GetRuleInfo("paMchaamaramu", include_examples: true, ruleset_id: "chandam");
+        var json = JsonDocument.Parse(result);
+
+        var lines = json.RootElement.GetProperty("Lines").GetInt32();
+        Assert.Equal(4, lines);
+
+        var name = json.RootElement.GetProperty("Name").GetString();
+        Assert.Equal("పంచచామరము (నారాచ, మహోత్సవ)", name);
     }
 
     /// <summary>

@@ -140,8 +140,10 @@ public class ChandamService
                 MatchPrasa = request.MatchPrasa
             };
 
-            var matchResult = padyam.Match(request.PoemText, rule);
-            var match = BuildChandamMatch(matchResult, rule, padyam, request.RenderFormat);
+            // Clone to prevent Core engine from mutating the shared Rule in Manager
+            var ruleClone = rule.Clone();
+            var matchResult = padyam.Match(request.PoemText, ruleClone);
+            var match = BuildChandamMatch(matchResult, ruleClone, padyam, request.RenderFormat);
 
             return new TryMatchResponse
             {
@@ -179,7 +181,9 @@ public class ChandamService
                     MatchYati = request.MatchYati,
                     MatchPrasa = request.MatchPrasa
                 };
-                var matchResult = padyam.Match(request.PoemText, rule);
+                // Clone to prevent Core engine from mutating the shared Rule in Manager
+                var ruleClone = rule.Clone();
+                var matchResult = padyam.Match(request.PoemText, ruleClone);
                 match.Beautified = padyam.Beautify(matchResult);
             }
         }
@@ -206,7 +210,9 @@ public class ChandamService
                     MatchYati = request.MatchYati,
                     MatchPrasa = request.MatchPrasa
                 };
-                var matchResult = padyam.Match(request.PoemText, rule);
+                // Clone to prevent Core engine from mutating the shared Rule in Manager
+                var ruleClone = rule.Clone();
+                var matchResult = padyam.Match(request.PoemText, ruleClone);
                 response.Match.Beautified = padyam.Beautify(matchResult);
             }
         }
@@ -309,7 +315,9 @@ public class ChandamService
             {
                 try
                 {
-                    var matchResult = padyam.Match(request.PoemText, rule);
+                    // Clone to prevent Core engine from mutating the shared Rule in Manager
+                    var ruleClone = rule.Clone();
+                    var matchResult = padyam.Match(request.PoemText, ruleClone);
 
                     if (matchResult.Percentage >= request.MinimumMatchPercentage)
                     {
@@ -384,7 +392,9 @@ public class ChandamService
                     try
                     {
                         var padyam = new Padyam { MatchYati = true, MatchPrasa = true };
-                        var matchResult = padyam.Match(example.Text, rule);
+                        // Clone to prevent Core engine from mutating the shared Rule in Manager
+                        var ruleClone = rule.Clone();
+                        var matchResult = padyam.Match(example.Text, ruleClone);
                         beautified = padyam.Beautify(matchResult);
                     }
                     catch { }
