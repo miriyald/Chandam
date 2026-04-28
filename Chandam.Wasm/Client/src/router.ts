@@ -126,10 +126,10 @@ export class Router {
     // Handle browser back/forward
     window.addEventListener('popstate', () => this.route());
 
-    // Intercept link clicks
+    // Intercept link clicks (skip blob URLs used for file downloads)
     document.addEventListener('click', (e) => {
       const target = (e.target as HTMLElement).closest('a');
-      if (target && target.href && target.origin === location.origin) {
+      if (target && target.href && target.origin === location.origin && !target.href.startsWith('blob:')) {
         e.preventDefault();
         const url = new URL(target.href);
         this.navigate(this.stripBasePath(url.pathname));
