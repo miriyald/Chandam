@@ -97,9 +97,6 @@ export class Router {
     const rawPath = url.pathname;
     const path = this.stripBasePath(rawPath);
 
-    // Track page view for SPA navigation
-    analyticsService.trackPageView(path);
-
     // Also extract query parameters
     const queryParams: Record<string, string> = {};
     url.searchParams.forEach((value, key) => {
@@ -113,6 +110,7 @@ export class Router {
         // Merge path params and query params
         const allParams = { ...pathParams, ...queryParams };
         await route.handler(allParams);
+        analyticsService.trackPageView(path);
         return;
       }
     }

@@ -1,8 +1,11 @@
 import { makeUrl } from '../utils/url-helpers';
 import { t } from '../i18n';
+import { setPageTitle } from '../utils/page-title';
 
 // Main function: Render landing page
 export function renderHomePage() {
+  setPageTitle();
+
   const content = document.getElementById('content');
   if (!content) return;
 

@@ -1,4 +1,5 @@
 import { Router, loadStaticPage } from './router';
+import { setPageTitle } from './utils/page-title';
 import { renderHomePage } from './ui/home-page';
 import { renderRuleSetsPage } from './ui/rule-sets-page';
 import { renderRuleSetPage } from './ui/rule-set-page';
@@ -100,9 +101,9 @@ router.register('/learn/:ruleSet/:ruleId', async (params) => {
 });
 
 // Static pages
-router.register('/about', () => loadStaticPage('pages/about.html'));
-router.register('/credits', () => loadStaticPage('pages/credits.html'));
-router.register('/contact', () => loadStaticPage('pages/contact.html'));
+router.register('/about', () => { setPageTitle('About'); loadStaticPage('pages/about.html'); });
+router.register('/credits', () => { setPageTitle('Credits'); loadStaticPage('pages/credits.html'); });
+router.register('/contact', () => { setPageTitle('Contact'); loadStaticPage('pages/contact.html'); });
 
 // Apply current language to static nav elements and lang toggle button
 function applyLanguageToPage(): void {

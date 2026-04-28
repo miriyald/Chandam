@@ -2,6 +2,7 @@
  * Custom rule creator page
  */
 import { t } from '../i18n';
+import { setPageTitle } from '../utils/page-title';
 import { customRulesService } from '../services/storage/custom-rules-service';
 import { makeUrl } from '../utils/url-helpers';
 import type { RuleDto, GanaOption } from '../services/storage/rule-dto';
@@ -47,6 +48,8 @@ const state = new RuleCreatorState();
  * Main function to render the rule creator page
  */
 export async function renderRuleCreatorPage() {
+  setPageTitle('Create Rule');
+
   const content = document.getElementById('content');
   if (!content) return;
 

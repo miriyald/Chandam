@@ -11,6 +11,7 @@ import { renderBreadcrumbs, buildRuleSetBreadcrumbs } from './breadcrumbs';
 import { renderModeSwitcher } from './mode-switcher';
 import { loadRuleSet } from '../utils/rule-loader';
 import { t } from '../i18n';
+import { setPageTitle } from '../utils/page-title';
 import { CustomRulesLoader } from '../services/custom-rules-loader';
 import { storageService } from '../services/storage/storage-service';
 import { analyticsService } from '../services/analytics-service';
@@ -38,6 +39,8 @@ export async function renderRuleSetPage(ruleSet: string) {
     console.error(`Rule set not found: ${ruleSet}`);
     return;
   }
+
+  setPageTitle('Compute ' + ruleSetConfig.name);
 
   // Step 2: Load rules based on type
   if (ruleSetConfig.rulesFile) {

@@ -8,6 +8,7 @@ import { renderModeSwitcher } from './mode-switcher';
 import { renderRuleActions } from './rule-actions';
 import { loadRuleSet } from '../utils/rule-loader';
 import { t } from '../i18n';
+import { setPageTitle } from '../utils/page-title';
 import { analyticsService } from '../services/analytics-service';
 import {
   submitToGitHub,
@@ -36,6 +37,8 @@ export async function renderLearnDetailPage(ruleSet: string, ruleId: string) {
 
   // Step 3: Get rule info with examples
   const ruleInfo = await WasmBridge.getRuleInfo(ruleId);
+
+  setPageTitle('Learn ' + ruleInfo.name, ruleSetConfig.name);
 
   // Step 3: Render page HTML
   renderLearnDetailPageHtml(ruleSet, ruleInfo);

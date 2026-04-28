@@ -11,6 +11,7 @@ import { renderRuleActions } from './rule-actions';
 import { loadRuleSet } from '../utils/rule-loader';
 import { storageService } from '../services/storage/storage-service';
 import { t } from '../i18n';
+import { setPageTitle } from '../utils/page-title';
 import { analyticsService } from '../services/analytics-service';
 
 // Main function: Render specific rule page
@@ -36,6 +37,8 @@ export async function renderRulePage(params: Record<string, string>) {
 
   // Step 3: Get rule info
   const ruleInfo = await WasmBridge.getRuleInfo(ruleId);
+
+  setPageTitle('Compute ' + ruleInfo.name, ruleSetConfig.name);
 
   // Step 3: Get example text (from URL param or random)
   const exampleText = await getExampleText(params);

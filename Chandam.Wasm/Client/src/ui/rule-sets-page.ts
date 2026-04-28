@@ -3,9 +3,12 @@ import { makeUrl } from '../utils/url-helpers';
 import { renderBreadcrumbs, buildStaticPageBreadcrumbs } from './breadcrumbs';
 import { storageService } from '../services/storage/storage-service';
 import { t } from '../i18n';
+import { setPageTitle } from '../utils/page-title';
 
 // Main function: Render rule sets page
 export async function renderRuleSetsPage() {
+  setPageTitle('Rule Sets');
+
   const content = document.getElementById('content');
   if (!content) return;
 
