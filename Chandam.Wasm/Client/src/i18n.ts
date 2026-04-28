@@ -190,6 +190,14 @@ export interface Translations {
   filter_try_removing: string;
   filter_showing: string;
   filter_of: string;
+
+  // Export Book
+  export_book: string;
+  export_book_single: string;
+  export_progress_title: string;
+  export_cancel: string;
+  export_book_subtitle: string;
+  export_book_generated: string;
 }
 
 const translations: Record<Language, Translations> = {
@@ -362,6 +370,13 @@ const translations: Record<Language, Translations> = {
     filter_try_removing: 'Try removing some filters to see more results.',
     filter_showing: 'Showing',
     filter_of: 'of',
+
+    export_book: 'Export as Book',
+    export_book_single: 'Export Rule',
+    export_progress_title: 'Exporting...',
+    export_cancel: 'Cancel',
+    export_book_subtitle: 'Telugu Poetry Meters',
+    export_book_generated: 'Generated from Chandam',
   },
   te: {
     nav_home: 'హోమ్',
@@ -532,6 +547,13 @@ const translations: Record<Language, Translations> = {
     filter_try_removing: 'మరిన్ని ఫలితాలను చూడటానికి కొన్ని వడపోతలను తొలగించండి.',
     filter_showing: 'చూపిస్తోంది',
     filter_of: 'లో',
+
+    export_book: 'పుస్తకంగా ఎగుమతి',
+    export_book_single: 'ఈ ఛందస్సు ఎగుమతి',
+    export_progress_title: 'ఎగుమతి చేస్తోంది...',
+    export_cancel: 'రద్దు',
+    export_book_subtitle: 'తెలుగు ఛందస్సులు',
+    export_book_generated: 'ఛందం నుండి రూపొందించబడింది',
   },
 };
 

@@ -13,6 +13,7 @@ import { storageService } from '../services/storage/storage-service';
 import { customRulesService } from '../services/storage/custom-rules-service';
 import { favoritesService } from '../services/storage/favorites-service';
 import { analyticsService } from '../services/analytics-service';
+import { exportFullBook } from '../utils/export-book';
 
 interface FilterState {
   searchText: string;
@@ -26,6 +27,9 @@ let currentFilterState: FilterState = {
 
 let currentFilters: AvailableFilters | null = null;
 let allRulesCount = 0;
+let allRulesCache: RuleSummaryDetailed[] = [];
+let currentRuleSetName = '';
+let currentRuleSetId = '';
 
 // Main function: Render learn index page
 export async function renderLearnIndexPage(ruleSet: string) {
@@ -50,6 +54,9 @@ export async function renderLearnIndexPage(ruleSet: string) {
   // Step 3: Get all rules with detailed metadata
   const rules = await WasmBridge.getAllRulesDetailed('te');
   allRulesCount = rules.length;
+  allRulesCache = rules;
+  currentRuleSetName = ruleSetConfig.name;
+  currentRuleSetId = ruleSet;
 
   // Step 3b: Get available filter values (no counts - faster!)
   currentFilters = await WasmBridge.getAvailableFilters('te');
@@ -128,6 +135,7 @@ function renderLearnIndexPageHtml(
           ${renderCategoryDropdown()}
           <span class="rule-count">${ruleCount} ${t('filter_of')} ${allRulesCount}</span>
           <button class="btn-clear-filters" data-action="clear-filters">${t('editor_btn_clear')}</button>
+          <button class="btn-export-book" data-action="export-book">${t('export_book')}</button>
         </div>
       </div>
 
@@ -289,6 +297,13 @@ function attachFilterEventListeners(ruleSetId: string) {
     clearButton.addEventListener('click', async () => {
       currentFilterState = { searchText: '', selectedCategory: '' };
       await refreshResults(ruleSetId);
+    });
+  }
+
+  const exportButton = document.querySelector('[data-action="export-book"]');
+  if (exportButton) {
+    exportButton.addEventListener('click', async () => {
+      await exportFullBook(currentRuleSetName, currentRuleSetId, allRulesCache);
     });
   }
 }

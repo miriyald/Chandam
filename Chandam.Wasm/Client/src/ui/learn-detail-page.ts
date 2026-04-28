@@ -10,6 +10,7 @@ import { loadRuleSet } from '../utils/rule-loader';
 import { t } from '../i18n';
 import { setPageTitle } from '../utils/page-title';
 import { analyticsService } from '../services/analytics-service';
+import { exportSingleRule } from '../utils/export-book';
 import {
   submitToGitHub,
   buildCustomRulePayload,
@@ -61,6 +62,7 @@ function renderLearnDetailPageHtml(
       <div class="page-header-controls">
         <h1 class="meter-name">${ruleInfo.name}</h1>
         <div id="rule-actions-container"></div>
+        <button id="btn-export-rule" class="btn-export-single">${t('export_book_single')}</button>
         ${renderModeSwitcher({ ruleSetId, ruleId: ruleInfo.identifier, currentMode: 'learn' })}
       </div>
 
@@ -86,6 +88,10 @@ function renderLearnDetailPageHtml(
   // Render action toolbar (currently just favorite button, future: share, print, etc.)
   renderRuleActions('rule-actions-container', ruleSetId, ruleInfo.identifier);
   attachLearnSubmitHandler(ruleSetId, ruleInfo);
+
+  document.getElementById('btn-export-rule')?.addEventListener('click', () => {
+    exportSingleRule(ruleSetId, ruleInfo);
+  });
 }
 
 function attachLearnSubmitHandler(ruleSetId: string, ruleInfo: RuleInfo): void {
