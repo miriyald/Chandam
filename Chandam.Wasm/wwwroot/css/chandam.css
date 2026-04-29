@@ -1379,10 +1379,57 @@ footer a {
   border-radius: 4px;
 }
 
+.rule-list-item .rule-item-header {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  margin-bottom: 0.25rem;
+}
+
 .rule-list-item .rule-name {
   font-size: 1.1rem;
   font-weight: bold;
+}
+
+.rule-list-item .rule-alias {
+  color: #7f8c8d;
+  font-size: 0.85rem;
   margin-bottom: 0.5rem;
+}
+
+.rule-list-item .rule-item-badges {
+  display: flex;
+  gap: 0.4rem;
+  flex-wrap: wrap;
+  margin-bottom: 0.5rem;
+}
+
+.badge-sm {
+  padding: 0.2rem 0.6rem;
+  font-size: 0.8rem;
+  border-radius: 12px;
+}
+
+.badge-lines {
+  background: #fce4ec;
+  color: #880e4f;
+}
+
+.rule-list-item .rule-sequence {
+  margin-bottom: 0.5rem;
+}
+
+.rule-list-item .rule-sequence code {
+  background: #fff8dc;
+  padding: 0.2rem 0.5rem;
+  border-radius: 3px;
+  font-family: monospace;
+  font-size: 0.85rem;
+  color: #d35400;
+  border-left: 3px solid #f39c12;
+  display: inline-block;
+  word-break: break-all;
 }
 
 .rule-list-item .rule-meta {
