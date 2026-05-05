@@ -21,24 +21,6 @@ public class ChandamService
         _ruleLoader = ruleLoader;
     }
 
-    /// <summary>
-    /// Helper: Ensure the specified ruleset is active. Uses default ("chandam") if null.
-    /// </summary>
-    private string EnsureActiveRuleSet(string? requestedRuleSet)
-    {
-        var ruleSetId = requestedRuleSet ?? "chandam";
-        
-        if (!string.IsNullOrEmpty(ruleSetId) && ruleSetId != _ruleLoader.GetCurrentRuleSetId())
-        {
-            if (!_ruleLoader.SetActiveRuleSet(ruleSetId))
-            {
-                // Fallback to current if requested ruleset doesn't exist
-                ruleSetId = _ruleLoader.GetCurrentRuleSetId();
-            }
-        }
-        
-        return ruleSetId;
-    }
 
     /// <summary>
     /// Auto-detect the best matching Chandam(s) for a poem
@@ -47,9 +29,6 @@ public class ChandamService
     {
         try
         {
-            // Ensure requested ruleset is active
-            EnsureActiveRuleSet(request.RuleSetId);
-
             if (string.IsNullOrWhiteSpace(request.PoemText))
             {
                 return new DetermineResponse
@@ -59,12 +38,14 @@ public class ChandamService
                 };
             }
 
+            var rules = _ruleLoader.GetRulesForRuleSet(request.RuleSetId, request.Language);
+
             var options = MatchOptions.QucikMatchSettings;
             options.Language = request.Language;
             options.MatchYati = request.MatchYati;
             options.MatchPrasa = request.MatchPrasa;
 
-            var probable = Padyam.MostProbable(request.PoemText, options);
+            var probable = Padyam.MostProbable2(request.PoemText, options, rules);
 
             if (probable == null || probable.MatchResult == null)
             {
@@ -103,9 +84,6 @@ public class ChandamService
     {
         try
         {
-            // Ensure requested ruleset is active
-            EnsureActiveRuleSet(request.RuleSetId);
-
             if (string.IsNullOrWhiteSpace(request.PoemText))
             {
                 return new TryMatchResponse
@@ -124,7 +102,7 @@ public class ChandamService
                 };
             }
 
-            var rule = Manager.FetchRule(request.RuleIdentifier);
+            var rule = _ruleLoader.FetchRuleFromRuleSet(request.RuleIdentifier, request.RuleSetId);
             if (rule == null)
             {
                 return new TryMatchResponse
@@ -140,7 +118,6 @@ public class ChandamService
                 MatchPrasa = request.MatchPrasa
             };
 
-            // Clone to prevent Core engine from mutating the shared Rule in Manager
             var ruleClone = rule.Clone();
             var matchResult = padyam.Match(request.PoemText, ruleClone);
             var match = BuildChandamMatch(matchResult, ruleClone, padyam, request.RenderFormat);
@@ -167,13 +144,11 @@ public class ChandamService
     /// </summary>
     public DetermineResponse DetermineWithBeautified(DetermineRequest request)
     {
-        var response = Determine(request);  // Get standard response with requested format
+        var response = Determine(request);
 
-        // Also populate beautified HTML for all matches
         foreach (var match in response.Matches)
         {
-            // Get the rule and create padyam
-            var rule = Manager.FetchRule(match.Rule.Identifier);
+            var rule = _ruleLoader.FetchRuleFromRuleSet(match.Rule.Identifier, request.RuleSetId);
             if (rule != null)
             {
                 var padyam = new Padyam
@@ -181,7 +156,6 @@ public class ChandamService
                     MatchYati = request.MatchYati,
                     MatchPrasa = request.MatchPrasa
                 };
-                // Clone to prevent Core engine from mutating the shared Rule in Manager
                 var ruleClone = rule.Clone();
                 var matchResult = padyam.Match(request.PoemText, ruleClone);
                 match.Beautified = padyam.Beautify(matchResult);
@@ -197,12 +171,11 @@ public class ChandamService
     /// </summary>
     public TryMatchResponse TryMatchWithBeautified(TryMatchRequest request)
     {
-        var response = TryMatch(request);  // Get standard response with requested format
+        var response = TryMatch(request);
 
-        // Also populate beautified HTML if match exists
         if (response.Match != null)
         {
-            var rule = Manager.FetchRule(request.RuleIdentifier);
+            var rule = _ruleLoader.FetchRuleFromRuleSet(request.RuleIdentifier, request.RuleSetId);
             if (rule != null)
             {
                 var padyam = new Padyam
@@ -210,7 +183,6 @@ public class ChandamService
                     MatchYati = request.MatchYati,
                     MatchPrasa = request.MatchPrasa
                 };
-                // Clone to prevent Core engine from mutating the shared Rule in Manager
                 var ruleClone = rule.Clone();
                 var matchResult = padyam.Match(request.PoemText, ruleClone);
                 response.Match.Beautified = padyam.Beautify(matchResult);
@@ -291,9 +263,6 @@ public class ChandamService
     {
         try
         {
-            // Ensure requested ruleset is active
-            EnsureActiveRuleSet(request.RuleSetId);
-
             if (string.IsNullOrWhiteSpace(request.PoemText))
             {
                 return new ScoresResponse
@@ -302,7 +271,7 @@ public class ChandamService
                 };
             }
 
-            var allRules = _ruleLoader.GetAllRules(request.Language);
+            var allRules = _ruleLoader.GetRulesForRuleSet(request.RuleSetId, request.Language);
             var scores = new List<ChandamScore>();
 
             var padyam = new Padyam
@@ -315,7 +284,6 @@ public class ChandamService
             {
                 try
                 {
-                    // Clone to prevent Core engine from mutating the shared Rule in Manager
                     var ruleClone = rule.Clone();
                     var matchResult = padyam.Match(request.PoemText, ruleClone);
 
@@ -361,9 +329,6 @@ public class ChandamService
     {
         try
         {
-            // Ensure requested ruleset is active
-            EnsureActiveRuleSet(request.RuleSetId);
-
             if (string.IsNullOrWhiteSpace(request.RuleIdentifier))
             {
                 return new GetRuleInfoResponse
@@ -372,7 +337,7 @@ public class ChandamService
                 };
             }
 
-            var rule = Manager.FetchRule(request.RuleIdentifier);
+            var rule = _ruleLoader.FetchRuleFromRuleSet(request.RuleIdentifier, request.RuleSetId);
             if (rule == null)
             {
                 return new GetRuleInfoResponse
@@ -429,9 +394,6 @@ public class ChandamService
     {
         try
         {
-            // Ensure requested ruleset is active
-            EnsureActiveRuleSet(request.RuleSetId);
-
             if (string.IsNullOrWhiteSpace(request.RuleIdentifier))
             {
                 return new GetSamplesResponse
@@ -440,7 +402,7 @@ public class ChandamService
                 };
             }
 
-            var rule = Manager.FetchRule(request.RuleIdentifier);
+            var rule = _ruleLoader.FetchRuleFromRuleSet(request.RuleIdentifier, request.RuleSetId);
             if (rule == null)
             {
                 return new GetSamplesResponse

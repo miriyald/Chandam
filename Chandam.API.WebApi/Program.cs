@@ -230,7 +230,7 @@ app.MapGet("/api/rules/{ruleSetId}/search", (
     [FromQuery] int? matra_length_max,
     [FromQuery] bool? has_examples,
     [FromQuery] int max_results,
-    SearchService searchService) =>
+    [FromServices] SearchService searchService) =>
 {
     try
     {
@@ -271,7 +271,7 @@ app.MapGet("/api/rules/{ruleSetId}/search", (
 app.MapGet("/api/rules/{ruleSetId}/filters", (
     string ruleSetId,
     [FromQuery] string? language,
-    SearchService searchService) =>
+    [FromServices] SearchService searchService) =>
 {
     try
     {
