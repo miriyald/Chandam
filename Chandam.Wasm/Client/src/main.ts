@@ -21,8 +21,8 @@ import { WasmBridge } from './wasm-bridge';
 
 const router = new Router();
 
-// Pre-load loader GIF to browser cache
-preloadLoaderImage('/images/chandam-icon-telugu.gif');
+// Pre-load loader SVG to browser cache
+preloadLoaderImage('/branding/chandam-circles.svg');
 
 // Initialize loader system (sets up event listeners)
 const initialLoader = createInitialLoader();

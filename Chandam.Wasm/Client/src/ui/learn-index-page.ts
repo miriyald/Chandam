@@ -125,17 +125,22 @@ function renderLearnIndexPageHtml(
       </div>
       <div class="filter-bar">
         <div class="filter-bar-row">
-          <input
-            type="text"
-            class="filter-search"
-            placeholder="${t('filter_search_placeholder')}"
-            value="${currentFilterState.searchText}"
-            data-filter="search"
-          />
-          ${renderCategoryDropdown()}
-          <span class="rule-count">${ruleCount} ${t('filter_of')} ${allRulesCount}</span>
-          <button class="btn-clear-filters" data-action="clear-filters">${t('editor_btn_clear')}</button>
-          <button class="btn-export-book" data-action="export-book">${t('export_book')}</button>
+          <div class="filter-inputs">
+            <input
+              type="text"
+              class="filter-search"
+              placeholder="${t('filter_search_placeholder')}"
+              value="${currentFilterState.searchText}"
+              data-filter="search"
+              aria-label="${t('filter_search_placeholder')}"
+            />
+            ${renderCategoryDropdown()}
+          </div>
+          <div class="filter-actions">
+            <span class="rule-count">${ruleCount} ${t('filter_of')} ${allRulesCount}</span>
+            <button class="btn-clear-filters" data-action="clear-filters">${t('editor_btn_clear')}</button>
+            <button class="btn-export-book" data-action="export-book">${t('export_book')}</button>
+          </div>
         </div>
       </div>
 
@@ -216,7 +221,7 @@ function renderRuleListItem(rule: RuleSummaryDetailed, ruleSetId: string, favori
 
   const isCustomRule = rule.identifier.startsWith('custom-');
   const deleteButton = isCustomRule
-    ? `<button class="btn-delete-inline" data-rule-id="${rule.identifier}" onclick="handleDeleteFromList('${rule.identifier}', '${rule.name.replace(/'/g, "\\'")}')">Delete</button>`
+    ? `<button class="btn-delete-inline" data-action="delete-rule" data-rule-id="${rule.identifier}" data-rule-name="${rule.name.replace(/"/g, '&quot;')}">Delete</button>`
     : '';
 
   return `
@@ -265,15 +270,15 @@ function renderCategoryDropdown(): string {
     : allLabel;
 
   const items = currentFilters.categories.map(cat =>
-    `<div class="rule-item" data-value="${cat}">${getTeluguCategoryName(cat)}</div>`
+    `<div class="rule-item" role="option" data-value="${cat}" aria-selected="${cat === currentFilterState.selectedCategory}">${getTeluguCategoryName(cat)}</div>`
   ).join('');
 
   return `
     <details class="rule-picker-inline" id="category-picker">
-      <summary id="selected-category-name">${selectedLabel} ▼</summary>
-      <div class="picker-dropdown">
+      <summary id="selected-category-name" aria-haspopup="listbox">${selectedLabel} ▼</summary>
+      <div class="picker-dropdown" role="listbox" aria-label="${t('filter_all_categories')}">
         <div class="rule-list">
-          <div class="rule-item" data-value="">${allLabel}</div>
+          <div class="rule-item" role="option" data-value="" aria-selected="${!currentFilterState.selectedCategory}">${allLabel}</div>
           ${items}
         </div>
       </div>
@@ -326,6 +331,17 @@ function attachFilterEventListeners(ruleSetId: string) {
       await exportFullBook(currentRuleSetName, currentRuleSetId, allRulesCache);
     });
   }
+
+  const rulesContent = document.querySelector('.rules-content');
+  if (rulesContent) {
+    rulesContent.addEventListener('click', async (e) => {
+      const target = (e.target as HTMLElement).closest('[data-action="delete-rule"]') as HTMLElement;
+      if (!target) return;
+      const ruleId = target.dataset.ruleId || '';
+      const ruleName = target.dataset.ruleName || '';
+      await handleDeleteFromList(ruleId, ruleName);
+    });
+  }
 }
 
 // Refresh results after filter change
@@ -342,8 +358,7 @@ function debounce<T extends (...args: any[]) => any>(func: T, wait: number): (..
   };
 }
 
-// Global delete handler for inline delete buttons
-(window as any).handleDeleteFromList = async function(ruleId: string, ruleName: string) {
+async function handleDeleteFromList(ruleId: string, ruleName: string) {
   const confirmed = confirm(
     `Are you sure you want to delete "${ruleName}"? This action cannot be undone.`
   );
@@ -353,27 +368,23 @@ function debounce<T extends (...args: any[]) => any>(func: T, wait: number): (..
   }
 
   try {
-    // Delete the rule
     await customRulesService.deleteCustomRule(ruleId);
 
-    // Also remove from favorites if it exists
     const isFavorited = await favoritesService.isFavorited('custom-rules', ruleId);
     if (isFavorited) {
       const ruleData = await WasmBridge.getRuleInfo(ruleId);
       await favoritesService.toggleFavorite('custom-rules', ruleId, ruleData);
     }
 
-    // Track deletion
     analyticsService.trackEvent('custom_rule_deleted', {
       ruleId: ruleId,
       source: 'index_page'
     });
 
-    // Reload the page to show updated list
     window.location.reload();
 
   } catch (error) {
     console.error('Failed to delete rule:', error);
     alert('Failed to delete rule. Please try again.');
   }
-};
+}

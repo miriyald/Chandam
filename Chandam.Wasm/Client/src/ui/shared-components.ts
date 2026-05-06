@@ -18,15 +18,15 @@ export function renderEditorCard(config: EditorCardConfig): string {
       <div class="editor-toolbar">
         <div class="editor-context-group">
           ${config.showRulePicker ? `
-            <label class="toggle-switch">
-              <input type="checkbox" id="auto-detect" checked>
+            <label class="toggle-switch" for="auto-detect">
+              <input type="checkbox" id="auto-detect" checked aria-label="${t('editor_auto_detect')}">
               <span class="toggle-slider"></span>
               <span class="toggle-label">${t('editor_auto_detect')}</span>
             </label>
-            <span class="separator">|</span>
+            <span class="separator" aria-hidden="true">|</span>
             <details class="rule-picker-inline" id="rule-picker-inline" style="display: none;">
-              <summary id="selected-rule-name">${t('editor_matching_with')} ${t('editor_select_rule')}</summary>
-              <div class="picker-dropdown" id="rule-picker-container"></div>
+              <summary id="selected-rule-name" aria-haspopup="listbox">${t('editor_matching_with')} ${t('editor_select_rule')}</summary>
+              <div class="picker-dropdown" id="rule-picker-container" role="listbox"></div>
             </details>
             <span id="editor-context-label" class="editor-context" style="display: inline;">
               ${config.contextText}
@@ -38,23 +38,23 @@ export function renderEditorCard(config: EditorCardConfig): string {
 
         <div class="editor-actions">
           <button id="btn-random" title="${t('editor_btn_random')}">${t('editor_btn_random')}</button>
-          <span class="action-separator">|</span>
+          <span class="action-separator" aria-hidden="true">|</span>
           <button id="btn-clear" title="${t('editor_btn_clear')}">${t('editor_btn_clear')}</button>
         </div>
       </div>
 
-      <textarea id="poem-editor" rows="5" placeholder="${t('editor_placeholder')}"></textarea>
+      <textarea id="poem-editor" rows="5" placeholder="${t('editor_placeholder')}" aria-label="${t('editor_placeholder')}"></textarea>
 
       <div class="controls-bar">
         <div class="toggle-group">
-          <label class="toggle-switch">
-            <input type="checkbox" id="match-yati" checked>
+          <label class="toggle-switch" for="match-yati">
+            <input type="checkbox" id="match-yati" checked aria-label="${t('editor_yati')}">
             <span class="toggle-slider"></span>
             <span class="toggle-label">${t('editor_yati')}</span>
           </label>
-          <span class="separator">|</span>
-          <label class="toggle-switch">
-            <input type="checkbox" id="match-prasa" checked>
+          <span class="separator" aria-hidden="true">|</span>
+          <label class="toggle-switch" for="match-prasa">
+            <input type="checkbox" id="match-prasa" checked aria-label="${t('editor_prasa')}">
             <span class="toggle-slider"></span>
             <span class="toggle-label">${t('editor_prasa')}</span>
           </label>

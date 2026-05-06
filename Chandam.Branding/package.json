@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "remotion studio",
     "build": "remotion render",
-    "render": "remotion render"
+    "render": "remotion render",
+    "generate-svg": "tsx src/generate-svg.ts"
   },
   "keywords": [],
   "author": "",
@@ -19,8 +20,10 @@
   },
   "devDependencies": {
     "@remotion/cli": "^4.0.249",
+    "@types/node": "^20.11.0",
     "@types/react": "^18.2.45",
     "@types/react-dom": "^18.2.18",
+    "tsx": "^4.7.0",
     "typescript": "^5.3.3"
   }
 }

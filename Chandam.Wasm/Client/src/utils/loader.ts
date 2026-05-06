@@ -63,15 +63,10 @@ export class LoadingAnimationManager {
   private createLoaderHTML(): string {
     return `
       <div class="loader-container">
-        <picture>
-          <source media="(min-width: 1025px)" srcset="/images/chandam-icon-telugu-148.gif">
-          <source media="(min-width: 769px) and (max-width: 1024px)" srcset="/images/chandam-icon-telugu-130.gif">
-          <source media="(max-width: 768px)" srcset="/images/chandam-icon-telugu-112.gif">
-          <img src="/images/chandam-icon-telugu-148.gif"
-               alt="${this.config.fallbackText}"
+        <object type="image/svg+xml" data="/branding/chandam-circles.svg"
                class="loader-gif"
-               onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
-        </picture>
+               aria-label="${this.config.fallbackText}">
+        </object>
         <p class="loader-fallback" style="display:none;">${this.config.fallbackText}</p>
       </div>
     `;
@@ -91,7 +86,7 @@ export function preloadLoaderImage(gifPath: string): void {
 
 export function createInitialLoader(): LoadingAnimationManager {
   return new LoadingAnimationManager({
-    gifPath: '/images/chandam-icon-telugu.gif',
+    gifPath: '/branding/chandam-circles.svg',
     fallbackText: 'Loading Chandam...',
     containerId: 'initial-loader'
   });
@@ -99,7 +94,7 @@ export function createInitialLoader(): LoadingAnimationManager {
 
 export function createDynamicLoader(): LoadingAnimationManager {
   return new LoadingAnimationManager({
-    gifPath: '/images/chandam-icon-telugu.gif',
+    gifPath: '/branding/chandam-circles.svg',
     fallbackText: 'Loading rule set...',
     containerId: 'dynamic-loader-container'
   });
