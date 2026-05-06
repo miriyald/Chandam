@@ -22,28 +22,28 @@ colors:
   header-text: "#f5f3f0"
 typography:
   logo:
-    fontFamily: "'RamaneeyaWin', 'Noto Sans Telugu', sans-serif"
+    fontFamily: "'Anek Telugu', sans-serif"
     fontSize: "1.5rem"
-    fontWeight: 400
+    fontWeight: 800
     lineHeight: 1.2
   display:
-    fontFamily: "'Timmana', 'Noto Sans Telugu', sans-serif"
+    fontFamily: "'Anek Telugu', sans-serif"
     fontSize: "clamp(1.5rem, 4vw, 2.25rem)"
-    fontWeight: 400
+    fontWeight: 700
     lineHeight: 1.2
   editor:
-    fontFamily: "'Suranna', 'Noto Sans Telugu', serif"
+    fontFamily: "'Tiro Telugu', serif"
     fontSize: "1.1rem"
     fontWeight: 400
     lineHeight: 1.8
     letterSpacing: "0.05em"
   body:
-    fontFamily: "'Noto Sans Telugu', sans-serif"
+    fontFamily: "'Anek Telugu', sans-serif"
     fontSize: "1rem"
     fontWeight: 400
     lineHeight: 1.6
   label:
-    fontFamily: "'Noto Sans Telugu', sans-serif"
+    fontFamily: "'Anek Telugu', sans-serif"
     fontSize: "0.85rem"
     fontWeight: 500
     lineHeight: 1.4
@@ -134,24 +134,22 @@ A restrained palette anchored by warm neutrals and ink tones. Color earns its pl
 
 ## 3. Typography
 
-**Display Font:** Timmana (with Noto Sans Telugu fallback)
-**Body Font:** Noto Sans Telugu (sans-serif)
-**Editor Font:** Suranna (with Noto Sans Telugu fallback, serif)
-**Logo Font:** RamaneeyaWin (legacy Telugu brand font, local only)
+**UI Font:** Anek Telugu (sans-serif, variable: 400–800 weight)
+**Editor Font:** Tiro Telugu (serif, 400 + italic)
 
-**Character:** A four-tier Telugu-first type system. Display (Timmana) commands attention for meter names with its bold Telugu presence. Body (Noto Sans Telugu) provides clean readability for navigation and UI. Editor (Suranna) brings a literary serif quality to poetry text — generous spacing honors the verse. Logo (RamaneeyaWin) is reserved exclusively for the "ఛందం" brand mark.
+**Character:** A two-font Telugu-first type system. Anek Telugu provides modern geometric clarity across all UI roles, from bold 800-weight logo/display to clean 400-weight body text. Tiro Telugu (by Tiro Typeworks, designed by Fiona Ross and John Hudson) brings expert-crafted literary serif quality to poetry text. The sans/serif contrast clearly signals "interface" vs "verse."
 
 ### Hierarchy
-- **Logo** (RamaneeyaWin, 400, 1.5rem, line-height 1.2): Brand mark only. Never used for body content.
-- **Display** (Timmana, 400, clamp(1.5rem, 4vw, 2.25rem), line-height 1.2): Meter names, page titles, hero text. The visual anchor of every page.
-- **Editor** (Suranna, 400, 1.1rem, line-height 1.8, letter-spacing 0.05em): Poetry input and output. Generous metrics honor Telugu verse rhythm.
-- **Body** (Noto Sans Telugu, 400, 1rem, line-height 1.6): Navigation, labels, table content, UI text. Clean and functional.
-- **Label** (Noto Sans Telugu, 500, 0.85rem, line-height 1.4, letter-spacing 0.02em): Metadata, counts, timestamps, control labels.
+- **Logo** (Anek Telugu, 800, 1.5rem, line-height 1.2): Brand mark only. Heavy weight creates distinction.
+- **Display** (Anek Telugu, 700, clamp(1.5rem, 4vw, 2.25rem), line-height 1.2): Meter names, page titles, hero text. The visual anchor of every page.
+- **Editor** (Tiro Telugu, 400, 1.1rem, line-height 1.8, letter-spacing 0.05em): Poetry input and output. Generous metrics honor Telugu verse rhythm.
+- **Body** (Anek Telugu, 400, 1rem, line-height 1.6): Navigation, labels, table content, UI text. Clean and functional.
+- **Label** (Anek Telugu, 500, 0.85rem, line-height 1.4, letter-spacing 0.02em): Metadata, counts, timestamps, control labels.
 
 ### Named Rules
 **The Telugu-First Rule.** Every font decision is validated against Telugu script rendering before Latin. If a size, weight, or spacing looks right in English but wrong in Telugu, the Telugu rendering wins.
 
-**The Poetry Breathing Room Rule.** Poetry text (Suranna, editor tier) always has line-height ≥ 1.8 and letter-spacing ≥ 0.05em. Telugu verse needs air to be read as rhythm, not as a wall of glyphs.
+**The Poetry Breathing Room Rule.** Poetry text (Tiro Telugu, editor tier) always has line-height ≥ 1.8 and letter-spacing ≥ 0.05em. Telugu verse needs air to be read as rhythm, not as a wall of glyphs.
 
 ## 4. Elevation
 
@@ -188,7 +186,7 @@ This system is flat by default. Depth is conveyed through surface color (Paper W
 - **Placeholder:** Muted text color, normal weight.
 
 ### Navigation
-- **Header:** Deep Charcoal background, warm white text. Logo in RamaneeyaWin with embossed text-shadow.
+- **Header:** Deep Charcoal background, warm white text. Logo in Anek Telugu 800 with embossed text-shadow.
 - **Nav links:** Warm white, no underline. Hover: Temple Gold color transition. Active: gold underline.
 - **Mobile:** Hamburger toggle at 768px. Full-width dropdown nav panel.
 
@@ -217,8 +215,8 @@ The payoff screen. Two variants:
 
 ### Do:
 - **Do** use Paper Warm (#faf8f5) as the page background — never pure white (#ffffff) except inside cards/inputs.
-- **Do** render all meter names in Timmana (display tier) at 1.25rem+ to establish clear hierarchy.
-- **Do** give poetry text (Suranna) at least 1.8 line-height and 0.05em letter-spacing, always.
+- **Do** render all meter names in Anek Telugu 700 (display tier) at 1.25rem+ to establish clear hierarchy.
+- **Do** give poetry text (Tiro Telugu, editor tier) at least 1.8 line-height and 0.05em letter-spacing, always.
 - **Do** use Temple Gold sparingly — favorites, selected states, cultural emphasis. Its rarity is the point.
 - **Do** test every typography change against actual Telugu text before committing.
 - **Do** keep component corners sharp (3-6px radius). This is an architectural system, not a friendly one.
