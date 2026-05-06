@@ -7,10 +7,12 @@
     <base href="/" />
     <link rel="icon" type="image/svg+xml" href="/images/favicon.svg" />
     <link rel="apple-touch-icon" href="/images/favicon.svg" />
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Telugu:wght@400;700&family=Timmana&family=Suranna&display=swap" rel="stylesheet" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Anek+Telugu:wght@400;500;600;700;800&family=Tiro+Telugu:ital@0;1&display=swap" rel="stylesheet" />
     <link href="css/chandam.css" rel="stylesheet" />
-    <!-- Preload loader GIF to browser cache for instant display -->
-    <link rel="preload" href="/images/chandam-icon-telugu.gif" as="image" type="image/gif" />
+    <!-- Preload loader SVG to browser cache for instant display -->
+    <link rel="preload" href="/branding/chandam-circles.svg" as="image" type="image/svg+xml" />
 
     <!-- Google Analytics 4 -->
     <!-- SINGLE SOURCE OF TRUTH: GA4_MEASUREMENT_ID is defined once and reused -->
@@ -38,6 +40,7 @@
     </script>
 </head>
 <body>
+    <a href="#content" class="skip-link">Skip to content</a>
     <header>
         <div class="container">
             <h1>ఛందం</h1>
@@ -59,18 +62,29 @@
         <div id="initial-loader">
             <!-- Loader will be injected here, but show static version initially -->
             <div class="loader-container">
-                <img src="/images/chandam-icon-telugu.gif"
-                     alt="Loading Chandam..."
+                <object type="image/svg+xml" data="/branding/chandam-circles.svg"
                      class="loader-gif"
-                     onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                     aria-label="Loading Chandam...">
+                </object>
                 <p class="loader-fallback" style="display:none;" data-i18n="loading">Loading...</p>
             </div>
         </div>
     </main>
 
     <footer>
-        <div class="container">
-            <p>© 2026 ఛందం | <a href="https://github.com/chandamu/chandam" target="_blank">GitHub</a> | <span id="version-info">v0.0.0 (dev)</span> | <span id="build-date-info"></span></p>
+        <div class="container footer-content">
+            <div class="footer-brand">
+                <span class="footer-logo">ఛందం</span>
+                <span class="footer-tagline">Telugu Poetry Meter Analysis</span>
+            </div>
+            <div class="footer-meta">
+                <a href="https://github.com/chandamu/chandam" target="_blank" rel="noopener">GitHub</a>
+                <span class="footer-dot" aria-hidden="true">&middot;</span>
+                <span id="version-info">v0.0.0 (dev)</span>
+                <span class="footer-dot" aria-hidden="true">&middot;</span>
+                <span id="build-date-info"></span>
+            </div>
+            <div class="footer-copyright">&copy; 2026 ఛందం</div>
         </div>
     </footer>
 

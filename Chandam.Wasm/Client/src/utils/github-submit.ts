@@ -27,7 +27,7 @@ export interface ExamplePayload {
 
 export type SubmissionPayload = CustomRulePayload | ExamplePayload;
 
-export function submitToGitHub(payload: SubmissionPayload, source: 'results' | 'learn_page'): void {
+export function submitToGitHub(payload: SubmissionPayload, source: 'results' | 'learn_page' | 'rule_actions'): void {
   downloadSubmissionFile(payload);
   analyticsService.trackEvent('submit_github_download', {
     ruleId: payload.ruleIdentifier,

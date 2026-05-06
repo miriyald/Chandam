@@ -85,9 +85,9 @@ async function fetchAllRuleDetails(
 function generateInlineCSS(): string {
   return `
     :root {
-      --font-display: 'Timmana', 'Noto Sans Telugu', sans-serif;
-      --font-editor: 'Suranna', 'Noto Sans Telugu', serif;
-      --font-main: 'Noto Sans Telugu', sans-serif;
+      --font-display: 'Anek Telugu', sans-serif;
+      --font-editor: 'Tiro Telugu', serif;
+      --font-main: 'Anek Telugu', sans-serif;
       --color-text: #1a1a1a;
       --color-poem: darkblue;
     }
@@ -391,7 +391,7 @@ function generateBookHtml(
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>${escapeHtml(title)}</title>
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Telugu:wght@400;700&family=Timmana&family=Suranna&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Anek+Telugu:wght@400;500;600;700;800&family=Tiro+Telugu:ital@0;1&display=swap" rel="stylesheet">
   <style>${generateInlineCSS()}</style>
 </head>
 <body>

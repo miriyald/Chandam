@@ -31,8 +31,8 @@ export default defineConfig({
   // Fail fast in CI if tests are accidentally left in `.only` mode
   forbidOnly: !!process.env.CI,
 
-  // Retry once in CI to reduce flakiness from slow WASM init
-  retries: process.env.CI ? 1 : 0,
+  // Retry once to handle transient server unavailability (local and CI)
+  retries: 1,
 
   reporter: process.env.CI
     ? [
@@ -102,7 +102,7 @@ export default defineConfig({
         // Reuse an existing server when running locally; require a fresh one in CI
         reuseExistingServer: !process.env.CI,
         timeout: 30_000,
-        stdout: 'pipe',
-        stderr: 'pipe',
+        stdout: 'ignore',
+        stderr: 'ignore',
       },
 });

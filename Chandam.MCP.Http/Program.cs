@@ -11,7 +11,8 @@ builder.Services.AddChandamServices(rulesDir);
 builder.Services
     .AddMcpServer()
     .WithHttpTransport()
-    .WithTools<ChandamTools>();
+    .WithTools<ChandamTools>()
+    .WithTools<AvadhaanamTools>();
 
 var app = builder.Build();
 app.MapMcp();

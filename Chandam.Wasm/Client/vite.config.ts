@@ -1,6 +1,11 @@
 import { defineConfig } from 'vite';
 
 export default defineConfig({
+  server: {
+    host: 'localhost',
+    port: 5050,
+    strictPort: true
+  },
   build: {
     outDir: '../wwwroot/js',
     emptyOutDir: true,

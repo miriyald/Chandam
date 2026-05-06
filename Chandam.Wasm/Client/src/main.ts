@@ -7,6 +7,7 @@ import { renderRulePage } from './ui/rule-page';
 import { renderLearnIndexPage } from './ui/learn-index-page';
 import { renderLearnDetailPage } from './ui/learn-detail-page';
 import { renderRuleCreatorPage } from './ui/rule-creator-page';
+import { renderExplorePage } from './ui/explore-page';
 import { validateRuleSet, validateRuleSetAsync, validateRule, handleInvalidRuleSet, handleInvalidRule } from './utils/error-handlers';
 import { createInitialLoader, preloadLoaderImage } from './utils/loader';
 import { LoadingEvents, LoadingEventType } from './utils/loading-events';
@@ -20,8 +21,8 @@ import { WasmBridge } from './wasm-bridge';
 
 const router = new Router();
 
-// Pre-load loader GIF to browser cache
-preloadLoaderImage('/images/chandam-icon-telugu.gif');
+// Pre-load loader SVG to browser cache
+preloadLoaderImage('/branding/chandam-circles.svg');
 
 // Initialize loader system (sets up event listeners)
 const initialLoader = createInitialLoader();
@@ -31,7 +32,8 @@ const initialLoader = createInitialLoader();
 
 // Home route - landing page
 router.register('/', () => {
-  renderHomePage();
+  setPageTitle(t('nav_home'));
+  loadStaticPage(`pages/${getLanguage()}/home.html`);
 });
 
 // Rule sets route - browse rule sets
@@ -72,6 +74,16 @@ router.register('/compute/:ruleSet/:ruleId', async (params) => {
   await renderRulePage(params);
 });
 
+// Explore routes (graph visualization)
+router.register('/explore/:ruleSet/', async (params) => {
+  const isValid = await validateRuleSetAsync(params.ruleSet);
+  if (!isValid) {
+    handleInvalidRuleSet(params.ruleSet);
+    return;
+  }
+  await renderExplorePage(params.ruleSet);
+});
+
 // Learn routes
 router.register('/learn/:ruleSet/', async (params) => {
   // Use async validation to support custom rulesets
@@ -101,9 +113,9 @@ router.register('/learn/:ruleSet/:ruleId', async (params) => {
 });
 
 // Static pages
-router.register('/about', () => { setPageTitle('About'); loadStaticPage('pages/about.html'); });
-router.register('/credits', () => { setPageTitle('Credits'); loadStaticPage('pages/credits.html'); });
-router.register('/contact', () => { setPageTitle('Contact'); loadStaticPage('pages/contact.html'); });
+router.register('/about', () => { setPageTitle(t('nav_about')); loadStaticPage(`pages/${getLanguage()}/about.html`); });
+router.register('/credits', () => { setPageTitle(t('nav_credits')); loadStaticPage(`pages/${getLanguage()}/credits.html`); });
+router.register('/contact', () => { setPageTitle(t('nav_contact')); loadStaticPage(`pages/${getLanguage()}/contact.html`); });
 
 // Apply current language to static nav elements and lang toggle button
 function applyLanguageToPage(): void {

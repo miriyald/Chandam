@@ -555,6 +555,50 @@ public class RuleLoaderService
     }
 
     /// <summary>
+    /// Get all rules for a specific rule set without changing global state.
+    /// Thread-safe: does not mutate Manager or _currentRuleSetId.
+    /// GenricVruttam is always last (guaranteed by EnsureGenricVruttam at load time).
+    /// </summary>
+    public List<Rule> GetRulesForRuleSet(string? ruleSetId, RuleLanguage? language = null)
+    {
+        var id = ruleSetId ?? _currentRuleSetId;
+
+        Rule[]? rules = null;
+        if (_loadedRuleSets.ContainsKey(id))
+            rules = _loadedRuleSets[id];
+        else if (_loadedRuleSets.ContainsKey($"{id}.min"))
+            rules = _loadedRuleSets[$"{id}.min"];
+
+        if (rules == null)
+            rules = GetCurrentRuleSet();
+
+        if (language.HasValue)
+            return rules.Where(r => r.Language == language.Value).ToList();
+
+        return rules.ToList();
+    }
+
+    /// <summary>
+    /// Fetch a single rule by identifier from a specific rule set without changing global state.
+    /// Thread-safe: does not mutate Manager or _currentRuleSetId.
+    /// </summary>
+    public Rule? FetchRuleFromRuleSet(string identifier, string? ruleSetId = null)
+    {
+        var id = ruleSetId ?? _currentRuleSetId;
+
+        Rule[]? rules = null;
+        if (_loadedRuleSets.ContainsKey(id))
+            rules = _loadedRuleSets[id];
+        else if (_loadedRuleSets.ContainsKey($"{id}.min"))
+            rules = _loadedRuleSets[$"{id}.min"];
+
+        if (rules == null)
+            return Manager.FetchRule(identifier);
+
+        return rules.FirstOrDefault(r => r.Identifier == identifier);
+    }
+
+    /// <summary>
     /// Get all rules matching exact Telugu name using index - O(1) lookup
     /// </summary>
     public List<Rule> GetRulesByName(string name, string? ruleSetId = null)

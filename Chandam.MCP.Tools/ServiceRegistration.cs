@@ -16,6 +16,7 @@ public static class ServiceRegistration
         services.AddSingleton(ruleLoader);
         services.AddSingleton<ChandamService>();
         services.AddSingleton<SearchService>();
+        services.AddSingleton<AvadhaanamService>();
 
         // Dictionary services
         services.AddSingleton(new DiskCache("cache"));

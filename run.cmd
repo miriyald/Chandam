@@ -119,7 +119,7 @@
 :: Run Vite dev server (hot reload)
 :: cd Chandam.Wasm/Client
 :: npm run dev
-:: Access at: http://localhost:5173
+:: Access at: http://localhost:5050
 
 :: Build frontend assets
 :: cd Chandam.Wasm/Client

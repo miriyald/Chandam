@@ -49,3 +49,8 @@ Chandam.Wasm/wwwroot/data/*.min.json.gz
 .claude
 .cursor
 .vs
+
+
+# Publish
+.publish/
+.agents/

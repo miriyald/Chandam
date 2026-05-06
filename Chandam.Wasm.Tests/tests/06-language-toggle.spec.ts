@@ -64,9 +64,8 @@ test.describe('Language toggle', () => {
 
     const langAfterToggle = await page.getAttribute('html', 'lang');
 
-    // Navigate to rule-sets via the SPA router
-    await page.locator('a[href="/rule-sets"]').click();
-    await page.waitForURL('**/rule-sets**');
+    // Navigate to rule-sets via SPA (use direct navigation to work on both desktop and mobile)
+    await gotoAndWait(page, '/rule-sets');
     await page.waitForTimeout(300);
 
     // Language should persist

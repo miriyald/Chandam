@@ -1,0 +1,44 @@
+name: Code Metrics
+
+on:
+  push:
+    branches: [ beta ]
+    paths-ignore:
+      - "Docs/metrics/**"
+      - "Docs/Scripts/output/metrics/**"
+  schedule:
+    - cron: "0 5 * * 1" # Weekly on Monday 05:00 UTC
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  metrics:
+    name: Generate Metrics Snapshot
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Run metrics script
+        shell: powershell
+        run: >
+          powershell -ExecutionPolicy Bypass -File .github/scripts/generate-metrics.ps1
+          -EventName "${{ github.event_name }}"
+          -Sha "${{ github.sha }}"
+          -RefName "${{ github.ref_name }}"
+
+      - name: Upload metrics artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: metrics-report
+          path: Docs/metrics/
+          retention-days: 30
+
+      - name: Commit metrics to git
+        shell: powershell
+        run: powershell -ExecutionPolicy Bypass -File .github/scripts/commit-metrics.ps1

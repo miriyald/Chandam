@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
+using System.Text.Json.Nodes;
 using System.Threading.Tasks;
 using Microsoft.JSInterop;
 using Microsoft.Extensions.DependencyInjection;
@@ -20,21 +21,33 @@ public static class JsBridge
         PropertyNamingPolicy = JsonNamingPolicy.CamelCase
     };
 
+    // Use JsonObject instead of anonymous types to avoid NullabilityInfoContext_NotSupported in WASM
+    private static string OkJson(string message) =>
+        new JsonObject { ["success"] = true, ["message"] = message }.ToJsonString();
+
+    private static string ErrorJson(string errorMessage) =>
+        new JsonObject { ["success"] = false, ["errorMessage"] = errorMessage }.ToJsonString();
+
     [JSInvokable]
     public static string GetAllRules(string language = "te")
     {
         var ruleLoader = ServiceAccessor.Services!.GetRequiredService<RuleLoaderService>();
         var langEnum = LanguageCodeMapper.ParseLanguage(language) ?? RuleLanguage.Telugu;
         var rules = ruleLoader.GetAllRules(langEnum);
-        var summary = rules.Select(r => new {
-            r.Identifier,
-            r.Name,
-            PadyamType = r.PadyamType.ToString(),
-            PadyamSubType = r.PadyamSubType.ToString(),
-            Frequency = r.Frequency.ToString(),
-            r.Lines
-        });
-        return JsonSerializer.Serialize(summary, JsonOptions);
+        var array = new JsonArray();
+        foreach (var r in rules)
+        {
+            array.Add(new JsonObject
+            {
+                ["identifier"] = r.Identifier,
+                ["name"] = r.Name,
+                ["padyamType"] = r.PadyamType.ToString(),
+                ["padyamSubType"] = r.PadyamSubType.ToString(),
+                ["frequency"] = r.Frequency.ToString(),
+                ["lines"] = r.Lines
+            });
+        }
+        return array.ToJsonString();
     }
 
     [JSInvokable]
@@ -44,30 +57,30 @@ public static class JsBridge
         var allRules = Manager.Rules();
         var rules = allRules.Where(r => r.Language == langEnum).ToList();
 
-        var resultList = new List<object>();
+        var resultArray = new JsonArray();
         int skippedCount = 0;
 
         foreach (var r in rules)
         {
             try
             {
-                var detail = new {
-                    r.Identifier,
-                    r.Name,
-                    PadyamType = r.PadyamType.ToString(),
-                    PadyamSubType = r.PadyamSubType.ToString(),
-                    Frequency = r.Frequency.ToString(),
-                    r.Lines,
-                    r.ChandamName,
-                    r.CharLength,
-                    r.MatraLength,
-                    Min = r.Min,  // This line might throw
-                    Max = r.Max,  // This line might throw
-                    r.Sequence,
-                    r.ShortName,
-                    r.Alias
-                };
-                resultList.Add(detail);
+                resultArray.Add(new JsonObject
+                {
+                    ["identifier"] = r.Identifier,
+                    ["name"] = r.Name,
+                    ["padyamType"] = r.PadyamType.ToString(),
+                    ["padyamSubType"] = r.PadyamSubType.ToString(),
+                    ["frequency"] = r.Frequency.ToString(),
+                    ["lines"] = r.Lines,
+                    ["chandamName"] = r.ChandamName,
+                    ["charLength"] = r.CharLength,
+                    ["matraLength"] = r.MatraLength,
+                    ["min"] = r.Min,
+                    ["max"] = r.Max,
+                    ["sequence"] = r.Sequence,
+                    ["shortName"] = r.ShortName,
+                    ["alias"] = r.Alias
+                });
             }
             catch (InvalidCastException ex)
             {
@@ -79,22 +92,20 @@ public static class JsBridge
                     Console.WriteLine($"  First element value: {firstElem}");
                 }
                 skippedCount++;
-                // Don't re-throw - skip this rule and continue
             }
             catch (Exception ex)
             {
                 Console.WriteLine($"WASM: SKIPPING rule '{r.Identifier}' ({r.Name}) - {ex.GetType().Name}: {ex.Message}");
                 skippedCount++;
-                // Don't re-throw - skip this rule and continue
             }
         }
 
         if (skippedCount > 0)
         {
-            Console.WriteLine($"WASM: Skipped {skippedCount} problematic rules, loaded {resultList.Count} successfully");
+            Console.WriteLine($"WASM: Skipped {skippedCount} problematic rules, loaded {resultArray.Count} successfully");
         }
 
-        return JsonSerializer.Serialize(resultList, JsonOptions);
+        return resultArray.ToJsonString();
     }
 
     [JSInvokable]
@@ -110,7 +121,7 @@ public static class JsBridge
             RenderFormat = RenderFormat.Html
         };
         var response = service.DetermineWithBeautified(request);
-        return JsonSerializer.Serialize(response, JsonOptions);
+        return JsonSerializer.Serialize(response, WasmJsonContext.Default.DetermineResponse);
     }
 
     [JSInvokable]
@@ -125,7 +136,7 @@ public static class JsBridge
             RenderFormat = RenderFormat.Html
         };
         var response = service.TryMatchWithBeautified(request);
-        return JsonSerializer.Serialize(response, JsonOptions);
+        return JsonSerializer.Serialize(response, WasmJsonContext.Default.TryMatchResponse);
     }
 
     [JSInvokable]
@@ -139,7 +150,7 @@ public static class JsBridge
             MinimumMatchPercentage = minPercentage
         };
         var response = service.Scores(request);
-        return JsonSerializer.Serialize(response, JsonOptions);
+        return JsonSerializer.Serialize(response, WasmJsonContext.Default.ScoresResponse);
     }
 
     [JSInvokable]
@@ -152,7 +163,7 @@ public static class JsBridge
             DescriptionFormat = RenderFormat.Html  // WASM needs HTML for browser rendering
         };
         var response = service.GetRuleInfo(request);
-        return JsonSerializer.Serialize(response, JsonOptions);
+        return JsonSerializer.Serialize(response, WasmJsonContext.Default.GetRuleInfoResponse);
     }
 
     [JSInvokable]
@@ -207,11 +218,11 @@ public static class JsBridge
 
             // Indexes will be rebuilt automatically on next access
 
-            return JsonSerializer.Serialize(new { success = true, message = "Rules reloaded successfully" }, JsonOptions);
+            return OkJson("Rules reloaded successfully");
         }
         catch (Exception ex)
         {
-            return JsonSerializer.Serialize(new { success = false, errorMessage = ex.Message }, JsonOptions);
+            return ErrorJson(ex.Message);
         }
     }
 
@@ -265,11 +276,11 @@ public static class JsBridge
                 Console.WriteLine($"WASM: Loaded {rules.Length} rules from JSON strings");
             }
 
-            return JsonSerializer.Serialize(new { success = true, message = $"Loaded {rules?.Length ?? 0} rules"}, JsonOptions);
+            return OkJson($"Loaded {rules?.Length ?? 0} rules");
         }
         catch (Exception ex)
         {
-            return JsonSerializer.Serialize(new { success = false, errorMessage = ex.Message }, JsonOptions);
+            return ErrorJson(ex.Message);
         }
     }
 
@@ -283,20 +294,14 @@ public static class JsBridge
 
             if (rules == null || rules.Length == 0)
             {
-                return JsonSerializer.Serialize(new {
-                    success = false,
-                    errorMessage = "Invalid custom ruleset: no rules found"
-                }, JsonOptions);
+                return ErrorJson("Invalid custom ruleset: no rules found");
             }
 
             // Enforce max 20 rules limit for custom rulesets (favorites can exceed this)
             // Note: favorites collection is validated client-side at max 50
             if (rules.Length > 50)
             {
-                return JsonSerializer.Serialize(new {
-                    success = false,
-                    errorMessage = $"Custom ruleset cannot exceed 50 rules (got {rules.Length})"
-                }, JsonOptions);
+                return ErrorJson($"Custom ruleset cannot exceed 50 rules (got {rules.Length})");
             }
 
             // Clear existing rules and register custom rules
@@ -309,19 +314,17 @@ public static class JsBridge
 
             Console.WriteLine($"WASM: Loaded {rules.Length} custom rules");
 
-            return JsonSerializer.Serialize(new {
-                success = true,
-                message = $"Loaded {rules.Length} custom rules",
-                ruleCount = rules.Length
-            }, JsonOptions);
+            return new JsonObject
+            {
+                ["success"] = true,
+                ["message"] = $"Loaded {rules.Length} custom rules",
+                ["ruleCount"] = rules.Length
+            }.ToJsonString();
         }
         catch (Exception ex)
         {
             Console.WriteLine($"WASM: Failed to load custom rules: {ex.Message}");
-            return JsonSerializer.Serialize(new {
-                success = false,
-                errorMessage = ex.Message
-            }, JsonOptions);
+            return ErrorJson(ex.Message);
         }
     }
 
@@ -356,12 +359,12 @@ public static class JsBridge
             var searchService = ServiceAccessor.Services!.GetRequiredService<SearchService>();
             var results = searchService.SearchRules(filters, ruleSetId: null, lang);
 
-            return JsonSerializer.Serialize(results, JsonOptions);
+            return JsonSerializer.Serialize(results, WasmJsonContext.Default.ListRuleSummaryDetailed);
         }
         catch (Exception ex)
         {
             Console.Error.WriteLine($"SearchRules error: {ex.Message}");
-            return JsonSerializer.Serialize(new List<object>(), JsonOptions);
+            return "[]";
         }
     }
 
@@ -380,7 +383,7 @@ public static class JsBridge
             var searchService = ServiceAccessor.Services!.GetRequiredService<SearchService>();
             var filters = searchService.GetAvailableFilters(ruleSetId: null, lang);
 
-            return JsonSerializer.Serialize(filters, JsonOptions);
+            return JsonSerializer.Serialize(filters, WasmJsonContext.Default.AvailableFilters);
         }
         catch (Exception ex)
         {

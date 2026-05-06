@@ -21,14 +21,17 @@ export async function waitForWasmReady(
   timeout = 45_000,
 ): Promise<void> {
   const loaderGone = page.waitForSelector('#initial-loader', {
-    state: 'detached',
+    // On some routes the loader remains in DOM but is hidden after app init.
+    state: 'hidden',
     timeout,
   });
   const contentReady = page.waitForFunction(
     () => {
       const content = document.getElementById('content');
       if (!content) return false;
-      return !content.querySelector('#initial-loader') && content.children.length > 0;
+      const loader = content.querySelector('#initial-loader') as HTMLElement | null;
+      const loaderIsReady = !loader || loader.offsetParent === null;
+      return loaderIsReady && content.children.length > 0;
     },
     undefined,
     { timeout },
@@ -39,14 +42,27 @@ export async function waitForWasmReady(
 /**
  * Navigates to `path` (relative to baseURL) then waits for the WASM runtime
  * to finish initialising.
+ *
+ * Retries up to 3 times with a 2-second delay to handle transient server
+ * unavailability (e.g. static server briefly unresponsive between test projects).
  */
 export async function gotoAndWait(
   page: Page,
   path: string,
   timeout = 45_000,
 ): Promise<void> {
-  await page.goto(path);
-  await waitForWasmReady(page, timeout);
+  let lastErr: unknown;
+  for (let attempt = 1; attempt <= 3; attempt++) {
+    try {
+      await page.goto(path);
+      await waitForWasmReady(page, timeout);
+      return;
+    } catch (err) {
+      lastErr = err;
+      if (attempt < 3) await page.waitForTimeout(2_000);
+    }
+  }
+  throw lastErr;
 }
 
 // ---------------------------------------------------------------------------

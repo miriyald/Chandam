@@ -53,9 +53,9 @@ export async function renderRuleSetsPage() {
       </div>
 
       <div style="text-align: center; margin-top: 2rem;">
-        <button class="btn-primary" onclick="window.location.href='${makeUrl('/create-rule')}'">
+        <a href="${makeUrl('/create-rule')}" class="btn-primary" style="display: inline-block; text-decoration: none;">
           ${t('custom_rules_btn_create')}
-        </button>
+        </a>
       </div>
     </div>
   `;

@@ -45,10 +45,11 @@ namespace Chandam.Rules
 		Ragada2 = 8,//Derivative of Ragada but not acutal Ragada...
 		Shatpada = 9,
 
-		GenricVruttam = 10,
-		VishamaVruttam = 11,
-		ArdhaVruttam = 12,
-		DaMDakamu = 13
+		VishamaVruttam = 10,
+		ArdhaVruttam = 11,
+		DaMDakamu = 12,
+
+		GenricVruttam = 99
 	}
 
 	public enum PadyamType

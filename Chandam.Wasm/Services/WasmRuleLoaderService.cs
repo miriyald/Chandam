@@ -35,7 +35,7 @@ public class WasmRuleLoaderService
         {
             // Load rules (with .br compression support)
             var rulesJson = await LoadFileWithBrotliSupportAsync(rulesFile);
-            var rules = _ruleLoader.LoadFromJsonString(rulesJson);
+            var rules = LoadRulesFromJson(rulesJson);
 
             if (rules != null && rules.Length > 0)
             {
@@ -120,23 +120,36 @@ public class WasmRuleLoaderService
         }
     }
 
-    private ExampleSetDto? LoadExampleSetFromJson(string json)
+    private static Rule[]? LoadRulesFromJson(string json)
     {
         if (string.IsNullOrWhiteSpace(json))
             return null;
 
         try
         {
-            var options = new JsonSerializerOptions
-            {
-                PropertyNameCaseInsensitive = true,
-                AllowTrailingCommas = true,
-                ReadCommentHandling = JsonCommentHandling.Skip
-            };
+            var ruleSetDto = JsonSerializer.Deserialize(json, WasmJsonContext.Default.RuleSetDto);
+            if (ruleSetDto?.Rules == null || ruleSetDto.Rules.Count == 0)
+                return null;
 
-            return JsonSerializer.Deserialize<ExampleSetDto>(json, options);
+            return RuleDtoConverter.ConvertToRules(ruleSetDto.Rules);
         }
-        catch (JsonException ex)
+        catch (Exception ex)
+        {
+            Console.WriteLine($"WASM: JSON deserialization error for rules: {ex.Message}");
+            return null;
+        }
+    }
+
+    private static ExampleSetDto? LoadExampleSetFromJson(string json)
+    {
+        if (string.IsNullOrWhiteSpace(json))
+            return null;
+
+        try
+        {
+            return JsonSerializer.Deserialize(json, WasmJsonContext.Default.ExampleSetDto);
+        }
+        catch (Exception ex)
         {
             Console.WriteLine($"WASM: JSON deserialization error for examples: {ex.Message}");
             return null;

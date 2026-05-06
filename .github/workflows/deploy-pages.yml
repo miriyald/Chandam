@@ -56,6 +56,12 @@ jobs:
             -p:ExcludeYaml=true \
             -o publish
 
+      - name: Make page scripts executable
+        run: chmod +x .github/scripts/prepare-github-pages.sh .github/scripts/publish-metrics-to-pages.sh
+
+      - name: Publish metrics into site output
+        run: bash .github/scripts/publish-metrics-to-pages.sh
+
       - name: Prepare for GitHub Pages
         run: bash .github/scripts/prepare-github-pages.sh publish/wwwroot
 

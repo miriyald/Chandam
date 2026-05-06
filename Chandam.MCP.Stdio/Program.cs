@@ -28,7 +28,8 @@ Console.SetOut(originalOut);
 builder.Services
     .AddMcpServer()
     .WithStdioServerTransport()
-    .WithTools<ChandamTools>();
+    .WithTools<ChandamTools>()
+    .WithTools<AvadhaanamTools>();
 
 var app = builder.Build();
 await app.RunAsync();

@@ -26,8 +26,8 @@ export function renderBreadcrumbs(items: BreadcrumbItem[]): string {
   return `<nav class="breadcrumbs" aria-label="Breadcrumb">${breadcrumbHtml}</nav>`;
 }
 
-// Build breadcrumbs for rule set pages (Learn/Compute index)
-export function buildRuleSetBreadcrumbs(ruleSetId: string, mode: 'compute' | 'learn'): BreadcrumbItem[] {
+// Build breadcrumbs for rule set pages (Learn/Compute/Explore index)
+export function buildRuleSetBreadcrumbs(ruleSetId: string, mode: 'compute' | 'learn' | 'explore'): BreadcrumbItem[] {
   const ruleSet = getRuleSet(ruleSetId);
   const ruleSetName = ruleSet ? ruleSet.name : ruleSetId;
 
@@ -57,7 +57,8 @@ export function buildRuleBreadcrumbs(
 // Build breadcrumbs for static pages (About, Contact, Credits)
 export function buildStaticPageBreadcrumbs(pageName: string): BreadcrumbItem[] {
   return [
-    { label: pageName } // Current page
+    { label: 'Home', url: '/' },
+    { label: pageName }
   ];
 }
 
