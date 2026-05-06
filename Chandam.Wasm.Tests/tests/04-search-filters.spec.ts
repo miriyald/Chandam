@@ -22,8 +22,8 @@ import { test, expect, gotoAndWait } from '../fixtures/wasm-ready';
 
 /** Reads the numeric rule count from the results header label. */
 async function readRuleCount(page: import('@playwright/test').Page): Promise<number> {
-  // The results header renders text like "Showing 14 of 14 Rules"
-  const header = page.locator('.results-header .rule-count');
+  // The filter bar renders text like "14 of 14"
+  const header = page.locator('.filter-actions .rule-count');
   await expect(header).toBeVisible({ timeout: 10_000 });
   const text = await header.textContent();
   const match = text?.match(/\d+/);
@@ -39,7 +39,7 @@ async function waitForFilterUpdate(page: import('@playwright/test').Page): Promi
 
 test.describe('Learn page – filter sidebar', () => {
   test.beforeEach(async ({ page }) => {
-    await gotoAndWait(page, '/learn/popular/');
+    await gotoAndWait(page, '/learn/chandam/');
   });
 
   test('filter sidebar and rule list render on load', async ({ page }) => {

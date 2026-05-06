@@ -57,7 +57,8 @@ export function buildRuleBreadcrumbs(
 // Build breadcrumbs for static pages (About, Contact, Credits)
 export function buildStaticPageBreadcrumbs(pageName: string): BreadcrumbItem[] {
   return [
-    { label: pageName } // Current page
+    { label: 'Home', url: '/' },
+    { label: pageName }
   ];
 }
 

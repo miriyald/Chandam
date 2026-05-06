@@ -20,8 +20,11 @@ import { gotoAndWait } from '../fixtures/wasm-ready';
 const ROUTES: Array<{ path: string; name: string; expectedContent: string }> = [
   { path: '/',               name: 'home',            expectedContent: 'ఛందం' },
   { path: '/rule-sets',      name: 'rule-sets',       expectedContent: 'Rule Sets' },
-  { path: '/compute/popular/', name: 'compute-popular', expectedContent: 'Rule Set' },
-  { path: '/learn/popular/', name: 'learn-popular',   expectedContent: 'Rule Sets' },
+  { path: '/compute/chandam/', name: 'compute-chandam', expectedContent: 'Rule Set' },
+  { path: '/compute/topella/', name: 'compute-topella', expectedContent: 'Rule Set' },
+  { path: '/learn/chandam/',   name: 'learn-chandam',   expectedContent: 'Rule Set' },
+  { path: '/learn/topella/',   name: 'learn-topella',   expectedContent: 'Rule Set' },
+  { path: '/create-rule',    name: 'create-rule',     expectedContent: 'Create Rule' },
   { path: '/about',          name: 'about',           expectedContent: 'About' },
   { path: '/credits',        name: 'credits',         expectedContent: 'Credits' },
   { path: '/contact',        name: 'contact',         expectedContent: 'Contact' },

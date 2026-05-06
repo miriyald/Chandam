@@ -21,14 +21,17 @@ export async function waitForWasmReady(
   timeout = 45_000,
 ): Promise<void> {
   const loaderGone = page.waitForSelector('#initial-loader', {
-    state: 'detached',
+    // On some routes the loader remains in DOM but is hidden after app init.
+    state: 'hidden',
     timeout,
   });
   const contentReady = page.waitForFunction(
     () => {
       const content = document.getElementById('content');
       if (!content) return false;
-      return !content.querySelector('#initial-loader') && content.children.length > 0;
+      const loader = content.querySelector('#initial-loader') as HTMLElement | null;
+      const loaderIsReady = !loader || loader.offsetParent === null;
+      return loaderIsReady && content.children.length > 0;
     },
     undefined,
     { timeout },

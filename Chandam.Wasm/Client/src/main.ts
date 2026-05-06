@@ -32,7 +32,8 @@ const initialLoader = createInitialLoader();
 
 // Home route - landing page
 router.register('/', () => {
-  renderHomePage();
+  setPageTitle('Home');
+  loadStaticPage('pages/home.html');
 });
 
 // Rule sets route - browse rule sets

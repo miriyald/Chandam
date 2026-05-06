@@ -111,6 +111,7 @@ export class Router {
         const allParams = { ...pathParams, ...queryParams };
         await route.handler(allParams);
         analyticsService.trackPageView(path);
+        this.updateActiveNav(path);
         return;
       }
     }
@@ -119,7 +120,28 @@ export class Router {
     const homeRoute = this.routes.find(r => r.pattern === '/');
     if (homeRoute) {
       await homeRoute.handler({});
+      this.updateActiveNav('/');
     }
+  }
+
+  private updateActiveNav(currentPath: string) {
+    const nav = document.getElementById('main-nav');
+    if (!nav) return;
+
+    const links = nav.querySelectorAll('a');
+    links.forEach(link => {
+      const linkPath = this.stripBasePath(new URL(link.href).pathname);
+      const isActive = currentPath === '/'
+        ? linkPath === '/'
+        : linkPath !== '/' && currentPath.startsWith(linkPath);
+
+      link.classList.toggle('active', isActive);
+      if (isActive) {
+        link.setAttribute('aria-current', 'page');
+      } else {
+        link.removeAttribute('aria-current');
+      }
+    });
   }
 
   init() {
