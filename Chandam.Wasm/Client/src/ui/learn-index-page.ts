@@ -171,43 +171,63 @@ function renderChandamGroups(
 
 // Helper: Render a single rule list item
 function renderRuleListItem(rule: RuleSummaryDetailed, ruleSetId: string, favoriteIds: Set<string>): string {
-  const metadata = [];
+  const displayName = rule.shortName && rule.shortName !== rule.name ? rule.shortName : rule.name;
+  const aliasHtml = rule.alias ? `<div class="rule-alias">${rule.alias}</div>` : '';
 
-  // Show char length range (if available and not -1)
+  const subTypeBadge = rule.padyamSubType
+    ? `<span class="badge badge-type badge-sm">${getTeluguCategoryName(rule.padyamSubType)}</span>`
+    : '';
+
+  const badges: string[] = [];
+
   if (rule.min && rule.max && rule.min !== -1 && rule.max !== -1) {
-    if (rule.min === rule.max) {
-      metadata.push(`${rule.min} ${t('metric_chars')}`);
-    } else {
-      metadata.push(`${rule.min}-${rule.max} ${t('metric_chars')}`);
-    }
+    const charText = rule.min === rule.max
+      ? `${rule.min} ${t('metric_chars')}`
+      : `${rule.min}-${rule.max} ${t('metric_chars')}`;
+    badges.push(`<span class="badge badge-chars badge-sm">${charText}</span>`);
   } else if (rule.charLength && rule.charLength !== -1) {
-    metadata.push(`${rule.charLength} ${t('metric_chars')}`);
+    badges.push(`<span class="badge badge-chars badge-sm">${rule.charLength} ${t('metric_chars')}</span>`);
   }
 
-  // Show matra length (if available and not -1)
   if (rule.matraLength && rule.matraLength !== -1) {
-    metadata.push(`${rule.matraLength} matras`);
+    badges.push(`<span class="badge badge-matras badge-sm">${rule.matraLength} ${t('metric_matras')}</span>`);
   }
 
-  // Don't show frequency (removed per user request)
+  if (rule.lines && rule.lines > 0) {
+    const padaLabel = rule.lines === 1 ? t('pada_singular') : t('pada_plural');
+    badges.push(`<span class="badge badge-lines badge-sm">${rule.lines} ${padaLabel}</span>`);
+  }
 
-  // Check if this rule is favorited
+  if (rule.chandamName) {
+    badges.push(`<span class="badge badge-chandam badge-sm">${rule.chandamName}</span>`);
+  }
+
+  const badgesHtml = badges.length > 0
+    ? `<div class="rule-item-badges">${badges.join('')}</div>`
+    : '';
+
+  const sequenceHtml = rule.sequence
+    ? `<div class="rule-sequence"><code>${rule.sequence}</code></div>`
+    : '';
+
   const compositeId = `${ruleSetId}:${rule.identifier}`;
   const isFavorited = favoriteIds.has(compositeId);
   const favoritedClass = isFavorited ? ' favorited' : '';
 
-  // Show delete button for ANY custom rule (identified by "custom-" prefix)
-  // This allows deletion from both /learn/custom-rules/ and /learn/custom-fav/ views
   const isCustomRule = rule.identifier.startsWith('custom-');
-  const showDelete = isCustomRule;
-  const deleteButton = showDelete
+  const deleteButton = isCustomRule
     ? `<button class="btn-delete-inline" data-rule-id="${rule.identifier}" onclick="handleDeleteFromList('${rule.identifier}', '${rule.name.replace(/'/g, "\\'")}')">Delete</button>`
     : '';
 
   return `
     <div class="rule-list-item${favoritedClass}">
-      <div class="rule-name meter-name">${rule.name}</div>
-      <div class="rule-meta">${metadata.join(' | ')}</div>
+      <div class="rule-item-header">
+        <span class="rule-name meter-name">${displayName}</span>
+        ${subTypeBadge}
+      </div>
+      ${aliasHtml}
+      ${badgesHtml}
+      ${sequenceHtml}
       <div class="rule-links">
         <a href="${makeUrl(`/learn/${ruleSetId}/${rule.identifier}`)}">Learn</a>
         <a href="${makeUrl(`/compute/${ruleSetId}/${rule.identifier}`)}">Try</a>
