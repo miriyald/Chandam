@@ -37,6 +37,22 @@ async function waitForFilterUpdate(page: import('@playwright/test').Page): Promi
   await page.waitForLoadState('domcontentloaded');
 }
 
+/**
+ * Some filter updates on mobile can finish after debounce + render delay.
+ * Poll until the expected count appears instead of asserting immediately.
+ */
+async function expectRuleCountEventually(
+  page: import('@playwright/test').Page,
+  expectedCount: number,
+): Promise<void> {
+  await expect
+    .poll(() => readRuleCount(page), {
+      timeout: 10_000,
+      message: `Expected rule count to settle at ${expectedCount}`,
+    })
+    .toBe(expectedCount);
+}
+
 test.describe('Learn page – filter sidebar', () => {
   test.beforeEach(async ({ page }) => {
     await gotoAndWait(page, '/learn/chandam/');
@@ -74,9 +90,7 @@ test.describe('Learn page – filter sidebar', () => {
     // Clear search → restore
     await searchInput.fill('');
     await waitForFilterUpdate(page);
-
-    const restoredCount = await readRuleCount(page);
-    expect(restoredCount).toBe(originalCount);
+    await expectRuleCountEventually(page, originalCount);
   });
 
   test('category checkbox filter reduces and restores rule count', async ({
