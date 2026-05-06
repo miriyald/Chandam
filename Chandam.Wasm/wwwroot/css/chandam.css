@@ -159,7 +159,7 @@ nav a:focus-visible {
 }
 
 .lang-toggle {
-  display: none;
+  display: inline-block;
   background: transparent;
   border: 1px solid rgba(255, 255, 255, 0.5);
   color: var(--color-header-text);

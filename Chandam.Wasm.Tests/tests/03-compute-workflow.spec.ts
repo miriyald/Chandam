@@ -2,16 +2,7 @@
  * Test 03 – Compute page workflow
  *
  * Part A – Auto-detect mode (default):
- *   1. Navigate to /compute/popular/.
- *   2. Confirm auto-detect is ON (rule picker hidden).
- *   3. Click Random → editor fills with Telugu text.
- *   4. Click Clear  → editor empties; results section hides.
- *   5. Click Random again → editor fills again.
- *   6. Click Analyze → results section appears with at least one match card.
- *   7. Match card shows rule name (Telugu text).
- *
- * Part B – Specific-rule mode:
- *   1. Navigate to /compute/popular/.
+ *   1. Navigate to /compute/chandam/.
  *   2. Uncheck auto-detect → rule picker becomes visible.
  *   3. Open picker and select a rule.
  *   4. Click Random (fetches an example for that specific rule).
@@ -24,7 +15,7 @@ import { dailyRandom, pickRandomIndex } from '../helpers/random';
 
 test.describe('Compute page – auto-detect mode', () => {
   test.beforeEach(async ({ page }) => {
-    await gotoAndWait(page, '/compute/popular/');
+    await gotoAndWait(page, '/compute/chandam/');
   });
 
   test('auto-detect is ON by default and rule picker is hidden', async ({
@@ -94,11 +85,13 @@ test.describe('Compute page – auto-detect mode', () => {
 
 test.describe('Compute page – specific rule mode', () => {
   test.beforeEach(async ({ page }) => {
-    await gotoAndWait(page, '/compute/popular/');
+    await gotoAndWait(page, '/compute/chandam/');
   });
 
   test('unchecking auto-detect reveals rule picker', async ({ page }) => {
-    await page.locator('#auto-detect').uncheck();
+    await page.locator('#auto-detect').evaluate((el: HTMLInputElement) => {
+      if (el.checked) { el.checked = false; el.dispatchEvent(new Event('change', { bubbles: true })); }
+    });
     await expect(page.locator('#rule-picker-inline')).toBeVisible({
       timeout: 5_000,
     });
@@ -111,7 +104,9 @@ test.describe('Compute page – specific rule mode', () => {
     const rng = dailyRandom();
 
     // Switch to specific-rule mode
-    await page.locator('#auto-detect').uncheck();
+    await page.locator('#auto-detect').evaluate((el: HTMLInputElement) => {
+      if (el.checked) { el.checked = false; el.dispatchEvent(new Event('change', { bubbles: true })); }
+    });
     await expect(page.locator('#rule-picker-inline')).toBeVisible();
 
     // Open picker and select a rule
@@ -140,7 +135,9 @@ test.describe('Compute page – specific rule mode', () => {
     const rng = dailyRandom();
 
     // Switch to specific-rule mode
-    await page.locator('#auto-detect').uncheck();
+    await page.locator('#auto-detect').evaluate((el: HTMLInputElement) => {
+      if (el.checked) { el.checked = false; el.dispatchEvent(new Event('change', { bubbles: true })); }
+    });
     await page.locator('#rule-picker-inline').click();
     const ruleItems = page.locator('#rule-picker-container .rule-item');
     const count = await ruleItems.count();
@@ -156,7 +153,9 @@ test.describe('Compute page – specific rule mode', () => {
     });
 
     // Uncheck Yati
-    await page.locator('#match-yati').uncheck();
+    await page.locator('#match-yati').evaluate((el: HTMLInputElement) => {
+      if (el.checked) { el.checked = false; el.dispatchEvent(new Event('change', { bubbles: true })); }
+    });
     await expect(page.locator('#match-yati')).not.toBeChecked();
 
     // Re-analyze — must not throw
@@ -173,14 +172,14 @@ test.describe('Compute – specific rule page (/compute/:ruleSet/:ruleId)', () =
   test('rule page loads, Random fills editor, Analyze returns result', async ({
     page,
   }) => {
-    // Navigate to learn/popular to get a real rule ID dynamically
-    await gotoAndWait(page, '/learn/popular/');
+    // Navigate to learn/chandam to get a real rule ID dynamically
+    await gotoAndWait(page, '/learn/chandam/');
     const firstRuleLink = page
-      .locator('.rule-list-item .rule-links a[href*="/compute/popular/"]')
+      .locator('.rule-list-item .rule-links a[href*="/compute/chandam/"]')
       .first();
     await expect(firstRuleLink).toBeVisible();
     const href = await firstRuleLink.getAttribute('href');
-    expect(href).toMatch(/\/compute\/popular\/.+/);
+    expect(href).toMatch(/\/compute\/chandam\/.+/);
 
     // Go to the specific rule compute page
     await page.goto(href!);

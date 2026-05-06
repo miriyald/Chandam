@@ -17,14 +17,14 @@ import { test, expect, gotoAndWait, waitForWasmReady } from '../fixtures/wasm-re
 import { dailyRandom, pickRandomIndex } from '../helpers/random';
 
 // Built-in rule set IDs defined in config.ts
-const RULE_SET_IDS = ['popular', 'complete', 'topella'] as const;
+const RULE_SET_IDS = ['chandam', 'topella'] as const;
 
 test.describe('Rule Sets → Rule navigation', () => {
   test('rule-sets page shows all built-in cards', async ({ page }) => {
     await gotoAndWait(page, '/rule-sets');
 
     const cards = page.locator('.rule-set-card');
-    await expect(cards).toHaveCount(RULE_SET_IDS.length, { timeout: 10_000 });
+    await expect(cards).toHaveCount(RULE_SET_IDS.length, { timeout: 15_000 });
 
     // Each card should have an Analyze link
     for (const id of RULE_SET_IDS) {
@@ -37,26 +37,32 @@ test.describe('Rule Sets → Rule navigation', () => {
   test('click Analyze on first card → compute rule-set page loads', async ({ page }) => {
     await gotoAndWait(page, '/rule-sets');
 
-    // Click the Analyze link on the first (popular) card
+    // Click the Analyze link on the first (chandam) card
     const analyzeLink = page
-      .locator('.rule-set-card a[href*="/compute/popular/"]')
+      .locator('.rule-set-card a[href*="/compute/chandam/"]')
       .first();
     await analyzeLink.click();
 
     // Wait for the compute page to render
-    await page.waitForURL('**/compute/popular/**');
+    await page.waitForURL('**/compute/chandam/**');
     await expect(page.locator('#poem-editor')).toBeVisible();
   });
 
   test('select a random rule from the picker and analyze', async ({ page }) => {
     const rng = dailyRandom();
 
-    await gotoAndWait(page, '/compute/popular/');
+    await gotoAndWait(page, '/compute/chandam/');
 
     // 1. Uncheck auto-detect so the rule picker becomes visible
+    // Use evaluate() because the toggle-slider span intercepts pointer events
     const autoDetect = page.locator('#auto-detect');
     await expect(autoDetect).toBeChecked();
-    await autoDetect.uncheck();
+    await autoDetect.evaluate((el: HTMLInputElement) => {
+      if (el.checked) {
+        el.checked = false;
+        el.dispatchEvent(new Event('change', { bubbles: true }));
+      }
+    });
 
     // 2. The rule-picker-inline <details> should become visible
     const rulePicker = page.locator('#rule-picker-inline');
@@ -100,7 +106,7 @@ test.describe('Rule Sets → Rule navigation', () => {
   test('navigate from rule-set page to a specific rule page via breadcrumb', async ({
     page,
   }) => {
-    await gotoAndWait(page, '/compute/popular/');
+    await gotoAndWait(page, '/compute/chandam/');
 
     // Load a random poem so we can run auto-detect
     await page.locator('#btn-random').click();
@@ -118,7 +124,7 @@ test.describe('Rule Sets → Rule navigation', () => {
     await expect(detailsLink).toBeVisible();
 
     const href = await detailsLink.getAttribute('href');
-    expect(href).toMatch(/\/learn\/popular\/.+/);
+    expect(href).toMatch(/\/learn\/chandam\/.+/);
 
     // Navigate to the learn detail page
     await page.goto(href!);

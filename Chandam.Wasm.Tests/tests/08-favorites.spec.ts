@@ -1,7 +1,7 @@
 /**
  * Test 08 – Favorites (heart button on rule pages)
  *
- * 1. Navigate to /compute/popular/:ruleId.
+ * 1. Navigate to /compute/chandam/:ruleId.
  * 2. Click the heart (#btn-favorite) → button state becomes favorited.
  * 3. Navigate to /rule-sets → a "Favorites" card appears.
  * 4. Navigate to /learn/custom-fav/ → favorited rule is listed.
@@ -14,20 +14,20 @@
 import { test, expect, gotoAndWait } from '../fixtures/wasm-ready';
 
 // ---------------------------------------------------------------------------
-// Helper – get first popular rule compute page path
+// Helper – get first chandam rule compute page path
 // ---------------------------------------------------------------------------
 
 async function getFirstRuleComputePath(
   page: import('@playwright/test').Page,
 ): Promise<{ ruleId: string; computePath: string }> {
-  await gotoAndWait(page, '/learn/popular/');
+  await gotoAndWait(page, '/learn/chandam/');
   const firstLearnLink = page
-    .locator('.rule-list-item .rule-links a[href*="/learn/popular/"]')
+    .locator('.rule-list-item .rule-links a[href*="/learn/chandam/"]')
     .first();
   await expect(firstLearnLink).toBeVisible();
   const href = await firstLearnLink.getAttribute('href');
   const ruleId = href?.split('/').filter(Boolean).pop() ?? '';
-  return { ruleId, computePath: `/compute/popular/${ruleId}` };
+  return { ruleId, computePath: `/compute/chandam/${ruleId}` };
 }
 
 // ---------------------------------------------------------------------------
@@ -112,8 +112,14 @@ test.describe('Favorites – heart button', () => {
     await page.locator('#btn-favorite').click();
     await page.waitForTimeout(500);
 
-    // Navigate to the favorites collection learn page
-    await gotoAndWait(page, '/learn/custom-fav/');
+    // Navigate to the favorites collection learn page via SPA (preserve WASM state)
+    // Use history.pushState + popstate to trigger the SPA router without full reload
+    await page.evaluate(() => {
+      history.pushState(null, '', '/learn/custom-fav/');
+      window.dispatchEvent(new PopStateEvent('popstate'));
+    });
+    // Wait for learn index to render with custom-fav content
+    await expect(page.locator('.learn-index-page')).toBeVisible({ timeout: 10_000 });
 
     // The favorited rule should appear in the list
     const ruleItem = page.locator('.rule-list-item').filter({
@@ -148,7 +154,7 @@ test.describe('Favorites – heart button', () => {
 
   test('heart button on learn detail page also works', async ({ page }) => {
     const { ruleId } = await getFirstRuleComputePath(page);
-    const learnPath = `/learn/popular/${ruleId}`;
+    const learnPath = `/learn/chandam/${ruleId}`;
     await gotoAndWait(page, learnPath);
 
     const favBtn = page.locator('#btn-favorite');

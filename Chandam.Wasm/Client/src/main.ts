@@ -32,8 +32,8 @@ const initialLoader = createInitialLoader();
 
 // Home route - landing page
 router.register('/', () => {
-  setPageTitle('Home');
-  loadStaticPage('pages/home.html');
+  setPageTitle(t('nav_home'));
+  loadStaticPage(`pages/${getLanguage()}/home.html`);
 });
 
 // Rule sets route - browse rule sets
@@ -113,9 +113,9 @@ router.register('/learn/:ruleSet/:ruleId', async (params) => {
 });
 
 // Static pages
-router.register('/about', () => { setPageTitle('About'); loadStaticPage('pages/about.html'); });
-router.register('/credits', () => { setPageTitle('Credits'); loadStaticPage('pages/credits.html'); });
-router.register('/contact', () => { setPageTitle('Contact'); loadStaticPage('pages/contact.html'); });
+router.register('/about', () => { setPageTitle(t('nav_about')); loadStaticPage(`pages/${getLanguage()}/about.html`); });
+router.register('/credits', () => { setPageTitle(t('nav_credits')); loadStaticPage(`pages/${getLanguage()}/credits.html`); });
+router.register('/contact', () => { setPageTitle(t('nav_contact')); loadStaticPage(`pages/${getLanguage()}/contact.html`); });
 
 // Apply current language to static nav elements and lang toggle button
 function applyLanguageToPage(): void {

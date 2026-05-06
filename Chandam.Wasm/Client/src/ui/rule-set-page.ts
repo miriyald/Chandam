@@ -3,7 +3,7 @@ import { getRuleSet, getRuleSetAsync } from '../config';
 import { renderRulePicker, setSelectedRule, getSelectedRule } from './rule-picker';
 import { clearEditor, enableEditorAutoSave } from './editor';
 import { renderEditorCard, showRulePicker, hideRulePicker } from './shared-components';
-import { renderFirstMatch } from './results';
+import { renderFirstMatch, hideResults } from './results';
 import { getEditorText } from './editor';
 import type { RuleSummaryDetailed } from '../types';
 import { makeUrl } from '../utils/url-helpers';
@@ -182,6 +182,7 @@ function attachEventHandlers(ruleSet: string) {
     });
 
     clearEditor();
+    hideResults();
   });
 }
 

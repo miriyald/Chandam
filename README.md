@@ -319,6 +319,66 @@ Chandam/
 
 See [Project Status](Docs/project-status.md) for detailed architecture.
 
+## Architecture
+
+```mermaid
+flowchart TD
+    classDef caller fill:#ECFDF5,stroke:#059669,color:#064E3B,stroke-width:2px;
+    classDef orchestrator fill:#0F172A,stroke:#0F172A,color:#F8FAFC,stroke-width:2px;
+    classDef component fill:#EEF2FF,stroke:#4F46E5,color:#312E81,stroke-width:2px;
+    classDef agent fill:#EEF2FF,stroke:#4F46E5,color:#312E81,stroke-width:2px;
+    classDef data fill:#E0F2FE,stroke:#0284C7,color:#0C4A6E,stroke-width:2px;
+    classDef cache fill:#FEF3C7,stroke:#D97706,color:#78350F,stroke-width:2px;
+    classDef external fill:#F1F5F9,stroke:#94A3B8,color:#475569,stroke-width:2px;
+
+    subgraph CONSUMERS["  Consumers  "]
+        direction TB
+        U1([" Claude Desktop "]):::caller
+        U2([" AI Agents "]):::caller
+        U3([" Web Browser "]):::caller
+        U4([" REST Clients "]):::caller
+    end
+    style CONSUMERS fill:#F8FAFC,stroke:#CBD5E1,stroke-width:2px,rx:8,ry:8;
+
+    subgraph TRANSPORT["  Transport  "]
+        direction TB
+        TR1{{"MCP Stdio"}}:::orchestrator
+        TR2{{"MCP HTTP/SSE"}}:::orchestrator
+        TR3["Blazor WASM"]:::external
+        TR4["REST API"]:::external
+    end
+    style TRANSPORT fill:#F8FAFC,stroke:#CBD5E1,stroke-width:2px,rx:8,ry:8;
+
+    subgraph TOOLS["  Tools (15)  "]
+        direction TB
+        TG1["Retrieve · 5"]:::data
+        TG2["Writing · 3"]:::cache
+        TG3["Constraint · 6"]:::component
+        TG4["Dictionary · 1"]:::external
+    end
+    style TOOLS fill:#FFFFFF,stroke:#CBD5E1,stroke-width:2px,stroke-dasharray: 6 4,rx:8,ry:8;
+
+    subgraph CORE["  Core Domain  "]
+        direction TB
+        CO1("Chandam.Core"):::agent
+        CO2("Chandam.Indic"):::agent
+        CO3("Chandam.Rules"):::agent
+    end
+    style CORE fill:#F8FAFC,stroke:#CBD5E1,stroke-width:2px,rx:8,ry:8;
+
+    subgraph DATA["  Data  "]
+        direction TB
+        D1[("379 Rules")]:::data
+        D2[("554 Examples")]:::data
+        D3[("3 Dict Sources")]:::data
+    end
+    style DATA fill:#F8FAFC,stroke:#CBD5E1,stroke-width:2px,rx:8,ry:8;
+
+    CONSUMERS --> TRANSPORT --> TOOLS --> CORE --> DATA
+```
+
+> For the full architecture with tool details and agent integration scenarios, see [Architecture Diagram](Docs/plans/architecture-diagram.md).
+
 ## 🧪 Testing
 
 ```bash
@@ -333,6 +393,12 @@ bash Docs/Scripts/test-api.sh http://localhost:5000
 
 # Web UI tests (Playwright - coming soon)
 # dotnet test Chandam.Wasm.Tests
+
+# Generate code metrics locally (same logic used by GitHub Actions)
+powershell -ExecutionPolicy Bypass -File Docs/scripts/metrics-ci.ps1
+
+# Generate + commit metrics locally (without push)
+powershell -ExecutionPolicy Bypass -File Docs/scripts/metrics-ci.ps1 -Commit -NoPush
 ```
 
 ## 📖 Documentation

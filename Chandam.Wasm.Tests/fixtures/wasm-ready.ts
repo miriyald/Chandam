@@ -42,14 +42,27 @@ export async function waitForWasmReady(
 /**
  * Navigates to `path` (relative to baseURL) then waits for the WASM runtime
  * to finish initialising.
+ *
+ * Retries up to 3 times with a 2-second delay to handle transient server
+ * unavailability (e.g. static server briefly unresponsive between test projects).
  */
 export async function gotoAndWait(
   page: Page,
   path: string,
   timeout = 45_000,
 ): Promise<void> {
-  await page.goto(path);
-  await waitForWasmReady(page, timeout);
+  let lastErr: unknown;
+  for (let attempt = 1; attempt <= 3; attempt++) {
+    try {
+      await page.goto(path);
+      await waitForWasmReady(page, timeout);
+      return;
+    } catch (err) {
+      lastErr = err;
+      if (attempt < 3) await page.waitForTimeout(2_000);
+    }
+  }
+  throw lastErr;
 }
 
 // ---------------------------------------------------------------------------

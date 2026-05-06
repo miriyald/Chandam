@@ -24,10 +24,10 @@ const ROUTES: Array<{ path: string; name: string; expectedContent: string }> = [
   { path: '/compute/topella/', name: 'compute-topella', expectedContent: 'Rule Set' },
   { path: '/learn/chandam/',   name: 'learn-chandam',   expectedContent: 'Rule Set' },
   { path: '/learn/topella/',   name: 'learn-topella',   expectedContent: 'Rule Set' },
-  { path: '/create-rule',    name: 'create-rule',     expectedContent: 'Create Rule' },
-  { path: '/about',          name: 'about',           expectedContent: 'About' },
-  { path: '/credits',        name: 'credits',         expectedContent: 'Credits' },
-  { path: '/contact',        name: 'contact',         expectedContent: 'Contact' },
+  { path: '/create-rule',    name: 'create-rule',     expectedContent: 'నియమ' },
+  { path: '/about',          name: 'about',           expectedContent: 'పరిచయం' },
+  { path: '/credits',        name: 'credits',         expectedContent: 'కృతజ్ఞతలు' },
+  { path: '/contact',        name: 'contact',         expectedContent: 'సంప్రదింపులు' },
 ];
 
 // ---------------------------------------------------------------------------

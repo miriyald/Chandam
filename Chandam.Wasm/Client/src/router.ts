@@ -116,12 +116,8 @@ export class Router {
       }
     }
 
-    // No match found - try home route
-    const homeRoute = this.routes.find(r => r.pattern === '/');
-    if (homeRoute) {
-      await homeRoute.handler({});
-      this.updateActiveNav('/');
-    }
+    // No match found - show 404 page
+    loadStaticPage(`pages/404.html`);
   }
 
   private updateActiveNav(currentPath: string) {
@@ -153,6 +149,8 @@ export class Router {
       const target = (e.target as HTMLElement).closest('a');
       if (target && target.href && target.origin === location.origin && !target.href.startsWith('blob:')) {
         e.preventDefault();
+        // Close mobile nav if open
+        document.getElementById('main-nav')?.classList.remove('open');
         const url = new URL(target.href);
         this.navigate(this.stripBasePath(url.pathname));
       }
