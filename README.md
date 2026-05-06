@@ -242,6 +242,9 @@ dotnet run --project Chandam.Wasm
 # - Blazor WASM runtime provides C# backend
 # - TypeScript UI calls C# methods via JSInvokable
 # - Rule loading and analysis happens in C#
+
+# If port 5000 is in use, specify an alternate port:
+dotnet run --project Chandam.Wasm --urls "http://localhost:5050"
 ```
 
 #### Option 2: Frontend-Only Development (TypeScript hot reload)
@@ -254,10 +257,10 @@ npm install
 # Start Vite dev server with hot reload
 npm run dev
 
-# Open http://localhost:5173 (Vite default)
+# Open http://localhost:5050
 # ⚠️ WASM backend won't be available - frontend only!
-# - Use this for UI/CSS/layout work
-# - Mock data or use external API for testing
+# - Use this for UI/CSS/layout work only
+# - Analysis features require the full-stack mode (Option 1)
 ```
 
 **Production build:**
@@ -434,6 +437,9 @@ A: Use "Determine" mode - it will automatically detect the best matching meter f
 
 **Q: Why does my poem show 85% match instead of 100%?**  
 A: Classical meters have strict rules. The tool highlights exactly where mismatches occur (syllable count, Yati position, Prasa, etc.) so you can adjust your poem.
+
+**Q: Is there a graph/explore view of the rules?**  
+A: Yes — navigate directly to `/explore/chandam/` or `/explore/topella/` for an interactive D3 force-directed graph showing the taxonomy (PadyamType → SubType → ChandamName → Rules). This is an experimental hidden feature not exposed in the main UI.
 
 **Q: Can I add my own custom meters?**  
 A: Currently no - the rule definitions require deep domain expertise. File an issue if you have a valid meter to contribute.

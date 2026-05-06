@@ -69,6 +69,7 @@ export interface Translations {
   // Mode switcher
   mode_learn: string;
   mode_compute: string;
+  mode_explore: string;
 
   // Learn sections
   learn_title_prefix: string;
@@ -262,6 +263,7 @@ const translations: Record<Language, Translations> = {
 
     mode_learn: 'Learn',
     mode_compute: 'Compute',
+    mode_explore: 'Explore',
 
     learn_title_prefix: 'Learn:',
     section_description: 'Description',
@@ -439,6 +441,7 @@ const translations: Record<Language, Translations> = {
 
     mode_learn: 'నేర్చుకోండి',
     mode_compute: 'విశ్లేషణ',
+    mode_explore: 'అన్వేషించు',
 
     learn_title_prefix: 'నేర్చుకో:',
     section_description: 'వివరణ',

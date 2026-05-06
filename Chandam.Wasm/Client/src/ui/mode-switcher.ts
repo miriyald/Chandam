@@ -4,7 +4,7 @@ import { t } from '../i18n';
 export interface ModeSwitcherOptions {
   ruleSetId: string;
   ruleId?: string;        // Optional - only for rule detail pages
-  currentMode: 'learn' | 'compute';
+  currentMode: 'learn' | 'compute' | 'explore';
 }
 
 // Main function: Render mode switcher (segmented control)

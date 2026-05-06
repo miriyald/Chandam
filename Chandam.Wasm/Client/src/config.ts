@@ -9,16 +9,7 @@ export interface RuleSet {
 
 export const RULE_SETS: RuleSet[] = [
   {
-    id: 'popular',
-    name: 'ప్రముఖ ఛందస్సులు',
-    description: 'తెలుగులో అత్యంత వాడుకలో ఉన్న ఛందస్సులు',
-    rulesFile: 'data/popular.min.json.gz',
-    examplesFile: 'data/popular-examples.min.json.gz',
-    ruleCount: 14
-  },
-
-  {
-    id: 'complete',
+    id: 'chandam',
     name: 'చంధోరత్నావళి',
     description: 'దిలీపు మిరియాల సంకలనం: అనేక ఛందస్సు వనరులు మరియూ ముఖ్యంగా కోవెల సంపత్కుమారాచార్య రచనలు',
     rulesFile: 'data/chandam.min.json.gz',
@@ -27,15 +18,15 @@ export const RULE_SETS: RuleSet[] = [
   },
   {
     id: 'topella',
-    name: 'అనంతచ్చంధము',
+    name: 'అనంతచ్ఛందస్సౌరభము',
     description: 'శ్రీ తోపెల్ల బాలసుబ్రహ్మణ్య శర్మగారి సంకలనం: అనేక ఛందస్సు వనరులు మరియూ స్వయంగా సృజించినవి.',
     rulesFile: 'data/topella.min.json.gz',
-    examplesFile: '',
+    examplesFile: 'data/topella-examples.min.json.gz',
     ruleCount: 2337
   }
 ];
 
-export const DEFAULT_RULE_SET = 'frequent';
+export const DEFAULT_RULE_SET = 'chandam';
 
 export function getRuleSet(id: string): RuleSet | undefined {
   return RULE_SETS.find(rs => rs.id === id);

@@ -7,6 +7,7 @@ import { renderRulePage } from './ui/rule-page';
 import { renderLearnIndexPage } from './ui/learn-index-page';
 import { renderLearnDetailPage } from './ui/learn-detail-page';
 import { renderRuleCreatorPage } from './ui/rule-creator-page';
+import { renderExplorePage } from './ui/explore-page';
 import { validateRuleSet, validateRuleSetAsync, validateRule, handleInvalidRuleSet, handleInvalidRule } from './utils/error-handlers';
 import { createInitialLoader, preloadLoaderImage } from './utils/loader';
 import { LoadingEvents, LoadingEventType } from './utils/loading-events';
@@ -70,6 +71,16 @@ router.register('/compute/:ruleSet/:ruleId', async (params) => {
   }
 
   await renderRulePage(params);
+});
+
+// Explore routes (graph visualization)
+router.register('/explore/:ruleSet/', async (params) => {
+  const isValid = await validateRuleSetAsync(params.ruleSet);
+  if (!isValid) {
+    handleInvalidRuleSet(params.ruleSet);
+    return;
+  }
+  await renderExplorePage(params.ruleSet);
 });
 
 // Learn routes
