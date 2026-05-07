@@ -21,33 +21,33 @@ export function renderHomePage() {
 
         <div class="hero-actions">
           <a href="${makeUrl('/rule-sets')}" class="btn-primary btn-large">
-            Browse Rule Sets
+            ${t('home_btn_browse_rule_sets')}
           </a>
         </div>
       </div>
 
       <div class="quick-links-section">
-        <h3>Quick Links</h3>
+        <h3>${t('home_quick_links')}</h3>
         <div class="quick-links-grid">
           <a href="${makeUrl('/rule-sets')}" class="quick-link-card">
             <span class="quick-link-icon">📚</span>
-            <span class="quick-link-title">Rule Sets</span>
-            <span class="quick-link-desc">Browse all meter collections</span>
+            <span class="quick-link-title">${t('home_link_rule_sets')}</span>
+            <span class="quick-link-desc">${t('home_link_rule_sets_desc')}</span>
           </a>
           <a href="${makeUrl('/about')}" class="quick-link-card">
             <span class="quick-link-icon">ℹ️</span>
-            <span class="quick-link-title">About</span>
-            <span class="quick-link-desc">Learn about this project</span>
+            <span class="quick-link-title">${t('home_link_about')}</span>
+            <span class="quick-link-desc">${t('home_link_about_desc')}</span>
           </a>
           <a href="${makeUrl('/credits')}" class="quick-link-card">
             <span class="quick-link-icon">🙏</span>
-            <span class="quick-link-title">Credits</span>
-            <span class="quick-link-desc">Contributors and sources</span>
+            <span class="quick-link-title">${t('home_link_credits')}</span>
+            <span class="quick-link-desc">${t('home_link_credits_desc')}</span>
           </a>
           <a href="${makeUrl('/contact')}" class="quick-link-card">
             <span class="quick-link-icon">✉️</span>
-            <span class="quick-link-title">Contact</span>
-            <span class="quick-link-desc">Get in touch</span>
+            <span class="quick-link-title">${t('home_link_contact')}</span>
+            <span class="quick-link-desc">${t('home_link_contact_desc')}</span>
           </a>
         </div>
       </div>

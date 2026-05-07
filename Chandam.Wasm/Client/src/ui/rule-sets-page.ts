@@ -7,12 +7,12 @@ import { setPageTitle } from '../utils/page-title';
 
 // Main function: Render rule sets page
 export async function renderRuleSetsPage() {
-  setPageTitle('Rule Sets');
+  setPageTitle(t('rulesets_page_title'));
 
   const content = document.getElementById('content');
   if (!content) return;
 
-  const breadcrumbs = buildStaticPageBreadcrumbs('Rule Sets');
+  const breadcrumbs = buildStaticPageBreadcrumbs(t('rulesets_page_title'));
 
   // Load custom rulesets from IndexedDB
   await storageService.init();
@@ -44,8 +44,8 @@ export async function renderRuleSetsPage() {
     <div class="rule-sets-page">
       ${renderBreadcrumbs(breadcrumbs)}
 
-      <h1>Telugu Poetry Meter Rule Sets</h1>
-      <p class="subtitle">Choose a rule set to analyze poetry or learn about meters</p>
+      <h1>${t('rulesets_heading')}</h1>
+      <p class="subtitle">${t('rulesets_subtitle')}</p>
 
       <div class="rule-set-cards">
         ${allRuleSets.map(rs => renderRuleSetCard(rs)).join('')}
@@ -69,11 +69,11 @@ function renderRuleSetCard(ruleSet: { id: string; name: string; description: str
   return `
     <div class="rule-set-card${customClass}${favoritesClass}">
       <h2 class="meter-name">${ruleSet.name}</h2>
-      <div class="rule-count">${ruleSet.ruleCount} Rules</div>
+      <div class="rule-count">${ruleSet.ruleCount} ${t('rulesets_rules_suffix')}</div>
       <p class="description">${ruleSet.description}</p>
       <div class="card-actions">
-        <a href="${makeUrl(`/compute/${ruleSet.id}/`)}" class="btn-analyze">✏️ Analyze</a>
-        <a href="${makeUrl(`/learn/${ruleSet.id}/`)}" class="btn-learn">📖 Learn</a>
+        <a href="${makeUrl(`/compute/${ruleSet.id}/`)}" class="btn-analyze">${t('rulesets_btn_analyze')}</a>
+        <a href="${makeUrl(`/learn/${ruleSet.id}/`)}" class="btn-learn">${t('rulesets_btn_learn')}</a>
       </div>
     </div>
   `;

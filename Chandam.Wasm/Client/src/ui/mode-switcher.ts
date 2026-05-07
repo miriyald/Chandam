@@ -38,7 +38,7 @@ export function renderModeSwitcher(options: ModeSwitcherOptions): string {
     : `<a href="${makeUrl(computeUrl)}" class="${computeClasses}">${escapeHtml(t('mode_compute'))}</a>`;
 
   return `
-    <nav class="mode-switcher" role="tablist" aria-label="Mode selection">
+    <nav class="mode-switcher" role="tablist" aria-label="${t('mode_switcher_aria_label')}">
       ${learnElement}
       ${computeElement}
     </nav>

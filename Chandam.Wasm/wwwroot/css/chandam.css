@@ -2433,6 +2433,17 @@ footer a:focus-visible {
 
   .breadcrumbs {
     font-size: 0.8rem;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    overflow-y: hidden;
+    white-space: nowrap;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .breadcrumb-link,
+  .breadcrumb-current,
+  .breadcrumb-separator {
+    flex: 0 0 auto;
   }
 
   .breadcrumb-separator {

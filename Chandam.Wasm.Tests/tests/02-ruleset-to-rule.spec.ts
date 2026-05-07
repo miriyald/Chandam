@@ -130,10 +130,11 @@ test.describe('Rule Sets → Rule navigation', () => {
     await page.goto(href!);
     await waitForWasmReady(page);
 
-    // Breadcrumbs should contain "Rule Sets" › rule-set name › rule name
+    // Breadcrumbs should show 3-level hierarchy with link to /rule-sets
     const breadcrumbs = page.locator('.breadcrumbs');
     await expect(breadcrumbs).toBeVisible();
-    await expect(breadcrumbs).toContainText('Rule Sets');
+    const firstLink = breadcrumbs.locator('a').first();
+    await expect(firstLink).toHaveAttribute('href', /\/rule-sets/);
   });
 });
 

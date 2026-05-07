@@ -142,10 +142,12 @@ test.describe('Learn detail page', () => {
     const breadcrumbs = page.locator('.breadcrumbs');
     await expect(breadcrumbs).toBeVisible();
 
-    // Should contain: Rule Sets › <ruleSet name> › <rule name>
-    await expect(breadcrumbs).toContainText('Rule Sets');
-    // The rule set name is in Telugu; just assert there are 2 separators (›)
+    // Should have 3 breadcrumb links: Rule Sets › <ruleSet name> › <rule name>
     const separators = breadcrumbs.locator('.breadcrumb-separator');
     await expect(separators).toHaveCount(2);
+    // First breadcrumb link should point to /rule-sets
+    const firstLink = breadcrumbs.locator('a').first();
+    await expect(firstLink).toHaveAttribute('href', /\/rule-sets/);
+
   });
 });

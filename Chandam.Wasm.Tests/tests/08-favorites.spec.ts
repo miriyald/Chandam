@@ -11,7 +11,7 @@
  * window.chandam console API so tests start with a clean state.
  */
 
-import { test, expect, gotoAndWait } from '../fixtures/wasm-ready';
+import { test, expect, gotoAndWait, waitForWasmReady } from '../fixtures/wasm-ready';
 
 // ---------------------------------------------------------------------------
 // Helper – get first chandam rule compute page path
@@ -79,7 +79,6 @@ test.describe('Favorites – heart button', () => {
     await page.waitForTimeout(500); // Allow async IndexedDB write
 
     await expect(favBtn).toHaveAttribute('data-favorited', 'true');
-    await expect(favBtn).toHaveAttribute('aria-label', 'Remove from favorites');
   });
 
   test('favorited rule appears in /rule-sets as Favorites card', async ({
@@ -167,6 +166,132 @@ test.describe('Favorites – heart button', () => {
 
     // Clean up
     await favBtn.click();
+    await page.waitForTimeout(500);
+  });
+});
+
+// ---------------------------------------------------------------------------
+// Helper – get first topella rule path
+// ---------------------------------------------------------------------------
+
+async function getFirstTopellaRulePath(
+  page: import('@playwright/test').Page,
+): Promise<{ ruleId: string; learnPath: string }> {
+  await gotoAndWait(page, '/learn/topella/');
+  const firstLearnLink = page
+    .locator('.rule-list-item .rule-links a[href*="/learn/topella/"]')
+    .first();
+  await expect(firstLearnLink).toBeVisible();
+  const href = await firstLearnLink.getAttribute('href');
+  const ruleId = href?.split('/').filter(Boolean).pop() ?? '';
+  return { ruleId, learnPath: `/learn/topella/${ruleId}` };
+}
+
+// ---------------------------------------------------------------------------
+// Multi-ruleset favorites & persistence
+// ---------------------------------------------------------------------------
+
+test.describe('Favorites – multi-ruleset and persistence', () => {
+  test.beforeEach(async ({ page }) => {
+    await gotoAndWait(page, '/');
+    await clearAllFavorites(page);
+  });
+
+  test('favorites from chandam and topella both appear in custom-fav', async ({
+    page,
+  }) => {
+    // Favorite a chandam rule
+    const { ruleId: chandamRuleId } = await getFirstRuleComputePath(page);
+    await gotoAndWait(page, `/learn/chandam/${chandamRuleId}`);
+    await page.locator('#btn-favorite').click();
+    await page.waitForTimeout(500);
+    await expect(page.locator('#btn-favorite')).toHaveAttribute('data-favorited', 'true');
+
+    // Favorite a topella rule
+    const { ruleId: topellaRuleId } = await getFirstTopellaRulePath(page);
+    await gotoAndWait(page, `/learn/topella/${topellaRuleId}`);
+    await page.locator('#btn-favorite').click();
+    await page.waitForTimeout(500);
+    await expect(page.locator('#btn-favorite')).toHaveAttribute('data-favorited', 'true');
+
+    // Navigate to favorites collection
+    await page.evaluate(() => {
+      history.pushState(null, '', '/learn/custom-fav/');
+      window.dispatchEvent(new PopStateEvent('popstate'));
+    });
+    await expect(page.locator('.learn-index-page')).toBeVisible({ timeout: 10_000 });
+
+    // Both rules should appear
+    const ruleItems = page.locator('.rule-list-item');
+    const count = await ruleItems.count();
+    expect(count).toBeGreaterThanOrEqual(2);
+
+    // Clean up
+    await gotoAndWait(page, '/');
+    await clearAllFavorites(page);
+  });
+
+  test('filtering within favorites collection works', async ({ page }) => {
+    // Setup: favorite two chandam rules
+    await gotoAndWait(page, '/learn/chandam/');
+    const ruleLinks = page.locator('.rule-list-item .rule-links a[href*="/learn/chandam/"]');
+    const firstHref = await ruleLinks.nth(0).getAttribute('href');
+    const secondHref = await ruleLinks.nth(1).getAttribute('href');
+
+    // Favorite first rule
+    await gotoAndWait(page, firstHref!);
+    await page.locator('#btn-favorite').click();
+    await page.waitForTimeout(500);
+
+    // Favorite second rule
+    await gotoAndWait(page, secondHref!);
+    await page.locator('#btn-favorite').click();
+    await page.waitForTimeout(500);
+
+    // Navigate to favorites collection
+    await page.evaluate(() => {
+      history.pushState(null, '', '/learn/custom-fav/');
+      window.dispatchEvent(new PopStateEvent('popstate'));
+    });
+    await expect(page.locator('.learn-index-page')).toBeVisible({ timeout: 10_000 });
+
+    // Get initial count
+    const initialCount = await page.locator('.rule-list-item').count();
+    expect(initialCount).toBeGreaterThanOrEqual(2);
+
+    // Use search filter with a specific rule name
+    const firstName = await page.locator('.rule-list-item .meter-name').first().textContent();
+    const searchInput = page.locator('#filter-search');
+    if (await searchInput.isVisible()) {
+      await searchInput.fill(firstName?.trim() ?? '');
+      await page.waitForTimeout(300);
+      const filteredCount = await page.locator('.rule-list-item').count();
+      expect(filteredCount).toBeLessThanOrEqual(initialCount);
+      expect(filteredCount).toBeGreaterThanOrEqual(1);
+    }
+
+    // Clean up
+    await gotoAndWait(page, '/');
+    await clearAllFavorites(page);
+  });
+
+  test('favorites survive page.reload()', async ({ page }) => {
+    // Favorite a rule
+    const { ruleId, computePath } = await getFirstRuleComputePath(page);
+    await gotoAndWait(page, computePath);
+    await page.locator('#btn-favorite').click();
+    await page.waitForTimeout(500);
+    await expect(page.locator('#btn-favorite')).toHaveAttribute('data-favorited', 'true');
+
+    // Hard reload
+    await page.reload();
+    await waitForWasmReady(page);
+
+    // Heart should still be filled (IndexedDB hydration on page load)
+    await expect(page.locator('#btn-favorite')).toHaveAttribute('data-favorited', 'true');
+
+    // Clean up
+    await page.locator('#btn-favorite').click();
     await page.waitForTimeout(500);
   });
 });

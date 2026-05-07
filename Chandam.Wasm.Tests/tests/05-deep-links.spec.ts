@@ -32,7 +32,6 @@ const ROUTES: RouteExpectation[] = [
   {
     path: '/rule-sets',
     visibleSelector: '.rule-sets-page',
-    expectedText: 'Telugu Poetry Meter Rule Sets',
     requiresWasm: true,
   },
   {

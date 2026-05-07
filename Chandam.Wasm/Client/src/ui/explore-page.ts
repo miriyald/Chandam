@@ -44,7 +44,7 @@ export async function renderExplorePage(ruleSet: string) {
       <div class="page-subtitle">${rules.length} ${t('label_rules_count')} — ${t('mode_explore')}</div>
 
       <div class="graph-controls">
-        <span class="graph-hint">Scroll to zoom. Drag nodes to rearrange. Click a rule to view details.</span>
+        <span class="graph-hint">${t('explore_graph_hint')}</span>
       </div>
 
       <div id="graph-container" class="graph-container"></div>

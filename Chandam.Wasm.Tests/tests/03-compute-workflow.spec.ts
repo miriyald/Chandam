@@ -168,6 +168,54 @@ test.describe('Compute page – specific rule mode', () => {
   });
 });
 
+test.describe('Compute – cross-ruleset and result navigation', () => {
+  test('switches from chandam to topella compute mid-session', async ({
+    page,
+  }) => {
+    // Compute on chandam
+    await gotoAndWait(page, '/compute/chandam/');
+    await page.locator('#btn-random').click();
+    await expect(page.locator('#poem-editor')).not.toHaveValue('');
+    await page.locator('#btn-analyze').click();
+    await expect(page.locator('#results-section')).toBeVisible({
+      timeout: 15_000,
+    });
+
+    // Switch to topella
+    await gotoAndWait(page, '/compute/topella/');
+    await page.locator('#btn-random').click();
+    await expect(page.locator('#poem-editor')).not.toHaveValue('');
+    await page.locator('#btn-analyze').click();
+    await expect(page.locator('#results-section')).toBeVisible({
+      timeout: 15_000,
+    });
+    await expect(page.locator('.match-card').first()).toBeVisible();
+  });
+
+  test('clicking rule link in results navigates to learn detail', async ({
+    page,
+  }) => {
+    await gotoAndWait(page, '/compute/chandam/');
+    await page.locator('#btn-random').click();
+    await expect(page.locator('#poem-editor')).not.toHaveValue('');
+    await page.locator('#btn-analyze').click();
+    await expect(page.locator('#results-section')).toBeVisible({
+      timeout: 15_000,
+    });
+
+    // The results card has a .rule-details-link pointing to /learn/chandam/:ruleId
+    const ruleLink = page.locator('.match-card .rule-details-link').first();
+    await expect(ruleLink).toBeVisible();
+    const href = await ruleLink.getAttribute('href');
+    expect(href).toMatch(/\/learn\/chandam\/.+/);
+
+    // Navigate (link opens new tab, so we grab the href and go directly)
+    await page.goto(href!);
+    await expect(page.locator('.meter-name')).toBeVisible({ timeout: 15_000 });
+    expect(page.url()).toContain('/learn/chandam/');
+  });
+});
+
 test.describe('Compute – specific rule page (/compute/:ruleSet/:ruleId)', () => {
   test('rule page loads, Random fills editor, Analyze returns result', async ({
     page,

@@ -70,17 +70,17 @@ export async function validateRule(ruleDto: RuleDto): Promise<ValidationResult> 
     errors.push(t('creator_validation_name'));
   } else {
     if (ruleDto.Name.length > MAX_RULE_NAME_LENGTH) {
-      errors.push(`Rule name must be ${MAX_RULE_NAME_LENGTH} characters or less`);
+      errors.push(t('creator_validation_name_length').replace('{max}', String(MAX_RULE_NAME_LENGTH)));
     }
 
     if (!RULE_NAME_PATTERN.test(ruleDto.Name)) {
-      errors.push('Rule name contains invalid characters');
+      errors.push(t('creator_validation_name_invalid'));
     }
 
     // Check for duplicate identifiers
     const exists = await customRulesService.ruleExists(ruleDto.Identifier);
     if (exists) {
-      errors.push('A rule with this name already exists. Please choose a different name.');
+      errors.push(t('creator_validation_name_exists'));
     }
   }
 
@@ -96,7 +96,7 @@ export async function validateRule(ruleDto: RuleDto): Promise<ValidationResult> 
 
   // Lines validation
   if (ruleDto.Lines < 1) {
-    errors.push('Number of lines must be at least 1');
+    errors.push(t('creator_validation_lines_min'));
   }
 
   return {

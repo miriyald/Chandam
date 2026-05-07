@@ -1,5 +1,6 @@
 import { getRuleSet } from '../config';
 import { makeUrl } from '../utils/url-helpers';
+import { t } from '../i18n';
 
 export interface BreadcrumbItem {
   label: string;
@@ -23,7 +24,7 @@ export function renderBreadcrumbs(items: BreadcrumbItem[]): string {
     return itemHtml;
   }).join('<span class="breadcrumb-separator">›</span>');
 
-  return `<nav class="breadcrumbs" aria-label="Breadcrumb">${breadcrumbHtml}</nav>`;
+  return `<nav class="breadcrumbs" aria-label="${t('breadcrumb_aria_label')}">${breadcrumbHtml}</nav>`;
 }
 
 // Build breadcrumbs for rule set pages (Learn/Compute/Explore index)
@@ -32,7 +33,7 @@ export function buildRuleSetBreadcrumbs(ruleSetId: string, mode: 'compute' | 'le
   const ruleSetName = ruleSet ? ruleSet.name : ruleSetId;
 
   return [
-    { label: 'Rule Sets', url: '/rule-sets' },
+    { label: t('breadcrumb_rule_sets'), url: '/rule-sets' },
     { label: ruleSetName } // Current page (no url)
   ];
 }
@@ -48,7 +49,7 @@ export function buildRuleBreadcrumbs(
   const ruleSetName = ruleSet ? ruleSet.name : ruleSetId;
 
   return [
-    { label: 'Rule Sets', url: '/rule-sets' },
+    { label: t('breadcrumb_rule_sets'), url: '/rule-sets' },
     { label: ruleSetName, url: `/${mode}/${ruleSetId}/` }, // Link to current mode
     { label: ruleName } // Current page (no url)
   ];
@@ -57,7 +58,7 @@ export function buildRuleBreadcrumbs(
 // Build breadcrumbs for static pages (About, Contact, Credits)
 export function buildStaticPageBreadcrumbs(pageName: string): BreadcrumbItem[] {
   return [
-    { label: 'Home', url: '/' },
+    { label: t('breadcrumb_home'), url: '/' },
     { label: pageName }
   ];
 }

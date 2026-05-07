@@ -221,7 +221,7 @@ function renderRuleListItem(rule: RuleSummaryDetailed, ruleSetId: string, favori
 
   const isCustomRule = rule.identifier.startsWith('custom-');
   const deleteButton = isCustomRule
-    ? `<button class="btn-delete-inline" data-action="delete-rule" data-rule-id="${rule.identifier}" data-rule-name="${rule.name.replace(/"/g, '&quot;')}">Delete</button>`
+    ? `<button class="btn-delete-inline" data-action="delete-rule" data-rule-id="${rule.identifier}" data-rule-name="${rule.name.replace(/"/g, '&quot;')}">${t('learn_btn_delete')}</button>`
     : '';
 
   return `
@@ -234,8 +234,8 @@ function renderRuleListItem(rule: RuleSummaryDetailed, ruleSetId: string, favori
       ${badgesHtml}
       ${sequenceHtml}
       <div class="rule-links">
-        <a href="${makeUrl(`/learn/${ruleSetId}/${rule.identifier}`)}">Learn</a>
-        <a href="${makeUrl(`/compute/${ruleSetId}/${rule.identifier}`)}">Try</a>
+        <a href="${makeUrl(`/learn/${ruleSetId}/${rule.identifier}`)}">${t('link_learn')}</a>
+        <a href="${makeUrl(`/compute/${ruleSetId}/${rule.identifier}`)}">${t('link_try')}</a>
         ${deleteButton}
       </div>
     </div>
@@ -360,7 +360,7 @@ function debounce<T extends (...args: any[]) => any>(func: T, wait: number): (..
 
 async function handleDeleteFromList(ruleId: string, ruleName: string) {
   const confirmed = confirm(
-    `Are you sure you want to delete "${ruleName}"? This action cannot be undone.`
+    t('alert_delete_confirm')
   );
 
   if (!confirmed) {
@@ -385,6 +385,6 @@ async function handleDeleteFromList(ruleId: string, ruleName: string) {
 
   } catch (error) {
     console.error('Failed to delete rule:', error);
-    alert('Failed to delete rule. Please try again.');
+    alert(t('alert_delete_failed'));
   }
 }

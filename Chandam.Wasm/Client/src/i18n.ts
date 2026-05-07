@@ -196,6 +196,57 @@ export interface Translations {
   export_book_subtitle: string;
   export_book_generated: string;
 
+  // Home page - additional
+  home_btn_browse_rule_sets: string;
+  home_quick_links: string;
+  home_link_rule_sets: string;
+  home_link_rule_sets_desc: string;
+  home_link_about: string;
+  home_link_about_desc: string;
+  home_link_credits: string;
+  home_link_credits_desc: string;
+  home_link_contact: string;
+  home_link_contact_desc: string;
+
+  // Rule Sets page
+  rulesets_page_title: string;
+  rulesets_heading: string;
+  rulesets_subtitle: string;
+  rulesets_rules_suffix: string;
+  rulesets_btn_analyze: string;
+  rulesets_btn_learn: string;
+
+  // Breadcrumbs
+  breadcrumb_aria_label: string;
+  breadcrumb_rule_sets: string;
+  breadcrumb_home: string;
+
+  // Mode Switcher
+  mode_switcher_aria_label: string;
+
+  // Rule Actions
+  action_remove_favorite: string;
+  action_add_favorite: string;
+  action_delete_custom_rule: string;
+  action_submit_github: string;
+  action_create_meter: string;
+  alert_max_favorites: string;
+  alert_favorite_failed: string;
+  alert_delete_confirm: string;
+  alert_delete_failed: string;
+
+  // Learn Index
+  learn_btn_delete: string;
+
+  // Rule Creator Validation
+  creator_validation_name_length: string;
+  creator_validation_name_invalid: string;
+  creator_validation_name_exists: string;
+  creator_validation_lines_min: string;
+
+  // Explore
+  explore_graph_hint: string;
+
   // Pages
   page_about_title: string;
   page_about_content: string;
@@ -383,6 +434,57 @@ const translations: Record<Language, Translations> = {
     export_cancel: 'Cancel',
     export_book_subtitle: 'Telugu Poetry Meters',
     export_book_generated: 'Generated from Chandam',
+
+    // Home page - additional
+    home_btn_browse_rule_sets: 'Browse Rule Sets',
+    home_quick_links: 'Quick Links',
+    home_link_rule_sets: 'Rule Sets',
+    home_link_rule_sets_desc: 'Browse all meter collections',
+    home_link_about: 'About',
+    home_link_about_desc: 'Learn about this project',
+    home_link_credits: 'Credits',
+    home_link_credits_desc: 'Contributors and sources',
+    home_link_contact: 'Contact',
+    home_link_contact_desc: 'Get in touch',
+
+    // Rule Sets page
+    rulesets_page_title: 'Rule Sets',
+    rulesets_heading: 'Telugu Poetry Meter Rule Sets',
+    rulesets_subtitle: 'Choose a rule set to analyze poetry or learn about meters',
+    rulesets_rules_suffix: 'Rules',
+    rulesets_btn_analyze: 'Analyze',
+    rulesets_btn_learn: 'Learn',
+
+    // Breadcrumbs
+    breadcrumb_aria_label: 'Breadcrumb',
+    breadcrumb_rule_sets: 'Rule Sets',
+    breadcrumb_home: 'Home',
+
+    // Mode Switcher
+    mode_switcher_aria_label: 'Mode selection',
+
+    // Rule Actions
+    action_remove_favorite: 'Remove from favorites',
+    action_add_favorite: 'Add to favorites',
+    action_delete_custom_rule: 'Delete this custom rule',
+    action_submit_github: 'Submit to GitHub',
+    action_create_meter: 'Create new meter',
+    alert_max_favorites: 'Maximum 50 favorites reached. Please remove some to add new ones.',
+    alert_favorite_failed: 'Failed to update favorite',
+    alert_delete_confirm: 'Are you sure you want to delete this custom rule? This action cannot be undone.',
+    alert_delete_failed: 'Failed to delete rule. Please try again.',
+
+    // Learn Index
+    learn_btn_delete: 'Delete',
+
+    // Rule Creator Validation
+    creator_validation_name_length: 'Rule name must be {max} characters or less',
+    creator_validation_name_invalid: 'Rule name contains invalid characters',
+    creator_validation_name_exists: 'A rule with this name already exists. Please choose a different name.',
+    creator_validation_lines_min: 'Number of lines must be at least 1',
+
+    // Explore
+    explore_graph_hint: 'Scroll to zoom. Drag nodes to rearrange. Click a rule to view details.',
 
     page_about_title: 'About Chandam',
     page_about_content: `
@@ -610,6 +712,57 @@ const translations: Record<Language, Translations> = {
     export_cancel: 'రద్దు',
     export_book_subtitle: 'తెలుగు ఛందస్సులు',
     export_book_generated: 'ఛందం నుండి రూపొందించబడింది',
+
+    // Home page - additional
+    home_btn_browse_rule_sets: 'నియమావళులను చూడండి',
+    home_quick_links: 'త్వరిత లింకులు',
+    home_link_rule_sets: 'నియమావళులు',
+    home_link_rule_sets_desc: 'అన్ని ఛందస్సుల సమూహాలను చూడండి',
+    home_link_about: 'పరిచయం',
+    home_link_about_desc: 'ఈ ప్రాజెక్టు గురించి తెలుసుకోండి',
+    home_link_credits: 'కృతజ్ఞతలు',
+    home_link_credits_desc: 'సహకారులు మరియు మూలాలు',
+    home_link_contact: 'సంప్రదింపులు',
+    home_link_contact_desc: 'మమ్మల్ని సంప్రదించండి',
+
+    // Rule Sets page
+    rulesets_page_title: 'నియమావళులు',
+    rulesets_heading: 'తెలుగు పద్య ఛందస్సు నియమావళులు',
+    rulesets_subtitle: 'పద్యాలను విశ్లేషించడానికి లేదా ఛందస్సు నేర్చుకోవడానికి ఒక నియమావళిని ఎంచుకోండి',
+    rulesets_rules_suffix: 'నియమాలు',
+    rulesets_btn_analyze: 'విశ్లేషించండి',
+    rulesets_btn_learn: 'నేర్చుకోండి',
+
+    // Breadcrumbs
+    breadcrumb_aria_label: 'నావిగేషన్ పథం',
+    breadcrumb_rule_sets: 'నియమావళులు',
+    breadcrumb_home: 'హోమ్',
+
+    // Mode Switcher
+    mode_switcher_aria_label: 'మోడ్ ఎంపిక',
+
+    // Rule Actions
+    action_remove_favorite: 'ఇష్టమైనవి నుండి తొలగించు',
+    action_add_favorite: 'ఇష్టమైనవాటికి జోడించు',
+    action_delete_custom_rule: 'ఈ అనుకూల నియమాన్ని తొలగించు',
+    action_submit_github: 'GitHubకు సమర్పించు',
+    action_create_meter: 'కొత్త ఛందస్సు సృష్టించు',
+    alert_max_favorites: 'గరిష్టంగా 50 ఇష్టమైనవి చేరుకున్నాయి. కొత్తవి జోడించడానికి కొన్నింటిని తొలగించండి.',
+    alert_favorite_failed: 'ఇష్టమైనవి నవీకరించడంలో విఫలమైంది',
+    alert_delete_confirm: 'మీరు ఈ అనుకూల నియమాన్ని తొలగించాలని ఖచ్చితంగా అనుకుంటున్నారా? ఈ చర్యను రద్దు చేయలేరు.',
+    alert_delete_failed: 'నియమాన్ని తొలగించడంలో విఫలమైంది. దయచేసి మళ్ళీ ప్రయత్నించండి.',
+
+    // Learn Index
+    learn_btn_delete: 'తొలగించు',
+
+    // Rule Creator Validation
+    creator_validation_name_length: 'నియమం పేరు {max} అక్షరాలు లేదా అంతకంటే తక్కువ ఉండాలి',
+    creator_validation_name_invalid: 'నియమం పేరులో చెల్లని అక్షరాలు ఉన్నాయి',
+    creator_validation_name_exists: 'ఈ పేరుతో ఒక నియమం ఇప్పటికే ఉంది. దయచేసి వేరే పేరు ఎంచుకోండి.',
+    creator_validation_lines_min: 'పాదాల సంఖ్య కనీసం 1 ఉండాలి',
+
+    // Explore
+    explore_graph_hint: 'జూమ్ చేయడానికి స్క్రోల్ చేయండి. నోడ్‌లను లాగి అమర్చండి. వివరాలు చూడటానికి నియమంపై క్లిక్ చేయండి.',
 
     page_about_title: 'About Chandam',
     page_about_content: `

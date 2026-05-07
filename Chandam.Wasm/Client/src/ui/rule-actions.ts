@@ -9,6 +9,7 @@ import { analyticsService } from '../services/analytics-service';
 import { storageService } from '../services/storage/storage-service';
 import { makeUrl } from '../utils/url-helpers';
 import { submitToGitHub, buildExamplePayload } from '../utils/github-submit';
+import { t } from '../i18n';
 
 /**
  * Renders action toolbar for rule pages (Learn & Compute)
@@ -55,8 +56,8 @@ function renderFavoriteButton(isFavorited: boolean, ruleSetId: string, ruleId: s
             data-rule-set="${ruleSetId}"
             data-rule-id="${ruleId}"
             data-favorited="${String(isFavorited)}"
-            title="${isFavorited ? 'Remove from favorites' : 'Add to favorites'}"
-            aria-label="${isFavorited ? 'Remove from favorites' : 'Add to favorites'}">
+            title="${isFavorited ? t('action_remove_favorite') : t('action_add_favorite')}"
+            aria-label="${isFavorited ? t('action_remove_favorite') : t('action_add_favorite')}">
       ${heartSvg}
     </button>
   `;
@@ -80,8 +81,8 @@ function renderDeleteButton(ruleSetId: string, ruleId: string): string {
             class="action-btn btn-delete"
             data-rule-set="${ruleSetId}"
             data-rule-id="${ruleId}"
-            title="Delete this custom rule"
-            aria-label="Delete this custom rule">
+            title="${t('action_delete_custom_rule')}"
+            aria-label="${t('action_delete_custom_rule')}">
       ${trashSvg}
     </button>
   `;
@@ -122,8 +123,8 @@ function renderGitHubButton(ruleSetId: string, ruleId: string): string {
             class="action-btn btn-github"
             data-rule-set="${ruleSetId}"
             data-rule-id="${ruleId}"
-            title="Submit to GitHub"
-            aria-label="Submit to GitHub">
+            title="${t('action_submit_github')}"
+            aria-label="${t('action_submit_github')}">
       ${githubSvg}
     </button>
   `;
@@ -139,8 +140,8 @@ function renderCreateRuleButton(): string {
   return `
     <a href="${makeUrl('/create-rule')}"
        class="action-btn btn-create-rule"
-       title="Create new meter"
-       aria-label="Create new meter">
+       title="${t('action_create_meter')}"
+       aria-label="${t('action_create_meter')}">
       ${plusSvg}
     </a>
   `;
@@ -201,8 +202,8 @@ async function handleFavoriteClick(ruleSetId: string, ruleId: string) {
 
     // Update button state
     btn.setAttribute('data-favorited', String(newState));
-    btn.setAttribute('title', newState ? 'Remove from favorites' : 'Add to favorites');
-    btn.setAttribute('aria-label', newState ? 'Remove from favorites' : 'Add to favorites');
+    btn.setAttribute('title', newState ? t('action_remove_favorite') : t('action_add_favorite'));
+    btn.setAttribute('aria-label', newState ? t('action_remove_favorite') : t('action_add_favorite'));
 
     // Remove animation class after animation completes
     setTimeout(() => btn.classList.remove('favoriting'), 300);
@@ -216,9 +217,9 @@ async function handleFavoriteClick(ruleSetId: string, ruleId: string) {
         ruleId: ruleId
       });
 
-      alert('Maximum 50 favorites reached. Please remove some to add new ones.');
+      alert(t('alert_max_favorites'));
     } else {
-      alert('Failed to update favorite');
+      alert(t('alert_favorite_failed'));
     }
 
     btn.classList.remove('favoriting');
@@ -227,9 +228,7 @@ async function handleFavoriteClick(ruleSetId: string, ruleId: string) {
 
 async function handleDeleteClick(ruleSetId: string, ruleId: string) {
   // Confirm deletion
-  const confirmed = confirm(
-    'Are you sure you want to delete this custom rule? This action cannot be undone.'
-  );
+  const confirmed = confirm(t('alert_delete_confirm'));
 
   if (!confirmed) {
     return;
@@ -272,6 +271,6 @@ async function handleDeleteClick(ruleSetId: string, ruleId: string) {
 
   } catch (error) {
     console.error('Failed to delete rule:', error);
-    alert('Failed to delete rule. Please try again.');
+    alert(t('alert_delete_failed'));
   }
 }
