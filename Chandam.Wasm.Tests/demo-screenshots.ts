@@ -383,6 +383,53 @@ async function story5(page: Page): Promise<void> {
 }
 
 // ---------------------------------------------------------------------------
+// Story 7: Export as Book
+// ---------------------------------------------------------------------------
+
+async function story7(page: Page): Promise<void> {
+  console.log('\n📚 Story 7: Export as Book');
+
+  // 1. Learn index page with export button visible
+  await gotoAndWait(page, '/learn/chandam/');
+  await capture(page, 'story-7-export-book', '01-export-button-on-index.png');
+
+  // 2. Click export and capture progress overlay
+  // Ensure rules are loaded before clicking export
+  await page.locator('.rule-list-item').first().waitFor({ state: 'visible', timeout: 10_000 });
+
+  // Start watching for overlay BEFORE clicking (export completes in ~1s)
+  const overlayPromise = page.waitForSelector('#export-progress-overlay', {
+    state: 'visible',
+    timeout: 10_000,
+  });
+  await page.locator('[data-action="export-book"]').click();
+
+  try {
+    await overlayPromise;
+    // Capture immediately — don't wait, it disappears fast
+    const dir = path.join(OUTPUT_DIR, 'story-7-export-book');
+    fs.mkdirSync(dir, { recursive: true });
+    await page.screenshot({
+      path: path.join(dir, '02-progress-overlay.png'),
+      fullPage: false,
+    });
+    console.log('  ✓ story-7-export-book/02-progress-overlay.png');
+  } catch {
+    // Export completed too fast — skip this screenshot
+    console.log('  ⚠ story-7-export-book/02-progress-overlay.png (skipped — export too fast)');
+  }
+  await page.waitForTimeout(1_000);
+
+  // 3. Navigate to learn detail and show single-rule export button
+  const firstLearnLink = page
+    .locator('.rule-list-item .rule-links a[href*="/learn/chandam/"]')
+    .first();
+  const learnHref = await firstLearnLink.getAttribute('href');
+  await gotoAndWait(page, learnHref!);
+  await capture(page, 'story-7-export-book', '03-single-rule-export-button.png');
+}
+
+// ---------------------------------------------------------------------------
 // Story 6: Mobile Experience
 // ---------------------------------------------------------------------------
 
@@ -476,6 +523,7 @@ async function main(): Promise<void> {
     await story3(page);
     await story4(page);
     await story5(page);
+    await story7(page);
 
     // Close desktop context
     await desktopContext.close();
@@ -504,6 +552,7 @@ function generateReadme(): void {
     'story-4-custom-rules',
     'story-5-github',
     'story-6-mobile',
+    'story-7-export-book',
   ];
 
   let md = '# Chandam Demo Screenshots\n\n';

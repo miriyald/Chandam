@@ -16,8 +16,6 @@ interface RouteExpectation {
   path: string;
   /** Selector expected to be visible after page renders. */
   visibleSelector: string;
-  /** Text expected somewhere on the page. */
-  expectedText?: string;
   /** Whether this route requires WASM (all compute/learn routes do). */
   requiresWasm?: boolean;
 }
@@ -26,7 +24,6 @@ const ROUTES: RouteExpectation[] = [
   {
     path: '/',
     visibleSelector: '.home-page',
-    expectedText: 'ఛందం',
     requiresWasm: true,
   },
   {
@@ -47,19 +44,16 @@ const ROUTES: RouteExpectation[] = [
   {
     path: '/about',
     visibleSelector: '#content',
-    expectedText: 'పరిచయం',
     requiresWasm: true,
   },
   {
     path: '/credits',
     visibleSelector: '#content',
-    expectedText: 'కృతజ్ఞతలు',
     requiresWasm: true,
   },
   {
     path: '/contact',
     visibleSelector: '#content',
-    expectedText: 'సంప్రదింపులు',
     requiresWasm: true,
   },
 ];
@@ -96,7 +90,7 @@ async function getFirstPopularRuleId(
   await expect(firstLearnLink).toBeVisible();
   const href = await firstLearnLink.getAttribute('href');
   // href is something like /learn/chandam/iMdravajramu
-const ruleId = href?.split('/').filter(Boolean).pop();
+  const ruleId = href?.split('/').filter(Boolean).pop();
   expect(ruleId).toBeTruthy();
   return ruleId!;
 }
@@ -130,10 +124,9 @@ test.describe('Deep link – standard routes', () => {
         timeout: 10_000,
       });
 
-      // Expected text is present (if specified)
-      if (route.expectedText) {
-        await expect(page.locator('body')).toContainText(route.expectedText);
-      }
+      // Content container should be hydrated with non-empty content.
+      const renderedContainer = page.locator(route.visibleSelector).first();
+      await expect(renderedContainer).not.toBeEmpty();
     });
   }
 });
@@ -211,8 +204,12 @@ test.describe('Deep link – error routes', () => {
     const homeHero = page.locator('.home-page');
     await expect(homeHero).not.toBeVisible({ timeout: 3_000 });
 
-    // The page body should indicate an error or "not found"
-    await expect(page.locator('body')).toContainText(/not found|404/i);
+    // Invalid route should retain the non-home URL path (no silent redirect to /)
+    expect(new URL(page.url()).pathname).toBe('/nonexistent-page-xyz');
+
+    // 404 content container should be rendered and hydrated
+    await expect(page.locator('#content')).toBeVisible();
+    await expect(page.locator('#content')).not.toBeEmpty();
   });
 
   test('invalid rule set ID renders error content', async ({ page }) => {

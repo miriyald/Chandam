@@ -166,11 +166,9 @@ test.describe('Custom rule – compute and persistence', () => {
     // Allow IndexedDB write to settle
     await page.waitForTimeout(500);
 
-    // Navigate to rule-sets via SPA router to preserve WASM state
-    await page.evaluate(() => {
-      history.pushState(null, '', '/rule-sets');
-      window.dispatchEvent(new PopStateEvent('popstate'));
-    });
+    // Navigate using an in-app link to trigger the SPA router reliably.
+    await page.locator('main a[href*="/rule-sets"]').first().click();
+    await expect(page).toHaveURL(/\/rule-sets\/?$/, { timeout: 10_000 });
     await expect(page.locator('.rule-sets-page')).toBeVisible({ timeout: 10_000 });
 
     // The custom-rules card uses class .custom-rules-card

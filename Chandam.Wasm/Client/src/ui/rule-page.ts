@@ -32,7 +32,11 @@ export async function renderRulePage(params: Record<string, string>) {
     await loadRuleSet(ruleSetConfig.rulesFile, ruleSetConfig.examplesFile);
   } else {
     // Custom ruleset - load from IndexedDB
-    await CustomRulesLoader.loadCustomRuleset(ruleSet);
+    const loaded = await CustomRulesLoader.loadCustomRuleset(ruleSet);
+    if (!loaded) {
+      console.error(`Failed to load custom ruleset: ${ruleSet}`);
+      return;
+    }
   }
 
   // Step 3: Get rule info

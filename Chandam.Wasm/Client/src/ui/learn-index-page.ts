@@ -48,7 +48,18 @@ export async function renderLearnIndexPage(ruleSet: string) {
     await loadRuleSet(ruleSetConfig.rulesFile, ruleSetConfig.examplesFile);
   } else {
     // Custom ruleset - load from IndexedDB
-    await CustomRulesLoader.loadCustomRuleset(ruleSet);
+    const loaded = await CustomRulesLoader.loadCustomRuleset(ruleSet);
+    if (!loaded) {
+      const content = document.getElementById('content');
+      if (content) {
+        content.innerHTML = `
+          <div class="empty-state">
+            <p>${t('filter_no_results')}</p>
+          </div>
+        `;
+      }
+      return;
+    }
   }
 
   // Step 3: Get all rules with detailed metadata
@@ -66,12 +77,14 @@ export async function renderLearnIndexPage(ruleSet: string) {
   const allFavorites = await storageService.indexedDB.getAllFavorites();
 
   // Create Set of composite IDs for O(1) lookup
-  // IMPORTANT: Filter to only favorites from THIS ruleset
-  // Composite ID format: "ruleSetId:ruleId" (e.g., "frequent:iMdravajramu")
+  // For custom-fav (virtual collection), all displayed rules are favorites
+  // For regular rulesets, filter to only favorites from THIS ruleset
   const favoriteIds = new Set(
-    allFavorites
-      .filter(fav => fav.ruleSetId === ruleSet)  // Only this ruleset's favorites
-      .map(fav => fav.id)
+    ruleSet === 'custom-fav'
+      ? allFavorites.map(fav => `custom-fav:${fav.ruleId}`)
+      : allFavorites
+          .filter(fav => fav.ruleSetId === ruleSet)
+          .map(fav => fav.id)
   );
 
   // Step 4: Apply filters and group results
@@ -121,6 +134,10 @@ function renderLearnIndexPageHtml(
 
       <div class="page-header-controls">
         <h1>${ruleSetName}</h1>
+        <button class="btn-export-book" data-action="export-book">
+          <svg class="export-icon" viewBox="0 0 24 24" width="16" height="16"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
+          ${t('export_book')}
+        </button>
         ${renderModeSwitcher({ ruleSetId, currentMode: 'learn' })}
       </div>
       <div class="filter-bar">
@@ -137,9 +154,8 @@ function renderLearnIndexPageHtml(
             ${renderCategoryDropdown()}
           </div>
           <div class="filter-actions">
-            <span class="rule-count">${ruleCount} ${t('filter_of')} ${allRulesCount}</span>
+            ${ruleCount !== allRulesCount ? `<span class="rule-count">${t('filter_results')} (${ruleCount}/${allRulesCount})</span>` : ''}
             <button class="btn-clear-filters" data-action="clear-filters">${t('editor_btn_clear')}</button>
-            <button class="btn-export-book" data-action="export-book">${t('export_book')}</button>
           </div>
         </div>
       </div>
@@ -212,7 +228,7 @@ function renderRuleListItem(rule: RuleSummaryDetailed, ruleSetId: string, favori
     : '';
 
   const sequenceHtml = rule.sequence
-    ? `<div class="rule-sequence"><code>${rule.sequence}</code></div>`
+    ? `<div class="rule-sequence"><span class="sequence-label">గణములు:</span> <code>${rule.sequence}</code></div>`
     : '';
 
   const compositeId = `${ruleSetId}:${rule.identifier}`;
@@ -221,7 +237,9 @@ function renderRuleListItem(rule: RuleSummaryDetailed, ruleSetId: string, favori
 
   const isCustomRule = rule.identifier.startsWith('custom-');
   const deleteButton = isCustomRule
-    ? `<button class="btn-delete-inline" data-action="delete-rule" data-rule-id="${rule.identifier}" data-rule-name="${rule.name.replace(/"/g, '&quot;')}">${t('learn_btn_delete')}</button>`
+    ? `<a class="rule-action-icon btn-delete-inline" data-action="delete-rule" data-rule-id="${rule.identifier}" data-rule-name="${rule.name.replace(/"/g, '&quot;')}" title="${t('learn_btn_delete')}">
+        <svg viewBox="0 0 24 24" width="16" height="16"><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/></svg>
+      </a>`
     : '';
 
   return `
@@ -229,15 +247,19 @@ function renderRuleListItem(rule: RuleSummaryDetailed, ruleSetId: string, favori
       <div class="rule-item-header">
         <span class="rule-name meter-name">${displayName}</span>
         ${subTypeBadge}
+        <div class="rule-item-actions">
+          <a href="${makeUrl(`/learn/${ruleSetId}/${rule.identifier}`)}" class="rule-action-icon" title="${t('link_learn')}">
+            <svg viewBox="0 0 24 24" width="16" height="16"><path d="M21 5c-1.11-.35-2.33-.5-3.5-.5-1.95 0-4.05.4-5.5 1.5-1.45-1.1-3.55-1.5-5.5-1.5S2.45 4.9 1 6v14.65c0 .25.25.5.5.5.1 0 .15-.05.25-.05C3.1 20.45 5.05 20 6.5 20c1.95 0 4.05.4 5.5 1.5 1.35-.85 3.8-1.5 5.5-1.5 1.65 0 3.35.3 4.75 1.05.1.05.15.05.25.05.25 0 .5-.25.5-.5V6c-.6-.45-1.25-.75-2-1zM21 18.5c-1.1-.35-2.3-.5-3.5-.5-1.7 0-4.15.65-5.5 1.5V8c1.35-.85 3.8-1.5 5.5-1.5 1.2 0 2.4.15 3.5.5v11.5z"/></svg>
+          </a>
+          <a href="${makeUrl(`/compute/${ruleSetId}/${rule.identifier}`)}" class="rule-action-icon" title="${t('link_try')}">
+            <svg viewBox="0 0 24 24" width="16" height="16"><path d="M8 5v14l11-7z"/></svg>
+          </a>
+          ${deleteButton}
+        </div>
       </div>
       ${aliasHtml}
       ${badgesHtml}
       ${sequenceHtml}
-      <div class="rule-links">
-        <a href="${makeUrl(`/learn/${ruleSetId}/${rule.identifier}`)}">${t('link_learn')}</a>
-        <a href="${makeUrl(`/compute/${ruleSetId}/${rule.identifier}`)}">${t('link_try')}</a>
-        ${deleteButton}
-      </div>
     </div>
   `;
 }

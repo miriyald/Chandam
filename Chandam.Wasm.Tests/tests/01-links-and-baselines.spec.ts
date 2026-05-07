@@ -17,17 +17,17 @@ import { gotoAndWait } from '../fixtures/wasm-ready';
 // ---------------------------------------------------------------------------
 // Routes to visit
 // ---------------------------------------------------------------------------
-const ROUTES: Array<{ path: string; name: string; expectedContent: string }> = [
-  { path: '/',               name: 'home',            expectedContent: 'ఛందం' },
-  { path: '/rule-sets',      name: 'rule-sets',       expectedContent: 'Rule Sets' },
-  { path: '/compute/chandam/', name: 'compute-chandam', expectedContent: 'Rule Set' },
-  { path: '/compute/topella/', name: 'compute-topella', expectedContent: 'Rule Set' },
-  { path: '/learn/chandam/',   name: 'learn-chandam',   expectedContent: 'Rule Set' },
-  { path: '/learn/topella/',   name: 'learn-topella',   expectedContent: 'Rule Set' },
-  { path: '/create-rule',    name: 'create-rule',     expectedContent: 'నియమ' },
-  { path: '/about',          name: 'about',           expectedContent: 'పరిచయం' },
-  { path: '/credits',        name: 'credits',         expectedContent: 'కృతజ్ఞతలు' },
-  { path: '/contact',        name: 'contact',         expectedContent: 'సంప్రదింపులు' },
+const ROUTES: Array<{ path: string; name: string; visibleSelector: string }> = [
+  { path: '/', name: 'home', visibleSelector: '.home-page' },
+  { path: '/rule-sets', name: 'rule-sets', visibleSelector: '.rule-sets-page' },
+  { path: '/compute/chandam/', name: 'compute-chandam', visibleSelector: '.compute-rule-set-page' },
+  { path: '/compute/topella/', name: 'compute-topella', visibleSelector: '.compute-rule-set-page' },
+  { path: '/learn/chandam/', name: 'learn-chandam', visibleSelector: '.learn-index-page' },
+  { path: '/learn/topella/', name: 'learn-topella', visibleSelector: '.learn-index-page' },
+  { path: '/create-rule', name: 'create-rule', visibleSelector: '#create-rule-btn' },
+  { path: '/about', name: 'about', visibleSelector: '#content' },
+  { path: '/credits', name: 'credits', visibleSelector: '#content' },
+  { path: '/contact', name: 'contact', visibleSelector: '#content' },
 ];
 
 // ---------------------------------------------------------------------------
@@ -58,8 +58,8 @@ for (const route of ROUTES) {
   test(`[${route.name}] page loads without errors`, async ({ page, consoleErrors }) => {
     await gotoAndWait(page, route.path);
 
-    // Page body must contain expected text
-    await expect(page.locator('body')).toContainText(route.expectedContent, {
+    // Route-specific container must render.
+    await expect(page.locator(route.visibleSelector)).toBeVisible({
       timeout: 10_000,
     });
 

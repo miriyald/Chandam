@@ -3,7 +3,7 @@ import { getRuleSet, getRuleSetAsync } from '../config';
 import { renderRulePicker, setSelectedRule, getSelectedRule } from './rule-picker';
 import { clearEditor, enableEditorAutoSave } from './editor';
 import { renderEditorCard, showRulePicker, hideRulePicker } from './shared-components';
-import { renderFirstMatch, hideResults } from './results';
+import { renderFirstMatch, renderScoreCards, hideResults } from './results';
 import { getEditorText } from './editor';
 import type { RuleSummaryDetailed } from '../types';
 import { makeUrl } from '../utils/url-helpers';
@@ -48,7 +48,11 @@ export async function renderRuleSetPage(ruleSet: string) {
     await loadRuleSet(ruleSetConfig.rulesFile, ruleSetConfig.examplesFile);
   } else {
     // Custom ruleset - load from IndexedDB
-    await CustomRulesLoader.loadCustomRuleset(ruleSet);
+    const loaded = await CustomRulesLoader.loadCustomRuleset(ruleSet);
+    if (!loaded) {
+      console.error(`Failed to load custom ruleset: ${ruleSet}`);
+      return;
+    }
   }
 
   // Step 3: Get all rules
@@ -106,6 +110,7 @@ function renderRuleSetPageHtml(ruleSetName: string, ruleCount: number, ruleSetId
       <div id="results-section" style="display: none;">
         <h3>${t('results_title')}</h3>
         <div id="results-container"></div>
+        <div id="score-cards-container"></div>
       </div>
     </div>
   `;
@@ -184,6 +189,29 @@ function attachEventHandlers(ruleSet: string) {
     clearEditor();
     hideResults();
   });
+
+  // Score card "try" button — switch to manual mode, select rule, and run tryMatch
+  document.getElementById('score-cards-container')?.addEventListener('click', async (e) => {
+    const btn = (e.target as HTMLElement).closest('.score-card-try') as HTMLElement;
+    if (!btn) return;
+
+    const ruleId = btn.getAttribute('data-rule-id');
+    const ruleName = btn.getAttribute('data-rule-name');
+    if (!ruleId || !ruleName) return;
+
+    // Switch to manual mode
+    const autoDetect = document.getElementById('auto-detect') as HTMLInputElement;
+    if (autoDetect && autoDetect.checked) {
+      autoDetect.checked = false;
+      showRulePicker();
+    }
+
+    // Select the rule
+    setSelectedRule(ruleId, ruleName);
+
+    // Run tryMatch
+    await handleMatchWithTracking();
+  });
 }
 
 // Custom determine handler that tracks last analyzed rule
@@ -214,6 +242,22 @@ async function handleDetermineWithTracking() {
       // Show results section
       const resultsSection = document.getElementById('results-section');
       if (resultsSection) resultsSection.style.display = 'block';
+
+      // Fetch and show alternative matches ranked by score
+      try {
+        const scoresResponse = await WasmBridge.getScores(poemText, yati, prasa, 50);
+        if (scoresResponse.scores && scoresResponse.scores.length > 1) {
+          // Filter out the best match (already shown) and show top 5 alternatives
+          const alternatives = scoresResponse.scores
+            .filter(s => s.identifier !== bestMatch.rule.identifier)
+            .slice(0, 5);
+          if (alternatives.length > 0) {
+            renderScoreCards(alternatives, 'score-cards-container', currentRuleSet);
+          }
+        }
+      } catch (scoreErr) {
+        console.error('Scores fetch failed:', scoreErr);
+      }
     } else {
       alert(response.errorMessage || t('alert_no_matches'));
     }

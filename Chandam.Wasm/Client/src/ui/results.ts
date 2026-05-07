@@ -1,4 +1,4 @@
-import type { ChandamMatch, MatchError } from '../types';
+import type { ChandamMatch, ChandamScore, MatchError } from '../types';
 import { openAccordion } from './accordion';
 import { makeUrl } from '../utils/url-helpers';
 import { t } from '../i18n';
@@ -246,6 +246,47 @@ async function handleSubmitToGitHub(button: HTMLElement, ruleSet?: string): Prom
   }
 }
 
+// Render lightweight score cards for alternative matches
+export function renderScoreCards(scores: ChandamScore[], containerId: string, ruleSet?: string): void {
+  const container = document.getElementById(containerId);
+  if (!container) return;
+
+  const cardsHtml = scores.map(score => {
+    const level = getScoreLevel(score.matchPercentage);
+    const learnLink = ruleSet
+      ? `<a href="${makeUrl(`/learn/${ruleSet}/${score.identifier}/`)}" class="score-card-link">${score.name}</a>`
+      : `<span class="score-card-name">${score.name}</span>`;
+    const computeBtn = ruleSet
+      ? `<button class="score-card-try" data-rule-id="${score.identifier}" data-rule-name="${score.name}" title="${t('link_try')}">
+          <svg viewBox="0 0 24 24" width="14" height="14"><path d="M8 5v14l11-7z"/></svg>
+        </button>`
+      : '';
+
+    return `
+      <div class="score-card">
+        <div class="score-card-info">
+          ${learnLink}
+          <span class="badge badge-type badge-sm">${score.padyamType}</span>
+        </div>
+        <div class="score-card-bar-group">
+          <div class="score-card-bar">
+            <div class="score-card-bar-fill score-bar-${level}" style="width: ${score.matchPercentage}%"></div>
+          </div>
+          <span class="score-card-percent match-score-${level}">${score.matchPercentage}%</span>
+          ${computeBtn}
+        </div>
+      </div>
+    `;
+  }).join('');
+
+  container.innerHTML = `
+    <div class="score-cards-section">
+      <h4 class="score-cards-heading">${t('results_alternatives')}</h4>
+      ${cardsHtml}
+    </div>
+  `;
+}
+
 // Hide results section
 export function hideResults() {
   const resultsSection = document.getElementById('results-section');
@@ -255,6 +296,9 @@ export function hideResults() {
 
   const container = document.getElementById('results-container');
   if (container) container.innerHTML = '';
+
+  const scoreCards = document.getElementById('score-cards-container');
+  if (scoreCards) scoreCards.innerHTML = '';
 }
 
 export function clearResults() {

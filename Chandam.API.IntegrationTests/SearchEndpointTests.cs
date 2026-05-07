@@ -56,7 +56,7 @@ namespace Chandam.API.IntegrationTests
             Assert.True(facets.TryGetProperty("SubTypes", out _));
         }
 
-        public void Dispose()
+        internal void Dispose()
         {
             _client?.Dispose();
         }

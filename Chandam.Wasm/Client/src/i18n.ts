@@ -3,6 +3,7 @@
 export interface Translations {
   // Navigation
   nav_home: string;
+  nav_rule_sets: string;
   nav_about: string;
   nav_credits: string;
   nav_contact: string;
@@ -47,6 +48,7 @@ export interface Translations {
   // Results
   results_title: string;
   results_view_details: string;
+  results_alternatives: string;
   results_line: string;
   results_position: string;
   results_type: string;
@@ -187,6 +189,11 @@ export interface Translations {
   filter_try_removing: string;
   filter_showing: string;
   filter_of: string;
+  filter_results: string;
+
+  // Examples
+  examples_none_available: string;
+  examples_contribute_cta: string;
 
   // Export
   export_book: string;
@@ -259,6 +266,7 @@ export interface Translations {
 const translations: Record<Language, Translations> = {
   en: {
     nav_home: 'Home',
+    nav_rule_sets: 'Rule Sets',
     nav_about: 'About',
     nav_credits: 'Credits',
     nav_contact: 'Contact',
@@ -298,6 +306,7 @@ const translations: Record<Language, Translations> = {
 
     results_title: 'Results',
     results_view_details: 'View Rule Details ↗',
+    results_alternatives: 'Other Possible Matches',
     results_line: 'Line',
     results_position: 'Pos',
     results_type: 'Type',
@@ -427,6 +436,10 @@ const translations: Record<Language, Translations> = {
     filter_try_removing: 'Try removing some filters to see more results.',
     filter_showing: 'Showing',
     filter_of: 'of',
+    filter_results: 'Results',
+
+    examples_none_available: 'No examples available yet.',
+    examples_contribute_cta: 'You may contribute by writing one!',
 
     export_book: 'Export as Book',
     export_book_single: 'Export Rule',
@@ -537,6 +550,7 @@ const translations: Record<Language, Translations> = {
   },
   te: {
     nav_home: 'హోమ్',
+    nav_rule_sets: 'నియమావళులు',
     nav_about: 'పరిచయం',
     nav_credits: 'కృతజ్ఞతలు',
     nav_contact: 'సంప్రదింపులు',
@@ -576,6 +590,7 @@ const translations: Record<Language, Translations> = {
 
     results_title: 'ఫలితాలు',
     results_view_details: 'నియమ వివరాలు చూడండి ↗',
+    results_alternatives: 'ఇతర సాధ్యమైన సరిపోలికలు',
     results_line: 'పంక్తి',
     results_position: 'స్థానం',
     results_type: 'రకం',
@@ -705,6 +720,10 @@ const translations: Record<Language, Translations> = {
     filter_try_removing: 'మరిన్ని ఫలితాలను చూడటానికి కొన్ని వడపోతలను తీసివేయడానికి ప్రయత్నించండి.',
     filter_showing: 'చూపిస్తున్నవి',
     filter_of: '/',
+    filter_results: 'ఫలితాలు',
+
+    examples_none_available: 'ఉదాహరణలు ఇంకా అందుబాటులో లేవు.',
+    examples_contribute_cta: 'మీరు ఒకటి వ్రాసి సహకరించవచ్చు!',
 
     export_book: 'పుస్తకంగా ఎగుమతి చేయి',
     export_book_single: 'నియమాన్ని ఎగుమతి చేయి',

@@ -412,9 +412,10 @@ html, body {
     <div class="chapter-dot" data-slide="26" data-tooltip="Custom Rules"></div>
     <div class="chapter-dot" data-slide="32" data-tooltip="GitHub"></div>
     <div class="chapter-dot" data-slide="35" data-tooltip="Mobile"></div>
+    <div class="chapter-dot" data-slide="41" data-tooltip="Export Book"></div>
   </nav>
 
-  <div class="slide-counter" id="counter">1 / 41</div>
+  <div class="slide-counter" id="counter">1 / 44</div>
 
   <button class="fullscreen-btn" id="fs-btn" aria-label="Toggle fullscreen">
     <svg viewBox="0 0 24 24"><path d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z"/></svg>
@@ -427,7 +428,7 @@ html, body {
     <section class="slide slide-title active">
       <div class="logo">ఛందం</div>
       <div class="subtitle">Telugu Poetry Meter Analysis</div>
-      <div class="tagline">6 User Stories</div>
+      <div class="tagline">7 User Stories</div>
       <div class="url">chandamu.github.io</div>
     </section>
 
@@ -642,6 +643,23 @@ html, body {
       <img class="screenshot mobile-frame" src="screenshots/story-6-mobile/05-mobile-favorites.png" alt="Mobile favorites" loading="lazy">
       <p class="caption">Heart button accessible on mobile</p>
     </section>
+
+    <!-- Story 7: Export as Book -->
+    <section class="slide slide-chapter" data-chapter="7">
+      <div class="story-number">Story 7</div>
+      <div class="chapter-title">Export as Book</div>
+      <div class="chapter-quote">"I want a printable reference of all meters"</div>
+    </section>
+
+    <section class="slide slide-content" data-chapter="7">
+      <img class="screenshot" src="screenshots/story-7-export-book/01-export-button-on-index.png" alt="Export button on index" loading="lazy">
+      <p class="caption">"Export as Book" button in the filter bar generates an HTML book</p>
+    </section>
+
+    <section class="slide slide-content" data-chapter="7">
+      <img class="screenshot" src="screenshots/story-7-export-book/03-single-rule-export-button.png" alt="Single rule export" loading="lazy">
+      <p class="caption">Individual rules can be exported with full metadata and examples</p>
+    </section>
   </div>
 
   <!-- Overview Grid -->
@@ -662,7 +680,7 @@ html, body {
   const dots = document.querySelectorAll('.chapter-dot');
   const fsBtn = document.getElementById('fs-btn');
 
-  const chapters = [0, 1, 12, 20, 26, 32, 35];
+  const chapters = [0, 1, 12, 20, 26, 32, 35, 41];
 
   function updateUI() {
     progress.style.width = ((current / (total - 1)) * 100) + '%';
@@ -719,7 +737,7 @@ html, body {
         e.preventDefault();
         break;
       default:
-        if (e.key >= '1' && e.key <= '6') {
+        if (e.key >= '1' && e.key <= '7') {
           goTo(chapters[parseInt(e.key)]);
           e.preventDefault();
         }

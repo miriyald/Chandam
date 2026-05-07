@@ -95,11 +95,8 @@ test.describe('Favorites – heart button', () => {
     // Navigate to rule-sets page
     await gotoAndWait(page, '/rule-sets');
 
-    // A "Favorites" or "custom-fav" card should now be visible
-    const favCard = page
-      .locator('.rule-set-card.favorites-ruleset, .rule-set-card .meter-name')
-      .filter({ hasText: /favorites|custom-fav/i })
-      .first();
+    // Favorites card should appear via its dedicated structural class.
+    const favCard = page.locator('.rule-set-card.favorites-ruleset').first();
     await expect(favCard).toBeVisible({ timeout: 5_000 });
   });
 

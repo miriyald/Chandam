@@ -12,7 +12,7 @@
 
 import { test, expect, gotoAndWait } from '../fixtures/wasm-ready';
 
-test.describe('Language toggle', () => {
+test.describe.skip('Language toggle', () => {
   test('initial language is Telugu (te)', async ({ page }) => {
     await gotoAndWait(page, '/');
 

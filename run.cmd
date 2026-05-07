@@ -130,6 +130,57 @@
 :: npm run lint
 
 :: ============================================================================
+:: 8a. PLAYWRIGHT COMMANDS - WASM TESTS
+:: ============================================================================
+
+:: Navigate to Playwright test project
+:: cd Chandam.Wasm.Tests
+
+:: Install dependencies
+:: cd Chandam.Wasm.Tests
+:: npm install
+
+:: Install Playwright browsers
+:: cd Chandam.Wasm.Tests
+:: npm run install-browsers
+
+:: Run all Playwright tests
+:: cd Chandam.Wasm.Tests
+:: npm test
+
+:: Run Playwright tests with UI mode
+:: cd Chandam.Wasm.Tests
+:: npm run test:ui
+
+:: Run headed browser tests
+:: cd Chandam.Wasm.Tests
+:: npm run test:headed
+
+:: Run desktop-only tests
+:: cd Chandam.Wasm.Tests
+:: npm run test:desktop
+
+:: Run mobile-only tests
+:: cd Chandam.Wasm.Tests
+:: npm run test:mobile
+
+:: Run specific Playwright test files
+:: cd Chandam.Wasm.Tests
+:: npx playwright test tests/06-language-toggle.spec.ts tests/14-refresh-persistence.spec.ts
+
+:: Show last Playwright HTML report
+:: cd Chandam.Wasm.Tests
+:: npm run report
+
+:: Update Playwright snapshots
+:: cd Chandam.Wasm.Tests
+:: npm run snapshots
+
+:: Screenshot demo
+:: cd Chandam.Wasm.Tests
+:: npm run demo-screenshots
+
+:: ============================================================================
 :: 9. TASKS COMMANDS (Rule Generation, Verification, Conversion)
 :: ============================================================================
 
