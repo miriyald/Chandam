@@ -91,10 +91,6 @@ namespace Verifier
             Console.WriteLine("\nGenerating Sanskrit Rules");
 
             var selectedRules = RuleHelper.GetSanRules();
-            foreach (var rule in selectedRules)
-            {
-                rule.Language = RuleLanguage.Sanskrit;
-            }
 
             if (selectedRules.Length == 0)
             {

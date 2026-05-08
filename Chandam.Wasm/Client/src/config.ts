@@ -27,7 +27,7 @@ export const RULE_SETS: RuleSet[] = [
   {
     id: 'sanskrit',
     name: 'సంస్కృత ఛందస్సులు',
-    description: 'संस्कृत छन्दस्सु నియమావళి',
+    description: 'సంస్కృత నియమావళి',
     rulesFile: 'data/sanskrit.min.json.gz',
     examplesFile: 'data/sanskrit-examples.min.json.gz',
     ruleCount: 1165

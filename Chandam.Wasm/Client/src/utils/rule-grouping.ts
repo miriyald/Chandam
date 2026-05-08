@@ -51,6 +51,9 @@ export function groupRulesByCategory(rules: RuleSummaryDetailed[]): Map<string, 
   const grouped = new Map<string, RuleSummaryDetailed[]>();
 
   rules.forEach(rule => {
+    // GenricVruttam is an internal/catch-all type — exclude from UI
+    if (rule.padyamSubType === 'GenricVruttam') return;
+
     let groupKey: string;
 
     // Vruttam subType: group by ChandamName

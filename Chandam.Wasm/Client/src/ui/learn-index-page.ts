@@ -62,8 +62,9 @@ export async function renderLearnIndexPage(ruleSet: string) {
     }
   }
 
-  // Step 3: Get all rules with detailed metadata
-  const rules = await WasmBridge.getAllRulesDetailed('te');
+  // Step 3: Get all rules with detailed metadata (exclude GenricVruttam from UI)
+  const rules = (await WasmBridge.getAllRulesDetailed('te'))
+    .filter(r => r.padyamSubType !== 'GenricVruttam');
   allRulesCount = rules.length;
   allRulesCache = rules;
   currentRuleSetName = ruleSetConfig.name;
@@ -287,9 +288,11 @@ function renderCategoryDropdown(): string {
     ? getTeluguCategoryName(currentFilterState.selectedCategory)
     : allLabel;
 
-  const items = currentFilters.categories.map(cat =>
-    `<div class="rule-item" role="option" data-value="${cat}" aria-selected="${cat === currentFilterState.selectedCategory}">${getTeluguCategoryName(cat)}</div>`
-  ).join('');
+  const items = currentFilters.categories
+    .filter(cat => cat !== 'GenricVruttam')
+    .map(cat =>
+      `<div class="rule-item" role="option" data-value="${cat}" aria-selected="${cat === currentFilterState.selectedCategory}">${getTeluguCategoryName(cat)}</div>`
+    ).join('');
 
   return `
     <details class="rule-picker-inline" id="category-picker">

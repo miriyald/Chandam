@@ -55,8 +55,9 @@ export async function renderRuleSetPage(ruleSet: string) {
     }
   }
 
-  // Step 3: Get all rules
-  const rules = await WasmBridge.getAllRulesDetailed();
+  // Step 3: Get all rules (exclude GenricVruttam from UI)
+  const rules = (await WasmBridge.getAllRulesDetailed())
+    .filter(r => r.padyamSubType !== 'GenricVruttam');
 
   // Store rules for lookup
   allRules = rules;
