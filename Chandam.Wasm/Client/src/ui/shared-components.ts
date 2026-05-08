@@ -37,9 +37,15 @@ export function renderEditorCard(config: EditorCardConfig): string {
         </div>
 
         <div class="editor-actions">
-          <button id="btn-random" title="${t('editor_btn_random')}">${t('editor_btn_random')}</button>
+          <button id="btn-random" title="${t('editor_btn_random')}">
+            <svg viewBox="0 0 24 24" width="14" height="14"><path d="M10.59 9.17L5.41 4 4 5.41l5.17 5.17 1.42-1.41zM14.5 4l2.04 2.04L4 18.59 5.41 20 17.96 7.46 20 9.5V4h-5.5zm.33 9.41l-1.41 1.41 3.13 3.13L14.5 20H20v-5.5l-2.04 2.04-3.13-3.13z"/></svg>
+            ${t('editor_btn_random')}
+          </button>
           <span class="action-separator" aria-hidden="true">|</span>
-          <button id="btn-clear" title="${t('editor_btn_clear')}">${t('editor_btn_clear')}</button>
+          <button id="btn-clear" title="${t('editor_btn_clear')}">
+            <svg viewBox="0 0 24 24" width="14" height="14"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+            ${t('editor_btn_clear')}
+          </button>
         </div>
       </div>
 
@@ -61,7 +67,10 @@ export function renderEditorCard(config: EditorCardConfig): string {
         </div>
 
         <div class="main-actions">
-          <button id="btn-analyze" class="btn-primary">${t('editor_btn_analyze')}</button>
+          <button id="btn-analyze" class="btn-primary">
+            <svg viewBox="0 0 24 24" width="14" height="14"><path d="M8 5v14l11-7z"/></svg>
+            ${t('editor_btn_analyze')}
+          </button>
         </div>
       </div>
     </div>

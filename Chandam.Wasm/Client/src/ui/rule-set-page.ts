@@ -190,8 +190,8 @@ function attachEventHandlers(ruleSet: string) {
     hideResults();
   });
 
-  // Score card "try" button — switch to manual mode, select rule, and run tryMatch
-  document.getElementById('score-cards-container')?.addEventListener('click', async (e) => {
+  // Score card "try" button — switch to manual mode, select rule, trigger analyze via UI event
+  document.getElementById('score-cards-container')?.addEventListener('click', (e) => {
     const btn = (e.target as HTMLElement).closest('.score-card-try') as HTMLElement;
     if (!btn) return;
 
@@ -209,8 +209,8 @@ function attachEventHandlers(ruleSet: string) {
     // Select the rule
     setSelectedRule(ruleId, ruleName);
 
-    // Run tryMatch
-    await handleMatchWithTracking();
+    // Trigger analyze button click — follows the natural UI flow (mode-aware)
+    document.getElementById('btn-analyze')?.click();
   });
 }
 
@@ -269,6 +269,10 @@ async function handleDetermineWithTracking() {
 
 // Custom match handler that tracks last analyzed rule
 async function handleMatchWithTracking() {
+  // Clear score cards (only relevant in auto-detect mode)
+  const scoreCards = document.getElementById('score-cards-container');
+  if (scoreCards) scoreCards.innerHTML = '';
+
   const poemText = getEditorText();
   const ruleId = getSelectedRule();
 

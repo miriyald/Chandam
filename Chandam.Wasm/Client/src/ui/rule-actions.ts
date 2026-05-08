@@ -67,6 +67,7 @@ function renderFavoriteButton(isFavorited: boolean, ruleSetId: string, ruleId: s
             title="${isFavorited ? t('action_remove_favorite') : t('action_add_favorite')}"
             aria-label="${isFavorited ? t('action_remove_favorite') : t('action_add_favorite')}">
       ${heartSvg}
+      <span>${isFavorited ? t('action_remove_favorite') : t('action_add_favorite')}</span>
     </button>
   `;
 }
@@ -92,6 +93,7 @@ function renderDeleteButton(ruleSetId: string, ruleId: string): string {
             title="${t('action_delete_custom_rule')}"
             aria-label="${t('action_delete_custom_rule')}">
       ${trashSvg}
+      <span>${t('action_delete_custom_rule')}</span>
     </button>
   `;
 }
@@ -136,6 +138,7 @@ function renderGitHubButton(ruleSetId: string, ruleId: string): string {
             title="${t('action_submit_github')}"
             aria-label="${t('action_submit_github')}">
       ${githubSvg}
+      <span>${t('action_submit_github')}</span>
     </button>
   `;
 }
@@ -153,6 +156,7 @@ function renderCreateRuleButton(): string {
        title="${t('action_create_meter')}"
        aria-label="${t('action_create_meter')}">
       ${plusSvg}
+      <span>${t('action_create_meter')}</span>
     </a>
   `;
 }

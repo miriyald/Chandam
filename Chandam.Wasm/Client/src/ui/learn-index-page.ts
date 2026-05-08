@@ -154,7 +154,7 @@ function renderLearnIndexPageHtml(
             ${renderCategoryDropdown()}
           </div>
           <div class="filter-actions">
-            ${ruleCount !== allRulesCount ? `<span class="rule-count">${t('filter_results')} (${ruleCount}/${allRulesCount})</span>` : ''}
+            ${ruleCount !== allRulesCount ? `<span class="filter-result-count">${t('filter_results')} (${ruleCount}/${allRulesCount})</span>` : ''}
             <button class="btn-clear-filters" data-action="clear-filters">${t('editor_btn_clear')}</button>
           </div>
         </div>
@@ -193,42 +193,36 @@ function renderChandamGroups(
 // Helper: Render a single rule list item
 function renderRuleListItem(rule: RuleSummaryDetailed, ruleSetId: string, favoriteIds: Set<string>): string {
   const displayName = rule.shortName && rule.shortName !== rule.name ? rule.shortName : rule.name;
-  const aliasHtml = rule.alias ? `<div class="rule-alias">${rule.alias}</div>` : '';
-
-  const subTypeBadge = rule.padyamSubType
-    ? `<span class="badge badge-type badge-sm">${getTeluguCategoryName(rule.padyamSubType)}</span>`
+  const aliasHtml = rule.alias
+    ? `<span class="rule-alias-inline">(${rule.alias})</span>`
     : '';
 
-  const badges: string[] = [];
+  // Compact summary: gana + yati + prasa (pre-formatted HTML from backend)
+  const summaryHtml = rule.compactSummary
+    ? `<div class="rule-compact-summary">${rule.compactSummary}</div>`
+    : '';
 
+  // Condensed constraints as inline text
+  const metaParts: string[] = [];
   if (rule.min && rule.max && rule.min !== -1 && rule.max !== -1) {
-    const charText = rule.min === rule.max
+    metaParts.push(rule.min === rule.max
       ? `${rule.min} ${t('metric_chars')}`
-      : `${rule.min}-${rule.max} ${t('metric_chars')}`;
-    badges.push(`<span class="badge badge-chars badge-sm">${charText}</span>`);
+      : `${rule.min}-${rule.max} ${t('metric_chars')}`);
   } else if (rule.charLength && rule.charLength !== -1) {
-    badges.push(`<span class="badge badge-chars badge-sm">${rule.charLength} ${t('metric_chars')}</span>`);
+    metaParts.push(`${rule.charLength} ${t('metric_chars')}`);
   }
-
   if (rule.matraLength && rule.matraLength !== -1) {
-    badges.push(`<span class="badge badge-matras badge-sm">${rule.matraLength} ${t('metric_matras')}</span>`);
+    metaParts.push(`${rule.matraLength} ${t('metric_matras')}`);
   }
-
   if (rule.lines && rule.lines > 0) {
     const padaLabel = rule.lines === 1 ? t('pada_singular') : t('pada_plural');
-    badges.push(`<span class="badge badge-lines badge-sm">${rule.lines} ${padaLabel}</span>`);
+    metaParts.push(`${rule.lines} ${padaLabel}`);
   }
-
   if (rule.chandamName) {
-    badges.push(`<span class="badge badge-chandam badge-sm">${rule.chandamName}</span>`);
+    metaParts.push(rule.chandamName);
   }
-
-  const badgesHtml = badges.length > 0
-    ? `<div class="rule-item-badges">${badges.join('')}</div>`
-    : '';
-
-  const sequenceHtml = rule.sequence
-    ? `<div class="rule-sequence"><span class="sequence-label">గణములు:</span> <code>${rule.sequence}</code></div>`
+  const metaHtml = metaParts.length > 0
+    ? `<div class="rule-item-meta">${metaParts.join(' · ')}</div>`
     : '';
 
   const compositeId = `${ruleSetId}:${rule.identifier}`;
@@ -239,6 +233,7 @@ function renderRuleListItem(rule: RuleSummaryDetailed, ruleSetId: string, favori
   const deleteButton = isCustomRule
     ? `<a class="rule-action-icon btn-delete-inline" data-action="delete-rule" data-rule-id="${rule.identifier}" data-rule-name="${rule.name.replace(/"/g, '&quot;')}" title="${t('learn_btn_delete')}">
         <svg viewBox="0 0 24 24" width="16" height="16"><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/></svg>
+        ${t('learn_btn_delete')}
       </a>`
     : '';
 
@@ -246,20 +241,21 @@ function renderRuleListItem(rule: RuleSummaryDetailed, ruleSetId: string, favori
     <div class="rule-list-item${favoritedClass}">
       <div class="rule-item-header">
         <span class="rule-name meter-name">${displayName}</span>
-        ${subTypeBadge}
+        ${aliasHtml}
         <div class="rule-item-actions">
           <a href="${makeUrl(`/learn/${ruleSetId}/${rule.identifier}`)}" class="rule-action-icon" title="${t('link_learn')}">
             <svg viewBox="0 0 24 24" width="16" height="16"><path d="M21 5c-1.11-.35-2.33-.5-3.5-.5-1.95 0-4.05.4-5.5 1.5-1.45-1.1-3.55-1.5-5.5-1.5S2.45 4.9 1 6v14.65c0 .25.25.5.5.5.1 0 .15-.05.25-.05C3.1 20.45 5.05 20 6.5 20c1.95 0 4.05.4 5.5 1.5 1.35-.85 3.8-1.5 5.5-1.5 1.65 0 3.35.3 4.75 1.05.1.05.15.05.25.05.25 0 .5-.25.5-.5V6c-.6-.45-1.25-.75-2-1zM21 18.5c-1.1-.35-2.3-.5-3.5-.5-1.7 0-4.15.65-5.5 1.5V8c1.35-.85 3.8-1.5 5.5-1.5 1.2 0 2.4.15 3.5.5v11.5z"/></svg>
+            ${t('link_learn')}
           </a>
           <a href="${makeUrl(`/compute/${ruleSetId}/${rule.identifier}`)}" class="rule-action-icon" title="${t('link_try')}">
             <svg viewBox="0 0 24 24" width="16" height="16"><path d="M8 5v14l11-7z"/></svg>
+            ${t('link_try')}
           </a>
           ${deleteButton}
         </div>
       </div>
-      ${aliasHtml}
-      ${badgesHtml}
-      ${sequenceHtml}
+      ${summaryHtml}
+      ${metaHtml}
     </div>
   `;
 }

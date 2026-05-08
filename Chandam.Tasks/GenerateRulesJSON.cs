@@ -38,50 +38,11 @@ namespace Verifier
             // Ensure output directory exists
             Directory.CreateDirectory(_outputDirectory);
 
-
-            GeneratePopularRules();
-
-
-
             GenerateChandamRules();
 
+            GenerateSanskritRules();
 
             Console.WriteLine("=== Generated Rulesets ===");
-        }
-
-        /// <summary>
-        /// Generate chandam-rules.json - Most frequent/common rules only
-        /// </summary>
-        private void GeneratePopularRules()
-        {
-
-            Console.WriteLine("\nGenerating Popular Rules");
-
-            var allRules = Manager.Rules();
-            var selectedRules = allRules
-                .Where(r => r.Language == RuleLanguage.Telugu && r.Frequency == Frequency.Frequent)
-                .ToArray();
-
-            var ruleSet = new RuleSetDto
-            {
-                Identifier = "popular",
-                Name = "ప్రముఖ ఛందస్సులు",
-                Description = "తెలుగులో అత్యంత వాడుకలో ఉన్న ఛందస్సులు",
-                Rules = ConvertRulesToDto(selectedRules)
-            };
-
-            var exampleSet = CreateExampleSet($"{ruleSet.Identifier}-examples",
-                                                "ప్రముఖ ఛందస్సుల ఉదాహరణలు",
-                                                "తెలుగులో అత్యంత వాడుకలో ఉన్న ఛందస్సుల ఉదాహరణలు",
-                                                selectedRules);
-
-            SaveRuleSet(ruleSet, $"{ruleSet.Identifier}.json");
-            SaveRuleSetYaml(ruleSet, $"{ruleSet.Identifier}.yaml");
-
-            SaveExampleSet(exampleSet, $"{exampleSet.Identifier}.json");
-            SaveExampleSetYaml(exampleSet, $"{exampleSet.Identifier}.yaml");
-
-            Console.WriteLine($"  ✓ Generated {selectedRules.Length} for {ruleSet.Identifier} rules (JSON + YAML)");
         }
 
 
@@ -121,6 +82,47 @@ namespace Verifier
             Console.WriteLine($"  ✓ Generated {selectedRules.Length} for {ruleSet.Identifier} rules (JSON + YAML)");
         }
 
+
+        /// <summary>
+        /// Generate sanskrit.json/yaml - All Sanskrit rules
+        /// </summary>
+        public void GenerateSanskritRules()
+        {
+            Console.WriteLine("\nGenerating Sanskrit Rules");
+
+            var selectedRules = RuleHelper.GetSanRules();
+            foreach (var rule in selectedRules)
+            {
+                rule.Language = RuleLanguage.Sanskrit;
+            }
+
+            if (selectedRules.Length == 0)
+            {
+                Console.WriteLine("  ! No Sanskrit rules found. Skipping.");
+                return;
+            }
+
+            var ruleSet = new RuleSetDto
+            {
+                Identifier = "sanskrit",
+                Name = "సంస్కృత ఛందస్సులు",
+                Description = "संस्कृत छन्दस्सु नियमावळि",
+                Rules = ConvertRulesToDto(selectedRules)
+            };
+
+            var exampleSet = CreateExampleSet("sanskrit-examples",
+                                               "సంస్కృత ఛందస్సులు उदाहरणानि",
+                                               "संस्कृत छन्दस्सुల ఉదాహరణలు",
+                                               selectedRules);
+
+            SaveRuleSet(ruleSet, $"{ruleSet.Identifier}.json");
+            SaveRuleSetYaml(ruleSet, $"{ruleSet.Identifier}.yaml");
+
+            SaveExampleSet(exampleSet, $"{exampleSet.Identifier}.json");
+            SaveExampleSetYaml(exampleSet, $"{exampleSet.Identifier}.yaml");
+
+            Console.WriteLine($"  ✓ Generated {selectedRules.Length} for {ruleSet.Identifier} rules (JSON + YAML)");
+        }
 
         /// <summary>
         /// Create ExampleSetDto from Rule array
@@ -286,23 +288,12 @@ namespace Verifier
         }
 
         /// <summary>
-        /// Save RuleSetDto to JSON file (generates both pretty and minified + compressed versions)
+        /// Save RuleSetDto to JSON file (minified + compressed versions only)
         /// </summary>
         private void SaveRuleSet(RuleSetDto ruleSet, string filename)
         {
-            var filePath = Path.Combine(_outputDirectory, filename);
+            var minFilePath = Path.Combine(_outputDirectory, filename.Replace(".json", ".min.json"));
 
-            // 1. Save pretty-printed JSON for debugging
-            var jsonPretty = JsonSerializer.Serialize(ruleSet, new JsonSerializerOptions
-            {
-                WriteIndented = true,
-                Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping
-            });
-            File.WriteAllText(filePath, jsonPretty, Encoding.UTF8);
-            Console.WriteLine($"  ✓ Saved JSON: {filePath} ({GetFileSize(filePath)})");
-
-            // 2. Save minified JSON
-            var minFilePath = filePath.Replace(".json", ".min.json");
             var jsonMinified = JsonSerializer.Serialize(ruleSet, new JsonSerializerOptions
             {
                 WriteIndented = false,
@@ -311,12 +302,11 @@ namespace Verifier
             File.WriteAllText(minFilePath, jsonMinified, Encoding.UTF8);
             Console.WriteLine($"  ✓ Saved Minified JSON: {minFilePath} ({GetFileSize(minFilePath)})");
 
-            // 3. Compress minified JSON to .gz (universal browser support)
             CompressToGzip(minFilePath);
         }
 
         /// <summary>
-        /// Save RuleSetDto to YAML file (human-editable format) + compressed version
+        /// Save RuleSetDto to YAML file (human-editable format)
         /// </summary>
         private void SaveRuleSetYaml(RuleSetDto ruleSet, string filename)
         {
@@ -331,29 +321,15 @@ namespace Verifier
             File.WriteAllText(filePath, yaml, Encoding.UTF8);
 
             Console.WriteLine($"  ✓ Saved YAML: {filePath} ({GetFileSize(filePath)})");
-
-            // Compress YAML to .gz (universal browser support)
-            CompressToGzip(filePath);
         }
 
         /// <summary>
-        /// Save ExampleSetDto to JSON file (generates both pretty and minified + compressed versions)
+        /// Save ExampleSetDto to JSON file (minified + compressed versions only)
         /// </summary>
         private void SaveExampleSet(ExampleSetDto exampleSet, string filename)
         {
-            var filePath = Path.Combine(_outputDirectory, filename);
+            var minFilePath = Path.Combine(_outputDirectory, filename.Replace(".json", ".min.json"));
 
-            // 1. Save pretty-printed JSON for debugging
-            var jsonPretty = JsonSerializer.Serialize(exampleSet, new JsonSerializerOptions
-            {
-                WriteIndented = true,
-                Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping
-            });
-            File.WriteAllText(filePath, jsonPretty, Encoding.UTF8);
-            Console.WriteLine($"  ✓ Saved JSON: {filePath} ({GetFileSize(filePath)})");
-
-            // 2. Save minified JSON
-            var minFilePath = filePath.Replace(".json", ".min.json");
             var jsonMinified = JsonSerializer.Serialize(exampleSet, new JsonSerializerOptions
             {
                 WriteIndented = false,
@@ -362,12 +338,11 @@ namespace Verifier
             File.WriteAllText(minFilePath, jsonMinified, Encoding.UTF8);
             Console.WriteLine($"  ✓ Saved Minified JSON: {minFilePath} ({GetFileSize(minFilePath)})");
 
-            // 3. Compress minified JSON to .gz (universal browser support)
             CompressToGzip(minFilePath);
         }
 
         /// <summary>
-        /// Save ExampleSetDto to YAML file (human-editable format with literal block scalars for poems) + compressed version
+        /// Save ExampleSetDto to YAML file (human-editable format with literal block scalars for poems)
         /// </summary>
         private void SaveExampleSetYaml(ExampleSetDto exampleSet, string filename)
         {
@@ -383,9 +358,6 @@ namespace Verifier
             File.WriteAllText(filePath, yaml, Encoding.UTF8);
 
             Console.WriteLine($"  ✓ Saved YAML: {filePath} ({GetFileSize(filePath)})");
-
-            // Compress YAML to .gz (universal browser support)
-            CompressToGzip(filePath);
         }
 
         /// <summary>

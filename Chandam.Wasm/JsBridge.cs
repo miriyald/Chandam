@@ -79,7 +79,8 @@ public static class JsBridge
                     ["max"] = r.Max,
                     ["sequence"] = r.Sequence,
                     ["shortName"] = r.ShortName,
-                    ["alias"] = r.Alias
+                    ["alias"] = r.Alias,
+                    ["compactSummary"] = DescriptionBuilder.BuildCompactSummary(r)
                 });
             }
             catch (InvalidCastException ex)

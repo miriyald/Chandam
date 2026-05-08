@@ -23,7 +23,7 @@ test.describe('Results pane behavior: perfect vs mismatch', () => {
     await expect(matchCard.locator('.ganaVibhajana')).toBeVisible();
 
     // 100% cards do not show score badge.
-    await expect(matchCard.locator('.match-score')).toHaveCount(0);
+    await expect(matchCard.locator('.match-score-group')).toHaveCount(0);
     await expect(matchCard.locator('.btn-submit-github')).toBeVisible();
   });
 
@@ -58,7 +58,7 @@ test.describe('Results pane behavior: perfect vs mismatch', () => {
         }
 
         await expect(matchCard).toBeVisible({ timeout: 15_000 });
-        const scoreCount = await matchCard.locator('.match-score').count();
+        const scoreCount = await matchCard.locator('.match-score-group').count();
         const submitCount = await matchCard.locator('.btn-submit-github').count();
 
         if (scoreCount > 0 && submitCount === 0) {

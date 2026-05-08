@@ -37,7 +37,7 @@ public class ChandamTools
         [Description("Check caesura (yati) matching")] bool match_yati = true,
         [Description("Check rhyme (prasa) matching")] bool match_prasa = true,
         [Description("Language code: te (Telugu), kn (Kannada), sa (Sanskrit), hi (Hindi), ml (Malayalam)")] string language = "te",
-        [Description("RuleSet to use: chandam, popular, topella (default: chandam)")] string? ruleset_id = null)
+        [Description("RuleSet to use: chandam, sanskrit, topella (default: chandam)")] string? ruleset_id = null)
     {
         var lang = LanguageCodeMapper.ParseLanguage(language) ?? Rules.RuleLanguage.Telugu;
         var request = new DetermineRequest
@@ -61,7 +61,7 @@ public class ChandamTools
         [Description("Check caesura (yati) matching")] bool match_yati = true,
         [Description("Check rhyme (prasa) matching")] bool match_prasa = true,
         [Description("Language code: te (Telugu), kn (Kannada), sa (Sanskrit), hi (Hindi), ml (Malayalam)")] string language = "te",
-        [Description("RuleSet to use: chandam, popular, topella (default: chandam)")] string? ruleset_id = null)
+        [Description("RuleSet to use: chandam, sanskrit, topella (default: chandam)")] string? ruleset_id = null)
     {
         var lang = LanguageCodeMapper.ParseLanguage(language) ?? Rules.RuleLanguage.Telugu;
         var request = new TryMatchRequest
@@ -86,7 +86,7 @@ public class ChandamTools
         [Description("Check rhyme (prasa) matching")] bool match_prasa = true,
         [Description("Language code: te, kn, sa, hi, ml")] string language = "te",
         [Description("Minimum match percentage to include in results (0-100)")] double min_percentage = 0,
-        [Description("RuleSet to use: chandam, popular, topella (default: chandam)")] string? ruleset_id = null)
+        [Description("RuleSet to use: chandam, sanskrit, topella (default: chandam)")] string? ruleset_id = null)
     {
         var lang = LanguageCodeMapper.ParseLanguage(language);
         var request = new ScoresRequest
@@ -106,7 +106,7 @@ public class ChandamTools
     public string GetRuleInfo(
         [Description("Rule identifier (e.g., 'kandam', 'utpalamaala')")] string rule_identifier,
         [Description("Include example poems in the response")] bool include_examples = false,
-        [Description("RuleSet to use: chandam, popular, topella (default: chandam)")] string? ruleset_id = null)
+        [Description("RuleSet to use: chandam, sanskrit, topella (default: chandam)")] string? ruleset_id = null)
     {
         var request = new GetRuleInfoRequest
         {
@@ -122,7 +122,7 @@ public class ChandamTools
     public string GetExamples(
         [Description("Rule identifier (e.g., 'kandam', 'utpalamaala')")] string rule_identifier,
         [Description("Maximum number of examples to return (0 = all)")] int max_examples = 5,
-        [Description("RuleSet to use: chandam, popular, topella (default: chandam)")] string? ruleset_id = null)
+        [Description("RuleSet to use: chandam, sanskrit, topella (default: chandam)")] string? ruleset_id = null)
     {
         var request = new GetSamplesRequest
         {
@@ -137,7 +137,7 @@ public class ChandamTools
     [McpServerTool, Description("List all available Chandam rules. Filter by language to see rules for a specific language.")]
     public string ListRules(
         [Description("Language code filter: te (Telugu), kn (Kannada), sa (Sanskrit), hi (Hindi), ml (Malayalam)")] string language = "te",
-        [Description("RuleSet to use: chandam, popular, topella (default: chandam)")] string? ruleset_id = null)
+        [Description("RuleSet to use: chandam, sanskrit, topella (default: chandam)")] string? ruleset_id = null)
     {
         var ruleSetId = ruleset_id ?? "chandam";
         if (!string.IsNullOrEmpty(ruleSetId) && ruleSetId != _ruleLoader.GetCurrentRuleSetId())
@@ -202,7 +202,7 @@ public class ChandamTools
         [Description("Maximum matra length (optional, -1 excluded)")] int? matra_length_max = null,
         [Description("Filter by examples: true=with examples, false=without, null=all (optional)")] bool? has_examples = null,
         [Description("Maximum results to return (0 = unlimited)")] int max_results = 20,
-        [Description("RuleSet to use: chandam, popular, topella (default: chandam)")] string? ruleset_id = null)
+        [Description("RuleSet to use: chandam, sanskrit, topella (default: chandam)")] string? ruleset_id = null)
     {
         try
         {

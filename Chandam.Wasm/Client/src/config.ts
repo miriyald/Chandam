@@ -14,7 +14,7 @@ export const RULE_SETS: RuleSet[] = [
     description: 'దిలీపు మిరియాల సంకలనం: అనేక ఛందస్సు వనరులు మరియూ ముఖ్యంగా కోవెల సంపత్కుమారాచార్య రచనలు',
     rulesFile: 'data/chandam.min.json.gz',
     examplesFile: 'data/chandam-examples.min.json.gz',
-    ruleCount: 380
+    ruleCount: 379
   },
   {
     id: 'topella',
@@ -23,6 +23,14 @@ export const RULE_SETS: RuleSet[] = [
     rulesFile: 'data/topella.min.json.gz',
     examplesFile: 'data/topella-examples.min.json.gz',
     ruleCount: 2337
+  },
+  {
+    id: 'sanskrit',
+    name: 'సంస్కృత ఛందస్సులు',
+    description: 'संस्कृत छन्दस्सु నియమావళి',
+    rulesFile: 'data/sanskrit.min.json.gz',
+    examplesFile: 'data/sanskrit-examples.min.json.gz',
+    ruleCount: 1165
   }
 ];
 
