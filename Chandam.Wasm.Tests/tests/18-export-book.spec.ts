@@ -5,7 +5,7 @@ import { test, expect, gotoAndWait } from '../fixtures/wasm-ready';
 async function navigateToFirstLearnDetail(page: Page): Promise<string> {
   await gotoAndWait(page, '/learn/chandam/');
   const href = await page
-    .locator('.rule-list-item .rule-links a[href*="/learn/chandam/"]')
+    .locator('.rule-list-item .rule-item-actions a[href*="/learn/chandam/"]')
     .first()
     .getAttribute('href');
   const ruleId = href?.split('/').filter(Boolean).pop() ?? '';

@@ -1,6 +1,5 @@
 import { Router, loadStaticPage } from './router';
 import { setPageTitle } from './utils/page-title';
-import { renderHomePage } from './ui/home-page';
 import { renderRuleSetsPage } from './ui/rule-sets-page';
 import { renderRuleSetPage } from './ui/rule-set-page';
 import { renderRulePage } from './ui/rule-page';
@@ -112,17 +111,8 @@ router.register('/learn/:ruleSet/:ruleId', async (params) => {
   await renderLearnDetailPage(params.ruleSet, params.ruleId);
 });
 
-// Render a page whose title and content come from i18n keys (page_{name}_title, page_{name}_content)
-function renderStaticI18nPage(name: string): void {
-  const content = document.getElementById('content');
-  if (!content) return;
-  const titleKey = `page_${name}_title` as keyof Translations;
-  const contentKey = `page_${name}_content` as keyof Translations;
-  content.innerHTML = `<div class="container"><h2>${t(titleKey)}</h2>${t(contentKey)}</div>`;
-}
-
 // Static pages
-router.register('/resources', () => { setPageTitle(t('nav_resources')); renderStaticI18nPage('resources'); });
+router.register('/resources', () => { setPageTitle(t('nav_resources')); loadStaticPage(`pages/${getLanguage()}/resources.html`); });
 router.register('/about', () => { setPageTitle(t('nav_about')); loadStaticPage(`pages/${getLanguage()}/about.html`); });
 router.register('/credits', () => { setPageTitle(t('nav_credits')); loadStaticPage(`pages/${getLanguage()}/credits.html`); });
 router.register('/contact', () => { setPageTitle(t('nav_contact')); loadStaticPage(`pages/${getLanguage()}/contact.html`); });

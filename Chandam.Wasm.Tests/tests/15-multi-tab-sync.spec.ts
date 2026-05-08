@@ -13,7 +13,7 @@ async function getFirstRuleComputePath(
 ): Promise<string> {
   await gotoAndWait(page, '/learn/chandam/');
   const firstLearnLink = page
-    .locator('.rule-list-item .rule-links a[href*="/learn/chandam/"]')
+    .locator('.rule-list-item .rule-item-actions a[href*="/learn/chandam/"]')
     .first();
   await expect(firstLearnLink).toBeVisible();
   const href = await firstLearnLink.getAttribute('href');

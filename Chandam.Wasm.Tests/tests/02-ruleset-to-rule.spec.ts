@@ -17,13 +17,13 @@ import { test, expect, gotoAndWait, waitForWasmReady } from '../fixtures/wasm-re
 import { dailyRandom, pickRandomIndex } from '../helpers/random';
 
 // Built-in rule set IDs defined in config.ts
-const RULE_SET_IDS = ['chandam', 'topella'] as const;
+const RULE_SET_IDS = ['chandam', 'topella', 'sanskrit'] as const;
 
 test.describe('Rule Sets → Rule navigation', () => {
   test('rule-sets page shows all built-in cards', async ({ page }) => {
     await gotoAndWait(page, '/rule-sets');
 
-    const cards = page.locator('.rule-set-card');
+    const cards = page.locator('.rule-set-card:not(.create-rule-card)');
     await expect(cards).toHaveCount(RULE_SET_IDS.length, { timeout: 15_000 });
 
     // Each card should have an Analyze link

@@ -25,7 +25,7 @@ async function getFirstRuleWithExamples(
 
   // Find the first rule that has a "Try" link on the index (all rules have learn/try links)
   const firstLearnLink = page
-    .locator('.rule-list-item .rule-links a[href*="/learn/chandam/"]')
+    .locator('.rule-list-item .rule-item-actions a[href*="/learn/chandam/"]')
     .first();
   await expect(firstLearnLink).toBeVisible();
   const learnHref = await firstLearnLink.getAttribute('href');

@@ -258,8 +258,6 @@ export interface Translations {
   // Pages
   page_about_title: string;
   page_about_content: string;
-  page_resources_title: string;
-  page_resources_content: string;
   page_credits_title: string;
   page_credits_content: string;
   page_contact_title: string;
@@ -503,23 +501,6 @@ const translations: Record<Language, Translations> = {
     // Explore
     explore_graph_hint: 'Scroll to zoom. Drag nodes to rearrange. Click a rule to view details.',
 
-    page_resources_title: 'Resources',
-    page_resources_content: `
-      <p>A curated collection of references and tools for Telugu prosody.</p>
-      <h3>References</h3>
-      <ul>
-        <li><a href="http://andhrabharati.com/" target="_blank">Andhra Bharati</a> — Encyclopedic resource for Telugu literature</li>
-        <li><a href="http://sanskrit.sai.uni-heidelberg.de/Chanda/HTML/" target="_blank">Sanskrit Encyclopaedia of Prosody</a> — Comprehensive metrical reference</li>
-        <li>Kovela Sampathkumaracharya — <em>Chandahpadakosam</em></li>
-        <li>Masters' Telugu Grammar</li>
-      </ul>
-      <h3>Tools</h3>
-      <ul>
-        <li><a href="/rule-sets">Browse Rule Sets</a> — Explore all 343+ Telugu meters</li>
-        <li><a href="/create-rule">Create Custom Rule</a> — Define your own meter patterns</li>
-      </ul>
-      <p><em>More resources coming soon.</em></p>
-    `,
     page_about_title: 'About Chandam',
     page_about_content: `
       <p>The art of composing poetry requires not only immense creativity but also a deep understanding of prosody (Chandas), including the rules of meter, ganas (metrical feet), and yati-prasa (caesura and rhyme). This demands significant practice, and even for seasoned poets, occasional errors are natural.</p>
@@ -805,23 +786,6 @@ const translations: Record<Language, Translations> = {
     // Explore
     explore_graph_hint: 'జూమ్ చేయడానికి స్క్రోల్ చేయండి. నోడ్‌లను లాగి అమర్చండి. వివరాలు చూడటానికి నియమంపై క్లిక్ చేయండి.',
 
-    page_resources_title: 'వనరులు',
-    page_resources_content: `
-      <p>తెలుగు ఛందస్సుకు సంబంధించిన సూచనలు మరియు సాధనాల సంకలనం.</p>
-      <h3>సూచనలు</h3>
-      <ul>
-        <li><a href="http://andhrabharati.com/" target="_blank">ఆంధ్ర భారతి</a> — తెలుగు సాహిత్యానికి సమగ్ర వనరు</li>
-        <li><a href="http://sanskrit.sai.uni-heidelberg.de/Chanda/HTML/" target="_blank">సంస్కృత ఛందస్సు encyclopaedia</a> — సమగ్ర ఛందో సూచన</li>
-        <li>కోవెల సాంపత్కుమారాచార్య — <em>ఛందఃపదకోశం</em></li>
-        <li>మాస్టర్స్ తెలుగు వ్యాకరణం</li>
-      </ul>
-      <h3>సాధనాలు</h3>
-      <ul>
-        <li><a href="/rule-sets">నియమావళులు చూడండి</a> — 343+ తెలుగు ఛందస్సులను అన్వేషించండి</li>
-        <li><a href="/create-rule">అనుకూల నియమం సృష్టించండి</a> — మీ స్వంత ఛందో నమూనాలను నిర్వచించండి</li>
-      </ul>
-      <p><em>మరిన్ని వనరులు త్వరలో...</em></p>
-    `,
     page_about_title: 'About Chandam',
     page_about_content: `
       <p>The art of composing poetry requires not only immense creativity but also a deep understanding of prosody (Chandas), including the rules of meter, ganas (metrical feet), and yati-prasa (caesura and rhyme). This demands significant practice, and even for seasoned poets, occasional errors are natural.</p>

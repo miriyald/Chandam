@@ -10,7 +10,7 @@ async function getFirstRuleWithExamples(page: Page): Promise<string> {
   await gotoAndWait(page, '/learn/chandam/');
 
   const href = await page
-    .locator('.rule-list-item .rule-links a[href*="/learn/chandam/"]')
+    .locator('.rule-list-item .rule-item-actions a[href*="/learn/chandam/"]')
     .first()
     .getAttribute('href');
 

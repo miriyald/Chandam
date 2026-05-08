@@ -118,7 +118,7 @@ async function story1(page: Page): Promise<void> {
 
   // 6. Learn detail — navigate to first rule
   const firstLearnLink = page
-    .locator('.rule-list-item .rule-links a[href*="/learn/chandam/"]')
+    .locator('.rule-list-item .rule-item-actions a[href*="/learn/chandam/"]')
     .first();
   const learnHref = await firstLearnLink.getAttribute('href');
   await gotoAndWait(page, learnHref!);
@@ -235,7 +235,7 @@ async function story3(page: Page): Promise<void> {
   // Navigate to a learn detail page to find the heart button
   await gotoAndWait(page, '/learn/chandam/');
   const firstLearnLink = page
-    .locator('.rule-list-item .rule-links a[href*="/learn/chandam/"]')
+    .locator('.rule-list-item .rule-item-actions a[href*="/learn/chandam/"]')
     .first();
   const learnHref = await firstLearnLink.getAttribute('href');
   await gotoAndWait(page, learnHref!);
@@ -355,7 +355,7 @@ async function story5(page: Page): Promise<void> {
   // Navigate to a known rule and use its example for a 100% match
   await gotoAndWait(page, '/learn/chandam/');
   const firstLearnLink = page
-    .locator('.rule-list-item .rule-links a[href*="/learn/chandam/"]')
+    .locator('.rule-list-item .rule-item-actions a[href*="/learn/chandam/"]')
     .first();
   const learnHref = await firstLearnLink.getAttribute('href');
   await gotoAndWait(page, learnHref!);
@@ -422,7 +422,7 @@ async function story7(page: Page): Promise<void> {
 
   // 3. Navigate to learn detail and show single-rule export button
   const firstLearnLink = page
-    .locator('.rule-list-item .rule-links a[href*="/learn/chandam/"]')
+    .locator('.rule-list-item .rule-item-actions a[href*="/learn/chandam/"]')
     .first();
   const learnHref = await firstLearnLink.getAttribute('href');
   await gotoAndWait(page, learnHref!);
@@ -473,7 +473,7 @@ async function story6Mobile(browser: Browser): Promise<void> {
     // 5. Mobile favorites — navigate to learn detail and show heart
     await gotoAndWait(page, '/learn/chandam/');
     const firstLink = page
-      .locator('.rule-list-item .rule-links a[href*="/learn/chandam/"]')
+      .locator('.rule-list-item .rule-item-actions a[href*="/learn/chandam/"]')
       .first();
     const href = await firstLink.getAttribute('href');
     await gotoAndWait(page, href!);

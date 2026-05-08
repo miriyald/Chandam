@@ -22,7 +22,7 @@ async function getFirstRuleComputePath(
 ): Promise<{ ruleId: string; computePath: string }> {
   await gotoAndWait(page, '/learn/chandam/');
   const firstLearnLink = page
-    .locator('.rule-list-item .rule-links a[href*="/learn/chandam/"]')
+    .locator('.rule-list-item .rule-item-actions a[href*="/learn/chandam/"]')
     .first();
   await expect(firstLearnLink).toBeVisible();
   const href = await firstLearnLink.getAttribute('href');
@@ -176,7 +176,7 @@ async function getFirstTopellaRulePath(
 ): Promise<{ ruleId: string; learnPath: string }> {
   await gotoAndWait(page, '/learn/topella/');
   const firstLearnLink = page
-    .locator('.rule-list-item .rule-links a[href*="/learn/topella/"]')
+    .locator('.rule-list-item .rule-item-actions a[href*="/learn/topella/"]')
     .first();
   await expect(firstLearnLink).toBeVisible();
   const href = await firstLearnLink.getAttribute('href');
@@ -231,7 +231,7 @@ test.describe('Favorites – multi-ruleset and persistence', () => {
   test('filtering within favorites collection works', async ({ page }) => {
     // Setup: favorite two chandam rules
     await gotoAndWait(page, '/learn/chandam/');
-    const ruleLinks = page.locator('.rule-list-item .rule-links a[href*="/learn/chandam/"]');
+    const ruleLinks = page.locator('.rule-list-item .rule-item-actions a[href*="/learn/chandam/"]');
     const firstHref = await ruleLinks.nth(0).getAttribute('href');
     const secondHref = await ruleLinks.nth(1).getAttribute('href');
 

@@ -223,7 +223,7 @@ test.describe('Compute – specific rule page (/compute/:ruleSet/:ruleId)', () =
     // Navigate to learn/chandam to get a real rule ID dynamically
     await gotoAndWait(page, '/learn/chandam/');
     const firstRuleLink = page
-      .locator('.rule-list-item .rule-links a[href*="/compute/chandam/"]')
+      .locator('.rule-list-item .rule-item-actions a[href*="/compute/chandam/"]')
       .first();
     await expect(firstRuleLink).toBeVisible();
     const href = await firstRuleLink.getAttribute('href');

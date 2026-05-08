@@ -164,7 +164,7 @@ function renderLearnIndexPageHtml(
             ${renderCategoryDropdown()}
           </div>
           <div class="filter-actions">
-            ${ruleCount !== allRulesCount ? `<span class="filter-result-count">${t('filter_results')} (${ruleCount}/${allRulesCount})</span>` : ''}
+            <span class="filter-result-count">${ruleCount !== allRulesCount ? `${t('filter_results')} (${ruleCount}/${allRulesCount})` : `${allRulesCount}`}</span>
             <button class="btn-clear-filters" data-action="clear-filters">
               <svg viewBox="0 0 24 24" width="14" height="14"><path d="M16 11h-1V3c0-.55-.45-1-1-1h-4c-.55 0-1 .45-1 1v8H8c-1.1 0-2 .9-2 2v9h12v-9c0-1.1-.9-2-2-2zm-5-7.5h2v7.5h-2V3.5zM6 22v-1h12v1H6z"/></svg>
               ${t('editor_btn_clear')}

@@ -18,7 +18,7 @@ import { gotoAndWait } from '../fixtures/wasm-ready';
 // Routes to visit
 // ---------------------------------------------------------------------------
 const ROUTES: Array<{ path: string; name: string; visibleSelector: string }> = [
-  { path: '/', name: 'home', visibleSelector: '.home-page' },
+  { path: '/', name: 'home', visibleSelector: '.home-page-landing' },
   { path: '/rule-sets', name: 'rule-sets', visibleSelector: '.rule-sets-page' },
   { path: '/compute/chandam/', name: 'compute-chandam', visibleSelector: '.compute-rule-set-page' },
   { path: '/compute/topella/', name: 'compute-topella', visibleSelector: '.compute-rule-set-page' },
