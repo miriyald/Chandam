@@ -119,6 +119,13 @@ export function getSortedGroupKeys(grouped: Map<string, RuleSummaryDetailed[]>):
 }
 
 /**
+ * Get Telugu display name for a PadyamSubType value
+ */
+export function getSubTypeDisplayName(subType: string): string {
+  return SUBTYPE_TELUGU_NAMES[subType] || subType;
+}
+
+/**
  * Convert group key to Telugu display name
  * - For Vruttam groups: returns the ChandamName with character count (e.g., "గాయత్రి (6)")
  * - For SubType groups: returns the Telugu name from SUBTYPE_TELUGU_NAMES

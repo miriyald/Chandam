@@ -1,7 +1,7 @@
 import { WasmBridge } from '../wasm-bridge';
 import { getRuleSet, getRuleSetAsync } from '../config';
 import type { RuleSummaryDetailed, AvailableFilters } from '../types';
-import { groupRulesByCategory, getSortedGroupKeys, getGroupDisplayName } from '../utils/rule-grouping';
+import { groupRulesByCategory, getSortedGroupKeys, getGroupDisplayName, getSubTypeDisplayName } from '../utils/rule-grouping';
 import { makeUrl } from '../utils/url-helpers';
 import { renderBreadcrumbs, buildRuleSetBreadcrumbs } from './breadcrumbs';
 import { renderModeSwitcher } from './mode-switcher';
@@ -18,11 +18,13 @@ import { exportFullBook } from '../utils/export-book';
 interface FilterState {
   searchText: string;
   selectedCategory: string;
+  selectedChandamName: string;
 }
 
 let currentFilterState: FilterState = {
   searchText: '',
   selectedCategory: '',
+  selectedChandamName: '',
 };
 
 let currentFilters: AvailableFilters | null = null;
@@ -88,22 +90,28 @@ export async function renderLearnIndexPage(ruleSet: string) {
           .map(fav => fav.id)
   );
 
+  // For custom-fav, map ruleId -> original ruleSetId for correct link generation
+  const originalRuleSetMap = ruleSet === 'custom-fav'
+    ? new Map(allFavorites.map(fav => [fav.ruleId, fav.ruleSetId]))
+    : undefined;
+
   // Step 4: Apply filters and group results
   const filteredRules = await applyFilters(rules);
   const grouped = groupRulesByCategory(filteredRules);
 
   // Step 5: Render page HTML with filters and favorite status
-  renderLearnIndexPageHtml(ruleSetConfig.name, filteredRules.length, ruleSet, grouped, favoriteIds);
+  renderLearnIndexPageHtml(ruleSetConfig.name, filteredRules.length, ruleSet, grouped, favoriteIds, originalRuleSetMap);
 }
 
 async function applyFilters(allRules: RuleSummaryDetailed[]): Promise<RuleSummaryDetailed[]> {
-  if (currentFilterState.searchText === '' && currentFilterState.selectedCategory === '') {
+  if (currentFilterState.searchText === '' && currentFilterState.selectedCategory === '' && currentFilterState.selectedChandamName === '') {
     return allRules;
   }
 
   return await WasmBridge.searchRules({
     query: currentFilterState.searchText || undefined,
     categories: currentFilterState.selectedCategory ? [currentFilterState.selectedCategory] : undefined,
+    chandamNames: currentFilterState.selectedChandamName ? [currentFilterState.selectedChandamName] : undefined,
     maxResults: 0
   }, 'te');
 }
@@ -114,7 +122,8 @@ function renderLearnIndexPageHtml(
   ruleCount: number,
   ruleSetId: string,
   grouped: Map<string, RuleSummaryDetailed[]>,
-  favoriteIds: Set<string>
+  favoriteIds: Set<string>,
+  originalRuleSetMap?: Map<string, string>
 ) {
   const content = document.getElementById('content');
   if (!content) return;
@@ -123,7 +132,7 @@ function renderLearnIndexPageHtml(
 
   const hasResults = ruleCount > 0;
   const resultsSection = hasResults
-    ? `<div class="chandam-groups">${renderChandamGroups(grouped, ruleSetId, favoriteIds)}</div>`
+    ? `<div class="chandam-groups">${renderChandamGroups(grouped, ruleSetId, favoriteIds, originalRuleSetMap)}</div>`
     : `<div class="empty-state">
          <p>${t('filter_no_results')}</p>
          <p>${t('filter_try_removing')}</p>
@@ -175,7 +184,8 @@ function renderLearnIndexPageHtml(
 function renderChandamGroups(
   grouped: Map<string, RuleSummaryDetailed[]>,
   ruleSetId: string,
-  favoriteIds: Set<string>
+  favoriteIds: Set<string>,
+  originalRuleSetMap?: Map<string, string>
 ): string {
   const sortedKeys = getSortedGroupKeys(grouped);
 
@@ -184,7 +194,7 @@ function renderChandamGroups(
     return `
       <div class="chandam-group">
         <h2>${getGroupDisplayName(groupKey, grouped)}</h2>
-        ${rules.map(rule => renderRuleListItem(rule, ruleSetId, favoriteIds)).join('')}
+        ${rules.map(rule => renderRuleListItem(rule, ruleSetId, favoriteIds, originalRuleSetMap)).join('')}
       </div>
     `;
   }).join('');
@@ -192,7 +202,8 @@ function renderChandamGroups(
 
 
 // Helper: Render a single rule list item
-function renderRuleListItem(rule: RuleSummaryDetailed, ruleSetId: string, favoriteIds: Set<string>): string {
+function renderRuleListItem(rule: RuleSummaryDetailed, ruleSetId: string, favoriteIds: Set<string>, originalRuleSetMap?: Map<string, string>): string {
+  const effectiveRuleSetId = originalRuleSetMap?.get(rule.identifier) || ruleSetId;
   const displayName = rule.shortName && rule.shortName !== rule.name ? rule.shortName : rule.name;
   const aliasHtml = rule.alias
     ? `<span class="rule-alias-inline">(${rule.alias})</span>`
@@ -244,11 +255,11 @@ function renderRuleListItem(rule: RuleSummaryDetailed, ruleSetId: string, favori
         <span class="rule-name meter-name">${displayName}</span>
         ${aliasHtml}
         <div class="rule-item-actions">
-          <a href="${makeUrl(`/learn/${ruleSetId}/${rule.identifier}`)}" class="rule-action-icon" title="${t('link_learn')}">
+          <a href="${makeUrl(`/learn/${effectiveRuleSetId}/${rule.identifier}`)}" class="rule-action-icon" title="${t('link_learn')}">
             <svg viewBox="0 0 24 24" width="16" height="16"><path d="M21 5c-1.11-.35-2.33-.5-3.5-.5-1.95 0-4.05.4-5.5 1.5-1.45-1.1-3.55-1.5-5.5-1.5S2.45 4.9 1 6v14.65c0 .25.25.5.5.5.1 0 .15-.05.25-.05C3.1 20.45 5.05 20 6.5 20c1.95 0 4.05.4 5.5 1.5 1.35-.85 3.8-1.5 5.5-1.5 1.65 0 3.35.3 4.75 1.05.1.05.15.05.25.05.25 0 .5-.25.5-.5V6c-.6-.45-1.25-.75-2-1zM21 18.5c-1.1-.35-2.3-.5-3.5-.5-1.7 0-4.15.65-5.5 1.5V8c1.35-.85 3.8-1.5 5.5-1.5 1.2 0 2.4.15 3.5.5v11.5z"/></svg>
             ${t('link_learn')}
           </a>
-          <a href="${makeUrl(`/compute/${ruleSetId}/${rule.identifier}`)}" class="rule-action-icon" title="${t('link_try')}">
+          <a href="${makeUrl(`/compute/${effectiveRuleSetId}/${rule.identifier}`)}" class="rule-action-icon" title="${t('link_try')}">
             <svg viewBox="0 0 24 24" width="16" height="16"><path d="M8 5v14l11-7z"/></svg>
             ${t('link_try')}
           </a>
@@ -261,46 +272,43 @@ function renderRuleListItem(rule: RuleSummaryDetailed, ruleSetId: string, favori
   `;
 }
 
-// Map English category names to Telugu (all 12 PadyamSubType values)
-function getTeluguCategoryName(englishCategory: string): string {
-  const categoryMap: Record<string, string> = {
-    'Akkara': 'అక్కరలు',
-    'Divpada': 'ద్విపదలు',
-    'Jati': 'జాతి',
-    'Ragada': 'రగడలు',
-    'Ragada2': 'రగడలు (2)',
-    'Shatpada': 'షట్పదలు',
-    'UpaJati': 'ఉపజాతి',
-    'Sisamu': 'సీసములు',
-    'Vruttam': 'వృత్తం',
-    'DaMDakamu': 'దండకము',
-    'ArdhaVruttam': 'అర్ధ సమవృత్తం',
-    'VishamaVruttam': 'విషమవృత్తం'
-  };
-  return categoryMap[englishCategory] || englishCategory;
+function getSelectedFilterLabel(): string {
+  if (currentFilterState.selectedChandamName && currentFilters) {
+    const idx = currentFilters.chandamNames.indexOf(currentFilterState.selectedChandamName);
+    return idx >= 0 ? currentFilters.chandamLabels[idx] : currentFilterState.selectedChandamName;
+  }
+  if (currentFilterState.selectedCategory) {
+    return getSubTypeDisplayName(currentFilterState.selectedCategory);
+  }
+  return t('filter_all_categories');
 }
 
 function renderCategoryDropdown(): string {
   if (!currentFilters) return '';
 
   const allLabel = t('filter_all_categories');
-  const selectedLabel = currentFilterState.selectedCategory
-    ? getTeluguCategoryName(currentFilterState.selectedCategory)
-    : allLabel;
+  const selectedLabel = getSelectedFilterLabel();
 
-  const items = currentFilters.categories
+  const categoryItems = currentFilters.categories
     .filter(cat => cat !== 'GenricVruttam')
     .map(cat =>
-      `<div class="rule-item" role="option" data-value="${cat}" aria-selected="${cat === currentFilterState.selectedCategory}">${getTeluguCategoryName(cat)}</div>`
+      `<div class="rule-item" role="option" data-filter-type="category" data-value="${cat}" aria-selected="${cat === currentFilterState.selectedCategory}">${getSubTypeDisplayName(cat)}</div>`
     ).join('');
+
+  const chandamItems = (currentFilters.chandamNames.length > 0)
+    ? currentFilters.chandamNames.map((name, i) =>
+        `<div class="rule-item" role="option" data-filter-type="chandam" data-value="${name}" aria-selected="${name === currentFilterState.selectedChandamName}">${currentFilters!.chandamLabels[i]}</div>`
+      ).join('')
+    : '';
 
   return `
     <details class="rule-picker-inline" id="category-picker">
       <summary id="selected-category-name" aria-haspopup="listbox">${selectedLabel} ▼</summary>
       <div class="picker-dropdown" role="listbox" aria-label="${t('filter_all_categories')}">
         <div class="rule-list">
-          <div class="rule-item" role="option" data-value="" aria-selected="${!currentFilterState.selectedCategory}">${allLabel}</div>
-          ${items}
+          <div class="rule-item" role="option" data-filter-type="category" data-value="" aria-selected="${!currentFilterState.selectedCategory && !currentFilterState.selectedChandamName}">${allLabel}</div>
+          ${categoryItems}
+          ${chandamItems ? `<div class="rule-group-header">${getSubTypeDisplayName('Vruttam')}</div>${chandamItems}` : ''}
         </div>
       </div>
     </details>
@@ -320,11 +328,21 @@ function attachFilterEventListeners(ruleSetId: string) {
   if (categoryPicker) {
     categoryPicker.querySelectorAll('.rule-item').forEach(item => {
       item.addEventListener('click', async () => {
-        const value = (item as HTMLElement).dataset.value || '';
-        currentFilterState.selectedCategory = value;
+        const el = item as HTMLElement;
+        const filterType = el.dataset.filterType || 'category';
+        const value = el.dataset.value || '';
+
+        if (filterType === 'chandam') {
+          currentFilterState.selectedChandamName = value;
+          currentFilterState.selectedCategory = '';
+        } else {
+          currentFilterState.selectedCategory = value;
+          currentFilterState.selectedChandamName = '';
+        }
+
         const summary = document.getElementById('selected-category-name');
         if (summary) {
-          summary.textContent = (value ? getTeluguCategoryName(value) : t('filter_all_categories')) + ' ▼';
+          summary.textContent = getSelectedFilterLabel() + ' ▼';
         }
         categoryPicker.open = false;
         await refreshResults(ruleSetId);
@@ -341,7 +359,7 @@ function attachFilterEventListeners(ruleSetId: string) {
   const clearButton = document.querySelector('[data-action="clear-filters"]');
   if (clearButton) {
     clearButton.addEventListener('click', async () => {
-      currentFilterState = { searchText: '', selectedCategory: '' };
+      currentFilterState = { searchText: '', selectedCategory: '', selectedChandamName: '' };
       await refreshResults(ruleSetId);
     });
   }
