@@ -2,7 +2,7 @@
 
 Auto-generated presentation screenshots for the Chandam WASM app.
 
-Generated: 2026-05-07
+Generated: 2026-05-08
 
 ## Stories
 
@@ -17,7 +17,6 @@ Generated: 2026-05-07
 - ![breadcrumbs](story-1-discovery/07-breadcrumbs.png)
 - ![compute prefilled](story-1-discovery/08-compute-prefilled.png)
 - ![results 100 percent](story-1-discovery/09-results-100-percent.png)
-- ![github submit button](story-1-discovery/10-github-submit-button.png)
 
 ### 2. Power User
 

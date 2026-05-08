@@ -108,13 +108,8 @@ test.describe('Favorites – heart button', () => {
     await page.locator('#btn-favorite').click();
     await page.waitForTimeout(500);
 
-    // Navigate to the favorites collection learn page via SPA (preserve WASM state)
-    // Use history.pushState + popstate to trigger the SPA router without full reload
-    await page.evaluate(() => {
-      history.pushState(null, '', '/learn/custom-fav/');
-      window.dispatchEvent(new PopStateEvent('popstate'));
-    });
-    // Wait for learn index to render with custom-fav content
+    // Navigate to the favorites collection learn page
+    await gotoAndWait(page, '/learn/custom-fav/');
     await expect(page.locator('.learn-index-page')).toBeVisible({ timeout: 10_000 });
 
     // The favorited rule should appear in the list
@@ -212,10 +207,7 @@ test.describe('Favorites – multi-ruleset and persistence', () => {
     await expect(page.locator('#btn-favorite')).toHaveAttribute('data-favorited', 'true');
 
     // Navigate to favorites collection
-    await page.evaluate(() => {
-      history.pushState(null, '', '/learn/custom-fav/');
-      window.dispatchEvent(new PopStateEvent('popstate'));
-    });
+    await gotoAndWait(page, '/learn/custom-fav/');
     await expect(page.locator('.learn-index-page')).toBeVisible({ timeout: 10_000 });
 
     // Both rules should appear
@@ -246,10 +238,7 @@ test.describe('Favorites – multi-ruleset and persistence', () => {
     await page.waitForTimeout(500);
 
     // Navigate to favorites collection
-    await page.evaluate(() => {
-      history.pushState(null, '', '/learn/custom-fav/');
-      window.dispatchEvent(new PopStateEvent('popstate'));
-    });
+    await gotoAndWait(page, '/learn/custom-fav/');
     await expect(page.locator('.learn-index-page')).toBeVisible({ timeout: 10_000 });
 
     // Get initial count
@@ -258,7 +247,7 @@ test.describe('Favorites – multi-ruleset and persistence', () => {
 
     // Use search filter with a specific rule name
     const firstName = await page.locator('.rule-list-item .meter-name').first().textContent();
-    const searchInput = page.locator('#filter-search');
+    const searchInput = page.locator('.filter-search');
     if (await searchInput.isVisible()) {
       await searchInput.fill(firstName?.trim() ?? '');
       await page.waitForTimeout(300);

@@ -8,6 +8,8 @@ using Microsoft.JSInterop;
 using Microsoft.Extensions.DependencyInjection;
 using Chandam.API.Services;
 using Chandam.API.Models;
+using Chandam.API.Models.Config;
+using Chandam.API.Converters;
 using Chandam.API.Helpers;
 using Chandam.Rules;
 using Chandam.Wasm.Services;
@@ -178,6 +180,76 @@ public static class JsBridge
     }
 
     [JSInvokable]
+    public static string GetRuleDto(string ruleId)
+    {
+        var ruleLoader = ServiceAccessor.Services!.GetRequiredService<RuleLoaderService>();
+        var rule = ruleLoader.FetchRuleFromRuleSet(ruleId);
+        if (rule == null) return "null";
+
+        var dto = new JsonObject
+        {
+            ["Identifier"] = rule.Identifier,
+            ["Name"] = rule.Name,
+            ["Language"] = rule.Language.ToString(),
+            ["PadyamType"] = rule.PadyamType.ToString(),
+            ["PadyamSubType"] = rule.PadyamSubType.ToString(),
+            ["RuleType"] = rule.RuleType.ToString(),
+            ["Frequency"] = rule.Frequency.ToString(),
+            ["Lines"] = rule.Lines,
+            ["Threshold"] = rule.Threshold,
+            ["Prasa"] = rule.Prasa,
+            ["PrasaYati"] = rule.PrasaYati,
+            ["AnthyaPrasa"] = rule.AnthyaPrasa,
+            ["ReverseYati"] = rule.ReverseYati,
+            ["OnlyPrasaYati"] = rule.OnlyPrasaYati,
+            ["YatiRecycle"] = rule.YatiRecycle,
+            ["DeferThresold"] = rule.DeferThresold,
+            ["InfiniteLength"] = rule.InfiniteLength
+        };
+
+        if (rule.Rules != null)
+        {
+            var rulesArray = new JsonArray();
+            foreach (var row in rule.Rules)
+            {
+                var rowArray = new JsonArray();
+                if (row != null) foreach (var cell in row) rowArray.Add(cell?.ToString() ?? "");
+                rulesArray.Add(rowArray);
+            }
+            dto["Rules"] = rulesArray;
+        }
+
+        if (rule.Yati != null)
+        {
+            var yatiArray = new JsonArray();
+            foreach (var row in rule.Yati)
+            {
+                var rowArray = new JsonArray();
+                if (row != null) foreach (var cell in row) rowArray.Add(cell);
+                yatiArray.Add(rowArray);
+            }
+            dto["Yati"] = yatiArray;
+        }
+
+        dto["YatiMode"] = rule.YatiMode.ToString();
+
+        if (rule.Examples2 != null && rule.Examples2.Length > 0)
+        {
+            var examplesArray = new JsonArray();
+            foreach (var ex in rule.Examples2)
+            {
+                var exObj = new JsonObject { ["Text"] = ex.Text ?? "" };
+                if (!string.IsNullOrEmpty(ex.Author)) exObj["Author"] = ex.Author;
+                if (!string.IsNullOrEmpty(ex.Reference)) exObj["Reference"] = ex.Reference;
+                examplesArray.Add(exObj);
+            }
+            dto["Examples"] = examplesArray;
+        }
+
+        return dto.ToJsonString();
+    }
+
+    [JSInvokable]
     public static string GetRandomPoem(string ruleId)
     {
         var rule = Manager.FetchRule(ruleId);
@@ -266,7 +338,12 @@ public static class JsBridge
         try
         {
             var ruleLoader = ServiceAccessor.Services!.GetRequiredService<RuleLoaderService>();
-            var rules = ruleLoader.LoadFromJsonString(rulesJson);
+
+            // Use source-generated context to avoid NullabilityInfoContext_NotSupported in WASM
+            var ruleSetDto = JsonSerializer.Deserialize(rulesJson, WasmJsonContext.Default.RuleSetDto);
+            Rule[]? rules = null;
+            if (ruleSetDto?.Rules != null && ruleSetDto.Rules.Count > 0)
+                rules = Chandam.API.Converters.RuleDtoConverter.ConvertToRules(ruleSetDto.Rules);
 
             if (rules != null && rules.Length > 0)
             {
@@ -301,7 +378,14 @@ public static class JsBridge
         try
         {
             var ruleLoader = ServiceAccessor.Services!.GetRequiredService<RuleLoaderService>();
-            var rules = ruleLoader.LoadFromJsonString(customRulesJson);
+
+            // Use source-generated context to avoid NullabilityInfoContext_NotSupported in WASM
+            var ruleSetDto = JsonSerializer.Deserialize(customRulesJson, WasmJsonContext.Default.RuleSetDto);
+            if (ruleSetDto == null || ruleSetDto.Rules == null || ruleSetDto.Rules.Count == 0)
+            {
+                return ErrorJson("Invalid custom ruleset: no rules found");
+            }
+            var rules = Chandam.API.Converters.RuleDtoConverter.ConvertToRules(ruleSetDto.Rules);
 
             if (rules == null || rules.Length == 0)
             {

@@ -205,11 +205,11 @@ async function handleFavoriteClick(ruleSetId: string, ruleId: string) {
     // Add animation class
     btn.classList.add('favoriting');
 
-    // Get full rule data
-    const ruleInfo = await WasmBridge.getRuleInfo(ruleId);
+    // Get rule data in DTO format (serializable for WASM reload)
+    const ruleDto = await WasmBridge.getRuleDto(ruleId);
 
     // Toggle favorite
-    const newState = await favoritesService.toggleFavorite(ruleSetId, ruleId, ruleInfo);
+    const newState = await favoritesService.toggleFavorite(ruleSetId, ruleId, ruleDto);
 
     const totalFavorites = await favoritesService.getFavoriteCount();
     done({ action: newState ? 'add' : 'remove', totalFavorites });
@@ -266,8 +266,8 @@ async function handleDeleteClick(ruleSetId: string, ruleId: string) {
     const isFavorited = await favoritesService.isFavorited(originalRuleSetId, ruleId);
     if (isFavorited) {
       // Get rule data and remove from favorites
-      const ruleData = await WasmBridge.getRuleInfo(ruleId);
-      await favoritesService.toggleFavorite(originalRuleSetId, ruleId, ruleData);
+      const ruleDto = await WasmBridge.getRuleDto(ruleId);
+      await favoritesService.toggleFavorite(originalRuleSetId, ruleId, ruleDto);
     }
 
     done();

@@ -80,9 +80,9 @@ export function initConsoleAPI() {
           return false;
         }
 
-        // Get rule data
-        const ruleInfo = await WasmBridge.getRuleInfo(ruleId);
-        await favoritesService.toggleFavorite(ruleSetId, ruleId, ruleInfo);
+        // Get rule data in DTO format
+        const ruleDto = await WasmBridge.getRuleDto(ruleId);
+        await favoritesService.toggleFavorite(ruleSetId, ruleId, ruleDto);
         console.log(`Added ${ruleId} to favorites`);
         return true;
       },
@@ -97,8 +97,8 @@ export function initConsoleAPI() {
           return false;
         }
 
-        const ruleInfo = await WasmBridge.getRuleInfo(ruleId);
-        await favoritesService.toggleFavorite(ruleSetId, ruleId, ruleInfo);
+        const ruleDto = await WasmBridge.getRuleDto(ruleId);
+        await favoritesService.toggleFavorite(ruleSetId, ruleId, ruleDto);
         console.log(`Removed ${ruleId} from favorites`);
         return true;
       },

@@ -433,8 +433,8 @@ async function handleDeleteFromList(ruleId: string, ruleName: string) {
 
     const isFavorited = await favoritesService.isFavorited('custom-rules', ruleId);
     if (isFavorited) {
-      const ruleData = await WasmBridge.getRuleInfo(ruleId);
-      await favoritesService.toggleFavorite('custom-rules', ruleId, ruleData);
+      const ruleDto = await WasmBridge.getRuleDto(ruleId);
+      await favoritesService.toggleFavorite('custom-rules', ruleId, ruleDto);
     }
 
     done();

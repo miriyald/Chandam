@@ -141,9 +141,16 @@ test.describe('Compute page – specific rule mode', () => {
     await page.locator('#rule-picker-inline').click();
     const ruleItems = page.locator('#rule-picker-container .rule-item');
     const count = await ruleItems.count();
-    await ruleItems.nth(pickRandomIndex(count, rng)).click();
+    const chosenItem = ruleItems.nth(pickRandomIndex(count, rng));
+    await chosenItem.click();
 
-    await page.locator('#btn-random').click();
+    // Load a rule-specific example poem
+    const ruleId = await chosenItem.getAttribute('data-rule-id');
+    const poem = await page.evaluate(async (id: string) => {
+      const { DotNet } = window as any;
+      return await DotNet.invokeMethodAsync('Chandam.Wasm', 'GetRandomPoem', id);
+    }, ruleId!);
+    await page.locator('#poem-editor').fill(poem || '');
     await expect(page.locator('#poem-editor')).not.toHaveValue('');
 
     // First analysis with Yati checked

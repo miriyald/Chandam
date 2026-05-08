@@ -201,11 +201,8 @@ test.describe('Custom rule – compute and persistence', () => {
     const url = page.url();
     const ruleId = url.split('/').filter(Boolean).pop() ?? '';
 
-    // Navigate to compute page for the custom rule via SPA
-    await page.evaluate((path: string) => {
-      history.pushState(null, '', path);
-      window.dispatchEvent(new PopStateEvent('popstate'));
-    }, `/compute/custom-rules/${ruleId}`);
+    // Navigate to compute page for the custom rule
+    await gotoAndWait(page, `/compute/custom-rules/${ruleId}`);
     await expect(page.locator('#poem-editor')).toBeVisible({ timeout: 10_000 });
 
     // Type Telugu text and analyze -- custom rule with default pattern may not match,

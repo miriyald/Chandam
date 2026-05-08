@@ -2834,13 +2834,14 @@ footer a:focus-visible {
   .breadcrumbs {
     font-size: 0.8rem;
     flex-wrap: nowrap;
-    overflow: hidden;
+    overflow-x: auto;
     white-space: nowrap;
   }
 
-  .breadcrumb-link:not(:last-of-type),
-  .breadcrumb-separator:not(:last-of-type) {
-    display: none;
+  .breadcrumb-link {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 8rem;
   }
 
   .breadcrumb-link,

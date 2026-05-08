@@ -87,9 +87,15 @@ test.describe('Rule Sets → Rule navigation', () => {
       timeout: 3_000,
     });
 
-    // 6. Load a random poem into the editor
-    await page.locator('#btn-random').click();
-    const editorValue = await page.locator('#poem-editor').inputValue();
+    // 6. Load a rule-specific example poem into the editor
+    const ruleId = await chosenItem.getAttribute('data-rule-id');
+    const poem = await page.evaluate(async (id: string) => {
+      const { DotNet } = window as any;
+      return await DotNet.invokeMethodAsync('Chandam.Wasm', 'GetRandomPoem', id);
+    }, ruleId!);
+    const editor = page.locator('#poem-editor');
+    await editor.fill(poem || '');
+    const editorValue = await editor.inputValue();
     expect(editorValue.trim().length).toBeGreaterThan(0);
 
     // 7. Click Analyze and wait for results
