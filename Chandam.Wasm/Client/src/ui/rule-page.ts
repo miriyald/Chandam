@@ -188,8 +188,7 @@ function attachEventHandlers(ruleSet: string, ruleId: string) {
     const yati = (document.getElementById('match-yati') as HTMLInputElement)?.checked ?? true;
     const prasa = (document.getElementById('match-prasa') as HTMLInputElement)?.checked ?? true;
 
-    // Track analyze button click
-    analyticsService.trackEvent('analyze_click', {
+    const trackComplete = analyticsService.startTimedEvent('analyze_click', {
       mode: 'specific_rule',
       ruleSet: ruleSet,
       ruleId: ruleId,
@@ -211,12 +210,13 @@ function attachEventHandlers(ruleSet: string, ruleId: string) {
       console.error('Match failed:', err);
       alert(t('alert_error'));
     }
+
+    trackComplete();
   });
 
   // Random button - picks from this rule's examples only
   document.getElementById('btn-random')?.addEventListener('click', async () => {
-    // Track random button click
-    analyticsService.trackEvent('random_click', {
+    const trackComplete = analyticsService.startTimedEvent('random_click', {
       ruleSet: ruleSet,
       ruleId: ruleId
     });
@@ -232,6 +232,8 @@ function attachEventHandlers(ruleSet: string, ruleId: string) {
     } catch (err) {
       console.error('Random poem failed:', err);
     }
+
+    trackComplete();
   });
 
   // Clear button
@@ -239,13 +241,12 @@ function attachEventHandlers(ruleSet: string, ruleId: string) {
     const editor = document.getElementById('poem-editor') as HTMLTextAreaElement;
     const hadContent = editor ? editor.value.length > 0 : false;
 
-    // Track clear button click
-    analyticsService.trackEvent('clear_click', {
+    const done = analyticsService.startTimedEvent('clear_click', {
       ruleSet: ruleSet,
       hadContent
     });
-
     clearEditor();
     hideResults();
+    done();
   });
 }

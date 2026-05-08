@@ -140,8 +140,7 @@ function attachEventHandlers(ruleSet: string) {
   document.getElementById('btn-analyze')?.addEventListener('click', async () => {
     const isAutoDetect = (document.getElementById('auto-detect') as HTMLInputElement)?.checked;
 
-    // Track analyze button click
-    analyticsService.trackEvent('analyze_click', {
+    const trackComplete = analyticsService.startTimedEvent('analyze_click', {
       mode: isAutoDetect ? 'auto_detect' : 'specific_rule',
       ruleSet: currentRuleSet,
       ruleId: isAutoDetect ? null : getSelectedRule(),
@@ -153,14 +152,15 @@ function attachEventHandlers(ruleSet: string) {
     } else {
       await handleMatchWithTracking();
     }
+
+    trackComplete();
   });
 
   // Random button - picks from any rule in the set
   document.getElementById('btn-random')?.addEventListener('click', async () => {
-    // Track random button click
-    analyticsService.trackEvent('random_click', {
+    const trackComplete = analyticsService.startTimedEvent('random_click', {
       ruleSet: currentRuleSet,
-      ruleId: 'auto_detect'  // Random from entire set
+      ruleId: 'auto_detect'
     });
 
     try {
@@ -174,6 +174,8 @@ function attachEventHandlers(ruleSet: string) {
     } catch (err) {
       console.error('Random poem failed:', err);
     }
+
+    trackComplete();
   });
 
   // Clear button
@@ -181,14 +183,13 @@ function attachEventHandlers(ruleSet: string) {
     const editor = document.getElementById('poem-editor') as HTMLTextAreaElement;
     const hadContent = editor ? editor.value.length > 0 : false;
 
-    // Track clear button click
-    analyticsService.trackEvent('clear_click', {
+    const done = analyticsService.startTimedEvent('clear_click', {
       ruleSet: currentRuleSet,
       hadContent
     });
-
     clearEditor();
     hideResults();
+    done();
   });
 
   // Score card "try" button — switch to manual mode, select rule, trigger analyze via UI event
@@ -199,6 +200,12 @@ function attachEventHandlers(ruleSet: string) {
     const ruleId = btn.getAttribute('data-rule-id');
     const ruleName = btn.getAttribute('data-rule-name');
     if (!ruleId || !ruleName) return;
+
+    const done = analyticsService.startTimedEvent('score_card_try', {
+      ruleSet: currentRuleSet,
+      ruleId
+    });
+    done();
 
     // Switch to manual mode
     const autoDetect = document.getElementById('auto-detect') as HTMLInputElement;

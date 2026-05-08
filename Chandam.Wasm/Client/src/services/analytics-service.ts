@@ -70,6 +70,19 @@ export class AnalyticsService {
   }
 
   /**
+   * Start a timer for measuring action duration.
+   * Returns a function that, when called, tracks the event with durationMs included.
+   * Pass extra params at completion time to merge with the initial params.
+   */
+  startTimedEvent(eventName: string, params: Record<string, any> = {}): (extra?: Record<string, any>) => void {
+    const startTime = performance.now();
+    return (extra?: Record<string, any>) => {
+      const durationMs = Math.round(performance.now() - startTime);
+      this.trackEvent(eventName, { ...params, ...extra, durationMs });
+    };
+  }
+
+  /**
    * Set user ID for cross-session tracking
    */
   setUserId(userId: string): void {

@@ -112,7 +112,17 @@ router.register('/learn/:ruleSet/:ruleId', async (params) => {
   await renderLearnDetailPage(params.ruleSet, params.ruleId);
 });
 
+// Render a page whose title and content come from i18n keys (page_{name}_title, page_{name}_content)
+function renderStaticI18nPage(name: string): void {
+  const content = document.getElementById('content');
+  if (!content) return;
+  const titleKey = `page_${name}_title` as keyof Translations;
+  const contentKey = `page_${name}_content` as keyof Translations;
+  content.innerHTML = `<div class="container"><h2>${t(titleKey)}</h2>${t(contentKey)}</div>`;
+}
+
 // Static pages
+router.register('/resources', () => { setPageTitle(t('nav_resources')); renderStaticI18nPage('resources'); });
 router.register('/about', () => { setPageTitle(t('nav_about')); loadStaticPage(`pages/${getLanguage()}/about.html`); });
 router.register('/credits', () => { setPageTitle(t('nav_credits')); loadStaticPage(`pages/${getLanguage()}/credits.html`); });
 router.register('/contact', () => { setPageTitle(t('nav_contact')); loadStaticPage(`pages/${getLanguage()}/contact.html`); });
@@ -152,7 +162,9 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   document.getElementById('lang-toggle')?.addEventListener('click', () => {
+    const done = analyticsService.startTimedEvent('language_toggle', {});
     toggleLanguage();
+    done({ language: getLanguage() });
   });
 });
 

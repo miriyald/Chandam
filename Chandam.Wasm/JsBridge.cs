@@ -64,6 +64,27 @@ public static class JsBridge
         {
             try
             {
+                string compactSummary = "";
+                try
+                {
+                    compactSummary = DescriptionBuilder.BuildCompactSummary(r);
+                }
+                catch
+                {
+                    // Non-fatal: rule still appears in list, just without compact summary
+                }
+
+                int minVal = -1, maxVal = -1;
+                try
+                {
+                    minVal = r.Min;
+                    maxVal = r.Max;
+                }
+                catch (InvalidCastException)
+                {
+                    // RowWiseRule types may throw on Min/Max access
+                }
+
                 resultArray.Add(new JsonObject
                 {
                     ["identifier"] = r.Identifier,
@@ -75,24 +96,13 @@ public static class JsBridge
                     ["chandamName"] = r.ChandamName,
                     ["charLength"] = r.CharLength,
                     ["matraLength"] = r.MatraLength,
-                    ["min"] = r.Min,
-                    ["max"] = r.Max,
+                    ["min"] = minVal,
+                    ["max"] = maxVal,
                     ["sequence"] = r.Sequence,
                     ["shortName"] = r.ShortName,
                     ["alias"] = r.Alias,
-                    ["compactSummary"] = DescriptionBuilder.BuildCompactSummary(r)
+                    ["compactSummary"] = compactSummary
                 });
-            }
-            catch (InvalidCastException ex)
-            {
-                Console.WriteLine($"WASM: SKIPPING rule '{r.Identifier}' ({r.Name}) - InvalidCastException: {ex.Message}");
-                if (r.Rules != null && r.Rules.Length > 0 && r.Rules[0] != null && r.Rules[0].Length > 0)
-                {
-                    var firstElem = r.Rules[0][0];
-                    Console.WriteLine($"  RuleType={r.RuleType}, First element type: {firstElem?.GetType().Name ?? "null"}");
-                    Console.WriteLine($"  First element value: {firstElem}");
-                }
-                skippedCount++;
             }
             catch (Exception ex)
             {

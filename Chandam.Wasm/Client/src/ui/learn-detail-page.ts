@@ -104,6 +104,12 @@ function attachLearnSubmitHandler(ruleSetId: string, ruleInfo: RuleInfo): void {
 
   btn.addEventListener('click', async () => {
     const isCustomRule = ruleInfo.identifier.startsWith('custom-');
+    const done = analyticsService.startTimedEvent('submit_github_click', {
+      ruleId: ruleInfo.identifier,
+      ruleSetId,
+      type: isCustomRule ? 'custom-rule' : 'new-example',
+      source: 'learn_page'
+    });
 
     if (isCustomRule) {
       const { customRulesService } = await import('../services/storage/custom-rules-service');
@@ -120,12 +126,7 @@ function attachLearnSubmitHandler(ruleSetId: string, ruleInfo: RuleInfo): void {
       submitToGitHub(payload, 'learn_page');
     }
 
-    analyticsService.trackEvent('submit_github_click', {
-      ruleId: ruleInfo.identifier,
-      ruleSetId,
-      type: isCustomRule ? 'custom-rule' : 'new-example',
-      source: 'learn_page'
-    });
+    done();
   });
 }
 

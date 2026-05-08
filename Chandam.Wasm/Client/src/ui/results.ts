@@ -205,6 +205,7 @@ async function handleAddToExamples(button: HTMLElement): Promise<void> {
   const poemText = editor?.value?.trim();
   if (!poemText) return;
 
+  const done = analyticsService.startTimedEvent('example_added', { ruleId, source: 'results' });
   const { customRulesService } = await import('../services/storage/custom-rules-service');
   const added = await customRulesService.addExampleToRule(ruleId, poemText);
 
@@ -213,12 +214,13 @@ async function handleAddToExamples(button: HTMLElement): Promise<void> {
     button.textContent = t('results_example_added');
     button.classList.add('btn-success');
     button.setAttribute('disabled', 'true');
-    analyticsService.trackEvent('example_added', { ruleId, exampleCount, source: 'results' });
+    done({ exampleCount });
   } else {
     button.textContent = t('results_example_duplicate');
     button.classList.add('btn-warning');
     button.setAttribute('disabled', 'true');
-    analyticsService.trackEvent('example_duplicate', { ruleId });
+    const dupDone = analyticsService.startTimedEvent('example_duplicate', { ruleId });
+    dupDone();
   }
 }
 

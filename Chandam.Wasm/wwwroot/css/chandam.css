@@ -2996,22 +2996,23 @@ footer a:focus-visible {
   transform: scale(1.1);
 }
 
-/* Delete button in rule list (inline with links) - matches Learn/Try link style */
+/* Delete button in rule list (inline with links) - same style as Learn/Try action icons */
 .btn-delete-inline {
-  background: #c1121f;
-  color: white;
+  background: transparent;
+  color: var(--color-text-muted);
   border: none;
-  padding: 0.4rem 0.8rem;
-  border-radius: 4px;
+  padding: 0.25rem 0.5rem;
+  border-radius: var(--radius-sm);
   cursor: pointer;
-  font-size: 0.9rem;
+  font-size: 0.75rem;
   font-family: var(--font-main);
   text-decoration: none;
   transition: all 0.2s;
 }
 
 .btn-delete-inline:hover {
-  background: #a00;
+  background: rgba(193, 18, 31, 0.08);
+  color: #c1121f;
 }
 
 /* Future action buttons (share, print, etc.) */

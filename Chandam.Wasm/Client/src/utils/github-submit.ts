@@ -28,22 +28,24 @@ export interface ExamplePayload {
 export type SubmissionPayload = CustomRulePayload | ExamplePayload;
 
 export function submitToGitHub(payload: SubmissionPayload, source: 'results' | 'learn_page' | 'rule_actions'): void {
-  downloadSubmissionFile(payload);
-  analyticsService.trackEvent('submit_github_download', {
+  const doneDownload = analyticsService.startTimedEvent('submit_github_download', {
     ruleId: payload.ruleIdentifier,
     ruleSetId: payload.type === 'new-example' ? payload.ruleSetId : 'custom-rules',
     type: payload.type,
     source,
     exampleCount: payload.examples.length
   });
+  downloadSubmissionFile(payload);
+  doneDownload();
 
-  openGitHubIssue(payload);
-  analyticsService.trackEvent('submit_github_redirect', {
+  const doneRedirect = analyticsService.startTimedEvent('submit_github_redirect', {
     ruleId: payload.ruleIdentifier,
     ruleSetId: payload.type === 'new-example' ? payload.ruleSetId : 'custom-rules',
     type: payload.type,
     source
   });
+  openGitHubIssue(payload);
+  doneRedirect();
 }
 
 function downloadSubmissionFile(payload: SubmissionPayload): void {

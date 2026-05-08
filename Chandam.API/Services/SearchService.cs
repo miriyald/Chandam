@@ -51,6 +51,10 @@ namespace Chandam.API.Services
             {
                 try
                 {
+                    string compactSummary = "";
+                    try { compactSummary = DescriptionBuilder.BuildCompactSummary(r); }
+                    catch { /* Non-fatal */ }
+
                     var detail = new RuleSummaryDetailed
                     {
                         Identifier = r.Identifier,
@@ -65,7 +69,8 @@ namespace Chandam.API.Services
                         Sequence = r.Sequence,
                         ShortName = r.ShortName,
                         Alias = r.Alias,
-                        ExamplesCount = r.Examples2?.Length ?? 0
+                        ExamplesCount = r.Examples2?.Length ?? 0,
+                        CompactSummary = compactSummary
                     };
 
                     // Try to get Min/Max - check rule type first to avoid exceptions
@@ -322,6 +327,7 @@ namespace Chandam.API.Services
         public string? ShortName { get; set; }
         public string? Alias { get; set; }
         public int ExamplesCount { get; set; }
+        public string? CompactSummary { get; set; }
     }
 
     public class AvailableFilters

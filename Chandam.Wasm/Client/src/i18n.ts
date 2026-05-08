@@ -4,6 +4,7 @@ export interface Translations {
   // Navigation
   nav_home: string;
   nav_rule_sets: string;
+  nav_resources: string;
   nav_about: string;
   nav_credits: string;
   nav_contact: string;
@@ -257,6 +258,8 @@ export interface Translations {
   // Pages
   page_about_title: string;
   page_about_content: string;
+  page_resources_title: string;
+  page_resources_content: string;
   page_credits_title: string;
   page_credits_content: string;
   page_contact_title: string;
@@ -267,6 +270,7 @@ const translations: Record<Language, Translations> = {
   en: {
     nav_home: 'Home',
     nav_rule_sets: 'Rule Sets',
+    nav_resources: 'Resources',
     nav_about: 'About',
     nav_credits: 'Credits',
     nav_contact: 'Contact',
@@ -279,8 +283,8 @@ const translations: Record<Language, Translations> = {
     home_btn_learn: '📖 Learn',
 
     editor_placeholder: 'పద్యం ఇక్కడ టైప్ చేయండి...',
-    editor_btn_random: '🎲 Random',
-    editor_btn_clear: '🧹 Clear',
+    editor_btn_random: 'Random',
+    editor_btn_clear: 'Clear',
     editor_btn_analyze: 'Analyze Poem',
     editor_auto_detect: 'Auto-detect',
     editor_yati: 'Yati',
@@ -499,6 +503,23 @@ const translations: Record<Language, Translations> = {
     // Explore
     explore_graph_hint: 'Scroll to zoom. Drag nodes to rearrange. Click a rule to view details.',
 
+    page_resources_title: 'Resources',
+    page_resources_content: `
+      <p>A curated collection of references and tools for Telugu prosody.</p>
+      <h3>References</h3>
+      <ul>
+        <li><a href="http://andhrabharati.com/" target="_blank">Andhra Bharati</a> — Encyclopedic resource for Telugu literature</li>
+        <li><a href="http://sanskrit.sai.uni-heidelberg.de/Chanda/HTML/" target="_blank">Sanskrit Encyclopaedia of Prosody</a> — Comprehensive metrical reference</li>
+        <li>Kovela Sampathkumaracharya — <em>Chandahpadakosam</em></li>
+        <li>Masters' Telugu Grammar</li>
+      </ul>
+      <h3>Tools</h3>
+      <ul>
+        <li><a href="/rule-sets">Browse Rule Sets</a> — Explore all 343+ Telugu meters</li>
+        <li><a href="/create-rule">Create Custom Rule</a> — Define your own meter patterns</li>
+      </ul>
+      <p><em>More resources coming soon.</em></p>
+    `,
     page_about_title: 'About Chandam',
     page_about_content: `
       <p>The art of composing poetry requires not only immense creativity but also a deep understanding of prosody (Chandas), including the rules of meter, ganas (metrical feet), and yati-prasa (caesura and rhyme). This demands significant practice, and even for seasoned poets, occasional errors are natural.</p>
@@ -551,6 +572,7 @@ const translations: Record<Language, Translations> = {
   te: {
     nav_home: 'హోమ్',
     nav_rule_sets: 'నియమావళులు',
+    nav_resources: 'వనరులు',
     nav_about: 'పరిచయం',
     nav_credits: 'కృతజ్ఞతలు',
     nav_contact: 'సంప్రదింపులు',
@@ -563,8 +585,8 @@ const translations: Record<Language, Translations> = {
     home_btn_learn: '📖 నేర్చుకోండి',
 
     editor_placeholder: 'పద్యం ఇక్కడ నమోదు చేయండి లేదా అతికించండి...',
-    editor_btn_random: '🎲 యాదృచ్ఛిక పద్యం',
-    editor_btn_clear: '🧹 ఖాళీ చేయి',
+    editor_btn_random: 'యాదృచ్ఛిక పద్యం',
+    editor_btn_clear: 'ఖాళీ చేయి',
     editor_btn_analyze: 'విశ్లేషించండి',
     editor_auto_detect: 'స్వయంచాలకంగా గుర్తించు',
     editor_yati: 'యతి',
@@ -783,6 +805,23 @@ const translations: Record<Language, Translations> = {
     // Explore
     explore_graph_hint: 'జూమ్ చేయడానికి స్క్రోల్ చేయండి. నోడ్‌లను లాగి అమర్చండి. వివరాలు చూడటానికి నియమంపై క్లిక్ చేయండి.',
 
+    page_resources_title: 'వనరులు',
+    page_resources_content: `
+      <p>తెలుగు ఛందస్సుకు సంబంధించిన సూచనలు మరియు సాధనాల సంకలనం.</p>
+      <h3>సూచనలు</h3>
+      <ul>
+        <li><a href="http://andhrabharati.com/" target="_blank">ఆంధ్ర భారతి</a> — తెలుగు సాహిత్యానికి సమగ్ర వనరు</li>
+        <li><a href="http://sanskrit.sai.uni-heidelberg.de/Chanda/HTML/" target="_blank">సంస్కృత ఛందస్సు encyclopaedia</a> — సమగ్ర ఛందో సూచన</li>
+        <li>కోవెల సాంపత్కుమారాచార్య — <em>ఛందఃపదకోశం</em></li>
+        <li>మాస్టర్స్ తెలుగు వ్యాకరణం</li>
+      </ul>
+      <h3>సాధనాలు</h3>
+      <ul>
+        <li><a href="/rule-sets">నియమావళులు చూడండి</a> — 343+ తెలుగు ఛందస్సులను అన్వేషించండి</li>
+        <li><a href="/create-rule">అనుకూల నియమం సృష్టించండి</a> — మీ స్వంత ఛందో నమూనాలను నిర్వచించండి</li>
+      </ul>
+      <p><em>మరిన్ని వనరులు త్వరలో...</em></p>
+    `,
     page_about_title: 'About Chandam',
     page_about_content: `
       <p>The art of composing poetry requires not only immense creativity but also a deep understanding of prosody (Chandas), including the rules of meter, ganas (metrical feet), and yati-prasa (caesura and rhyme). This demands significant practice, and even for seasoned poets, occasional errors are natural.</p>

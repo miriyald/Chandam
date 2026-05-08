@@ -165,7 +165,10 @@ function renderLearnIndexPageHtml(
           </div>
           <div class="filter-actions">
             ${ruleCount !== allRulesCount ? `<span class="filter-result-count">${t('filter_results')} (${ruleCount}/${allRulesCount})</span>` : ''}
-            <button class="btn-clear-filters" data-action="clear-filters">${t('editor_btn_clear')}</button>
+            <button class="btn-clear-filters" data-action="clear-filters">
+              <svg viewBox="0 0 24 24" width="14" height="14"><path d="M16 11h-1V3c0-.55-.45-1-1-1h-4c-.55 0-1 .45-1 1v8H8c-1.1 0-2 .9-2 2v9h12v-9c0-1.1-.9-2-2-2zm-5-7.5h2v7.5h-2V3.5zM6 22v-1h12v1H6z"/></svg>
+              ${t('editor_btn_clear')}
+            </button>
           </div>
         </div>
       </div>
@@ -320,7 +323,12 @@ function attachFilterEventListeners(ruleSetId: string) {
   if (searchInput) {
     searchInput.addEventListener('input', debounce(async (e: Event) => {
       currentFilterState.searchText = (e.target as HTMLInputElement).value;
+      const done = analyticsService.startTimedEvent('filter_search', {
+        ruleSet: ruleSetId,
+        queryLength: currentFilterState.searchText.length
+      });
       await refreshResults(ruleSetId);
+      done();
     }, 300));
   }
 
@@ -345,7 +353,14 @@ function attachFilterEventListeners(ruleSetId: string) {
           summary.textContent = getSelectedFilterLabel() + ' ▼';
         }
         categoryPicker.open = false;
+
+        const done = analyticsService.startTimedEvent('filter_category', {
+          ruleSet: ruleSetId,
+          filterType,
+          value: value || 'all'
+        });
         await refreshResults(ruleSetId);
+        done();
       });
     });
 
@@ -360,7 +375,9 @@ function attachFilterEventListeners(ruleSetId: string) {
   if (clearButton) {
     clearButton.addEventListener('click', async () => {
       currentFilterState = { searchText: '', selectedCategory: '', selectedChandamName: '' };
+      const done = analyticsService.startTimedEvent('filter_clear', { ruleSet: ruleSetId });
       await refreshResults(ruleSetId);
+      done();
     });
   }
 
@@ -406,6 +423,11 @@ async function handleDeleteFromList(ruleId: string, ruleName: string) {
     return;
   }
 
+  const done = analyticsService.startTimedEvent('custom_rule_deleted', {
+    ruleId: ruleId,
+    source: 'index_page'
+  });
+
   try {
     await customRulesService.deleteCustomRule(ruleId);
 
@@ -415,11 +437,7 @@ async function handleDeleteFromList(ruleId: string, ruleName: string) {
       await favoritesService.toggleFavorite('custom-rules', ruleId, ruleData);
     }
 
-    analyticsService.trackEvent('custom_rule_deleted', {
-      ruleId: ruleId,
-      source: 'index_page'
-    });
-
+    done();
     window.location.reload();
 
   } catch (error) {

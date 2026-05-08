@@ -165,14 +165,15 @@ function attachGitHubHandler(ruleSetId: string, ruleId: string): void {
   const btn = document.getElementById('btn-github-submit');
   if (btn) {
     btn.addEventListener('click', async () => {
-      const ruleInfo = await WasmBridge.getRuleInfo(ruleId);
-      const payload = buildExamplePayload(ruleInfo.name, ruleSetId, ruleId, []);
-      submitToGitHub(payload, 'rule_actions');
-      analyticsService.trackEvent('submit_github_click', {
+      const trackComplete = analyticsService.startTimedEvent('submit_github_click', {
         ruleId,
         ruleSetId,
         source: 'rule_actions_toolbar'
       });
+      const ruleInfo = await WasmBridge.getRuleInfo(ruleId);
+      const payload = buildExamplePayload(ruleInfo.name, ruleSetId, ruleId, []);
+      submitToGitHub(payload, 'rule_actions');
+      trackComplete();
     });
   }
 }
@@ -195,6 +196,11 @@ async function handleFavoriteClick(ruleSetId: string, ruleId: string) {
   const btn = document.getElementById('btn-favorite');
   if (!btn) return;
 
+  const done = analyticsService.startTimedEvent('favorite_toggle', {
+    ruleSet: ruleSetId,
+    ruleId: ruleId
+  });
+
   try {
     // Add animation class
     btn.classList.add('favoriting');
@@ -205,14 +211,8 @@ async function handleFavoriteClick(ruleSetId: string, ruleId: string) {
     // Toggle favorite
     const newState = await favoritesService.toggleFavorite(ruleSetId, ruleId, ruleInfo);
 
-    // Track favorite toggle
     const totalFavorites = await favoritesService.getFavoriteCount();
-    analyticsService.trackEvent('favorite_toggle', {
-      action: newState ? 'add' : 'remove',
-      ruleSet: ruleSetId,
-      ruleId: ruleId,
-      totalFavorites
-    });
+    done({ action: newState ? 'add' : 'remove', totalFavorites });
 
     // Update button state
     btn.setAttribute('data-favorited', String(newState));
@@ -226,10 +226,8 @@ async function handleFavoriteClick(ruleSetId: string, ruleId: string) {
     console.error('Failed to toggle favorite:', error);
 
     if (error instanceof Error && error.message.includes('Maximum 50 favorites')) {
-      // Track favorites limit reached
-      analyticsService.trackEvent('favorites_limit_reached', {
-        ruleId: ruleId
-      });
+      const limitDone = analyticsService.startTimedEvent('favorites_limit_reached', { ruleId });
+      limitDone();
 
       alert(t('alert_max_favorites'));
     } else {
@@ -247,6 +245,12 @@ async function handleDeleteClick(ruleSetId: string, ruleId: string) {
   if (!confirmed) {
     return;
   }
+
+  const done = analyticsService.startTimedEvent('custom_rule_deleted', {
+    ruleId: ruleId,
+    source: 'detail_page',
+    viewedFrom: ruleSetId
+  });
 
   try {
     // Import services
@@ -266,12 +270,7 @@ async function handleDeleteClick(ruleSetId: string, ruleId: string) {
       await favoritesService.toggleFavorite(originalRuleSetId, ruleId, ruleData);
     }
 
-    // Track deletion
-    analyticsService.trackEvent('custom_rule_deleted', {
-      ruleId: ruleId,
-      source: 'detail_page',
-      viewedFrom: ruleSetId  // Track which collection view it was deleted from
-    });
+    done();
 
     // Navigate back appropriately
     const { makeUrl } = await import('../utils/url-helpers');
