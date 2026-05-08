@@ -17,13 +17,13 @@ import { test, expect, gotoAndWait, waitForWasmReady } from '../fixtures/wasm-re
 import { dailyRandom, pickRandomIndex } from '../helpers/random';
 
 // Built-in rule set IDs defined in config.ts
-const RULE_SET_IDS = ['chandam', 'topella'] as const;
+const RULE_SET_IDS = ['chandam', 'topella', 'sanskrit'] as const;
 
 test.describe('Rule Sets → Rule navigation', () => {
   test('rule-sets page shows all built-in cards', async ({ page }) => {
     await gotoAndWait(page, '/rule-sets');
 
-    const cards = page.locator('.rule-set-card');
+    const cards = page.locator('.rule-set-card:not(.create-rule-card)');
     await expect(cards).toHaveCount(RULE_SET_IDS.length, { timeout: 15_000 });
 
     // Each card should have an Analyze link
@@ -87,9 +87,15 @@ test.describe('Rule Sets → Rule navigation', () => {
       timeout: 3_000,
     });
 
-    // 6. Load a random poem into the editor
-    await page.locator('#btn-random').click();
-    const editorValue = await page.locator('#poem-editor').inputValue();
+    // 6. Load a rule-specific example poem into the editor
+    const ruleId = await chosenItem.getAttribute('data-rule-id');
+    const poem = await page.evaluate(async (id: string) => {
+      const { DotNet } = window as any;
+      return await DotNet.invokeMethodAsync('Chandam.Wasm', 'GetRandomPoem', id);
+    }, ruleId!);
+    const editor = page.locator('#poem-editor');
+    await editor.fill(poem || '');
+    const editorValue = await editor.inputValue();
     expect(editorValue.trim().length).toBeGreaterThan(0);
 
     // 7. Click Analyze and wait for results
@@ -130,10 +136,11 @@ test.describe('Rule Sets → Rule navigation', () => {
     await page.goto(href!);
     await waitForWasmReady(page);
 
-    // Breadcrumbs should contain "Rule Sets" › rule-set name › rule name
+    // Breadcrumbs should show 3-level hierarchy with link to /rule-sets
     const breadcrumbs = page.locator('.breadcrumbs');
     await expect(breadcrumbs).toBeVisible();
-    await expect(breadcrumbs).toContainText('Rule Sets');
+    const firstLink = breadcrumbs.locator('a').first();
+    await expect(firstLink).toHaveAttribute('href', /\/rule-sets/);
   });
 });
 

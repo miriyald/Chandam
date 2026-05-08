@@ -16,7 +16,7 @@ public class GetSamplesRequest
     public int MaxExamples { get; set; } = 0;
 
     /// <summary>
-    /// RuleSet ID to use ("chandam", "popular", "topella", etc.). If null, uses active ruleset.
+    /// RuleSet ID to use ("chandam", "sanskrit", "topella", etc.). If null, uses active ruleset.
     /// Default: "chandam"
     /// </summary>
     public string? RuleSetId { get; set; } = "chandam";

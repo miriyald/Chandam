@@ -179,7 +179,7 @@ app.MapGet("/api/rules/{ruleSetId}/{identifier}", (string ruleSetId, string iden
     return Results.Ok(response);
 });
 
-app.MapGet("/api/rules/{ruleSetId:regex(^(chandam|popular|topella|chandam\\.min|popular\\.min|topella\\.min)$)}", (string ruleSetId, RuleLoaderService loader, ChandamService service, string? language) =>
+app.MapGet("/api/rules/{ruleSetId:regex(^(chandam|sanskrit|topella|chandam\\.min|sanskrit\\.min|topella\\.min)$)}", (string ruleSetId, RuleLoaderService loader, ChandamService service, string? language) =>
 {
     // Ensure the requested ruleset is active
     if (!string.IsNullOrEmpty(ruleSetId) && ruleSetId != loader.GetCurrentRuleSetId())

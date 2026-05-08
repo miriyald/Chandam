@@ -1,4 +1,4 @@
-import type { ChandamMatch, MatchError } from '../types';
+import type { ChandamMatch, ChandamScore, MatchError } from '../types';
 import { openAccordion } from './accordion';
 import { makeUrl } from '../utils/url-helpers';
 import { t } from '../i18n';
@@ -52,9 +52,13 @@ function renderMatchCard(match: ChandamMatch, ruleSet?: string): string {
   const statusClass = match.isMatched ? 'match-success' : 'match-failure';
   const statusIcon = match.isMatched ? '✓' : '✗';
 
-  // Only show score if < 100%
+  // Only show score if < 100% — bar + percentage
+  const scoreLevel = getScoreLevel(match.matchPercentage);
   const scoreHtml = match.matchPercentage < 100
-    ? `<span class="match-score match-score-${getScoreLevel(match.matchPercentage)}">${match.matchPercentage}%</span>`
+    ? `<div class="match-score-group">
+        <div class="match-score-bar"><div class="match-score-bar-fill score-bar-${scoreLevel}" style="width: ${match.matchPercentage}%"></div></div>
+        <span class="match-score-value match-score-${scoreLevel}">${match.matchPercentage}%</span>
+      </div>`
     : '';
 
   // Generate rule details link (opens in new tab)
@@ -107,6 +111,10 @@ function renderMatchCard(match: ChandamMatch, ruleSet?: string): string {
     `;
   }
 
+  const sequenceHint = (match.matchPercentage < 100 && match.rule.sequence)
+    ? `<div class="match-sequence-hint">${match.rule.sequence}</div>`
+    : '';
+
   return `
     <div class="match-card ${statusClass}">
       <div class="match-header">
@@ -121,6 +129,7 @@ function renderMatchCard(match: ChandamMatch, ruleSet?: string): string {
           ${ruleLink}
         </div>
       </div>
+      ${sequenceHint}
       ${bodyHtml}
     </div>
   `;
@@ -139,9 +148,8 @@ function renderErrorsTable(errors: MatchError[]): string {
 
   const errorRows = errors.map(err => `
     <tr>
-      <td class="error-line">${err.line}</td>
-      <td class="error-position">${err.position}</td>
-      <td class="error-type">${err.mismatchType}</td>
+      <td class="error-line">${err.line === 0 ? '' : err.line}</td>
+      <td class="error-position">${err.line === 0 || err.position === -1 ? '' : err.position}</td>
       <td class="error-expected">${err.expected}</td>
       <td class="error-actual">${err.actual}</td>
       <td class="error-description">${err.mismatchDescription}${err.remarks ? `<br><em>${err.remarks}</em>` : ''}</td>
@@ -157,7 +165,6 @@ function renderErrorsTable(errors: MatchError[]): string {
             <tr>
               <th>${t('results_line')}</th>
               <th>${t('results_position')}</th>
-              <th>${t('results_type')}</th>
               <th>${t('results_expected')}</th>
               <th>${t('results_actual')}</th>
               <th>${t('results_description')}</th>
@@ -198,6 +205,7 @@ async function handleAddToExamples(button: HTMLElement): Promise<void> {
   const poemText = editor?.value?.trim();
   if (!poemText) return;
 
+  const done = analyticsService.startTimedEvent('example_added', { ruleId, source: 'results' });
   const { customRulesService } = await import('../services/storage/custom-rules-service');
   const added = await customRulesService.addExampleToRule(ruleId, poemText);
 
@@ -206,12 +214,13 @@ async function handleAddToExamples(button: HTMLElement): Promise<void> {
     button.textContent = t('results_example_added');
     button.classList.add('btn-success');
     button.setAttribute('disabled', 'true');
-    analyticsService.trackEvent('example_added', { ruleId, exampleCount, source: 'results' });
+    done({ exampleCount });
   } else {
     button.textContent = t('results_example_duplicate');
     button.classList.add('btn-warning');
     button.setAttribute('disabled', 'true');
-    analyticsService.trackEvent('example_duplicate', { ruleId });
+    const dupDone = analyticsService.startTimedEvent('example_duplicate', { ruleId });
+    dupDone();
   }
 }
 
@@ -246,6 +255,46 @@ async function handleSubmitToGitHub(button: HTMLElement, ruleSet?: string): Prom
   }
 }
 
+// Render lightweight score cards for alternative matches
+export function renderScoreCards(scores: ChandamScore[], containerId: string, ruleSet?: string): void {
+  const container = document.getElementById(containerId);
+  if (!container) return;
+
+  const cardsHtml = scores.map(score => {
+    const level = getScoreLevel(score.matchPercentage);
+    const learnLink = ruleSet
+      ? `<a href="${makeUrl(`/learn/${ruleSet}/${score.identifier}/`)}" class="score-card-link">${score.name}</a>`
+      : `<span class="score-card-name">${score.name}</span>`;
+    const computeBtn = ruleSet
+      ? `<button class="score-card-try" data-rule-id="${score.identifier}" data-rule-name="${score.name}" title="${t('link_try')}">
+          <svg viewBox="0 0 24 24" width="14" height="14"><path d="M8 5v14l11-7z"/></svg>
+        </button>`
+      : '';
+
+    return `
+      <div class="score-card">
+        <div class="score-card-info">
+          ${learnLink}
+        </div>
+        <div class="score-card-bar-group">
+          <div class="score-card-bar">
+            <div class="score-card-bar-fill score-bar-${level}" style="width: ${score.matchPercentage}%"></div>
+          </div>
+          <span class="score-card-percent match-score-${level}">${score.matchPercentage}%</span>
+          ${computeBtn}
+        </div>
+      </div>
+    `;
+  }).join('');
+
+  container.innerHTML = `
+    <div class="score-cards-section">
+      <h4 class="score-cards-heading">${t('results_alternatives')}</h4>
+      ${cardsHtml}
+    </div>
+  `;
+}
+
 // Hide results section
 export function hideResults() {
   const resultsSection = document.getElementById('results-section');
@@ -255,6 +304,9 @@ export function hideResults() {
 
   const container = document.getElementById('results-container');
   if (container) container.innerHTML = '';
+
+  const scoreCards = document.getElementById('score-cards-container');
+  if (scoreCards) scoreCards.innerHTML = '';
 }
 
 export function clearResults() {

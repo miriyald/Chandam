@@ -141,9 +141,16 @@ test.describe('Compute page – specific rule mode', () => {
     await page.locator('#rule-picker-inline').click();
     const ruleItems = page.locator('#rule-picker-container .rule-item');
     const count = await ruleItems.count();
-    await ruleItems.nth(pickRandomIndex(count, rng)).click();
+    const chosenItem = ruleItems.nth(pickRandomIndex(count, rng));
+    await chosenItem.click();
 
-    await page.locator('#btn-random').click();
+    // Load a rule-specific example poem
+    const ruleId = await chosenItem.getAttribute('data-rule-id');
+    const poem = await page.evaluate(async (id: string) => {
+      const { DotNet } = window as any;
+      return await DotNet.invokeMethodAsync('Chandam.Wasm', 'GetRandomPoem', id);
+    }, ruleId!);
+    await page.locator('#poem-editor').fill(poem || '');
     await expect(page.locator('#poem-editor')).not.toHaveValue('');
 
     // First analysis with Yati checked
@@ -168,6 +175,54 @@ test.describe('Compute page – specific rule mode', () => {
   });
 });
 
+test.describe('Compute – cross-ruleset and result navigation', () => {
+  test('switches from chandam to topella compute mid-session', async ({
+    page,
+  }) => {
+    // Compute on chandam
+    await gotoAndWait(page, '/compute/chandam/');
+    await page.locator('#btn-random').click();
+    await expect(page.locator('#poem-editor')).not.toHaveValue('');
+    await page.locator('#btn-analyze').click();
+    await expect(page.locator('#results-section')).toBeVisible({
+      timeout: 15_000,
+    });
+
+    // Switch to topella
+    await gotoAndWait(page, '/compute/topella/');
+    await page.locator('#btn-random').click();
+    await expect(page.locator('#poem-editor')).not.toHaveValue('');
+    await page.locator('#btn-analyze').click();
+    await expect(page.locator('#results-section')).toBeVisible({
+      timeout: 15_000,
+    });
+    await expect(page.locator('.match-card').first()).toBeVisible();
+  });
+
+  test('clicking rule link in results navigates to learn detail', async ({
+    page,
+  }) => {
+    await gotoAndWait(page, '/compute/chandam/');
+    await page.locator('#btn-random').click();
+    await expect(page.locator('#poem-editor')).not.toHaveValue('');
+    await page.locator('#btn-analyze').click();
+    await expect(page.locator('#results-section')).toBeVisible({
+      timeout: 15_000,
+    });
+
+    // The results card has a .rule-details-link pointing to /learn/chandam/:ruleId
+    const ruleLink = page.locator('.match-card .rule-details-link').first();
+    await expect(ruleLink).toBeVisible();
+    const href = await ruleLink.getAttribute('href');
+    expect(href).toMatch(/\/learn\/chandam\/.+/);
+
+    // Navigate (link opens new tab, so we grab the href and go directly)
+    await page.goto(href!);
+    await expect(page.locator('.meter-name')).toBeVisible({ timeout: 15_000 });
+    expect(page.url()).toContain('/learn/chandam/');
+  });
+});
+
 test.describe('Compute – specific rule page (/compute/:ruleSet/:ruleId)', () => {
   test('rule page loads, Random fills editor, Analyze returns result', async ({
     page,
@@ -175,7 +230,7 @@ test.describe('Compute – specific rule page (/compute/:ruleSet/:ruleId)', () =
     // Navigate to learn/chandam to get a real rule ID dynamically
     await gotoAndWait(page, '/learn/chandam/');
     const firstRuleLink = page
-      .locator('.rule-list-item .rule-links a[href*="/compute/chandam/"]')
+      .locator('.rule-list-item .rule-item-actions a[href*="/compute/chandam/"]')
       .first();
     await expect(firstRuleLink).toBeVisible();
     const href = await firstRuleLink.getAttribute('href');

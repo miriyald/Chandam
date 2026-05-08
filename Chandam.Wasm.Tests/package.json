@@ -10,11 +10,13 @@
     "test:mobile": "playwright test --project=mobile",
     "report": "playwright show-report",
     "snapshots": "playwright test --update-snapshots",
-    "install-browsers": "playwright install --with-deps chromium webkit"
+    "install-browsers": "playwright install --with-deps chromium webkit",
+    "demo-screenshots": "npx tsx demo-screenshots.ts"
   },
   "devDependencies": {
     "@playwright/test": "1.59.1",
-    "serve": "14.2.6"
+    "serve": "14.2.6",
+    "tsx": "4.21.0"
   },
   "engines": {
     "node": ">=20.0.0"

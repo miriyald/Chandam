@@ -46,6 +46,7 @@ namespace Verifier
 				{
 					"generate" or "gen" => GenerateRules(options),
 					"topella" => GenerateTopellaOnly(options),
+					"sanskrit" or "sans" => GenerateSanskritOnly(options),
 					"convert" or "yaml2json" => ConvertYamlToJson(options),
 					"help" or "--help" or "-h" or "/?" => ShowHelp(),
 					_ => ShowUnknownCommand(command)
@@ -95,6 +96,21 @@ namespace Verifier
 		}
 
 		/// <summary>
+		/// Generate Sanskrit rules only
+		/// </summary>
+		static int GenerateSanskritOnly(string[] options)
+		{
+			Console.WriteLine("=== Generating Sanskrit Rules ===\n");
+
+			var outputDir = options.Length > 0 ? options[0] : @"Chandam.Config\Rules";
+
+			new GenerateRulesJSON(outputDir).GenerateSanskritRules();
+
+			Console.WriteLine("\n=== Sanskrit Generation Complete ===");
+			return 0;
+		}
+
+		/// <summary>
 		/// Convert YAML files to JSON
 		/// </summary>
 		static int ConvertYamlToJson(string[] options)
@@ -127,6 +143,10 @@ namespace Verifier
 			Console.WriteLine("                         Outputs: topella.json/yaml + compressed versions");
 			Console.WriteLine("                         Usage: topella [output-directory]");
 			Console.WriteLine("                         Default: Chandam.Config\\Rules\n");
+			Console.WriteLine("  sanskrit, sans         Generate Sanskrit rules (1184 vruttams)");
+			Console.WriteLine("                         Outputs: sanskrit.json/yaml + compressed versions");
+			Console.WriteLine("                         Usage: sanskrit [output-directory]");
+			Console.WriteLine("                         Default: Chandam.Config\\Rules\n");
 			Console.WriteLine("  convert, yaml2json     Convert YAML files to JSON");
 			Console.WriteLine("                         Usage: convert [input-dir] [output-dir]");
 			Console.WriteLine("                         Default: Chandam.Config\\Rules\n");
@@ -136,14 +156,14 @@ namespace Verifier
 			Console.WriteLine("  Chandam.Tasks generate C:\\Output\\Rules");
 			Console.WriteLine("  Chandam.Tasks convert");
 			Console.WriteLine("  Chandam.Tasks yaml2json C:\\Rules C:\\Output\n");
-			Console.WriteLine("Generated Files:");
+			Console.WriteLine("Generated Files (per ruleset: .yaml + .min.json + .min.json.gz):");
 			Console.WriteLine("  Rules:");
-			Console.WriteLine("    - chandam-rules.json/yaml         (frequent rules)");
-			Console.WriteLine("    - telugu-complete.json/yaml       (all Telugu rules)");
-			Console.WriteLine("    - topella.json/yaml               (Topella's 2337 meters)\n");
+			Console.WriteLine("    - chandam                         (all Telugu rules)");
+			Console.WriteLine("    - sanskrit                        (Sanskrit 1165 vruttams)");
+			Console.WriteLine("    - topella                         (Topella's 2337 meters)\n");
 			Console.WriteLine("  Examples:");
-			Console.WriteLine("    - chandam-examples.json/yaml      (frequent examples)");
-			Console.WriteLine("    - telugu-complete-examples.json/yaml (all examples)\n");
+			Console.WriteLine("    - chandam-examples");
+			Console.WriteLine("    - sanskrit-examples\n");
 			return 0;
 		}
 

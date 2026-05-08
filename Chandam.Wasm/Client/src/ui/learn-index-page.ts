@@ -1,7 +1,7 @@
 import { WasmBridge } from '../wasm-bridge';
 import { getRuleSet, getRuleSetAsync } from '../config';
 import type { RuleSummaryDetailed, AvailableFilters } from '../types';
-import { groupRulesByCategory, getSortedGroupKeys, getGroupDisplayName } from '../utils/rule-grouping';
+import { groupRulesByCategory, getSortedGroupKeys, getGroupDisplayName, getSubTypeDisplayName } from '../utils/rule-grouping';
 import { makeUrl } from '../utils/url-helpers';
 import { renderBreadcrumbs, buildRuleSetBreadcrumbs } from './breadcrumbs';
 import { renderModeSwitcher } from './mode-switcher';
@@ -18,11 +18,13 @@ import { exportFullBook } from '../utils/export-book';
 interface FilterState {
   searchText: string;
   selectedCategory: string;
+  selectedChandamName: string;
 }
 
 let currentFilterState: FilterState = {
   searchText: '',
   selectedCategory: '',
+  selectedChandamName: '',
 };
 
 let currentFilters: AvailableFilters | null = null;
@@ -48,11 +50,23 @@ export async function renderLearnIndexPage(ruleSet: string) {
     await loadRuleSet(ruleSetConfig.rulesFile, ruleSetConfig.examplesFile);
   } else {
     // Custom ruleset - load from IndexedDB
-    await CustomRulesLoader.loadCustomRuleset(ruleSet);
+    const loaded = await CustomRulesLoader.loadCustomRuleset(ruleSet);
+    if (!loaded) {
+      const content = document.getElementById('content');
+      if (content) {
+        content.innerHTML = `
+          <div class="empty-state">
+            <p>${t('filter_no_results')}</p>
+          </div>
+        `;
+      }
+      return;
+    }
   }
 
-  // Step 3: Get all rules with detailed metadata
-  const rules = await WasmBridge.getAllRulesDetailed('te');
+  // Step 3: Get all rules with detailed metadata (exclude GenricVruttam from UI)
+  const rules = (await WasmBridge.getAllRulesDetailed('te'))
+    .filter(r => r.padyamSubType !== 'GenricVruttam');
   allRulesCount = rules.length;
   allRulesCache = rules;
   currentRuleSetName = ruleSetConfig.name;
@@ -66,30 +80,38 @@ export async function renderLearnIndexPage(ruleSet: string) {
   const allFavorites = await storageService.indexedDB.getAllFavorites();
 
   // Create Set of composite IDs for O(1) lookup
-  // IMPORTANT: Filter to only favorites from THIS ruleset
-  // Composite ID format: "ruleSetId:ruleId" (e.g., "frequent:iMdravajramu")
+  // For custom-fav (virtual collection), all displayed rules are favorites
+  // For regular rulesets, filter to only favorites from THIS ruleset
   const favoriteIds = new Set(
-    allFavorites
-      .filter(fav => fav.ruleSetId === ruleSet)  // Only this ruleset's favorites
-      .map(fav => fav.id)
+    ruleSet === 'custom-fav'
+      ? allFavorites.map(fav => `custom-fav:${fav.ruleId}`)
+      : allFavorites
+          .filter(fav => fav.ruleSetId === ruleSet)
+          .map(fav => fav.id)
   );
+
+  // For custom-fav, map ruleId -> original ruleSetId for correct link generation
+  const originalRuleSetMap = ruleSet === 'custom-fav'
+    ? new Map(allFavorites.map(fav => [fav.ruleId, fav.ruleSetId]))
+    : undefined;
 
   // Step 4: Apply filters and group results
   const filteredRules = await applyFilters(rules);
   const grouped = groupRulesByCategory(filteredRules);
 
   // Step 5: Render page HTML with filters and favorite status
-  renderLearnIndexPageHtml(ruleSetConfig.name, filteredRules.length, ruleSet, grouped, favoriteIds);
+  renderLearnIndexPageHtml(ruleSetConfig.name, filteredRules.length, ruleSet, grouped, favoriteIds, originalRuleSetMap);
 }
 
 async function applyFilters(allRules: RuleSummaryDetailed[]): Promise<RuleSummaryDetailed[]> {
-  if (currentFilterState.searchText === '' && currentFilterState.selectedCategory === '') {
+  if (currentFilterState.searchText === '' && currentFilterState.selectedCategory === '' && currentFilterState.selectedChandamName === '') {
     return allRules;
   }
 
   return await WasmBridge.searchRules({
     query: currentFilterState.searchText || undefined,
     categories: currentFilterState.selectedCategory ? [currentFilterState.selectedCategory] : undefined,
+    chandamNames: currentFilterState.selectedChandamName ? [currentFilterState.selectedChandamName] : undefined,
     maxResults: 0
   }, 'te');
 }
@@ -100,7 +122,8 @@ function renderLearnIndexPageHtml(
   ruleCount: number,
   ruleSetId: string,
   grouped: Map<string, RuleSummaryDetailed[]>,
-  favoriteIds: Set<string>
+  favoriteIds: Set<string>,
+  originalRuleSetMap?: Map<string, string>
 ) {
   const content = document.getElementById('content');
   if (!content) return;
@@ -109,7 +132,7 @@ function renderLearnIndexPageHtml(
 
   const hasResults = ruleCount > 0;
   const resultsSection = hasResults
-    ? `<div class="chandam-groups">${renderChandamGroups(grouped, ruleSetId, favoriteIds)}</div>`
+    ? `<div class="chandam-groups">${renderChandamGroups(grouped, ruleSetId, favoriteIds, originalRuleSetMap)}</div>`
     : `<div class="empty-state">
          <p>${t('filter_no_results')}</p>
          <p>${t('filter_try_removing')}</p>
@@ -121,6 +144,10 @@ function renderLearnIndexPageHtml(
 
       <div class="page-header-controls">
         <h1>${ruleSetName}</h1>
+        <button class="btn-export-book" data-action="export-book">
+          <svg class="export-icon" viewBox="0 0 24 24" width="16" height="16"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
+          ${t('export_book')}
+        </button>
         ${renderModeSwitcher({ ruleSetId, currentMode: 'learn' })}
       </div>
       <div class="filter-bar">
@@ -137,9 +164,11 @@ function renderLearnIndexPageHtml(
             ${renderCategoryDropdown()}
           </div>
           <div class="filter-actions">
-            <span class="rule-count">${ruleCount} ${t('filter_of')} ${allRulesCount}</span>
-            <button class="btn-clear-filters" data-action="clear-filters">${t('editor_btn_clear')}</button>
-            <button class="btn-export-book" data-action="export-book">${t('export_book')}</button>
+            <span class="filter-result-count">${ruleCount !== allRulesCount ? `${t('filter_results')} (${ruleCount}/${allRulesCount})` : `${allRulesCount}`}</span>
+            <button class="btn-clear-filters" data-action="clear-filters">
+              <svg viewBox="0 0 24 24" width="14" height="14"><path d="M16 11h-1V3c0-.55-.45-1-1-1h-4c-.55 0-1 .45-1 1v8H8c-1.1 0-2 .9-2 2v9h12v-9c0-1.1-.9-2-2-2zm-5-7.5h2v7.5h-2V3.5zM6 22v-1h12v1H6z"/></svg>
+              ${t('editor_btn_clear')}
+            </button>
           </div>
         </div>
       </div>
@@ -158,7 +187,8 @@ function renderLearnIndexPageHtml(
 function renderChandamGroups(
   grouped: Map<string, RuleSummaryDetailed[]>,
   ruleSetId: string,
-  favoriteIds: Set<string>
+  favoriteIds: Set<string>,
+  originalRuleSetMap?: Map<string, string>
 ): string {
   const sortedKeys = getSortedGroupKeys(grouped);
 
@@ -167,7 +197,7 @@ function renderChandamGroups(
     return `
       <div class="chandam-group">
         <h2>${getGroupDisplayName(groupKey, grouped)}</h2>
-        ${rules.map(rule => renderRuleListItem(rule, ruleSetId, favoriteIds)).join('')}
+        ${rules.map(rule => renderRuleListItem(rule, ruleSetId, favoriteIds, originalRuleSetMap)).join('')}
       </div>
     `;
   }).join('');
@@ -175,44 +205,39 @@ function renderChandamGroups(
 
 
 // Helper: Render a single rule list item
-function renderRuleListItem(rule: RuleSummaryDetailed, ruleSetId: string, favoriteIds: Set<string>): string {
+function renderRuleListItem(rule: RuleSummaryDetailed, ruleSetId: string, favoriteIds: Set<string>, originalRuleSetMap?: Map<string, string>): string {
+  const effectiveRuleSetId = originalRuleSetMap?.get(rule.identifier) || ruleSetId;
   const displayName = rule.shortName && rule.shortName !== rule.name ? rule.shortName : rule.name;
-  const aliasHtml = rule.alias ? `<div class="rule-alias">${rule.alias}</div>` : '';
-
-  const subTypeBadge = rule.padyamSubType
-    ? `<span class="badge badge-type badge-sm">${getTeluguCategoryName(rule.padyamSubType)}</span>`
+  const aliasHtml = rule.alias
+    ? `<span class="rule-alias-inline">(${rule.alias})</span>`
     : '';
 
-  const badges: string[] = [];
+  // Compact summary: gana + yati + prasa (pre-formatted HTML from backend)
+  const summaryHtml = rule.compactSummary
+    ? `<div class="rule-compact-summary">${rule.compactSummary}</div>`
+    : '';
 
+  // Condensed constraints as inline text
+  const metaParts: string[] = [];
   if (rule.min && rule.max && rule.min !== -1 && rule.max !== -1) {
-    const charText = rule.min === rule.max
+    metaParts.push(rule.min === rule.max
       ? `${rule.min} ${t('metric_chars')}`
-      : `${rule.min}-${rule.max} ${t('metric_chars')}`;
-    badges.push(`<span class="badge badge-chars badge-sm">${charText}</span>`);
+      : `${rule.min}-${rule.max} ${t('metric_chars')}`);
   } else if (rule.charLength && rule.charLength !== -1) {
-    badges.push(`<span class="badge badge-chars badge-sm">${rule.charLength} ${t('metric_chars')}</span>`);
+    metaParts.push(`${rule.charLength} ${t('metric_chars')}`);
   }
-
   if (rule.matraLength && rule.matraLength !== -1) {
-    badges.push(`<span class="badge badge-matras badge-sm">${rule.matraLength} ${t('metric_matras')}</span>`);
+    metaParts.push(`${rule.matraLength} ${t('metric_matras')}`);
   }
-
   if (rule.lines && rule.lines > 0) {
     const padaLabel = rule.lines === 1 ? t('pada_singular') : t('pada_plural');
-    badges.push(`<span class="badge badge-lines badge-sm">${rule.lines} ${padaLabel}</span>`);
+    metaParts.push(`${rule.lines} ${padaLabel}`);
   }
-
   if (rule.chandamName) {
-    badges.push(`<span class="badge badge-chandam badge-sm">${rule.chandamName}</span>`);
+    metaParts.push(rule.chandamName);
   }
-
-  const badgesHtml = badges.length > 0
-    ? `<div class="rule-item-badges">${badges.join('')}</div>`
-    : '';
-
-  const sequenceHtml = rule.sequence
-    ? `<div class="rule-sequence"><code>${rule.sequence}</code></div>`
+  const metaHtml = metaParts.length > 0
+    ? `<div class="rule-item-meta">${metaParts.join(' · ')}</div>`
     : '';
 
   const compositeId = `${ruleSetId}:${rule.identifier}`;
@@ -221,65 +246,72 @@ function renderRuleListItem(rule: RuleSummaryDetailed, ruleSetId: string, favori
 
   const isCustomRule = rule.identifier.startsWith('custom-');
   const deleteButton = isCustomRule
-    ? `<button class="btn-delete-inline" data-action="delete-rule" data-rule-id="${rule.identifier}" data-rule-name="${rule.name.replace(/"/g, '&quot;')}">Delete</button>`
+    ? `<a class="rule-action-icon btn-delete-inline" data-action="delete-rule" data-rule-id="${rule.identifier}" data-rule-name="${rule.name.replace(/"/g, '&quot;')}" title="${t('learn_btn_delete')}">
+        <svg viewBox="0 0 24 24" width="16" height="16"><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/></svg>
+        ${t('learn_btn_delete')}
+      </a>`
     : '';
 
   return `
     <div class="rule-list-item${favoritedClass}">
       <div class="rule-item-header">
         <span class="rule-name meter-name">${displayName}</span>
-        ${subTypeBadge}
+        ${aliasHtml}
+        <div class="rule-item-actions">
+          <a href="${makeUrl(`/learn/${effectiveRuleSetId}/${rule.identifier}`)}" class="rule-action-icon" title="${t('link_learn')}">
+            <svg viewBox="0 0 24 24" width="16" height="16"><path d="M21 5c-1.11-.35-2.33-.5-3.5-.5-1.95 0-4.05.4-5.5 1.5-1.45-1.1-3.55-1.5-5.5-1.5S2.45 4.9 1 6v14.65c0 .25.25.5.5.5.1 0 .15-.05.25-.05C3.1 20.45 5.05 20 6.5 20c1.95 0 4.05.4 5.5 1.5 1.35-.85 3.8-1.5 5.5-1.5 1.65 0 3.35.3 4.75 1.05.1.05.15.05.25.05.25 0 .5-.25.5-.5V6c-.6-.45-1.25-.75-2-1zM21 18.5c-1.1-.35-2.3-.5-3.5-.5-1.7 0-4.15.65-5.5 1.5V8c1.35-.85 3.8-1.5 5.5-1.5 1.2 0 2.4.15 3.5.5v11.5z"/></svg>
+            ${t('link_learn')}
+          </a>
+          <a href="${makeUrl(`/compute/${effectiveRuleSetId}/${rule.identifier}`)}" class="rule-action-icon" title="${t('link_try')}">
+            <svg viewBox="0 0 24 24" width="16" height="16"><path d="M8 5v14l11-7z"/></svg>
+            ${t('link_try')}
+          </a>
+          ${deleteButton}
+        </div>
       </div>
-      ${aliasHtml}
-      ${badgesHtml}
-      ${sequenceHtml}
-      <div class="rule-links">
-        <a href="${makeUrl(`/learn/${ruleSetId}/${rule.identifier}`)}">Learn</a>
-        <a href="${makeUrl(`/compute/${ruleSetId}/${rule.identifier}`)}">Try</a>
-        ${deleteButton}
-      </div>
+      ${summaryHtml}
+      ${metaHtml}
     </div>
   `;
 }
 
-// Map English category names to Telugu (all 12 PadyamSubType values)
-function getTeluguCategoryName(englishCategory: string): string {
-  const categoryMap: Record<string, string> = {
-    'Akkara': 'అక్కరలు',
-    'Divpada': 'ద్విపదలు',
-    'Jati': 'జాతి',
-    'Ragada': 'రగడలు',
-    'Ragada2': 'రగడలు (2)',
-    'Shatpada': 'షట్పదలు',
-    'UpaJati': 'ఉపజాతి',
-    'Sisamu': 'సీసములు',
-    'Vruttam': 'వృత్తం',
-    'DaMDakamu': 'దండకము',
-    'ArdhaVruttam': 'అర్ధ సమవృత్తం',
-    'VishamaVruttam': 'విషమవృత్తం'
-  };
-  return categoryMap[englishCategory] || englishCategory;
+function getSelectedFilterLabel(): string {
+  if (currentFilterState.selectedChandamName && currentFilters) {
+    const idx = currentFilters.chandamNames.indexOf(currentFilterState.selectedChandamName);
+    return idx >= 0 ? currentFilters.chandamLabels[idx] : currentFilterState.selectedChandamName;
+  }
+  if (currentFilterState.selectedCategory) {
+    return getSubTypeDisplayName(currentFilterState.selectedCategory);
+  }
+  return t('filter_all_categories');
 }
 
 function renderCategoryDropdown(): string {
   if (!currentFilters) return '';
 
   const allLabel = t('filter_all_categories');
-  const selectedLabel = currentFilterState.selectedCategory
-    ? getTeluguCategoryName(currentFilterState.selectedCategory)
-    : allLabel;
+  const selectedLabel = getSelectedFilterLabel();
 
-  const items = currentFilters.categories.map(cat =>
-    `<div class="rule-item" role="option" data-value="${cat}" aria-selected="${cat === currentFilterState.selectedCategory}">${getTeluguCategoryName(cat)}</div>`
-  ).join('');
+  const categoryItems = currentFilters.categories
+    .filter(cat => cat !== 'GenricVruttam')
+    .map(cat =>
+      `<div class="rule-item" role="option" data-filter-type="category" data-value="${cat}" aria-selected="${cat === currentFilterState.selectedCategory}">${getSubTypeDisplayName(cat)}</div>`
+    ).join('');
+
+  const chandamItems = (currentFilters.chandamNames.length > 0)
+    ? currentFilters.chandamNames.map((name, i) =>
+        `<div class="rule-item" role="option" data-filter-type="chandam" data-value="${name}" aria-selected="${name === currentFilterState.selectedChandamName}">${currentFilters!.chandamLabels[i]}</div>`
+      ).join('')
+    : '';
 
   return `
     <details class="rule-picker-inline" id="category-picker">
       <summary id="selected-category-name" aria-haspopup="listbox">${selectedLabel} ▼</summary>
       <div class="picker-dropdown" role="listbox" aria-label="${t('filter_all_categories')}">
         <div class="rule-list">
-          <div class="rule-item" role="option" data-value="" aria-selected="${!currentFilterState.selectedCategory}">${allLabel}</div>
-          ${items}
+          <div class="rule-item" role="option" data-filter-type="category" data-value="" aria-selected="${!currentFilterState.selectedCategory && !currentFilterState.selectedChandamName}">${allLabel}</div>
+          ${categoryItems}
+          ${chandamItems ? `<div class="rule-group-header">${getSubTypeDisplayName('Vruttam')}</div>${chandamItems}` : ''}
         </div>
       </div>
     </details>
@@ -291,7 +323,12 @@ function attachFilterEventListeners(ruleSetId: string) {
   if (searchInput) {
     searchInput.addEventListener('input', debounce(async (e: Event) => {
       currentFilterState.searchText = (e.target as HTMLInputElement).value;
+      const done = analyticsService.startTimedEvent('filter_search', {
+        ruleSet: ruleSetId,
+        queryLength: currentFilterState.searchText.length
+      });
       await refreshResults(ruleSetId);
+      done();
     }, 300));
   }
 
@@ -299,14 +336,31 @@ function attachFilterEventListeners(ruleSetId: string) {
   if (categoryPicker) {
     categoryPicker.querySelectorAll('.rule-item').forEach(item => {
       item.addEventListener('click', async () => {
-        const value = (item as HTMLElement).dataset.value || '';
-        currentFilterState.selectedCategory = value;
+        const el = item as HTMLElement;
+        const filterType = el.dataset.filterType || 'category';
+        const value = el.dataset.value || '';
+
+        if (filterType === 'chandam') {
+          currentFilterState.selectedChandamName = value;
+          currentFilterState.selectedCategory = '';
+        } else {
+          currentFilterState.selectedCategory = value;
+          currentFilterState.selectedChandamName = '';
+        }
+
         const summary = document.getElementById('selected-category-name');
         if (summary) {
-          summary.textContent = (value ? getTeluguCategoryName(value) : t('filter_all_categories')) + ' ▼';
+          summary.textContent = getSelectedFilterLabel() + ' ▼';
         }
         categoryPicker.open = false;
+
+        const done = analyticsService.startTimedEvent('filter_category', {
+          ruleSet: ruleSetId,
+          filterType,
+          value: value || 'all'
+        });
         await refreshResults(ruleSetId);
+        done();
       });
     });
 
@@ -320,8 +374,10 @@ function attachFilterEventListeners(ruleSetId: string) {
   const clearButton = document.querySelector('[data-action="clear-filters"]');
   if (clearButton) {
     clearButton.addEventListener('click', async () => {
-      currentFilterState = { searchText: '', selectedCategory: '' };
+      currentFilterState = { searchText: '', selectedCategory: '', selectedChandamName: '' };
+      const done = analyticsService.startTimedEvent('filter_clear', { ruleSet: ruleSetId });
       await refreshResults(ruleSetId);
+      done();
     });
   }
 
@@ -360,31 +416,32 @@ function debounce<T extends (...args: any[]) => any>(func: T, wait: number): (..
 
 async function handleDeleteFromList(ruleId: string, ruleName: string) {
   const confirmed = confirm(
-    `Are you sure you want to delete "${ruleName}"? This action cannot be undone.`
+    t('alert_delete_confirm')
   );
 
   if (!confirmed) {
     return;
   }
 
+  const done = analyticsService.startTimedEvent('custom_rule_deleted', {
+    ruleId: ruleId,
+    source: 'index_page'
+  });
+
   try {
     await customRulesService.deleteCustomRule(ruleId);
 
     const isFavorited = await favoritesService.isFavorited('custom-rules', ruleId);
     if (isFavorited) {
-      const ruleData = await WasmBridge.getRuleInfo(ruleId);
-      await favoritesService.toggleFavorite('custom-rules', ruleId, ruleData);
+      const ruleDto = await WasmBridge.getRuleDto(ruleId);
+      await favoritesService.toggleFavorite('custom-rules', ruleId, ruleDto);
     }
 
-    analyticsService.trackEvent('custom_rule_deleted', {
-      ruleId: ruleId,
-      source: 'index_page'
-    });
-
+    done();
     window.location.reload();
 
   } catch (error) {
     console.error('Failed to delete rule:', error);
-    alert('Failed to delete rule. Please try again.');
+    alert(t('alert_delete_failed'));
   }
 }

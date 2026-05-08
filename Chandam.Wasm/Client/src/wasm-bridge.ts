@@ -93,6 +93,15 @@ export class WasmBridge {
     return JSON.parse(json);
   }
 
+  static async getRuleDto(ruleId: string): Promise<any> {
+    const json = await DotNet.invokeMethodAsync<string>(
+      this.ASSEMBLY,
+      'GetRuleDto',
+      ruleId
+    );
+    return JSON.parse(json);
+  }
+
   static async getRandomPoem(ruleId: string): Promise<string> {
     return await DotNet.invokeMethodAsync<string>(
       this.ASSEMBLY,

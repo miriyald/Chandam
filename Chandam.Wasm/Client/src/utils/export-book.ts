@@ -426,21 +426,26 @@ export async function exportFullBook(
   ruleSetId: string,
   rules: RuleSummaryDetailed[]
 ): Promise<void> {
-  const startTime = Date.now();
-
-  analyticsService.trackEvent('export_book_started', {
+  const doneStarted = analyticsService.startTimedEvent('export_book_started', {
     ruleSetId,
     ruleCount: rules.length,
     type: 'full'
   });
+  doneStarted();
 
   showExportProgress();
+
+  const doneExport = analyticsService.startTimedEvent('export_book_completed', {
+    ruleSetId,
+    type: 'full'
+  });
 
   try {
     const ruleInfos = await fetchAllRuleDetails(rules, updateExportProgress);
 
     if (cancelExport) {
-      analyticsService.trackEvent('export_book_cancelled', { ruleSetId, ruleCount: rules.length });
+      const doneCancelled = analyticsService.startTimedEvent('export_book_cancelled', { ruleSetId, ruleCount: rules.length });
+      doneCancelled();
       return;
     }
 
@@ -448,16 +453,11 @@ export async function exportFullBook(
     const filename = `${ruleSetId}-${formatDateTime()}.html`;
     triggerDownload(html, filename);
 
-    analyticsService.trackEvent('export_book_completed', {
-      ruleSetId,
-      ruleCount: ruleInfos.size,
-      type: 'full',
-      durationMs: Date.now() - startTime,
-      fileSizeKB: Math.round(html.length / 1024)
-    });
+    doneExport({ ruleCount: ruleInfos.size, fileSizeKB: Math.round(html.length / 1024) });
   } catch (err) {
     console.error('Export failed:', err);
-    analyticsService.trackEvent('export_book_error', { ruleSetId, error: String(err) });
+    const doneError = analyticsService.startTimedEvent('export_book_error', { ruleSetId, error: String(err) });
+    doneError();
   } finally {
     hideExportProgress();
   }
@@ -467,7 +467,13 @@ export async function exportSingleRule(
   ruleSetName: string,
   ruleInfo: RuleInfo
 ): Promise<void> {
-  analyticsService.trackEvent('export_book_started', {
+  const doneStarted = analyticsService.startTimedEvent('export_book_started', {
+    ruleId: ruleInfo.identifier,
+    type: 'single'
+  });
+  doneStarted();
+
+  const done = analyticsService.startTimedEvent('export_book_completed', {
     ruleId: ruleInfo.identifier,
     type: 'single'
   });
@@ -479,9 +485,5 @@ export async function exportSingleRule(
   const filename = `${ruleInfo.identifier}-${formatDateTime()}.html`;
   triggerDownload(html, filename);
 
-  analyticsService.trackEvent('export_book_completed', {
-    ruleId: ruleInfo.identifier,
-    type: 'single',
-    fileSizeKB: Math.round(html.length / 1024)
-  });
+  done({ fileSizeKB: Math.round(html.length / 1024) });
 }

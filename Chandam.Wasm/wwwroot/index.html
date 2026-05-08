@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="te">
+
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -9,7 +10,9 @@
     <link rel="apple-touch-icon" href="/images/favicon.svg" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Anek+Telugu:wght@400;500;600;700;800&family=Tiro+Telugu:ital@0;1&display=swap" rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Anek+Telugu:wght@400;500;600;700;800&family=Tiro+Telugu:ital@0;1&display=swap"
+        rel="stylesheet" />
     <link href="css/chandam.css" rel="stylesheet" />
     <!-- Preload loader SVG to browser cache for instant display -->
     <link rel="preload" href="/branding/chandam-circles.svg" as="image" type="image/svg+xml" />
@@ -17,41 +20,43 @@
     <!-- Google Analytics 4 -->
     <!-- SINGLE SOURCE OF TRUTH: GA4_MEASUREMENT_ID is defined once and reused -->
     <script>
-      // GA4 Measurement ID - SINGLE SOURCE OF TRUTH
-      window.GA4_MEASUREMENT_ID = 'G-50E1EGRJF1';
+        // GA4 Measurement ID - SINGLE SOURCE OF TRUTH
+        window.GA4_MEASUREMENT_ID = 'G-50E1EGRJF1';
     </script>
     <script>
-      // Load gtag.js with measurement ID
-      (function() {
-        var script = document.createElement('script');
-        script.async = true;
-        script.src = 'https://www.googletagmanager.com/gtag/js?id=' + window.GA4_MEASUREMENT_ID;
-        document.head.appendChild(script);
-      })();
+        // Load gtag.js with measurement ID
+        (function () {
+            var script = document.createElement('script');
+            script.async = true;
+            script.src = 'https://www.googletagmanager.com/gtag/js?id=' + window.GA4_MEASUREMENT_ID;
+            document.head.appendChild(script);
+        })();
 
-      // Initialize gtag
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', window.GA4_MEASUREMENT_ID, {
-        anonymize_ip: true,
-        send_page_view: false  // We handle page views manually for SPA
-      });
+        // Initialize gtag
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+        gtag('config', window.GA4_MEASUREMENT_ID, {
+            anonymize_ip: true,
+            send_page_view: false  // We handle page views manually for SPA
+        });
     </script>
 </head>
+
 <body>
     <a href="#content" class="skip-link">Skip to content</a>
     <header>
         <div class="container">
-            <h1>ఛందం</h1>
+            <h1><a href="/">ఛందం</a></h1>
             <nav id="main-nav">
-                <a href="/" data-i18n="nav_home">Home</a>
-                <a href="/rule-sets">Rule Sets</a>
+                <a href="/rule-sets" data-i18n="nav_rule_sets">Rule Sets</a>
+                <a href="/resources" data-i18n="nav_resources">Resources</a>
                 <a href="/about" data-i18n="nav_about">About</a>
                 <a href="/credits" data-i18n="nav_credits">Credits</a>
                 <a href="/contact" data-i18n="nav_contact">Contact</a>
             </nav>
-            <button id="lang-toggle" class="lang-toggle" title="Switch language / భాష మార్చండి" aria-label="Switch interface language">
+            <button id="lang-toggle" class="lang-toggle" title="Switch language / భాష మార్చండి"
+                aria-label="Switch interface language">
                 <span class="lang-current">EN</span>
             </button>
             <button id="nav-toggle" aria-label="Toggle navigation">☰</button>
@@ -62,9 +67,8 @@
         <div id="initial-loader">
             <!-- Loader will be injected here, but show static version initially -->
             <div class="loader-container">
-                <object type="image/svg+xml" data="/branding/chandam-circles.svg"
-                     class="loader-gif"
-                     aria-label="Loading Chandam...">
+                <object type="image/svg+xml" data="/branding/chandam-circles.svg" class="loader-gif"
+                    aria-label="Loading Chandam...">
                 </object>
                 <p class="loader-fallback" style="display:none;" data-i18n="loading">Loading...</p>
             </div>
@@ -74,8 +78,8 @@
     <footer>
         <div class="container footer-content">
             <div class="footer-brand">
-                <span class="footer-logo">ఛందం</span>
-                <span class="footer-tagline">Telugu Poetry Meter Analysis</span>
+                <span class="footer-logo">ఛందం©</span>
+                <span class="footer-tagline">ఛందం© తో పద్య సాహిత్యం మరింత రసమయం..!!</span>
             </div>
             <div class="footer-meta">
                 <a href="https://github.com/chandamu/chandam" target="_blank" rel="noopener">GitHub</a>
@@ -84,7 +88,7 @@
                 <span class="footer-dot" aria-hidden="true">&middot;</span>
                 <span id="build-date-info"></span>
             </div>
-            <div class="footer-copyright">&copy; 2026 ఛందం</div>
+            <div class="footer-copyright">ఛందం &copy;</div>
         </div>
     </footer>
 
@@ -97,4 +101,5 @@
     <!-- TypeScript app bundle -->
     <script type="module" src="js/chandam-app.js"></script>
 </body>
+
 </html>

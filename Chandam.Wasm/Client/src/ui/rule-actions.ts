@@ -9,6 +9,7 @@ import { analyticsService } from '../services/analytics-service';
 import { storageService } from '../services/storage/storage-service';
 import { makeUrl } from '../utils/url-helpers';
 import { submitToGitHub, buildExamplePayload } from '../utils/github-submit';
+import { t } from '../i18n';
 
 /**
  * Renders action toolbar for rule pages (Learn & Compute)
@@ -25,7 +26,15 @@ export async function renderRuleActions(
   await storageService.init();
 
   // Check if already favorited
-  const isFavorited = await favoritesService.isFavorited(ruleSetId, ruleId);
+  // For custom-fav (virtual collection), check by ruleId alone since favorites
+  // are stored with their original ruleSetId, not "custom-fav"
+  let isFavorited: boolean;
+  if (ruleSetId === 'custom-fav') {
+    const allFavs = await storageService.indexedDB.getAllFavorites();
+    isFavorited = allFavs.some(fav => fav.ruleId === ruleId);
+  } else {
+    isFavorited = await favoritesService.isFavorited(ruleSetId, ruleId);
+  }
 
   container.innerHTML = `
     <div class="rule-actions">
@@ -55,9 +64,10 @@ function renderFavoriteButton(isFavorited: boolean, ruleSetId: string, ruleId: s
             data-rule-set="${ruleSetId}"
             data-rule-id="${ruleId}"
             data-favorited="${String(isFavorited)}"
-            title="${isFavorited ? 'Remove from favorites' : 'Add to favorites'}"
-            aria-label="${isFavorited ? 'Remove from favorites' : 'Add to favorites'}">
+            title="${isFavorited ? t('action_remove_favorite') : t('action_add_favorite')}"
+            aria-label="${isFavorited ? t('action_remove_favorite') : t('action_add_favorite')}">
       ${heartSvg}
+      <span>${isFavorited ? t('action_remove_favorite') : t('action_add_favorite')}</span>
     </button>
   `;
 }
@@ -80,9 +90,10 @@ function renderDeleteButton(ruleSetId: string, ruleId: string): string {
             class="action-btn btn-delete"
             data-rule-set="${ruleSetId}"
             data-rule-id="${ruleId}"
-            title="Delete this custom rule"
-            aria-label="Delete this custom rule">
+            title="${t('action_delete_custom_rule')}"
+            aria-label="${t('action_delete_custom_rule')}">
       ${trashSvg}
+      <span>${t('action_delete_custom_rule')}</span>
     </button>
   `;
 }
@@ -111,6 +122,8 @@ function renderPrintButton(ruleSetId: string, ruleId: string): string {
 */
 
 function renderGitHubButton(ruleSetId: string, ruleId: string): string {
+  if (!ruleId.startsWith('custom-')) return '';
+
   const githubSvg = `
     <svg class="github-icon" viewBox="0 0 24 24" width="20" height="20">
       <path d="M12 2C6.477 2 2 6.477 2 12c0 4.42 2.865 8.166 6.839 9.49.5.09.682-.217.682-.482 0-.237-.009-.866-.013-1.7-2.782.604-3.369-1.34-3.369-1.34-.454-1.156-1.11-1.464-1.11-1.464-.908-.62.069-.607.069-.607 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.831.092-.646.35-1.086.636-1.336-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0112 6.836c.85.004 1.705.115 2.504.337 1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.203 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.578.688.48C19.138 20.164 22 16.418 22 12c0-5.523-4.477-10-10-10z"/>
@@ -122,9 +135,10 @@ function renderGitHubButton(ruleSetId: string, ruleId: string): string {
             class="action-btn btn-github"
             data-rule-set="${ruleSetId}"
             data-rule-id="${ruleId}"
-            title="Submit to GitHub"
-            aria-label="Submit to GitHub">
+            title="${t('action_submit_github')}"
+            aria-label="${t('action_submit_github')}">
       ${githubSvg}
+      <span>${t('action_submit_github')}</span>
     </button>
   `;
 }
@@ -139,9 +153,10 @@ function renderCreateRuleButton(): string {
   return `
     <a href="${makeUrl('/create-rule')}"
        class="action-btn btn-create-rule"
-       title="Create new meter"
-       aria-label="Create new meter">
+       title="${t('action_create_meter')}"
+       aria-label="${t('action_create_meter')}">
       ${plusSvg}
+      <span>${t('action_create_meter')}</span>
     </a>
   `;
 }
@@ -150,14 +165,15 @@ function attachGitHubHandler(ruleSetId: string, ruleId: string): void {
   const btn = document.getElementById('btn-github-submit');
   if (btn) {
     btn.addEventListener('click', async () => {
-      const ruleInfo = await WasmBridge.getRuleInfo(ruleId);
-      const payload = buildExamplePayload(ruleInfo.name, ruleSetId, ruleId, []);
-      submitToGitHub(payload, 'rule_actions');
-      analyticsService.trackEvent('submit_github_click', {
+      const trackComplete = analyticsService.startTimedEvent('submit_github_click', {
         ruleId,
         ruleSetId,
         source: 'rule_actions_toolbar'
       });
+      const ruleInfo = await WasmBridge.getRuleInfo(ruleId);
+      const payload = buildExamplePayload(ruleInfo.name, ruleSetId, ruleId, []);
+      submitToGitHub(payload, 'rule_actions');
+      trackComplete();
     });
   }
 }
@@ -180,29 +196,28 @@ async function handleFavoriteClick(ruleSetId: string, ruleId: string) {
   const btn = document.getElementById('btn-favorite');
   if (!btn) return;
 
+  const done = analyticsService.startTimedEvent('favorite_toggle', {
+    ruleSet: ruleSetId,
+    ruleId: ruleId
+  });
+
   try {
     // Add animation class
     btn.classList.add('favoriting');
 
-    // Get full rule data
-    const ruleInfo = await WasmBridge.getRuleInfo(ruleId);
+    // Get rule data in DTO format (serializable for WASM reload)
+    const ruleDto = await WasmBridge.getRuleDto(ruleId);
 
     // Toggle favorite
-    const newState = await favoritesService.toggleFavorite(ruleSetId, ruleId, ruleInfo);
+    const newState = await favoritesService.toggleFavorite(ruleSetId, ruleId, ruleDto);
 
-    // Track favorite toggle
     const totalFavorites = await favoritesService.getFavoriteCount();
-    analyticsService.trackEvent('favorite_toggle', {
-      action: newState ? 'add' : 'remove',
-      ruleSet: ruleSetId,
-      ruleId: ruleId,
-      totalFavorites
-    });
+    done({ action: newState ? 'add' : 'remove', totalFavorites });
 
     // Update button state
     btn.setAttribute('data-favorited', String(newState));
-    btn.setAttribute('title', newState ? 'Remove from favorites' : 'Add to favorites');
-    btn.setAttribute('aria-label', newState ? 'Remove from favorites' : 'Add to favorites');
+    btn.setAttribute('title', newState ? t('action_remove_favorite') : t('action_add_favorite'));
+    btn.setAttribute('aria-label', newState ? t('action_remove_favorite') : t('action_add_favorite'));
 
     // Remove animation class after animation completes
     setTimeout(() => btn.classList.remove('favoriting'), 300);
@@ -211,14 +226,12 @@ async function handleFavoriteClick(ruleSetId: string, ruleId: string) {
     console.error('Failed to toggle favorite:', error);
 
     if (error instanceof Error && error.message.includes('Maximum 50 favorites')) {
-      // Track favorites limit reached
-      analyticsService.trackEvent('favorites_limit_reached', {
-        ruleId: ruleId
-      });
+      const limitDone = analyticsService.startTimedEvent('favorites_limit_reached', { ruleId });
+      limitDone();
 
-      alert('Maximum 50 favorites reached. Please remove some to add new ones.');
+      alert(t('alert_max_favorites'));
     } else {
-      alert('Failed to update favorite');
+      alert(t('alert_favorite_failed'));
     }
 
     btn.classList.remove('favoriting');
@@ -227,13 +240,17 @@ async function handleFavoriteClick(ruleSetId: string, ruleId: string) {
 
 async function handleDeleteClick(ruleSetId: string, ruleId: string) {
   // Confirm deletion
-  const confirmed = confirm(
-    'Are you sure you want to delete this custom rule? This action cannot be undone.'
-  );
+  const confirmed = confirm(t('alert_delete_confirm'));
 
   if (!confirmed) {
     return;
   }
+
+  const done = analyticsService.startTimedEvent('custom_rule_deleted', {
+    ruleId: ruleId,
+    source: 'detail_page',
+    viewedFrom: ruleSetId
+  });
 
   try {
     // Import services
@@ -249,16 +266,11 @@ async function handleDeleteClick(ruleSetId: string, ruleId: string) {
     const isFavorited = await favoritesService.isFavorited(originalRuleSetId, ruleId);
     if (isFavorited) {
       // Get rule data and remove from favorites
-      const ruleData = await WasmBridge.getRuleInfo(ruleId);
-      await favoritesService.toggleFavorite(originalRuleSetId, ruleId, ruleData);
+      const ruleDto = await WasmBridge.getRuleDto(ruleId);
+      await favoritesService.toggleFavorite(originalRuleSetId, ruleId, ruleDto);
     }
 
-    // Track deletion
-    analyticsService.trackEvent('custom_rule_deleted', {
-      ruleId: ruleId,
-      source: 'detail_page',
-      viewedFrom: ruleSetId  // Track which collection view it was deleted from
-    });
+    done();
 
     // Navigate back appropriately
     const { makeUrl } = await import('../utils/url-helpers');
@@ -272,6 +284,6 @@ async function handleDeleteClick(ruleSetId: string, ruleId: string) {
 
   } catch (error) {
     console.error('Failed to delete rule:', error);
-    alert('Failed to delete rule. Please try again.');
+    alert(t('alert_delete_failed'));
   }
 }

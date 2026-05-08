@@ -1,6 +1,5 @@
 import { Router, loadStaticPage } from './router';
 import { setPageTitle } from './utils/page-title';
-import { renderHomePage } from './ui/home-page';
 import { renderRuleSetsPage } from './ui/rule-sets-page';
 import { renderRuleSetPage } from './ui/rule-set-page';
 import { renderRulePage } from './ui/rule-page';
@@ -113,6 +112,7 @@ router.register('/learn/:ruleSet/:ruleId', async (params) => {
 });
 
 // Static pages
+router.register('/resources', () => { setPageTitle(t('nav_resources')); loadStaticPage(`pages/${getLanguage()}/resources.html`); });
 router.register('/about', () => { setPageTitle(t('nav_about')); loadStaticPage(`pages/${getLanguage()}/about.html`); });
 router.register('/credits', () => { setPageTitle(t('nav_credits')); loadStaticPage(`pages/${getLanguage()}/credits.html`); });
 router.register('/contact', () => { setPageTitle(t('nav_contact')); loadStaticPage(`pages/${getLanguage()}/contact.html`); });
@@ -152,7 +152,9 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   document.getElementById('lang-toggle')?.addEventListener('click', () => {
+    const done = analyticsService.startTimedEvent('language_toggle', {});
     toggleLanguage();
+    done({ language: getLanguage() });
   });
 });
 

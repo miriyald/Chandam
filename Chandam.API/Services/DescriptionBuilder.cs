@@ -232,7 +232,7 @@ public static class DescriptionBuilder
         }
     }
 
-    private static string GetGanaText(object[] lineRule, RuleType ruleType, bool infiniteLength)
+    internal static string GetGanaText(object[] lineRule, RuleType ruleType, bool infiniteLength)
     {
         if (lineRule == null || lineRule.Length == 0)
             return "";
@@ -530,7 +530,7 @@ public static class DescriptionBuilder
             {
                 sb.AppendLine("<div class='property'>");
                 sb.AppendLine("  <span class='label'>యతి:</span>");
-                sb.AppendLine("  <span class='value'><span class='check-yes'>✓</span> పాద-వారీగా</span>");
+                sb.AppendLine("  <span class='value'><span class='check-yes'>✓</span> పాదాలవారీగా</span>");
                 sb.AppendLine("</div>");
             }
             else
@@ -554,7 +554,7 @@ public static class DescriptionBuilder
                 && rule.Yati.Length > 1;
 
             sb.AppendLine("<div class='gana-sequence'>");
-            sb.AppendLine("<strong>గణములు (పాద-వారీగా):</strong>");
+            sb.AppendLine("<strong>గణములు (పాదాలవారీగా):</strong>");
             sb.AppendLine("<table class='gana-table'>");
             for (int i = 0; i < rule.Rules.Length; i++)
             {
@@ -607,5 +607,106 @@ public static class DescriptionBuilder
         }
 
         return sb.ToString().TrimEnd();
+    }
+
+    /// <summary>
+    /// Compact HTML summary for list/card views: gana sequence + yati + prasa.
+    /// Works for all rule types (Vruttam, Jati, UpaJati, Weight-based).
+    /// </summary>
+    public static string BuildCompactSummary(Rule rule)
+    {
+        if (rule == null || rule.Rules == null || rule.Rules.Length == 0)
+            return string.Empty;
+
+        var sb = new StringBuilder();
+
+        // Gana section
+        if (rule.RowWiseRules && rule.Rules.Length > 1)
+        {
+            bool allSame = true;
+            var firstText = GetGanaText(rule.Rules[0], rule.RuleType, rule.InfiniteLength);
+            for (int i = 1; i < rule.Rules.Length; i++)
+            {
+                if (GetGanaText(rule.Rules[i], rule.RuleType, rule.InfiniteLength) != firstText)
+                {
+                    allSame = false;
+                    break;
+                }
+            }
+
+            if (allSame)
+            {
+                sb.Append("<div class=\"compact-gana\">");
+                sb.Append($"<span class=\"compact-heading\">గణములు:</span> ");
+                sb.Append($"<span class=\"compact-value\">{firstText}</span>");
+                sb.Append("</div>");
+            }
+            else
+            {
+                sb.Append("<div class=\"compact-gana\">");
+                sb.Append("<span class=\"compact-heading\">గణములు (పాదాలవారీగా):</span>");
+                for (int i = 0; i < rule.Rules.Length; i++)
+                {
+                    var ganaText = GetGanaText(rule.Rules[i], rule.RuleType, rule.InfiniteLength);
+                    sb.Append($"<div class=\"compact-line\"><span class=\"compact-padam\">{GetPadamName(i + 1)}:</span> {ganaText}</div>");
+                }
+                sb.Append("</div>");
+            }
+        }
+        else
+        {
+            var ganaText = GetGanaText(rule.Rules[0], rule.RuleType, rule.InfiniteLength);
+            if (!string.IsNullOrEmpty(ganaText))
+            {
+                sb.Append("<div class=\"compact-gana\">");
+                sb.Append($"<span class=\"compact-heading\">గణములు:</span> ");
+                sb.Append($"<span class=\"compact-value\">{ganaText}</span>");
+                sb.Append("</div>");
+            }
+        }
+
+        // Properties: yati + prasa
+        sb.Append("<div class=\"compact-props\">");
+
+        // Yati
+        if (rule.Yati != null && rule.Yati.Length > 0 && rule.Yati[0].Length > 0)
+        {
+            if (rule.Yati.Length == rule.Rules.Length && rule.Yati.Length > 1)
+            {
+                sb.Append("<span class=\"cp-yati\"><span class=\"compact-heading\">యతి:</span> <span class=\"check-yes\">✓</span> పాదాలవారీగా</span>");
+            }
+            else
+            {
+                var positions = string.Join(", ", rule.Yati[0]);
+                var suffix = GetYatiSuffix(rule.YatiMode, rule.ReverseYati, rule.Yati[0].Length);
+                sb.Append($"<span class=\"cp-yati\"><span class=\"compact-heading\">యతి:</span> {positions}{suffix}</span>");
+            }
+        }
+        else if (rule.PrasaYati)
+        {
+            sb.Append("<span class=\"cp-yati\"><span class=\"compact-heading\">ప్రాసయతి:</span> <span class=\"check-yes\">✓</span></span>");
+        }
+        else
+        {
+            sb.Append("<span class=\"cp-yati cp-absent\"><span class=\"compact-heading\">యతి:</span> ✗</span>");
+        }
+
+        // Prasa
+        if (rule.Prasa)
+        {
+            sb.Append("<span class=\"cp-prasa\"><span class=\"compact-heading\">ప్రాస:</span> <span class=\"check-yes\">✓</span></span>");
+        }
+        else if (rule.AnthyaPrasa)
+        {
+            sb.Append("<span class=\"cp-prasa\"><span class=\"compact-heading\">అంత్యప్రాస:</span> <span class=\"check-yes\">✓</span></span>");
+        }
+        else
+        {
+            sb.Append("<span class=\"cp-prasa cp-absent\"><span class=\"compact-heading\">ప్రాస:</span> ✗</span>");
+        }
+
+        sb.Append("</div>");
+
+        return sb.ToString();
     }
 }
