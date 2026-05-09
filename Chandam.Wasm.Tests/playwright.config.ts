@@ -36,15 +36,15 @@ export default defineConfig({
 
   reporter: process.env.CI
     ? [
-        // Annotates failing tests inline on the GitHub Actions summary page
-        ['github'],
-        ['html', { outputFolder: 'playwright-report', open: 'never' }],
-        ['list'],
-      ]
+      // Annotates failing tests inline on the GitHub Actions summary page
+      ['github'],
+      ['html', { outputFolder: 'playwright-report', open: 'never' }],
+      ['list'],
+    ]
     : [
-        ['html', { outputFolder: 'playwright-report', open: 'never' }],
-        ['list'],
-      ],
+      ['html', { outputFolder: 'playwright-report', open: 'never' }],
+      ['list'],
+    ],
 
   // WASM cold-start can take 8-15 s per fresh browser context
   timeout: 60_000,
@@ -96,13 +96,13 @@ export default defineConfig({
   webServer: process.env.CHANDAM_URL
     ? undefined
     : {
-        // Serves the published WASM output in SPA mode (all 404s → index.html)
-        command: 'npx --yes serve@14 .publish/wwwroot -l 5080 --single',
-        port: 5080,
-        // Reuse an existing server when running locally; require a fresh one in CI
-        reuseExistingServer: !process.env.CI,
-        timeout: 30_000,
-        stdout: 'ignore',
-        stderr: 'ignore',
-      },
+      // Serves the published WASM output in SPA mode (all 404s → index.html)
+      command: 'npx --yes serve@14 .publish/wwwroot -l 5080 --single',
+      port: 5080,
+      // Reuse an existing server when running locally; require a fresh one in CI
+      reuseExistingServer: !process.env.CI,
+      timeout: 30_000,
+      stdout: 'ignore',
+      stderr: 'ignore',
+    },
 });

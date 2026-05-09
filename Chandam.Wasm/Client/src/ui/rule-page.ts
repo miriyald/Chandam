@@ -7,6 +7,7 @@ import { renderEditorCard } from './shared-components';
 import { makeUrl } from '../utils/url-helpers';
 import { renderBreadcrumbs, buildRuleBreadcrumbs } from './breadcrumbs';
 import { renderModeSwitcher } from './mode-switcher';
+import { renderRuleActions } from './rule-actions';
 import { loadRuleSet } from '../utils/rule-loader';
 import { storageService } from '../services/storage/storage-service';
 import { t } from '../i18n';
@@ -129,13 +130,18 @@ function renderRulePageHtml(
   content.innerHTML = `
     <div class="compute-rule-page">
       ${renderBreadcrumbs(breadcrumbs)}
-      <h1 class="meter-name">${ruleName}</h1>
+
+      <div class="page-header-controls">
+        <h1 class="meter-name">${ruleName}</h1>
+        <div id="rule-actions-container"></div>
+        ${renderModeSwitcher({ ruleSetId, ruleId, currentMode: 'compute' })}
+      </div>
 
       ${renderEditorCard({
-        contextText: `${t('editor_matching_with')} ${ruleName}`,
-        showRulePicker: false,
-        showAutoDetect: false
-      })}
+    contextText: `${t('editor_matching_with')} ${ruleName}`,
+    showRulePicker: false,
+    showAutoDetect: false
+  })}
 
       <div id="results-section" style="display: none;">
         <h3>${t('results_title')}</h3>
@@ -143,6 +149,9 @@ function renderRulePageHtml(
       </div>
     </div>
   `;
+
+  // Render action toolbar (favorite, create-rule, etc.) for this rule.
+  renderRuleActions('rule-actions-container', ruleSetId, ruleId);
 
   // Set editor text: example text takes priority, then saved state
   const editor = document.getElementById('poem-editor') as HTMLTextAreaElement;

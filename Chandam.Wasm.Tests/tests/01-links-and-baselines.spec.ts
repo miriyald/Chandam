@@ -68,6 +68,9 @@ for (const route of ROUTES) {
   });
 
   test(`[${route.name}] same-origin links resolve`, async ({ page }) => {
+    // Large routes (e.g., learn-topella) enumerate many links and need more time.
+    test.setTimeout(120_000);
+
     await gotoAndWait(page, route.path);
 
     const links = await collectSameOriginLinks(page);
