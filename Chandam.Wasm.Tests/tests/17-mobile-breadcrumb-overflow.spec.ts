@@ -1,8 +1,8 @@
 /**
- * Test 17 - Mobile breadcrumb overflow regression
+ * Test 17 - Mobile breadcrumb back-link behavior
  *
- * Ensures breadcrumb trails on mobile remain a single row and are horizontally
- * scrollable instead of wrapping into multiple lines.
+ * Ensures breadcrumbs on mobile collapse to show only the last parent
+ * as a back-link, hiding ancestors and the current page name.
  */
 
 import { test, expect, gotoAndWait } from '../fixtures/wasm-ready';
@@ -24,8 +24,8 @@ async function getFirstLearnRulePath(
   return href!;
 }
 
-test.describe('Mobile breadcrumb overflow behavior', () => {
-  test('breadcrumbs keep single-row scroll behavior on mobile', async ({
+test.describe('Mobile breadcrumb back-link behavior', () => {
+  test('breadcrumbs show only parent as back-link on mobile', async ({
     page,
     isMobile,
   }) => {
@@ -37,17 +37,27 @@ test.describe('Mobile breadcrumb overflow behavior', () => {
     const breadcrumbs = page.locator('.breadcrumbs');
     await expect(breadcrumbs).toBeVisible();
 
-    const breadcrumbState = await breadcrumbs.evaluate((el) => {
-      const style = window.getComputedStyle(el);
+    // Ancestors should be hidden
+    const ancestors = page.locator('.breadcrumb-ancestor');
+    const ancestorCount = await ancestors.count();
+    for (let i = 0; i < ancestorCount; i++) {
+      await expect(ancestors.nth(i)).toBeHidden();
+    }
 
-      return {
-        flexWrap: style.flexWrap,
-        whiteSpace: style.whiteSpace,
-      };
-    });
+    // Separators should be hidden
+    const separators = page.locator('.breadcrumb-separator');
+    const sepCount = await separators.count();
+    for (let i = 0; i < sepCount; i++) {
+      await expect(separators.nth(i)).toBeHidden();
+    }
 
-    expect(breadcrumbState.flexWrap).toBe('nowrap');
-    expect(breadcrumbState.whiteSpace).toBe('nowrap');
+    // Current page name should be hidden
+    const current = page.locator('.breadcrumb-current');
+    await expect(current).toBeHidden();
+
+    // Parent link should be visible as back-link
+    const parent = page.locator('.breadcrumb-parent');
+    await expect(parent).toBeVisible();
   });
 
   test('mobile breadcrumb visual baseline', async ({ page, isMobile }) => {
@@ -59,7 +69,7 @@ test.describe('Mobile breadcrumb overflow behavior', () => {
     const breadcrumbs = page.locator('.breadcrumbs');
     await expect(breadcrumbs).toBeVisible();
 
-    await expect(breadcrumbs).toHaveScreenshot('mobile-breadcrumb-overflow.png', {
+    await expect(breadcrumbs).toHaveScreenshot('mobile-breadcrumb-back-link.png', {
       maxDiffPixelRatio: 0.02,
     });
   });

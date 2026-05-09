@@ -18,7 +18,8 @@ export function renderBreadcrumbs(items: BreadcrumbItem[]): string {
     if (isLast || !item.url) {
       itemHtml = `<span class="breadcrumb-current">${escapeHtml(item.label)}</span>`;
     } else {
-      itemHtml = `<a href="${makeUrl(item.url)}" class="breadcrumb-link">${escapeHtml(item.label)}</a>`;
+      const posClass = (index === items.length - 2) ? 'breadcrumb-parent' : 'breadcrumb-ancestor';
+      itemHtml = `<a href="${makeUrl(item.url)}" class="breadcrumb-link ${posClass}">${escapeHtml(item.label)}</a>`;
     }
 
     return itemHtml;
