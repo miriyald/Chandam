@@ -123,13 +123,13 @@ header h1 a {
   text-decoration: none;
 }
 
-nav {
+header nav {
   display: flex;
   align-items: center;
   gap: 0.25rem;
 }
 
-nav a {
+header nav a {
   color: var(--color-header-text);
   text-decoration: none;
   padding: 0.5rem 0.75rem;
@@ -137,19 +137,19 @@ nav a {
   transition: color 0.2s, background 0.2s;
 }
 
-nav a:hover {
+header nav a:hover {
   color: var(--color-accent-gold);
   background: rgba(255, 255, 255, 0.05);
 }
 
-nav a.active,
-nav a[aria-current="page"] {
+header nav a.active,
+header nav a[aria-current="page"] {
   color: var(--color-accent-gold);
   border-bottom: 2px solid var(--color-accent-gold);
   padding-bottom: calc(0.5rem - 2px);
 }
 
-nav a:focus-visible {
+header nav a:focus-visible {
   outline: 2px solid var(--color-accent-gold);
   outline-offset: 2px;
   border-radius: var(--radius-sm);
