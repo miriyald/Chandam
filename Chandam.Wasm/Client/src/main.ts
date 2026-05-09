@@ -7,7 +7,7 @@ import { renderLearnIndexPage } from './ui/learn-index-page';
 import { renderLearnDetailPage } from './ui/learn-detail-page';
 import { renderRuleCreatorPage } from './ui/rule-creator-page';
 import { renderExplorePage } from './ui/explore-page';
-import { validateRuleSet, validateRuleSetAsync, validateRule, handleInvalidRuleSet, handleInvalidRule } from './utils/error-handlers';
+import { validateRuleSetAsync, validateRule, handleInvalidRuleSet, handleInvalidRule } from './utils/error-handlers';
 import { createInitialLoader, preloadLoaderImage } from './utils/loader';
 import { LoadingEvents, LoadingEventType } from './utils/loading-events';
 import './utils/decompression'; // Register decompressGzip globally for C# interop
@@ -17,8 +17,23 @@ import { initLanguage, toggleLanguage, getLanguage, t } from './i18n';
 import type { Translations } from './i18n';
 import { analyticsService } from './services/analytics-service';
 import { WasmBridge } from './wasm-bridge';
+import { CustomRulesLoader } from './services/custom-rules-loader';
+import { getRuleSetAsync } from './config';
 
 const router = new Router();
+
+async function ensureRulesetLoadedForValidation(ruleSetId: string): Promise<void> {
+  const ruleSet = await getRuleSetAsync(ruleSetId);
+  if (!ruleSet) {
+    return;
+  }
+
+  // Custom and virtual rulesets must be loaded into WASM before rule-level
+  // validation can resolve their identifiers.
+  if (!ruleSet.rulesFile) {
+    await CustomRulesLoader.loadCustomRuleset(ruleSetId);
+  }
+}
 
 // Pre-load loader SVG to browser cache
 preloadLoaderImage('/branding/chandam-circles.svg');
@@ -64,6 +79,8 @@ router.register('/compute/:ruleSet/:ruleId', async (params) => {
     return;
   }
 
+  await ensureRulesetLoadedForValidation(params.ruleSet);
+
   const isRuleValid = await validateRule(params.ruleId);
   if (!isRuleValid) {
     handleInvalidRule(params.ruleSet, params.ruleId);
@@ -101,6 +118,8 @@ router.register('/learn/:ruleSet/:ruleId', async (params) => {
     handleInvalidRuleSet(params.ruleSet);
     return;
   }
+
+  await ensureRulesetLoadedForValidation(params.ruleSet);
 
   const isRuleValid = await validateRule(params.ruleId);
   if (!isRuleValid) {

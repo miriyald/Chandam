@@ -13,6 +13,41 @@
 import { test, expect, gotoAndWait } from '../fixtures/wasm-ready';
 import { dailyRandom, pickRandomIndex } from '../helpers/random';
 
+async function selectRuleWithExample(
+  page: import('@playwright/test').Page,
+  rng: () => number,
+): Promise<{ ruleId: string; poem: string }> {
+  const ruleItems = page.locator('#rule-picker-container .rule-item');
+  const count = await ruleItems.count();
+  const tried = new Set<number>();
+
+  while (tried.size < count) {
+    let idx = pickRandomIndex(count, rng);
+    while (tried.has(idx) && tried.size < count) {
+      idx = (idx + 1) % count;
+    }
+    tried.add(idx);
+
+    const chosenItem = ruleItems.nth(idx);
+    const ruleId = await chosenItem.getAttribute('data-rule-id');
+    if (!ruleId) {
+      continue;
+    }
+
+    const poem = await page.evaluate(async (id: string) => {
+      const { DotNet } = window as any;
+      return await DotNet.invokeMethodAsync('Chandam.Wasm', 'GetRandomPoem', id);
+    }, ruleId);
+
+    if (poem?.trim()) {
+      await chosenItem.click();
+      return { ruleId, poem };
+    }
+  }
+
+  throw new Error('Could not find a specific rule with an example poem');
+}
+
 test.describe('Compute page – auto-detect mode', () => {
   test.beforeEach(async ({ page }) => {
     await gotoAndWait(page, '/compute/chandam/');
@@ -111,9 +146,7 @@ test.describe('Compute page – specific rule mode', () => {
 
     // Open picker and select a rule
     await page.locator('#rule-picker-inline').click();
-    const ruleItems = page.locator('#rule-picker-container .rule-item');
-    const count = await ruleItems.count();
-    await ruleItems.nth(pickRandomIndex(count, rng)).click();
+    await selectRuleWithExample(page, rng);
 
     // Ensure Yati and Prasa are checked
     await expect(page.locator('#match-yati')).toBeChecked();
@@ -139,17 +172,9 @@ test.describe('Compute page – specific rule mode', () => {
       if (el.checked) { el.checked = false; el.dispatchEvent(new Event('change', { bubbles: true })); }
     });
     await page.locator('#rule-picker-inline').click();
-    const ruleItems = page.locator('#rule-picker-container .rule-item');
-    const count = await ruleItems.count();
-    const chosenItem = ruleItems.nth(pickRandomIndex(count, rng));
-    await chosenItem.click();
+    const { poem } = await selectRuleWithExample(page, rng);
 
     // Load a rule-specific example poem
-    const ruleId = await chosenItem.getAttribute('data-rule-id');
-    const poem = await page.evaluate(async (id: string) => {
-      const { DotNet } = window as any;
-      return await DotNet.invokeMethodAsync('Chandam.Wasm', 'GetRandomPoem', id);
-    }, ruleId!);
     await page.locator('#poem-editor').fill(poem || '');
     await expect(page.locator('#poem-editor')).not.toHaveValue('');
 

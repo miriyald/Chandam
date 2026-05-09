@@ -19,6 +19,41 @@ import { dailyRandom, pickRandomIndex } from '../helpers/random';
 // Built-in rule set IDs defined in config.ts
 const RULE_SET_IDS = ['chandam', 'topella', 'sanskrit'] as const;
 
+async function selectAnalyzableRule(
+  page: import('@playwright/test').Page,
+  count: number,
+  rng: () => number,
+): Promise<{ ruleId: string; ruleName: string; poem: string }> {
+  const tried = new Set<number>();
+
+  while (tried.size < count) {
+    let idx = pickRandomIndex(count, rng);
+    while (tried.has(idx) && tried.size < count) {
+      idx = (idx + 1) % count;
+    }
+    tried.add(idx);
+
+    const chosenItem = page.locator('#rule-picker-container .rule-item').nth(idx);
+    const ruleId = await chosenItem.getAttribute('data-rule-id');
+    const ruleName = (await chosenItem.textContent())?.trim() ?? '';
+    if (!ruleId) {
+      continue;
+    }
+
+    const poem = await page.evaluate(async (id: string) => {
+      const { DotNet } = window as any;
+      return await DotNet.invokeMethodAsync('Chandam.Wasm', 'GetRandomPoem', id);
+    }, ruleId);
+
+    if (poem?.trim()) {
+      await chosenItem.click();
+      return { ruleId, ruleName, poem };
+    }
+  }
+
+  throw new Error('Could not find a rule with a usable example poem');
+}
+
 test.describe('Rule Sets → Rule navigation', () => {
   test('rule-sets page shows all built-in cards', async ({ page }) => {
     await gotoAndWait(page, '/rule-sets');
@@ -76,25 +111,17 @@ test.describe('Rule Sets → Rule navigation', () => {
     const count = await ruleItems.count();
     expect(count).toBeGreaterThan(0);
 
-    const idx = pickRandomIndex(count, rng);
-    const chosenItem = ruleItems.nth(idx);
-    const ruleName = await chosenItem.textContent();
-    await chosenItem.click();
+    const { ruleName, poem } = await selectAnalyzableRule(page, count, rng);
 
     // 5. Summary text should reflect the chosen rule
     const summary = page.locator('#selected-rule-name');
-    await expect(summary).toContainText(ruleName?.trim() ?? '', {
+    await expect(summary).toContainText(ruleName, {
       timeout: 3_000,
     });
 
     // 6. Load a rule-specific example poem into the editor
-    const ruleId = await chosenItem.getAttribute('data-rule-id');
-    const poem = await page.evaluate(async (id: string) => {
-      const { DotNet } = window as any;
-      return await DotNet.invokeMethodAsync('Chandam.Wasm', 'GetRandomPoem', id);
-    }, ruleId!);
     const editor = page.locator('#poem-editor');
-    await editor.fill(poem || '');
+    await editor.fill(poem);
     const editorValue = await editor.inputValue();
     expect(editorValue.trim().length).toBeGreaterThan(0);
 
