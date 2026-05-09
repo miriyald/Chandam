@@ -48,7 +48,7 @@ export async function renderRulePage(params: Record<string, string>) {
   const exampleText = await getExampleText(params);
 
   // Step 4: Render page HTML
-  renderRulePageHtml(
+  await renderRulePageHtml(
     ruleSet,
     ruleInfo.name,
     ruleId,
@@ -116,7 +116,7 @@ function cleanExampleFromUrl(ruleSet: string, ruleId: string) {
 }
 
 // Step 4: Render page HTML
-function renderRulePageHtml(
+async function renderRulePageHtml(
   ruleSetId: string,
   ruleName: string,
   ruleId: string,
@@ -151,7 +151,7 @@ function renderRulePageHtml(
   `;
 
   // Render action toolbar (favorite, create-rule, etc.) for this rule.
-  renderRuleActions('rule-actions-container', ruleSetId, ruleId);
+  await renderRuleActions('rule-actions-container', ruleSetId, ruleId);
 
   // Set editor text: example text takes priority, then saved state
   const editor = document.getElementById('poem-editor') as HTMLTextAreaElement;
