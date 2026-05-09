@@ -29,11 +29,12 @@ export async function renderResults(matches: ChandamMatch[], containerId: string
 }
 
 // Render only the first (best) match
-export async function renderFirstMatch(match: ChandamMatch, containerId: string, ruleSet?: string) {
+export async function renderFirstMatch(match: ChandamMatch, containerId: string, ruleSet?: string, options?: { showRuleLink?: boolean }) {
   const container = document.getElementById(containerId);
   if (!container) return;
 
-  container.innerHTML = renderMatchCard(match, ruleSet);
+  const showLink = options?.showRuleLink ?? true;
+  container.innerHTML = renderMatchCard(match, ruleSet, showLink);
   attachResultActionHandlers(container, ruleSet);
 
   // Show results section
@@ -47,7 +48,7 @@ export async function renderFirstMatch(match: ChandamMatch, containerId: string,
 }
 
 // Render a single match card with split-view layout
-function renderMatchCard(match: ChandamMatch, ruleSet?: string): string {
+function renderMatchCard(match: ChandamMatch, ruleSet?: string, showRuleLink = true): string {
   // Determine status styling
   const statusClass = match.isMatched ? 'match-success' : 'match-failure';
   const statusIcon = match.isMatched ? '✓' : '✗';
@@ -61,8 +62,8 @@ function renderMatchCard(match: ChandamMatch, ruleSet?: string): string {
       </div>`
     : '';
 
-  // Generate rule details link (opens in new tab)
-  const ruleLink = ruleSet && match.rule.identifier
+  // Generate rule details link (opens in new tab) — hidden on rule compute pages
+  const ruleLink = (showRuleLink && ruleSet && match.rule.identifier)
     ? `<a href="${makeUrl(`/learn/${ruleSet}/${match.rule.identifier}/`)}" class="rule-details-link" target="_blank" rel="noopener noreferrer">${t('results_view_details')}</a>`
     : '';
 

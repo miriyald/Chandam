@@ -198,7 +198,7 @@ function attachEventHandlers(ruleSet: string, ruleId: string) {
     try {
       const response = await WasmBridge.tryMatch(poemText, ruleId, yati, prasa);
       if (response.isMatch && response.match) {
-        renderFirstMatch(response.match, 'results-container');
+        renderFirstMatch(response.match, 'results-container', ruleSet, { showRuleLink: false });
 
         // Show results section
         const resultsSection = document.getElementById('results-section');
