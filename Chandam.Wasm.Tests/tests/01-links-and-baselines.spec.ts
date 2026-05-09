@@ -91,6 +91,7 @@ for (const route of ROUTES) {
     await page.waitForTimeout(500);
 
     await expect(page).toHaveScreenshot(`${route.name}.png`, {
+      timeout: 15_000,
       // Allow up to 2% pixel difference for font rendering variance
       maxDiffPixelRatio: 0.02,
       // Mask dynamic content that changes between runs

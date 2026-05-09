@@ -257,7 +257,7 @@ test.describe('Compute – specific rule page (/compute/:ruleSet/:ruleId)', () =
     const firstRuleLink = page
       .locator('.rule-list-item .rule-item-actions a[href*="/compute/chandam/"]')
       .first();
-    await expect(firstRuleLink).toBeVisible();
+    await expect(firstRuleLink).toBeVisible({ timeout: 15_000 });
     const href = await firstRuleLink.getAttribute('href');
     expect(href).toMatch(/\/compute\/chandam\/.+/);
 

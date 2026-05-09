@@ -5,6 +5,11 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Chandam — App Walkthrough</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Anek+Telugu:wght@400;500;600;700;800&family=Tiro+Telugu:ital@0;1&display=swap"
+    rel="stylesheet">
   <style>
     *,
     *::before,
@@ -25,7 +30,7 @@
       --muted: #5c5c5c;
       --border: #d4cfc8;
       --surface: #f4f1ec;
-      --font-ui: 'Anek Telugu', -apple-system, 'Segoe UI', sans-serif;
+      --font-ui: 'Anek Telugu', sans-serif;
       --font-editor: 'Tiro Telugu', serif;
     }
 
@@ -454,15 +459,15 @@
     <nav class="chapter-nav">
       <div class="chapter-dot active" data-slide="0" data-tooltip="శీర్షిక"></div>
       <div class="chapter-dot" data-slide="1" data-tooltip="పరిచయం"></div>
-      <div class="chapter-dot" data-slide="12" data-tooltip="లోతైన విశ్లేషణ"></div>
-      <div class="chapter-dot" data-slide="20" data-tooltip="ఇష్టాలు"></div>
-      <div class="chapter-dot" data-slide="26" data-tooltip="స్వీయ నియమాలు"></div>
-      <div class="chapter-dot" data-slide="32" data-tooltip="GitHub"></div>
-      <div class="chapter-dot" data-slide="35" data-tooltip="మొబైల్"></div>
-      <div class="chapter-dot" data-slide="41" data-tooltip="గ్రంథ ఎగుమతి"></div>
+      <div class="chapter-dot" data-slide="11" data-tooltip="లోతైన విశ్లేషణ"></div>
+      <div class="chapter-dot" data-slide="19" data-tooltip="ఇష్టాలు"></div>
+      <div class="chapter-dot" data-slide="25" data-tooltip="స్వీయ నియమాలు"></div>
+      <div class="chapter-dot" data-slide="31" data-tooltip="GitHub"></div>
+      <div class="chapter-dot" data-slide="33" data-tooltip="మొబైల్"></div>
+      <div class="chapter-dot" data-slide="39" data-tooltip="గ్రంథ ఎగుమతి"></div>
     </nav>
 
-    <div class="slide-counter" id="counter">1 / 44</div>
+    <div class="slide-counter" id="counter">1 / 42</div>
 
     <button class="fullscreen-btn" id="fs-btn" aria-label="Toggle fullscreen">
       <svg viewBox="0 0 24 24">
@@ -490,7 +495,7 @@
 
       <section class="slide slide-content" data-chapter="1">
         <img class="screenshot" src="screenshots/story-1-discovery/01-home-page.png" alt="ముఖ్య పేజీ" loading="lazy">
-        <p class="caption">హీరో విభాగం మరియు వేగవంతమైన లింక్ కార్డులతో ముఖప్రవేశ పేజీ</p>
+        <p class="caption">హీరో విభాగం మరియు వేగవంతమైన లింక్ కార్డులతో ముఖ పేజీ</p>
       </section>
 
       <section class="slide slide-content" data-chapter="1">
@@ -507,7 +512,7 @@
       <section class="slide slide-content" data-chapter="1">
         <img class="screenshot" src="screenshots/story-1-discovery/04-learn-chandam.png" alt="అభ్యాస సూచిక"
           loading="lazy">
-        <p class="caption">ప్రకారం వారీగా అన్ని తెలుగు ఛందస్సుల జాబితా</p>
+        <p class="caption">వర్గాల వారీగా అన్ని తెలుగు ఛందస్సుల జాబితా</p>
       </section>
 
       <section class="slide slide-content" data-chapter="1">
@@ -537,13 +542,8 @@
       <section class="slide slide-content" data-chapter="1">
         <img class="screenshot" src="screenshots/story-1-discovery/09-results-100-percent.png" alt="100% సరిపోలిక"
           loading="lazy">
-        <p class="caption">పచ్చ సూచికతో 100% సరిపోలిక మరియు గణ విభజన</p>
-      </section>
-
-      <section class="slide slide-content" data-chapter="1">
-        <img class="screenshot" src="screenshots/story-5-github/01-perfect-match-submit.png" alt="GitHub సమర్పణ"
-          loading="lazy">
-        <p class="caption">పూర్తి సరిపోలిక వచ్చినప్పుడు "GitHub కి సమర్పించండి" ఎంపిక అందుబాటులోకి వస్తుంది</p>
+        <p class="caption">పచ్చ సూచికతో 100% సరిపోలిక మరియు గణ విభజన — పూర్తి సరిపోలిక వచ్చినప్పుడు "GitHub కి
+          సమర్పించండి" ఎంపిక అందుబాటులోకి వస్తుంది</p>
       </section>
 
       <!-- Story 2: Power User Analysis -->
@@ -586,7 +586,7 @@
       <section class="slide slide-content" data-chapter="2">
         <img class="screenshot" src="screenshots/story-2-power-user/06-partial-match-errors.png" alt="Partial match"
           loading="lazy">
-        <p class="caption">వ్యతిరేకతలను చూపించే లోప సూచనలతో భాగస్వల సరిపోలిక</p>
+        <p class="caption">అసమానతలను చూపించే లోప సూచనలతో పాక్షిక సరిపోలిక</p>
       </section>
 
       <section class="slide slide-content" data-chapter="2">
@@ -683,12 +683,6 @@
         <p class="caption">100% సరిపోలికతో GitHub సమర్పణ బటన్ అందుబాటులోకి వస్తుంది</p>
       </section>
 
-      <section class="slide slide-content" data-chapter="5">
-        <img class="screenshot" src="screenshots/story-5-github/02-no-submit-partial.png" alt="No submit partial"
-          loading="lazy">
-        <p class="caption">భాగస్వల సరిపోలికలు సమర్పించలేరు. నాణ్యత నియంత్రణ అమల్లో ఉంటుంది.</p>
-      </section>
-
       <!-- Story 6: Mobile Experience -->
       <section class="slide slide-chapter" data-chapter="6">
         <div class="story-number">కథ 6</div>
@@ -764,7 +758,7 @@
       const dots = document.querySelectorAll('.chapter-dot');
       const fsBtn = document.getElementById('fs-btn');
 
-      const chapters = [0, 1, 12, 20, 26, 32, 35, 41];
+      const chapters = [0, 1, 11, 19, 25, 31, 33, 39];
 
       function updateUI() {
         progress.style.width = ((current / (total - 1)) * 100) + '%';

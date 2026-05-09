@@ -7,7 +7,6 @@ import { renderEditorCard } from './shared-components';
 import { makeUrl } from '../utils/url-helpers';
 import { renderBreadcrumbs, buildRuleBreadcrumbs } from './breadcrumbs';
 import { renderModeSwitcher } from './mode-switcher';
-import { renderRuleActions } from './rule-actions';
 import { loadRuleSet } from '../utils/rule-loader';
 import { storageService } from '../services/storage/storage-service';
 import { t } from '../i18n';
@@ -130,12 +129,7 @@ function renderRulePageHtml(
   content.innerHTML = `
     <div class="compute-rule-page">
       ${renderBreadcrumbs(breadcrumbs)}
-
-      <div class="page-header-controls">
-        <h1 class="meter-name">${ruleName}</h1>
-        <div id="rule-actions-container"></div>
-        ${renderModeSwitcher({ ruleSetId, ruleId, currentMode: 'compute' })}
-      </div>
+      <h1 class="meter-name">${ruleName}</h1>
 
       ${renderEditorCard({
         contextText: `${t('editor_matching_with')} ${ruleName}`,
@@ -149,9 +143,6 @@ function renderRulePageHtml(
       </div>
     </div>
   `;
-
-  // Render action toolbar (currently just favorite button, future: share, print, etc.)
-  renderRuleActions('rule-actions-container', ruleSetId, ruleId);
 
   // Set editor text: example text takes priority, then saved state
   const editor = document.getElementById('poem-editor') as HTMLTextAreaElement;

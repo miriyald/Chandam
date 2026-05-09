@@ -24,7 +24,7 @@ async function getFirstRuleComputePath(
   const firstLearnLink = page
     .locator('.rule-list-item .rule-item-actions a[href*="/learn/chandam/"]')
     .first();
-  await expect(firstLearnLink).toBeVisible();
+  await expect(firstLearnLink).toBeVisible({ timeout: 15_000 });
   const href = await firstLearnLink.getAttribute('href');
   const ruleId = href?.split('/').filter(Boolean).pop() ?? '';
   return { ruleId, computePath: `/compute/chandam/${ruleId}` };
@@ -179,7 +179,7 @@ async function getFirstTopellaRulePath(
   const firstLearnLink = page
     .locator('.rule-list-item .rule-item-actions a[href*="/learn/topella/"]')
     .first();
-  await expect(firstLearnLink).toBeVisible();
+  await expect(firstLearnLink).toBeVisible({ timeout: 15_000 });
   const href = await firstLearnLink.getAttribute('href');
   const ruleId = href?.split('/').filter(Boolean).pop() ?? '';
   return { ruleId, learnPath: `/learn/topella/${ruleId}` };

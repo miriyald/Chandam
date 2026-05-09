@@ -9,6 +9,7 @@ import type { RuleSummaryDetailed } from '../types';
 import { makeUrl } from '../utils/url-helpers';
 import { renderBreadcrumbs, buildRuleSetBreadcrumbs } from './breadcrumbs';
 import { renderModeSwitcher } from './mode-switcher';
+import { renderRuleActions } from './rule-actions';
 import { loadRuleSet } from '../utils/rule-loader';
 import { t } from '../i18n';
 import { setPageTitle } from '../utils/page-title';
@@ -98,6 +99,7 @@ function renderRuleSetPageHtml(ruleSetName: string, ruleCount: number, ruleSetId
 
       <div class="page-header-controls">
         <h1>${ruleSetName}</h1>
+        <div id="rule-actions-container"></div>
         ${renderModeSwitcher({ ruleSetId, currentMode: 'compute' })}
       </div>
       <div class="page-subtitle">${ruleCount} ${t('label_rules_count')}</div>
@@ -115,6 +117,9 @@ function renderRuleSetPageHtml(ruleSetName: string, ruleCount: number, ruleSetId
       </div>
     </div>
   `;
+
+  // Render rule actions (Create New Rule button, etc.)
+  renderRuleActions('rule-actions-container', ruleSetId);
 }
 
 // Step 5: Attach event handlers

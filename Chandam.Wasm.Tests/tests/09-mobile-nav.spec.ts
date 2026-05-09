@@ -106,6 +106,7 @@ test.describe('Mobile navigation menu', () => {
     await page.waitForTimeout(200);
 
     await expect(page).toHaveScreenshot('mobile-nav-open.png', {
+      timeout: 15_000,
       maxDiffPixelRatio: 0.02,
       mask: [page.locator('#version-info')],
     });

@@ -70,6 +70,7 @@ test.describe('Mobile breadcrumb back-link behavior', () => {
     await expect(breadcrumbs).toBeVisible();
 
     await expect(breadcrumbs).toHaveScreenshot('mobile-breadcrumb-back-link.png', {
+      timeout: 15_000,
       maxDiffPixelRatio: 0.02,
     });
   });

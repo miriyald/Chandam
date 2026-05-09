@@ -12,18 +12,30 @@ import { submitToGitHub, buildExamplePayload } from '../utils/github-submit';
 import { t } from '../i18n';
 
 /**
- * Renders action toolbar for rule pages (Learn & Compute)
+ * Renders action toolbar for rule pages (Learn & Compute) and rule set page
+ * When ruleId is provided: renders Favorite, GitHub, Create Rule, and Delete buttons
+ * When ruleId is undefined: renders only the Create Rule button (for rule set page)
  */
 export async function renderRuleActions(
   containerId: string,
   ruleSetId: string,
-  ruleId: string
+  ruleId?: string
 ): Promise<void> {
   const container = document.getElementById(containerId);
   if (!container) return;
 
   // Ensure storage is initialized
   await storageService.init();
+
+  // If ruleId is not provided, only render Create Rule button
+  if (!ruleId) {
+    container.innerHTML = `
+      <div class="rule-actions">
+        ${renderCreateRuleButton()}
+      </div>
+    `;
+    return;
+  }
 
   // Check if already favorited
   // For custom-fav (virtual collection), check by ruleId alone since favorites
