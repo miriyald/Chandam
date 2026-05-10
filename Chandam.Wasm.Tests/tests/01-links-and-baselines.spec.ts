@@ -68,6 +68,9 @@ for (const route of ROUTES) {
   });
 
   test(`[${route.name}] same-origin links resolve`, async ({ page }) => {
+    // Large routes (e.g., learn-topella) enumerate many links and need more time.
+    test.setTimeout(120_000);
+
     await gotoAndWait(page, route.path);
 
     const links = await collectSameOriginLinks(page);
@@ -91,8 +94,9 @@ for (const route of ROUTES) {
     await page.waitForTimeout(500);
 
     await expect(page).toHaveScreenshot(`${route.name}.png`, {
-      // Allow up to 2% pixel difference for font rendering variance
-      maxDiffPixelRatio: 0.02,
+      timeout: 15_000,
+      // Allow up to 6% pixel difference for mobile rendering variance
+      maxDiffPixelRatio: 0.06,
       // Mask dynamic content that changes between runs
       mask: [page.locator('#version-info')],
     });

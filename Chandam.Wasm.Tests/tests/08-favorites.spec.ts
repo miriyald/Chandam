@@ -24,7 +24,7 @@ async function getFirstRuleComputePath(
   const firstLearnLink = page
     .locator('.rule-list-item .rule-item-actions a[href*="/learn/chandam/"]')
     .first();
-  await expect(firstLearnLink).toBeVisible();
+  await expect(firstLearnLink).toBeVisible({ timeout: 15_000 });
   const href = await firstLearnLink.getAttribute('href');
   const ruleId = href?.split('/').filter(Boolean).pop() ?? '';
   return { ruleId, computePath: `/compute/chandam/${ruleId}` };
@@ -43,6 +43,17 @@ async function clearAllFavorites(
     if (api?.favorites?.clear) {
       await api.favorites.clear();
     }
+  });
+}
+
+async function favoriteCurrentRule(
+  page: import('@playwright/test').Page,
+): Promise<void> {
+  const favBtn = page.locator('#btn-favorite');
+  await expect(favBtn).toBeVisible();
+  await favBtn.click();
+  await expect(favBtn).toHaveAttribute('data-favorited', 'true', {
+    timeout: 10_000,
   });
 }
 
@@ -88,9 +99,7 @@ test.describe('Favorites – heart button', () => {
     await gotoAndWait(page, computePath);
 
     // Favorite the rule
-    const favBtn = page.locator('#btn-favorite');
-    await favBtn.click();
-    await page.waitForTimeout(500);
+    await favoriteCurrentRule(page);
 
     // Navigate to rule-sets page
     await gotoAndWait(page, '/rule-sets');
@@ -105,8 +114,7 @@ test.describe('Favorites – heart button', () => {
     await gotoAndWait(page, computePath);
 
     // Favorite the rule
-    await page.locator('#btn-favorite').click();
-    await page.waitForTimeout(500);
+    await favoriteCurrentRule(page);
 
     // Navigate to the favorites collection learn page
     await gotoAndWait(page, '/learn/custom-fav/');
@@ -128,9 +136,7 @@ test.describe('Favorites – heart button', () => {
     const favBtn = page.locator('#btn-favorite');
 
     // Favorite
-    await favBtn.click();
-    await page.waitForTimeout(500);
-    await expect(favBtn).toHaveAttribute('data-favorited', 'true');
+    await favoriteCurrentRule(page);
 
     // Un-favorite
     await favBtn.click();
@@ -173,7 +179,7 @@ async function getFirstTopellaRulePath(
   const firstLearnLink = page
     .locator('.rule-list-item .rule-item-actions a[href*="/learn/topella/"]')
     .first();
-  await expect(firstLearnLink).toBeVisible();
+  await expect(firstLearnLink).toBeVisible({ timeout: 15_000 });
   const href = await firstLearnLink.getAttribute('href');
   const ruleId = href?.split('/').filter(Boolean).pop() ?? '';
   return { ruleId, learnPath: `/learn/topella/${ruleId}` };
@@ -195,16 +201,12 @@ test.describe('Favorites – multi-ruleset and persistence', () => {
     // Favorite a chandam rule
     const { ruleId: chandamRuleId } = await getFirstRuleComputePath(page);
     await gotoAndWait(page, `/learn/chandam/${chandamRuleId}`);
-    await page.locator('#btn-favorite').click();
-    await page.waitForTimeout(500);
-    await expect(page.locator('#btn-favorite')).toHaveAttribute('data-favorited', 'true');
+    await favoriteCurrentRule(page);
 
     // Favorite a topella rule
     const { ruleId: topellaRuleId } = await getFirstTopellaRulePath(page);
     await gotoAndWait(page, `/learn/topella/${topellaRuleId}`);
-    await page.locator('#btn-favorite').click();
-    await page.waitForTimeout(500);
-    await expect(page.locator('#btn-favorite')).toHaveAttribute('data-favorited', 'true');
+    await favoriteCurrentRule(page);
 
     // Navigate to favorites collection
     await gotoAndWait(page, '/learn/custom-fav/');
@@ -229,13 +231,11 @@ test.describe('Favorites – multi-ruleset and persistence', () => {
 
     // Favorite first rule
     await gotoAndWait(page, firstHref!);
-    await page.locator('#btn-favorite').click();
-    await page.waitForTimeout(500);
+    await favoriteCurrentRule(page);
 
     // Favorite second rule
     await gotoAndWait(page, secondHref!);
-    await page.locator('#btn-favorite').click();
-    await page.waitForTimeout(500);
+    await favoriteCurrentRule(page);
 
     // Navigate to favorites collection
     await gotoAndWait(page, '/learn/custom-fav/');
@@ -265,9 +265,7 @@ test.describe('Favorites – multi-ruleset and persistence', () => {
     // Favorite a rule
     const { ruleId, computePath } = await getFirstRuleComputePath(page);
     await gotoAndWait(page, computePath);
-    await page.locator('#btn-favorite').click();
-    await page.waitForTimeout(500);
-    await expect(page.locator('#btn-favorite')).toHaveAttribute('data-favorited', 'true');
+    await favoriteCurrentRule(page);
 
     // Hard reload
     await page.reload();

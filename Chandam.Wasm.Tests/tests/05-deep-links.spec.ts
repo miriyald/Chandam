@@ -87,7 +87,7 @@ async function getFirstPopularRuleId(
   const firstLearnLink = page
     .locator('.rule-list-item .rule-item-actions a[href*="/learn/chandam/"]')
     .first();
-  await expect(firstLearnLink).toBeVisible();
+  await expect(firstLearnLink).toBeVisible({ timeout: 15_000 });
   const href = await firstLearnLink.getAttribute('href');
   // href is something like /learn/chandam/iMdravajramu
   const ruleId = href?.split('/').filter(Boolean).pop();

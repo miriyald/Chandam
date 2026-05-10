@@ -48,7 +48,7 @@ export async function renderRulePage(params: Record<string, string>) {
   const exampleText = await getExampleText(params);
 
   // Step 4: Render page HTML
-  renderRulePageHtml(
+  await renderRulePageHtml(
     ruleSet,
     ruleInfo.name,
     ruleId,
@@ -116,7 +116,7 @@ function cleanExampleFromUrl(ruleSet: string, ruleId: string) {
 }
 
 // Step 4: Render page HTML
-function renderRulePageHtml(
+async function renderRulePageHtml(
   ruleSetId: string,
   ruleName: string,
   ruleId: string,
@@ -138,10 +138,10 @@ function renderRulePageHtml(
       </div>
 
       ${renderEditorCard({
-        contextText: `${t('editor_matching_with')} ${ruleName}`,
-        showRulePicker: false,
-        showAutoDetect: false
-      })}
+    contextText: `${t('editor_matching_with')} ${ruleName}`,
+    showRulePicker: false,
+    showAutoDetect: false
+  })}
 
       <div id="results-section" style="display: none;">
         <h3>${t('results_title')}</h3>
@@ -150,8 +150,8 @@ function renderRulePageHtml(
     </div>
   `;
 
-  // Render action toolbar (currently just favorite button, future: share, print, etc.)
-  renderRuleActions('rule-actions-container', ruleSetId, ruleId);
+  // Render action toolbar (favorite, create-rule, etc.) for this rule.
+  await renderRuleActions('rule-actions-container', ruleSetId, ruleId);
 
   // Set editor text: example text takes priority, then saved state
   const editor = document.getElementById('poem-editor') as HTMLTextAreaElement;
@@ -198,7 +198,7 @@ function attachEventHandlers(ruleSet: string, ruleId: string) {
     try {
       const response = await WasmBridge.tryMatch(poemText, ruleId, yati, prasa);
       if (response.isMatch && response.match) {
-        renderFirstMatch(response.match, 'results-container');
+        renderFirstMatch(response.match, 'results-container', ruleSet, { showRuleLink: false });
 
         // Show results section
         const resultsSection = document.getElementById('results-section');

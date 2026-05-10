@@ -11,7 +11,7 @@
     "report": "playwright show-report",
     "snapshots": "playwright test --update-snapshots",
     "install-browsers": "playwright install --with-deps chromium webkit",
-    "demo-screenshots": "npx tsx demo-screenshots.ts"
+    "screenshots": "npx tsx demo-screenshots.ts"
   },
   "devDependencies": {
     "@playwright/test": "1.59.1",

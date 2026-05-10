@@ -12,18 +12,30 @@ import { submitToGitHub, buildExamplePayload } from '../utils/github-submit';
 import { t } from '../i18n';
 
 /**
- * Renders action toolbar for rule pages (Learn & Compute)
+ * Renders action toolbar for rule pages (Learn & Compute) and rule set page
+ * When ruleId is provided: renders Favorite, GitHub, Create Rule, and Delete buttons
+ * When ruleId is undefined: renders only the Create Rule button (for rule set page)
  */
 export async function renderRuleActions(
   containerId: string,
   ruleSetId: string,
-  ruleId: string
+  ruleId?: string
 ): Promise<void> {
   const container = document.getElementById(containerId);
   if (!container) return;
 
   // Ensure storage is initialized
   await storageService.init();
+
+  // If ruleId is not provided, only render Create Rule button
+  if (!ruleId) {
+    container.innerHTML = `
+      <div class="rule-actions">
+        ${renderCreateRuleButton()}
+      </div>
+    `;
+    return;
+  }
 
   // Check if already favorited
   // For custom-fav (virtual collection), check by ruleId alone since favorites
@@ -80,14 +92,14 @@ function renderDeleteButton(ruleSetId: string, ruleId: string): string {
   }
 
   const trashSvg = `
-    <svg class="trash-icon" viewBox="0 0 24 24" width="24" height="24">
+    <svg viewBox="0 0 24 24" width="16" height="16">
       <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/>
     </svg>
   `;
 
   return `
     <button id="btn-delete"
-            class="action-btn btn-delete"
+            class="action-btn btn-delete-inline"
             data-rule-set="${ruleSetId}"
             data-rule-id="${ruleId}"
             title="${t('action_delete_custom_rule')}"

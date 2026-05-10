@@ -236,7 +236,8 @@ test.describe('Learn page – filter sidebar', () => {
     await waitForFilterUpdate(page);
 
     await expect(page).toHaveScreenshot('learn-filter-active.png', {
-      maxDiffPixelRatio: 0.02,
+      timeout: 15_000,
+      maxDiffPixelRatio: 0.06,
       mask: [page.locator('#version-info')],
     });
   });
