@@ -38,7 +38,7 @@ $ErrorActionPreference = "Stop"
 $ScriptDir = $PSScriptRoot
 $Root      = (Resolve-Path "$ScriptDir\..\..").Path
 $OutputDir = if ($OutputDir) { $OutputDir } else { Join-Path $ScriptDir "output\metrics" }
-$ExcludedPathPattern = "\\(obj|bin|\.git|node_modules|dist|coverage|publish|Obsolete|Rules)\\"
+$ExcludedPathPattern = "(?i)\\(obj|bin|\.git|node_modules|dist|coverage|publish|Obsolete|Rules)\\"
 
 if (-not (Test-Path $OutputDir)) { New-Item -ItemType Directory -Path $OutputDir | Out-Null }
 

@@ -52,7 +52,7 @@ try {
     $report | Out-File -FilePath $reportPath -Encoding utf8
 
     if ([string]::IsNullOrWhiteSpace($report)) {
-        throw "Metrics script produced empty output at $reportPath"
+        throw "Metrics script produced no output; cannot generate report at $reportPath"
     }
 
     function Get-Metric {
