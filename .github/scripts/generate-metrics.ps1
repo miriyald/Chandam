@@ -42,10 +42,10 @@ try {
     $mode = if ($EventName -eq "push") { "basic" } else { "deep" }
 
     if ($mode -eq "deep") {
-        .\Docs\Scripts\metrics.ps1 -Deep | Out-File -FilePath $reportPath -Encoding utf8
+        .\metrics.ps1 -Deep | Out-File -FilePath $reportPath -Encoding utf8
     }
     else {
-        .\Docs\Scripts\metrics.ps1 | Out-File -FilePath $reportPath -Encoding utf8
+        .\metrics.ps1 | Out-File -FilePath $reportPath -Encoding utf8
     }
 
     $report = Get-Content $reportPath -Raw
