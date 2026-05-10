@@ -39,13 +39,14 @@ try {
         New-Item -ItemType Directory -Path $metricsDir | Out-Null
     }
 
+    $metricsScript = Join-Path $scriptDir "metrics.ps1"
     $mode = if ($EventName -eq "push") { "basic" } else { "deep" }
 
     if ($mode -eq "deep") {
-        .\metrics.ps1 -Deep | Out-File -FilePath $reportPath -Encoding utf8
+        & $metricsScript -Deep | Out-File -FilePath $reportPath -Encoding utf8
     }
     else {
-        .\metrics.ps1 | Out-File -FilePath $reportPath -Encoding utf8
+        & $metricsScript | Out-File -FilePath $reportPath -Encoding utf8
     }
 
     $report = Get-Content $reportPath -Raw
