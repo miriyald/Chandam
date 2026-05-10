@@ -43,10 +43,10 @@ try {
     $mode = if ($EventName -eq "push") { "basic" } else { "deep" }
 
     if ($mode -eq "deep") {
-        $report = (& $metricsScript -Deep *>&1 | Out-String)
+        $report = (& $metricsScript -Deep 6>&1 | Out-String)
     }
     else {
-        $report = (& $metricsScript *>&1 | Out-String)
+        $report = (& $metricsScript 6>&1 | Out-String)
     }
 
     $report | Out-File -FilePath $reportPath -Encoding utf8
