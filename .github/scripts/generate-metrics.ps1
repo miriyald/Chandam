@@ -43,13 +43,17 @@ try {
     $mode = if ($EventName -eq "push") { "basic" } else { "deep" }
 
     if ($mode -eq "deep") {
-        & $metricsScript -Deep | Out-File -FilePath $reportPath -Encoding utf8
+        $report = (& $metricsScript -Deep 6>&1 | Out-String)
     }
     else {
-        & $metricsScript | Out-File -FilePath $reportPath -Encoding utf8
+        $report = (& $metricsScript 6>&1 | Out-String)
     }
 
-    $report = Get-Content $reportPath -Raw
+    $report | Out-File -FilePath $reportPath -Encoding utf8
+
+    if ([string]::IsNullOrWhiteSpace($report)) {
+        throw "Metrics script produced no output; cannot generate report at $reportPath"
+    }
 
     function Get-Metric {
         param([string]$Pattern)
