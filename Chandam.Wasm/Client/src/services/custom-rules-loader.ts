@@ -2,7 +2,7 @@
  * Custom rules loader service
  * Loads custom rulesets from browser storage into WASM engine
  */
-import { storageService } from './storage/storage-service';
+import { customRulesService } from './storage/custom-rules-service';
 import type { CustomRuleset } from './storage/models';
 
 declare const DotNet: any;
@@ -13,8 +13,7 @@ export class CustomRulesLoader {
    */
   static async loadCustomRuleset(rulesetId: string): Promise<boolean> {
     try {
-      await storageService.init();
-      const customRuleset = await storageService.indexedDB.getCustomRuleset(rulesetId);
+      const customRuleset = await customRulesService.getCustomRuleset(rulesetId);
 
       if (!customRuleset || !customRuleset.rules || customRuleset.rules.length === 0) {
         console.log(`No custom ruleset found with ID: ${rulesetId}`);
@@ -39,9 +38,8 @@ export class CustomRulesLoader {
    * Check if a custom ruleset exists
    */
   static async hasCustomRuleset(rulesetId: string): Promise<boolean> {
-    await storageService.init();
-    const ruleset = await storageService.indexedDB.getCustomRuleset(rulesetId);
-    return ruleset !== undefined && ruleset.rules.length > 0;
+    const ruleset = await customRulesService.getCustomRuleset(rulesetId);
+    return ruleset !== null && ruleset.rules.length > 0;
   }
 
   /**

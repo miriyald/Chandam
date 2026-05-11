@@ -11,6 +11,10 @@ import {
   buildExamplePayload,
   stripHtmlToText
 } from '../utils/github-submit';
+import { collectionService } from '../services/storage/collection-service';
+
+// Module-level map to pass match data to click handlers
+const renderedMatches = new Map<string, ChandamMatch>();
 
 export async function renderResults(matches: ChandamMatch[], containerId: string, ruleSet?: string) {
   const container = document.getElementById(containerId);
@@ -49,6 +53,9 @@ export async function renderFirstMatch(match: ChandamMatch, containerId: string,
 
 // Render a single match card with split-view layout
 function renderMatchCard(match: ChandamMatch, ruleSet?: string, showRuleLink = true): string {
+  // Store match for click handler access
+  renderedMatches.set(match.rule.identifier, match);
+
   // Determine status styling
   const statusClass = match.isMatched ? 'match-success' : 'match-failure';
   const statusIcon = match.isMatched ? '✓' : '✗';
@@ -74,6 +81,9 @@ function renderMatchCard(match: ChandamMatch, ruleSet?: string, showRuleLink = t
     : '';
   const submitGithubBtn = (match.matchPercentage === 100 && ruleSet)
     ? `<button class="btn-submit-github" data-rule-id="${escapeAttr(match.rule.identifier)}" data-rule-name="${escapeAttr(match.rule.name)}" data-rule-set="${escapeAttr(ruleSet)}" title="${t('results_submit_github')}">${t('results_submit_github')}</button>`
+    : '';
+  const addToCollectionBtn = (match.matchPercentage >= 95 && ruleSet)
+    ? `<button class="btn-add-collection" data-rule-id="${escapeAttr(match.rule.identifier)}" data-rule-name="${escapeAttr(match.rule.name)}" data-rule-set="${escapeAttr(ruleSet)}">${t('results_add_to_collection')}</button>`
     : '';
 
   // Enhanced error display (table format)
@@ -125,6 +135,7 @@ function renderMatchCard(match: ChandamMatch, ruleSet?: string, showRuleLink = t
           ${scoreHtml}
         </div>
         <div class="match-actions">
+          ${addToCollectionBtn}
           ${addExampleBtn}
           ${submitGithubBtn}
           ${ruleLink}
@@ -194,6 +205,8 @@ function attachResultActionHandlers(container: HTMLElement, ruleSet?: string): v
       await handleAddToExamples(target);
     } else if (target.classList.contains('btn-submit-github')) {
       await handleSubmitToGitHub(target, ruleSet);
+    } else if (target.classList.contains('btn-add-collection')) {
+      await handleAddToCollection(target, ruleSet);
     }
   }, { signal: resultActionController.signal });
 }
@@ -253,6 +266,37 @@ async function handleSubmitToGitHub(button: HTMLElement, ruleSet?: string): Prom
     const examples = poemText ? [poemText] : [];
     const payload = buildExamplePayload(ruleName, ruleSetId, ruleId, examples);
     submitToGitHub(payload, 'results');
+  }
+}
+
+async function handleAddToCollection(button: HTMLElement, ruleSet?: string): Promise<void> {
+  const ruleId = button.getAttribute('data-rule-id') || '';
+  const ruleName = button.getAttribute('data-rule-name') || '';
+  const ruleSetId = button.getAttribute('data-rule-set') || ruleSet || '';
+
+  const editor = document.getElementById('poem-editor') as HTMLTextAreaElement;
+  const poemText = editor?.value?.trim();
+  if (!poemText) return;
+
+  // Get beautified from the stored match data
+  const match = renderedMatches.get(ruleId);
+  const beautified = match?.beautified || '';
+
+  const result = await collectionService.addPoem(ruleSetId, ruleId, ruleName, poemText, beautified);
+
+  if (result === 'added') {
+    button.textContent = t('results_added_to_collection');
+    button.classList.add('btn-success');
+    button.setAttribute('disabled', 'true');
+    analyticsService.trackEvent('poem_collected', { ruleId, ruleSet: ruleSetId });
+  } else if (result === 'duplicate') {
+    button.textContent = t('results_already_in_collection');
+    button.classList.add('btn-warning');
+    button.setAttribute('disabled', 'true');
+  } else {
+    button.textContent = t('results_collection_full');
+    button.classList.add('btn-warning');
+    button.setAttribute('disabled', 'true');
   }
 }
 

@@ -50,9 +50,8 @@ export async function getRuleSetAsync(id: string): Promise<RuleSet | undefined> 
   if (predefined) return predefined;
 
   // Check custom rulesets in IndexedDB
-  const { storageService } = await import('./services/storage/storage-service');
-  await storageService.init();
-  const customRuleset = await storageService.indexedDB.getCustomRuleset(id);
+  const { customRulesService } = await import('./services/storage/custom-rules-service');
+  const customRuleset = await customRulesService.getCustomRuleset(id);
 
   if (customRuleset) {
     // Convert CustomRuleset to RuleSet format

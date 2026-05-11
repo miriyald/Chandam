@@ -7,6 +7,7 @@ import { renderLearnIndexPage } from './ui/learn-index-page';
 import { renderLearnDetailPage } from './ui/learn-detail-page';
 import { renderRuleCreatorPage } from './ui/rule-creator-page';
 import { renderExplorePage } from './ui/explore-page';
+import { renderMyWritingsPage } from './ui/my-writings-page';
 import { validateRuleSetAsync, validateRule, handleInvalidRuleSet, handleInvalidRule } from './utils/error-handlers';
 import { createInitialLoader, preloadLoaderImage } from './utils/loader';
 import { LoadingEvents, LoadingEventType } from './utils/loading-events';
@@ -130,6 +131,11 @@ router.register('/learn/:ruleSet/:ruleId', async (params) => {
   await renderLearnDetailPage(params.ruleSet, params.ruleId);
 });
 
+// My Writings route
+router.register('/my-writings', async () => {
+  await renderMyWritingsPage();
+});
+
 // Static pages
 router.register('/resources', () => { setPageTitle(t('nav_resources')); loadStaticPage(`pages/${getLanguage()}/resources.html`); });
 router.register('/about', () => { setPageTitle(t('nav_about')); loadStaticPage(`pages/${getLanguage()}/about.html`); });
@@ -174,6 +180,15 @@ document.addEventListener('DOMContentLoaded', () => {
     const done = analyticsService.startTimedEvent('language_toggle', {});
     toggleLanguage();
     done({ language: getLanguage() });
+  });
+
+  document.getElementById('btn-clear-data')?.addEventListener('click', async (e) => {
+    e.preventDefault();
+    const confirmed = confirm(t('clear_data_warning'));
+    if (confirmed) {
+      await storageService.clearAll();
+      window.location.reload();
+    }
   });
 });
 

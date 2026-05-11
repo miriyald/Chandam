@@ -33,3 +33,18 @@ export interface CustomRuleset {
   createdAt: number;
   updatedAt: number;
 }
+
+export interface CollectionPoem {
+  ruleSetId: string;        // e.g., 'frequent', 'complete'
+  ruleIdentifier: string;   // e.g., 'utpalamaala'
+  ruleName: string;         // rule.name only (NOT alias)
+  poemText: string;         // Raw text (for editor / re-analysis)
+  beautified: string;       // Pre-rendered HTML
+  poemHash: string;         // 16-char short hash for dedup
+  addedAt: number;          // Timestamp ms
+}
+
+export interface CompressedEntry {
+  id: string;               // Well-known key: 'favorites', 'custom-rulesets', 'poems:default'
+  data: Uint8Array;         // Gzip-compressed JSON blob
+}

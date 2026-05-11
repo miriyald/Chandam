@@ -76,8 +76,7 @@ export async function renderLearnIndexPage(ruleSet: string) {
   currentFilters = await WasmBridge.getAvailableFilters('te');
 
   // Step 3c: Load favorite identifiers from browser storage
-  await storageService.init();
-  const allFavorites = await storageService.indexedDB.getAllFavorites();
+  const allFavorites = await favoritesService.getAllFavorites();
 
   // Create Set of composite IDs for O(1) lookup
   // For custom-fav (virtual collection), all displayed rules are favorites

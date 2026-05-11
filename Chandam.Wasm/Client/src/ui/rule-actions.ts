@@ -42,7 +42,7 @@ export async function renderRuleActions(
   // are stored with their original ruleSetId, not "custom-fav"
   let isFavorited: boolean;
   if (ruleSetId === 'custom-fav') {
-    const allFavs = await storageService.indexedDB.getAllFavorites();
+    const allFavs = await favoritesService.getAllFavorites();
     isFavorited = allFavs.some(fav => fav.ruleId === ruleId);
   } else {
     isFavorited = await favoritesService.isFavorited(ruleSetId, ruleId);
