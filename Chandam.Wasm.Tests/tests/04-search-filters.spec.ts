@@ -88,7 +88,10 @@ test.describe('Learn page – filter sidebar', () => {
     expect(filteredCount).toBeLessThanOrEqual(originalCount);
 
     // Clear search → restore
-    await searchInput.fill('');
+    // Focus and select all text, then delete to ensure complete clearing on mobile
+    await searchInput.click();
+    await searchInput.press('Control+A');
+    await searchInput.press('Delete');
     await waitForFilterUpdate(page);
     await expectRuleCountEventually(page, originalCount);
   });

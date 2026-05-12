@@ -275,7 +275,11 @@ async function handleDetermineWithTracking() {
   await nextFrame();
 
   try {
-    const response = await WasmBridge.determine(poemText, yati, prasa);
+    const [response, scoresResponse] = await Promise.all([
+      WasmBridge.determine(poemText, yati, prasa),
+      WasmBridge.getScores(poemText, yati, prasa, 50).catch(() => null)
+    ]);
+
     if (response.success && response.matches.length > 0) {
       const bestMatch = response.matches[0];
 
@@ -289,18 +293,13 @@ async function handleDetermineWithTracking() {
       const resultsSection = document.getElementById('results-section');
       if (resultsSection) resultsSection.style.display = 'block';
 
-      try {
-        const scoresResponse = await WasmBridge.getScores(poemText, yati, prasa, 50);
-        if (scoresResponse.scores && scoresResponse.scores.length > 1) {
-          const alternatives = scoresResponse.scores
-            .filter(s => s.identifier !== bestMatch.rule.identifier)
-            .slice(0, 5);
-          if (alternatives.length > 0) {
-            renderScoreCards(alternatives, 'score-cards-container', currentRuleSet);
-          }
+      if (scoresResponse?.scores && scoresResponse.scores.length > 1) {
+        const alternatives = scoresResponse.scores
+          .filter(s => s.identifier !== bestMatch.rule.identifier)
+          .slice(0, 5);
+        if (alternatives.length > 0) {
+          renderScoreCards(alternatives, 'score-cards-container', currentRuleSet);
         }
-      } catch (scoreErr) {
-        console.error('Scores fetch failed:', scoreErr);
       }
     } else {
       alert(response.errorMessage || t('alert_no_matches'));

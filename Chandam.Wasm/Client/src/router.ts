@@ -148,14 +148,18 @@ export class Router {
     // Handle browser back/forward
     window.addEventListener('popstate', () => this.route());
 
-    // Intercept link clicks (skip blob URLs and target=_blank)
+    // Intercept link clicks (skip blob URLs, target=_blank, and hash-only links)
     document.addEventListener('click', (e) => {
       const target = (e.target as HTMLElement).closest('a');
       if (target && target.href && target.origin === location.origin && !target.href.startsWith('blob:') && target.target !== '_blank') {
+        const url = new URL(target.href);
+        // Let the browser handle hash-only navigation (same page anchors)
+        if (url.pathname === window.location.pathname && url.hash) {
+          return;
+        }
         e.preventDefault();
         // Close mobile nav if open
         document.getElementById('main-nav')?.classList.remove('open');
-        const url = new URL(target.href);
         this.navigate(this.stripBasePath(url.pathname));
       }
     });
