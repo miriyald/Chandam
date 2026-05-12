@@ -37,27 +37,23 @@ export async function renderRuleActions(
     return;
   }
 
-  // Check if already favorited
-  // For custom-fav (virtual collection), check by ruleId alone since favorites
-  // are stored with their original ruleSetId, not "custom-fav"
-  let isFavorited: boolean;
-  if (ruleSetId === 'custom-fav') {
-    const allFavs = await favoritesService.getAllFavorites();
-    isFavorited = allFavs.some(fav => fav.ruleId === ruleId);
-  } else {
+  const isCustom = ruleSetId === 'custom-rules' || ruleSetId === 'custom-fav';
+
+  let isFavorited = false;
+  if (!isCustom) {
     isFavorited = await favoritesService.isFavorited(ruleSetId, ruleId);
   }
 
   container.innerHTML = `
     <div class="rule-actions">
-      ${renderFavoriteButton(isFavorited, ruleSetId, ruleId)}
+      ${isCustom ? '' : renderFavoriteButton(isFavorited, ruleSetId, ruleId)}
       ${renderGitHubButton(ruleSetId, ruleId)}
       ${renderDeleteButton(ruleSetId, ruleId)}
     </div>
   `;
 
   // Attach event handlers
-  attachFavoriteHandler(ruleSetId, ruleId);
+  if (!isCustom) attachFavoriteHandler(ruleSetId, ruleId);
   attachGitHubHandler(ruleSetId, ruleId);
   attachDeleteHandler(ruleSetId, ruleId);
 }

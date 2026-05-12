@@ -613,7 +613,8 @@ footer a:focus-visible {
   pointer-events: none;
 }
 
-.footer-github-link {
+.footer-github-link,
+.footer-clear-link {
   display: inline-flex;
   align-items: center;
   gap: 0.25rem;

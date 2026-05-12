@@ -109,7 +109,7 @@ function renderRuleSetPageHtml(ruleSetName: string, ruleCount: number, ruleSetId
   const content = document.getElementById('content');
   if (!content) return;
 
-  const breadcrumbs = buildRuleSetBreadcrumbs(ruleSetId, 'compute');
+  const breadcrumbs = buildRuleSetBreadcrumbs(ruleSetId, 'compute', ruleSetName);
 
   content.innerHTML = `
     <div class="compute-rule-set-page">

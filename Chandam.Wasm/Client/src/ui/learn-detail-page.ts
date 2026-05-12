@@ -35,18 +35,19 @@ export async function renderLearnDetailPage(ruleSet: string, ruleId: string) {
   setPageTitle('Learn ' + ruleInfo.name, ruleSetConfig.name);
 
   // Step 3: Render page HTML
-  renderLearnDetailPageHtml(ruleSet, ruleInfo);
+  renderLearnDetailPageHtml(ruleSet, ruleInfo, ruleSetConfig.name);
 }
 
 // Helper: Render page HTML
 function renderLearnDetailPageHtml(
   ruleSetId: string,
-  ruleInfo: RuleInfo
+  ruleInfo: RuleInfo,
+  ruleSetName: string
 ) {
   const content = document.getElementById('content');
   if (!content) return;
 
-  const breadcrumbs = buildRuleBreadcrumbs(ruleSetId, ruleInfo.identifier, ruleInfo.name, 'learn');
+  const breadcrumbs = buildRuleBreadcrumbs(ruleSetId, ruleInfo.identifier, ruleInfo.name, 'learn', ruleSetName);
 
   content.innerHTML = `
     <div class="learn-detail-page">

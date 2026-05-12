@@ -148,9 +148,18 @@ function applyLanguageToPage(): void {
   document.documentElement.lang = getLanguage();
 
   // Update elements with data-i18n attribute (static nav links, loading text)
+  // Preserves child elements (e.g. SVG icons) by updating only the last text node
   document.querySelectorAll<HTMLElement>('[data-i18n]').forEach(el => {
     const key = el.getAttribute('data-i18n') as keyof Translations;
-    el.textContent = t(key);
+    if (el.children.length > 0) {
+      const textNodes = Array.from(el.childNodes).filter(n => n.nodeType === Node.TEXT_NODE && n.textContent?.trim());
+      const lastText = textNodes[textNodes.length - 1];
+      if (lastText) {
+        lastText.textContent = ` ${t(key)}`;
+      }
+    } else {
+      el.textContent = t(key);
+    }
   });
 
   // Update language toggle button label

@@ -139,7 +139,7 @@ function renderLearnIndexPageHtml(
   const content = document.getElementById('content');
   if (!content) return;
 
-  const breadcrumbs = buildRuleSetBreadcrumbs(ruleSetId, 'learn');
+  const breadcrumbs = buildRuleSetBreadcrumbs(ruleSetId, 'learn', ruleSetName);
 
   const hasResults = ruleCount > 0;
   const resultsSection = hasResults
@@ -251,8 +251,9 @@ function renderRuleListItem(rule: RuleSummaryDetailed, ruleSetId: string, favori
     ? `<div class="rule-item-meta">${metaParts.join(' · ')}</div>`
     : '';
 
+  const isCustomRuleSet = ruleSetId === 'custom-rules' || ruleSetId === 'custom-fav';
   const compositeId = `${ruleSetId}:${rule.identifier}`;
-  const isFavorited = favoriteIds.has(compositeId);
+  const isFavorited = !isCustomRuleSet && favoriteIds.has(compositeId);
   const favoritedClass = isFavorited ? ' favorited' : '';
 
   const isCustomRule = rule.identifier.startsWith('custom-');
