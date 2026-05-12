@@ -1,300 +1,320 @@
-# Chandam API - Docker Deployment Guide
+# Chandam - Docker & Package Guide
+
+Pre-built Docker images and NuGet packages are published automatically on every merge to the `beta` branch.
+
+## Docker Images (GitHub Container Registry)
+
+| Image | Description | Port |
+|-------|-------------|------|
+| `ghcr.io/miriyald/chandam-wasm` | Web UI (nginx + Blazor WASM) | 80 |
+| `ghcr.io/miriyald/chandam-api` | REST API server | 8080 |
+| `ghcr.io/miriyald/chandam-mcp-http` | MCP HTTP/SSE server (for remote AI agents) | 3001 |
+| `ghcr.io/miriyald/chandam-mcp-stdio` | MCP Stdio server (for Claude Desktop) | stdin/stdout |
+
+### Tags
+
+| Tag | Description |
+|-----|-------------|
+| `latest` | Most recent build from beta |
+| `beta` | Same as latest (explicit channel) |
+| `YYYYMMdd.HHmmss` | Immutable version (UTC build timestamp) |
+
+---
 
 ## Quick Start
 
-### 1. Build Docker Image
+### Web UI
 
 ```bash
-cd Chandam3
-docker build -f Chandam.API.WebApi/Dockerfile -t chandam-api:latest .
+docker run -d -p 8082:80 ghcr.io/miriyald/chandam-wasm:latest
 ```
 
-### 2. Run Container
+Open http://localhost:8082 — analyze Telugu poetry in your browser.
 
-**Default rule set (compiled rules):**
+### REST API
+
 ```bash
-docker run -d -p 8080:8080 --name chandam-api chandam-api:latest
+docker run -d -p 8080:8080 ghcr.io/miriyald/chandam-api:latest
 ```
 
-**With JSON rule files:**
-```bash
-docker run -d -p 8080:8080 \
-  -v $(pwd)/Chandam.Config/Rules:/app/Chandam.Config/Rules:ro \
-  --name chandam-api \
-  chandam-api:latest
-```
-
-**Specific rule set:**
-```bash
-docker run -d -p 8080:8080 \
-  -e CHANDAM_RULESET=telugu-complete \
-  -v $(pwd)/Chandam.Config/Rules:/app/Chandam.Config/Rules:ro \
-  --name chandam-api \
-  chandam-api:latest
-```
-
-### 3. Test API
+Test it:
 
 ```bash
-# Health check
 curl http://localhost:8080/health
 
-# Run full test suite
-bash test-api.sh http://localhost:8080
+curl -X POST http://localhost:8080/api/determine \
+  -H "Content-Type: application/json" \
+  -d '{
+    "poemText": "శ్రీవాణీగిరిజాశ్చిరాయ దధతో వక్షోముఖాంగేషు యే",
+    "language": "te",
+    "matchYati": true,
+    "matchPrasa": true
+  }'
 ```
 
-## Using Docker Compose
+### MCP HTTP Server (Remote AI Agents)
 
-### Default Setup (port 8080)
+```bash
+docker run -d -p 3001:3001 ghcr.io/miriyald/chandam-mcp-http:latest
+```
+
+Connect your MCP client to `http://localhost:3001/sse`.
+
+### MCP Stdio Server (Claude Desktop)
+
+Add to your `claude_desktop_config.json`:
+
+```json
+{
+  "mcpServers": {
+    "chandam": {
+      "command": "docker",
+      "args": ["run", "-i", "--rm", "ghcr.io/miriyald/chandam-mcp-stdio:latest"]
+    }
+  }
+}
+```
+
+---
+
+## Running All Services Together
+
+```bash
+# Pull all images
+docker pull ghcr.io/miriyald/chandam-wasm:latest
+docker pull ghcr.io/miriyald/chandam-api:latest
+docker pull ghcr.io/miriyald/chandam-mcp-http:latest
+
+# Run
+docker run -d -p 8082:80 --name chandam-wasm ghcr.io/miriyald/chandam-wasm:latest
+docker run -d -p 8080:8080 --name chandam-api ghcr.io/miriyald/chandam-api:latest
+docker run -d -p 3001:3001 --name chandam-mcp-http ghcr.io/miriyald/chandam-mcp-http:latest
+```
+
+Or use docker-compose (for local builds):
 
 ```bash
 docker-compose up -d
 ```
 
-### Complete Telugu Rules (port 8081)
-
-```bash
-docker-compose --profile complete up -d
-```
-
-### Both Instances
-
-```bash
-docker-compose --profile complete up -d
-# Default rules on port 8080
-# Complete rules on port 8081
-```
-
-### Stop Services
-
-```bash
-docker-compose down
-```
+---
 
 ## Configuration
 
-### Environment Variables
+### Environment Variables (API & MCP Http)
 
 | Variable | Default | Description |
 |----------|---------|-------------|
-| `CHANDAM_RULESET` | `default` | Rule set identifier to load |
-| `ASPNETCORE_URLS` | `http://+:8080` | Listen URLs |
-| `ASPNETCORE_ENVIRONMENT` | `Production` | Environment name |
+| `CHANDAM_RULESET` | `default` | Rule set to load (`default`, `chandam-rules`, `telugu-complete`) |
+| `ASPNETCORE_URLS` | `http://+:8080` | Listen URL |
+| `ASPNETCORE_ENVIRONMENT` | `Production` | Environment |
 
-### Volume Mounts
+### Custom Rule Files
 
-| Host Path | Container Path | Description |
-|-----------|----------------|-------------|
-| `./Chandam.Config/Rules` | `/app/Chandam.Config/Rules` | JSON rule files directory |
-
-## Available Rule Sets
-
-| Identifier | Rules | Size | Description |
-|------------|-------|------|-------------|
-| `default` | 379 | - | Compiled Telugu rules (fallback) |
-| `chandam-rules` | 14 | 54KB | Frequent Telugu Chandams |
-| `telugu-complete` | 379 | 672KB | All Telugu rules |
-
-## API Endpoints
-
-### Health Check
-```bash
-GET /health
-```
-
-### Determine Chandam
-```bash
-POST /api/determine
-Content-Type: application/json
-
-{
-  "poemText": "poem text in Telugu...",
-  "language": 0,
-  "matchYati": true,
-  "matchPrasa": true,
-  "topMatches": 5
-}
-```
-
-### Try Match Specific Rule
-```bash
-POST /api/try-match
-Content-Type: application/json
-
-{
-  "poemText": "poem text...",
-  "ruleIdentifier": "iMdravajramu",
-  "matchYati": true,
-  "matchPrasa": true
-}
-```
-
-### Calculate Scores
-```bash
-POST /api/scores
-Content-Type: application/json
-
-{
-  "poemText": "poem text...",
-  "language": 0,
-  "matchYati": true,
-  "matchPrasa": true,
-  "minimumMatchPercentage": 50
-}
-```
-
-### Get Rule Info
-```bash
-GET /api/rules/{identifier}
-```
-
-### Get Rule Samples
-```bash
-GET /api/rules/{identifier}/samples?maxExamples=3
-```
-
-### List All Rules
-```bash
-GET /api/rules?language=0
-```
-
-## Examples
-
-### Run on Custom Port
-
-```bash
-docker run -d -p 9000:8080 --name chandam-api chandam-api:latest
-curl http://localhost:9000/health
-```
-
-### Run with Specific Language
+Mount your own rule YAML/JSON files:
 
 ```bash
 docker run -d -p 8080:8080 \
-  -e CHANDAM_RULESET=sanskrit-common \
-  -v $(pwd)/Chandam.Config/Rules:/app/Chandam.Config/Rules:ro \
-  chandam-api:latest
+  -v $(pwd)/my-rules:/app/Chandam.Config/Rules:ro \
+  -e CHANDAM_RULESET=telugu-complete \
+  ghcr.io/miriyald/chandam-api:latest
 ```
 
-### Debug Mode
+### Available Rule Sets
+
+| Identifier | Rules | Description |
+|------------|-------|-------------|
+| `default` | 379 | Compiled Telugu rules (no volume needed) |
+| `chandam-rules` | 14 | Frequent Telugu Chandams |
+| `telugu-complete` | 379 | All Telugu rules (from YAML) |
+
+---
+
+## API Endpoints
+
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| GET | `/health` | Health check |
+| POST | `/api/determine` | Auto-detect meter |
+| POST | `/api/try-match` | Match against specific rule |
+| POST | `/api/scores` | Ranked scores for all rules |
+| GET | `/api/rules` | List all rules |
+| GET | `/api/rules/{id}` | Get rule details |
+| GET | `/api/rules/{id}/samples` | Get example poems |
+
+### Example: Determine Meter
 
 ```bash
-docker run -it --rm -p 8080:8080 \
-  -e ASPNETCORE_ENVIRONMENT=Development \
-  chandam-api:latest
+curl -X POST http://localhost:8080/api/determine \
+  -H "Content-Type: application/json" \
+  -d '{
+    "poemText": "తేనెలేని తేటతేనె దొరకునె ధరణిపై\nజానకీవరుండు లేని జగమందు నెవ్వరున్",
+    "language": "te",
+    "matchYati": true,
+    "matchPrasa": true,
+    "topMatches": 5
+  }'
 ```
 
-### View Logs
+### Example: Try Specific Rule
 
 ```bash
-# Follow logs
-docker logs -f chandam-api
-
-# Last 100 lines
-docker logs --tail 100 chandam-api
+curl -X POST http://localhost:8080/api/try-match \
+  -H "Content-Type: application/json" \
+  -d '{
+    "poemText": "శ్రీవాణీగిరిజాశ్చిరాయ దధతో వక్షోముఖాంగేషు యే",
+    "ruleIdentifier": "Sardulavikreeditamu",
+    "matchYati": true,
+    "matchPrasa": true
+  }'
 ```
 
-## Health Check
+---
 
-The container includes a health check that runs every 30 seconds:
+## NuGet Package (GitHub Packages)
+
+The `Chandam` package bundles the core analysis engine for use in .NET applications.
+
+**Package:** `Chandam`  
+**Feed:** `https://nuget.pkg.github.com/miriyald/index.json`  
+**Contents:** Chandam.Core, Chandam.Util, Chandam.Indic, Chandam.Rules
+
+### Setup
+
+Add the GitHub Packages feed to your `nuget.config`:
+
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<configuration>
+  <packageSources>
+    <add key="nuget.org" value="https://api.nuget.org/v3/index.json" />
+    <add key="chandam" value="https://nuget.pkg.github.com/miriyald/index.json" />
+  </packageSources>
+</configuration>
+```
+
+GitHub Packages requires authentication. Create a [Personal Access Token](https://github.com/settings/tokens) with `read:packages` scope:
 
 ```bash
-# Check container health
-docker ps
+dotnet nuget update source chandam \
+  --username YOUR_GITHUB_USERNAME \
+  --password YOUR_GITHUB_PAT \
+  --store-password-in-clear-text
+```
 
-# View health status
+### Install
+
+```bash
+dotnet add package Chandam --prerelease
+```
+
+### Usage
+
+```csharp
+using Chandam.API;
+
+// Load rules from JSON/YAML files
+var ruleLoader = new RuleLoader();
+var rules = ruleLoader.LoadRules("path/to/rules.yaml");
+
+// Create the service
+var service = new ChandamService(rules);
+
+// Analyze a poem
+var result = service.Determine(
+    poemText: "తేనెలేని తేటతేనె దొరకునె ధరణిపై",
+    language: Language.Telugu,
+    matchYati: true,
+    matchPrasa: true
+);
+
+if (result.Success)
+{
+    Console.WriteLine($"Meter: {result.Matches[0].Rule.Name}");
+    Console.WriteLine($"Match: {result.Matches[0].MatchPercentage}%");
+}
+```
+
+---
+
+## Health Checks
+
+All containers (except MCP Stdio) include built-in health checks:
+
+```bash
+# Check container health status
 docker inspect --format='{{.State.Health.Status}}' chandam-api
+
+# API health endpoint
+curl http://localhost:8080/health
+
+# MCP HTTP health endpoint
+curl http://localhost:3001/health
 ```
+
+---
+
+## Pinning a Version
+
+To avoid unexpected updates, pin to a specific build:
+
+```bash
+# Docker
+docker run -d -p 8080:8080 ghcr.io/miriyald/chandam-api:20260511.143022
+
+# NuGet
+dotnet add package Chandam --version 20260511.143022-beta
+```
+
+---
 
 ## Troubleshooting
 
 ### Container won't start
 
 ```bash
-# Check logs
 docker logs chandam-api
+```
 
-# Check if port is in use
-netstat -ano | grep 8080
+### Port already in use
 
-# Try different port
-docker run -p 9000:8080 chandam-api:latest
+```bash
+docker run -d -p 9000:8080 ghcr.io/miriyald/chandam-api:latest
 ```
 
 ### Rules not loading
 
 ```bash
-# Verify volume mount
 docker exec chandam-api ls -la /app/Chandam.Config/Rules
-
-# Check environment
 docker exec chandam-api env | grep CHANDAM
 ```
 
-### API not responding
+### Authentication error pulling images
+
+GHCR public images don't require auth. If the repo is private:
 
 ```bash
-# Check if container is running
-docker ps -a
-
-# Restart container
-docker restart chandam-api
-
-# Health check
-curl http://localhost:8080/health
+echo $GITHUB_PAT | docker login ghcr.io -u YOUR_USERNAME --password-stdin
 ```
 
-## Build Options
+---
 
-### Multi-architecture Build
+## Building Locally
+
+If you prefer to build images yourself:
 
 ```bash
-docker buildx build --platform linux/amd64,linux/arm64 \
-  -f Chandam.API.WebApi/Dockerfile \
-  -t chandam-api:latest .
+# API (multi-stage, self-contained)
+docker build -f Chandam.API.WebApi/Dockerfile -t chandam-api .
+
+# MCP Http (requires pre-build)
+dotnet publish Chandam.MCP.Http/Chandam.MCP.Http.csproj -c Release -o Publish/chandam-mcp-http
+docker build -f Chandam.MCP.Http/Dockerfile -t chandam-mcp-http .
+
+# MCP Stdio (requires pre-build)
+dotnet publish Chandam.MCP.Stdio/Chandam.MCP.Stdio.csproj -c Release -o Publish/chandam-mcp-stdio
+docker build -f Chandam.MCP.Stdio/Dockerfile -t chandam-mcp-stdio .
+
+# WASM (multi-stage, self-contained)
+docker build -f Chandam.Wasm/Dockerfile -t chandam-wasm .
 ```
-
-### Build with Cache
-
-```bash
-docker build --cache-from chandam-api:latest \
-  -f Chandam.API.WebApi/Dockerfile \
-  -t chandam-api:latest .
-```
-
-### Production Build
-
-```bash
-docker build \
-  --build-arg ASPNETCORE_ENVIRONMENT=Production \
-  -f Chandam.API.WebApi/Dockerfile \
-  -t chandam-api:prod .
-```
-
-## Performance
-
-**Container Size:** ~250MB (runtime image)
-
-**Memory Usage:** ~100-150MB (typical)
-
-**Startup Time:** ~2-3 seconds
-
-**Request Latency:**
-- Health check: <10ms
-- Determine: 50-200ms (depending on rule count)
-- Scores: 200-500ms (all rules)
-
-## Security
-
-- Container runs as non-root user
-- Read-only volume mounts for config
-- No shell access in production image
-- Minimal runtime dependencies
-
-## Next Steps
-
-1. Deploy to cloud (Azure, AWS, GCP)
-2. Add monitoring (Prometheus, Grafana)
-3. Set up CI/CD pipeline
-4. Configure load balancing
-5. Add caching layer (Redis)

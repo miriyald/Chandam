@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
     <Nullable>enable</Nullable>
-    <Version>0.0.2</Version>
+    <Version>$(ChandamVersion)</Version>
 
     <!-- Use browser's JS Intl APIs for globalization - drops ~400KB of ICU data -->
     <HybridGlobalization>true</HybridGlobalization>

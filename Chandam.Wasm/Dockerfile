@@ -12,11 +12,11 @@ RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash - && \
 # Copy project files for restore
 COPY ["Chandam.Wasm/Chandam.Wasm.csproj", "Chandam.Wasm/"]
 COPY ["Chandam.API/Chandam.API.csproj", "Chandam.API/"]
-COPY ["Core/Chandam.Core.csproj", "Core/"]
-COPY ["Rules/Chandam.Rules.csproj", "Rules/"]
-COPY ["Util/Chandam.Util.csproj", "Util/"]
-COPY ["Strings/Chandam.Indic.csproj", "Strings/"]
-COPY ["Samples/Chandam.Samples.csproj", "Samples/"]
+COPY ["Chandam.Core/Chandam.Core.csproj", "Chandam.Core/"]
+COPY ["Chandam.Rules/Chandam.Rules.csproj", "Chandam.Rules/"]
+COPY ["Chandam.Util/Chandam.Util.csproj", "Chandam.Util/"]
+COPY ["Chandam.Indic/Chandam.Indic.csproj", "Chandam.Indic/"]
+COPY ["Chandam.Samples/Chandam.Samples.csproj", "Chandam.Samples/"]
 
 # Restore
 RUN dotnet restore "Chandam.Wasm/Chandam.Wasm.csproj" -p:ExcludeYaml=true
@@ -25,11 +25,11 @@ RUN dotnet restore "Chandam.Wasm/Chandam.Wasm.csproj" -p:ExcludeYaml=true
 COPY Chandam.Wasm/ Chandam.Wasm/
 COPY Chandam.API/ Chandam.API/
 COPY Chandam.Config/Rules/ Chandam.Config/Rules/
-COPY Core/ Core/
-COPY Rules/ Rules/
-COPY Util/ Util/
-COPY Strings/ Strings/
-COPY Samples/ Samples/
+COPY Chandam.Core/ Chandam.Core/
+COPY Chandam.Rules/ Chandam.Rules/
+COPY Chandam.Util/ Chandam.Util/
+COPY Chandam.Indic/ Chandam.Indic/
+COPY Chandam.Samples/ Chandam.Samples/
 
 # Build TypeScript/Vite (MSBuild will handle this, but copy Client separately for clarity)
 WORKDIR /src/Chandam.Wasm/Client

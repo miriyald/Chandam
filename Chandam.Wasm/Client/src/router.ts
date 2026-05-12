@@ -124,12 +124,16 @@ export class Router {
     const nav = document.getElementById('main-nav');
     if (!nav) return;
 
+    const effectivePath = /^\/(learn|compute|explore)\//.test(currentPath)
+      ? '/rule-sets'
+      : currentPath;
+
     const links = nav.querySelectorAll('a');
     links.forEach(link => {
       const linkPath = this.stripBasePath(new URL(link.href).pathname);
-      const isActive = currentPath === '/'
+      const isActive = effectivePath === '/'
         ? linkPath === '/'
-        : linkPath !== '/' && currentPath.startsWith(linkPath);
+        : linkPath !== '/' && effectivePath.startsWith(linkPath);
 
       link.classList.toggle('active', isActive);
       if (isActive) {
@@ -144,10 +148,10 @@ export class Router {
     // Handle browser back/forward
     window.addEventListener('popstate', () => this.route());
 
-    // Intercept link clicks (skip blob URLs used for file downloads)
+    // Intercept link clicks (skip blob URLs and target=_blank)
     document.addEventListener('click', (e) => {
       const target = (e.target as HTMLElement).closest('a');
-      if (target && target.href && target.origin === location.origin && !target.href.startsWith('blob:')) {
+      if (target && target.href && target.origin === location.origin && !target.href.startsWith('blob:') && target.target !== '_blank') {
         e.preventDefault();
         // Close mobile nav if open
         document.getElementById('main-nav')?.classList.remove('open');

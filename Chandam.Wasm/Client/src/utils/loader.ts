@@ -1,10 +1,15 @@
 import { LoadingEvents, LoadingEventType } from './loading-events';
 
 export interface LoaderConfig {
-  gifPath: string;
   fallbackText: string;
   containerId: string;
 }
+
+const LOADER_SVG = `<svg class="loader-svg" viewBox="0 0 96 48" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+  <circle class="loader-circle" cx="24" cy="24" r="10" fill="#1a3a5c"/>
+  <circle class="loader-circle" cx="48" cy="24" r="10" fill="#b8860b"/>
+  <circle class="loader-circle" cx="72" cy="24" r="10" fill="#1a3a5c"/>
+</svg>`;
 
 export class LoadingAnimationManager {
   private config: LoaderConfig;
@@ -16,31 +21,26 @@ export class LoadingAnimationManager {
   }
 
   private setupEventListeners(): void {
-    LoadingEvents.onLoadingStarted((detail) => {
+    LoadingEvents.onLoadingStarted(() => {
       this.show();
     });
 
-    LoadingEvents.onLoadingCompleted((detail) => {
+    LoadingEvents.onLoadingCompleted(() => {
       this.hide();
     });
 
-    LoadingEvents.onLoadingFailed((detail) => {
+    LoadingEvents.onLoadingFailed(() => {
       this.hide();
     });
   }
 
   private show(): void {
     const container = document.getElementById(this.config.containerId);
-    if (!container) {
-      console.error(`Loader: Container #${this.config.containerId} not found`);
-      return;
-    }
-
-    if (this.isShowing) return; // Already showing
+    if (!container) return;
+    if (this.isShowing) return;
 
     container.innerHTML = this.createLoaderHTML();
     this.isShowing = true;
-    console.log('Loader: Showing');
   }
 
   private async hide(): Promise<void> {
@@ -51,22 +51,18 @@ export class LoadingAnimationManager {
       const loaderDiv = container.querySelector('.loader-container');
       if (loaderDiv) {
         loaderDiv.classList.add('fade-out');
-        await this.delay(500); // Wait for CSS fade-out transition
+        await this.delay(400);
         container.innerHTML = '';
       }
     }
 
     this.isShowing = false;
-    console.log('Loader: Hidden');
   }
 
   private createLoaderHTML(): string {
     return `
-      <div class="loader-container">
-        <object type="image/svg+xml" data="/branding/chandam-circles.svg"
-               class="loader-gif"
-               aria-label="${this.config.fallbackText}">
-        </object>
+      <div class="loader-container" aria-label="${this.config.fallbackText}">
+        ${LOADER_SVG}
         <p class="loader-fallback" style="display:none;">${this.config.fallbackText}</p>
       </div>
     `;
@@ -77,16 +73,8 @@ export class LoadingAnimationManager {
   }
 }
 
-// Pre-load image to browser cache for instant display
-export function preloadLoaderImage(gifPath: string): void {
-  const img = new Image();
-  img.src = gifPath;
-  console.log(`Preloading loader image: ${gifPath}`);
-}
-
 export function createInitialLoader(): LoadingAnimationManager {
   return new LoadingAnimationManager({
-    gifPath: '/branding/chandam-circles.svg',
     fallbackText: 'Loading Chandam...',
     containerId: 'initial-loader'
   });
@@ -94,7 +82,6 @@ export function createInitialLoader(): LoadingAnimationManager {
 
 export function createDynamicLoader(): LoadingAnimationManager {
   return new LoadingAnimationManager({
-    gifPath: '/branding/chandam-circles.svg',
     fallbackText: 'Loading rule set...',
     containerId: 'dynamic-loader-container'
   });

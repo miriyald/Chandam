@@ -272,13 +272,6 @@ footer {
   opacity: 0.4;
 }
 
-.footer-copyright {
-  width: 100%;
-  text-align: center;
-  margin-top: var(--space-sm);
-  opacity: 0.6;
-  font-size: 0.75rem;
-}
 
 footer a {
   color: var(--color-header-text);
@@ -350,9 +343,8 @@ footer a:focus-visible {
   left: 0;
   width: 100vw;
   height: 100vh;
-  background: rgba(0, 0, 0, 0.3);
+  background: rgba(250, 248, 245, 0.97);
 
-  /* Flexbox centering */
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -360,7 +352,7 @@ footer a:focus-visible {
 
   z-index: 9999;
   opacity: 1;
-  transition: opacity 0.5s ease-out;
+  transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 /* Fade-out animation */
@@ -368,35 +360,38 @@ footer a:focus-visible {
   opacity: 0;
 }
 
-/* Loader animation - centered by parent flexbox */
-.loader-gif {
-  width: 192px;
-  height: 192px;
-
-  /* Prevent unwanted margins */
+/* Loader circles SVG */
+.loader-svg {
+  width: 128px;
+  height: 128px;
   margin: 0;
   display: block;
 }
 
-/* Fallback text (if GIF fails to load) */
+/* Pulse animation for page-level loader circles */
+.loader-circle {
+  transform-origin: center;
+  animation: pulse-circle 1.4s cubic-bezier(0.16, 1, 0.3, 1) infinite;
+}
+.loader-circle:nth-child(2) {
+  animation-delay: 0.2s;
+}
+.loader-circle:nth-child(3) {
+  animation-delay: 0.4s;
+}
+
+@keyframes pulse-circle {
+  0%, 100% { transform: scale(0.7); opacity: 0.4; }
+  50% { transform: scale(1); opacity: 1; }
+}
+
+/* Fallback text */
 .loader-fallback {
-  color: #ffffff;
+  color: var(--color-text, #1a1a1a);
   font-family: var(--font-main);
   font-size: 1.2rem;
   margin-top: 1rem;
   text-align: center;
-}
-
-/* Initial loader specific styling */
-#initial-loader .loader-container {
-  background: rgba(0, 0, 0, 0.4);
-  /* Slightly more opaque for initial load */
-}
-
-/* Dynamic loader overlay (appears over content) */
-#dynamic-loader-container .loader-container {
-  background: rgba(0, 0, 0, 0.3);
-  /* Transparent overlay */
 }
 
 /* Mobile responsive */
@@ -404,6 +399,30 @@ footer a:focus-visible {
   .loader-fallback {
     font-size: 1rem;
   }
+}
+
+/* ========================================
+   INLINE ACTION LOADERS
+   ======================================== */
+
+/* Button loading state — disabled, no content change */
+.btn-primary.is-loading,
+.btn-secondary.is-loading {
+  opacity: 0.7;
+  pointer-events: none;
+}
+
+/* In-page loading placeholder (shown while page content loads) */
+.page-loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 40vh;
+  padding: var(--spacing-lg, 24px) 0;
+}
+
+#results-container .page-loading {
+  min-height: 120px;
 }
 
 .editor-section {
@@ -558,28 +577,11 @@ footer a:focus-visible {
 
 /* Rule Details Link (opens in new tab) */
 .rule-details-link {
-  color: var(--color-primary);
   text-decoration: none;
-  font-size: 0.95rem;
-  font-weight: 500;
-  white-space: nowrap;
-  padding: 0.5rem 1rem;
-  border: 1px solid var(--color-primary);
-  border-radius: var(--radius-sm);
-  transition: background 0.2s, color 0.2s;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.25rem;
 }
 
-.rule-details-link svg {
-  fill: currentColor;
-  flex-shrink: 0;
-}
-
-.rule-details-link:hover {
-  background: var(--color-primary);
-  color: #ffffff;
+.rule-details-link:hover svg {
+  fill: var(--color-primary);
 }
 
 /* Match Actions (buttons + link group in results header) */
@@ -590,68 +592,34 @@ footer a:focus-visible {
   flex-wrap: wrap;
 }
 
-.btn-add-example,
-.btn-submit-github {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.35rem;
-  border: none;
-  border-radius: 6px;
-  padding: 0.4rem 0.75rem;
-  font-size: 0.85rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.2s;
-  white-space: nowrap;
-}
-
-.btn-add-example svg,
-.btn-submit-github svg {
-  fill: currentColor;
-  flex-shrink: 0;
-}
-
-.btn-add-example {
-  background: var(--color-header-bg, #2d6a4f);
-  color: white;
-}
-
-.btn-add-example:hover {
-  filter: brightness(0.85);
-}
-
 .btn-add-example.btn-success {
-  background: #40916c;
+  background: var(--color-success);
+  color: white;
+  border-color: var(--color-success);
   cursor: default;
 }
 
 .btn-add-example.btn-warning {
   background: #e9c46a;
   color: var(--color-text);
+  border-color: #e9c46a;
   cursor: default;
 }
 
 .btn-add-example[disabled],
-.btn-submit-github[disabled] {
+.btn-submit-github[disabled],
+.btn-add-collection[disabled] {
   opacity: 0.7;
   pointer-events: none;
 }
 
-.btn-submit-github {
-  background: #24292f;
-  color: white;
-}
-
-.btn-submit-github:hover {
-  background: #1a1f23;
+.footer-github-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
 }
 
 /* Examples footer (learn detail page) */
-.examples-footer {
-  margin-top: 1.5rem;
-  display: flex;
-  justify-content: flex-end;
-}
 
 /* Score Bar + Value (match card header) */
 .match-score-group {
@@ -2451,16 +2419,9 @@ footer a:focus-visible {
     justify-content: stretch;
   }
 
-  .match-actions .btn-add-example,
-  .match-actions .btn-submit-github,
-  .match-actions .rule-details-link {
+  .match-actions .action-btn {
     flex: 1;
-    text-align: center;
-  }
-
-  .rule-details-link {
-    width: 100%;
-    text-align: center;
+    justify-content: center;
   }
 
   /* Make errors table scrollable on mobile */
@@ -3001,27 +2962,10 @@ footer a:focus-visible {
 }
 
 /* Delete button in rule list (inline with links) - same style as Learn/Try action icons */
-.btn-delete-inline {
-  background: transparent;
-  color: var(--color-text-muted);
-  border: none;
-  padding: 0.25rem 0.5rem;
-  border-radius: var(--radius-sm);
-  cursor: pointer;
-  font-size: 0.75rem;
-  font-family: var(--font-main);
-  text-decoration: none;
-  transition: all 0.2s;
-}
-
-.btn-delete-inline:hover {
+.action-btn.btn-delete-inline:hover {
   background: rgba(193, 18, 31, 0.08);
   color: #c1121f;
-}
-
-.action-btn.btn-delete-inline {
-  border: none;
-  background: transparent;
+  border-color: rgba(193, 18, 31, 0.3);
 }
 
 .action-btn.btn-delete-inline:hover svg {
@@ -3821,39 +3765,6 @@ footer a:focus-visible {
 /* ========================================
    EXPORT BOOK FEATURE
    ======================================== */
-.btn-export-book,
-.btn-export-single {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.4rem;
-  background: #ffffff;
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-sm);
-  font-size: 0.85rem;
-  font-weight: 500;
-  cursor: pointer;
-  padding: 0.5rem 0.75rem;
-  color: var(--color-text-muted);
-  transition: border-color 0.2s, color 0.2s;
-  font-family: var(--font-main);
-}
-
-.export-icon {
-  fill: currentColor;
-  flex-shrink: 0;
-}
-
-.btn-export-book:hover,
-.btn-export-single:hover {
-  border-color: var(--color-primary);
-  color: var(--color-primary);
-}
-
-.btn-export-book:active,
-.btn-export-single:active {
-  transform: scale(0.97);
-}
-
 .btn-export-book:disabled,
 .btn-export-single:disabled {
   opacity: 0.5;
@@ -4095,38 +4006,16 @@ footer a:focus-visible {
 }
 
 /* Collection button in results */
-.btn-add-collection {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.35rem;
-  border: none;
-  border-radius: 6px;
-  padding: 0.4rem 0.75rem;
-  font-size: 0.85rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.2s;
-  white-space: nowrap;
-  background: var(--color-header-bg, #2d6a4f);
-  color: white;
-}
-
-.btn-add-collection:hover {
-  filter: brightness(0.85);
-}
-
 .btn-add-collection.btn-success {
-  background: #40916c;
+  background: var(--color-success);
+  color: white;
+  border-color: var(--color-success);
   cursor: default;
 }
 
 .btn-add-collection.btn-warning {
   background: #e9c46a;
   color: var(--color-text);
+  border-color: #e9c46a;
   cursor: default;
-}
-
-.btn-add-collection[disabled] {
-  opacity: 0.7;
-  pointer-events: none;
 }

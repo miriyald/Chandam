@@ -9,8 +9,9 @@ import { renderRuleCreatorPage } from './ui/rule-creator-page';
 import { renderExplorePage } from './ui/explore-page';
 import { renderMyWritingsPage } from './ui/my-writings-page';
 import { validateRuleSetAsync, validateRule, handleInvalidRuleSet, handleInvalidRule } from './utils/error-handlers';
-import { createInitialLoader, preloadLoaderImage } from './utils/loader';
+import { createInitialLoader } from './utils/loader';
 import { LoadingEvents, LoadingEventType } from './utils/loading-events';
+import { initInlineLoader } from './utils/inline-loader';
 import './utils/decompression'; // Register decompressGzip globally for C# interop
 import { storageService } from './services/storage/storage-service';
 import { initConsoleAPI, getUserId } from './services/console-api';
@@ -36,11 +37,11 @@ async function ensureRulesetLoadedForValidation(ruleSetId: string): Promise<void
   }
 }
 
-// Pre-load loader SVG to browser cache
-preloadLoaderImage('/branding/chandam-circles.svg');
-
 // Initialize loader system (sets up event listeners)
 const initialLoader = createInitialLoader();
+
+// Initialize inline loader for action-level feedback (buttons, progress bars)
+initInlineLoader();
 
 // Note: Initial loader is already visible in HTML,
 // We just need to emit completion event when WASM is ready

@@ -71,19 +71,19 @@ function renderMatchCard(match: ChandamMatch, ruleSet?: string, showRuleLink = t
 
   // Generate rule details link (opens in new tab) — hidden on rule compute pages
   const ruleLink = (showRuleLink && ruleSet && match.rule.identifier)
-    ? `<a href="${makeUrl(`/learn/${ruleSet}/${match.rule.identifier}/`)}" class="rule-details-link" target="_blank" rel="noopener noreferrer">${t('results_view_details')}</a>`
+    ? `<a href="${makeUrl(`/learn/${ruleSet}/${match.rule.identifier}/`)}" class="action-btn rule-details-link" target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path fill="currentColor" d="M21 5c-1.11-.35-2.33-.5-3.5-.5-1.95 0-4.05.4-5.5 1.5-1.45-1.1-3.55-1.5-5.5-1.5S2.45 4.9 1 6v14.65c0 .25.25.5.5.5.1 0 .15-.05.25-.05C3.1 20.45 5.05 20 6.5 20c1.95 0 4.05.4 5.5 1.5 1.35-.85 3.8-1.5 5.5-1.5 1.65 0 3.35.3 4.75 1.05.1.05.15.05.25.05.25 0 .5-.25.5-.5V6c-.6-.45-1.25-.75-2-1zM21 18.5c-1.1-.35-2.3-.5-3.5-.5-1.7 0-4.15.65-5.5 1.5V8c1.35-.85 3.8-1.5 5.5-1.5 1.2 0 2.4.15 3.5.5v11.5z"/></svg> <span>${t('results_view_details')}</span></a>`
     : '';
 
   // Action buttons for 100% matches
   const isCustomRule = match.rule.identifier.startsWith('custom-');
   const addExampleBtn = (match.matchPercentage === 100 && isCustomRule)
-    ? `<button class="btn-add-example" data-rule-id="${escapeAttr(match.rule.identifier)}" title="${t('results_add_to_examples')}">${t('results_add_to_examples')}</button>`
+    ? `<button class="action-btn btn-add-example" data-rule-id="${escapeAttr(match.rule.identifier)}" title="${t('results_add_to_examples')}"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path fill="currentColor" d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg> <span>${t('results_add_to_examples')}</span></button>`
     : '';
   const submitGithubBtn = (match.matchPercentage === 100 && ruleSet)
-    ? `<button class="btn-submit-github" data-rule-id="${escapeAttr(match.rule.identifier)}" data-rule-name="${escapeAttr(match.rule.name)}" data-rule-set="${escapeAttr(ruleSet)}" title="${t('results_submit_github')}">${t('results_submit_github')}</button>`
+    ? `<button class="action-btn btn-submit-github" data-rule-id="${escapeAttr(match.rule.identifier)}" data-rule-name="${escapeAttr(match.rule.name)}" data-rule-set="${escapeAttr(ruleSet)}" title="${t('results_submit_github')}"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path fill="currentColor" d="M12 2C6.477 2 2 6.477 2 12c0 4.42 2.865 8.166 6.839 9.49.5.09.682-.217.682-.482 0-.237-.009-.866-.013-1.7-2.782.604-3.369-1.34-3.369-1.34-.454-1.156-1.11-1.464-1.11-1.464-.908-.62.069-.607.069-.607 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.831.092-.646.35-1.086.636-1.336-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0112 6.836c.85.004 1.705.115 2.504.337 1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.203 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.578.688.48C19.138 20.164 22 16.418 22 12c0-5.523-4.477-10-10-10z"/></svg> <span>${t('results_submit_github')}</span></button>`
     : '';
   const addToCollectionBtn = (match.matchPercentage >= 95 && ruleSet)
-    ? `<button class="btn-add-collection" data-rule-id="${escapeAttr(match.rule.identifier)}" data-rule-name="${escapeAttr(match.rule.name)}" data-rule-set="${escapeAttr(ruleSet)}">${t('results_add_to_collection')}</button>`
+    ? `<button class="action-btn btn-add-collection" data-rule-id="${escapeAttr(match.rule.identifier)}" data-rule-name="${escapeAttr(match.rule.name)}" data-rule-set="${escapeAttr(ruleSet)}"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path fill="currentColor" d="M17 3H7c-1.1 0-2 .9-2 2v16l7-3 7 3V5c0-1.1-.9-2-2-2z"/></svg> <span>${t('results_add_to_collection')}</span></button>`
     : '';
 
   // Enhanced error display (table format)
@@ -201,12 +201,16 @@ function attachResultActionHandlers(container: HTMLElement, ruleSet?: string): v
 
   container.addEventListener('click', async (e) => {
     const target = e.target as HTMLElement;
-    if (target.classList.contains('btn-add-example')) {
-      await handleAddToExamples(target);
-    } else if (target.classList.contains('btn-submit-github')) {
-      await handleSubmitToGitHub(target, ruleSet);
-    } else if (target.classList.contains('btn-add-collection')) {
-      await handleAddToCollection(target, ruleSet);
+    const addExampleBtn = target.closest('.btn-add-example') as HTMLElement | null;
+    const submitGithubBtn = target.closest('.btn-submit-github') as HTMLElement | null;
+    const addCollectionBtn = target.closest('.btn-add-collection') as HTMLElement | null;
+
+    if (addExampleBtn) {
+      await handleAddToExamples(addExampleBtn);
+    } else if (submitGithubBtn) {
+      await handleSubmitToGitHub(submitGithubBtn, ruleSet);
+    } else if (addCollectionBtn) {
+      await handleAddToCollection(addCollectionBtn, ruleSet);
     }
   }, { signal: resultActionController.signal });
 }

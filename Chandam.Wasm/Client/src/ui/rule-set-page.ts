@@ -16,6 +16,12 @@ import { setPageTitle } from '../utils/page-title';
 import { CustomRulesLoader } from '../services/custom-rules-loader';
 import { storageService } from '../services/storage/storage-service';
 import { analyticsService } from '../services/analytics-service';
+import { LoadingEvents, LoadingEventType } from '../utils/loading-events';
+
+// Yield to allow the browser to paint before blocking WASM calls
+function nextFrame(): Promise<void> {
+  return new Promise(resolve => requestAnimationFrame(() => setTimeout(resolve, 0)));
+}
 
 // Track last analyzed rule (from either Determine or Match) for smart auto-select
 let lastAnalyzedRule: { id: string; name: string } | null = null;
@@ -33,6 +39,18 @@ export async function renderRuleSetPage(ruleSet: string) {
 
   // Store current rule set for learn page links
   currentRuleSet = ruleSet;
+
+  // Show page-level loading indicator immediately
+  const content = document.getElementById('content');
+  if (content) {
+    content.innerHTML = `<div class="page-loading">
+      <svg class="loader-svg" viewBox="0 0 96 48" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <circle class="loader-circle" cx="24" cy="24" r="10" fill="#1a3a5c"/>
+        <circle class="loader-circle" cx="48" cy="24" r="10" fill="#b8860b"/>
+        <circle class="loader-circle" cx="72" cy="24" r="10" fill="#1a3a5c"/>
+      </svg>
+    </div>`;
+  }
 
   // Step 1: Validate and load rule set (supports both predefined and custom)
   const ruleSetConfig = await getRuleSetAsync(ruleSet);
@@ -168,6 +186,12 @@ function attachEventHandlers(ruleSet: string) {
       ruleId: 'auto_detect'
     });
 
+    LoadingEvents.emit(LoadingEventType.ActionStarted, {
+      source: 'random',
+      buttonId: 'btn-random'
+    });
+    await nextFrame();
+
     try {
       const poem = await WasmBridge.getRandomPoemFromRuleSet();
       if (poem) {
@@ -178,6 +202,11 @@ function attachEventHandlers(ruleSet: string) {
       }
     } catch (err) {
       console.error('Random poem failed:', err);
+    } finally {
+      LoadingEvents.emit(LoadingEventType.ActionCompleted, {
+        source: 'random',
+        buttonId: 'btn-random'
+      });
     }
 
     trackComplete();
@@ -238,29 +267,31 @@ async function handleDetermineWithTracking() {
   const yati = (document.getElementById('match-yati') as HTMLInputElement)?.checked ?? true;
   const prasa = (document.getElementById('match-prasa') as HTMLInputElement)?.checked ?? true;
 
+  LoadingEvents.emit(LoadingEventType.ActionStarted, {
+    source: 'analyze',
+    buttonId: 'btn-analyze',
+    resultContainerId: 'results-section'
+  });
+  await nextFrame();
+
   try {
     const response = await WasmBridge.determine(poemText, yati, prasa);
     if (response.success && response.matches.length > 0) {
       const bestMatch = response.matches[0];
 
-      // Track the analyzed rule (detected by Determine) for smart auto-select
       lastAnalyzedRule = {
         id: bestMatch.rule.identifier,
         name: bestMatch.rule.shortName || bestMatch.rule.name
       };
 
-      // Show only the first (best) match
       renderFirstMatch(bestMatch, 'results-container', currentRuleSet);
 
-      // Show results section
       const resultsSection = document.getElementById('results-section');
       if (resultsSection) resultsSection.style.display = 'block';
 
-      // Fetch and show alternative matches ranked by score
       try {
         const scoresResponse = await WasmBridge.getScores(poemText, yati, prasa, 50);
         if (scoresResponse.scores && scoresResponse.scores.length > 1) {
-          // Filter out the best match (already shown) and show top 5 alternatives
           const alternatives = scoresResponse.scores
             .filter(s => s.identifier !== bestMatch.rule.identifier)
             .slice(0, 5);
@@ -277,6 +308,12 @@ async function handleDetermineWithTracking() {
   } catch (err) {
     console.error('Determine failed:', err);
     alert(t('alert_error'));
+  } finally {
+    LoadingEvents.emit(LoadingEventType.ActionCompleted, {
+      source: 'analyze',
+      buttonId: 'btn-analyze',
+      resultContainerId: 'results-section'
+    });
   }
 }
 
@@ -317,12 +354,18 @@ async function handleMatchWithTracking() {
   const yati = (document.getElementById('match-yati') as HTMLInputElement)?.checked ?? true;
   const prasa = (document.getElementById('match-prasa') as HTMLInputElement)?.checked ?? true;
 
+  LoadingEvents.emit(LoadingEventType.ActionStarted, {
+    source: 'match',
+    buttonId: 'btn-analyze',
+    resultContainerId: 'results-section'
+  });
+  await nextFrame();
+
   try {
     const response = await WasmBridge.tryMatch(poemText, ruleId, yati, prasa);
     if (response.isMatch && response.match) {
       renderFirstMatch(response.match, 'results-container', currentRuleSet);
 
-      // Show results section
       const resultsSection = document.getElementById('results-section');
       if (resultsSection) resultsSection.style.display = 'block';
     } else {
@@ -331,5 +374,11 @@ async function handleMatchWithTracking() {
   } catch (err) {
     console.error('Match failed:', err);
     alert(t('alert_error'));
+  } finally {
+    LoadingEvents.emit(LoadingEventType.ActionCompleted, {
+      source: 'match',
+      buttonId: 'btn-analyze',
+      resultContainerId: 'results-section'
+    });
   }
 }
