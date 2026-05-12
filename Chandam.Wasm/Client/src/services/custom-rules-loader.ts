@@ -4,6 +4,7 @@
  */
 import { customRulesService } from './storage/custom-rules-service';
 import type { CustomRuleset } from './storage/models';
+import { invalidatePredefinedCache } from '../utils/rule-loader';
 
 declare const DotNet: any;
 
@@ -78,6 +79,7 @@ export class CustomRulesLoader {
       const response = JSON.parse(result);
 
       if (response.success) {
+        invalidatePredefinedCache();
         console.log(`Loaded ${response.ruleCount} rules from custom ruleset "${ruleset.name}"`);
         return true;
       } else {

@@ -3,6 +3,7 @@ using Chandam.Rules;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 
 namespace Chandam.API.Converters;
 
@@ -69,15 +70,29 @@ public static class RuleDtoConverter
                 Prasa = dto.Prasa,
                 PrasaYati = dto.PrasaYati,
                 References = dto.References,
-                // Note: RuleText has protected setter, cannot set from here
                 Rules = ConvertRulesArray(dto.Rules, ParseRuleType(dto.RuleType)),
-                // Note: ReverseYati has protected setter, cannot set from here (defaults to false)
                 RuleType = ParseRuleType(dto.RuleType),
                 Threshold = dto.Threshold,
                 Yati = dto.Yati ?? Array.Empty<int[]>(),
                 YatiMode = ParseYatiMode(dto.YatiMode),
-                // Note: YatiRecycle has protected setter, cannot set from here (defaults to false)
             };
+
+            // Set properties with protected setters via reflection
+            if (!string.IsNullOrEmpty(dto.RuleText))
+            {
+                typeof(Rule).GetField("_RuleText", BindingFlags.NonPublic | BindingFlags.Instance)
+                    ?.SetValue(rule, dto.RuleText);
+            }
+            if (dto.ReverseYati)
+            {
+                typeof(Rule).GetField("_ReverseYati", BindingFlags.NonPublic | BindingFlags.Instance)
+                    ?.SetValue(rule, true);
+            }
+            if (dto.YatiRecycle)
+            {
+                typeof(Rule).GetField("_YatiRecycle", BindingFlags.NonPublic | BindingFlags.Instance)
+                    ?.SetValue(rule, true);
+            }
 
             // Convert enhanced examples
             if (dto.Examples != null && dto.Examples.Count > 0)

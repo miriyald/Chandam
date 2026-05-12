@@ -27,6 +27,8 @@ public class RuleLoaderService
     private readonly Dictionary<string, Dictionary<string, List<int>>> _chandamNameIndex = new();   // ChandamName -> array indexes (for Vruttam)
     private readonly Dictionary<string, Dictionary<string, List<int>>> _nameIndex = new();          // Telugu name -> array indexes
 
+    private static readonly string[] KnownRuleSets = ["chandam", "topella", "sanskrit"];
+
     private string _currentRuleSetId = "default";
     private string _rulesDirectory = "Chandam.Config/Rules";
 
@@ -59,40 +61,27 @@ public class RuleLoaderService
             return;
         }
 
-        // Look for both YAML and JSON files (prefer YAML for readability)
-        var yamlFiles = Directory.GetFiles(_rulesDirectory, "*.yaml");
-        var jsonFiles = Directory.GetFiles(_rulesDirectory, "*.json");
-        var allFiles = yamlFiles.Concat(jsonFiles).ToArray();
-
-        if (allFiles.Length == 0)
+        // Load only known rule sets (prefer YAML over JSON)
+        foreach (var identifier in KnownRuleSets)
         {
-            Console.WriteLine("No rule files found. Using compiled rules.");
-            LoadDefaultCompiledRules();
-            return;
-        }
+            var yamlPath = Path.Combine(_rulesDirectory, $"{identifier}.yaml");
+            var jsonPath = Path.Combine(_rulesDirectory, $"{identifier}.json");
+            var filePath = File.Exists(yamlPath) ? yamlPath : File.Exists(jsonPath) ? jsonPath : null;
 
-        // Track which identifiers we've already loaded (YAML takes precedence)
-        var loadedIdentifiers = new HashSet<string>();
+            if (filePath == null)
+            {
+                Console.WriteLine($"Rule set file not found for '{identifier}'");
+                continue;
+            }
 
-        foreach (var filePath in allFiles)
-        {
             try
             {
-                var identifier = Path.GetFileNameWithoutExtension(filePath);
-
-                // Skip if we already loaded this identifier (YAML was processed first)
-                if (loadedIdentifiers.Contains(identifier))
-                {
-                    continue;
-                }
-
                 var ruleSet = LoadRuleSetFromFile(filePath);
                 if (ruleSet != null && ruleSet.Length > 0)
                 {
                     ruleSet = EnsureGenricVruttam(ruleSet);
                     _loadedRuleSets[identifier] = ruleSet;
-                    BuildIndexes(identifier, ruleSet);  // Build indexes after loading
-                    loadedIdentifiers.Add(identifier);
+                    BuildIndexes(identifier, ruleSet);
                     var fileType = Path.GetExtension(filePath).ToUpper();
                     Console.WriteLine($"Loaded rule set '{identifier}' with {ruleSet.Length} rules ({fileType})");
                 }
@@ -250,39 +239,24 @@ public class RuleLoaderService
         if (!Directory.Exists(_rulesDirectory))
             return;
 
-        // Look for *-examples.yaml and *-examples.json files
-        var yamlFiles = Directory.GetFiles(_rulesDirectory, "*-examples.yaml");
-        var jsonFiles = Directory.GetFiles(_rulesDirectory, "*-examples.json");
-        var allFiles = yamlFiles.Concat(jsonFiles).ToArray();
-
-        if (allFiles.Length == 0)
+        // Load only known example sets (prefer YAML over JSON)
+        foreach (var identifier in KnownRuleSets)
         {
-            Console.WriteLine("No example files found.");
-            return;
-        }
+            var examplesId = $"{identifier}-examples";
+            var yamlPath = Path.Combine(_rulesDirectory, $"{examplesId}.yaml");
+            var jsonPath = Path.Combine(_rulesDirectory, $"{examplesId}.json");
+            var filePath = File.Exists(yamlPath) ? yamlPath : File.Exists(jsonPath) ? jsonPath : null;
 
-        // Track which identifiers we've already loaded (YAML takes precedence)
-        var loadedIdentifiers = new HashSet<string>();
+            if (filePath == null) continue;
 
-        foreach (var filePath in allFiles)
-        {
             try
             {
-                var identifier = Path.GetFileNameWithoutExtension(filePath);
-
-                // Skip if we already loaded this identifier
-                if (loadedIdentifiers.Contains(identifier))
-                {
-                    continue;
-                }
-
                 var exampleSet = LoadExampleSetFromFile(filePath);
                 if (exampleSet != null && exampleSet.Examples.Count > 0)
                 {
-                    _loadedExampleSets[identifier] = exampleSet;
-                    loadedIdentifiers.Add(identifier);
+                    _loadedExampleSets[examplesId] = exampleSet;
                     var fileType = Path.GetExtension(filePath).ToUpper();
-                    Console.WriteLine($"Loaded example set '{identifier}' with {exampleSet.Examples.Count} rule examples ({fileType})");
+                    Console.WriteLine($"Loaded example set '{examplesId}' with {exampleSet.Examples.Count} rule examples ({fileType})");
                 }
             }
             catch (Exception ex)
