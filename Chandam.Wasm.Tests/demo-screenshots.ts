@@ -72,9 +72,9 @@ async function clearCustomRules(page: Page): Promise<void> {
       openReq.onsuccess = () => resolve(openReq.result);
       openReq.onerror = () => reject(openReq.error);
     });
-    if (db.objectStoreNames.contains('custom-rulesets')) {
-      const tx = db.transaction('custom-rulesets', 'readwrite');
-      tx.objectStore('custom-rulesets').clear();
+    if (db.objectStoreNames.contains('compressed-data')) {
+      const tx = db.transaction('compressed-data', 'readwrite');
+      tx.objectStore('compressed-data').clear();
       await new Promise<void>((resolve, reject) => {
         tx.oncomplete = () => resolve();
         tx.onerror = () => reject(tx.error);

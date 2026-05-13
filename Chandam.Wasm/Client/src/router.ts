@@ -160,7 +160,8 @@ export class Router {
         e.preventDefault();
         // Close mobile nav if open
         document.getElementById('main-nav')?.classList.remove('open');
-        this.navigate(this.stripBasePath(url.pathname));
+        const navPath = this.stripBasePath(url.pathname) + url.search;
+        this.navigate(navPath);
       }
     });
 
