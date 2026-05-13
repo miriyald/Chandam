@@ -8,6 +8,7 @@ import { renderLearnDetailPage } from './ui/learn-detail-page';
 import { renderRuleCreatorPage } from './ui/rule-creator-page';
 import { renderExplorePage } from './ui/explore-page';
 import { renderMyWritingsPage } from './ui/my-writings-page';
+import { renderMyDataPage } from './ui/my-data-page';
 import { validateRuleSetAsync, validateRule, handleInvalidRuleSet, handleInvalidRule } from './utils/error-handlers';
 import { createInitialLoader } from './utils/loader';
 import { LoadingEvents, LoadingEventType } from './utils/loading-events';
@@ -137,11 +138,16 @@ router.register('/my-writings', async () => {
   await renderMyWritingsPage();
 });
 
+// My Data route
+router.register('/my-data', async () => {
+  await renderMyDataPage();
+});
+
 // Static pages
 router.register('/resources', () => { setPageTitle(t('nav_resources')); loadStaticPage(`pages/${getLanguage()}/resources.html`); });
 router.register('/about', () => { setPageTitle(t('nav_about')); loadStaticPage(`pages/${getLanguage()}/about.html`); });
 router.register('/credits', () => { setPageTitle(t('nav_credits')); loadStaticPage(`pages/${getLanguage()}/credits.html`); });
-router.register('/contact', () => { setPageTitle(t('nav_contact')); loadStaticPage(`pages/${getLanguage()}/contact.html`); });
+router.register('/contact', () => { setPageTitle(t('nav_contact')); loadStaticPage(`pages/${getLanguage()}/contact.html`); });  // footer-only
 
 // Apply current language to static nav elements and lang toggle button
 function applyLanguageToPage(): void {
@@ -192,14 +198,6 @@ document.addEventListener('DOMContentLoaded', () => {
     done({ language: getLanguage() });
   });
 
-  document.getElementById('btn-clear-data')?.addEventListener('click', async (e) => {
-    e.preventDefault();
-    const confirmed = confirm(t('clear_data_warning'));
-    if (confirmed) {
-      await storageService.clearAll();
-      window.location.reload();
-    }
-  });
 });
 
 // Global function called by Blazor WASM when ready
@@ -252,8 +250,10 @@ window.onWasmReady = async () => {
   router.init();
 };
 
+import { WASM_INIT_TIMEOUT_MS } from './constants';
+
 // Safety net: detect if WASM fails to load within timeout
-const INIT_TIMEOUT_MS = 10000; // 10 seconds
+const INIT_TIMEOUT_MS = WASM_INIT_TIMEOUT_MS;
 let initComplete = false;
 
 const initTimeout = setTimeout(() => {

@@ -32,47 +32,21 @@ test.describe('Results pane behavior: perfect vs mismatch', () => {
   }) => {
     await gotoAndWait(page, '/compute/chandam/');
 
-    await page.locator('#btn-random').click();
-    const baseText = await page.locator('#poem-editor').inputValue();
-    expect(baseText.trim().length).toBeGreaterThan(0);
+    // Use a deliberately malformed poem that will partially match but not 100%
+    const mismatchPoem = `స్తోకంబై తోకలును జూలునిప్పుల్
+దాకొన్నన్  హేషలుగ దౌడులొప్పన్
+జీకాకై మంటలకెచేరు గుఱ్ఱా
+లేకోనల్ లేననల`;
 
-    const variants = [
-      baseText.length > 4 ? baseText.slice(2) : `${baseText}\nక`,
-      `${baseText}\nక`,
-    ];
-
-    let foundNonPerfect = false;
-    const dismissDialog = async (dialog: any) => {
-      await dialog.dismiss();
-    };
-    page.on('dialog', dismissDialog);
-
-    try {
-      for (const variant of variants) {
-        await page.locator('#poem-editor').fill(variant);
-        await page.locator('#btn-analyze').click();
-
-        const matchCard = page.locator('.match-card').first();
-        if ((await matchCard.count()) === 0) {
-          continue;
-        }
-
-        await expect(matchCard).toBeVisible({ timeout: 15_000 });
-        const scoreCount = await matchCard.locator('.match-score-group').count();
-        const submitCount = await matchCard.locator('.btn-submit-github').count();
-
-        if (scoreCount > 0 && submitCount === 0) {
-          foundNonPerfect = true;
-          break;
-        }
-      }
-    } finally {
-      page.off('dialog', dismissDialog);
-    }
-
-    expect(foundNonPerfect).toBe(true);
+    await page.locator('#poem-editor').fill(mismatchPoem);
+    await page.locator('#btn-analyze').click();
 
     const matchCard = page.locator('.match-card').first();
+    await expect(matchCard).toBeVisible({ timeout: 15_000 });
+
+    // Non-perfect match should show score badge and hide GitHub submit
+    const scoreGroup = matchCard.locator('.match-score-group');
+    await expect(scoreGroup).toBeVisible({ timeout: 5_000 });
     await expect(matchCard.locator('.btn-submit-github')).toHaveCount(0);
 
     // Mismatch path renders error table when engine reports errors.

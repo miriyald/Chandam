@@ -5,6 +5,7 @@ export interface RuleSet {
   examplesFile: string;
   description: string;
   ruleCount: number;
+  exampleCount: number;
 }
 
 export const RULE_SETS: RuleSet[] = [
@@ -14,7 +15,8 @@ export const RULE_SETS: RuleSet[] = [
     description: 'దిలీపు మిరియాల సంకలనం: అనేక ఛందస్సు వనరులు మరియూ ముఖ్యంగా కోవెల సంపత్కుమారాచార్య రచనలు',
     rulesFile: 'data/chandam.min.json.gz',
     examplesFile: 'data/chandam-examples.min.json.gz',
-    ruleCount: 379
+    ruleCount: 379,
+    exampleCount: 554
   },
   {
     id: 'topella',
@@ -22,7 +24,8 @@ export const RULE_SETS: RuleSet[] = [
     description: 'శ్రీ తోపెల్ల బాలసుబ్రహ్మణ్య శర్మగారి సంకలనం: అనేక ఛందస్సు వనరులు మరియూ స్వయంగా సృజించినవి.',
     rulesFile: 'data/topella.min.json.gz',
     examplesFile: 'data/topella-examples.min.json.gz',
-    ruleCount: 2337
+    ruleCount: 2337,
+    exampleCount: 712
   },
   {
     id: 'sanskrit',
@@ -30,7 +33,8 @@ export const RULE_SETS: RuleSet[] = [
     description: 'సంస్కృత నియమావళి',
     rulesFile: 'data/sanskrit.min.json.gz',
     examplesFile: 'data/sanskrit-examples.min.json.gz',
-    ruleCount: 1165
+    ruleCount: 1165,
+    exampleCount: 0
   }
 ];
 
@@ -55,13 +59,17 @@ export async function getRuleSetAsync(id: string): Promise<RuleSet | undefined> 
 
   if (customRuleset) {
     // Convert CustomRuleset to RuleSet format
+    const totalExamples = customRuleset.rules.reduce(
+      (sum, r) => sum + (r.Examples?.length ?? 0), 0
+    );
     return {
       id: customRuleset.id,
       name: customRuleset.name,
       rulesFile: '', // Custom rulesets don't have files
       examplesFile: '',
       description: customRuleset.description,
-      ruleCount: customRuleset.rules.length
+      ruleCount: customRuleset.rules.length,
+      exampleCount: totalExamples
     };
   }
 

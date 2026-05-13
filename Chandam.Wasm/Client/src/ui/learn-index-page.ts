@@ -1,5 +1,6 @@
 import { WasmBridge } from '../wasm-bridge';
 import { getRuleSet, getRuleSetAsync } from '../config';
+import { SEARCH_DEBOUNCE_MS } from '../constants';
 import type { RuleSummaryDetailed, AvailableFilters } from '../types';
 import { groupRulesByCategory, getSortedGroupKeys, getGroupDisplayName, getSubTypeDisplayName } from '../utils/rule-grouping';
 import { makeUrl } from '../utils/url-helpers';
@@ -244,6 +245,9 @@ function renderRuleListItem(rule: RuleSummaryDetailed, ruleSetId: string, favori
     const padaLabel = rule.lines === 1 ? t('pada_singular') : t('pada_plural');
     metaParts.push(`${rule.lines} ${padaLabel}`);
   }
+  if (rule.exampleCount && rule.exampleCount > 0) {
+    metaParts.push(`${rule.exampleCount} ${t('metric_examples')}`);
+  }
   if (rule.chandamName) {
     metaParts.push(rule.chandamName);
   }
@@ -341,7 +345,7 @@ function attachFilterEventListeners(ruleSetId: string) {
       });
       await refreshResults(ruleSetId);
       done();
-    }, 300));
+    }, SEARCH_DEBOUNCE_MS));
   }
 
   const categoryPicker = document.getElementById('category-picker') as HTMLDetailsElement;

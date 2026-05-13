@@ -4,9 +4,9 @@
 import { storageService } from './storage-service';
 import { generateShortHash } from '../../utils/hash-utils';
 import type { CollectionPoem } from './models';
+import { MAX_POEMS, STORAGE_KEYS } from '../../constants';
 
-const POEMS_KEY = 'poems:default';
-const MAX_POEMS = 20;
+const POEMS_KEY = STORAGE_KEYS.POEMS;
 
 export class CollectionService {
   async addPoem(

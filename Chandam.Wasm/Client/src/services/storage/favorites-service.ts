@@ -3,10 +3,10 @@
  */
 import { storageService } from './storage-service';
 import type { FavoriteEntry, CustomRuleset } from './models';
+import { MAX_FAVORITES, STORAGE_KEYS } from '../../constants';
 
-const FAVORITES_KEY = 'favorites';
-const FAV_RULESET_KEY = 'custom-rulesets:custom-fav';
-const MAX_FAVORITES = 50;
+const FAVORITES_KEY = STORAGE_KEYS.FAVORITES;
+const FAV_RULESET_KEY = STORAGE_KEYS.FAV_RULESET;
 
 export class FavoritesService {
   async isFavorited(ruleSetId: string, ruleId: string): Promise<boolean> {

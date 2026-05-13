@@ -8,8 +8,9 @@ import { customRulesService } from './storage/custom-rules-service';
 import { CustomRulesLoader } from './custom-rules-loader';
 import { WasmBridge } from '../wasm-bridge';
 import type { CustomRuleset } from './storage/models';
+import { STORAGE_KEYS } from '../constants';
 
-const USER_ID_KEY = 'chandam:userId';
+const USER_ID_KEY = STORAGE_KEYS.USER_ID;
 
 /**
  * Get or generate persistent user ID for analytics

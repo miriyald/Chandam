@@ -86,6 +86,7 @@ export interface Translations {
   // Metrics
   metric_chars: string;
   metric_matras: string;
+  metric_examples: string;
 
   // Alerts
   alert_enter_poem: string;
@@ -221,6 +222,7 @@ export interface Translations {
   rulesets_heading: string;
   rulesets_subtitle: string;
   rulesets_rules_suffix: string;
+  rulesets_examples_suffix: string;
   rulesets_btn_analyze: string;
   rulesets_btn_learn: string;
 
@@ -266,8 +268,21 @@ export interface Translations {
   results_already_in_collection: string;
   results_collection_full: string;
 
+  // My Data
+  nav_my_data: string;
+  my_data_title: string;
+  my_data_clear_btn: string;
+  my_data_writings_title: string;
+  my_data_writings_desc: string;
+  my_data_favorites_title: string;
+  my_data_favorites_desc: string;
+  my_data_custom_rules_title: string;
+  my_data_custom_rules_desc: string;
+
   // Footer
   footer_clear_data: string;
+  footer_favorites: string;
+  footer_custom_rules: string;
   clear_data_warning: string;
 
   // Pages
@@ -356,6 +371,7 @@ const translations: Record<Language, Translations> = {
 
     metric_chars: 'chars',
     metric_matras: 'matras',
+    metric_examples: 'ex.',
 
     alert_enter_poem: 'Please enter poem text',
     alert_no_matches: 'No matches found',
@@ -482,6 +498,7 @@ const translations: Record<Language, Translations> = {
     rulesets_heading: 'Telugu Poetry Meter Rule Sets',
     rulesets_subtitle: 'Choose a rule set to analyze poetry or learn about meters',
     rulesets_rules_suffix: 'Rules',
+    rulesets_examples_suffix: 'Examples',
     rulesets_btn_analyze: 'Analyze',
     rulesets_btn_learn: 'Learn',
 
@@ -527,8 +544,21 @@ const translations: Record<Language, Translations> = {
     results_already_in_collection: 'Already saved',
     results_collection_full: 'Collection full (20/20)',
 
+    // My Data
+    nav_my_data: 'My Data',
+    my_data_title: 'My Data',
+    my_data_clear_btn: 'Clear All Data',
+    my_data_writings_title: 'My Writings',
+    my_data_writings_desc: 'Your saved poems',
+    my_data_favorites_title: 'Favorites',
+    my_data_favorites_desc: 'Your favorited rules',
+    my_data_custom_rules_title: 'Custom Rules',
+    my_data_custom_rules_desc: 'Your custom meters',
+
     // Footer
     footer_clear_data: 'Clear Site Data',
+    footer_favorites: 'Favorites',
+    footer_custom_rules: 'Custom Rules',
     clear_data_warning: 'This will delete all your saved poems, favorites, custom rules, and editor state. This action cannot be undone. Continue?',
 
     page_about_title: 'About Chandam',
@@ -656,6 +686,7 @@ const translations: Record<Language, Translations> = {
 
     metric_chars: 'అక్షరాలు',
     metric_matras: 'మాత్రలు',
+    metric_examples: 'ఉదాహరణలు',
 
     alert_enter_poem: 'దయచేసి విశ్లేషించడానికి పద్యాన్ని నమోదు చేయండి.',
     alert_no_matches: 'సరిపోలే నియమాలు కనుగొనబడలేదు.',
@@ -782,6 +813,7 @@ const translations: Record<Language, Translations> = {
     rulesets_heading: 'తెలుగు పద్య ఛందస్సు నియమావళులు',
     rulesets_subtitle: 'పద్యాలను విశ్లేషించడానికి లేదా ఛందస్సు నేర్చుకోవడానికి ఒక నియమావళిని ఎంచుకోండి',
     rulesets_rules_suffix: 'నియమాలు',
+    rulesets_examples_suffix: 'ఉదాహరణలు',
     rulesets_btn_analyze: 'విశ్లేషించండి',
     rulesets_btn_learn: 'నేర్చుకోండి',
 
@@ -827,8 +859,21 @@ const translations: Record<Language, Translations> = {
     results_already_in_collection: 'ఇప్పటికే భద్రపరచబడింది',
     results_collection_full: 'సేకరణ నిండింది (20/20)',
 
+    // My Data
+    nav_my_data: 'నా డేటా',
+    my_data_title: 'నా డేటా',
+    my_data_clear_btn: 'మొత్తం డేటా తొలగించు',
+    my_data_writings_title: 'నా రచనలు',
+    my_data_writings_desc: 'మీ భద్రపరచిన పద్యాలు',
+    my_data_favorites_title: 'ఇష్టమైనవి',
+    my_data_favorites_desc: 'మీ ఇష్టమైన నియమాలు',
+    my_data_custom_rules_title: 'అనుకూల నియమాలు',
+    my_data_custom_rules_desc: 'మీ అనుకూల ఛందస్సులు',
+
     // Footer
     footer_clear_data: 'డేటా తొలగించు',
+    footer_favorites: 'ఇష్టమైనవి',
+    footer_custom_rules: 'అనుకూల నియమాలు',
     clear_data_warning: 'ఇది మీ భద్రపరచిన పద్యాలు, ఇష్టమైనవి, అనుకూల నియమాలు మరియు ఎడిటర్ స్థితిని తొలగిస్తుంది. ఈ చర్యను రద్దు చేయలేరు. కొనసాగించాలా?',
 
     page_about_title: 'About Chandam',
@@ -882,7 +927,8 @@ const translations: Record<Language, Translations> = {
   },
 };
 
-const STORAGE_KEY = 'chandam-ui-lang';
+import { STORAGE_KEYS } from './constants';
+const STORAGE_KEY = STORAGE_KEYS.UI_LANGUAGE;
 
 let currentLanguage: Language = 'te';
 

@@ -33,6 +33,7 @@ export async function renderRuleSetsPage() {
     name: crs.name,
     description: crs.description,
     ruleCount: crs.rules.length,
+    exampleCount: crs.rules.reduce((sum, r) => sum + (r.Examples?.length ?? 0), 0),
     isCustom: true,
     isFavorites: crs.type === 'favorites'
   }));
@@ -62,14 +63,17 @@ export async function renderRuleSetsPage() {
 }
 
 // Helper: Render a single rule set card
-function renderRuleSetCard(ruleSet: { id: string; name: string; description: string; ruleCount: number; isCustom?: boolean; isFavorites?: boolean }) {
+function renderRuleSetCard(ruleSet: { id: string; name: string; description: string; ruleCount: number; exampleCount?: number; isCustom?: boolean; isFavorites?: boolean }) {
   const customClass = ruleSet.isCustom ? ' custom-ruleset' : '';
   const favoritesClass = ruleSet.isFavorites ? ' favorites-ruleset' : '';
+  const examplesHtml = ruleSet.exampleCount
+    ? ` · ${ruleSet.exampleCount} ${t('rulesets_examples_suffix')}`
+    : '';
 
   return `
     <div class="rule-set-card${customClass}${favoritesClass}">
       <h2 class="meter-name">${ruleSet.name}</h2>
-      <div class="rule-count">${ruleSet.ruleCount} ${t('rulesets_rules_suffix')}</div>
+      <div class="rule-count">${ruleSet.ruleCount} ${t('rulesets_rules_suffix')}${examplesHtml}</div>
       <p class="description">${ruleSet.description}</p>
       <div class="card-actions">
         <a href="${makeUrl(`/compute/${ruleSet.id}/`)}" class="btn-analyze">

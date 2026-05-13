@@ -1,7 +1,6 @@
 import type { RuleDto } from '../services/storage/rule-dto';
 import { analyticsService } from '../services/analytics-service';
-
-const GITHUB_REPO_URL = 'https://github.com/chandamu/chandam';
+import { GITHUB_REPO_URL } from '../constants';
 
 export interface CustomRulePayload {
   type: 'custom-rule';

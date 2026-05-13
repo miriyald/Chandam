@@ -4,9 +4,10 @@
  */
 import { compressToGzip, decompressFromGzip } from '../../utils/compression';
 import type { CompressedEntry } from './models';
+import { DB_NAME } from '../../constants';
 
 export class IndexedDBService {
-  private dbName = 'ChandamDB';
+  private dbName = DB_NAME;
   private version = 1;
   private db: IDBDatabase | null = null;
 

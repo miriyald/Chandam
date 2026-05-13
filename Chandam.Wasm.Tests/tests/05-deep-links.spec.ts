@@ -52,8 +52,8 @@ const ROUTES: RouteExpectation[] = [
     requiresWasm: true,
   },
   {
-    path: '/contact',
-    visibleSelector: '#content',
+    path: '/my-data',
+    visibleSelector: '.my-data-page',
     requiresWasm: true,
   },
 ];
