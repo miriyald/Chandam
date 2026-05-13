@@ -36,9 +36,9 @@ async function clearAllFavorites(page: import('@playwright/test').Page): Promise
       openReq.onerror = () => reject(openReq.error);
     });
 
-    if (db.objectStoreNames.contains('favorites')) {
-      const tx = db.transaction('favorites', 'readwrite');
-      tx.objectStore('favorites').clear();
+    if (db.objectStoreNames.contains('compressed-data')) {
+      const tx = db.transaction('compressed-data', 'readwrite');
+      tx.objectStore('compressed-data').clear();
       await new Promise<void>((resolve, reject) => {
         tx.oncomplete = () => resolve();
         tx.onerror = () => reject(tx.error);

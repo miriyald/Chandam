@@ -1,14 +1,18 @@
 /**
- * IndexedDB wrapper for complex structured data
+ * IndexedDB wrapper — single compressed-data store.
+ * All structured data stored as gzip-compressed JSON blobs.
  */
-import type { FavoriteEntry, CustomRuleset } from './models';
+import { compressToGzip, decompressFromGzip } from '../../utils/compression';
+import type { CompressedEntry } from './models';
 
 export class IndexedDBService {
   private dbName = 'ChandamDB';
-  private version = 2;  // Bumped for new schema
+  private version = 1;
   private db: IDBDatabase | null = null;
 
   async init(): Promise<void> {
+    if (this.db) return;
+
     return new Promise((resolve, reject) => {
       const request = indexedDB.open(this.dbName, this.version);
 
@@ -20,140 +24,89 @@ export class IndexedDBService {
 
       request.onupgradeneeded = (event) => {
         const db = (event.target as IDBOpenDBRequest).result;
-
-        // Create favorites store (new)
-        if (!db.objectStoreNames.contains('favorites')) {
-          db.createObjectStore('favorites', { keyPath: 'id' });
-        }
-
-        // Create custom-rulesets store (renamed from 'rulesets')
-        if (!db.objectStoreNames.contains('custom-rulesets')) {
-          db.createObjectStore('custom-rulesets', { keyPath: 'id' });
+        if (!db.objectStoreNames.contains('compressed-data')) {
+          db.createObjectStore('compressed-data', { keyPath: 'id' });
         }
       };
     });
   }
 
-  // ========== Favorites Methods ==========
-
-  async getFavorite(compositeId: string): Promise<FavoriteEntry | undefined> {
-    if (!this.db) await this.init();
-
-    return new Promise((resolve, reject) => {
-      const tx = this.db!.transaction('favorites', 'readonly');
-      const store = tx.objectStore('favorites');
-      const request = store.get(compositeId);
-
-      request.onsuccess = () => resolve(request.result);
-      request.onerror = () => reject(request.error);
-    });
-  }
-
-  async getAllFavorites(): Promise<FavoriteEntry[]> {
-    if (!this.db) await this.init();
-
-    return new Promise((resolve, reject) => {
-      const tx = this.db!.transaction('favorites', 'readonly');
-      const store = tx.objectStore('favorites');
-      const request = store.getAll();
-
-      request.onsuccess = () => resolve(request.result || []);
-      request.onerror = () => reject(request.error);
-    });
-  }
-
-  async addFavorite(favorite: FavoriteEntry): Promise<void> {
-    if (!this.db) await this.init();
-
-    // Check max 50 limit
-    const allFavorites = await this.getAllFavorites();
-    if (allFavorites.length >= 50) {
-      throw new Error('Maximum 50 favorites reached');
+  async destroyAndRecreate(): Promise<void> {
+    if (this.db) {
+      this.db.close();
+      this.db = null;
     }
 
+    await new Promise<void>((resolve, reject) => {
+      const req = indexedDB.deleteDatabase(this.dbName);
+      req.onsuccess = () => resolve();
+      req.onerror = () => reject(req.error);
+      req.onblocked = () => resolve();
+    });
+
+    await this.init();
+  }
+
+  async getData<T>(id: string): Promise<T | undefined> {
+    if (!this.db) await this.init();
+
+    const entry = await this.getRaw(id);
+    if (!entry) return undefined;
+
+    const json = await decompressFromGzip(entry.data);
+    return JSON.parse(json) as T;
+  }
+
+  async saveData<T>(id: string, data: T): Promise<void> {
+    if (!this.db) await this.init();
+
+    const json = JSON.stringify(data);
+    const compressed = await compressToGzip(json);
+    const entry: CompressedEntry = { id, data: compressed };
+
     return new Promise((resolve, reject) => {
-      const tx = this.db!.transaction('favorites', 'readwrite');
-      const store = tx.objectStore('favorites');
-      const request = store.put(favorite);
+      const tx = this.db!.transaction('compressed-data', 'readwrite');
+      const store = tx.objectStore('compressed-data');
+      const request = store.put(entry);
 
       request.onsuccess = () => resolve();
       request.onerror = () => reject(request.error);
     });
   }
 
-  async removeFavorite(compositeId: string): Promise<void> {
+  async deleteData(id: string): Promise<void> {
     if (!this.db) await this.init();
 
     return new Promise((resolve, reject) => {
-      const tx = this.db!.transaction('favorites', 'readwrite');
-      const store = tx.objectStore('favorites');
-      const request = store.delete(compositeId);
-
-      request.onsuccess = () => resolve();
-      request.onerror = () => reject(request.error);
-    });
-  }
-
-  async isFavorited(compositeId: string): Promise<boolean> {
-    const favorite = await this.getFavorite(compositeId);
-    return favorite !== undefined;
-  }
-
-  // ========== Custom Rulesets Methods ==========
-
-  async getCustomRuleset(id: string): Promise<CustomRuleset | undefined> {
-    if (!this.db) await this.init();
-
-    return new Promise((resolve, reject) => {
-      const tx = this.db!.transaction('custom-rulesets', 'readonly');
-      const store = tx.objectStore('custom-rulesets');
-      const request = store.get(id);
-
-      request.onsuccess = () => resolve(request.result);
-      request.onerror = () => reject(request.error);
-    });
-  }
-
-  async getAllCustomRulesets(): Promise<CustomRuleset[]> {
-    if (!this.db) await this.init();
-
-    return new Promise((resolve, reject) => {
-      const tx = this.db!.transaction('custom-rulesets', 'readonly');
-      const store = tx.objectStore('custom-rulesets');
-      const request = store.getAll();
-
-      request.onsuccess = () => resolve(request.result || []);
-      request.onerror = () => reject(request.error);
-    });
-  }
-
-  async saveCustomRuleset(ruleset: CustomRuleset): Promise<void> {
-    if (!this.db) await this.init();
-
-    // Enforce max 20 rules limit (except for favorites collection)
-    if (ruleset.type !== 'favorites' && ruleset.rules.length > 20) {
-      throw new Error('Custom ruleset cannot exceed 20 rules');
-    }
-
-    return new Promise((resolve, reject) => {
-      const tx = this.db!.transaction('custom-rulesets', 'readwrite');
-      const store = tx.objectStore('custom-rulesets');
-      const request = store.put(ruleset);
-
-      request.onsuccess = () => resolve();
-      request.onerror = () => reject(request.error);
-    });
-  }
-
-  async deleteCustomRuleset(id: string): Promise<void> {
-    if (!this.db) await this.init();
-
-    return new Promise((resolve, reject) => {
-      const tx = this.db!.transaction('custom-rulesets', 'readwrite');
-      const store = tx.objectStore('custom-rulesets');
+      const tx = this.db!.transaction('compressed-data', 'readwrite');
+      const store = tx.objectStore('compressed-data');
       const request = store.delete(id);
 
       request.onsuccess = () => resolve();
+      request.onerror = () => reject(request.error);
+    });
+  }
+
+  async clearAll(): Promise<void> {
+    if (!this.db) await this.init();
+
+    return new Promise((resolve, reject) => {
+      const tx = this.db!.transaction('compressed-data', 'readwrite');
+      const store = tx.objectStore('compressed-data');
+      const request = store.clear();
+
+      request.onsuccess = () => resolve();
+      request.onerror = () => reject(request.error);
+    });
+  }
+
+  private async getRaw(id: string): Promise<CompressedEntry | undefined> {
+    return new Promise((resolve, reject) => {
+      const tx = this.db!.transaction('compressed-data', 'readonly');
+      const store = tx.objectStore('compressed-data');
+      const request = store.get(id);
+
+      request.onsuccess = () => resolve(request.result);
       request.onerror = () => reject(request.error);
     });
   }

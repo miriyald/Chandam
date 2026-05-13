@@ -52,7 +52,8 @@ export async function renderRulePage(params: Record<string, string>) {
     ruleSet,
     ruleInfo.name,
     ruleId,
-    exampleText
+    exampleText,
+    ruleSetConfig.name
   );
 
   // Step 5: Attach event handlers
@@ -120,12 +121,13 @@ async function renderRulePageHtml(
   ruleSetId: string,
   ruleName: string,
   ruleId: string,
-  exampleText: string
+  exampleText: string,
+  ruleSetName: string
 ) {
   const content = document.getElementById('content');
   if (!content) return;
 
-  const breadcrumbs = buildRuleBreadcrumbs(ruleSetId, ruleId, ruleName, 'compute');
+  const breadcrumbs = buildRuleBreadcrumbs(ruleSetId, ruleId, ruleName, 'compute', ruleSetName);
 
   content.innerHTML = `
     <div class="compute-rule-page">

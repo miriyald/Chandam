@@ -37,28 +37,23 @@ export async function renderRuleActions(
     return;
   }
 
-  // Check if already favorited
-  // For custom-fav (virtual collection), check by ruleId alone since favorites
-  // are stored with their original ruleSetId, not "custom-fav"
-  let isFavorited: boolean;
-  if (ruleSetId === 'custom-fav') {
-    const allFavs = await storageService.indexedDB.getAllFavorites();
-    isFavorited = allFavs.some(fav => fav.ruleId === ruleId);
-  } else {
+  const isCustom = ruleSetId === 'custom-rules' || ruleSetId === 'custom-fav';
+
+  let isFavorited = false;
+  if (!isCustom) {
     isFavorited = await favoritesService.isFavorited(ruleSetId, ruleId);
   }
 
   container.innerHTML = `
     <div class="rule-actions">
-      ${renderFavoriteButton(isFavorited, ruleSetId, ruleId)}
+      ${isCustom ? '' : renderFavoriteButton(isFavorited, ruleSetId, ruleId)}
       ${renderGitHubButton(ruleSetId, ruleId)}
-      ${renderCreateRuleButton()}
       ${renderDeleteButton(ruleSetId, ruleId)}
     </div>
   `;
 
   // Attach event handlers
-  attachFavoriteHandler(ruleSetId, ruleId);
+  if (!isCustom) attachFavoriteHandler(ruleSetId, ruleId);
   attachGitHubHandler(ruleSetId, ruleId);
   attachDeleteHandler(ruleSetId, ruleId);
 }
@@ -93,7 +88,7 @@ function renderDeleteButton(ruleSetId: string, ruleId: string): string {
 
   const trashSvg = `
     <svg viewBox="0 0 24 24" width="16" height="16">
-      <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/>
+      <path fill="currentColor" d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/>
     </svg>
   `;
 

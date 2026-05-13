@@ -69,14 +69,14 @@ public static class RuleDtoConverter
                 Prasa = dto.Prasa,
                 PrasaYati = dto.PrasaYati,
                 References = dto.References,
-                // Note: RuleText has protected setter, cannot set from here
+                ReverseYati = dto.ReverseYati,
                 Rules = ConvertRulesArray(dto.Rules, ParseRuleType(dto.RuleType)),
-                // Note: ReverseYati has protected setter, cannot set from here (defaults to false)
+                RuleText = dto.RuleText ?? string.Empty,
                 RuleType = ParseRuleType(dto.RuleType),
                 Threshold = dto.Threshold,
                 Yati = dto.Yati ?? Array.Empty<int[]>(),
                 YatiMode = ParseYatiMode(dto.YatiMode),
-                // Note: YatiRecycle has protected setter, cannot set from here (defaults to false)
+                YatiRecycle = dto.YatiRecycle,
             };
 
             // Convert enhanced examples

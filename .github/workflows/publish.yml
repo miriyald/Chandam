@@ -1,0 +1,150 @@
+name: Publish Packages
+
+on:
+  push:
+    branches: [beta]
+
+permissions:
+  contents: read
+  packages: write
+  checks: write
+  pull-requests: write
+
+env:
+  REGISTRY: ghcr.io
+  IMAGE_PREFIX: ghcr.io/miriyald
+
+jobs:
+  test:
+    name: Run Tests
+    uses: ./.github/workflows/tests.yml
+
+  publish-docker:
+    name: Publish Docker Images
+    needs: test
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup .NET 8.0
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: "8.0.x"
+
+      - name: Generate version
+        id: version
+        run: |
+          BUILD_VERSION="$(date -u +'%Y%m%d.%H%M%S')"
+          echo "build_version=$BUILD_VERSION" >> $GITHUB_OUTPUT
+
+      - name: Pre-build MCP Http
+        run: dotnet publish Chandam.MCP.Http/Chandam.MCP.Http.csproj -c Release -o Publish/chandam-mcp-http
+
+      - name: Pre-build MCP Stdio
+        run: dotnet publish Chandam.MCP.Stdio/Chandam.MCP.Stdio.csproj -c Release -o Publish/chandam-mcp-stdio
+
+      - name: Log in to GHCR
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build and push chandam-api
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          file: Chandam.API.WebApi/Dockerfile
+          push: true
+          tags: |
+            ${{ env.IMAGE_PREFIX }}/chandam-api:latest
+            ${{ env.IMAGE_PREFIX }}/chandam-api:beta
+            ${{ env.IMAGE_PREFIX }}/chandam-api:${{ steps.version.outputs.build_version }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+      - name: Build and push chandam-mcp-http
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          file: Chandam.MCP.Http/Dockerfile
+          push: true
+          tags: |
+            ${{ env.IMAGE_PREFIX }}/chandam-mcp-http:latest
+            ${{ env.IMAGE_PREFIX }}/chandam-mcp-http:beta
+            ${{ env.IMAGE_PREFIX }}/chandam-mcp-http:${{ steps.version.outputs.build_version }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+      - name: Build and push chandam-mcp-stdio
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          file: Chandam.MCP.Stdio/Dockerfile
+          push: true
+          tags: |
+            ${{ env.IMAGE_PREFIX }}/chandam-mcp-stdio:latest
+            ${{ env.IMAGE_PREFIX }}/chandam-mcp-stdio:beta
+            ${{ env.IMAGE_PREFIX }}/chandam-mcp-stdio:${{ steps.version.outputs.build_version }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+      - name: Build and push chandam-wasm
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          file: Chandam.Wasm/Dockerfile
+          push: true
+          tags: |
+            ${{ env.IMAGE_PREFIX }}/chandam-wasm:latest
+            ${{ env.IMAGE_PREFIX }}/chandam-wasm:beta
+            ${{ env.IMAGE_PREFIX }}/chandam-wasm:${{ steps.version.outputs.build_version }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+  publish-nuget:
+    name: Publish NuGet Package
+    needs: test
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup .NET 8.0
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: "8.0.x"
+
+      - name: Generate version
+        id: version
+        run: |
+          BUILD_VERSION="$(date -u +'%Y%m%d.%H%M%S')"
+          echo "build_version=$BUILD_VERSION" >> $GITHUB_OUTPUT
+
+      - name: Restore
+        run: dotnet restore Chandam.Package/Chandam.Package.csproj
+
+      - name: Pack NuGet package
+        run: |
+          dotnet pack Chandam.Package/Chandam.Package.csproj \
+            --configuration Release \
+            --no-restore \
+            -p:PackageVersion=${{ steps.version.outputs.build_version }}-beta \
+            -o ./nupkgs
+
+      - name: Push to GitHub Packages
+        run: |
+          dotnet nuget push ./nupkgs/*.nupkg \
+            --source "https://nuget.pkg.github.com/miriyald/index.json" \
+            --api-key ${{ secrets.GITHUB_TOKEN }} \
+            --skip-duplicate

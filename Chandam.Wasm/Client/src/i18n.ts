@@ -255,6 +255,21 @@ export interface Translations {
   // Explore
   explore_graph_hint: string;
 
+  // My Writings / Collection
+  nav_my_writings: string;
+  writings_subtitle: string;
+  writings_empty: string;
+  writings_delete: string;
+  writings_delete_confirm: string;
+  results_add_to_collection: string;
+  results_added_to_collection: string;
+  results_already_in_collection: string;
+  results_collection_full: string;
+
+  // Footer
+  footer_clear_data: string;
+  clear_data_warning: string;
+
   // Pages
   page_about_title: string;
   page_about_content: string;
@@ -500,6 +515,21 @@ const translations: Record<Language, Translations> = {
 
     // Explore
     explore_graph_hint: 'Scroll to zoom. Drag nodes to rearrange. Click a rule to view details.',
+
+    // My Writings / Collection
+    nav_my_writings: 'My Writings',
+    writings_subtitle: 'Your collection ({count}/20)',
+    writings_empty: 'No poems saved yet. Analyze a poem and save it to your collection!',
+    writings_delete: 'Remove',
+    writings_delete_confirm: 'Remove this poem from your collection?',
+    results_add_to_collection: 'Save',
+    results_added_to_collection: 'Saved!',
+    results_already_in_collection: 'Already saved',
+    results_collection_full: 'Collection full (20/20)',
+
+    // Footer
+    footer_clear_data: 'Clear Site Data',
+    clear_data_warning: 'This will delete all your saved poems, favorites, custom rules, and editor state. This action cannot be undone. Continue?',
 
     page_about_title: 'About Chandam',
     page_about_content: `
@@ -785,6 +815,21 @@ const translations: Record<Language, Translations> = {
 
     // Explore
     explore_graph_hint: 'జూమ్ చేయడానికి స్క్రోల్ చేయండి. నోడ్‌లను లాగి అమర్చండి. వివరాలు చూడటానికి నియమంపై క్లిక్ చేయండి.',
+
+    // My Writings / Collection
+    nav_my_writings: 'నా రచనలు',
+    writings_subtitle: 'మీ సేకరణ ({count}/20)',
+    writings_empty: 'ఇంకా పద్యాలు భద్రపరచబడలేదు. ఒక పద్యాన్ని విశ్లేషించి మీ సేకరణకు జోడించండి!',
+    writings_delete: 'తొలగించు',
+    writings_delete_confirm: 'ఈ పద్యాన్ని మీ సేకరణ నుండి తొలగించాలా?',
+    results_add_to_collection: 'భద్రపరచు',
+    results_added_to_collection: 'భద్రపరచబడింది!',
+    results_already_in_collection: 'ఇప్పటికే భద్రపరచబడింది',
+    results_collection_full: 'సేకరణ నిండింది (20/20)',
+
+    // Footer
+    footer_clear_data: 'డేటా తొలగించు',
+    clear_data_warning: 'ఇది మీ భద్రపరచిన పద్యాలు, ఇష్టమైనవి, అనుకూల నియమాలు మరియు ఎడిటర్ స్థితిని తొలగిస్తుంది. ఈ చర్యను రద్దు చేయలేరు. కొనసాగించాలా?',
 
     page_about_title: 'About Chandam',
     page_about_content: `

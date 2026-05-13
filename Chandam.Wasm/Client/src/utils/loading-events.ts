@@ -3,7 +3,10 @@
 export enum LoadingEventType {
   LoadingStarted = 'loading:started',
   LoadingCompleted = 'loading:completed',
-  LoadingFailed = 'loading:failed'
+  LoadingFailed = 'loading:failed',
+  ActionStarted = 'action:started',
+  ActionCompleted = 'action:completed',
+  ActionFailed = 'action:failed'
 }
 
 export interface LoadingEventDetail {
@@ -11,11 +14,18 @@ export interface LoadingEventDetail {
   message?: string;
 }
 
+export interface ActionEventDetail {
+  source: string; // 'analyze' | 'random' | 'filter'
+  buttonId?: string;
+  resultContainerId?: string;
+}
+
 export class LoadingEvents {
-  static emit(type: LoadingEventType, detail: LoadingEventDetail): void {
+  static emit(type: LoadingEventType.LoadingStarted | LoadingEventType.LoadingCompleted | LoadingEventType.LoadingFailed, detail: LoadingEventDetail): void;
+  static emit(type: LoadingEventType.ActionStarted | LoadingEventType.ActionCompleted | LoadingEventType.ActionFailed, detail: ActionEventDetail): void;
+  static emit(type: LoadingEventType, detail: LoadingEventDetail | ActionEventDetail): void {
     const event = new CustomEvent(type, { detail });
     window.dispatchEvent(event);
-    console.log(`LoadingEvent: ${type}`, detail);
   }
 
   static onLoadingStarted(callback: (detail: LoadingEventDetail) => void): void {
@@ -33,6 +43,24 @@ export class LoadingEvents {
   static onLoadingFailed(callback: (detail: LoadingEventDetail) => void): void {
     window.addEventListener(LoadingEventType.LoadingFailed, (e: Event) => {
       callback((e as CustomEvent<LoadingEventDetail>).detail);
+    });
+  }
+
+  static onActionStarted(callback: (detail: ActionEventDetail) => void): void {
+    window.addEventListener(LoadingEventType.ActionStarted, (e: Event) => {
+      callback((e as CustomEvent<ActionEventDetail>).detail);
+    });
+  }
+
+  static onActionCompleted(callback: (detail: ActionEventDetail) => void): void {
+    window.addEventListener(LoadingEventType.ActionCompleted, (e: Event) => {
+      callback((e as CustomEvent<ActionEventDetail>).detail);
+    });
+  }
+
+  static onActionFailed(callback: (detail: ActionEventDetail) => void): void {
+    window.addEventListener(LoadingEventType.ActionFailed, (e: Event) => {
+      callback((e as CustomEvent<ActionEventDetail>).detail);
     });
   }
 }

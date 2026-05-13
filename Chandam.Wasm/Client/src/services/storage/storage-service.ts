@@ -3,6 +3,7 @@
  */
 import { LocalStorageService } from './local-storage';
 import { IndexedDBService } from './indexed-db';
+import { runMigrations, resetMigrationVersion } from './migrations';
 import type { EditorState, UIState } from './models';
 
 export class StorageService {
@@ -12,6 +13,7 @@ export class StorageService {
 
   async init(): Promise<void> {
     if (this.initialized) return;
+    await runMigrations();
     await this.indexedDB.init();
     this.initialized = true;
   }
@@ -58,18 +60,9 @@ export class StorageService {
   // Clear all data
   async clearAll(): Promise<void> {
     this.localStorage.clear();
-
-    // Clear all favorites and custom rulesets
+    resetMigrationVersion();
     await this.init();
-    const favorites = await this.indexedDB.getAllFavorites();
-    for (const fav of favorites) {
-      await this.indexedDB.removeFavorite(fav.id);
-    }
-
-    const customRulesets = await this.indexedDB.getAllCustomRulesets();
-    for (const ruleset of customRulesets) {
-      await this.indexedDB.deleteCustomRuleset(ruleset.id);
-    }
+    await this.indexedDB.clearAll();
   }
 }
 

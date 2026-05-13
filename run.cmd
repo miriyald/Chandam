@@ -133,6 +133,9 @@
 :: 8a. PLAYWRIGHT COMMANDS - WASM TESTS
 :: ============================================================================
 
+:: Publish WASM to Playwright test folder (required before running tests)
+:: dotnet publish Chandam.Wasm/Chandam.Wasm.csproj -c Release -o Chandam.Wasm.Tests/.publish -p:ExcludeYaml=false
+
 :: Navigate to Playwright test project
 :: cd Chandam.Wasm.Tests
 

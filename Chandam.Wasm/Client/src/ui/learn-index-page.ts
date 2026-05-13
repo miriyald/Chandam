@@ -35,6 +35,18 @@ let currentRuleSetId = '';
 
 // Main function: Render learn index page
 export async function renderLearnIndexPage(ruleSet: string) {
+  // Show page-level loading indicator immediately
+  const content = document.getElementById('content');
+  if (content) {
+    content.innerHTML = `<div class="page-loading">
+      <svg class="loader-svg" viewBox="0 0 96 48" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <circle class="loader-circle" cx="24" cy="24" r="10" fill="#1a3a5c"/>
+        <circle class="loader-circle" cx="48" cy="24" r="10" fill="#b8860b"/>
+        <circle class="loader-circle" cx="72" cy="24" r="10" fill="#1a3a5c"/>
+      </svg>
+    </div>`;
+  }
+
   // Step 1: Validate and load rule set (supports both predefined and custom)
   const ruleSetConfig = await getRuleSetAsync(ruleSet);
   if (!ruleSetConfig) {
@@ -76,8 +88,7 @@ export async function renderLearnIndexPage(ruleSet: string) {
   currentFilters = await WasmBridge.getAvailableFilters('te');
 
   // Step 3c: Load favorite identifiers from browser storage
-  await storageService.init();
-  const allFavorites = await storageService.indexedDB.getAllFavorites();
+  const allFavorites = await favoritesService.getAllFavorites();
 
   // Create Set of composite IDs for O(1) lookup
   // For custom-fav (virtual collection), all displayed rules are favorites
@@ -128,7 +139,7 @@ function renderLearnIndexPageHtml(
   const content = document.getElementById('content');
   if (!content) return;
 
-  const breadcrumbs = buildRuleSetBreadcrumbs(ruleSetId, 'learn');
+  const breadcrumbs = buildRuleSetBreadcrumbs(ruleSetId, 'learn', ruleSetName);
 
   const hasResults = ruleCount > 0;
   const resultsSection = hasResults
@@ -144,9 +155,9 @@ function renderLearnIndexPageHtml(
 
       <div class="page-header-controls">
         <h1>${ruleSetName}</h1>
-        <button class="btn-export-book" data-action="export-book">
-          <svg class="export-icon" viewBox="0 0 24 24" width="16" height="16"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
-          ${t('export_book')}
+        <button class="action-btn btn-export-book" data-action="export-book">
+          <svg viewBox="0 0 24 24" width="16" height="16"><path fill="currentColor" d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
+          <span>${t('export_book')}</span>
         </button>
         ${renderModeSwitcher({ ruleSetId, currentMode: 'learn' })}
       </div>
@@ -240,8 +251,9 @@ function renderRuleListItem(rule: RuleSummaryDetailed, ruleSetId: string, favori
     ? `<div class="rule-item-meta">${metaParts.join(' · ')}</div>`
     : '';
 
+  const isCustomRuleSet = ruleSetId === 'custom-rules' || ruleSetId === 'custom-fav';
   const compositeId = `${ruleSetId}:${rule.identifier}`;
-  const isFavorited = favoriteIds.has(compositeId);
+  const isFavorited = !isCustomRuleSet && favoriteIds.has(compositeId);
   const favoritedClass = isFavorited ? ' favorited' : '';
 
   const isCustomRule = rule.identifier.startsWith('custom-');

@@ -4,88 +4,96 @@
 import { storageService } from './storage-service';
 import type { FavoriteEntry, CustomRuleset } from './models';
 
+const FAVORITES_KEY = 'favorites';
+const FAV_RULESET_KEY = 'custom-rulesets:custom-fav';
+const MAX_FAVORITES = 50;
+
 export class FavoritesService {
   async isFavorited(ruleSetId: string, ruleId: string): Promise<boolean> {
-    await storageService.init();
     const compositeId = this.makeCompositeId(ruleSetId, ruleId);
-    return storageService.indexedDB.isFavorited(compositeId);
+    const favorites = await this.loadFavorites();
+    return favorites.some(f => f.id === compositeId);
   }
 
   async toggleFavorite(ruleSetId: string, ruleId: string, ruleData: any): Promise<boolean> {
     await storageService.init();
     const compositeId = this.makeCompositeId(ruleSetId, ruleId);
-    const isFavorited = await storageService.indexedDB.isFavorited(compositeId);
+    const favorites = await this.loadFavorites();
+    const existingIndex = favorites.findIndex(f => f.id === compositeId);
 
-    if (isFavorited) {
-      // Remove favorite
-      await storageService.indexedDB.removeFavorite(compositeId);
+    if (existingIndex >= 0) {
+      favorites.splice(existingIndex, 1);
     } else {
-      // Add favorite
-      const favorite: FavoriteEntry = {
+      if (favorites.length >= MAX_FAVORITES) {
+        throw new Error(`Maximum ${MAX_FAVORITES} favorites reached`);
+      }
+      favorites.push({
         id: compositeId,
         ruleSetId,
         ruleId,
         ruleData,
         favoritedAt: Date.now()
-      };
-
-      await storageService.indexedDB.addFavorite(favorite);
+      });
     }
 
-    // Regenerate favorites collection
-    await this.regenerateFavoritesRuleset();
+    await this.saveFavorites(favorites);
+    await this.regenerateFavoritesRuleset(favorites);
 
-    return !isFavorited; // Return new state
+    return existingIndex < 0;
   }
 
-  async regenerateFavoritesRuleset(): Promise<void> {
+  async regenerateFavoritesRuleset(favorites?: FavoriteEntry[]): Promise<void> {
     await storageService.init();
-
-    // Get all favorites
-    const allFavorites = await storageService.indexedDB.getAllFavorites();
-
-    // Sort by favoritedAt (chronological order)
+    const allFavorites = favorites ?? await this.loadFavorites();
     allFavorites.sort((a, b) => a.favoritedAt - b.favoritedAt);
 
-    // Extract rule data
-    const favoriteRules = allFavorites.map(fav => fav.ruleData);
+    const rulesets = await this.loadCustomRulesets();
 
-    if (favoriteRules.length > 0) {
-      // Create/update favorites ruleset
+    if (allFavorites.length > 0) {
       const favRuleset: CustomRuleset = {
         id: 'custom-fav',
         name: '⭐ My Favorites',
-        description: `${favoriteRules.length} favorited rules from various rulesets`,
-        rules: favoriteRules,
+        description: `${allFavorites.length} favorited rules from various rulesets`,
+        rules: allFavorites.map(fav => fav.ruleData),
         type: 'favorites',
         createdAt: Date.now(),
         updatedAt: Date.now()
       };
-
-      await storageService.indexedDB.saveCustomRuleset(favRuleset);
+      const idx = rulesets.findIndex(r => r.id === 'custom-fav');
+      if (idx >= 0) rulesets[idx] = favRuleset;
+      else rulesets.push(favRuleset);
     } else {
-      // Delete if no favorites left
-      try {
-        await storageService.indexedDB.deleteCustomRuleset('custom-fav');
-      } catch (e) {
-        // Ignore if doesn't exist
-      }
+      const idx = rulesets.findIndex(r => r.id === 'custom-fav');
+      if (idx >= 0) rulesets.splice(idx, 1);
     }
+
+    await storageService.indexedDB.saveData('custom-rulesets', rulesets);
   }
 
   async getFavoriteCount(): Promise<number> {
-    await storageService.init();
-    const favorites = await storageService.indexedDB.getAllFavorites();
+    const favorites = await this.loadFavorites();
     return favorites.length;
   }
 
   async getAllFavorites(): Promise<FavoriteEntry[]> {
-    await storageService.init();
-    return storageService.indexedDB.getAllFavorites();
+    return this.loadFavorites();
   }
 
   private makeCompositeId(ruleSetId: string, ruleId: string): string {
     return `${ruleSetId}:${ruleId}`;
+  }
+
+  private async loadFavorites(): Promise<FavoriteEntry[]> {
+    await storageService.init();
+    return await storageService.indexedDB.getData<FavoriteEntry[]>(FAVORITES_KEY) ?? [];
+  }
+
+  private async saveFavorites(favorites: FavoriteEntry[]): Promise<void> {
+    await storageService.indexedDB.saveData(FAVORITES_KEY, favorites);
+  }
+
+  private async loadCustomRulesets(): Promise<CustomRuleset[]> {
+    return await storageService.indexedDB.getData<CustomRuleset[]>('custom-rulesets') ?? [];
   }
 }
 

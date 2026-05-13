@@ -20,6 +20,11 @@ export class AnalyticsService {
    * Auto-detects measurement ID from gtag config in index.html
    */
   init(): void {
+    if (this.isLocalhost()) {
+      console.log('[Analytics] Localhost detected, tracking disabled');
+      return;
+    }
+
     if (!this.isAvailable()) {
       console.warn('[Analytics] gtag.js not loaded, tracking disabled');
       return;
@@ -37,9 +42,11 @@ export class AnalyticsService {
     console.log('[Analytics] Initialized with measurement ID:', this.measurementId);
   }
 
-  /**
-   * Check if gtag is available (not blocked by ad blockers)
-   */
+  private isLocalhost(): boolean {
+    const host = window.location.hostname;
+    return host === 'localhost' || host === '127.0.0.1' || host === '::1';
+  }
+
   private isAvailable(): boolean {
     return typeof window !== 'undefined' && typeof window.gtag === 'function';
   }
@@ -48,7 +55,7 @@ export class AnalyticsService {
    * Track page view (SPA navigation)
    */
   trackPageView(path: string): void {
-    if (!this.isAvailable()) return;
+    if (!this.initialized || !this.isAvailable()) return;
 
     window.gtag!('event', 'page_view', {
       page_path: path,
@@ -62,7 +69,7 @@ export class AnalyticsService {
    * Track custom event with parameters
    */
   trackEvent(eventName: string, params: Record<string, any> = {}): void {
-    if (!this.isAvailable()) return;
+    if (!this.initialized || !this.isAvailable()) return;
 
     window.gtag!('event', eventName, params);
 
@@ -86,7 +93,7 @@ export class AnalyticsService {
    * Set user ID for cross-session tracking
    */
   setUserId(userId: string): void {
-    if (!this.isAvailable() || !this.measurementId) return;
+    if (!this.initialized || !this.isAvailable() || !this.measurementId) return;
 
     window.gtag!('config', this.measurementId, {
       user_id: userId

@@ -1,0 +1,32 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <IsPackable>true</IsPackable>
+    <PackageId>Chandam</PackageId>
+    <Version>$(ChandamVersion)</Version>
+    <Description>Telugu, Sanskrit, and Kannada poetry meter (chandam/prosody) analysis engine. Identifies metrical patterns in Indian language verses.</Description>
+    <PackageTags>telugu;sanskrit;kannada;poetry;meter;prosody;chandam;nlp;indic</PackageTags>
+    <IncludeBuildOutput>true</IncludeBuildOutput>
+    <GenerateDocumentationFile>false</GenerateDocumentationFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Chandam.Core\Chandam.Core.csproj" PrivateAssets="all" />
+    <ProjectReference Include="..\Chandam.Util\Chandam.Util.csproj" PrivateAssets="all" />
+    <ProjectReference Include="..\Chandam.Indic\Chandam.Indic.csproj" PrivateAssets="all" />
+    <ProjectReference Include="..\Chandam.Rules\Chandam.Rules.csproj" PrivateAssets="all" />
+  </ItemGroup>
+
+  <!-- Bundle referenced project DLLs into the NuGet package -->
+  <PropertyGroup>
+    <TargetsForTfmSpecificBuildOutput>$(TargetsForTfmSpecificBuildOutput);CopyProjectReferencesToPackage</TargetsForTfmSpecificBuildOutput>
+  </PropertyGroup>
+
+  <Target Name="CopyProjectReferencesToPackage" DependsOnTargets="BuildOnlySettings;ResolveReferences">
+    <ItemGroup>
+      <BuildOutputInPackage Include="@(ReferenceCopyLocalPaths->WithMetadataValue('ReferenceSourceTarget','ProjectReference'))" />
+    </ItemGroup>
+  </Target>
+
+</Project>

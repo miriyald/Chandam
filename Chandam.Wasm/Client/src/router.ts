@@ -124,12 +124,16 @@ export class Router {
     const nav = document.getElementById('main-nav');
     if (!nav) return;
 
+    const effectivePath = /^\/(learn|compute|explore)\//.test(currentPath)
+      ? '/rule-sets'
+      : currentPath;
+
     const links = nav.querySelectorAll('a');
     links.forEach(link => {
       const linkPath = this.stripBasePath(new URL(link.href).pathname);
-      const isActive = currentPath === '/'
+      const isActive = effectivePath === '/'
         ? linkPath === '/'
-        : linkPath !== '/' && currentPath.startsWith(linkPath);
+        : linkPath !== '/' && effectivePath.startsWith(linkPath);
 
       link.classList.toggle('active', isActive);
       if (isActive) {
@@ -144,15 +148,20 @@ export class Router {
     // Handle browser back/forward
     window.addEventListener('popstate', () => this.route());
 
-    // Intercept link clicks (skip blob URLs used for file downloads)
+    // Intercept link clicks (skip blob URLs, target=_blank, and hash-only links)
     document.addEventListener('click', (e) => {
       const target = (e.target as HTMLElement).closest('a');
-      if (target && target.href && target.origin === location.origin && !target.href.startsWith('blob:')) {
+      if (target && target.href && target.origin === location.origin && !target.href.startsWith('blob:') && target.target !== '_blank') {
+        const url = new URL(target.href);
+        // Let the browser handle hash-only navigation (same page anchors)
+        if (url.pathname === window.location.pathname && url.hash) {
+          return;
+        }
         e.preventDefault();
         // Close mobile nav if open
         document.getElementById('main-nav')?.classList.remove('open');
-        const url = new URL(target.href);
-        this.navigate(this.stripBasePath(url.pathname));
+        const navPath = this.stripBasePath(url.pathname) + url.search;
+        this.navigate(navPath);
       }
     });
 

@@ -20,11 +20,20 @@ async function getFirstRuleWithExamples(page: Page): Promise<string> {
 }
 
 test.describe('GitHub reporting flow', () => {
-  test('learn page submit creates download and opens GitHub issue URL', async ({
+  test('custom rule learn page submit creates download and opens GitHub issue URL', async ({
     page,
   }) => {
-    const ruleId = await getFirstRuleWithExamples(page);
-    await gotoAndWait(page, `/learn/chandam/${ruleId}`);
+    // Create a custom rule first (GitHub submit only available for custom rules)
+    await gotoAndWait(page, '/create-rule');
+    await page.locator('#rule-name').fill(`GH Test ${Date.now()}`);
+
+    page.once('dialog', async (dialog) => await dialog.accept());
+    await page.locator('#create-rule-btn').click();
+    await expect(page).toHaveURL(/\/learn\/custom-rules\/custom-\d+\/?$/, { timeout: 7_000 });
+
+    // Now on the custom rule's learn page — GitHub submit button should be visible
+    const githubBtn = page.locator('#btn-github-submit');
+    await expect(githubBtn).toBeVisible({ timeout: 5_000 });
 
     await page.evaluate(() => {
       (window as any).__openedUrl = '';
@@ -35,12 +44,11 @@ test.describe('GitHub reporting flow', () => {
     });
 
     const downloadPromise = page.waitForEvent('download');
-    await page.locator('#btn-submit-github-learn').click();
+    await githubBtn.click();
     const download = await downloadPromise;
 
     const filename = download.suggestedFilename();
     expect(filename).toContain('chandam-example-');
-    expect(filename).toContain(ruleId);
 
     const openedUrl = await page.evaluate(() => (window as any).__openedUrl as string);
     expect(openedUrl).toContain('github.com/chandamu/chandam/issues/new');

@@ -35,7 +35,7 @@ Then open http://localhost:5000 in your browser.
 
 **Using Docker:**
 ```bash
-docker-compose up chandam-wasm
+docker run -d -p 8082:80 ghcr.io/miriyald/chandam-wasm:latest
 ```
 Access at http://localhost:8082
 
@@ -69,7 +69,7 @@ curl -X POST http://localhost:5000/api/determine \
 
 **Using Docker:**
 ```bash
-docker-compose up chandam-api
+docker run -d -p 8080:8080 ghcr.io/miriyald/chandam-api:latest
 ```
 Access at http://localhost:8080
 
@@ -91,13 +91,13 @@ Add to your `claude_desktop_config.json`:
 }
 ```
 
-Or with Docker:
+Or with Docker (no build needed):
 ```json
 {
   "mcpServers": {
     "chandam": {
       "command": "docker",
-      "args": ["run", "-i", "--rm", "chandam-mcp-stdio"]
+      "args": ["run", "-i", "--rm", "ghcr.io/miriyald/chandam-mcp-stdio:latest"]
     }
   }
 }
@@ -286,11 +286,30 @@ npm run lint  # ESLint 10 with TypeScript rules
 
 ### Docker Deployment
 
-```bash
-# Build all images
-docker-compose build
+**Pull pre-built images from GitHub Container Registry (no build required):**
 
-# Start all services
+```bash
+# Web UI
+docker run -d -p 8082:80 ghcr.io/miriyald/chandam-wasm:latest
+
+# REST API
+docker run -d -p 8080:8080 ghcr.io/miriyald/chandam-api:latest
+
+# MCP HTTP/SSE server (for remote AI agents)
+docker run -d -p 3001:3001 ghcr.io/miriyald/chandam-mcp-http:latest
+
+# MCP Stdio server (for Claude Desktop)
+docker run -i --rm ghcr.io/miriyald/chandam-mcp-stdio:latest
+```
+
+**Available tags:**
+- `latest` / `beta` — most recent build from beta branch
+- `YYYYMMdd.HHmmss` — specific version (e.g., `20260511.143022`)
+
+**Or build locally with docker-compose:**
+
+```bash
+docker-compose build
 docker-compose up -d
 
 # Individual services
@@ -454,18 +473,20 @@ The web application is automatically deployed to GitHub Pages on every push to t
 
 ### Versioning
 
-Version is defined in [Chandam.Wasm/Chandam.Wasm.csproj](Chandam.Wasm/Chandam.Wasm.csproj):
+Version is defined centrally in [Directory.Build.props](Directory.Build.props):
 
 ```xml
 <PropertyGroup>
-  <Version>0.0.2</Version>
+  <ChandamVersion>0.0.2</ChandamVersion>
 </PropertyGroup>
 ```
 
-**During local development:** Footer shows `v0.0.0 (dev)`  
-**After publish:** MSBuild automatically injects `v0.0.2 (2026-04-02)`
+This version flows to all artifacts:
+- **Web UI**: Footer shows `v0.0.0 (dev)` locally, `vYYYYMMdd.HHmmss (Published: date)` after publish
+- **Docker images**: Tagged as `YYYYMMdd.HHmmss` (UTC build timestamp)
+- **NuGet package**: `YYYYMMdd.HHmmss-beta`
 
-To release a new version, just update the `<Version>` in the .csproj file.
+To release a new version, update `<ChandamVersion>` in `Directory.Build.props`.
 
 ### Deployment Workflow
 

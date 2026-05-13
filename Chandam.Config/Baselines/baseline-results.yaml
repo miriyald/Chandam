@@ -642,14 +642,14 @@ results:
 
     రంగనారతుల నిద్రాసక్తిఁ జను రాత్రి; పోవుఁ గుటుంబార్థబుద్ధి నహము
   poemHash: QMVJc7qfIqL31BaAL+3bIDmHbftysIFPZgyWjFqPiUg=
-  matchPercentage: 81
+  matchPercentage: 91
   isMatch: true
-  yatiMatched: false
+  yatiMatched: true
   prasaMatched: true
-  matchedLines: 45
+  matchedLines: 47
   totalLines: 49
-  mismatchCount: 9
-  timestamp: 2026-05-09T20:59:42.8273525Z
+  mismatchCount: 4
+  timestamp: 2026-05-12T00:00:00.0000000Z
 - ruleIdentifier: seesaM2
   ruleName: సీసం2-పూర్వభాగము
   exampleIndex: 3
@@ -662,14 +662,14 @@ results:
 
     మమతతో భ్రూయుగమధ్యంబు సేర్చి దృ; క్కర్ణ నాసాస్య మార్గములు మూసి,
   poemHash: Ef6254I4wyOVZMfAm9TNPtdqjZNrpFWbIbTVe7nZKko=
-  matchPercentage: 85
+  matchPercentage: 97
   isMatch: true
-  yatiMatched: false
+  yatiMatched: true
   prasaMatched: true
-  matchedLines: 45
+  matchedLines: 48
   totalLines: 49
-  mismatchCount: 7
-  timestamp: 2026-05-09T20:59:42.8279301Z
+  mismatchCount: 1
+  timestamp: 2026-05-12T00:00:00.0000000Z
 - ruleIdentifier: utsaahamu
   ruleName: ఉత్సాహము
   exampleIndex: 0
@@ -1140,14 +1140,14 @@ results:
 
     రాగ-మయమౌ పలు వరాల సద్భావాలు!
   poemHash: C9Fsx80jwlU8Uqo3h4vlT4+WZnoZBW8bN6BQP2hXt1U=
-  matchPercentage: 88
+  matchPercentage: 100
   isMatch: true
-  yatiMatched: false
+  yatiMatched: true
   prasaMatched: true
-  matchedLines: 30
+  matchedLines: 34
   totalLines: 34
-  mismatchCount: 4
-  timestamp: 2026-05-09T20:59:42.8347231Z
+  mismatchCount: 0
+  timestamp: 2026-05-12T00:00:00.0000000Z
 - ruleIdentifier: aMtaraakkara
   ruleName: అంతరాక్కర
   exampleIndex: 1
@@ -1160,14 +1160,14 @@ results:
 
     పూర్ణ-సుఖ మందె నహ బుద్బుదమ్మీ యింపు!
   poemHash: cggEd2dTXpssEZ3OIlSu0u+6zNXwJ8spaO/kKWiXsqQ=
-  matchPercentage: 91
+  matchPercentage: 100
   isMatch: true
-  yatiMatched: false
+  yatiMatched: true
   prasaMatched: true
-  matchedLines: 31
+  matchedLines: 34
   totalLines: 34
-  mismatchCount: 3
-  timestamp: 2026-05-09T20:59:42.8349956Z
+  mismatchCount: 0
+  timestamp: 2026-05-12T00:00:00.0000000Z
 - ruleIdentifier: aMtaraakkara
   ruleName: అంతరాక్కర
   exampleIndex: 2
@@ -1180,14 +1180,14 @@ results:
 
     నమల మగు నంతరాక్కర మబ్ధిసంఖ్య
   poemHash: LVocMQ5JOKgGgODT1+ssAasUTLl12Em6LgIi2Y42eBI=
-  matchPercentage: 91
+  matchPercentage: 88
   isMatch: true
   yatiMatched: false
   prasaMatched: true
-  matchedLines: 31
+  matchedLines: 30
   totalLines: 34
-  mismatchCount: 3
-  timestamp: 2026-05-09T20:59:42.8352229Z
+  mismatchCount: 4
+  timestamp: 2026-05-12T00:00:00.0000000Z
 - ruleIdentifier: aMtaraakkara
   ruleName: అంతరాక్కర
   exampleIndex: 3

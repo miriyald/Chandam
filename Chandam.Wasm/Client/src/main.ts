@@ -7,9 +7,11 @@ import { renderLearnIndexPage } from './ui/learn-index-page';
 import { renderLearnDetailPage } from './ui/learn-detail-page';
 import { renderRuleCreatorPage } from './ui/rule-creator-page';
 import { renderExplorePage } from './ui/explore-page';
+import { renderMyWritingsPage } from './ui/my-writings-page';
 import { validateRuleSetAsync, validateRule, handleInvalidRuleSet, handleInvalidRule } from './utils/error-handlers';
-import { createInitialLoader, preloadLoaderImage } from './utils/loader';
+import { createInitialLoader } from './utils/loader';
 import { LoadingEvents, LoadingEventType } from './utils/loading-events';
+import { initInlineLoader } from './utils/inline-loader';
 import './utils/decompression'; // Register decompressGzip globally for C# interop
 import { storageService } from './services/storage/storage-service';
 import { initConsoleAPI, getUserId } from './services/console-api';
@@ -35,11 +37,11 @@ async function ensureRulesetLoadedForValidation(ruleSetId: string): Promise<void
   }
 }
 
-// Pre-load loader SVG to browser cache
-preloadLoaderImage('/branding/chandam-circles.svg');
-
 // Initialize loader system (sets up event listeners)
 const initialLoader = createInitialLoader();
+
+// Initialize inline loader for action-level feedback (buttons, progress bars)
+initInlineLoader();
 
 // Note: Initial loader is already visible in HTML,
 // We just need to emit completion event when WASM is ready
@@ -130,6 +132,11 @@ router.register('/learn/:ruleSet/:ruleId', async (params) => {
   await renderLearnDetailPage(params.ruleSet, params.ruleId);
 });
 
+// My Writings route
+router.register('/my-writings', async () => {
+  await renderMyWritingsPage();
+});
+
 // Static pages
 router.register('/resources', () => { setPageTitle(t('nav_resources')); loadStaticPage(`pages/${getLanguage()}/resources.html`); });
 router.register('/about', () => { setPageTitle(t('nav_about')); loadStaticPage(`pages/${getLanguage()}/about.html`); });
@@ -141,9 +148,18 @@ function applyLanguageToPage(): void {
   document.documentElement.lang = getLanguage();
 
   // Update elements with data-i18n attribute (static nav links, loading text)
+  // Preserves child elements (e.g. SVG icons) by updating only the last text node
   document.querySelectorAll<HTMLElement>('[data-i18n]').forEach(el => {
     const key = el.getAttribute('data-i18n') as keyof Translations;
-    el.textContent = t(key);
+    if (el.children.length > 0) {
+      const textNodes = Array.from(el.childNodes).filter(n => n.nodeType === Node.TEXT_NODE && n.textContent?.trim());
+      const lastText = textNodes[textNodes.length - 1];
+      if (lastText) {
+        lastText.textContent = ` ${t(key)}`;
+      }
+    } else {
+      el.textContent = t(key);
+    }
   });
 
   // Update language toggle button label
@@ -174,6 +190,15 @@ document.addEventListener('DOMContentLoaded', () => {
     const done = analyticsService.startTimedEvent('language_toggle', {});
     toggleLanguage();
     done({ language: getLanguage() });
+  });
+
+  document.getElementById('btn-clear-data')?.addEventListener('click', async (e) => {
+    e.preventDefault();
+    const confirmed = confirm(t('clear_data_warning'));
+    if (confirmed) {
+      await storageService.clearAll();
+      window.location.reload();
+    }
   });
 });
 

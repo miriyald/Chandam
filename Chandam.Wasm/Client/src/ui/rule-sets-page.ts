@@ -15,8 +15,8 @@ export async function renderRuleSetsPage() {
   const breadcrumbs = buildStaticPageBreadcrumbs(t('rulesets_page_title'));
 
   // Load custom rulesets from IndexedDB
-  await storageService.init();
-  const customRulesets = await storageService.indexedDB.getAllCustomRulesets();
+  const { customRulesService } = await import('../services/storage/custom-rules-service');
+  const customRulesets = await customRulesService.getAllCustomRulesets();
 
   // Filter: only show favorites if it has rules, and separate custom-rules
   const customRulesetsWithData = customRulesets.filter(rs =>

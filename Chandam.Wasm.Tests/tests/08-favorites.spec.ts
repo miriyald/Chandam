@@ -250,7 +250,8 @@ test.describe('Favorites – multi-ruleset and persistence', () => {
     const searchInput = page.locator('.filter-search');
     if (await searchInput.isVisible()) {
       await searchInput.fill(firstName?.trim() ?? '');
-      await page.waitForTimeout(300);
+      // Wait for debounce (300ms) + DOM refresh
+      await page.waitForTimeout(800);
       const filteredCount = await page.locator('.rule-list-item').count();
       expect(filteredCount).toBeLessThanOrEqual(initialCount);
       expect(filteredCount).toBeGreaterThanOrEqual(1);

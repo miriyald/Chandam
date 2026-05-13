@@ -1,5 +1,16 @@
 <Project>
   <PropertyGroup>
     <NoWarn>$(NoWarn);CS8981</NoWarn>
+    <ChandamVersion>0.0.2</ChandamVersion>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <Authors>Dileep Miriyala</Authors>
+    <Company>Chandamu</Company>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageProjectUrl>https://chandamu.github.io/</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/miriyald/chandam</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <IsPackable>false</IsPackable>
   </PropertyGroup>
 </Project>

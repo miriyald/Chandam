@@ -31,7 +31,7 @@ export async function renderExplorePage(ruleSet: string) {
   const content = document.getElementById('content');
   if (!content) return;
 
-  const breadcrumbs = buildRuleSetBreadcrumbs(ruleSet, 'explore');
+  const breadcrumbs = buildRuleSetBreadcrumbs(ruleSet, 'explore', ruleSetConfig.name);
 
   content.innerHTML = `
     <div class="explore-page">

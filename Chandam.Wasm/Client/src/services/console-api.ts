@@ -4,6 +4,7 @@
  */
 import { storageService } from './storage/storage-service';
 import { favoritesService } from './storage/favorites-service';
+import { customRulesService } from './storage/custom-rules-service';
 import { CustomRulesLoader } from './custom-rules-loader';
 import { WasmBridge } from '../wasm-bridge';
 import type { CustomRuleset } from './storage/models';
@@ -15,11 +16,9 @@ const USER_ID_KEY = 'chandam:userId';
  * Returns UUID v4 stored in localStorage
  */
 export function getUserId(): string {
-  // Check if user ID exists
   let userId = localStorage.getItem(USER_ID_KEY);
 
   if (!userId) {
-    // Generate new UUID v4
     userId = crypto.randomUUID();
     localStorage.setItem(USER_ID_KEY, userId);
     console.log('[Analytics] Generated new user ID:', userId.substring(0, 8) + '...');
@@ -40,13 +39,11 @@ export function initConsoleAPI() {
 
     // Analytics
     analytics: {
-      // Get current user ID
       getUserId: () => {
         const userId = getUserId();
         console.log('User ID:', userId);
         return userId;
       },
-      // Reset user ID (generate new one)
       resetUserId: () => {
         localStorage.removeItem(USER_ID_KEY);
         const newId = getUserId();
@@ -57,9 +54,7 @@ export function initConsoleAPI() {
 
     // Favorites management
     favorites: {
-      // Get all favorites
       list: async () => {
-        await storageService.init();
         const favorites = await favoritesService.getAllFavorites();
         console.table(favorites.map(f => ({
           ruleSet: f.ruleSetId,
@@ -70,28 +65,21 @@ export function initConsoleAPI() {
         return favorites;
       },
 
-      // Add to favorites
       add: async (ruleSetId: string, ruleId: string) => {
-        await storageService.init();
         const isFav = await favoritesService.isFavorited(ruleSetId, ruleId);
-
         if (isFav) {
           console.log('Already favorited');
           return false;
         }
 
-        // Get rule data in DTO format
         const ruleDto = await WasmBridge.getRuleDto(ruleId);
         await favoritesService.toggleFavorite(ruleSetId, ruleId, ruleDto);
         console.log(`Added ${ruleId} to favorites`);
         return true;
       },
 
-      // Remove from favorites
       remove: async (ruleSetId: string, ruleId: string) => {
-        await storageService.init();
         const isFav = await favoritesService.isFavorited(ruleSetId, ruleId);
-
         if (!isFav) {
           console.log('Not in favorites');
           return false;
@@ -103,30 +91,24 @@ export function initConsoleAPI() {
         return true;
       },
 
-      // Check if favorited
       check: async (ruleSetId: string, ruleId: string) => {
-        await storageService.init();
         const isFav = await favoritesService.isFavorited(ruleSetId, ruleId);
-        console.log(isFav ? 'Favorited ❤️' : 'Not favorited 🤍');
+        console.log(isFav ? 'Favorited' : 'Not favorited');
         return isFav;
       },
 
-      // Get count
       count: async () => {
-        await storageService.init();
         const count = await favoritesService.getFavoriteCount();
         console.log(`${count} favorites (max 50)`);
         return count;
       },
 
-      // Clear all favorites
       clear: async () => {
-        await storageService.init();
+        // Remove all favorites by toggling each one off
         const favorites = await favoritesService.getAllFavorites();
         for (const fav of favorites) {
-          await storageService.indexedDB.removeFavorite(fav.id);
+          await favoritesService.toggleFavorite(fav.ruleSetId, fav.ruleId, fav.ruleData);
         }
-        await favoritesService.regenerateFavoritesRuleset();
         console.log('All favorites cleared');
         return true;
       }
@@ -134,30 +116,23 @@ export function initConsoleAPI() {
 
     // Custom rulesets management
     custom: {
-      // List all custom rulesets
       list: async () => {
-        await storageService.init();
-        const customRulesets = await storageService.indexedDB.getAllCustomRulesets();
-        console.table(customRulesets.map(crs => ({
+        const allRulesets = await customRulesService.getAllCustomRulesets();
+        console.table(allRulesets.map(crs => ({
           id: crs.id,
           name: crs.name,
           type: crs.type,
           rules: crs.rules.length,
           updated: new Date(crs.updatedAt).toLocaleString()
         })));
-        return customRulesets;
+        return allRulesets;
       },
 
-      // Get specific custom ruleset
       get: async (id: string) => {
-        await storageService.init();
-        return await storageService.indexedDB.getCustomRuleset(id);
+        return await customRulesService.getCustomRuleset(id);
       },
 
-      // Create/update custom ruleset from JSON string
       set: async (id: string, name: string, rulesJson: string) => {
-        await storageService.init();
-
         try {
           const rulesArray = JSON.parse(rulesJson);
 
@@ -186,10 +161,16 @@ export function initConsoleAPI() {
             updatedAt: Date.now()
           };
 
-          await storageService.indexedDB.saveCustomRuleset(customRuleset);
+          // Save via the service's internal compressed storage
+          await storageService.init();
+          const rulesets = await customRulesService.getAllCustomRulesets();
+          const idx = rulesets.findIndex(r => r.id === id);
+          if (idx >= 0) rulesets[idx] = customRuleset;
+          else rulesets.push(customRuleset);
+          await storageService.indexedDB.saveData('custom-rulesets', rulesets);
+
           console.log(`Saved custom ruleset "${name}" with ${rulesArray.length} rules`);
 
-          // Load into WASM
           await CustomRulesLoader.loadCustomRuleset(customRuleset.id);
           console.log('Custom ruleset loaded into WASM engine');
 
@@ -200,16 +181,16 @@ export function initConsoleAPI() {
         }
       },
 
-      // Delete custom ruleset
       delete: async (id: string) => {
-        await storageService.init();
-
         if (id === 'custom-fav') {
           console.error('Cannot delete favorites collection. Use chandam.favorites.clear() instead.');
           return false;
         }
 
-        await storageService.indexedDB.deleteCustomRuleset(id);
+        await storageService.init();
+        const rulesets = await customRulesService.getAllCustomRulesets();
+        const filtered = rulesets.filter(r => r.id !== id);
+        await storageService.indexedDB.saveData('custom-rulesets', filtered);
         console.log(`Custom ruleset "${id}" deleted`);
         return true;
       }

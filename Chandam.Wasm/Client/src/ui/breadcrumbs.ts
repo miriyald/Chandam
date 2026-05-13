@@ -29,9 +29,8 @@ export function renderBreadcrumbs(items: BreadcrumbItem[]): string {
 }
 
 // Build breadcrumbs for rule set pages (Learn/Compute/Explore index)
-export function buildRuleSetBreadcrumbs(ruleSetId: string, mode: 'compute' | 'learn' | 'explore'): BreadcrumbItem[] {
-  const ruleSet = getRuleSet(ruleSetId);
-  const ruleSetName = ruleSet ? ruleSet.name : ruleSetId;
+export function buildRuleSetBreadcrumbs(ruleSetId: string, mode: 'compute' | 'learn' | 'explore', nameOverride?: string): BreadcrumbItem[] {
+  const ruleSetName = nameOverride || (getRuleSet(ruleSetId)?.name ?? ruleSetId);
 
   return [
     { label: t('breadcrumb_rule_sets'), url: '/rule-sets' },
@@ -44,10 +43,10 @@ export function buildRuleBreadcrumbs(
   ruleSetId: string,
   ruleId: string,
   ruleName: string,
-  mode: 'compute' | 'learn'
+  mode: 'compute' | 'learn',
+  ruleSetNameOverride?: string
 ): BreadcrumbItem[] {
-  const ruleSet = getRuleSet(ruleSetId);
-  const ruleSetName = ruleSet ? ruleSet.name : ruleSetId;
+  const ruleSetName = ruleSetNameOverride || (getRuleSet(ruleSetId)?.name ?? ruleSetId);
 
   return [
     { label: t('breadcrumb_rule_sets'), url: '/rule-sets' },

@@ -23,23 +23,16 @@ async function clearStorageState(page: Page): Promise<void> {
       openReq.onerror = () => reject(openReq.error);
     });
 
-    const clearStore = async (storeName: string): Promise<void> => {
-      if (!db.objectStoreNames.contains(storeName)) {
-        return;
-      }
-
-      const tx = db.transaction(storeName, 'readwrite');
-      tx.objectStore(storeName).clear();
-
+    if (db.objectStoreNames.contains('compressed-data')) {
+      const tx = db.transaction('compressed-data', 'readwrite');
+      tx.objectStore('compressed-data').clear();
       await new Promise<void>((resolve, reject) => {
         tx.oncomplete = () => resolve();
         tx.onerror = () => reject(tx.error);
         tx.onabort = () => reject(tx.error);
       });
-    };
+    }
 
-    await clearStore('favorites');
-    await clearStore('custom-rulesets');
     db.close();
   });
 }
@@ -87,7 +80,7 @@ test.describe('Custom rule creator workflow', () => {
       .not.toEqual('');
     await expect(page).toHaveURL(/\/learn\/custom-rules\/custom-\d+\/?$/);
 
-    // Verify persistence from IndexedDB so this works in desktop and mobile projects.
+    // Verify persistence from IndexedDB (compressed-data store)
     const customRules = await page.evaluate(async () => {
       const openReq = indexedDB.open('ChandamDB');
       const db = await new Promise<any>((resolve, reject) => {
@@ -95,45 +88,44 @@ test.describe('Custom rule creator workflow', () => {
         openReq.onerror = () => reject(openReq.error);
       });
 
-      const customRuleset = await new Promise<any>((resolve, reject) => {
-        if (!db.objectStoreNames.contains('custom-rulesets')) {
-          resolve(null);
-          return;
-        }
+      if (!db.objectStoreNames.contains('compressed-data')) {
+        db.close();
+        return null;
+      }
 
-        const tx = db.transaction('custom-rulesets', 'readonly');
-        const req = tx.objectStore('custom-rulesets').get('custom-rules');
+      const entry = await new Promise<any>((resolve, reject) => {
+        const tx = db.transaction('compressed-data', 'readonly');
+        const req = tx.objectStore('compressed-data').get('custom-rulesets');
         req.onsuccess = () => resolve(req.result ?? null);
         req.onerror = () => reject(req.error);
       });
 
       db.close();
-      return customRuleset;
+      if (!entry || !entry.data) return null;
+
+      const stream = new Blob([new Uint8Array(entry.data)]).stream();
+      const decompressed = stream.pipeThrough(new DecompressionStream('gzip'));
+      const reader = decompressed.getReader();
+      const chunks: Uint8Array[] = [];
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
+        chunks.push(value);
+      }
+      const allBytes = new Uint8Array(chunks.reduce((n, c) => n + c.length, 0));
+      let offset = 0;
+      for (const chunk of chunks) { allBytes.set(chunk, offset); offset += chunk.length; }
+
+      const json = new TextDecoder().decode(allBytes);
+      const rulesets = JSON.parse(json);
+      return rulesets.find((r: any) => r.id === 'custom-rules') ?? null;
     });
     expect(customRules).toBeTruthy();
     expect((customRules as any).rules.length).toBeGreaterThan(0);
     expect((customRules as any).rules.some((r: any) => r.Name === name)).toBe(true);
 
-    // Cleanup: remove the custom-rules collection so the test remains isolated.
-    await page.evaluate(async () => {
-      const openReq = indexedDB.open('ChandamDB');
-      const db = await new Promise<any>((resolve, reject) => {
-        openReq.onsuccess = () => resolve(openReq.result);
-        openReq.onerror = () => reject(openReq.error);
-      });
-
-      if (db.objectStoreNames.contains('custom-rulesets')) {
-        const tx = db.transaction('custom-rulesets', 'readwrite');
-        tx.objectStore('custom-rulesets').delete('custom-rules');
-        await new Promise<void>((resolve, reject) => {
-          tx.oncomplete = () => resolve();
-          tx.onerror = () => reject(tx.error);
-          tx.onabort = () => reject(tx.error);
-        });
-      }
-
-      db.close();
-    });
+    // Cleanup: clear custom-rulesets from compressed-data store
+    await clearStorageState(page);
   });
 });
 
@@ -252,19 +244,37 @@ test.describe('Custom rule – compute and persistence', () => {
         openReq.onerror = () => reject(openReq.error);
       });
 
-      const customRuleset = await new Promise<any>((resolve, reject) => {
-        if (!db.objectStoreNames.contains('custom-rulesets')) {
-          resolve(null);
-          return;
-        }
-        const tx = db.transaction('custom-rulesets', 'readonly');
-        const req = tx.objectStore('custom-rulesets').get('custom-rules');
+      if (!db.objectStoreNames.contains('compressed-data')) {
+        db.close();
+        return null;
+      }
+
+      const entry = await new Promise<any>((resolve, reject) => {
+        const tx = db.transaction('compressed-data', 'readonly');
+        const req = tx.objectStore('compressed-data').get('custom-rulesets');
         req.onsuccess = () => resolve(req.result ?? null);
         req.onerror = () => reject(req.error);
       });
 
       db.close();
-      return customRuleset;
+      if (!entry || !entry.data) return null;
+
+      const stream = new Blob([new Uint8Array(entry.data)]).stream();
+      const decompressed = stream.pipeThrough(new DecompressionStream('gzip'));
+      const reader = decompressed.getReader();
+      const chunks: Uint8Array[] = [];
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
+        chunks.push(value);
+      }
+      const allBytes = new Uint8Array(chunks.reduce((n, c) => n + c.length, 0));
+      let offset = 0;
+      for (const chunk of chunks) { allBytes.set(chunk, offset); offset += chunk.length; }
+
+      const json = new TextDecoder().decode(allBytes);
+      const rulesets = JSON.parse(json);
+      return rulesets.find((r: any) => r.id === 'custom-rules') ?? null;
     });
 
     expect(customRules).toBeTruthy();

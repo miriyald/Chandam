@@ -95,6 +95,31 @@ async function getFirstPopularRuleId(
   return ruleId!;
 }
 
+/** Finds a rule that has at least one example by checking the learn detail page. */
+async function getRuleIdWithExamples(
+  page: import('@playwright/test').Page,
+): Promise<string> {
+  await gotoAndWait(page, '/learn/chandam/');
+  const learnLinks = page.locator('.rule-list-item .rule-item-actions a[href*="/learn/chandam/"]');
+  await expect(learnLinks.first()).toBeVisible({ timeout: 15_000 });
+  const count = await learnLinks.count();
+
+  for (let i = 0; i < Math.min(count, 15); i++) {
+    const href = await learnLinks.nth(i).getAttribute('href');
+    const ruleId = href?.split('/').filter(Boolean).pop() ?? '';
+    await gotoAndWait(page, `/learn/chandam/${ruleId}`);
+    await expect(page.locator('.learn-detail-page')).toBeVisible({ timeout: 10_000 });
+    const exampleCards = page.locator('.example-card');
+    if ((await exampleCards.count()) > 0) {
+      return ruleId;
+    }
+    await gotoAndWait(page, '/learn/chandam/');
+    await expect(learnLinks.first()).toBeVisible({ timeout: 15_000 });
+  }
+
+  throw new Error('No rule with examples found in first 15 rules');
+}
+
 // ---------------------------------------------------------------------------
 // Tests – standard routes
 // ---------------------------------------------------------------------------
@@ -170,12 +195,13 @@ test.describe('Deep link – specific rule pages', () => {
   test('direct navigation with ?example=1 pre-fills editor', async ({
     page,
   }) => {
-    if (!cachedRuleId) cachedRuleId = await getFirstPopularRuleId(page);
+    const ruleWithExamples = await getRuleIdWithExamples(page);
 
-    const path = `/compute/chandam/${cachedRuleId}?example=1`;
+    const path = `/compute/chandam/${ruleWithExamples}?example=1`;
     await gotoAndWait(page, path);
 
-    // Editor should be pre-filled with example 1 text
+    // Wait for async example loading to populate the editor
+    await expect(page.locator('#poem-editor')).not.toHaveValue('', { timeout: 10_000 });
     const editorValue = await page.locator('#poem-editor').inputValue();
     expect(editorValue.trim().length).toBeGreaterThan(0);
   });

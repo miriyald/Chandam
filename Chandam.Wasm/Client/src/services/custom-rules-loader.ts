@@ -2,30 +2,49 @@
  * Custom rules loader service
  * Loads custom rulesets from browser storage into WASM engine
  */
-import { storageService } from './storage/storage-service';
+import { customRulesService } from './storage/custom-rules-service';
 import type { CustomRuleset } from './storage/models';
+import { invalidatePredefinedCache } from '../utils/rule-loader';
 
 declare const DotNet: any;
 
 export class CustomRulesLoader {
+  private static _loadedRulesetId: string | null = null;
+  private static _loadedRulesetHash: number = 0;
+
   /**
-   * Load custom ruleset from storage by ID
+   * Load custom ruleset from storage by ID.
+   * Skips re-loading if the same ruleset (same ID and rule count) is already active.
    */
-  static async loadCustomRuleset(rulesetId: string): Promise<boolean> {
+  static async loadCustomRuleset(rulesetId: string, force = false): Promise<boolean> {
     try {
-      await storageService.init();
-      const customRuleset = await storageService.indexedDB.getCustomRuleset(rulesetId);
+      const customRuleset = await customRulesService.getCustomRuleset(rulesetId);
 
       if (!customRuleset || !customRuleset.rules || customRuleset.rules.length === 0) {
         console.log(`No custom ruleset found with ID: ${rulesetId}`);
         return false;
       }
 
-      return await this.loadRulesetIntoWasm(customRuleset);
+      const hash = customRuleset.rules.length * 31 + (customRuleset.updatedAt ?? 0);
+      if (!force && this._loadedRulesetId === rulesetId && this._loadedRulesetHash === hash) {
+        return true;
+      }
+
+      const result = await this.loadRulesetIntoWasm(customRuleset);
+      if (result) {
+        this._loadedRulesetId = rulesetId;
+        this._loadedRulesetHash = hash;
+      }
+      return result;
     } catch (error) {
       console.error(`Error loading custom ruleset ${rulesetId}:`, error);
       return false;
     }
+  }
+
+  static invalidateCache(): void {
+    this._loadedRulesetId = null;
+    this._loadedRulesetHash = 0;
   }
 
   /**
@@ -39,9 +58,8 @@ export class CustomRulesLoader {
    * Check if a custom ruleset exists
    */
   static async hasCustomRuleset(rulesetId: string): Promise<boolean> {
-    await storageService.init();
-    const ruleset = await storageService.indexedDB.getCustomRuleset(rulesetId);
-    return ruleset !== undefined && ruleset.rules.length > 0;
+    const ruleset = await customRulesService.getCustomRuleset(rulesetId);
+    return ruleset !== null && ruleset.rules.length > 0;
   }
 
   /**
@@ -61,6 +79,7 @@ export class CustomRulesLoader {
       const response = JSON.parse(result);
 
       if (response.success) {
+        invalidatePredefinedCache();
         console.log(`Loaded ${response.ruleCount} rules from custom ruleset "${ruleset.name}"`);
         return true;
       } else {
