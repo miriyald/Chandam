@@ -62,6 +62,7 @@ test.describe('Compute page – auto-detect mode', () => {
 
   test('Random button fills editor with Telugu text', async ({ page }) => {
     await page.locator('#btn-random').click();
+    await expect(page.locator('#poem-editor')).not.toHaveValue('', { timeout: 10_000 });
     const value = await page.locator('#poem-editor').inputValue();
     expect(value.trim().length).toBeGreaterThan(0);
     // Telugu text should contain characters in Unicode range U+0C00–U+0C7F

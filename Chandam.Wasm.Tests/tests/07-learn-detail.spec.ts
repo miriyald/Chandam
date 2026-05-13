@@ -23,11 +23,10 @@ async function getFirstRuleWithExamples(
 ): Promise<{ ruleId: string; learnPath: string; computePath: string }> {
   await gotoAndWait(page, '/learn/chandam/');
 
-  // Find the first rule that has a "Try" link on the index (all rules have learn/try links)
   const firstLearnLink = page
     .locator('.rule-list-item .rule-item-actions a[href*="/learn/chandam/"]')
     .first();
-  await expect(firstLearnLink).toBeVisible();
+  await expect(firstLearnLink).toBeVisible({ timeout: 15_000 });
   const learnHref = await firstLearnLink.getAttribute('href');
   const ruleId = learnHref?.split('/').filter(Boolean).pop() ?? '';
   expect(ruleId.length).toBeGreaterThan(0);
@@ -58,8 +57,9 @@ test.describe('Learn detail page', () => {
     const { learnPath } = await getFirstRuleWithExamples(page);
     await gotoAndWait(page, learnPath);
 
+    await expect(page.locator('.learn-detail-page')).toBeVisible({ timeout: 10_000 });
     const descSection = page.locator('.learn-detail-page .description-content');
-    await expect(descSection).toBeVisible();
+    await expect(descSection).toBeVisible({ timeout: 10_000 });
   });
 
   test('examples section has at least one example card', async ({ page }) => {
@@ -67,11 +67,10 @@ test.describe('Learn detail page', () => {
     await gotoAndWait(page, learnPath);
 
     const examplesSection = page.locator('.learn-detail-page .examples');
-    await expect(examplesSection).toBeVisible();
+    await expect(examplesSection).toBeVisible({ timeout: 10_000 });
 
-    const exampleCards = examplesSection.locator('.example-card');
-    const count = await exampleCards.count();
-    expect(count).toBeGreaterThan(0);
+    const firstCard = examplesSection.locator('.example-card').first();
+    await expect(firstCard).toBeVisible({ timeout: 10_000 });
   });
 
   test('clicking "Try" on example 1 navigates to compute page with example text', async ({
@@ -81,7 +80,7 @@ test.describe('Learn detail page', () => {
     await gotoAndWait(page, learnPath);
 
     const firstExampleCard = page.locator('.example-card').first();
-    await expect(firstExampleCard).toBeVisible();
+    await expect(firstExampleCard).toBeVisible({ timeout: 10_000 });
 
     // Get the example text displayed in the card for later comparison.
     // Examples may use either .poem (beautified HTML) or .poem-text (plain pre).
@@ -100,7 +99,8 @@ test.describe('Learn detail page', () => {
     // Navigate directly rather than clicking (avoids new-tab handling)
     await gotoAndWait(page, href!);
 
-    // Editor should be pre-filled with the example text
+    // Wait for async example loading to populate the editor
+    await expect(page.locator('#poem-editor')).not.toHaveValue('', { timeout: 10_000 });
     const editorValue = await page.locator('#poem-editor').inputValue();
     expect(editorValue.trim().length).toBeGreaterThan(0);
     // Normalise whitespace before comparing: beautified HTML may have different
