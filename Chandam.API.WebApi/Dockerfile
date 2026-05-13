@@ -18,6 +18,7 @@ COPY Chandam.API/ Chandam.API/
 COPY Chandam.Core/ Chandam.Core/
 COPY Chandam.Util/ Chandam.Util/
 COPY Chandam.Indic/ Chandam.Indic/
+COPY Chandam.Config/ Chandam.Config/
 
 # Build and publish
 WORKDIR "/src/Chandam.API.WebApi"
