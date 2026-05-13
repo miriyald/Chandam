@@ -72,11 +72,7 @@ namespace Chandam.Rules
 			{
 				return _YatiRecycle;
 			}
-#if SCRIPTSHARP
 			set
-#else
-			protected set
-#endif
 			{
 				_YatiRecycle = value;
 			}
@@ -87,11 +83,7 @@ namespace Chandam.Rules
 			{
 				return _ReverseYati;
 			}
-#if SCRIPTSHARP
 			set
-#else
-			protected set
-#endif
 			{
 				_ReverseYati = value;
 			}
@@ -102,16 +94,10 @@ namespace Chandam.Rules
 			{
 				return _RuleText;
 			}
-
-#if SCRIPTSHARP
 			set
-#else
-			protected set
-#endif
 			{
 				_RuleText = value;
 			}
-
 		}
 
 		public string[] References
