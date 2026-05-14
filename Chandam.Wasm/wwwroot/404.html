@@ -22,22 +22,28 @@
         window.GA4_MEASUREMENT_ID = 'G-50E1EGRJF1';
     </script>
     <script>
-        // Load gtag.js with measurement ID
+        // Skip loading GA script on localhost/dev loopback hosts.
         (function () {
+            var host = window.location.hostname;
+            var isLocalhost = host === 'localhost' || host === '127.0.0.1' || host === '::1';
+            if (isLocalhost) {
+                return;
+            }
+
             var script = document.createElement('script');
             script.async = true;
             script.src = 'https://www.googletagmanager.com/gtag/js?id=' + window.GA4_MEASUREMENT_ID;
             document.head.appendChild(script);
-        })();
 
-        // Initialize gtag
-        window.dataLayer = window.dataLayer || [];
-        function gtag() { dataLayer.push(arguments); }
-        gtag('js', new Date());
-        gtag('config', window.GA4_MEASUREMENT_ID, {
-            anonymize_ip: true,
-            send_page_view: false  // We handle page views manually for SPA
-        });
+            // Initialize gtag
+            window.dataLayer = window.dataLayer || [];
+            function gtag() { dataLayer.push(arguments); }
+            gtag('js', new Date());
+            gtag('config', window.GA4_MEASUREMENT_ID, {
+                anonymize_ip: true,
+                send_page_view: false  // We handle page views manually for SPA
+            });
+        })();
     </script>
 </head>
 

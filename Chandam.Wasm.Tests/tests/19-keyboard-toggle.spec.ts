@@ -18,7 +18,8 @@
 import { test, expect, gotoAndWait } from '../fixtures/wasm-ready';
 
 test.describe('Keyboard toggle - Desktop', () => {
-  test.beforeEach(async ({ page }) => {
+  test.beforeEach(async ({ page }, testInfo) => {
+    test.skip(testInfo.project.name === 'mobile', 'Desktop-only tests');
     await gotoAndWait(page, '/compute/chandam/');
     // Clear any persisted preference
     await page.evaluate(() => localStorage.removeItem('chandam:kb-scheme'));
@@ -137,14 +138,21 @@ test.describe('Keyboard toggle - Desktop', () => {
 });
 
 test.describe('Keyboard toggle - Mobile', () => {
-  test.use({ viewport: { width: 375, height: 667 } });
+  test.beforeEach(async ({}, testInfo) => {
+    test.skip(testInfo.project.name !== 'mobile', 'Mobile-only tests');
+  });
 
   test('toggle is hidden until nav is opened', async ({ page }) => {
     await gotoAndWait(page, '/compute/chandam/');
 
     const toggle = page.locator('#kb-toggle');
-    // On mobile, nav is collapsed so toggle should not be visible
-    await expect(toggle).not.toBeVisible();
+    // On mobile, nav is collapsed (overflow:hidden + max-height:0) so toggle is clipped
+    const isClipped = await toggle.evaluate((el) => {
+      const nav = el.closest('nav');
+      if (!nav) return false;
+      return nav.scrollHeight > nav.clientHeight || nav.clientHeight === 0;
+    });
+    expect(isClipped).toBe(true);
 
     // Open the mobile nav
     const navToggle = page.locator('#nav-toggle');
