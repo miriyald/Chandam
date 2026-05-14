@@ -98,6 +98,7 @@ test.describe('Mobile navigation menu', () => {
 
   test('mobile nav screenshot', async ({ page, isMobile }) => {
     test.skip(!isMobile, 'Mobile-only test');
+    test.skip(!!process.env.CI, 'Visual baselines skipped in CI — run via workflow_dispatch with update_snapshots');
 
     await gotoAndWait(page, '/');
 

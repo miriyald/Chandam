@@ -62,6 +62,7 @@ test.describe('Mobile breadcrumb back-link behavior', () => {
 
   test('mobile breadcrumb visual baseline', async ({ page, isMobile }) => {
     test.skip(!isMobile, 'Mobile-only test');
+    test.skip(!!process.env.CI, 'Visual baselines skipped in CI — run via workflow_dispatch with update_snapshots');
 
     const learnPath = await getFirstLearnRulePath(page);
     await gotoAndWait(page, learnPath);

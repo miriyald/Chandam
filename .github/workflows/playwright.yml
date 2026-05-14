@@ -121,7 +121,7 @@ jobs:
         run: npx playwright test --update-snapshots
         working-directory: Chandam.Wasm.Tests
         env:
-          CI: true
+          CI: ''
 
       - name: Run Playwright tests
         if: ${{ inputs.update_snapshots != true }}
