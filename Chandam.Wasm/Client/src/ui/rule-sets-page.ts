@@ -63,7 +63,7 @@ export async function renderRuleSetsPage() {
 }
 
 // Helper: Render a single rule set card
-function renderRuleSetCard(ruleSet: { id: string; name: string; description: string; ruleCount: number; exampleCount?: number; isCustom?: boolean; isFavorites?: boolean }) {
+export function renderRuleSetCard(ruleSet: { id: string; name: string; description: string; ruleCount: number; exampleCount?: number; isCustom?: boolean; isFavorites?: boolean }) {
   const customClass = ruleSet.isCustom ? ' custom-ruleset' : '';
   const favoritesClass = ruleSet.isFavorites ? ' favorites-ruleset' : '';
   const examplesHtml = ruleSet.exampleCount
@@ -90,7 +90,7 @@ function renderRuleSetCard(ruleSet: { id: string; name: string; description: str
 }
 
 // Helper: Render custom rules collection card with distinct styling
-function renderCustomRulesCard(collection: { id: string; name: string; description: string; rules: any[] }) {
+export function renderCustomRulesCard(collection: { id: string; name: string; description: string; rules: any[] }) {
   return `
     <div class="rule-set-card custom-rules-card">
       <h2 class="meter-name">${t('custom_rules_title')}</h2>

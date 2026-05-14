@@ -3,11 +3,11 @@ import { renderBreadcrumbs, buildStaticPageBreadcrumbs } from './breadcrumbs';
 import { t } from '../i18n';
 import { setPageTitle } from '../utils/page-title';
 import { collectionService } from '../services/storage/collection-service';
-import { favoritesService } from '../services/storage/favorites-service';
 import { customRulesService } from '../services/storage/custom-rules-service';
 import { storageService } from '../services/storage/storage-service';
 import { analyticsService } from '../services/analytics-service';
-import { MAX_POEMS, MAX_FAVORITES, MAX_CUSTOM_RULES } from '../constants';
+import { MAX_POEMS } from '../constants';
+import { renderRuleSetCard, renderCustomRulesCard } from './rule-sets-page';
 
 export async function renderMyDataPage(): Promise<void> {
   setPageTitle(t('my_data_title'));
@@ -15,50 +15,80 @@ export async function renderMyDataPage(): Promise<void> {
   const content = document.getElementById('content');
   if (!content) return;
 
-  const [poemCount, favCount, customCount] = await Promise.all([
+  const [poemCount, customRulesets] = await Promise.all([
     collectionService.getPoemCount(),
-    favoritesService.getFavoriteCount(),
-    customRulesService.getCustomRulesCount(),
+    customRulesService.getAllCustomRulesets(),
   ]);
 
+  const favRuleset = customRulesets.find(rs => rs.type === 'favorites' && rs.rules.length > 0);
+  const customRulesCollection = customRulesets.find(rs => rs.id === 'custom-rules' && rs.rules.length > 0);
+
   const breadcrumbs = buildStaticPageBreadcrumbs(t('my_data_title'));
+  const cards: string[] = [];
+
+  // My Writings card — same structure as rule-set-card but links to /my-writings
+  if (poemCount > 0) {
+    cards.push(`
+      <div class="rule-set-card">
+        <h2 class="meter-name">${t('my_data_writings_title')}</h2>
+        <div class="rule-count">${poemCount}/${MAX_POEMS} ${t('my_data_writings_desc')}</div>
+        <p class="description">${t('my_data_writings_subtitle')}</p>
+        <div class="card-actions">
+          <a href="${makeUrl('/my-writings')}" class="btn-analyze">
+            <svg viewBox="0 0 24 24" width="14" height="14"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>
+            ${t('my_data_view')}
+          </a>
+        </div>
+      </div>
+    `);
+  }
+
+  // Favorites card — uses exact same rendering as Rule Sets page
+  if (favRuleset) {
+    const totalExamples = favRuleset.rules.reduce((sum, r) => sum + (r.Examples?.length ?? 0), 0);
+    cards.push(renderRuleSetCard({
+      id: favRuleset.id,
+      name: favRuleset.name,
+      description: favRuleset.description,
+      ruleCount: favRuleset.rules.length,
+      exampleCount: totalExamples,
+      isCustom: true,
+      isFavorites: true,
+    }));
+  }
+
+  // Custom Rules card — uses exact same rendering as Rule Sets page
+  if (customRulesCollection) {
+    cards.push(renderCustomRulesCard(customRulesCollection));
+  }
+
+  // Create Custom Rule card — same as Rule Sets page
+  cards.push(`
+    <a href="${makeUrl('/create-rule')}" class="rule-set-card create-rule-card">
+      <div class="create-rule-icon">
+        <svg viewBox="0 0 24 24" width="32" height="32"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
+      </div>
+      <h2>${t('custom_rules_btn_create')}</h2>
+    </a>
+  `);
 
   content.innerHTML = `
     <div class="rule-sets-page my-data-page">
       ${renderBreadcrumbs(breadcrumbs)}
 
-      <div class="my-data-header">
-        <h1>${t('my_data_title')}</h1>
-        <button id="btn-clear-all-data" class="btn-clear-data">
-          <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path fill="currentColor" d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/></svg>
-          ${t('my_data_clear_btn')}
+      <h1>${t('my_data_title')}</h1>
+
+      <div class="rule-actions my-data-actions">
+        <button id="btn-clear-all-data" class="action-btn btn-delete" title="${t('my_data_clear_btn')}">
+          <svg class="trash-icon" viewBox="0 0 24 24" width="16" height="16">
+            <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/>
+          </svg>
+          <span>${t('my_data_clear_btn')}</span>
         </button>
       </div>
 
       <div class="rule-set-cards">
-        <a href="${makeUrl('/my-writings')}" class="rule-set-card my-data-card">
-          <div class="my-data-icon">
-            <svg viewBox="0 0 24 24" width="32" height="32" fill="currentColor"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>
-          </div>
-          <h2>${t('my_data_writings_title')}</h2>
-          <p class="my-data-count">${poemCount}/${MAX_POEMS}</p>
-        </a>
-
-        <a href="${makeUrl('/rule-sets')}" class="rule-set-card my-data-card">
-          <div class="my-data-icon">
-            <svg viewBox="0 0 24 24" width="32" height="32" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
-          </div>
-          <h2>${t('my_data_favorites_title')}</h2>
-          <p class="my-data-count">${favCount}/${MAX_FAVORITES}</p>
-        </a>
-
-        <a href="${makeUrl('/rule-sets')}" class="rule-set-card my-data-card">
-          <div class="my-data-icon">
-            <svg viewBox="0 0 24 24" width="32" height="32" fill="currentColor"><path d="M12 3c-4.97 0-9 4.03-9 9s4.03 9 9 9c.83 0 1.5-.67 1.5-1.5 0-.39-.15-.74-.39-1.01-.23-.26-.38-.61-.38-.99 0-.83.67-1.5 1.5-1.5H16c2.76 0 5-2.24 5-5 0-4.42-4.03-8-9-8zm-5.5 9c-.83 0-1.5-.67-1.5-1.5S5.67 9 6.5 9 8 9.67 8 10.5 7.33 12 6.5 12zm3-4C8.67 8 8 7.33 8 6.5S8.67 5 9.5 5s1.5.67 1.5 1.5S10.33 8 9.5 8zm5 0c-.83 0-1.5-.67-1.5-1.5S13.67 5 14.5 5s1.5.67 1.5 1.5S15.33 8 14.5 8zm3 4c-.83 0-1.5-.67-1.5-1.5S16.67 9 17.5 9s1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/></svg>
-          </div>
-          <h2>${t('my_data_custom_rules_title')}</h2>
-          <p class="my-data-count">${customCount}/${MAX_CUSTOM_RULES}</p>
-        </a>
+        ${cards.join('')}
       </div>
     </div>
   `;

@@ -274,10 +274,14 @@ export interface Translations {
   my_data_clear_btn: string;
   my_data_writings_title: string;
   my_data_writings_desc: string;
+  my_data_writings_subtitle: string;
   my_data_favorites_title: string;
   my_data_favorites_desc: string;
+  my_data_favorites_subtitle: string;
   my_data_custom_rules_title: string;
   my_data_custom_rules_desc: string;
+  my_data_custom_rules_subtitle: string;
+  my_data_view: string;
 
   // Footer
   footer_clear_data: string;
@@ -549,11 +553,15 @@ const translations: Record<Language, Translations> = {
     my_data_title: 'My Data',
     my_data_clear_btn: 'Clear All Data',
     my_data_writings_title: 'My Writings',
-    my_data_writings_desc: 'Your saved poems',
+    my_data_writings_desc: 'poems',
+    my_data_writings_subtitle: 'Your saved poems and compositions',
     my_data_favorites_title: 'Favorites',
-    my_data_favorites_desc: 'Your favorited rules',
+    my_data_favorites_desc: 'rules',
+    my_data_favorites_subtitle: 'Rules you have favorited for quick access',
     my_data_custom_rules_title: 'Custom Rules',
-    my_data_custom_rules_desc: 'Your custom meters',
+    my_data_custom_rules_desc: 'rules',
+    my_data_custom_rules_subtitle: 'Meters you have created',
+    my_data_view: 'View',
 
     // Footer
     footer_clear_data: 'Clear Site Data',
@@ -864,11 +872,15 @@ const translations: Record<Language, Translations> = {
     my_data_title: 'నా డేటా',
     my_data_clear_btn: 'మొత్తం డేటా తొలగించు',
     my_data_writings_title: 'నా రచనలు',
-    my_data_writings_desc: 'మీ భద్రపరచిన పద్యాలు',
+    my_data_writings_desc: 'పద్యాలు',
+    my_data_writings_subtitle: 'మీ భద్రపరచిన పద్యాలు మరియు రచనలు',
     my_data_favorites_title: 'ఇష్టమైనవి',
-    my_data_favorites_desc: 'మీ ఇష్టమైన నియమాలు',
+    my_data_favorites_desc: 'నియమాలు',
+    my_data_favorites_subtitle: 'శీఘ్ర ప్రాప్యత కోసం మీరు ఇష్టపడిన నియమాలు',
     my_data_custom_rules_title: 'అనుకూల నియమాలు',
-    my_data_custom_rules_desc: 'మీ అనుకూల ఛందస్సులు',
+    my_data_custom_rules_desc: 'నియమాలు',
+    my_data_custom_rules_subtitle: 'మీరు సృష్టించిన ఛందస్సులు',
+    my_data_view: 'చూడండి',
 
     // Footer
     footer_clear_data: 'డేటా తొలగించు',
