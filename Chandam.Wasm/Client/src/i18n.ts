@@ -841,17 +841,11 @@ const translations: Record<Language, Translations> = {
     footer_clear_data: 'డేటా తొలగించు',
     footer_favorites: 'ఇష్టమైనవి',
     footer_custom_rules: 'అనుకూల నియమాలు',
-        clear_data_warning: 'ఇది మీ భద్రపరచిన పద్యాలు, ఇష్టమైనవి, అనుకూల నియమాలు మరియు ఎడిటర్ స్థితిని తొలగిస్తుంది. ఈ చర్యను రద్దు చేయలేరు. కొనసాగించాలా?',
+    clear_data_warning: 'ఇది మీ భద్రపరచిన పద్యాలు, ఇష్టమైనవి, అనుకూల నియమాలు మరియు ఎడిటర్ స్థితిని తొలగిస్తుంది. ఈ చర్యను రద్దు చేయలేరు. కొనసాగించాలా?',
 
     page_about_title: 'పరిచయం',
     page_credits_title: 'కృతజ్ఞతలు',
     page_contact_title: 'సంప్రదింపులు',
-  },
-};
-
-    page_about_title: 'About Chandam',
-    page_credits_title: 'Credits',
-    page_contact_title: 'Contact',
   },
 };
 
