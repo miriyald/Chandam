@@ -69,7 +69,7 @@ namespace Chandam.API.Services
                         Sequence = r.Sequence,
                         ShortName = r.ShortName,
                         Alias = r.Alias,
-                        ExamplesCount = r.Examples2?.Length ?? 0,
+                        ExampleCount = r.Examples2?.Length ?? 0,
                         CompactSummary = compactSummary
                     };
 
@@ -182,7 +182,7 @@ namespace Chandam.API.Services
             if (filters.HasExamples.HasValue)
             {
                 var hasExamples = filters.HasExamples.Value;
-                filtered = filtered.Where(r => (r.ExamplesCount > 0) == hasExamples);
+                filtered = filtered.Where(r => (r.ExampleCount > 0) == hasExamples);
             }
 
             // 6. Matra length range - exclude -1 and undefined
@@ -273,7 +273,7 @@ namespace Chandam.API.Services
                 }
 
                 // Check if examples exist
-                if (rule.ExamplesCount > 0)
+                if (rule.ExampleCount > 0)
                     hasRulesWithExamples = true;
                 else
                     hasRulesWithoutExamples = true;
@@ -326,7 +326,7 @@ namespace Chandam.API.Services
         public string? Sequence { get; set; }
         public string? ShortName { get; set; }
         public string? Alias { get; set; }
-        public int ExamplesCount { get; set; }
+        public int ExampleCount { get; set; }
         public string? CompactSummary { get; set; }
     }
 

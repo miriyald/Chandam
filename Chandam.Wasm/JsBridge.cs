@@ -103,7 +103,8 @@ public static class JsBridge
                     ["sequence"] = r.Sequence,
                     ["shortName"] = r.ShortName,
                     ["alias"] = r.Alias,
-                    ["compactSummary"] = compactSummary
+                    ["compactSummary"] = compactSummary,
+                    ["exampleCount"] = r.Examples2?.Length ?? 0
                 });
             }
             catch (Exception ex)

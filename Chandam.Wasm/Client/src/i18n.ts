@@ -86,6 +86,7 @@ export interface Translations {
   // Metrics
   metric_chars: string;
   metric_matras: string;
+  metric_examples: string;
 
   // Alerts
   alert_enter_poem: string;
@@ -191,6 +192,7 @@ export interface Translations {
   filter_showing: string;
   filter_of: string;
   filter_results: string;
+  filter_with_examples: string;
 
   // Examples
   examples_none_available: string;
@@ -221,6 +223,7 @@ export interface Translations {
   rulesets_heading: string;
   rulesets_subtitle: string;
   rulesets_rules_suffix: string;
+  rulesets_examples_suffix: string;
   rulesets_btn_analyze: string;
   rulesets_btn_learn: string;
 
@@ -266,17 +269,31 @@ export interface Translations {
   results_already_in_collection: string;
   results_collection_full: string;
 
+  // My Data
+  nav_my_data: string;
+  my_data_title: string;
+  my_data_clear_btn: string;
+  my_data_writings_title: string;
+  my_data_writings_desc: string;
+  my_data_writings_subtitle: string;
+  my_data_favorites_title: string;
+  my_data_favorites_desc: string;
+  my_data_favorites_subtitle: string;
+  my_data_custom_rules_title: string;
+  my_data_custom_rules_desc: string;
+  my_data_custom_rules_subtitle: string;
+  my_data_view: string;
+
   // Footer
   footer_clear_data: string;
+  footer_favorites: string;
+  footer_custom_rules: string;
   clear_data_warning: string;
 
   // Pages
   page_about_title: string;
-  page_about_content: string;
   page_credits_title: string;
-  page_credits_content: string;
   page_contact_title: string;
-  page_contact_content: string;
 }
 
 const translations: Record<Language, Translations> = {
@@ -356,6 +373,7 @@ const translations: Record<Language, Translations> = {
 
     metric_chars: 'chars',
     metric_matras: 'matras',
+    metric_examples: 'ex.',
 
     alert_enter_poem: 'Please enter poem text',
     alert_no_matches: 'No matches found',
@@ -454,6 +472,7 @@ const translations: Record<Language, Translations> = {
     filter_showing: 'Showing',
     filter_of: 'of',
     filter_results: 'Results',
+    filter_with_examples: 'With Examples',
 
     examples_none_available: 'No examples available yet.',
     examples_contribute_cta: 'You may contribute by writing one!',
@@ -482,6 +501,7 @@ const translations: Record<Language, Translations> = {
     rulesets_heading: 'Telugu Poetry Meter Rule Sets',
     rulesets_subtitle: 'Choose a rule set to analyze poetry or learn about meters',
     rulesets_rules_suffix: 'Rules',
+    rulesets_examples_suffix: 'Examples',
     rulesets_btn_analyze: 'Analyze',
     rulesets_btn_learn: 'Learn',
 
@@ -518,7 +538,7 @@ const translations: Record<Language, Translations> = {
 
     // My Writings / Collection
     nav_my_writings: 'My Writings',
-    writings_subtitle: 'Your collection ({count}/20)',
+    writings_subtitle: 'Your collection ({count} poems)',
     writings_empty: 'No poems saved yet. Analyze a poem and save it to your collection!',
     writings_delete: 'Remove',
     writings_delete_confirm: 'Remove this poem from your collection?',
@@ -527,58 +547,30 @@ const translations: Record<Language, Translations> = {
     results_already_in_collection: 'Already saved',
     results_collection_full: 'Collection full (20/20)',
 
+    // My Data
+    nav_my_data: 'My Data',
+    my_data_title: 'My Data',
+    my_data_clear_btn: 'Clear All Data',
+    my_data_writings_title: 'My Writings',
+    my_data_writings_desc: 'poems',
+    my_data_writings_subtitle: 'Your saved poems and compositions',
+    my_data_favorites_title: 'Favorites',
+    my_data_favorites_desc: 'rules',
+    my_data_favorites_subtitle: 'Rules you have favorited for quick access',
+    my_data_custom_rules_title: 'Custom Rules',
+    my_data_custom_rules_desc: 'rules',
+    my_data_custom_rules_subtitle: 'Meters you have created',
+    my_data_view: 'View',
+
     // Footer
     footer_clear_data: 'Clear Site Data',
+    footer_favorites: 'Favorites',
+    footer_custom_rules: 'Custom Rules',
     clear_data_warning: 'This will delete all your saved poems, favorites, custom rules, and editor state. This action cannot be undone. Continue?',
 
     page_about_title: 'About Chandam',
-    page_about_content: `
-      <p>The art of composing poetry requires not only immense creativity but also a deep understanding of prosody (Chandas), including the rules of meter, ganas (metrical feet), and yati-prasa (caesura and rhyme). This demands significant practice, and even for seasoned poets, occasional errors are natural.</p>
-      <p>The idea for this tool was born from the thought: "Wouldn't it be great if a technological tool could verify all these rules?" To pass on the tradition of poetry to future generations, we must also provide them with modern tools that aid in poetic composition. <strong>Chandam<sup>©</sup></strong> is such an effort.</p>
-      <p>This is a dedicated attempt, driven by the firm resolution to build a comprehensive software for Telugu prosody.</p>
-      <p>A major challenge in digitization is typographical errors. A unique feature of metrical poetry is that any spelling mistake often results in a violation of gana, yati, or prasa rules. This tool can easily detect such errors. See the <a title="Case Studies" href="?CaseStudy">Case Studies</a> for examples.</p>
-      <p>Experts in poetry [like those who perform Ashtavadhanas, Shatavadhanas, etc.] may not need such a tool. However, if such experts participate in its development, we can make a significant human effort to carry the tradition of poetry to future generations.</p>
-      <p><strong>Chandam<sup>©</sup></strong> has been built considering all types of prosody rules. I have personally checked nearly <strong>11,000</strong> individual poems. Nevertheless, due to current <strong>technological limitations</strong> or my own <strong>lack of understanding</strong>, it is possible that the tool may incorrectly flag a correct verse as flawed or vice-versa. If you notice such issues, please bring them to my attention so I can correct them. Currently, it can identify <strong>343+</strong> Telugu meters and includes definitions for over <strong>1300</strong> Sanskrit meters.</p>
-      <h3>Uses:</h3>
-      <ol>
-        <li>Correct old Telugu poems. See <a title="Case Studies" href="?CaseStudy">Case Studies</a>.</li>
-        <li>New poets can use it as an editor.</li>
-        <li>Identify the meter of unknown poems.</li>
-        <li>Verify if a poem conforms to a specific meter.</li>
-        <li>It not only points out errors but also explains where they occur in an understandable way.</li>
-        <li>Learn prosody. Besides rules, I have included examples (the goal is to have at least 5 for each).</li>
-        <li>It can assist those who wish to create new meters.</li>
-      </ol>
-    `,
     page_credits_title: 'Credits',
-    page_credits_content: `
-      <ol>
-        <li>Special Thanks: <b>Sri K. Naga Bhushanarao (<a href='http://andhrabharati.com/' target='_blank'>Andhra Bharati</a>)</b> - For collecting numerous examples I did not have, personally verifying every rule, and correcting even minor spelling mistakes.</li>
-        <li><b>Sri Vulapalli Sambasivarao: <a href='http://www.telugubhaghavatam.org' target='_blank'>Potana Bhagavatam</a></b> - For providing all the verses from his work upon request and for pointing out errors in this application.</li>
-        <li>Smt. Lakshmidevi: <a href="https://www.blogger.com/profile/01955992709223887713" target='_blank'>Malati Madhavam, Mandakini, Manobhiramam, Maa Vanta-Varpu</a> - For being the very first user of <strong>Chandam<sup>©</sup></strong> and providing valuable suggestions and advice.</li>
-        <li><b>Sri Ambarisha Darbha</b>: For his encouragement and for permitting the use of the <a href='http://adityafonts.com' target='_blank'>fonts</a> he created.</li>
-        <li>Sri Jejjala Krishna Mohana Rao: For writing and providing many articles on prosody on the internet.</li>
-        <li>Sri Kovela Sampathkumaracharya's "Chandahpadakosam".</li>
-        <li>Masters' Telugu Grammar book.</li>
-        <li>Sanskrit language resources. <a target="_blank" href="http://sanskrit.sai.uni-heidelberg.de/Chanda/HTML/">Refer</a></li>
-        <li>Sri Mallina Narasimharao and Sri Rakeshwar: For their effort in documenting special meters on Wikipedia.</li>
-        <li>Sri Murali Korimilli: My friend and colleague, for his immense encouragement.</li>
-        <li>Chiranjeevi Phani Pradeep (Arjunu): For giving this idea (2008).</li>
-        <li>Chiranjeevi Sandeep: For testing this.</li>
-        <li>Finally, my wife Anuradha: For many unstated reasons.</li>
-        <li>To all the great souls: For reducing my effort by placing Telugu books, poems, and articles on the internet.</li>
-      </ol>
-    `,
     page_contact_title: 'Contact',
-    page_contact_content: `
-      <ol>
-        <li>Email me at <a href='mailto:m.dileep@gmail.com'>m.dileep@gmail.com</a> or Call me at <span class='gName'>+91-8978559072</span></li>
-        <li>Visit my blog at <a target='_blank' href='http://mdileep.wordpress.com'>http://mdileep.wordpress.com</a></li>
-        <li><a href='http://www.miriyala.in'>http://www.miriyala.in</a></li>
-        <li>Google: <a target='_blank' href='https://www.google.co.in/search?q=Dileep+Miriyala'>Dileep Miriyala</a> or <a target='_blank' href='https://www.google.co.in/search?q=https://www.google.co.in/search?q=%E0%B0%A6%E0%B0%BF%E0%B0%B2%E0%B1%80%E0%B0%AA%E0%B1%81%2B%E0%B0%AE%E0%B0%BF%E0%B0%B0%E0%B0%BF%E0%B0%AF%E0%B0%BE%E0%B0%B2'>దిలీపు మిరియాల</a></li>
-        <li>Facebook <a target='_blank' href='https://www.facebook.com/public/Dileep-Miriyala‎'>Dileep Miriyala</a></li>
-      </ol>
-    `
   },
   te: {
     nav_home: 'హోమ్',
@@ -595,14 +587,14 @@ const translations: Record<Language, Translations> = {
     home_btn_analyze: '✏️ విశ్లేషించండి',
     home_btn_learn: '📖 నేర్చుకోండి',
 
-    editor_placeholder: 'పద్యం ఇక్కడ నమోదు చేయండి లేదా అతికించండి...',
-    editor_btn_random: 'యాదృచ్ఛిక పద్యం',
-    editor_btn_clear: 'ఖాళీ చేయి',
+    editor_placeholder: 'పద్యమును ఇక్కడ ఉంచండి.',
+    editor_btn_random: 'ఏదేని పద్యం',
+    editor_btn_clear: 'తీసివేయి',
     editor_btn_analyze: 'విశ్లేషించండి',
     editor_auto_detect: 'స్వయంచాలకంగా గుర్తించు',
     editor_yati: 'యతి',
     editor_prasa: 'ప్రాస',
-    editor_auto_detect_context: 'ఉత్తమ సరిపోలికను స్వయంచాలకంగా గుర్తిస్తోంది...',
+    editor_auto_detect_context: 'ఉత్తమ సరిపోలికను స్వయంచాలకంగా గుర్తిస్తోంది.',
     editor_matching_with: 'దీనితో సరిపోలుస్తోంది:',
     editor_select_rule: 'ఒక నియమాన్ని ఎంచుకోండి ▼',
 
@@ -656,6 +648,7 @@ const translations: Record<Language, Translations> = {
 
     metric_chars: 'అక్షరాలు',
     metric_matras: 'మాత్రలు',
+    metric_examples: 'ఉదాహరణలు',
 
     alert_enter_poem: 'దయచేసి విశ్లేషించడానికి పద్యాన్ని నమోదు చేయండి.',
     alert_no_matches: 'సరిపోలే నియమాలు కనుగొనబడలేదు.',
@@ -754,6 +747,7 @@ const translations: Record<Language, Translations> = {
     filter_showing: 'చూపిస్తున్నవి',
     filter_of: '/',
     filter_results: 'ఫలితాలు',
+    filter_with_examples: 'ఉదాహరణలతో',
 
     examples_none_available: 'ఉదాహరణలు ఇంకా అందుబాటులో లేవు.',
     examples_contribute_cta: 'మీరు ఒకటి వ్రాసి సహకరించవచ్చు!',
@@ -782,6 +776,7 @@ const translations: Record<Language, Translations> = {
     rulesets_heading: 'తెలుగు పద్య ఛందస్సు నియమావళులు',
     rulesets_subtitle: 'పద్యాలను విశ్లేషించడానికి లేదా ఛందస్సు నేర్చుకోవడానికి ఒక నియమావళిని ఎంచుకోండి',
     rulesets_rules_suffix: 'నియమాలు',
+    rulesets_examples_suffix: 'ఉదాహరణలు',
     rulesets_btn_analyze: 'విశ్లేషించండి',
     rulesets_btn_learn: 'నేర్చుకోండి',
 
@@ -818,7 +813,7 @@ const translations: Record<Language, Translations> = {
 
     // My Writings / Collection
     nav_my_writings: 'నా రచనలు',
-    writings_subtitle: 'మీ సేకరణ ({count}/20)',
+    writings_subtitle: 'మీ సేకరణ ({count} పద్యాలు)',
     writings_empty: 'ఇంకా పద్యాలు భద్రపరచబడలేదు. ఒక పద్యాన్ని విశ్లేషించి మీ సేకరణకు జోడించండి!',
     writings_delete: 'తొలగించు',
     writings_delete_confirm: 'ఈ పద్యాన్ని మీ సేకరణ నుండి తొలగించాలా?',
@@ -827,62 +822,35 @@ const translations: Record<Language, Translations> = {
     results_already_in_collection: 'ఇప్పటికే భద్రపరచబడింది',
     results_collection_full: 'సేకరణ నిండింది (20/20)',
 
+    // My Data
+    nav_my_data: 'నా డేటా',
+    my_data_title: 'నా డేటా',
+    my_data_clear_btn: 'మొత్తం డేటా తొలగించు',
+    my_data_writings_title: 'నా రచనలు',
+    my_data_writings_desc: 'పద్యాలు',
+    my_data_writings_subtitle: 'మీ భద్రపరచిన పద్యాలు మరియు రచనలు',
+    my_data_favorites_title: 'ఇష్టమైనవి',
+    my_data_favorites_desc: 'నియమాలు',
+    my_data_favorites_subtitle: 'శీఘ్ర ప్రాప్యత కోసం మీరు ఇష్టపడిన నియమాలు',
+    my_data_custom_rules_title: 'అనుకూల నియమాలు',
+    my_data_custom_rules_desc: 'నియమాలు',
+    my_data_custom_rules_subtitle: 'మీరు సృష్టించిన ఛందస్సులు',
+    my_data_view: 'చూడండి',
+
     // Footer
     footer_clear_data: 'డేటా తొలగించు',
+    footer_favorites: 'ఇష్టమైనవి',
+    footer_custom_rules: 'అనుకూల నియమాలు',
     clear_data_warning: 'ఇది మీ భద్రపరచిన పద్యాలు, ఇష్టమైనవి, అనుకూల నియమాలు మరియు ఎడిటర్ స్థితిని తొలగిస్తుంది. ఈ చర్యను రద్దు చేయలేరు. కొనసాగించాలా?',
 
-    page_about_title: 'About Chandam',
-    page_about_content: `
-      <p>The art of composing poetry requires not only immense creativity but also a deep understanding of prosody (Chandas), including the rules of meter, ganas (metrical feet), and yati-prasa (caesura and rhyme). This demands significant practice, and even for seasoned poets, occasional errors are natural.</p>
-      <p>The idea for this tool was born from the thought: "Wouldn't it be great if a technological tool could verify all these rules?" To pass on the tradition of poetry to future generations, we must also provide them with modern tools that aid in poetic composition. <strong>Chandam<sup>©</sup></strong> is such an effort.</p>
-      <p>This is a dedicated attempt, driven by the firm resolution to build a comprehensive software for Telugu prosody.</p>
-      <p>A major challenge in digitization is typographical errors. A unique feature of metrical poetry is that any spelling mistake often results in a violation of gana, yati, or prasa rules. This tool can easily detect such errors. See the <a title="Case Studies" href="?CaseStudy">Case Studies</a> for examples.</p>
-      <p>Experts in poetry [like those who perform Ashtavadhanas, Shatavadhanas, etc.] may not need such a tool. However, if such experts participate in its development, we can make a significant human effort to carry the tradition of poetry to future generations.</p>
-      <p><strong>Chandam<sup>©</sup></strong> has been built considering all types of prosody rules. I have personally checked nearly <strong>11,000</strong> individual poems. Nevertheless, due to current <strong>technological limitations</strong> or my own <strong>lack of understanding</strong>, it is possible that the tool may incorrectly flag a correct verse as flawed or vice-versa. If you notice such issues, please bring them to my attention so I can correct them. Currently, it can identify <strong>343+</strong> Telugu meters and includes definitions for over <strong>1300</strong> Sanskrit meters.</p>
-      <h3>Uses:</h3>
-      <ol>
-        <li>Correct old Telugu poems. See <a title="Case Studies" href="?CaseStudy">Case Studies</a>.</li>
-        <li>New poets can use it as an editor.</li>
-        <li>Identify the meter of unknown poems.</li>
-        <li>Verify if a poem conforms to a specific meter.</li>
-        <li>It not only points out errors but also explains where they occur in an understandable way.</li>
-        <li>Learn prosody. Besides rules, I have included examples (the goal is to have at least 5 for each).</li>
-        <li>It can assist those who wish to create new meters.</li>
-      </ol>
-    `,
-    page_credits_title: 'Credits',
-    page_credits_content: `
-      <ol>
-        <li>Special Thanks: <b>Sri K. Naga Bhushanarao (<a href='http://andhrabharati.com/' target='_blank'>Andhra Bharati</a>)</b> - For collecting numerous examples I did not have, personally verifying every rule, and correcting even minor spelling mistakes.</li>
-        <li><b>Sri Vulapalli Sambasivarao: <a href='http://www.telugubhaghavatam.org' target='_blank'>Potana Bhagavatam</a></b> - For providing all the verses from his work upon request and for pointing out errors in this application.</li>
-        <li>Smt. Lakshmidevi: <a href="https://www.blogger.com/profile/01955992709223887713" target='_blank'>Malati Madhavam, Mandakini, Manobhiramam, Maa Vanta-Varpu</a> - For being the very first user of <strong>Chandam<sup>©</sup></strong> and providing valuable suggestions and advice.</li>
-        <li><b>Sri Ambarisha Darbha</b>: For his encouragement and for permitting the use of the <a href='http://adityafonts.com' target='_blank'>fonts</a> he created.</li>
-        <li>Sri Jejjala Krishna Mohana Rao: For writing and providing many articles on prosody on the internet.</li>
-        <li>Sri Kovela Sampathkumaracharya's "Chandahpadakosam".</li>
-        <li>Masters' Telugu Grammar book.</li>
-        <li>Sanskrit language resources. <a target="_blank" href="http://sanskrit.sai.uni-heidelberg.de/Chanda/HTML/">Refer</a></li>
-        <li>Sri Mallina Narasimharao and Sri Rakeshwar: For their effort in documenting special meters on Wikipedia.</li>
-        <li>Sri Murali Korimilli: My friend and colleague, for his immense encouragement.</li>
-        <li>Chiranjeevi Phani Pradeep (Arjunu): For giving this idea (2008).</li>
-        <li>Chiranjeevi Sandeep: For testing this.</li>
-        <li>Finally, my wife Anuradha: For many unstated reasons.</li>
-        <li>To all the great souls: For reducing my effort by placing Telugu books, poems, and articles on the internet.</li>
-      </ol>
-    `,
-    page_contact_title: 'Contact',
-    page_contact_content: `
-      <ol>
-        <li>Email me at <a href='mailto:m.dileep@gmail.com'>m.dileep@gmail.com</a> or Call me at <span class='gName'>+91-8978559072</span></li>
-        <li>Visit my blog at <a target='_blank' href='http://mdileep.wordpress.com'>http://mdileep.wordpress.com</a></li>
-        <li><a href='http://www.miriyala.in'>http://www.miriyala.in</a></li>
-        <li>Google: <a target='_blank' href='https://www.google.co.in/search?q=Dileep+Miriyala'>Dileep Miriyala</a> or <a target='_blank' href='https://www.google.co.in/search?q=https://www.google.co.in/search?q=%E0%B0%A6%E0%B0%BF%E0%B0%B2%E0%B1%80%E0%B0%AA%E0%B1%81%2B%E0%B0%AE%E0%B0%BF%E0%B0%B0%E0%B0%BF%E0%B0%AF%E0%B0%BE%E0%B0%B2'>దిలీపు మిరియాల</a></li>
-        <li>Facebook <a target='_blank' href='https://www.facebook.com/public/Dileep-Miriyala‪'>Dileep Miriyala</a></li>
-      </ol>
-    `
+    page_about_title: 'పరిచయం',
+    page_credits_title: 'కృతజ్ఞతలు',
+    page_contact_title: 'సంప్రదింపులు',
   },
 };
 
-const STORAGE_KEY = 'chandam-ui-lang';
+import { STORAGE_KEYS } from './constants';
+const STORAGE_KEY = STORAGE_KEYS.UI_LANGUAGE;
 
 let currentLanguage: Language = 'te';
 

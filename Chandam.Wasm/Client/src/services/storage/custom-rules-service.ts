@@ -4,10 +4,10 @@
 import { storageService } from './storage-service';
 import type { CustomRuleset } from './models';
 import type { RuleDto } from './rule-dto';
+import { MAX_CUSTOM_RULES, STORAGE_KEYS } from '../../constants';
 
-const CUSTOM_RULESETS_KEY = 'custom-rulesets';
-const CUSTOM_RULES_ID = 'custom-rules';
-const MAX_CUSTOM_RULES = 50;
+const CUSTOM_RULESETS_KEY = STORAGE_KEYS.CUSTOM_RULESETS;
+const CUSTOM_RULES_ID = STORAGE_KEYS.CUSTOM_RULES_ID;
 
 export class CustomRulesService {
   async createCustomRule(ruleData: RuleDto): Promise<void> {

@@ -17,6 +17,7 @@ export interface RuleSummaryDetailed extends RuleSummary {
   shortName?: string;
   alias?: string;
   compactSummary?: string;
+  exampleCount?: number;
 }
 
 export interface DetermineResponse {

@@ -249,7 +249,7 @@ public class ChandamToolsTests
         var results = json.RootElement.GetProperty("Results");
         foreach (var item in results.EnumerateArray())
         {
-            Assert.True(item.GetProperty("ExamplesCount").GetInt32() > 0);
+            Assert.True(item.GetProperty("ExampleCount").GetInt32() > 0);
         }
     }
 

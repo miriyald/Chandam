@@ -27,7 +27,7 @@ const ROUTES: Array<{ path: string; name: string; visibleSelector: string }> = [
   { path: '/create-rule', name: 'create-rule', visibleSelector: '#create-rule-btn' },
   { path: '/about', name: 'about', visibleSelector: '#content' },
   { path: '/credits', name: 'credits', visibleSelector: '#content' },
-  { path: '/contact', name: 'contact', visibleSelector: '#content' },
+  { path: '/my-data', name: 'my-data', visibleSelector: '.my-data-page' },
 ];
 
 // ---------------------------------------------------------------------------

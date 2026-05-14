@@ -613,11 +613,36 @@ footer a:focus-visible {
   pointer-events: none;
 }
 
-.footer-github-link,
-.footer-clear-link {
+.footer-links {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0;
+  font-size: 0.85rem;
+}
+
+.footer-link-group {
+  display: flex;
+  align-items: center;
+  gap: 0;
+}
+
+.footer-link-group a {
   display: inline-flex;
   align-items: center;
   gap: 0.25rem;
+  padding: 0.25rem 0.6rem;
+  border-right: 1px solid rgba(245, 243, 240, 0.2);
+}
+
+.footer-link-group a:last-child {
+  border-right: none;
+}
+
+.footer-separator {
+  color: rgba(245, 243, 240, 0.4);
+  padding: 0 0.5rem;
+  font-weight: bold;
 }
 
 /* Examples footer (learn detail page) */
@@ -3062,6 +3087,20 @@ footer a:focus-visible {
   font-size: 1rem;
   font-weight: 500;
   margin-top: 0.5rem;
+}
+
+/* My Data page */
+.my-data-actions {
+  margin-bottom: var(--space-sm);
+}
+
+.my-data-actions .action-btn:hover {
+  color: #c1121f;
+  border-color: rgba(193, 18, 31, 0.3);
+}
+
+.my-data-actions .action-btn:hover .trash-icon {
+  fill: #c1121f;
 }
 
 /* ========================================

@@ -51,7 +51,7 @@ test.describe('GitHub reporting flow', () => {
     expect(filename).toContain('chandam-example-');
 
     const openedUrl = await page.evaluate(() => (window as any).__openedUrl as string);
-    expect(openedUrl).toContain('github.com/chandamu/chandam/issues/new');
+    expect(openedUrl).toContain('github.com/miriyald/chandam/issues/new');
     expect(openedUrl).toContain('template=new-examples.md');
     expect(openedUrl).toContain('labels=examples%2Ccommunity');
   });
@@ -82,7 +82,7 @@ test.describe('GitHub reporting flow', () => {
     expect(filename).toContain('chandam-example-');
 
     const openedUrl = await page.evaluate(() => (window as any).__openedUrl as string);
-    expect(openedUrl).toContain('github.com/chandamu/chandam/issues/new');
+    expect(openedUrl).toContain('github.com/miriyald/chandam/issues/new');
     expect(openedUrl).toContain('template=new-examples.md');
   });
 });

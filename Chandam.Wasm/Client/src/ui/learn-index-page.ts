@@ -1,5 +1,6 @@
 import { WasmBridge } from '../wasm-bridge';
 import { getRuleSet, getRuleSetAsync } from '../config';
+import { SEARCH_DEBOUNCE_MS } from '../constants';
 import type { RuleSummaryDetailed, AvailableFilters } from '../types';
 import { groupRulesByCategory, getSortedGroupKeys, getGroupDisplayName, getSubTypeDisplayName } from '../utils/rule-grouping';
 import { makeUrl } from '../utils/url-helpers';
@@ -19,12 +20,14 @@ interface FilterState {
   searchText: string;
   selectedCategory: string;
   selectedChandamName: string;
+  hasExamples: boolean;
 }
 
 let currentFilterState: FilterState = {
   searchText: '',
   selectedCategory: '',
   selectedChandamName: '',
+  hasExamples: false,
 };
 
 let currentFilters: AvailableFilters | null = null;
@@ -115,7 +118,7 @@ export async function renderLearnIndexPage(ruleSet: string) {
 }
 
 async function applyFilters(allRules: RuleSummaryDetailed[]): Promise<RuleSummaryDetailed[]> {
-  if (currentFilterState.searchText === '' && currentFilterState.selectedCategory === '' && currentFilterState.selectedChandamName === '') {
+  if (currentFilterState.searchText === '' && currentFilterState.selectedCategory === '' && currentFilterState.selectedChandamName === '' && !currentFilterState.hasExamples) {
     return allRules;
   }
 
@@ -123,6 +126,7 @@ async function applyFilters(allRules: RuleSummaryDetailed[]): Promise<RuleSummar
     query: currentFilterState.searchText || undefined,
     categories: currentFilterState.selectedCategory ? [currentFilterState.selectedCategory] : undefined,
     chandamNames: currentFilterState.selectedChandamName ? [currentFilterState.selectedChandamName] : undefined,
+    hasExamples: currentFilterState.hasExamples ? true : undefined,
     maxResults: 0
   }, 'te');
 }
@@ -173,6 +177,7 @@ function renderLearnIndexPageHtml(
               aria-label="${t('filter_search_placeholder')}"
             />
             ${renderCategoryDropdown()}
+            ${renderExamplesToggle()}
           </div>
           <div class="filter-actions">
             <span class="filter-result-count">${ruleCount !== allRulesCount ? `${t('filter_results')} (${ruleCount}/${allRulesCount})` : `${allRulesCount}`}</span>
@@ -243,6 +248,9 @@ function renderRuleListItem(rule: RuleSummaryDetailed, ruleSetId: string, favori
   if (rule.lines && rule.lines > 0) {
     const padaLabel = rule.lines === 1 ? t('pada_singular') : t('pada_plural');
     metaParts.push(`${rule.lines} ${padaLabel}`);
+  }
+  if (rule.exampleCount && rule.exampleCount > 0) {
+    metaParts.push(`${rule.exampleCount} ${t('metric_examples')}`);
   }
   if (rule.chandamName) {
     metaParts.push(rule.chandamName);
@@ -330,6 +338,20 @@ function renderCategoryDropdown(): string {
   `;
 }
 
+function renderExamplesToggle(): string {
+  if (!currentFilters || !currentFilters.hasRulesWithExamples || !currentFilters.hasRulesWithoutExamples) {
+    return '';
+  }
+
+  return `
+    <label class="toggle-switch compact">
+      <input type="checkbox" id="filter-has-examples" ${currentFilterState.hasExamples ? 'checked' : ''}>
+      <span class="toggle-slider"></span>
+      <span class="toggle-label">${t('filter_with_examples')}</span>
+    </label>
+  `;
+}
+
 function attachFilterEventListeners(ruleSetId: string) {
   const searchInput = document.querySelector('.filter-search') as HTMLInputElement;
   if (searchInput) {
@@ -341,7 +363,7 @@ function attachFilterEventListeners(ruleSetId: string) {
       });
       await refreshResults(ruleSetId);
       done();
-    }, 300));
+    }, SEARCH_DEBOUNCE_MS));
   }
 
   const categoryPicker = document.getElementById('category-picker') as HTMLDetailsElement;
@@ -383,10 +405,23 @@ function attachFilterEventListeners(ruleSetId: string) {
     });
   }
 
+  const examplesToggle = document.getElementById('filter-has-examples') as HTMLInputElement;
+  if (examplesToggle) {
+    examplesToggle.addEventListener('change', async () => {
+      currentFilterState.hasExamples = examplesToggle.checked;
+      const done = analyticsService.startTimedEvent('filter_examples', {
+        ruleSet: ruleSetId,
+        enabled: String(examplesToggle.checked)
+      });
+      await refreshResults(ruleSetId);
+      done();
+    });
+  }
+
   const clearButton = document.querySelector('[data-action="clear-filters"]');
   if (clearButton) {
     clearButton.addEventListener('click', async () => {
-      currentFilterState = { searchText: '', selectedCategory: '', selectedChandamName: '' };
+      currentFilterState = { searchText: '', selectedCategory: '', selectedChandamName: '', hasExamples: false };
       const done = analyticsService.startTimedEvent('filter_clear', { ruleSet: ruleSetId });
       await refreshResults(ruleSetId);
       done();

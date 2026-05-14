@@ -2,6 +2,7 @@
  * Sequential migration framework for browser storage.
  * Modeled after DB migration scripts — each step runs exactly once, in order.
  */
+import { DB_NAME, STORAGE_KEYS } from '../../constants';
 
 export interface Migration {
   version: string;
@@ -9,8 +10,7 @@ export interface Migration {
   migrate: () => Promise<void>;
 }
 
-const DB_NAME = 'ChandamDB';
-const VERSION_KEY = 'chandam:storage:version';
+const VERSION_KEY = STORAGE_KEYS.STORAGE_VERSION;
 
 const migrations: Migration[] = [
   { version: 'A', name: 'compressed-storage', migrate: migrateToA },
