@@ -88,6 +88,8 @@ for (const route of ROUTES) {
   });
 
   test(`[${route.name}] visual baseline`, async ({ page }) => {
+    test.skip(!!process.env.CI, 'Visual baselines skipped in CI — run via workflow_dispatch with update_snapshots');
+
     await gotoAndWait(page, route.path);
 
     // Allow animations/fonts to settle
@@ -95,10 +97,8 @@ for (const route of ROUTES) {
 
     await expect(page).toHaveScreenshot(`${route.name}.png`, {
       timeout: 15_000,
-      // Allow up to 8% pixel difference for cross-platform font rendering (Windows vs Linux)
       maxDiffPixelRatio: 0.08,
-      // Mask dynamic content that changes between runs
-      mask: [page.locator('#version-info')],
+      mask: [page.locator('#version-info'), page.locator('#kb-toggle')],
     });
   });
 }

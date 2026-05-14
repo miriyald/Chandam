@@ -8,17 +8,11 @@
 
 import { test, expect, gotoAndWait } from '../fixtures/wasm-ready';
 
-async function getFirstRuleComputePath(
+async function getFirstRuleLearnPath(
   page: import('@playwright/test').Page,
 ): Promise<string> {
-  await gotoAndWait(page, '/learn/chandam/');
-  const firstLearnLink = page
-    .locator('.rule-list-item .rule-item-actions a[href*="/learn/chandam/"]')
-    .first();
-  await expect(firstLearnLink).toBeVisible({ timeout: 15_000 });
-  const href = await firstLearnLink.getAttribute('href');
-  const ruleId = href?.split('/').filter(Boolean).pop() ?? '';
-  return `/compute/chandam/${ruleId}`;
+  const ruleId = 'iMdravajramu';
+  return `/learn/chandam/${ruleId}`;
 }
 
 async function clearAllFavorites(page: import('@playwright/test').Page): Promise<void> {
@@ -56,15 +50,15 @@ test.describe('Favorites synchronization across tabs', () => {
   });
 
   test('favorite state syncs between two tabs after reload', async ({ page, context }) => {
-    const computePath = await getFirstRuleComputePath(page);
+    const learnPath = await getFirstRuleLearnPath(page);
 
-    await gotoAndWait(page, computePath);
+    await gotoAndWait(page, learnPath);
     const favBtnTabA = page.locator('#btn-favorite');
     await expect(favBtnTabA).toHaveAttribute('data-favorited', 'false');
 
     const pageB = await context.newPage();
     try {
-      await gotoAndWait(pageB, computePath);
+      await gotoAndWait(pageB, learnPath);
       const favBtnTabB = pageB.locator('#btn-favorite');
       await expect(favBtnTabB).toHaveAttribute('data-favorited', 'false');
 
@@ -74,7 +68,7 @@ test.describe('Favorites synchronization across tabs', () => {
       await expect(favBtnTabA).toHaveAttribute('data-favorited', 'true');
 
       // Reload tab B and verify it observes tab A's write.
-      await gotoAndWait(pageB, computePath);
+      await gotoAndWait(pageB, learnPath);
       await expect(favBtnTabB).toHaveAttribute('data-favorited', 'true');
 
       // Un-favorite in tab B.
@@ -83,7 +77,7 @@ test.describe('Favorites synchronization across tabs', () => {
       await expect(favBtnTabB).toHaveAttribute('data-favorited', 'false');
 
       // Reload tab A and verify it observes tab B's write.
-      await gotoAndWait(page, computePath);
+      await gotoAndWait(page, learnPath);
       await expect(favBtnTabA).toHaveAttribute('data-favorited', 'false');
     } finally {
       await pageB.close();

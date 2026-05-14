@@ -127,6 +127,7 @@ header nav {
   display: flex;
   align-items: center;
   gap: 0.25rem;
+  flex: 1;
 }
 
 header nav a {
@@ -166,6 +167,38 @@ header nav a:focus-visible {
   margin-left: auto;
 }
 
+.kb-toggle {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0.15rem;
+  margin-left: auto;
+  margin-right: 0.5rem;
+  border-radius: 4px;
+  transition: opacity 0.15s;
+  line-height: 0;
+}
+
+.kb-toggle:hover {
+  opacity: 0.8;
+}
+
+.kb-toggle:not(.active) {
+  opacity: 0.5;
+}
+
+@media (max-width: 768px) {
+  .kb-toggle {
+    margin-left: 0;
+    margin-right: 0;
+    padding: 0.75rem 1rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+}
+
 .lang-toggle {
   display: none !important;
   background: transparent;
@@ -176,7 +209,7 @@ header nav a:focus-visible {
   padding: 0.25rem 0.6rem;
   cursor: pointer;
   border-radius: 3px;
-  margin-left: auto;
+  margin-left: 0.5rem;
   transition: background 0.15s;
 }
 
@@ -196,6 +229,7 @@ header nav a:focus-visible {
   }
 
   header nav {
+    flex: none;
     max-height: 0;
     overflow: hidden;
     opacity: 0;
@@ -208,7 +242,7 @@ header nav a:focus-visible {
   }
 
   header nav.open {
-    max-height: 300px;
+    max-height: 400px;
     opacity: 1;
     margin-top: 1rem;
   }

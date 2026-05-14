@@ -2,14 +2,13 @@ name: Playwright Tests (WASM)
 
 on:
   push:
-    branches:
-      - copilot/add-pywright-automation-tests
+    branches: [beta, master]
     paths:
       - 'Chandam.Wasm/**'
       - 'Chandam.Wasm.Tests/**'
       - '.github/workflows/playwright.yml'
   pull_request:
-    branches: [ beta ]
+    branches: [beta, master]
     paths:
       - 'Chandam.Wasm/**'
       - 'Chandam.Wasm.Tests/**'
@@ -122,7 +121,7 @@ jobs:
         run: npx playwright test --update-snapshots
         working-directory: Chandam.Wasm.Tests
         env:
-          CI: true
+          CI: ''
 
       - name: Run Playwright tests
         if: ${{ inputs.update_snapshots != true }}
