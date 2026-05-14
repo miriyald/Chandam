@@ -237,7 +237,7 @@ public class ChandamTools
                     r.ChandamName,
                     r.CharLength,
                     r.MatraLength,
-                    r.ExamplesCount
+                    r.ExampleCount
                 })
             };
 
