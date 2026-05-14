@@ -3094,6 +3094,15 @@ footer a:focus-visible {
   margin-bottom: var(--space-sm);
 }
 
+.my-data-actions .action-btn:hover {
+  color: #c1121f;
+  border-color: rgba(193, 18, 31, 0.3);
+}
+
+.my-data-actions .action-btn:hover .trash-icon {
+  fill: #c1121f;
+}
+
 /* ========================================
    RULE CREATOR PAGE
    ======================================== */

@@ -6,7 +6,7 @@ import { collectionService } from '../services/storage/collection-service';
 import { customRulesService } from '../services/storage/custom-rules-service';
 import { storageService } from '../services/storage/storage-service';
 import { analyticsService } from '../services/analytics-service';
-import { MAX_POEMS } from '../constants';
+import { MAX_POEMS, MAX_FAVORITES, MAX_CUSTOM_RULES } from '../constants';
 import { renderRuleSetCard, renderCustomRulesCard } from './rule-sets-page';
 
 export async function renderMyDataPage(): Promise<void> {
@@ -51,6 +51,7 @@ export async function renderMyDataPage(): Promise<void> {
       name: favRuleset.name,
       description: favRuleset.description,
       ruleCount: favRuleset.rules.length,
+      maxCount: MAX_FAVORITES,
       exampleCount: totalExamples,
       isCustom: true,
       isFavorites: true,
@@ -59,7 +60,7 @@ export async function renderMyDataPage(): Promise<void> {
 
   // Custom Rules card — uses exact same rendering as Rule Sets page
   if (customRulesCollection) {
-    cards.push(renderCustomRulesCard(customRulesCollection));
+    cards.push(renderCustomRulesCard({ ...customRulesCollection, maxCount: MAX_CUSTOM_RULES }));
   }
 
   // Create Custom Rule card — same as Rule Sets page
@@ -79,7 +80,7 @@ export async function renderMyDataPage(): Promise<void> {
       <h1>${t('my_data_title')}</h1>
 
       <div class="rule-actions my-data-actions">
-        <button id="btn-clear-all-data" class="action-btn btn-delete" title="${t('my_data_clear_btn')}">
+        <button id="btn-clear-all-data" class="action-btn" title="${t('my_data_clear_btn')}">
           <svg class="trash-icon" viewBox="0 0 24 24" width="16" height="16">
             <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/>
           </svg>

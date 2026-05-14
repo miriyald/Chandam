@@ -10,8 +10,8 @@
  *    a. Check first available category → count changes.
  *    b. Check second category → count is superset.
  *    c. Uncheck both → count back to original.
- * 7. Has-examples radio: select "With examples" → count changes.
- *    Select "All" → count restores.
+ * 7. Has-examples toggle: check "With Examples" → count changes.
+ *    Uncheck → count restores.
  * 8. Matra length range: enter min=10, max=20 → filtered count appears.
  *    Clear inputs → count restores.
  * 9. Apply multiple filters + Clear All → count returns to original.
@@ -140,30 +140,29 @@ test.describe('Learn page – filter sidebar', () => {
     expect(restoredCount).toBe(originalCount);
   });
 
-  test('has-examples radio filter changes count', async ({ page }) => {
+  test('has-examples toggle filter changes count', async ({ page }) => {
     const originalCount = await readRuleCount(page);
 
-    // Select "With examples"
-    const withExamplesRadio = page.locator(
-      '[data-filter="examples"][value="true"]',
-    );
+    // The toggle switch hides the actual checkbox; target the parent label
+    const toggleLabel = page.locator('label:has(#filter-has-examples)');
 
-    // This radio may not exist if all rules have examples – guard accordingly
-    const radioVisible = await withExamplesRadio.isVisible();
-    if (!radioVisible) {
+    // Toggle may not render if all rules have examples (or none do)
+    const toggleVisible = await toggleLabel.isVisible();
+    if (!toggleVisible) {
       test.skip();
       return;
     }
 
-    await withExamplesRadio.check();
+    // Click label to check
+    await toggleLabel.click();
     await waitForFilterUpdate(page);
 
     const filteredCount = await readRuleCount(page);
     expect(filteredCount).toBeLessThanOrEqual(originalCount);
+    expect(filteredCount).toBeGreaterThan(0);
 
-    // Select "All" to reset
-    const allRadio = page.locator('[data-filter="examples"][value="all"]');
-    await allRadio.check();
+    // Click label again to uncheck
+    await toggleLabel.click();
     await waitForFilterUpdate(page);
 
     const restoredCount = await readRuleCount(page);

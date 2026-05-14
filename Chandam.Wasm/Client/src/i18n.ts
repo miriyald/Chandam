@@ -192,6 +192,7 @@ export interface Translations {
   filter_showing: string;
   filter_of: string;
   filter_results: string;
+  filter_with_examples: string;
 
   // Examples
   examples_none_available: string;
@@ -474,6 +475,7 @@ const translations: Record<Language, Translations> = {
     filter_showing: 'Showing',
     filter_of: 'of',
     filter_results: 'Results',
+    filter_with_examples: 'With Examples',
 
     examples_none_available: 'No examples available yet.',
     examples_contribute_cta: 'You may contribute by writing one!',
@@ -539,7 +541,7 @@ const translations: Record<Language, Translations> = {
 
     // My Writings / Collection
     nav_my_writings: 'My Writings',
-    writings_subtitle: 'Your collection ({count}/20)',
+    writings_subtitle: 'Your collection ({count} poems)',
     writings_empty: 'No poems saved yet. Analyze a poem and save it to your collection!',
     writings_delete: 'Remove',
     writings_delete_confirm: 'Remove this poem from your collection?',
@@ -793,6 +795,7 @@ const translations: Record<Language, Translations> = {
     filter_showing: 'చూపిస్తున్నవి',
     filter_of: '/',
     filter_results: 'ఫలితాలు',
+    filter_with_examples: 'ఉదాహరణలతో',
 
     examples_none_available: 'ఉదాహరణలు ఇంకా అందుబాటులో లేవు.',
     examples_contribute_cta: 'మీరు ఒకటి వ్రాసి సహకరించవచ్చు!',
@@ -858,7 +861,7 @@ const translations: Record<Language, Translations> = {
 
     // My Writings / Collection
     nav_my_writings: 'నా రచనలు',
-    writings_subtitle: 'మీ సేకరణ ({count}/20)',
+    writings_subtitle: 'మీ సేకరణ ({count} పద్యాలు)',
     writings_empty: 'ఇంకా పద్యాలు భద్రపరచబడలేదు. ఒక పద్యాన్ని విశ్లేషించి మీ సేకరణకు జోడించండి!',
     writings_delete: 'తొలగించు',
     writings_delete_confirm: 'ఈ పద్యాన్ని మీ సేకరణ నుండి తొలగించాలా?',
