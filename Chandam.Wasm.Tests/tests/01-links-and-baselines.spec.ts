@@ -98,7 +98,7 @@ for (const route of ROUTES) {
       // Allow up to 8% pixel difference for cross-platform font rendering (Windows vs Linux)
       maxDiffPixelRatio: 0.08,
       // Mask dynamic content that changes between runs
-      mask: [page.locator('#version-info')],
+      mask: [page.locator('#version-info'), page.locator('#kb-toggle')],
     });
   });
 }

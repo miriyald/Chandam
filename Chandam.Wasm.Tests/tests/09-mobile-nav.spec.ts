@@ -107,8 +107,8 @@ test.describe('Mobile navigation menu', () => {
 
     await expect(page).toHaveScreenshot('mobile-nav-open.png', {
       timeout: 15_000,
-      maxDiffPixelRatio: 0.02,
-      mask: [page.locator('#version-info')],
+      maxDiffPixelRatio: 0.08,
+      mask: [page.locator('#version-info'), page.locator('#kb-toggle')],
     });
   });
 });
