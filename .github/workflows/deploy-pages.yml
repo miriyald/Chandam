@@ -50,6 +50,14 @@ jobs:
         run: npm run build
         working-directory: Chandam.Wasm/Client
 
+      - name: Generate metrics snapshot for deployment
+        shell: pwsh
+        run: |
+          ./.github/scripts/generate-metrics.ps1 `
+            -EventName "${{ github.event_name }}" `
+            -Sha "${{ github.sha }}" `
+            -RefName "${{ github.ref_name }}"
+
       - name: Publish Blazor WASM
         run: |
           dotnet publish Chandam.Wasm/Chandam.Wasm.csproj \

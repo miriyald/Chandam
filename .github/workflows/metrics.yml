@@ -5,7 +5,7 @@ on:
     branches: [ beta ]
     paths-ignore:
       - "Docs/metrics/**"
-      - "Docs/Scripts/output/metrics/**"
+      - "Docs/scripts/output/metrics/**"
   schedule:
     - cron: "0 5 * * 1" # Weekly on Monday 05:00 UTC
   workflow_dispatch:
