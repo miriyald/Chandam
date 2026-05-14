@@ -11,6 +11,7 @@ on:
 permissions:
   contents: write # Required to push to gh-pages branch
   checks: write   # Required for test workflow to publish results
+  pull-requests: write # Required by reusable tests workflow permissions
 
 jobs:
   test:

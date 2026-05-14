@@ -38,6 +38,7 @@ $ErrorActionPreference = "Stop"
 $ScriptDir = $PSScriptRoot
 $Root      = (Resolve-Path "$ScriptDir\..\..").Path
 $OutputDir = if ($OutputDir) { $OutputDir } else { Join-Path $ScriptDir "output\metrics" }
+$ExcludedPathPattern = "(?i)\\(obj|bin|\.git|node_modules|dist|coverage|publish|Obsolete|Rules)\\"
 
 if (-not (Test-Path $OutputDir)) { New-Item -ItemType Directory -Path $OutputDir | Out-Null }
 
@@ -45,7 +46,6 @@ if (-not (Test-Path $OutputDir)) { New-Item -ItemType Directory -Path $OutputDir
 $AllProjects = @(
     [pscustomobject]@{ Name = "Chandam.Util";                Layer = "Core";  ReadOnly = $true  }
     [pscustomobject]@{ Name = "Chandam.Indic";               Layer = "Core";  ReadOnly = $true  }
-    [pscustomobject]@{ Name = "Chandam.Rules";               Layer = "Core";  ReadOnly = $true  }
     [pscustomobject]@{ Name = "Chandam.Samples";             Layer = "Core";  ReadOnly = $true  }
     [pscustomobject]@{ Name = "Chandam.Core";                Layer = "Core";  ReadOnly = $true  }
     [pscustomobject]@{ Name = "Chandam.Dictionary";          Layer = "Core";  ReadOnly = $false }
@@ -71,7 +71,7 @@ function Get-LOC {
     param([string]$Dir)
     $result = [pscustomobject]@{ Files=0; Total=0; Code=0; Blank=0; Comment=0 }
     $csFiles = Get-ChildItem -Path $Dir -Recurse -Filter "*.cs" -ErrorAction SilentlyContinue |
-               Where-Object { $_.FullName -notmatch "\\(obj|bin)\\" }
+               Where-Object { $_.FullName -notmatch $ExcludedPathPattern }
     $result.Files = ($csFiles | Measure-Object).Count
     $inBlock = $false
     foreach ($file in $csFiles) {
@@ -111,7 +111,7 @@ function Get-ComplexityMetrics {
     $methodSig = '\b(public|private|protected|internal)\b.*\(.*\)'
 
     $csFiles = Get-ChildItem -Path $Dir -Recurse -Filter "*.cs" -ErrorAction SilentlyContinue |
-               Where-Object { $_.FullName -notmatch "\\(obj|bin)\\" }
+               Where-Object { $_.FullName -notmatch $ExcludedPathPattern }
 
     $totalDec  = 0
     $codeLines = 0
@@ -224,7 +224,7 @@ Write-Host "================================================================" -F
 
 # -- LOC Table ----------------------------------------------------------------
 Write-Host ""
-Write-Host "-- Lines of Code (CS, excluding obj/bin) --" -ForegroundColor Yellow
+Write-Host "-- Lines of Code (CS, excluding obj/bin/Obsolete/Rules) --" -ForegroundColor Yellow
 Write-Host ""
 $hdrLoc = "{0,-34} {1,5} {2,7} {3,7} {4,7} {5,6}" -f "Project", "Files", "Total", "Code", "Blank", "Cmts"
 Write-Host $hdrLoc -ForegroundColor Gray
@@ -258,10 +258,10 @@ Write-Host $totRow -ForegroundColor White
 
 # -- File Distribution --------------------------------------------------------
 Write-Host ""
-Write-Host "-- File distribution (all types, excluding obj/bin) --" -ForegroundColor Yellow
+Write-Host "-- File distribution (all types, including WASM/Node/etc; excluding obj/bin/Obsolete/Rules) --" -ForegroundColor Yellow
 Write-Host ""
 $allExts = Get-ChildItem -Path $Root -Recurse -File -ErrorAction SilentlyContinue |
-           Where-Object { $_.FullName -notmatch "\\(obj|bin|\.git|node_modules|dist|coverage|publish)\\" } |
+           Where-Object { $_.FullName -notmatch $ExcludedPathPattern } |
            Group-Object Extension | Sort-Object Count -Descending | Select-Object -First 15
 foreach ($g in $allExts) {
     $bar = "#" * [Math]::Min([Math]::Ceiling($g.Count / 5), 40)
