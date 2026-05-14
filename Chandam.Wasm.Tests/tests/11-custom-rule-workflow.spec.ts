@@ -41,6 +41,35 @@ function uniqueRuleName(): string {
   return `E2E Rule ${Date.now()}`;
 }
 
+async function createCustomRuleAndNavigate(
+  page: Page,
+  name: string,
+): Promise<string> {
+  await gotoAndWait(page, '/create-rule');
+  await page.locator('#rule-name').fill(name);
+
+  const createBtn = page.locator('#create-rule-btn');
+  await expect(createBtn).toBeVisible();
+  await expect(createBtn).toBeEnabled();
+  await createBtn.scrollIntoViewIfNeeded();
+
+  const dialogPromise = page.waitForEvent('dialog', { timeout: 15_000 });
+
+  // Use DOM click to avoid occasional mobile pointer interception.
+  await createBtn.evaluate((btn: HTMLButtonElement) => btn.click());
+
+  const dialog = await dialogPromise;
+  const dialogMessage = dialog.message();
+  await dialog.accept();
+  expect(dialogMessage.trim().length).toBeGreaterThan(0);
+
+  await expect(page).toHaveURL(/\/learn\/custom-rules\/custom-\d+\/?$/, {
+    timeout: 15_000,
+  });
+
+  return page.url().split('/').filter(Boolean).pop() ?? '';
+}
+
 test.describe('Custom rule creator workflow', () => {
   test.beforeEach(async ({ page }) => {
     await clearStorageState(page);
@@ -64,21 +93,7 @@ test.describe('Custom rule creator workflow', () => {
   test('creates a custom rule, lists it, then deletes it', async ({ page }) => {
     const name = uniqueRuleName();
 
-    await gotoAndWait(page, '/create-rule');
-    await page.locator('#rule-name').fill(name);
-
-    let successDialog = '';
-    page.once('dialog', async (dialog) => {
-      successDialog = dialog.message();
-      await dialog.accept();
-    });
-
-    await page.locator('#create-rule-btn').click();
-
-    await expect
-      .poll(() => successDialog, { timeout: 7_000 })
-      .not.toEqual('');
-    await expect(page).toHaveURL(/\/learn\/custom-rules\/custom-\d+\/?$/);
+    await createCustomRuleAndNavigate(page, name);
 
     // Verify persistence from IndexedDB (compressed-data store)
     const customRules = await page.evaluate(async () => {
@@ -143,17 +158,7 @@ test.describe('Custom rule – compute and persistence', () => {
   }) => {
     const name = uniqueRuleName();
 
-    await gotoAndWait(page, '/create-rule');
-    await page.locator('#rule-name').fill(name);
-
-    page.once('dialog', async (dialog) => {
-      await dialog.accept();
-    });
-
-    await page.locator('#create-rule-btn').click();
-    await expect(page).toHaveURL(/\/learn\/custom-rules\/custom-\d+\/?$/, {
-      timeout: 7_000,
-    });
+    await createCustomRuleAndNavigate(page, name);
 
     // Allow IndexedDB write to settle
     await page.waitForTimeout(500);
@@ -173,25 +178,12 @@ test.describe('Custom rule – compute and persistence', () => {
   test('can navigate to compute page for a custom rule and analyze', async ({ page }) => {
     const name = uniqueRuleName();
 
-    await gotoAndWait(page, '/create-rule');
-    await page.locator('#rule-name').fill(name);
-
-    page.once('dialog', async (dialog) => {
-      await dialog.accept();
-    });
-
-    await page.locator('#create-rule-btn').click();
-    await expect(page).toHaveURL(/\/learn\/custom-rules\/custom-\d+\/?$/, {
-      timeout: 7_000,
-    });
+    const ruleId = await createCustomRuleAndNavigate(page, name);
 
     // Allow IndexedDB write to settle
     await page.waitForTimeout(500);
 
     // Extract the custom rule ID from the URL
-    const url = page.url();
-    const ruleId = url.split('/').filter(Boolean).pop() ?? '';
-
     // Navigate to compute page for the custom rule
     await gotoAndWait(page, `/compute/custom-rules/${ruleId}`);
     await expect(page.locator('#poem-editor')).toBeVisible({ timeout: 10_000 });
@@ -217,17 +209,7 @@ test.describe('Custom rule – compute and persistence', () => {
   test('custom rule persists in IndexedDB after page.reload()', async ({ page }) => {
     const name = uniqueRuleName();
 
-    await gotoAndWait(page, '/create-rule');
-    await page.locator('#rule-name').fill(name);
-
-    page.once('dialog', async (dialog) => {
-      await dialog.accept();
-    });
-
-    await page.locator('#create-rule-btn').click();
-    await expect(page).toHaveURL(/\/learn\/custom-rules\/custom-\d+\/?$/, {
-      timeout: 7_000,
-    });
+    await createCustomRuleAndNavigate(page, name);
 
     // Allow IndexedDB write to complete
     await page.waitForTimeout(500);

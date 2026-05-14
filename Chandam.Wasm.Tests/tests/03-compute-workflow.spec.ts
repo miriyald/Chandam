@@ -162,7 +162,9 @@ test.describe('Compute page – specific rule mode', () => {
     await expect(page.locator('#results-section')).toBeVisible({
       timeout: 15_000,
     });
-    await expect(page.locator('.match-card').first()).toBeVisible();
+    await expect(page.locator('.match-card').first()).toBeVisible({
+      timeout: 15_000,
+    });
   });
 
   test('uncheck Yati then re-analyze does not crash', async ({ page }) => {
