@@ -17,6 +17,7 @@ import './utils/decompression'; // Register decompressGzip globally for C# inter
 import { storageService } from './services/storage/storage-service';
 import { initConsoleAPI, getUserId } from './services/console-api';
 import { initLanguage, toggleLanguage, getLanguage, t } from './i18n';
+import { initKeyboard } from './transliteration';
 import type { Translations } from './i18n';
 import { analyticsService } from './services/analytics-service';
 import { WasmBridge } from './wasm-bridge';
@@ -187,6 +188,7 @@ window.addEventListener('languagechange', () => {
 document.addEventListener('DOMContentLoaded', () => {
   initLanguage();
   applyLanguageToPage();
+  initKeyboard();
 
   document.getElementById('nav-toggle')?.addEventListener('click', () => {
     document.getElementById('main-nav')?.classList.toggle('open');

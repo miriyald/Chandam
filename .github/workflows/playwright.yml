@@ -2,14 +2,13 @@ name: Playwright Tests (WASM)
 
 on:
   push:
-    branches:
-      - copilot/add-pywright-automation-tests
+    branches: [beta, master]
     paths:
       - 'Chandam.Wasm/**'
       - 'Chandam.Wasm.Tests/**'
       - '.github/workflows/playwright.yml'
   pull_request:
-    branches: [ beta ]
+    branches: [beta, master]
     paths:
       - 'Chandam.Wasm/**'
       - 'Chandam.Wasm.Tests/**'

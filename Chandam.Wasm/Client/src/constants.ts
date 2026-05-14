@@ -30,4 +30,5 @@ export const STORAGE_KEYS = {
   FAV_RULESET: 'custom-rulesets:custom-fav',
   CUSTOM_RULESETS: 'custom-rulesets',
   CUSTOM_RULES_ID: 'custom-rules',
+  KB_SCHEME: 'chandam:kb-scheme',
 } as const;

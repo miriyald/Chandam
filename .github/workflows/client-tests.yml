@@ -1,0 +1,44 @@
+name: Client Unit Tests (Vitest)
+
+on:
+  push:
+    branches: [beta, master]
+    paths:
+      - 'Chandam.Wasm/Client/**'
+      - '.github/workflows/client-tests.yml'
+  pull_request:
+    branches: [beta, master]
+    paths:
+      - 'Chandam.Wasm/Client/**'
+      - '.github/workflows/client-tests.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  vitest:
+    name: Run Vitest (transliteration + client)
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        run: npm install
+        working-directory: Chandam.Wasm/Client
+
+      - name: Run Vitest
+        run: npm run test -- --reporter=verbose
+        working-directory: Chandam.Wasm/Client
+
+      - name: TypeScript type check
+        run: npx tsc --noEmit
+        working-directory: Chandam.Wasm/Client
