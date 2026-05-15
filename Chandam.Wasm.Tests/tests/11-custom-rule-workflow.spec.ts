@@ -6,7 +6,7 @@ async function clearStorageState(page: Page): Promise<void> {
   await page.evaluate(async () => {
     const api = (window as any).chandam;
     if (api?.storage?.clear) {
-      api.storage.clear();
+      await api.storage.clear();
     }
     if (api?.favorites?.clear) {
       await api.favorites.clear();
@@ -35,6 +35,12 @@ async function clearStorageState(page: Page): Promise<void> {
 
     db.close();
   });
+
+  // Reload so Blazor re-initializes from a clean slate.
+  // Without this, wiping IndexedDB while Blazor is live can leave the app
+  // in a corrupted in-memory state that causes button clicks to silently fail.
+  await page.reload();
+  await waitForWasmReady(page);
 }
 
 function uniqueRuleName(): string {
@@ -54,14 +60,11 @@ async function createCustomRuleAndNavigate(
   await createBtn.scrollIntoViewIfNeeded();
 
   const dialogPromise = page.waitForEvent('dialog', { timeout: 15_000 });
-
-  // Use DOM click to avoid occasional mobile pointer interception.
-  await createBtn.evaluate((btn: HTMLButtonElement) => btn.click());
+  await createBtn.click({ force: true });
 
   const dialog = await dialogPromise;
-  const dialogMessage = dialog.message();
+  expect(dialog.message().trim().length).toBeGreaterThan(0);
   await dialog.accept();
-  expect(dialogMessage.trim().length).toBeGreaterThan(0);
 
   await expect(page).toHaveURL(/\/learn\/custom-rules\/custom-\d+\/?$/, {
     timeout: 15_000,
@@ -160,9 +163,6 @@ test.describe('Custom rule – compute and persistence', () => {
 
     await createCustomRuleAndNavigate(page, name);
 
-    // Allow IndexedDB write to settle
-    await page.waitForTimeout(500);
-
     // Navigate to rule-sets page
     await gotoAndWait(page, '/rule-sets');
     await expect(page.locator('.rule-sets-page')).toBeVisible({ timeout: 10_000 });
@@ -180,10 +180,6 @@ test.describe('Custom rule – compute and persistence', () => {
 
     const ruleId = await createCustomRuleAndNavigate(page, name);
 
-    // Allow IndexedDB write to settle
-    await page.waitForTimeout(500);
-
-    // Extract the custom rule ID from the URL
     // Navigate to compute page for the custom rule
     await gotoAndWait(page, `/compute/custom-rules/${ruleId}`);
     await expect(page.locator('#poem-editor')).toBeVisible({ timeout: 10_000 });
@@ -210,9 +206,6 @@ test.describe('Custom rule – compute and persistence', () => {
     const name = uniqueRuleName();
 
     await createCustomRuleAndNavigate(page, name);
-
-    // Allow IndexedDB write to complete
-    await page.waitForTimeout(500);
 
     // Hard reload
     await page.reload();

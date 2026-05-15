@@ -149,6 +149,12 @@ test.describe('Compute page – specific rule mode', () => {
     await page.locator('#rule-picker-inline').click();
     await selectRuleWithExample(page, rng);
 
+    // Wait for picker to collapse after selection (details element closes)
+    await expect(page.locator('#rule-picker-inline')).not.toHaveAttribute(
+      'open',
+      '',
+    );
+
     // Ensure Yati and Prasa are checked
     await expect(page.locator('#match-yati')).toBeChecked();
     await expect(page.locator('#match-prasa')).toBeChecked();
