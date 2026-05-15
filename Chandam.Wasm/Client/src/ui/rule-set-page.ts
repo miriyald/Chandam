@@ -258,6 +258,13 @@ function attachEventHandlers(ruleSet: string) {
 
 // Custom determine handler that tracks last analyzed rule
 async function handleDetermineWithTracking() {
+  // Clear existing score cards immediately so stale alternatives are never shown
+  // while a new analysis is running.
+  const scoreCardsContainer = document.getElementById('score-cards-container');
+  if (scoreCardsContainer) {
+    scoreCardsContainer.innerHTML = '';
+  }
+
   const poemText = getEditorText();
   if (!poemText.trim()) {
     alert(t('alert_enter_poem'));
@@ -288,19 +295,27 @@ async function handleDetermineWithTracking() {
         name: bestMatch.rule.shortName || bestMatch.rule.name
       };
 
-      renderFirstMatch(bestMatch, 'results-container', currentRuleSet);
+      await renderFirstMatch(bestMatch, 'results-container', currentRuleSet);
 
       const resultsSection = document.getElementById('results-section');
       if (resultsSection) resultsSection.style.display = 'block';
 
-      if (scoresResponse?.scores && scoresResponse.scores.length > 1) {
+      if (scoresResponse?.scores && scoresResponse.scores.length > 1 && scoreCardsContainer) {
         const alternatives = scoresResponse.scores
           .filter(s => s.identifier !== bestMatch.rule.identifier)
           .slice(0, 5);
         if (alternatives.length > 0) {
           renderScoreCards(alternatives, 'score-cards-container', currentRuleSet);
+        } else {
+          scoreCardsContainer.innerHTML = '';
         }
+      } else if (scoreCardsContainer) {
+        scoreCardsContainer.innerHTML = '';
       }
+
+      // Keep the loading state until both best-match and score-card regions
+      // have been updated and the browser can paint the final UI together.
+      await nextFrame();
     } else {
       alert(response.errorMessage || t('alert_no_matches'));
     }
@@ -363,10 +378,13 @@ async function handleMatchWithTracking() {
   try {
     const response = await WasmBridge.tryMatch(poemText, ruleId, yati, prasa);
     if (response.isMatch && response.match) {
-      renderFirstMatch(response.match, 'results-container', currentRuleSet);
+      await renderFirstMatch(response.match, 'results-container', currentRuleSet);
 
       const resultsSection = document.getElementById('results-section');
       if (resultsSection) resultsSection.style.display = 'block';
+
+      // Keep loading until rendered content is paint-ready.
+      await nextFrame();
     } else {
       alert(response.errorMessage || t('alert_no_match'));
     }

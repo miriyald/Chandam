@@ -22,7 +22,8 @@ on:
         default: false
 
 permissions:
-  contents: read
+  contents: write
+  pull-requests: write
 
 jobs:
   playwright:
@@ -158,3 +159,23 @@ jobs:
           name: updated-baselines
           path: Chandam.Wasm.Tests/baselines/
           retention-days: 30
+
+      # ------------------------------------------------------------------
+      # 8. Create PR with updated baselines
+      # ------------------------------------------------------------------
+      - name: Create PR with updated baselines
+        if: ${{ inputs.update_snapshots == true }}
+        uses: peter-evans/create-pull-request@v7
+        with:
+          commit-message: 'Update Playwright visual baselines'
+          branch: auto/update-visual-baselines
+          delete-branch: true
+          title: 'Update Playwright visual baselines'
+          body: |
+            Regenerated visual baseline screenshots on Linux (ubuntu-latest).
+
+            Triggered by workflow_dispatch with `update_snapshots=true`.
+
+            Review the screenshot changes in `Chandam.Wasm.Tests/baselines/` before merging.
+          add-paths: |
+            Chandam.Wasm.Tests/baselines/**

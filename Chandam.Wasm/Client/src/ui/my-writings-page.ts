@@ -8,6 +8,7 @@ import { analyticsService } from '../services/analytics-service';
 import { storageService } from '../services/storage/storage-service';
 import { makeUrl } from '../utils/url-helpers';
 import type { CollectionPoem } from '../services/storage/models';
+import { wrapPoemLines } from '../utils/poem-html';
 
 let actionController: AbortController | null = null;
 let cachedPoems: CollectionPoem[] = [];
@@ -57,7 +58,7 @@ function renderPageContent(poems: CollectionPoem[]): string {
 
 function renderWritingCard(poem: CollectionPoem): string {
   const poemHtml = poem.beautified
-    ? `<div class="poem">${poem.beautified}</div>`
+    ? `<div class="poem">${wrapPoemLines(poem.beautified)}</div>`
     : `<pre class="poem-text">${escapeHtml(poem.poemText)}</pre>`;
 
   const trashSvg = `<svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/></svg>`;

@@ -64,19 +64,19 @@ test.describe('Favorites synchronization across tabs', () => {
 
       // Favorite in tab A.
       await favBtnTabA.click();
-      await page.waitForTimeout(500);
       await expect(favBtnTabA).toHaveAttribute('data-favorited', 'true');
 
       // Reload tab B and verify it observes tab A's write.
+      await pageB.waitForTimeout(500);
       await gotoAndWait(pageB, learnPath);
       await expect(favBtnTabB).toHaveAttribute('data-favorited', 'true');
 
       // Un-favorite in tab B.
       await favBtnTabB.click();
-      await pageB.waitForTimeout(500);
       await expect(favBtnTabB).toHaveAttribute('data-favorited', 'false');
 
       // Reload tab A and verify it observes tab B's write.
+      await page.waitForTimeout(500);
       await gotoAndWait(page, learnPath);
       await expect(favBtnTabA).toHaveAttribute('data-favorited', 'false');
     } finally {

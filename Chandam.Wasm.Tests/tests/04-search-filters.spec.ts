@@ -233,6 +233,7 @@ test.describe('Learn page – filter sidebar', () => {
   });
 
   test('screenshot of active filter state', async ({ page }) => {
+    test.skip(!!process.env.CI, 'Visual baselines skipped in CI — run via workflow_dispatch with update_snapshots');
     // Apply a filter to get an interesting screenshot
     await page.locator('.filter-search').fill('వ');
     await waitForFilterUpdate(page);

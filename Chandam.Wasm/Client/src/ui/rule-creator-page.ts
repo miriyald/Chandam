@@ -4,6 +4,7 @@
 import { t } from '../i18n';
 import { setPageTitle } from '../utils/page-title';
 import { customRulesService } from '../services/storage/custom-rules-service';
+import { CustomRulesLoader } from '../services/custom-rules-loader';
 import { makeUrl } from '../utils/url-helpers';
 import type { RuleDto, GanaOption } from '../services/storage/rule-dto';
 import {
@@ -553,8 +554,12 @@ async function handleCreateRule() {
     }
 
     await customRulesService.createCustomRule(ruleDto);
+    // Ensure WASM knows about the new rule before navigating
+    await CustomRulesLoader.loadCustomRuleset('custom-rules', true);
     alert(t('creator_success'));
-    window.location.href = makeUrl(`/learn/custom-rules/${ruleDto.Identifier}`);
+    const targetUrl = makeUrl(`/learn/custom-rules/${ruleDto.Identifier}`);
+    window.history.pushState(null, '', targetUrl);
+    window.dispatchEvent(new PopStateEvent('popstate'));
   } catch (error) {
     alert(t('creator_error'));
     console.error(error);

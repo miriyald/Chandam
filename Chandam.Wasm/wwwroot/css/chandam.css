@@ -52,6 +52,29 @@
   --shadow-dropdown: 0 4px 16px rgba(26, 26, 26, 0.12);
 }
 
+/* Mobile spacing overrides */
+@media (max-width: 768px) {
+  :root {
+    --space-md: 12px;
+    --space-lg: 16px;
+    --space-xl: 20px;
+    --space-section: 24px;
+    --font-editor-size-mobile: 1.0rem;
+    --font-editor-line-height-mobile: 1.7;
+  }
+}
+
+@media (max-width: 480px) {
+  :root {
+    --space-md: 8px;
+    --space-lg: 12px;
+    --space-xl: 16px;
+    --space-section: 16px;
+    --font-editor-size-mobile: 0.95rem;
+    --font-editor-line-height-mobile: 1.6;
+  }
+}
+
 /* Skip link for keyboard/screen reader users */
 .skip-link {
   position: absolute;
@@ -1024,13 +1047,33 @@ footer a:focus-visible {
 /* Inner poem text container */
 .poem {
   font-family: var(--font-editor);
-  /* Tiro Telugu serif for poetry */
   font-size: var(--font-editor-size);
   letter-spacing: var(--font-editor-letter-spacing);
   line-height: var(--font-editor-line-height);
   color: var(--color-poem);
   white-space: normal;
   word-wrap: break-word;
+}
+
+.poem-line {
+  display: block;
+  padding-left: 1.2em;
+  text-indent: -1.2em;
+  padding-top: 0.2em;
+  padding-bottom: 0.2em;
+  border-bottom: 1px solid rgba(26, 58, 92, 0.06);
+  text-wrap: pretty;
+  background: linear-gradient(
+    to right,
+    transparent 0,
+    transparent 1.2em,
+    rgba(184, 134, 11, 0.04) 1.2em,
+    rgba(184, 134, 11, 0.04) 100%
+  );
+}
+
+.poem-line:last-child {
+  border-bottom: none;
 }
 
 /* ========================================
@@ -2366,9 +2409,31 @@ footer a:focus-visible {
    RESPONSIVE (MOBILE)
    ======================================== */
 @media (max-width: 768px) {
+  main {
+    padding: 1rem 0.75rem;
+  }
+
   .editor-section {
-    padding: 0.875rem;
-    border-radius: 10px;
+    padding: 0.625rem;
+    border-radius: 8px;
+  }
+
+  #poem-editor {
+    font-size: var(--font-editor-size-mobile);
+    line-height: var(--font-editor-line-height-mobile);
+    min-height: 140px;
+    padding: 0.625rem;
+    margin: var(--space-sm) 0;
+  }
+
+  .match-card {
+    padding: var(--space-md);
+    margin-bottom: var(--space-md);
+  }
+
+  #results-section {
+    margin-top: 1rem;
+    padding: 0.5rem;
   }
 
   .editor-toolbar {
@@ -2453,7 +2518,8 @@ footer a:focus-visible {
   }
 
   .match-body-split {
-    gap: 1rem;
+    gap: 0.5rem;
+    margin: 0.5rem 0;
   }
 
   .match-header {
@@ -2501,21 +2567,15 @@ footer a:focus-visible {
   .padyam {
     min-width: 100%;
     flex: 1 1 100%;
-    padding: 0.75rem;
-    margin-bottom: 1rem;
-    /* Space between stacked items */
+    padding: 0.25rem 0;
+    margin-bottom: 0.5rem;
+    border: none;
+    background: transparent;
   }
 
   .poem {
-    font-size: var(--font-editor-size);
+    font-size: var(--font-editor-size-mobile);
     line-height: var(--font-editor-line-height-mobile);
-    background-image: repeating-linear-gradient(
-      transparent,
-      transparent calc(1.1rem * 2.4 - 1px),
-      var(--poem-ruled-line-color) calc(1.1rem * 2.4 - 1px),
-      var(--poem-ruled-line-color) calc(1.1rem * 2.4)
-    );
-    background-size: 100% calc(1.1rem * 2.4);
   }
 
   .ganaVibhajana {
@@ -2526,9 +2586,21 @@ footer a:focus-visible {
 
 /* Hide less critical columns on very small screens */
 @media (max-width: 480px) {
-  .error-position {
-    display: none;
-  }
+  .error-position { display: none; }
+
+  main { padding: 0.5rem 0.5rem; }
+  .container { padding: 0 0.5rem; }
+  .editor-section { padding: 0.5rem; border-radius: 8px; }
+  #poem-editor { min-height: 120px; padding: 0.5rem; margin: 4px 0; }
+  #results-section { margin-top: 0.5rem; padding: 0.25rem; }
+  .match-header { gap: 0.25rem; }
+  .match-title-group .meter-name { font-size: 1.1rem; }
+  .padyam { padding: 0 0; margin-bottom: 0.25rem; border: none; background: transparent; }
+  .controls-bar { gap: 0.5rem; padding-top: 0.5rem; }
+  .toggle-group { gap: 0.75rem; }
+  .toggle-label { font-size: 0.8rem; }
+  .main-actions button { padding: 0.75rem; font-size: 0.95rem; }
+  .errors-table th, .errors-table td { padding: 0.25rem 0.2rem; font-size: 0.8rem; }
 }
 
 /* ========== HTML Description Content ========== */

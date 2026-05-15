@@ -13,6 +13,7 @@ const WORD_BOUNDARY = new Set([' ', '.', ',', ';', ':', '!', '?', '\n', '\r', '(
 
 /**
  * Attach IME behavior to a text input element.
+ * Uses beforeinput for mobile virtual keyboards and keypress as fallback for desktop.
  * Returns a cleanup function.
  */
 export function attachIMEToElement(
@@ -20,6 +21,42 @@ export function attachIMEToElement(
   getScheme: SchemeGetter,
 ): () => void {
   const state: IMEState = { inputBuffer: '', prevOutputLen: 0 };
+  let handledByBeforeInput = false;
+
+  function onBeforeInput(e: InputEvent) {
+    const { scheme, script } = getScheme();
+    if (scheme === 'none') return;
+
+    if (e.inputType === 'insertText' && e.data && e.data.length === 1) {
+      const char = e.data;
+
+      if (WORD_BOUNDARY.has(char)) {
+        resetState(state);
+        return;
+      }
+
+      e.preventDefault();
+      handledByBeforeInput = true;
+      state.inputBuffer += char;
+      applyConversion(el, state, scheme, script);
+      return;
+    }
+
+    if (e.inputType === 'deleteContentBackward') {
+      if (state.inputBuffer.length > 0) {
+        e.preventDefault();
+        handledByBeforeInput = true;
+        state.inputBuffer = state.inputBuffer.slice(0, -1);
+        applyConversion(el, state, scheme, script);
+      }
+      return;
+    }
+
+    if (e.inputType === 'insertLineBreak' || e.inputType === 'insertParagraph') {
+      resetState(state);
+      return;
+    }
+  }
 
   function onKeydown(e: KeyboardEvent) {
     const { scheme } = getScheme();
@@ -42,6 +79,12 @@ export function attachIMEToElement(
   }
 
   function onKeypress(e: KeyboardEvent) {
+    // Skip if beforeinput already handled this keystroke
+    if (handledByBeforeInput) {
+      handledByBeforeInput = false;
+      return;
+    }
+
     const { scheme, script } = getScheme();
     if (scheme === 'none') return;
     if (e.ctrlKey || e.altKey || e.metaKey) {
@@ -52,13 +95,11 @@ export function attachIMEToElement(
     const char = e.key;
     if (char.length !== 1) return;
 
-    // Word boundary: commit current buffer and pass through
     if (WORD_BOUNDARY.has(char)) {
       resetState(state);
       return;
     }
 
-    // Enter: commit and pass through
     if (e.key === 'Enter') {
       resetState(state);
       return;
@@ -73,14 +114,22 @@ export function attachIMEToElement(
     resetState(state);
   }
 
+  function onTouchend() {
+    resetState(state);
+  }
+
+  el.addEventListener('beforeinput', onBeforeInput as EventListener);
   el.addEventListener('keydown', onKeydown as EventListener);
   el.addEventListener('keypress', onKeypress as EventListener);
   el.addEventListener('mouseup', onMouseup);
+  el.addEventListener('touchend', onTouchend);
 
   return () => {
+    el.removeEventListener('beforeinput', onBeforeInput as EventListener);
     el.removeEventListener('keydown', onKeydown as EventListener);
     el.removeEventListener('keypress', onKeypress as EventListener);
     el.removeEventListener('mouseup', onMouseup);
+    el.removeEventListener('touchend', onTouchend);
   };
 }
 
@@ -112,6 +161,5 @@ function applyConversion(
 
   state.prevOutputLen = converted.length;
 
-  // Fire input event so auto-save and other listeners pick up the change
   el.dispatchEvent(new Event('input', { bubbles: true }));
 }
