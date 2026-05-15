@@ -3,6 +3,7 @@ import type { RuleInfo, RuleSummaryDetailed } from '../types';
 import { groupRulesByCategory, getSortedGroupKeys, getGroupDisplayName } from './rule-grouping';
 import { t } from '../i18n';
 import { analyticsService } from '../services/analytics-service';
+import { wrapPoemLines } from './poem-html';
 
 type ProgressCallback = (current: number, total: number) => void;
 
@@ -312,7 +313,7 @@ function generateExamplesSection(examples: RuleInfo['examples']): string {
 
   const cards = examples.map(ex => {
     const poemHtml = ex.beautified
-      ? `<div class="poem">${ex.beautified}</div>`
+      ? `<div class="poem">${wrapPoemLines(ex.beautified)}</div>`
       : `<pre class="poem-text">${escapeHtml(ex.text)}</pre>`;
 
     const authorHtml = ex.author

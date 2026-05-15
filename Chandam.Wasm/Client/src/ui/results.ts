@@ -12,6 +12,7 @@ import {
   stripHtmlToText
 } from '../utils/github-submit';
 import { collectionService } from '../services/storage/collection-service';
+import { wrapPoemLines } from '../utils/poem-html';
 
 // Module-level map to pass match data to click handlers
 const renderedMatches = new Map<string, ChandamMatch>();
@@ -102,7 +103,7 @@ function renderMatchCard(match: ChandamMatch, ruleSet?: string, showRuleLink = t
       <div class="match-body-split">
         <div class="padyam">
           <div class="poem">
-            ${match.beautified}
+            ${wrapPoemLines(match.beautified)}
           </div>
         </div>
         <div class="ganaVibhajana">

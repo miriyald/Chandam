@@ -8,6 +8,7 @@ import { renderModeSwitcher } from './mode-switcher';
 import { renderRuleActions } from './rule-actions';
 import { loadRuleSet } from '../utils/rule-loader';
 import { t } from '../i18n';
+import { wrapPoemLines } from '../utils/poem-html';
 import { setPageTitle } from '../utils/page-title';
 import { exportSingleRule } from '../utils/export-book';
 
@@ -101,7 +102,7 @@ function renderExamples(
   return examples.map((example, idx) => {
     const exampleNumber = idx + 1;
     const poemHtml = example.beautified
-      ? `<div class="poem">${example.beautified}</div>`
+      ? `<div class="poem">${wrapPoemLines(example.beautified)}</div>`
       : `<pre class="poem-text">${escapeHtml(example.text)}</pre>`;
 
     const authorAttribution = example.author

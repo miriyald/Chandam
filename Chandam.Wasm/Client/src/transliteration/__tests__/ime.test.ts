@@ -33,6 +33,26 @@ function pressKeydown(el: HTMLInputElement, key: string) {
   el.dispatchEvent(new KeyboardEvent('keydown', { key, bubbles: true }));
 }
 
+function fireBeforeInput(el: HTMLInputElement, data: string, inputType = 'insertText') {
+  const event = new InputEvent('beforeinput', {
+    data,
+    inputType,
+    bubbles: true,
+    cancelable: true,
+  });
+  el.dispatchEvent(event);
+}
+
+function fireBeforeInputDelete(el: HTMLInputElement) {
+  const event = new InputEvent('beforeinput', {
+    data: null,
+    inputType: 'deleteContentBackward',
+    bubbles: true,
+    cancelable: true,
+  });
+  el.dispatchEvent(event);
+}
+
 describe('IME state machine', () => {
   let el: HTMLInputElement;
   let cleanup: () => void;
@@ -101,6 +121,64 @@ describe('IME state machine', () => {
     pressKey(el, 'k');
     pressKey(el, 'a');
     // After cleanup, IME should not intercept
+    expect(el.value).toBe('');
+  });
+});
+
+describe('IME beforeinput (mobile virtual keyboard)', () => {
+  let el: HTMLInputElement;
+  let cleanup: () => void;
+  const getScheme = () => ({ scheme: 'rts' as const, script: 'te' as const });
+
+  beforeEach(() => {
+    el = createMockInput();
+    document.body.appendChild(el);
+    cleanup = attachIMEToElement(el, getScheme);
+  });
+
+  it('converts via beforeinput insertText', () => {
+    fireBeforeInput(el, 'k');
+    fireBeforeInput(el, 'a');
+    expect(el.value).toBe('క');
+  });
+
+  it('converts standalone vowel via beforeinput', () => {
+    fireBeforeInput(el, 'a');
+    expect(el.value).toBe('అ');
+  });
+
+  it('builds conjuncts via beforeinput', () => {
+    fireBeforeInput(el, 'k');
+    fireBeforeInput(el, 'k');
+    fireBeforeInput(el, 'a');
+    expect(el.value).toBe('క్క');
+  });
+
+  it('handles deleteContentBackward', () => {
+    fireBeforeInput(el, 'k');
+    fireBeforeInput(el, 'a');
+    expect(el.value).toBe('క');
+    fireBeforeInputDelete(el);
+    expect(el.value).toBe('క్');
+  });
+
+  it('resets on word boundary via beforeinput', () => {
+    fireBeforeInput(el, 'k');
+    fireBeforeInput(el, 'a');
+    fireBeforeInput(el, ' '); // space - word boundary
+    fireBeforeInput(el, 'g');
+    fireBeforeInput(el, 'a');
+    expect(el.value).toContain('క');
+    expect(el.value).toContain('గ');
+  });
+
+  it('passes through when scheme is none', () => {
+    cleanup();
+    const noneScheme = () => ({ scheme: 'none' as const, script: 'te' as const });
+    cleanup = attachIMEToElement(el, noneScheme);
+    el.value = '';
+
+    fireBeforeInput(el, 'k');
     expect(el.value).toBe('');
   });
 });
