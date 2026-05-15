@@ -17,6 +17,7 @@ import { CustomRulesLoader } from '../services/custom-rules-loader';
 import { storageService } from '../services/storage/storage-service';
 import { analyticsService } from '../services/analytics-service';
 import { LoadingEvents, LoadingEventType } from '../utils/loading-events';
+import { notify } from '../utils/notify';
 
 // Yield to allow the browser to paint before blocking WASM calls
 function nextFrame(): Promise<void> {
@@ -198,7 +199,7 @@ function attachEventHandlers(ruleSet: string) {
         const editor = document.getElementById('poem-editor') as HTMLTextAreaElement;
         if (editor) editor.value = poem;
       } else {
-        alert(t('alert_no_examples'));
+        notify(t('alert_no_examples'), 'warning');
       }
     } catch (err) {
       console.error('Random poem failed:', err);
@@ -267,7 +268,7 @@ async function handleDetermineWithTracking() {
 
   const poemText = getEditorText();
   if (!poemText.trim()) {
-    alert(t('alert_enter_poem'));
+    notify(t('alert_enter_poem'), 'warning');
     return;
   }
 
@@ -317,11 +318,11 @@ async function handleDetermineWithTracking() {
       // have been updated and the browser can paint the final UI together.
       await nextFrame();
     } else {
-      alert(response.errorMessage || t('alert_no_matches'));
+      notify(response.errorMessage || t('alert_no_matches'), 'error');
     }
   } catch (err) {
     console.error('Determine failed:', err);
-    alert(t('alert_error'));
+    notify(t('alert_error'), 'error');
   } finally {
     LoadingEvents.emit(LoadingEventType.ActionCompleted, {
       source: 'analyze',
@@ -341,12 +342,12 @@ async function handleMatchWithTracking() {
   const ruleId = getSelectedRule();
 
   if (!poemText.trim()) {
-    alert(t('alert_enter_poem'));
+    notify(t('alert_enter_poem'), 'warning');
     return;
   }
 
   if (!ruleId) {
-    alert(t('alert_select_rule'));
+    notify(t('alert_select_rule'), 'warning');
     // Add visual feedback to rule picker
     const rulePicker = document.getElementById('rule-picker-inline');
     if (rulePicker) {
@@ -386,11 +387,11 @@ async function handleMatchWithTracking() {
       // Keep loading until rendered content is paint-ready.
       await nextFrame();
     } else {
-      alert(response.errorMessage || t('alert_no_match'));
+      notify(response.errorMessage || t('alert_no_match'), 'error');
     }
   } catch (err) {
     console.error('Match failed:', err);
-    alert(t('alert_error'));
+    notify(t('alert_error'), 'error');
   } finally {
     LoadingEvents.emit(LoadingEventType.ActionCompleted, {
       source: 'match',

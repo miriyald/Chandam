@@ -15,6 +15,8 @@ import { customRulesService } from '../services/storage/custom-rules-service';
 import { favoritesService } from '../services/storage/favorites-service';
 import { analyticsService } from '../services/analytics-service';
 import { exportFullBook } from '../utils/export-book';
+import { notify } from '../utils/notify';
+import { showConfirm } from '../utils/confirm-dialog';
 
 interface FilterState {
   searchText: string;
@@ -462,9 +464,11 @@ function debounce<T extends (...args: any[]) => any>(func: T, wait: number): (..
 }
 
 async function handleDeleteFromList(ruleId: string, ruleName: string) {
-  const confirmed = confirm(
-    t('alert_delete_confirm')
-  );
+  const confirmed = await showConfirm(t('alert_delete_confirm'), {
+    title: `${t('action_delete_custom_rule')}: ${ruleName}`,
+    cancelText: t('creator_btn_cancel'),
+    confirmText: t('action_delete_custom_rule')
+  });
 
   if (!confirmed) {
     return;
@@ -489,6 +493,6 @@ async function handleDeleteFromList(ruleId: string, ruleName: string) {
 
   } catch (error) {
     console.error('Failed to delete rule:', error);
-    alert(t('alert_delete_failed'));
+    notify(t('alert_delete_failed'), 'error');
   }
 }

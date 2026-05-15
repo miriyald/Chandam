@@ -9,6 +9,7 @@ import { storageService } from '../services/storage/storage-service';
 import { makeUrl } from '../utils/url-helpers';
 import type { CollectionPoem } from '../services/storage/models';
 import { wrapPoemLines } from '../utils/poem-html';
+import { showConfirm } from '../utils/confirm-dialog';
 
 let actionController: AbortController | null = null;
 let cachedPoems: CollectionPoem[] = [];
@@ -102,7 +103,11 @@ function attachHandlers(container: HTMLElement): void {
       const hash = deleteBtn.getAttribute('data-hash');
       if (!hash) return;
 
-      const confirmed = confirm(t('writings_delete_confirm'));
+      const confirmed = await showConfirm(t('writings_delete_confirm'), {
+        title: t('writings_delete'),
+        cancelText: t('creator_btn_cancel'),
+        confirmText: t('writings_delete')
+      });
       if (!confirmed) return;
 
       await collectionService.removePoem(hash);

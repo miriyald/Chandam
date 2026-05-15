@@ -13,6 +13,7 @@ import { storageService } from '../services/storage/storage-service';
 import { t } from '../i18n';
 import { setPageTitle } from '../utils/page-title';
 import { analyticsService } from '../services/analytics-service';
+import { notify } from '../utils/notify';
 
 // Main function: Render specific rule page
 export async function renderRulePage(params: Record<string, string>) {
@@ -183,7 +184,7 @@ function attachEventHandlers(ruleSet: string, ruleId: string) {
     const poemText = editor?.value || '';
 
     if (!poemText.trim()) {
-      alert(t('alert_enter_poem'));
+      notify(t('alert_enter_poem'), 'warning');
       return;
     }
 
@@ -206,11 +207,11 @@ function attachEventHandlers(ruleSet: string, ruleId: string) {
         const resultsSection = document.getElementById('results-section');
         if (resultsSection) resultsSection.style.display = 'block';
       } else {
-        alert(response.errorMessage || t('alert_no_match'));
+        notify(response.errorMessage || t('alert_no_match'), 'error');
       }
     } catch (err) {
       console.error('Match failed:', err);
-      alert(t('alert_error'));
+      notify(t('alert_error'), 'error');
     }
 
     trackComplete();
@@ -229,7 +230,7 @@ function attachEventHandlers(ruleSet: string, ruleId: string) {
         const editor = document.getElementById('poem-editor') as HTMLTextAreaElement;
         if (editor) editor.value = poem;
       } else {
-        alert(t('alert_no_examples'));
+        notify(t('alert_no_examples'), 'warning');
       }
     } catch (err) {
       console.error('Random poem failed:', err);
