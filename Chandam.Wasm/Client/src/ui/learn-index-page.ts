@@ -102,8 +102,8 @@ export async function renderLearnIndexPage(ruleSet: string) {
     ruleSet === 'custom-fav'
       ? allFavorites.map(fav => `custom-fav:${fav.ruleId}`)
       : allFavorites
-          .filter(fav => fav.ruleSetId === ruleSet)
-          .map(fav => fav.id)
+        .filter(fav => fav.ruleSetId === ruleSet)
+        .map(fav => fav.id)
   );
 
   // For custom-fav, map ruleId -> original ruleSetId for correct link generation
@@ -322,8 +322,8 @@ function renderCategoryDropdown(): string {
 
   const chandamItems = (currentFilters.chandamNames.length > 0)
     ? currentFilters.chandamNames.map((name, i) =>
-        `<div class="rule-item" role="option" data-filter-type="chandam" data-value="${name}" aria-selected="${name === currentFilterState.selectedChandamName}">${currentFilters!.chandamLabels[i]}</div>`
-      ).join('')
+      `<div class="rule-item" role="option" data-filter-type="chandam" data-value="${name}" aria-selected="${name === currentFilterState.selectedChandamName}">${currentFilters!.chandamLabels[i]}</div>`
+    ).join('')
     : '';
 
   return `
@@ -457,7 +457,7 @@ async function refreshResults(ruleSetId: string) {
 // Debounce helper
 function debounce<T extends (...args: any[]) => any>(func: T, wait: number): (...args: Parameters<T>) => void {
   let timeout: ReturnType<typeof setTimeout> | null = null;
-  return function(...args: Parameters<T>) {
+  return function (...args: Parameters<T>) {
     if (timeout) clearTimeout(timeout);
     timeout = setTimeout(() => func(...args), wait);
   };

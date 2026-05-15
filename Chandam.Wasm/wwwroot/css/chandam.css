@@ -430,16 +430,27 @@ footer a:focus-visible {
   transform-origin: center;
   animation: pulse-circle 1.4s cubic-bezier(0.16, 1, 0.3, 1) infinite;
 }
+
 .loader-circle:nth-child(2) {
   animation-delay: 0.2s;
 }
+
 .loader-circle:nth-child(3) {
   animation-delay: 0.4s;
 }
 
 @keyframes pulse-circle {
-  0%, 100% { transform: scale(0.7); opacity: 0.4; }
-  50% { transform: scale(1); opacity: 1; }
+
+  0%,
+  100% {
+    transform: scale(0.7);
+    opacity: 0.4;
+  }
+
+  50% {
+    transform: scale(1);
+    opacity: 1;
+  }
 }
 
 /* Fallback text */
@@ -1063,13 +1074,11 @@ footer a:focus-visible {
   padding-bottom: 0.2em;
   border-bottom: 1px solid rgba(26, 58, 92, 0.06);
   text-wrap: pretty;
-  background: linear-gradient(
-    to right,
-    transparent 0,
-    transparent 1.2em,
-    rgba(184, 134, 11, 0.04) 1.2em,
-    rgba(184, 134, 11, 0.04) 100%
-  );
+  background: linear-gradient(to right,
+      transparent 0,
+      transparent 1.2em,
+      rgba(184, 134, 11, 0.04) 1.2em,
+      rgba(184, 134, 11, 0.04) 100%);
 }
 
 .poem-line:last-child {
@@ -1791,6 +1800,7 @@ footer a:focus-visible {
 .empty-examples-upsell p {
   margin: 0.5rem 0;
 }
+
 
 /* Learn index page */
 .learn-index-page h1 {
@@ -2586,21 +2596,72 @@ footer a:focus-visible {
 
 /* Hide less critical columns on very small screens */
 @media (max-width: 480px) {
-  .error-position { display: none; }
+  .error-position {
+    display: none;
+  }
 
-  main { padding: 0.5rem 0.5rem; }
-  .container { padding: 0 0.5rem; }
-  .editor-section { padding: 0.5rem; border-radius: 8px; }
-  #poem-editor { min-height: 120px; padding: 0.5rem; margin: 4px 0; }
-  #results-section { margin-top: 0.5rem; padding: 0.25rem; }
-  .match-header { gap: 0.25rem; }
-  .match-title-group .meter-name { font-size: 1.1rem; }
-  .padyam { padding: 0 0; margin-bottom: 0.25rem; border: none; background: transparent; }
-  .controls-bar { gap: 0.5rem; padding-top: 0.5rem; }
-  .toggle-group { gap: 0.75rem; }
-  .toggle-label { font-size: 0.8rem; }
-  .main-actions button { padding: 0.75rem; font-size: 0.95rem; }
-  .errors-table th, .errors-table td { padding: 0.25rem 0.2rem; font-size: 0.8rem; }
+  main {
+    padding: 0.5rem 0.5rem;
+  }
+
+  .container {
+    padding: 0 0.5rem;
+  }
+
+  .editor-section {
+    padding: 0.5rem;
+    border-radius: 8px;
+  }
+
+  #poem-editor {
+    min-height: 120px;
+    padding: 0.5rem;
+    margin: 4px 0;
+  }
+
+  #results-section {
+    margin-top: 0.5rem;
+    padding: 0.25rem;
+  }
+
+  .match-header {
+    gap: 0.25rem;
+  }
+
+  .match-title-group .meter-name {
+    font-size: 1.1rem;
+  }
+
+  .padyam {
+    padding: 0 0;
+    margin-bottom: 0.25rem;
+    border: none;
+    background: transparent;
+  }
+
+  .controls-bar {
+    gap: 0.5rem;
+    padding-top: 0.5rem;
+  }
+
+  .toggle-group {
+    gap: 0.75rem;
+  }
+
+  .toggle-label {
+    font-size: 0.8rem;
+  }
+
+  .main-actions button {
+    padding: 0.75rem;
+    font-size: 0.95rem;
+  }
+
+  .errors-table th,
+  .errors-table td {
+    padding: 0.25rem 0.2rem;
+    font-size: 0.8rem;
+  }
 }
 
 /* ========== HTML Description Content ========== */
@@ -4180,13 +4241,13 @@ footer a:focus-visible {
 }
 
 .toast {
+  --toast-accent: var(--color-primary);
   position: relative;
   display: grid;
   grid-template-columns: 1fr auto;
   align-items: start;
   gap: var(--space-sm);
   border: 1px solid var(--color-border);
-  border-left-width: 4px;
   border-radius: var(--radius-md);
   background: var(--color-surface);
   color: var(--color-text);
@@ -4208,6 +4269,17 @@ footer a:focus-visible {
   font-family: var(--font-display);
   font-size: 0.85rem;
   font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.toast-title::before {
+  content: '';
+  width: 0.45rem;
+  height: 0.45rem;
+  border-radius: 50%;
+  background: var(--toast-accent);
 }
 
 .toast-message {
@@ -4254,28 +4326,37 @@ footer a:focus-visible {
 }
 
 .toast-info {
-  border-left-color: var(--color-primary);
+  --toast-accent: var(--color-primary);
+  border-color: rgba(26, 58, 92, 0.45);
   background: #f1f4f8;
 }
 
 .toast-success {
-  border-left-color: var(--color-success);
+  --toast-accent: var(--color-success);
+  border-color: rgba(45, 106, 79, 0.45);
   background: #f0f7f4;
 }
 
 .toast-warning {
-  border-left-color: var(--color-warning);
+  --toast-accent: var(--color-warning);
+  border-color: rgba(204, 102, 0, 0.45);
   background: #fff7ed;
 }
 
 .toast-error {
-  border-left-color: var(--color-error);
+  --toast-accent: var(--color-error);
+  border-color: rgba(193, 18, 31, 0.45);
   background: #fdf1f2;
 }
 
 @keyframes toast-progress {
-  from { transform: scaleX(1); }
-  to { transform: scaleX(0); }
+  from {
+    transform: scaleX(1);
+  }
+
+  to {
+    transform: scaleX(0);
+  }
 }
 
 @keyframes toast-in {
@@ -4283,6 +4364,7 @@ footer a:focus-visible {
     opacity: 0;
     transform: translateX(18px);
   }
+
   to {
     opacity: 1;
     transform: translateX(0);
@@ -4294,6 +4376,7 @@ footer a:focus-visible {
     opacity: 1;
     transform: translateX(0);
   }
+
   to {
     opacity: 0;
     transform: translateX(18px);
@@ -4352,7 +4435,7 @@ footer a:focus-visible {
 .btn-danger {
   background: var(--color-error);
   border: 1px solid var(--color-error);
-  color: #fff;
+  color: var(--color-header-text);
   border-radius: var(--radius-sm);
   padding: 0.5rem 0.95rem;
   cursor: pointer;
@@ -4364,8 +4447,13 @@ footer a:focus-visible {
 }
 
 @keyframes confirm-overlay-in {
-  from { opacity: 0; }
-  to { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
 }
 
 @keyframes confirm-dialog-in {
@@ -4373,6 +4461,7 @@ footer a:focus-visible {
     opacity: 0;
     transform: translateY(8px) scale(0.985);
   }
+
   to {
     opacity: 1;
     transform: translateY(0) scale(1);

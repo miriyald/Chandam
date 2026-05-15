@@ -102,12 +102,13 @@ export class WasmBridge {
     return JSON.parse(json);
   }
 
-  static async getRandomPoem(ruleId: string): Promise<string> {
-    return await DotNet.invokeMethodAsync<string>(
+  static async getRandomPoem(ruleId: string): Promise<{ text: string; isGenerated: boolean }> {
+    const json = await DotNet.invokeMethodAsync<string>(
       this.ASSEMBLY,
       'GetRandomPoem',
       ruleId
     );
+    return JSON.parse(json);
   }
 
   static async getRandomPoemFromRuleSet(language: string = 'te'): Promise<string> {

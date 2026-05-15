@@ -84,9 +84,12 @@ export async function handleRandom() {
   }
 
   try {
-    const poem = await WasmBridge.getRandomPoem(ruleId);
-    if (poem) {
-      setEditorText(poem);
+    const result = await WasmBridge.getRandomPoem(ruleId);
+    if (result.text) {
+      setEditorText(result.text);
+      if (result.isGenerated) {
+        notify(t('alert_generated_poem'), 'info');
+      }
     } else {
       notify(t('alert_no_examples'), 'warning');
     }

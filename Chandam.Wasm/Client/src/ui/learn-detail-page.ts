@@ -12,34 +12,26 @@ import { wrapPoemLines } from '../utils/poem-html';
 import { setPageTitle } from '../utils/page-title';
 import { exportSingleRule } from '../utils/export-book';
 
-// Main function: Render learn detail page
 export async function renderLearnDetailPage(ruleSet: string, ruleId: string) {
-  // Step 1: Validate and load rule set (supports both predefined and custom)
   const ruleSetConfig = await getRuleSetAsync(ruleSet);
   if (!ruleSetConfig) {
     console.error(`Rule set not found: ${ruleSet}`);
     return;
   }
 
-  // Step 2: Load rules based on type
   if (ruleSetConfig.rulesFile) {
-    // Predefined ruleset - load from files
     await loadRuleSet(ruleSetConfig.rulesFile, ruleSetConfig.examplesFile);
   } else {
-    // Custom ruleset - load from IndexedDB
     await CustomRulesLoader.loadCustomRuleset(ruleSet);
   }
 
-  // Step 3: Get rule info with examples
   const ruleInfo = await WasmBridge.getRuleInfo(ruleId);
 
   setPageTitle('Learn ' + ruleInfo.name, ruleSetConfig.name);
 
-  // Step 3: Render page HTML
   renderLearnDetailPageHtml(ruleSet, ruleInfo, ruleSetConfig.name);
 }
 
-// Helper: Render page HTML
 function renderLearnDetailPageHtml(
   ruleSetId: string,
   ruleInfo: RuleInfo,
@@ -49,6 +41,9 @@ function renderLearnDetailPageHtml(
   if (!content) return;
 
   const breadcrumbs = buildRuleBreadcrumbs(ruleSetId, ruleInfo.identifier, ruleInfo.name, 'learn', ruleSetName);
+  const hasExamples = ruleInfo.examples && ruleInfo.examples.length > 0;
+  const showGenerated = !hasExamples && ruleInfo.padyamType === 'Vruttam';
+  const exampleCount = hasExamples ? ruleInfo.examples!.length : (showGenerated ? 1 : 0);
 
   content.innerHTML = `
     <div class="learn-detail-page">
@@ -69,28 +64,44 @@ function renderLearnDetailPageHtml(
       </div>
 
       <section class="examples">
-        <h2>${t('section_examples')} (${ruleInfo.examples?.length || 0})</h2>
-        ${renderExamples(ruleInfo.examples, ruleSetId, ruleInfo.identifier)}
+        <h2>${t('section_examples')} (${exampleCount})</h2>
+        ${renderExamples(ruleInfo.examples, ruleSetId, ruleInfo.identifier, showGenerated)}
       </section>
     </div>
   `;
 
-  // Render action toolbar (favorite, github submit, create, delete)
   renderRuleActions('rule-actions-container', ruleSetId, ruleInfo.identifier);
 
   document.getElementById('btn-export-rule')?.addEventListener('click', () => {
     exportSingleRule(ruleSetId, ruleInfo);
   });
+
+  if (showGenerated) {
+    loadGeneratedPoem(ruleInfo.identifier);
+    document.getElementById('btn-regenerate')?.addEventListener('click', () => {
+      loadGeneratedPoem(ruleInfo.identifier);
+    });
+  }
 }
 
+async function loadGeneratedPoem(ruleId: string) {
+  const el = document.getElementById('generated-poem-text');
+  if (!el) return;
+  el.textContent = '...';
+  const result = await WasmBridge.getRandomPoem(ruleId);
+  el.textContent = result.text || '—';
+}
 
-// Helper: Render examples section
 function renderExamples(
   examples: RuleInfo['examples'],
   ruleSetId: string,
-  ruleId: string
+  ruleId: string,
+  showGenerated: boolean
 ): string {
   if (!examples || examples.length === 0) {
+    if (showGenerated) {
+      return renderGeneratedCard(ruleSetId, ruleId);
+    }
     return `
       <div class="empty-examples-upsell">
         <p>${t('examples_none_available')}</p>
@@ -129,7 +140,27 @@ function renderExamples(
   }).join('');
 }
 
-// Helper: Escape HTML to prevent XSS
+function renderGeneratedCard(ruleSetId: string, ruleId: string): string {
+  const author = t('generated_example_badge');
+  const reference = t('generated_disclaimer');
+
+  return `
+    <div class="example-card">
+      <button id="btn-regenerate" class="try-example-btn" title="${t('btn_regenerate')}">
+        <svg viewBox="0 0 24 24" width="14" height="14"><path fill="currentColor" d="M17.65 6.35A7.958 7.958 0 0012 4c-4.42 0-7.99 3.58-7.99 8s3.57 8 7.99 8c3.73 0 6.84-2.55 7.73-6h-2.08A5.99 5.99 0 0112 18c-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z"/></svg>
+        ${t('btn_regenerate')}
+      </button>
+      <div class="example-poem-area">
+        <pre class="poem-text" id="generated-poem-text">...</pre>
+        <div class="poem-attribution">— ${escapeHtml(author)}</div>
+      </div>
+      <div class="example-footer">
+        <div class="example-reference">${escapeHtml(reference)}</div>
+      </div>
+    </div>
+  `;
+}
+
 function escapeHtml(text: string): string {
   const div = document.createElement('div');
   div.textContent = text;

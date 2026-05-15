@@ -20,4 +20,9 @@ public class GetSamplesRequest
     /// Default: "chandam"
     /// </summary>
     public string? RuleSetId { get; set; } = "chandam";
+
+    /// <summary>
+    /// Include machine-generated example if no real examples exist (Vruttam only)
+    /// </summary>
+    public bool IncludeGenerated { get; set; } = true;
 }

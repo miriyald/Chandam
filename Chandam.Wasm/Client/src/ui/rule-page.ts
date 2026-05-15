@@ -80,7 +80,8 @@ async function getExampleText(params: Record<string, string>): Promise<string> {
     }
   } else {
     // No example specified - get random
-    return await WasmBridge.getRandomPoem(ruleId);
+    const result = await WasmBridge.getRandomPoem(ruleId);
+    return result.text;
   }
 }
 
@@ -225,10 +226,13 @@ function attachEventHandlers(ruleSet: string, ruleId: string) {
     });
 
     try {
-      const poem = await WasmBridge.getRandomPoem(ruleId);
-      if (poem) {
+      const result = await WasmBridge.getRandomPoem(ruleId);
+      if (result.text) {
         const editor = document.getElementById('poem-editor') as HTMLTextAreaElement;
-        if (editor) editor.value = poem;
+        if (editor) editor.value = result.text;
+        if (result.isGenerated) {
+          notify(t('alert_generated_poem'), 'info');
+        }
       } else {
         notify(t('alert_no_examples'), 'warning');
       }

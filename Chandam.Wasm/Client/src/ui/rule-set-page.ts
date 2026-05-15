@@ -124,10 +124,10 @@ function renderRuleSetPageHtml(ruleSetName: string, ruleCount: number, ruleSetId
       <div class="page-subtitle">${ruleCount} ${t('label_rules_count')}</div>
 
       ${renderEditorCard({
-        contextText: t('editor_auto_detect_context'),
-        showRulePicker: true,
-        showAutoDetect: true
-      })}
+    contextText: t('editor_auto_detect_context'),
+    showRulePicker: true,
+    showAutoDetect: true
+  })}
 
       <div id="results-section" style="display: none;">
         <h3>${t('results_title')}</h3>
