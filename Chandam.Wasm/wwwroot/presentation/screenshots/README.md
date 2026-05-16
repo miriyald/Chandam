@@ -2,7 +2,7 @@
 
 Auto-generated presentation screenshots for the Chandam WASM app.
 
-Generated: 2026-05-14
+Generated: 2026-05-16
 
 ## Stories
 
