@@ -17,7 +17,7 @@ on:
   workflow_dispatch:
     inputs:
       update_snapshots:
-        description: 'Update visual baseline screenshots'
+        description: 'Update visual assets (test baselines + presentation screenshots)'
         type: boolean
         default: false
 
@@ -124,6 +124,25 @@ jobs:
         env:
           CI: ''
 
+      - name: Regenerate presentation screenshots
+        if: ${{ inputs.update_snapshots == true }}
+        run: |
+          npx --yes serve@14 .publish/wwwroot -l 5080 --single >/tmp/chandam-serve.log 2>&1 &
+          SERVER_PID=$!
+          trap "kill $SERVER_PID" EXIT
+
+          for i in {1..30}; do
+            if curl -fsS http://localhost:5080 >/dev/null; then
+              break
+            fi
+            sleep 1
+          done
+
+          CHANDAM_URL=http://localhost:5080 npm run screenshots
+        working-directory: Chandam.Wasm.Tests
+        env:
+          CI: ''
+
       - name: Run Playwright tests
         if: ${{ inputs.update_snapshots != true }}
         run: npx playwright test
@@ -152,30 +171,36 @@ jobs:
 
       # Only upload updated snapshots when the workflow was triggered with
       # update_snapshots=true so reviewers can download and commit them.
-      - name: Upload updated baseline snapshots
+      - name: Upload updated visual assets
         uses: actions/upload-artifact@v4
         if: ${{ inputs.update_snapshots == true }}
         with:
-          name: updated-baselines
-          path: Chandam.Wasm.Tests/baselines/
+          name: updated-visual-assets
+          path: |
+            Chandam.Wasm.Tests/baselines/
+            Chandam.Wasm/wwwroot/presentation/screenshots/
           retention-days: 30
 
       # ------------------------------------------------------------------
-      # 8. Create PR with updated baselines
+      # 8. Create PR with updated visual assets
       # ------------------------------------------------------------------
-      - name: Create PR with updated baselines
+      - name: Create PR with updated visual assets
         if: ${{ inputs.update_snapshots == true }}
         uses: peter-evans/create-pull-request@v7
         with:
-          commit-message: 'Update Playwright visual baselines'
+          commit-message: 'Update Playwright visual assets'
           branch: auto/update-visual-baselines
           delete-branch: true
-          title: 'Update Playwright visual baselines'
+          title: 'Update Playwright visual assets'
           body: |
-            Regenerated visual baseline screenshots on Linux (ubuntu-latest).
+            Regenerated Playwright visual assets on Linux (ubuntu-latest):
+
+            - Test baselines in `Chandam.Wasm.Tests/baselines/`
+            - Presentation screenshots in `Chandam.Wasm/wwwroot/presentation/screenshots/`
 
             Triggered by workflow_dispatch with `update_snapshots=true`.
 
-            Review the screenshot changes in `Chandam.Wasm.Tests/baselines/` before merging.
+            Review the visual asset changes before merging.
           add-paths: |
             Chandam.Wasm.Tests/baselines/**
+            Chandam.Wasm/wwwroot/presentation/screenshots/**
