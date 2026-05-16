@@ -1131,6 +1131,8 @@ footer a:focus-visible {
   font-family: var(--font-main);
   background: #ffffff;
   transition: border-color 0.2s;
+  -webkit-appearance: none;
+  appearance: none;
 }
 
 .filter-bar .filter-search:focus {

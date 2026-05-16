@@ -10,8 +10,7 @@ export const MAX_POEMS = 20;
 export const MAX_FAVORITES = 50;
 export const MAX_CUSTOM_RULES = 50;
 
-// UI debounce timings (ms)
-export const SEARCH_DEBOUNCE_MS = 300;
+// UI timing constants (ms)
 export const EDITOR_AUTOSAVE_DEBOUNCE_MS = 1000;
 
 // WASM initialization

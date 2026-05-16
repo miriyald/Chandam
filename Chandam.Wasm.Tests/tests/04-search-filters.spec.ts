@@ -4,7 +4,7 @@
  * 1. Navigate to /learn/chandam/.
  * 2. Wait for WASM ready; assert filter sidebar and results render.
  * 3. Note the initial rule count.
- * 4. Search filter: type a Telugu character → wait for debounce → count changes.
+ * 4. Search filter: type a Telugu character → press Enter or blur → count changes.
  * 5. Clear search → count returns to original.
  * 6. Category checkboxes:
  *    a. Check first available category → count changes.
@@ -30,10 +30,9 @@ async function readRuleCount(page: import('@playwright/test').Page): Promise<num
   return match ? parseInt(match[0], 10) : 0;
 }
 
-/** Waits for the debounce period used by the search input (300 ms + margin). */
+/** Waits for a filter update to complete (async WASM search + DOM re-render). */
 async function waitForFilterUpdate(page: import('@playwright/test').Page): Promise<void> {
-  await page.waitForTimeout(500);
-  // Also wait for any in-flight WASM search to resolve
+  await page.waitForTimeout(200);
   await page.waitForLoadState('domcontentloaded');
 }
 
@@ -78,20 +77,19 @@ test.describe('Learn page – filter sidebar', () => {
   test('text search filter reduces and restores rule count', async ({ page }) => {
     const originalCount = await readRuleCount(page);
 
-    // Type a Telugu character that appears in some rule names
+    // Type a Telugu character and press Enter to trigger search
     const searchInput = page.locator('.filter-search');
     await searchInput.fill('ఇ');
+    await searchInput.press('Enter');
     await waitForFilterUpdate(page);
 
     const filteredCount = await readRuleCount(page);
     // Filtered count should be less than or equal to original
     expect(filteredCount).toBeLessThanOrEqual(originalCount);
 
-    // Clear search → restore
-    // Focus and select all text, then delete to ensure complete clearing on mobile
-    await searchInput.click();
-    await searchInput.press('Control+A');
-    await searchInput.press('Delete');
+    // Clear search and press Enter → restore
+    await searchInput.fill('');
+    await searchInput.press('Enter');
     await waitForFilterUpdate(page);
     await expectRuleCountEventually(page, originalCount);
   });
@@ -212,6 +210,7 @@ test.describe('Learn page – filter sidebar', () => {
 
     // Apply text search
     await page.locator('.filter-search').fill('వ');
+    await page.locator('.filter-search').press('Enter');
     await waitForFilterUpdate(page);
 
     // Check first category checkbox (if available)
@@ -236,6 +235,7 @@ test.describe('Learn page – filter sidebar', () => {
     test.skip(!!process.env.CI, 'Visual baselines skipped in CI — run via workflow_dispatch with update_snapshots');
     // Apply a filter to get an interesting screenshot
     await page.locator('.filter-search').fill('వ');
+    await page.locator('.filter-search').press('Enter');
     await waitForFilterUpdate(page);
 
     await expect(page).toHaveScreenshot('learn-filter-active.png', {
@@ -243,5 +243,40 @@ test.describe('Learn page – filter sidebar', () => {
       maxDiffPixelRatio: 0.06,
       mask: [page.locator('#version-info')],
     });
+  });
+
+  test('blur on search input triggers filtering', async ({ page }) => {
+    const originalCount = await readRuleCount(page);
+    const searchInput = page.locator('.filter-search');
+
+    // Type text but don't press Enter — click elsewhere to blur
+    await searchInput.fill('ఇ');
+    await page.locator('.filter-actions').click();
+    await waitForFilterUpdate(page);
+
+    const filteredCount = await readRuleCount(page);
+    expect(filteredCount).toBeLessThanOrEqual(originalCount);
+  });
+
+  test('text search + examples toggle combine as AND', async ({ page }) => {
+    // Type search text and press Enter
+    const searchInput = page.locator('.filter-search');
+    await searchInput.fill('వ');
+    await searchInput.press('Enter');
+    await waitForFilterUpdate(page);
+    const afterSearch = await readRuleCount(page);
+
+    // Toggle "With Examples" — result should be <= search-only result (AND)
+    const toggleLabel = page.locator('label:has(#filter-has-examples)');
+    const toggleVisible = await toggleLabel.isVisible();
+    if (!toggleVisible) {
+      test.skip();
+      return;
+    }
+
+    await toggleLabel.click();
+    await waitForFilterUpdate(page);
+    const afterBoth = await readRuleCount(page);
+    expect(afterBoth).toBeLessThanOrEqual(afterSearch);
   });
 });
