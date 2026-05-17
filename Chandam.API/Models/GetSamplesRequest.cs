@@ -17,9 +17,8 @@ public class GetSamplesRequest
 
     /// <summary>
     /// RuleSet ID to use ("chandam", "sanskrit", "topella", etc.). If null, uses active ruleset.
-    /// Default: "chandam"
     /// </summary>
-    public string? RuleSetId { get; set; } = "chandam";
+    public string? RuleSetId { get; set; }
 
     /// <summary>
     /// Include machine-generated example if no real examples exist (Vruttam only)
