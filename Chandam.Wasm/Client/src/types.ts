@@ -73,6 +73,7 @@ export interface RuleInfo {
   max?: number;
 
   examples?: PoemExample[];
+  references?: string[];
 }
 
 export interface MatchError {

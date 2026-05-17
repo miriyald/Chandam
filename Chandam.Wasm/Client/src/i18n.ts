@@ -79,6 +79,7 @@ export interface Translations {
   section_description: string;
   section_technical: string;
   section_examples: string;
+  section_references: string;
   no_description: string;
   no_examples: string;
   btn_try_example: string;
@@ -371,6 +372,7 @@ const translations: Record<Language, Translations> = {
     section_description: 'Description',
     section_technical: 'Technical Details',
     section_examples: 'Examples',
+    section_references: 'References',
     no_description: 'No description available',
     no_examples: 'No examples available',
     btn_try_example: 'Try This Example',
@@ -650,6 +652,7 @@ const translations: Record<Language, Translations> = {
     section_description: 'వివరణ',
     section_technical: 'సాంకేతిక వివరాలు',
     section_examples: 'ఉదాహరణలు',
+    section_references: 'ప్రమాణము',
     no_description: 'వివరణ అందుబాటులో లేదు',
     no_examples: 'ఉదాహరణలు అందుబాటులో లేవు',
     btn_try_example: 'ఈ ఉదాహరణను ప్రయత్నించండి',

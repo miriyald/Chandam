@@ -67,6 +67,8 @@ function renderLearnDetailPageHtml(
         <h2>${t('section_examples')} (${exampleCount})</h2>
         ${renderExamples(ruleInfo.examples, ruleSetId, ruleInfo.identifier, showGenerated)}
       </section>
+
+      ${renderReferences(ruleInfo.references)}
     </div>
   `;
 
@@ -158,6 +160,18 @@ function renderGeneratedCard(ruleSetId: string, ruleId: string): string {
         <div class="example-reference">${escapeHtml(reference)}</div>
       </div>
     </div>
+  `;
+}
+
+function renderReferences(references: RuleInfo['references']): string {
+  if (!references || references.length === 0) return '';
+  return `
+    <section class="references">
+      <h2>${t('section_references')}</h2>
+      <ul class="references-list">
+        ${references.map(ref => `<li>${escapeHtml(ref)}</li>`).join('')}
+      </ul>
+    </section>
   `;
 }
 

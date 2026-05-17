@@ -1740,6 +1740,33 @@ footer a:focus-visible {
   flex: 1 1 auto;
 }
 
+.references {
+  margin-top: var(--space-lg);
+}
+
+.references h2 {
+  font-size: 1.1rem;
+  margin-bottom: 0.5rem;
+}
+
+.references-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.references-list li {
+  padding: 0.4rem 0;
+  border-bottom: 1px solid var(--color-divider);
+  font-family: var(--font-main);
+  font-size: 0.95rem;
+  color: var(--color-text-muted);
+}
+
+.references-list li:last-child {
+  border-bottom: none;
+}
+
 /* Special rules from RuleText */
 .special-rules {
   margin: 0.75rem 0;
