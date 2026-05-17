@@ -27,7 +27,6 @@ test.describe('GitHub reporting flow', () => {
     await gotoAndWait(page, '/create-rule');
     await page.locator('#rule-name').fill(`GH Test ${Date.now()}`);
 
-    page.once('dialog', async (dialog) => await dialog.accept());
     await page.locator('#create-rule-btn').click();
     await expect(page).toHaveURL(/\/learn\/custom-rules\/custom-\d+\/?$/, { timeout: 7_000 });
 
