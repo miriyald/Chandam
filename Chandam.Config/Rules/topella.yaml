@@ -804,7 +804,7 @@ rules:
   ruleType: Name
   frequency: Rare
   lines: 4
-  threshold: 2
+  threshold: 3
   rules:
   - - జ
     - య
@@ -1269,7 +1269,7 @@ rules:
   ruleType: Name
   frequency: Rare
   lines: 4
-  threshold: 2
+  threshold: 3
   rules:
   - - భ
     - న
@@ -1437,7 +1437,7 @@ rules:
   ruleType: Name
   frequency: Rare
   lines: 4
-  threshold: 2
+  threshold: 3
   rules:
   - - న
     - త
@@ -1730,7 +1730,7 @@ rules:
   ruleType: Name
   frequency: Rare
   lines: 4
-  threshold: 2
+  threshold: 3
   rules:
   - - స
     - మ
@@ -2287,7 +2287,7 @@ rules:
   ruleType: Name
   frequency: Rare
   lines: 4
-  threshold: 2
+  threshold: 3
   rules:
   - - న
     - భ
@@ -3881,7 +3881,7 @@ rules:
   ruleType: Name
   frequency: Rare
   lines: 4
-  threshold: 2
+  threshold: 3
   rules:
   - - య
     - న
@@ -3898,7 +3898,7 @@ rules:
   ruleType: Name
   frequency: Rare
   lines: 4
-  threshold: 2
+  threshold: 3
   rules:
   - - ర
     - జ
@@ -3937,7 +3937,7 @@ rules:
   ruleType: Name
   frequency: Rare
   lines: 4
-  threshold: 2
+  threshold: 3
   rules:
   - - మ
     - ర
@@ -4143,7 +4143,7 @@ rules:
   ruleType: Name
   frequency: Rare
   lines: 4
-  threshold: 2
+  threshold: 3
   rules:
   - - త
     - భ
@@ -4218,7 +4218,7 @@ rules:
   ruleType: Name
   frequency: Rare
   lines: 4
-  threshold: 2
+  threshold: 3
   rules:
   - - భ
     - య
@@ -5463,7 +5463,7 @@ rules:
   ruleType: Name
   frequency: Rare
   lines: 4
-  threshold: 2
+  threshold: 3
   rules:
   - - జ
     - మ
@@ -5688,7 +5688,7 @@ rules:
   ruleType: Name
   frequency: Rare
   lines: 4
-  threshold: 2
+  threshold: 3
   rules:
   - - మ
     - భ
@@ -5741,7 +5741,7 @@ rules:
   ruleType: Name
   frequency: Rare
   lines: 4
-  threshold: 2
+  threshold: 3
   rules:
   - - య
     - ర
@@ -6082,7 +6082,7 @@ rules:
   ruleType: Name
   frequency: Rare
   lines: 4
-  threshold: 2
+  threshold: 3
   rules:
   - - మ
     - గ
@@ -6144,7 +6144,7 @@ rules:
   ruleType: Name
   frequency: Rare
   lines: 4
-  threshold: 2
+  threshold: 3
   rules:
   - - స
     - య
@@ -9686,7 +9686,7 @@ rules:
   ruleType: Name
   frequency: Rare
   lines: 4
-  threshold: 2
+  threshold: 3
   rules:
   - - జ
     - స
@@ -10790,7 +10790,7 @@ rules:
   ruleType: Name
   frequency: Rare
   lines: 4
-  threshold: 2
+  threshold: 3
   rules:
   - - జ
     - త
@@ -11759,7 +11759,7 @@ rules:
   ruleType: Name
   frequency: Rare
   lines: 4
-  threshold: 2
+  threshold: 3
   rules:
   - - న
     - మ
@@ -12711,7 +12711,7 @@ rules:
   ruleType: Name
   frequency: Rare
   lines: 4
-  threshold: 2
+  threshold: 3
   rules:
   - - ర
     - య
@@ -13556,7 +13556,7 @@ rules:
   ruleType: Name
   frequency: Rare
   lines: 4
-  threshold: 2
+  threshold: 1
   rules:
   - - గ
     - ల
@@ -15229,7 +15229,7 @@ rules:
   ruleType: Name
   frequency: Rare
   lines: 4
-  threshold: 2
+  threshold: 3
   rules:
   - - స
     - త
@@ -15246,7 +15246,7 @@ rules:
   ruleType: Name
   frequency: Rare
   lines: 4
-  threshold: 2
+  threshold: 3
   rules:
   - - మ
     - య
@@ -15377,7 +15377,7 @@ rules:
   ruleType: Name
   frequency: Rare
   lines: 4
-  threshold: 2
+  threshold: 3
   rules:
   - - త
     - య
@@ -15866,7 +15866,7 @@ rules:
   ruleType: Name
   frequency: Rare
   lines: 4
-  threshold: 2
+  threshold: 3
   rules:
   - - స
     - స
@@ -16636,7 +16636,7 @@ rules:
   ruleType: Name
   frequency: Rare
   lines: 4
-  threshold: 2
+  threshold: 3
   rules:
   - - న
     - న
@@ -18055,7 +18055,7 @@ rules:
   ruleType: Name
   frequency: Rare
   lines: 4
-  threshold: 2
+  threshold: 3
   rules:
   - - ర
     - ల
@@ -18365,7 +18365,7 @@ rules:
   ruleType: Name
   frequency: Rare
   lines: 4
-  threshold: 2
+  threshold: 3
   rules:
   - - భ
     - భ
@@ -19337,7 +19337,7 @@ rules:
   ruleType: Name
   frequency: Rare
   lines: 4
-  threshold: 1
+  threshold: 3
   rules:
   - - మ
   yati: []
@@ -19494,7 +19494,7 @@ rules:
   ruleType: Name
   frequency: Rare
   lines: 4
-  threshold: 2
+  threshold: 3
   rules:
   - - న
     - ర
@@ -19869,7 +19869,7 @@ rules:
   ruleType: Name
   frequency: Rare
   lines: 4
-  threshold: 2
+  threshold: 3
   rules:
   - - మ
     - స
@@ -20442,7 +20442,7 @@ rules:
   ruleType: Name
   frequency: Rare
   lines: 4
-  threshold: 1
+  threshold: 3
   rules:
   - - త
   yati: []
@@ -20477,7 +20477,7 @@ rules:
   ruleType: Name
   frequency: Rare
   lines: 4
-  threshold: 2
+  threshold: 3
   rules:
   - - య
     - మ
@@ -21677,7 +21677,7 @@ rules:
   ruleType: Name
   frequency: Rare
   lines: 4
-  threshold: 2
+  threshold: 3
   rules:
   - - భ
     - జ
@@ -22178,7 +22178,7 @@ rules:
   ruleType: Name
   frequency: Rare
   lines: 4
-  threshold: 2
+  threshold: 3
   rules:
   - - న
     - జ
@@ -22835,7 +22835,7 @@ rules:
   ruleType: Name
   frequency: Rare
   lines: 4
-  threshold: 2
+  threshold: 3
   rules:
   - - ర
     - న
@@ -24119,7 +24119,7 @@ rules:
   ruleType: Name
   frequency: Rare
   lines: 4
-  threshold: 2
+  threshold: 3
   rules:
   - - మ
     - న
@@ -24696,7 +24696,7 @@ rules:
   ruleType: Name
   frequency: Rare
   lines: 4
-  threshold: 2
+  threshold: 3
   rules:
   - - భ
     - గ
@@ -26484,7 +26484,7 @@ rules:
   ruleType: Name
   frequency: Rare
   lines: 4
-  threshold: 2
+  threshold: 3
   rules:
   - - మ
     - జ
@@ -26874,7 +26874,7 @@ rules:
   ruleType: Name
   frequency: Rare
   lines: 4
-  threshold: 2
+  threshold: 3
   rules:
   - - త
     - త
@@ -26912,7 +26912,7 @@ rules:
   ruleType: Name
   frequency: Rare
   lines: 4
-  threshold: 1
+  threshold: 3
   rules:
   - - భ
   yati: []
@@ -28450,7 +28450,7 @@ rules:
   ruleType: Name
   frequency: Rare
   lines: 4
-  threshold: 2
+  threshold: 1
   rules:
   - - ల
     - ల
@@ -28589,7 +28589,7 @@ rules:
   ruleType: Name
   frequency: Rare
   lines: 4
-  threshold: 2
+  threshold: 3
   rules:
   - - స
     - జ
@@ -29224,7 +29224,7 @@ rules:
   ruleType: Name
   frequency: Rare
   lines: 4
-  threshold: 2
+  threshold: 3
   rules:
   - - య
     - స
@@ -30278,7 +30278,7 @@ rules:
   ruleType: Name
   frequency: Rare
   lines: 4
-  threshold: 2
+  threshold: 3
   rules:
   - - జ
     - జ
@@ -30950,7 +30950,7 @@ rules:
   ruleType: Name
   frequency: Rare
   lines: 4
-  threshold: 1
+  threshold: 3
   rules:
   - - ర
   yati: []
@@ -30966,7 +30966,7 @@ rules:
   ruleType: Name
   frequency: Rare
   lines: 4
-  threshold: 1
+  threshold: 3
   rules:
   - - జ
   yati: []
@@ -31046,7 +31046,7 @@ rules:
   ruleType: Name
   frequency: Rare
   lines: 4
-  threshold: 2
+  threshold: 3
   rules:
   - - స
     - ర
@@ -32578,7 +32578,7 @@ rules:
   ruleType: Name
   frequency: Rare
   lines: 4
-  threshold: 2
+  threshold: 1
   rules:
   - - ల
     - గ
@@ -33239,7 +33239,7 @@ rules:
   ruleType: Name
   frequency: Rare
   lines: 4
-  threshold: 2
+  threshold: 3
   rules:
   - - భ
     - త
@@ -35419,7 +35419,7 @@ rules:
   ruleType: Name
   frequency: Rare
   lines: 4
-  threshold: 2
+  threshold: 3
   rules:
   - - త
     - మ
@@ -36252,7 +36252,7 @@ rules:
   ruleType: Name
   frequency: Rare
   lines: 4
-  threshold: 2
+  threshold: 3
   rules:
   - - జ
     - ర
@@ -36491,7 +36491,7 @@ rules:
   ruleType: Name
   frequency: Rare
   lines: 4
-  threshold: 2
+  threshold: 3
   rules:
   - - త
     - స
@@ -37348,7 +37348,7 @@ rules:
   ruleType: Name
   frequency: Rare
   lines: 4
-  threshold: 2
+  threshold: 3
   rules:
   - - య
     - త
@@ -37638,7 +37638,7 @@ rules:
   ruleType: Name
   frequency: Rare
   lines: 4
-  threshold: 2
+  threshold: 3
   rules:
   - - ర
     - ర
@@ -38117,7 +38117,7 @@ rules:
   ruleType: Name
   frequency: Rare
   lines: 4
-  threshold: 1
+  threshold: 3
   rules:
   - - స
   yati: []
@@ -38133,7 +38133,7 @@ rules:
   ruleType: Name
   frequency: Rare
   lines: 4
-  threshold: 1
+  threshold: 3
   rules:
   - - న
   yati: []
@@ -39828,7 +39828,7 @@ rules:
   ruleType: Name
   frequency: Rare
   lines: 4
-  threshold: 2
+  threshold: 3
   rules:
   - - స
     - న
@@ -40264,7 +40264,7 @@ rules:
   ruleType: Name
   frequency: Rare
   lines: 4
-  threshold: 2
+  threshold: 3
   rules:
   - - య
     - జ
@@ -40952,7 +40952,7 @@ rules:
   ruleType: Name
   frequency: Rare
   lines: 4
-  threshold: 2
+  threshold: 3
   rules:
   - - య
     - గ
@@ -40969,7 +40969,7 @@ rules:
   ruleType: Name
   frequency: Rare
   lines: 4
-  threshold: 2
+  threshold: 3
   rules:
   - - త
     - గ
@@ -41055,7 +41055,7 @@ rules:
   ruleType: Name
   frequency: Rare
   lines: 4
-  threshold: 2
+  threshold: 3
   rules:
   - - స
     - భ
@@ -41816,7 +41816,7 @@ rules:
   ruleType: Name
   frequency: Rare
   lines: 4
-  threshold: 1
+  threshold: 3
   rules:
   - - య
   yati: []
@@ -41942,7 +41942,7 @@ rules:
   ruleType: Name
   frequency: Rare
   lines: 4
-  threshold: 2
+  threshold: 3
   rules:
   - - న
     - య
@@ -42787,7 +42787,7 @@ rules:
   ruleType: Name
   frequency: Rare
   lines: 4
-  threshold: 2
+  threshold: 3
   rules:
   - - భ
     - ర
@@ -43412,7 +43412,7 @@ rules:
   ruleType: Name
   frequency: Rare
   lines: 4
-  threshold: 2
+  threshold: 1
   rules:
   - - గ
     - గ
@@ -44619,7 +44619,7 @@ rules:
   ruleType: Name
   frequency: Rare
   lines: 4
-  threshold: 2
+  threshold: 3
   rules:
   - - ర
     - గ
@@ -44900,7 +44900,7 @@ rules:
   ruleType: Name
   frequency: Rare
   lines: 4
-  threshold: 2
+  threshold: 3
   rules:
   - - న
     - స
@@ -45702,7 +45702,7 @@ rules:
   ruleType: Name
   frequency: Rare
   lines: 4
-  threshold: 2
+  threshold: 3
   rules:
   - - జ
     - భ
@@ -45741,7 +45741,7 @@ rules:
   ruleType: Name
   frequency: Rare
   lines: 4
-  threshold: 2
+  threshold: 3
   rules:
   - - మ
     - త
@@ -45777,7 +45777,7 @@ rules:
   ruleType: Name
   frequency: Rare
   lines: 4
-  threshold: 2
+  threshold: 3
   rules:
   - - భ
     - మ
@@ -46209,7 +46209,7 @@ rules:
   ruleType: Name
   frequency: Rare
   lines: 4
-  threshold: 2
+  threshold: 3
   rules:
   - - జ
     - గ
@@ -46610,7 +46610,7 @@ rules:
   ruleType: Name
   frequency: Rare
   lines: 4
-  threshold: 2
+  threshold: 3
   rules:
   - - జ
     - న
@@ -47002,7 +47002,7 @@ rules:
   ruleType: Name
   frequency: Rare
   lines: 4
-  threshold: 2
+  threshold: 3
   rules:
   - - న
     - గ
@@ -48019,7 +48019,7 @@ rules:
   ruleType: Name
   frequency: Rare
   lines: 4
-  threshold: 2
+  threshold: 3
   rules:
   - - ర
     - భ
@@ -48036,7 +48036,7 @@ rules:
   ruleType: Name
   frequency: Rare
   lines: 4
-  threshold: 2
+  threshold: 3
   rules:
   - - య
     - య
@@ -48053,7 +48053,7 @@ rules:
   ruleType: Name
   frequency: Rare
   lines: 4
-  threshold: 2
+  threshold: 3
   rules:
   - - య
     - భ
@@ -48246,7 +48246,7 @@ rules:
   ruleType: Name
   frequency: Rare
   lines: 4
-  threshold: 2
+  threshold: 3
   rules:
   - - భ
     - స
@@ -48370,7 +48370,7 @@ rules:
   ruleType: Name
   frequency: Rare
   lines: 4
-  threshold: 2
+  threshold: 3
   rules:
   - - త
     - ర
@@ -49660,7 +49660,7 @@ rules:
   ruleType: Name
   frequency: Rare
   lines: 4
-  threshold: 2
+  threshold: 3
   rules:
   - - త
     - జ
@@ -50044,7 +50044,7 @@ rules:
   ruleType: Name
   frequency: Rare
   lines: 4
-  threshold: 2
+  threshold: 3
   rules:
   - - స
     - గ

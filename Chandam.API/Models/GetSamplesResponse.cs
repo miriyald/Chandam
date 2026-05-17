@@ -31,4 +31,9 @@ public class GetSamplesResponse
     /// Error message if rule not found or has no examples
     /// </summary>
     public string? ErrorMessage { get; set; }
+
+    /// <summary>
+    /// Whether the examples are machine-generated (not literature)
+    /// </summary>
+    public bool IsGenerated { get; set; }
 }

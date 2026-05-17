@@ -4,7 +4,7 @@
  * 1. Normal load: #initial-loader disappears; no "Failed to Load" error banner.
  * 2. Invalid rule set ID: error/404 content renders; no JS exception.
  * 3. Valid rule set + invalid rule ID: error content renders; no JS exception.
- * 4. Empty editor → clicking Analyze shows an alert (not a crash).
+ * 4. Empty editor → clicking Analyze shows a toast message (not a crash).
  * 5. Direct navigation to /create-rule: rule creator page renders.
  */
 
@@ -97,7 +97,7 @@ test.describe('Invalid route edge cases', () => {
 });
 
 test.describe('Empty editor edge cases', () => {
-  test('clicking Analyze with empty editor shows alert (not a crash)', async ({
+  test('clicking Analyze with empty editor shows toast (not a crash)', async ({
     page,
   }) => {
     await gotoAndWait(page, '/compute/chandam/');
@@ -105,26 +105,19 @@ test.describe('Empty editor edge cases', () => {
     // Ensure editor is empty
     await expect(page.locator('#poem-editor')).toHaveValue('');
 
-    // Listen for dialog
-    let dialogMessage = '';
-    page.once('dialog', async (dialog) => {
-      dialogMessage = dialog.message();
-      await dialog.accept();
-    });
-
     await page.locator('#btn-analyze').click();
 
-    // Wait a moment for the alert to appear
-    await page.waitForTimeout(500);
-
-    // An alert should have been shown (not a page crash)
-    expect(dialogMessage.trim().length).toBeGreaterThan(0);
+    // A toast should be shown (instead of blocking browser alert)
+    const toast = page.locator('.toast.toast-warning').first();
+    await expect(toast).toBeVisible({ timeout: 2_000 });
+    const toastMessage = await toast.locator('.toast-message').textContent();
+    expect((toastMessage ?? '').trim().length).toBeGreaterThan(0);
 
     // Page should still be functional
     await expect(page.locator('#poem-editor')).toBeVisible();
   });
 
-  test('clicking Analyze in specific-rule mode without a rule selection shows alert', async ({
+  test('clicking Analyze in specific-rule mode without a rule selection shows toast', async ({
     page,
   }) => {
     await gotoAndWait(page, '/compute/chandam/');
@@ -146,16 +139,11 @@ test.describe('Empty editor edge cases', () => {
       if (details) details.dataset.selectedRule = '';
     });
 
-    let dialogMessage = '';
-    page.once('dialog', async (dialog) => {
-      dialogMessage = dialog.message();
-      await dialog.accept();
-    });
-
     await page.locator('#btn-analyze').click();
-    await page.waitForTimeout(500);
+    const toast = page.locator('.toast').first();
+    await expect(toast).toBeVisible({ timeout: 2_000 });
 
-    // Either an alert was shown for "no rule selected" or "no text"
+    // Either a toast was shown for "no rule selected" or "no text"
     // Both are acceptable non-crash outcomes
     await expect(page.locator('#poem-editor')).toBeVisible();
   });

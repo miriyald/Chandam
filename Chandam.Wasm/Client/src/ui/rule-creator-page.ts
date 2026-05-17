@@ -23,6 +23,7 @@ import {
   getElement,
   getRequiredElement
 } from './rule-creator-helpers';
+import { notify, notifyList } from '../utils/notify';
 
 /**
  * State management for row counter
@@ -542,26 +543,28 @@ async function handleCreateRule() {
   // Validate using helper function
   const validationResult = await validateRule(ruleDto);
   if (!validationResult.isValid) {
-    alert(validationResult.errors.join('\n'));
+    notifyList(validationResult.errors, 'warning', {
+      title: t('creator_error')
+    });
     return;
   }
 
   try {
     const count = await customRulesService.getCustomRulesCount();
     if (count >= 50) {
-      alert(t('creator_limit_reached'));
+      notify(t('creator_limit_reached'), 'warning');
       return;
     }
 
     await customRulesService.createCustomRule(ruleDto);
     // Ensure WASM knows about the new rule before navigating
     await CustomRulesLoader.loadCustomRuleset('custom-rules', true);
-    alert(t('creator_success'));
+    notify(t('creator_success'), 'success');
     const targetUrl = makeUrl(`/learn/custom-rules/${ruleDto.Identifier}`);
     window.history.pushState(null, '', targetUrl);
     window.dispatchEvent(new PopStateEvent('popstate'));
   } catch (error) {
-    alert(t('creator_error'));
+    notify(t('creator_error'), 'error');
     console.error(error);
   }
 }

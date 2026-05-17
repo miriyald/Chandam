@@ -1,6 +1,5 @@
 import { WasmBridge } from '../wasm-bridge';
 import { getRuleSet, getRuleSetAsync } from '../config';
-import { SEARCH_DEBOUNCE_MS } from '../constants';
 import type { RuleSummaryDetailed, AvailableFilters } from '../types';
 import { groupRulesByCategory, getSortedGroupKeys, getGroupDisplayName, getSubTypeDisplayName } from '../utils/rule-grouping';
 import { makeUrl } from '../utils/url-helpers';
@@ -15,6 +14,8 @@ import { customRulesService } from '../services/storage/custom-rules-service';
 import { favoritesService } from '../services/storage/favorites-service';
 import { analyticsService } from '../services/analytics-service';
 import { exportFullBook } from '../utils/export-book';
+import { notify } from '../utils/notify';
+import { showConfirm } from '../utils/confirm-dialog';
 
 interface FilterState {
   searchText: string;
@@ -100,8 +101,8 @@ export async function renderLearnIndexPage(ruleSet: string) {
     ruleSet === 'custom-fav'
       ? allFavorites.map(fav => `custom-fav:${fav.ruleId}`)
       : allFavorites
-          .filter(fav => fav.ruleSetId === ruleSet)
-          .map(fav => fav.id)
+        .filter(fav => fav.ruleSetId === ruleSet)
+        .map(fav => fav.id)
   );
 
   // For custom-fav, map ruleId -> original ruleSetId for correct link generation
@@ -169,12 +170,13 @@ function renderLearnIndexPageHtml(
         <div class="filter-bar-row">
           <div class="filter-inputs">
             <input
-              type="text"
+              type="search"
               class="filter-search"
               placeholder="${t('filter_search_placeholder')}"
               value="${currentFilterState.searchText}"
               data-filter="search"
               aria-label="${t('filter_search_placeholder')}"
+              enterkeyhint="search"
             />
             ${renderCategoryDropdown()}
             ${renderExamplesToggle()}
@@ -320,8 +322,8 @@ function renderCategoryDropdown(): string {
 
   const chandamItems = (currentFilters.chandamNames.length > 0)
     ? currentFilters.chandamNames.map((name, i) =>
-        `<div class="rule-item" role="option" data-filter-type="chandam" data-value="${name}" aria-selected="${name === currentFilterState.selectedChandamName}">${currentFilters!.chandamLabels[i]}</div>`
-      ).join('')
+      `<div class="rule-item" role="option" data-filter-type="chandam" data-value="${name}" aria-selected="${name === currentFilterState.selectedChandamName}">${currentFilters!.chandamLabels[i]}</div>`
+    ).join('')
     : '';
 
   return `
@@ -355,15 +357,34 @@ function renderExamplesToggle(): string {
 function attachFilterEventListeners(ruleSetId: string) {
   const searchInput = document.querySelector('.filter-search') as HTMLInputElement;
   if (searchInput) {
-    searchInput.addEventListener('input', debounce(async (e: Event) => {
-      currentFilterState.searchText = (e.target as HTMLInputElement).value;
+    let lastSearchedText = currentFilterState.searchText;
+
+    async function executeSearch() {
+      const newText = searchInput.value;
+      if (newText === lastSearchedText) return;
+      lastSearchedText = newText;
+      currentFilterState.searchText = newText;
       const done = analyticsService.startTimedEvent('filter_search', {
         ruleSet: ruleSetId,
-        queryLength: currentFilterState.searchText.length
+        queryLength: newText.length
       });
       await refreshResults(ruleSetId);
       done();
-    }, SEARCH_DEBOUNCE_MS));
+    }
+
+    searchInput.addEventListener('keydown', async (e: KeyboardEvent) => {
+      if (e.key !== 'Enter' || e.isComposing) return;
+      e.preventDefault();
+      await executeSearch();
+    });
+
+    searchInput.addEventListener('blur', async () => {
+      await executeSearch();
+    });
+
+    searchInput.addEventListener('search', async () => {
+      await executeSearch();
+    });
   }
 
   const categoryPicker = document.getElementById('category-picker') as HTMLDetailsElement;
@@ -373,6 +394,9 @@ function attachFilterEventListeners(ruleSetId: string) {
         const el = item as HTMLElement;
         const filterType = el.dataset.filterType || 'category';
         const value = el.dataset.value || '';
+
+        const si = document.querySelector('.filter-search') as HTMLInputElement;
+        if (si) currentFilterState.searchText = si.value;
 
         if (filterType === 'chandam') {
           currentFilterState.selectedChandamName = value;
@@ -408,6 +432,8 @@ function attachFilterEventListeners(ruleSetId: string) {
   const examplesToggle = document.getElementById('filter-has-examples') as HTMLInputElement;
   if (examplesToggle) {
     examplesToggle.addEventListener('change', async () => {
+      const si = document.querySelector('.filter-search') as HTMLInputElement;
+      if (si) currentFilterState.searchText = si.value;
       currentFilterState.hasExamples = examplesToggle.checked;
       const done = analyticsService.startTimedEvent('filter_examples', {
         ruleSet: ruleSetId,
@@ -452,19 +478,13 @@ async function refreshResults(ruleSetId: string) {
   await renderLearnIndexPage(ruleSetId);
 }
 
-// Debounce helper
-function debounce<T extends (...args: any[]) => any>(func: T, wait: number): (...args: Parameters<T>) => void {
-  let timeout: ReturnType<typeof setTimeout> | null = null;
-  return function(...args: Parameters<T>) {
-    if (timeout) clearTimeout(timeout);
-    timeout = setTimeout(() => func(...args), wait);
-  };
-}
 
 async function handleDeleteFromList(ruleId: string, ruleName: string) {
-  const confirmed = confirm(
-    t('alert_delete_confirm')
-  );
+  const confirmed = await showConfirm(t('alert_delete_confirm'), {
+    title: `${t('action_delete_custom_rule')}: ${ruleName}`,
+    cancelText: t('creator_btn_cancel'),
+    confirmText: t('action_delete_custom_rule')
+  });
 
   if (!confirmed) {
     return;
@@ -489,6 +509,6 @@ async function handleDeleteFromList(ruleId: string, ruleName: string) {
 
   } catch (error) {
     console.error('Failed to delete rule:', error);
-    alert(t('alert_delete_failed'));
+    notify(t('alert_delete_failed'), 'error');
   }
 }

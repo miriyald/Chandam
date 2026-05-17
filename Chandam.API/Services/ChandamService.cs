@@ -438,6 +438,21 @@ public class ChandamService
 
                 response.TotalExamples = rule.Examples2.Length;
             }
+            else if (request.IncludeGenerated && PoemGenerator.CanGenerate(rule))
+            {
+                var generated = PoemGenerator.Generate(rule);
+                if (!string.IsNullOrEmpty(generated))
+                {
+                    response.Examples.Add(new ExamplePoem
+                    {
+                        Text = generated,
+                        Author = "యంత్ర-నిర్మితం (Machine-Generated)",
+                        Notes = "Generated using musical syllables to demonstrate meter structure"
+                    });
+                    response.IsGenerated = true;
+                    response.TotalExamples = 1;
+                }
+            }
             else
             {
                 response.ErrorMessage = "ఈ ఛందానికి ఉదాహరణలు లేవు. (No examples available for this Chandam)";

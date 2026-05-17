@@ -58,6 +58,7 @@ export interface Translations {
   results_description: string;
   results_mismatch_singular: string;
   results_mismatch_plural: string;
+  results_disclaimer: string;
 
   // Links
   link_browse_rules: string;
@@ -79,6 +80,7 @@ export interface Translations {
   section_description: string;
   section_technical: string;
   section_examples: string;
+  section_references: string;
   no_description: string;
   no_examples: string;
   btn_try_example: string;
@@ -95,6 +97,7 @@ export interface Translations {
   alert_select_rule: string;
   alert_no_match: string;
   alert_no_examples: string;
+  alert_generated_poem: string;
 
   // Language switcher
   lang_toggle_title: string;
@@ -197,6 +200,9 @@ export interface Translations {
   // Examples
   examples_none_available: string;
   examples_contribute_cta: string;
+  generated_example_badge: string;
+  generated_disclaimer: string;
+  btn_regenerate: string;
 
   // Export
   export_book: string;
@@ -349,6 +355,7 @@ const translations: Record<Language, Translations> = {
     results_description: 'Description',
     results_mismatch_singular: 'Mismatch',
     results_mismatch_plural: 'Mismatches',
+    results_disclaimer: 'Chandam© results are indicative. Please use your own judgement.',
 
     link_browse_rules: 'Browse Rules',
     link_learn_more: 'Learn More',
@@ -367,6 +374,7 @@ const translations: Record<Language, Translations> = {
     section_description: 'Description',
     section_technical: 'Technical Details',
     section_examples: 'Examples',
+    section_references: 'References',
     no_description: 'No description available',
     no_examples: 'No examples available',
     btn_try_example: 'Try This Example',
@@ -381,6 +389,7 @@ const translations: Record<Language, Translations> = {
     alert_select_rule: 'Please select a rule',
     alert_no_match: 'No match',
     alert_no_examples: 'No examples available',
+    alert_generated_poem: 'Generated sample (not literature)',
 
     lang_toggle_title: 'Switch to Telugu / తెలుగుకు మార్చండి',
     lang_name: 'EN',
@@ -476,6 +485,9 @@ const translations: Record<Language, Translations> = {
 
     examples_none_available: 'No examples available yet.',
     examples_contribute_cta: 'You may contribute by writing one!',
+    generated_example_badge: 'Machine-Generated (యంత్ర-నిర్మితం)',
+    generated_disclaimer: 'Sample generated using స-రి-గ-మ-ప-ద-ని syllables to demonstrate meter structure. Not literature.',
+    btn_regenerate: 'Regenerate',
 
     export_book: 'Export as Book',
     export_book_single: 'Export Rule',
@@ -624,6 +636,7 @@ const translations: Record<Language, Translations> = {
     results_description: 'వివరణ',
     results_mismatch_singular: 'లోపం',
     results_mismatch_plural: 'లోపాలు',
+    results_disclaimer: 'ఛందం© ఫలితాలపైనే పూర్తిగా ఆధారపడవద్దు. స్వవిచక్షణతో నిర్ణయం తీసుకోగలరు.',
 
     link_browse_rules: 'నియమాలను చూడండి',
     link_learn_more: 'మరింత తెలుసుకోండి',
@@ -642,6 +655,7 @@ const translations: Record<Language, Translations> = {
     section_description: 'వివరణ',
     section_technical: 'సాంకేతిక వివరాలు',
     section_examples: 'ఉదాహరణలు',
+    section_references: 'ప్రమాణము',
     no_description: 'వివరణ అందుబాటులో లేదు',
     no_examples: 'ఉదాహరణలు అందుబాటులో లేవు',
     btn_try_example: 'ఈ ఉదాహరణను ప్రయత్నించండి',
@@ -656,6 +670,7 @@ const translations: Record<Language, Translations> = {
     alert_select_rule: 'దయచేసి ఒక నియమాన్ని ఎంచుకోండి.',
     alert_no_match: 'ఇచ్చిన పద్యం ఈ నియమానికి సరిపోలలేదు.',
     alert_no_examples: 'ఈ నియమానికి ఉదాహరణలు అందుబాటులో లేవు.',
+    alert_generated_poem: 'యంత్ర-నిర్మిత నమూనా (సాహిత్యం కాదు)',
 
     lang_toggle_title: 'Switch to English / ఇంగ్లీష్‌కు మార్చండి',
     lang_name: 'తె',
@@ -751,6 +766,9 @@ const translations: Record<Language, Translations> = {
 
     examples_none_available: 'ఉదాహరణలు ఇంకా అందుబాటులో లేవు.',
     examples_contribute_cta: 'మీరు ఒకటి వ్రాసి సహకరించవచ్చు!',
+    generated_example_badge: 'యంత్ర-నిర్మితం (Machine-Generated)',
+    generated_disclaimer: 'స-రి-గ-మ-ప-ద-ని అక్షరాలతో ఛందస్సు నమూనా. సాహిత్యం కాదు.',
+    btn_regenerate: 'మరొకటి',
 
     export_book: 'పుస్తకంగా ఎగుమతి చేయి',
     export_book_single: 'నియమాన్ని ఎగుమతి చేయి',

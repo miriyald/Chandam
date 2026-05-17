@@ -122,13 +122,15 @@ public class ChandamTools
     public string GetExamples(
         [Description("Rule identifier (e.g., 'kandam', 'utpalamaala')")] string rule_identifier,
         [Description("Maximum number of examples to return (0 = all)")] int max_examples = 5,
-        [Description("RuleSet to use: chandam, sanskrit, topella (default: chandam)")] string? ruleset_id = null)
+        [Description("RuleSet to use: chandam, sanskrit, topella (default: chandam)")] string? ruleset_id = null,
+        [Description("Include machine-generated example if no real examples exist (Vruttam only)")] bool include_generated = true)
     {
         var request = new GetSamplesRequest
         {
             RuleIdentifier = rule_identifier,
             MaxExamples = max_examples,
-            RuleSetId = ruleset_id ?? "chandam"
+            RuleSetId = ruleset_id ?? "chandam",
+            IncludeGenerated = include_generated
         };
         var result = _service.GetSamples(request);
         return JsonSerializer.Serialize(result, JsonOptions);

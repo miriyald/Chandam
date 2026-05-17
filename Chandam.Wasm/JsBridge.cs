@@ -253,14 +253,26 @@ public static class JsBridge
     [JSInvokable]
     public static string GetRandomPoem(string ruleId)
     {
-        var rule = Manager.FetchRule(ruleId);
+        var ruleLoader = ServiceAccessor.Services!.GetRequiredService<RuleLoaderService>();
+        var rule = ruleLoader.FetchRuleFromRuleSet(ruleId) ?? Manager.FetchRule(ruleId);
+
         if (rule?.Examples2 != null && rule.Examples2.Length > 0)
         {
             var random = new Random();
             var example = rule.Examples2[random.Next(rule.Examples2.Length)];
-            return example.Text;
+            return new JsonObject { ["text"] = example.Text, ["isGenerated"] = false }.ToJsonString();
         }
-        return string.Empty;
+
+        if (PoemGenerator.CanGenerate(rule))
+        {
+            var generated = PoemGenerator.Generate(rule!);
+            if (!string.IsNullOrEmpty(generated))
+            {
+                return new JsonObject { ["text"] = generated, ["isGenerated"] = true }.ToJsonString();
+            }
+        }
+
+        return new JsonObject { ["text"] = "", ["isGenerated"] = false }.ToJsonString();
     }
 
     [JSInvokable]

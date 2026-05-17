@@ -8,6 +8,7 @@ import { storageService } from '../services/storage/storage-service';
 import { analyticsService } from '../services/analytics-service';
 import { MAX_POEMS, MAX_FAVORITES, MAX_CUSTOM_RULES } from '../constants';
 import { renderRuleSetCard, renderCustomRulesCard } from './rule-sets-page';
+import { showConfirm } from '../utils/confirm-dialog';
 
 export async function renderMyDataPage(): Promise<void> {
   setPageTitle(t('my_data_title'));
@@ -95,7 +96,11 @@ export async function renderMyDataPage(): Promise<void> {
   `;
 
   document.getElementById('btn-clear-all-data')?.addEventListener('click', async () => {
-    const confirmed = confirm(t('clear_data_warning'));
+    const confirmed = await showConfirm(t('clear_data_warning'), {
+      title: t('my_data_clear_btn'),
+      cancelText: t('creator_btn_cancel'),
+      confirmText: t('my_data_clear_btn')
+    });
     if (confirmed) {
       await storageService.clearAll();
       analyticsService.trackEvent('clear_all_data', {});

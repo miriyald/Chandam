@@ -3,11 +3,12 @@ import { getEditorText, setEditorText, clearEditor } from './editor';
 import { getSelectedRule } from './rule-picker';
 import { renderFirstMatch, hideResults } from './results';
 import { t } from '../i18n';
+import { notify } from '../utils/notify';
 
 export async function handleDetermineAndShowResults() {
   const poemText = getEditorText();
   if (!poemText.trim()) {
-    alert(t('alert_enter_poem'));
+    notify(t('alert_enter_poem'), 'warning');
     return;
   }
 
@@ -24,11 +25,11 @@ export async function handleDetermineAndShowResults() {
       const resultsSection = document.getElementById('results-section');
       if (resultsSection) resultsSection.style.display = 'block';
     } else {
-      alert(response.errorMessage || t('alert_no_matches'));
+      notify(response.errorMessage || t('alert_no_matches'), 'error');
     }
   } catch (err) {
     console.error('Determine failed:', err);
-    alert(t('alert_error'));
+    notify(t('alert_error'), 'error');
   }
 }
 
@@ -40,12 +41,12 @@ export async function handleMatch() {
   const ruleId = getSelectedRule();
 
   if (!poemText.trim()) {
-    alert(t('alert_enter_poem'));
+    notify(t('alert_enter_poem'), 'warning');
     return;
   }
 
   if (!ruleId) {
-    alert(t('alert_select_rule'));
+    notify(t('alert_select_rule'), 'warning');
     // Add visual feedback to rule picker
     const rulePicker = document.getElementById('rule-picker-inline');
     if (rulePicker) {
@@ -67,27 +68,30 @@ export async function handleMatch() {
       const resultsSection = document.getElementById('results-section');
       if (resultsSection) resultsSection.style.display = 'block';
     } else {
-      alert(response.errorMessage || t('alert_no_match'));
+      notify(response.errorMessage || t('alert_no_match'), 'error');
     }
   } catch (err) {
     console.error('Match failed:', err);
-    alert(t('alert_error'));
+    notify(t('alert_error'), 'error');
   }
 }
 
 export async function handleRandom() {
   const ruleId = getSelectedRule();
   if (!ruleId) {
-    alert(t('alert_select_rule'));
+    notify(t('alert_select_rule'), 'warning');
     return;
   }
 
   try {
-    const poem = await WasmBridge.getRandomPoem(ruleId);
-    if (poem) {
-      setEditorText(poem);
+    const result = await WasmBridge.getRandomPoem(ruleId);
+    if (result.text) {
+      setEditorText(result.text);
+      if (result.isGenerated) {
+        notify(t('alert_generated_poem'), 'info');
+      }
     } else {
-      alert(t('alert_no_examples'));
+      notify(t('alert_no_examples'), 'warning');
     }
   } catch (err) {
     console.error('Random poem failed:', err);

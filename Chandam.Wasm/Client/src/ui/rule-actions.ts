@@ -10,6 +10,8 @@ import { storageService } from '../services/storage/storage-service';
 import { makeUrl } from '../utils/url-helpers';
 import { submitToGitHub, buildExamplePayload } from '../utils/github-submit';
 import { t } from '../i18n';
+import { notify } from '../utils/notify';
+import { showConfirm } from '../utils/confirm-dialog';
 
 /**
  * Renders action toolbar for rule pages (Learn & Compute) and rule set page
@@ -195,7 +197,7 @@ function attachFavoriteHandler(ruleSetId: string, ruleId: string): void {
 function attachDeleteHandler(ruleSetId: string, ruleId: string): void {
   const btn = document.getElementById('btn-delete');
   if (btn) {
-    btn.addEventListener('click', () => handleDeleteClick(ruleSetId, ruleId));
+    btn.addEventListener('click', async () => await handleDeleteClick(ruleSetId, ruleId));
   }
 }
 
@@ -236,9 +238,9 @@ async function handleFavoriteClick(ruleSetId: string, ruleId: string) {
       const limitDone = analyticsService.startTimedEvent('favorites_limit_reached', { ruleId });
       limitDone();
 
-      alert(t('alert_max_favorites'));
+      notify(t('alert_max_favorites'), 'warning');
     } else {
-      alert(t('alert_favorite_failed'));
+      notify(t('alert_favorite_failed'), 'error');
     }
 
     btn.classList.remove('favoriting');
@@ -247,7 +249,11 @@ async function handleFavoriteClick(ruleSetId: string, ruleId: string) {
 
 async function handleDeleteClick(ruleSetId: string, ruleId: string) {
   // Confirm deletion
-  const confirmed = confirm(t('alert_delete_confirm'));
+  const confirmed = await showConfirm(t('alert_delete_confirm'), {
+    title: t('action_delete_custom_rule'),
+    cancelText: t('creator_btn_cancel'),
+    confirmText: t('action_delete_custom_rule')
+  });
 
   if (!confirmed) {
     return;
@@ -291,6 +297,6 @@ async function handleDeleteClick(ruleSetId: string, ruleId: string) {
 
   } catch (error) {
     console.error('Failed to delete rule:', error);
-    alert(t('alert_delete_failed'));
+    notify(t('alert_delete_failed'), 'error');
   }
 }
