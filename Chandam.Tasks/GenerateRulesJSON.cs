@@ -532,9 +532,8 @@ namespace Verifier
                 References = string.IsNullOrWhiteSpace(reference) ? null : new string[] { reference }
             };
 
-            // Calculate threshold based on gana count
-            var charLength = rule.Rules[0].Length;
-            rule.Threshold = charLength >= 3 ? 3 : charLength;
+            // Threshold: if CharLength >= 3, use 3; otherwise use CharLength
+            rule.Threshold = rule.CharLength >= 3 ? 3 : 1;
 
             return rule;
         }
