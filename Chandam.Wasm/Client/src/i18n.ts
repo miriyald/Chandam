@@ -58,6 +58,7 @@ export interface Translations {
   results_description: string;
   results_mismatch_singular: string;
   results_mismatch_plural: string;
+  results_disclaimer: string;
 
   // Links
   link_browse_rules: string;
@@ -354,6 +355,7 @@ const translations: Record<Language, Translations> = {
     results_description: 'Description',
     results_mismatch_singular: 'Mismatch',
     results_mismatch_plural: 'Mismatches',
+    results_disclaimer: 'Chandam© results are indicative. Please use your own judgement.',
 
     link_browse_rules: 'Browse Rules',
     link_learn_more: 'Learn More',
@@ -634,6 +636,7 @@ const translations: Record<Language, Translations> = {
     results_description: 'వివరణ',
     results_mismatch_singular: 'లోపం',
     results_mismatch_plural: 'లోపాలు',
+    results_disclaimer: 'ఛందం© ఫలితాలపైనే పూర్తిగా ఆధారపడవద్దు. స్వవిచక్షణతో నిర్ణయం తీసుకోగలరు.',
 
     link_browse_rules: 'నియమాలను చూడండి',
     link_learn_more: 'మరింత తెలుసుకోండి',

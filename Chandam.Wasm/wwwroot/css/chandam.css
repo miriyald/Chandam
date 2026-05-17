@@ -1767,6 +1767,17 @@ footer a:focus-visible {
   border-bottom: none;
 }
 
+.results-disclaimer {
+  margin-top: var(--space-lg);
+  padding: 0.75rem 1rem;
+  background: #fff8e1;
+  border-left: 4px solid #f9a825;
+  border-radius: var(--radius-sm);
+  font-size: 0.85rem;
+  color: #5d4037;
+  font-style: italic;
+}
+
 /* Special rules from RuleText */
 .special-rules {
   margin: 0.75rem 0;
