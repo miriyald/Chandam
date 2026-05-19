@@ -9,6 +9,7 @@ import { renderRuleCreatorPage } from './ui/rule-creator-page';
 import { renderExplorePage } from './ui/explore-page';
 import { renderMyWritingsPage } from './ui/my-writings-page';
 import { renderMyDataPage } from './ui/my-data-page';
+import { loadResourcesPage } from './ui/resources-loader';
 import { validateRuleSetAsync, validateRule, handleInvalidRuleSet, handleInvalidRule } from './utils/error-handlers';
 import { createInitialLoader } from './utils/loader';
 import { LoadingEvents, LoadingEventType } from './utils/loading-events';
@@ -145,7 +146,7 @@ router.register('/my-data', async () => {
 });
 
 // Static pages
-router.register('/resources', () => { setPageTitle(t('nav_resources')); loadStaticPage(`pages/${getLanguage()}/resources.html`); });
+router.register('/resources', async () => { setPageTitle(t('nav_resources')); await loadStaticPage(`pages/${getLanguage()}/resources.html`); loadResourcesPage(); });
 router.register('/about', () => { setPageTitle(t('nav_about')); loadStaticPage(`pages/${getLanguage()}/about.html`); });
 router.register('/credits', () => { setPageTitle(t('nav_credits')); loadStaticPage(`pages/${getLanguage()}/credits.html`); });
 router.register('/contact', () => { setPageTitle(t('nav_contact')); loadStaticPage(`pages/${getLanguage()}/contact.html`); });  // footer-only
