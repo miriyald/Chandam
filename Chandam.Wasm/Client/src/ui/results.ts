@@ -90,6 +90,16 @@ function renderMatchCard(match: ChandamMatch, ruleSet?: string, showRuleLink = t
     ? `<button class="action-btn btn-add-collection" data-rule-id="${escapeAttr(match.rule.identifier)}" data-rule-name="${escapeAttr(collectionRuleName)}" data-rule-set="${escapeAttr(ruleSet)}"><span class="material-symbols-outlined" style="font-size:16px" aria-hidden="true">bookmark</span> <span>${t('results_add_to_collection')}</span></button>`
     : '';
 
+  const exportBtn = (match.matchPercentage === 100 && match.beautified)
+    ? `<div class="export-dropdown">
+        <button class="action-btn btn-export" title="Export as Image"><span class="material-symbols-outlined" style="font-size:16px" aria-hidden="true">ios_share</span> <span>${t('results_export')}</span></button>
+        <div class="export-dropdown-menu">
+          <button class="export-option" data-mode="poem">${t('results_export_poem')}</button>
+          <button class="export-option" data-mode="results">${t('results_export_results')}</button>
+        </div>
+      </div>`
+    : '';
+
   // Enhanced error display (table format)
   const errorsHtml = (match.errors && match.errors.length > 0)
     ? renderErrorsTable(match.errors)
@@ -143,6 +153,7 @@ function renderMatchCard(match: ChandamMatch, ruleSet?: string, showRuleLink = t
           ${addExampleBtn}
           ${submitGithubBtn}
           ${ruleLink}
+          ${exportBtn}
         </div>
       </div>
       ${sequenceHint}
@@ -208,6 +219,8 @@ function attachResultActionHandlers(container: HTMLElement, ruleSet?: string): v
     const addExampleBtn = target.closest('.btn-add-example') as HTMLElement | null;
     const submitGithubBtn = target.closest('.btn-submit-github') as HTMLElement | null;
     const addCollectionBtn = target.closest('.btn-add-collection') as HTMLElement | null;
+    const exportToggleBtn = target.closest('.btn-export') as HTMLElement | null;
+    const exportOptionBtn = target.closest('.export-option') as HTMLElement | null;
 
     if (addExampleBtn) {
       await handleAddToExamples(addExampleBtn);
@@ -215,6 +228,18 @@ function attachResultActionHandlers(container: HTMLElement, ruleSet?: string): v
       await handleSubmitToGitHub(submitGithubBtn, ruleSet);
     } else if (addCollectionBtn) {
       await handleAddToCollection(addCollectionBtn, ruleSet);
+    } else if (exportToggleBtn) {
+      const dropdown = exportToggleBtn.closest('.export-dropdown') as HTMLElement | null;
+      if (dropdown) {
+        dropdown.classList.toggle('open');
+      }
+    } else if (exportOptionBtn) {
+      const dropdown = exportOptionBtn.closest('.export-dropdown') as HTMLElement | null;
+      if (dropdown) dropdown.classList.remove('open');
+      await handleExportImage(exportOptionBtn);
+    } else {
+      // Close any open export dropdown on outside click
+      container.querySelectorAll('.export-dropdown.open').forEach(el => el.classList.remove('open'));
     }
   }, { signal: resultActionController.signal });
 }
@@ -306,6 +331,19 @@ async function handleAddToCollection(button: HTMLElement, ruleSet?: string): Pro
     button.classList.add('btn-warning');
     button.setAttribute('disabled', 'true');
   }
+}
+
+async function handleExportImage(button: HTMLElement): Promise<void> {
+  const mode = button.getAttribute('data-mode') as 'poem' | 'results';
+  if (!mode) return;
+
+  const matchCard = button.closest('.match-card') as HTMLElement | null;
+  if (!matchCard) return;
+
+  const meterName = matchCard.querySelector('.meter-name')?.textContent || 'poem';
+
+  const { exportAsImage } = await import('../utils/export-image');
+  await exportAsImage(matchCard, mode, meterName);
 }
 
 // Render lightweight score cards for alternative matches

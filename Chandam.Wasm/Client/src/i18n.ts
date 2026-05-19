@@ -205,6 +205,9 @@ export interface Translations {
   btn_regenerate: string;
 
   // Export
+  results_export: string;
+  results_export_poem: string;
+  results_export_results: string;
   export_book: string;
   export_book_single: string;
   export_progress_title: string;
@@ -489,6 +492,9 @@ const translations: Record<Language, Translations> = {
     generated_disclaimer: 'Sample generated using స-రి-గ-మ-ప-ద-ని syllables to demonstrate meter structure. Not literature.',
     btn_regenerate: 'Regenerate',
 
+    results_export: 'Export',
+    results_export_poem: 'Poem Only',
+    results_export_results: 'Full Results',
     export_book: 'Export as Book',
     export_book_single: 'Export Rule',
     export_progress_title: 'Exporting...',
@@ -770,6 +776,9 @@ const translations: Record<Language, Translations> = {
     generated_disclaimer: 'స-రి-గ-మ-ప-ద-ని అక్షరాలతో ఛందస్సు నమూనా. సాహిత్యం కాదు.',
     btn_regenerate: 'మరొకటి',
 
+    results_export: 'ఎగుమతి',
+    results_export_poem: 'పద్యం మాత్రమే',
+    results_export_results: 'పూర్తి ఫలితాలు',
     export_book: 'పుస్తకంగా ఎగుమతి చేయి',
     export_book_single: 'నియమాన్ని ఎగుమతి చేయి',
     export_progress_title: 'ఎగుమతి చేస్తోంది...',
