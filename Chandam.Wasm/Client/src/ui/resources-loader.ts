@@ -111,7 +111,7 @@ function renderTextCard(item: ResourceItem): string {
 
   const href = item.link ? resolveResourceLink(item.link) : null;
   const linkAttributes = href
-    ? getLinkAttributes()
+    ? getLinkAttributes(href)
     : "";
 
   const titleContent = item.link
@@ -133,7 +133,7 @@ function resolveResourceLink(link: string): string {
   return link.startsWith("/") ? makeUrl(link) : link;
 }
 
-function getLinkAttributes(): string {
+function getLinkAttributes(href: string): string {
   return ' target="_blank" rel="noopener noreferrer"';
 }
 
@@ -143,7 +143,7 @@ function getLinkAttributes(): string {
 function renderYouTubeCard(item: ResourceItem): string {
   const videoId = extractYouTubeVideoId(item.link!);
   const href = resolveResourceLink(item.link!);
-  const linkAttributes = getLinkAttributes();
+  const linkAttributes = getLinkAttributes(href);
 
   // If video ID can't be extracted, render as text card
   if (!videoId) {
