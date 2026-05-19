@@ -34,9 +34,8 @@ public class TryMatchRequest
 
     /// <summary>
     /// RuleSet ID to use ("chandam", "sanskrit", "topella", etc.). If null, uses active ruleset.
-    /// Default: "chandam"
     /// </summary>
-    public string? RuleSetId { get; set; } = "chandam";
+    public string? RuleSetId { get; set; }
 
     /// <summary>
     /// Language of the poem. If null, infers from rule or uses default (te).

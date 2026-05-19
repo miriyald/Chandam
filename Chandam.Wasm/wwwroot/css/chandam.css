@@ -1074,11 +1074,6 @@ footer a:focus-visible {
   padding-bottom: 0.2em;
   border-bottom: 1px solid rgba(26, 58, 92, 0.06);
   text-wrap: pretty;
-  background: linear-gradient(to right,
-      transparent 0,
-      transparent 1.2em,
-      rgba(184, 134, 11, 0.04) 1.2em,
-      rgba(184, 134, 11, 0.04) 100%);
 }
 
 .poem-line:last-child {
@@ -4515,5 +4510,191 @@ footer a:focus-visible {
 
   .confirm-dialog {
     padding: var(--space-sm) var(--space-sm) var(--space-md);
+  }
+}
+
+/* ========================================
+   RESOURCES PAGE - ICON & YOUTUBE SUPPORT
+   ======================================== */
+
+/* Resource section headings with icons */
+.resource-section h3 {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  margin-bottom: var(--space-md);
+  border-bottom: 2px solid var(--color-accent-gold-light);
+  padding-bottom: var(--space-xs);
+}
+
+.resource-section h3 svg {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+  fill: var(--color-primary);
+}
+
+/* Item header with icon */
+.item-header {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-sm);
+  margin-bottom: var(--space-xs);
+}
+
+.item-icon {
+  display: inline-flex;
+  align-items: center;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.item-icon svg {
+  width: 16px;
+  height: 16px;
+  fill: var(--color-text-muted);
+  transition: fill 0.2s;
+}
+
+.resource-card:hover .item-icon svg {
+  fill: var(--color-primary);
+}
+
+.resource-card h4 {
+  margin: 0;
+  font-size: 1.02rem;
+  line-height: 1.35;
+}
+
+/* YouTube thumbnail card */
+.resource-card-youtube {
+  padding: 0;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.youtube-thumb {
+  position: relative;
+  width: 100%;
+  padding-top: 56.25%;
+  /* 16:9 aspect ratio */
+  background: #000;
+  overflow: hidden;
+}
+
+.youtube-thumb img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: var(--radius-md) var(--radius-md) 0 0;
+  transition: opacity 160ms ease;
+}
+
+.resource-card-youtube:hover .youtube-thumb img {
+  opacity: 0.85;
+}
+
+.youtube-play-badge {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 64px;
+  height: 64px;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 50%;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  transition: all 160ms ease;
+}
+
+.resource-card-youtube:hover .youtube-play-badge {
+  background: rgba(255, 255, 255, 1);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+  transform: translate(-50%, -50%) scale(1.1);
+}
+
+.youtube-play-badge svg {
+  width: 48px;
+  height: 48px;
+  fill: #c1121f;
+}
+
+.resource-card-youtube h4,
+.resource-card-youtube p {
+  padding: var(--space-md);
+  padding-top: var(--space-sm);
+}
+
+.resource-card-youtube h4 {
+  margin: 0;
+  font-size: 1.02rem;
+  line-height: 1.35;
+}
+
+.resource-card-youtube p {
+  margin: 0;
+  color: var(--color-text-muted);
+  line-height: 1.65;
+  padding-top: var(--space-xs);
+}
+
+/* Grid and card resets for YouTube cards */
+.resource-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: var(--space-md);
+}
+
+.resource-card {
+  padding: var(--space-md);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-bg);
+  transition: transform 160ms ease, box-shadow 160ms ease, border-color 160ms ease;
+}
+
+.resource-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+  border-color: var(--color-accent-gold);
+}
+
+.resource-card p {
+  margin: 0;
+  color: var(--color-text-muted);
+  line-height: 1.65;
+}
+
+.resource-card a {
+  color: var(--color-primary);
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+}
+
+.resource-card a:hover,
+.resource-card a:focus {
+  border-bottom-color: var(--color-primary);
+}
+
+@media (max-width: 768px) {
+  .resource-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .youtube-play-badge {
+    width: 48px;
+    height: 48px;
+  }
+
+  .youtube-play-badge svg {
+    width: 36px;
+    height: 36px;
   }
 }
