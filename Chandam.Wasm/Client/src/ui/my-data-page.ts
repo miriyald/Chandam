@@ -36,7 +36,7 @@ export async function renderMyDataPage(): Promise<void> {
         <p class="description">${t('my_data_writings_subtitle')}</p>
         <div class="card-actions">
           <a href="${makeUrl('/my-writings')}" class="btn-analyze">
-            <svg viewBox="0 0 24 24" width="14" height="14"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>
+            <span class="material-symbols-outlined" style="font-size:14px" aria-hidden="true">edit</span>
             ${t('my_data_view')}
           </a>
         </div>
@@ -68,7 +68,7 @@ export async function renderMyDataPage(): Promise<void> {
   cards.push(`
     <a href="${makeUrl('/create-rule')}" class="rule-set-card create-rule-card">
       <div class="create-rule-icon">
-        <svg viewBox="0 0 24 24" width="32" height="32"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
+        <span class="material-symbols-outlined" style="font-size:32px" aria-hidden="true">add</span>
       </div>
       <h2>${t('custom_rules_btn_create')}</h2>
     </a>
@@ -82,9 +82,7 @@ export async function renderMyDataPage(): Promise<void> {
 
       <div class="rule-actions my-data-actions">
         <button id="btn-clear-all-data" class="action-btn" title="${t('my_data_clear_btn')}">
-          <svg class="trash-icon" viewBox="0 0 24 24" width="16" height="16">
-            <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/>
-          </svg>
+          <span class="material-symbols-outlined" style="font-size:16px" aria-hidden="true">delete</span>
           <span>${t('my_data_clear_btn')}</span>
         </button>
       </div>

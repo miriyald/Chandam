@@ -2,7 +2,9 @@
  * Resources page loader - loads JSON and renders resource groups and items
  */
 
+import { getLanguage } from "../i18n";
 import { getIconSVG, getIconNameForType } from "../utils/icon-helper";
+import { makeUrl } from "../utils/url-helpers";
 import { extractYouTubeVideoId, getYouTubeThumbnailUrl, isYouTubeUrl } from "../utils/youtube-helper";
 
 interface ResourceItem {
@@ -24,20 +26,21 @@ interface ResourcesData {
 }
 
 /**
- * Detects locale from window.location.pathname
+ * Resolves locale from the direct static page path or the active SPA language.
  */
-function detectLocale(): "en" | "te" {
+function resolveLocale(): "en" | "te" {
   const path = window.location.pathname;
-  if (path.includes("/te/")) return "te";
-  return "en";
+  if (path.includes("/pages/te/")) return "te";
+  if (path.includes("/pages/en/")) return "en";
+  return getLanguage();
 }
 
 /**
  * Loads resources JSON and renders the page
  */
 export async function loadResourcesPage(): Promise<void> {
-  const locale = detectLocale();
-  const jsonPath = `/pages/${locale}/resources.json`;
+  const locale = resolveLocale();
+  const jsonPath = makeUrl(`/pages/${locale}/resources.json`);
 
   try {
     const response = await fetch(jsonPath);
@@ -106,8 +109,13 @@ function renderTextCard(item: ResourceItem): string {
   const iconName = getIconNameForType(item.type);
   const icon = getIconSVG(iconName, 16);
 
+  const href = item.link ? resolveResourceLink(item.link) : null;
+  const linkAttributes = href
+    ? getLinkAttributes()
+    : "";
+
   const titleContent = item.link
-    ? `<a href="${item.link}" target="_blank" rel="noopener noreferrer">${item.text}</a>`
+    ? `<a href="${href}"${linkAttributes}>${item.text}</a>`
     : item.text;
 
   return `
@@ -121,11 +129,21 @@ function renderTextCard(item: ResourceItem): string {
   `;
 }
 
+function resolveResourceLink(link: string): string {
+  return link.startsWith("/") ? makeUrl(link) : link;
+}
+
+function getLinkAttributes(): string {
+  return ' target="_blank" rel="noopener noreferrer"';
+}
+
 /**
  * Renders a YouTube card with thumbnail and play badge
  */
 function renderYouTubeCard(item: ResourceItem): string {
   const videoId = extractYouTubeVideoId(item.link!);
+  const href = resolveResourceLink(item.link!);
+  const linkAttributes = getLinkAttributes();
 
   // If video ID can't be extracted, render as text card
   if (!videoId) {
@@ -146,7 +164,7 @@ function renderYouTubeCard(item: ResourceItem): string {
         <div class="youtube-play-badge">${playBadge}</div>
       </div>
       <h4>
-        <a href="${item.link}" target="_blank" rel="noopener noreferrer">${item.text}</a>
+        <a href="${href}"${linkAttributes}>${item.text}</a>
       </h4>
       <p>${item.description}</p>
     </article>

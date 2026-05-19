@@ -161,7 +161,7 @@ function renderLearnIndexPageHtml(
       <div class="page-header-controls">
         <h1>${ruleSetName}</h1>
         <button class="action-btn btn-export-book" data-action="export-book">
-          <svg viewBox="0 0 24 24" width="16" height="16"><path fill="currentColor" d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
+          <span class="material-symbols-outlined" style="font-size:16px" aria-hidden="true">download</span>
           <span>${t('export_book')}</span>
         </button>
         ${renderModeSwitcher({ ruleSetId, currentMode: 'learn' })}
@@ -184,7 +184,7 @@ function renderLearnIndexPageHtml(
           <div class="filter-actions">
             <span class="filter-result-count">${ruleCount !== allRulesCount ? `${t('filter_results')} (${ruleCount}/${allRulesCount})` : `${allRulesCount}`}</span>
             <button class="btn-clear-filters" data-action="clear-filters">
-              <svg viewBox="0 0 24 24" width="14" height="14"><path d="M16 11h-1V3c0-.55-.45-1-1-1h-4c-.55 0-1 .45-1 1v8H8c-1.1 0-2 .9-2 2v9h12v-9c0-1.1-.9-2-2-2zm-5-7.5h2v7.5h-2V3.5zM6 22v-1h12v1H6z"/></svg>
+              <span class="material-symbols-outlined" style="font-size:14px" aria-hidden="true">delete_sweep</span>
               ${t('editor_btn_clear')}
             </button>
           </div>
@@ -269,7 +269,7 @@ function renderRuleListItem(rule: RuleSummaryDetailed, ruleSetId: string, favori
   const isCustomRule = rule.identifier.startsWith('custom-');
   const deleteButton = isCustomRule
     ? `<a class="rule-action-icon btn-delete-inline" data-action="delete-rule" data-rule-id="${rule.identifier}" data-rule-name="${rule.name.replace(/"/g, '&quot;')}" title="${t('learn_btn_delete')}">
-        <svg viewBox="0 0 24 24" width="16" height="16"><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/></svg>
+        <span class="material-symbols-outlined" style="font-size:16px" aria-hidden="true">delete</span>
         ${t('learn_btn_delete')}
       </a>`
     : '';
@@ -281,11 +281,11 @@ function renderRuleListItem(rule: RuleSummaryDetailed, ruleSetId: string, favori
         ${aliasHtml}
         <div class="rule-item-actions">
           <a href="${makeUrl(`/learn/${effectiveRuleSetId}/${rule.identifier}`)}" class="rule-action-icon" title="${t('link_learn')}">
-            <svg viewBox="0 0 24 24" width="16" height="16"><path d="M21 5c-1.11-.35-2.33-.5-3.5-.5-1.95 0-4.05.4-5.5 1.5-1.45-1.1-3.55-1.5-5.5-1.5S2.45 4.9 1 6v14.65c0 .25.25.5.5.5.1 0 .15-.05.25-.05C3.1 20.45 5.05 20 6.5 20c1.95 0 4.05.4 5.5 1.5 1.35-.85 3.8-1.5 5.5-1.5 1.65 0 3.35.3 4.75 1.05.1.05.15.05.25.05.25 0 .5-.25.5-.5V6c-.6-.45-1.25-.75-2-1zM21 18.5c-1.1-.35-2.3-.5-3.5-.5-1.7 0-4.15.65-5.5 1.5V8c1.35-.85 3.8-1.5 5.5-1.5 1.2 0 2.4.15 3.5.5v11.5z"/></svg>
+            <span class="material-symbols-outlined" style="font-size:16px" aria-hidden="true">menu_book</span>
             ${t('link_learn')}
           </a>
           <a href="${makeUrl(`/compute/${effectiveRuleSetId}/${rule.identifier}`)}" class="rule-action-icon" title="${t('link_try')}">
-            <svg viewBox="0 0 24 24" width="16" height="16"><path d="M8 5v14l11-7z"/></svg>
+            <span class="material-symbols-outlined" style="font-size:16px" aria-hidden="true">play_arrow</span>
             ${t('link_try')}
           </a>
           ${deleteButton}

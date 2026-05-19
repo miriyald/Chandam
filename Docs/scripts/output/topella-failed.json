@@ -1,5 +1,5 @@
 {
-  "totalFailed": 437,
+  "totalFailed": 436,
   "failures": [
     {
       "id": 1,
@@ -3501,15 +3501,6 @@
       "bestIdentifier": "paddaTikaa",
       "scoreWithYatiPrasa": 88,
       "scoreWithoutYatiPrasa": 80
-    },
-    {
-      "id": 268,
-      "source": "434",
-      "meterName": "అవోఢా",
-      "poemText": "ఆంతర్యార్ధమ్మువై\nశాంతాకారమ్మువై\nభ్రాంతిర్లోకమ్ములన్\nసాంతమ్మౌ శ్రీపతీ",
-      "bestIdentifier": null,
-      "scoreWithYatiPrasa": 0,
-      "scoreWithoutYatiPrasa": 0
     },
     {
       "id": 282,

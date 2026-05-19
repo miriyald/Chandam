@@ -53,7 +53,7 @@ function renderLearnDetailPageHtml(
         <h1 class="meter-name">${ruleInfo.name}</h1>
         <div id="rule-actions-container"></div>
         <button id="btn-export-rule" class="action-btn btn-export-single">
-          <svg viewBox="0 0 24 24" width="16" height="16"><path fill="currentColor" d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
+          <span class="material-symbols-outlined" style="font-size:16px" aria-hidden="true">download</span>
           <span>${t('export_book_single')}</span>
         </button>
         ${renderModeSwitcher({ ruleSetId, ruleId: ruleInfo.identifier, currentMode: 'learn' })}
@@ -129,7 +129,7 @@ function renderExamples(
     return `
       <div class="example-card">
         <a href="${makeUrlWithParams(`/compute/${ruleSetId}/${ruleId}`, { example: exampleNumber })}" class="try-example-btn" title="${t('btn_try_example')}">
-          <svg viewBox="0 0 24 24" width="14" height="14"><path d="M8 5v14l11-7z"/></svg>
+          <span class="material-symbols-outlined" style="font-size:14px" aria-hidden="true">play_arrow</span>
           ${t('btn_try_example')}
         </a>
         <div class="example-poem-area">
@@ -149,7 +149,7 @@ function renderGeneratedCard(ruleSetId: string, ruleId: string): string {
   return `
     <div class="example-card">
       <button id="btn-regenerate" class="try-example-btn" title="${t('btn_regenerate')}">
-        <svg viewBox="0 0 24 24" width="14" height="14"><path fill="currentColor" d="M17.65 6.35A7.958 7.958 0 0012 4c-4.42 0-7.99 3.58-7.99 8s3.57 8 7.99 8c3.73 0 6.84-2.55 7.73-6h-2.08A5.99 5.99 0 0112 18c-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z"/></svg>
+        <span class="material-symbols-outlined" style="font-size:14px" aria-hidden="true">refresh</span>
         ${t('btn_regenerate')}
       </button>
       <div class="example-poem-area">
