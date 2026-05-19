@@ -428,39 +428,36 @@ footer a:focus-visible {
   opacity: 0;
 }
 
-/* Loader circles SVG */
+/* Chandam loader - 4 SVG circles cycling laghu/guru via transform+opacity (compositor thread) */
 .loader-svg {
   width: 128px;
-  height: 128px;
+  height: 48px;
   margin: 0;
   display: block;
 }
 
-/* Pulse animation for page-level loader circles */
 .loader-circle {
   transform-origin: center;
-  animation: pulse-circle 1.4s cubic-bezier(0.16, 1, 0.3, 1) infinite;
+  animation: chandam-pulse 2.4s cubic-bezier(0.4, 0, 0.2, 1) infinite;
 }
 
-.loader-circle:nth-child(2) {
-  animation-delay: 0.2s;
-}
+.loader-circle:nth-child(1) { animation-delay: 0s; }
+.loader-circle:nth-child(2) { animation-delay: 0.4s; }
+.loader-circle:nth-child(3) { animation-delay: 0.8s; }
+.loader-circle:nth-child(4) { animation-delay: 1.2s; }
 
-.loader-circle:nth-child(3) {
-  animation-delay: 0.4s;
-}
-
-@keyframes pulse-circle {
-
-  0%,
-  100% {
-    transform: scale(0.7);
+@keyframes chandam-pulse {
+  0%, 100% {
+    transform: scale(0.6);
     opacity: 0.4;
   }
-
-  50% {
-    transform: scale(1);
+  40% {
+    transform: scale(1.4);
     opacity: 1;
+  }
+  60% {
+    transform: scale(1.2);
+    opacity: 0.9;
   }
 }
 

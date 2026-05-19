@@ -626,7 +626,7 @@ const translations: Record<Language, Translations> = {
     label_prasa_rhyme: 'ప్రాస:',
 
     results_title: 'ఫలితాలు',
-    results_view_details: 'నియమ వివరాలు చూడండి ↗',
+    results_view_details: 'నియమాలు ↗',
     results_alternatives: 'ఇతర సాధ్యమైన సరిపోలికలు',
     results_line: 'పంక్తి',
     results_position: 'స్థానం',
