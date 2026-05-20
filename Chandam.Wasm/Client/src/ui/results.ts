@@ -91,11 +91,11 @@ function renderMatchCard(match: ChandamMatch, ruleSet?: string, showRuleLink = t
     : '';
 
   const exportBtn = (match.matchPercentage === 100 && match.beautified)
-    ? `<div class="export-dropdown">
+    ? `<div class="export-dropdown" data-rule-id="${escapeAttr(match.rule.identifier)}">
         <button class="action-btn btn-export" title="Export as Image"><span class="material-symbols-outlined" style="font-size:16px" aria-hidden="true">ios_share</span> <span>${t('results_export')}</span></button>
         <div class="export-dropdown-menu">
-          <button class="export-option" data-mode="poem">${t('results_export_poem')}</button>
-          <button class="export-option" data-mode="results">${t('results_export_results')}</button>
+          <button class="export-option" data-mode="poem"><span class="material-symbols-outlined" style="font-size:16px" aria-hidden="true">article</span> ${t('results_export_poem')}</button>
+          <button class="export-option" data-mode="results"><span class="material-symbols-outlined" style="font-size:16px" aria-hidden="true">dashboard</span> ${t('results_export_results')}</button>
         </div>
       </div>`
     : '';
@@ -341,9 +341,10 @@ async function handleExportImage(button: HTMLElement): Promise<void> {
   if (!matchCard) return;
 
   const meterName = matchCard.querySelector('.meter-name')?.textContent || 'poem';
+  const identifier = button.closest('.export-dropdown')?.getAttribute('data-rule-id') || 'unknown';
 
   const { exportAsImage } = await import('../utils/export-image');
-  await exportAsImage(matchCard, mode, meterName);
+  await exportAsImage(matchCard, mode, meterName, identifier);
 }
 
 // Render lightweight score cards for alternative matches

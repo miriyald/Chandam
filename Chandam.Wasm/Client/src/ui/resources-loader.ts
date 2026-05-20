@@ -60,7 +60,10 @@ function renderResources(groups: ResourceGroup[]): void {
   const nav = document.getElementById("resources-nav");
   if (nav) {
     nav.innerHTML = groups
-      .map((g) => `<a href="#${g.id}">${g.title}</a>`)
+      .map((g) => {
+        const href = makeUrl("/resources") + `#${g.id}`;
+        return `<a href="${href}">${g.title}</a>`;
+      })
       .join("");
   }
 

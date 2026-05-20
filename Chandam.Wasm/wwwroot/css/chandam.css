@@ -441,20 +441,35 @@ footer a:focus-visible {
   animation: chandam-pulse 2.4s cubic-bezier(0.4, 0, 0.2, 1) infinite;
 }
 
-.loader-circle:nth-child(1) { animation-delay: 0s; }
-.loader-circle:nth-child(2) { animation-delay: 0.4s; }
-.loader-circle:nth-child(3) { animation-delay: 0.8s; }
-.loader-circle:nth-child(4) { animation-delay: 1.2s; }
+.loader-circle:nth-child(1) {
+  animation-delay: 0s;
+}
+
+.loader-circle:nth-child(2) {
+  animation-delay: 0.4s;
+}
+
+.loader-circle:nth-child(3) {
+  animation-delay: 0.8s;
+}
+
+.loader-circle:nth-child(4) {
+  animation-delay: 1.2s;
+}
 
 @keyframes chandam-pulse {
-  0%, 100% {
+
+  0%,
+  100% {
     transform: scale(0.6);
     opacity: 0.4;
   }
+
   40% {
     transform: scale(1.4);
     opacity: 1;
   }
+
   60% {
     transform: scale(1.2);
     opacity: 0.9;
@@ -613,6 +628,7 @@ footer a:focus-visible {
   justify-content: space-between;
   align-items: center;
   gap: var(--space-md);
+  flex-wrap: wrap;
   margin-bottom: var(--space-md);
   padding-bottom: 0.75rem;
   border-bottom: 1px solid var(--color-divider);
@@ -622,7 +638,8 @@ footer a:focus-visible {
   display: flex;
   align-items: center;
   gap: 0.75rem;
-  flex: 1;
+  flex: 1 1 150px;
+  min-width: 0;
 }
 
 .match-icon {
@@ -649,6 +666,9 @@ footer a:focus-visible {
 .match-title-group .meter-name {
   margin: 0;
   font-size: 1.5rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 /* Rule Details Link (opens in new tab) */
@@ -2580,17 +2600,17 @@ footer a:focus-visible {
   }
 
   .match-header {
-    flex-direction: column;
-    align-items: flex-start;
     gap: 0.5rem;
   }
 
   .match-title-group {
-    width: 100%;
+    flex: 1 1 120px;
+    min-width: 0;
   }
 
   .match-title-group .meter-name {
     font-size: 1.25rem;
+    white-space: nowrap;
   }
 
   .match-score-bar {
@@ -2598,8 +2618,8 @@ footer a:focus-visible {
   }
 
   .match-actions {
-    width: 100%;
-    justify-content: stretch;
+    flex: 1 1 auto;
+    justify-content: flex-end;
   }
 
   .match-actions .action-btn {
@@ -3143,7 +3163,8 @@ footer a:focus-visible {
   border-radius: var(--radius-sm);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
   z-index: 10;
-  min-width: 140px;
+  min-width: 160px;
+  font-family: var(--font-main);
 }
 
 .export-dropdown.open .export-dropdown-menu {
@@ -3151,7 +3172,9 @@ footer a:focus-visible {
 }
 
 .export-option {
-  display: block;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
   width: 100%;
   padding: 0.5rem 0.75rem;
   text-align: left;
@@ -3159,6 +3182,7 @@ footer a:focus-visible {
   background: none;
   cursor: pointer;
   font-size: 0.85rem;
+  font-family: var(--font-main);
   color: var(--color-text);
 }
 
