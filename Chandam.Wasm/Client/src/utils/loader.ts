@@ -5,10 +5,11 @@ export interface LoaderConfig {
   containerId: string;
 }
 
-const LOADER_SVG = `<svg class="loader-svg" viewBox="0 0 96 48" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-  <circle class="loader-circle" cx="24" cy="24" r="10" fill="#1a3a5c"/>
+const LOADER_SVG = `<svg class="loader-svg" viewBox="0 0 128 48" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+  <circle class="loader-circle" cx="24" cy="24" r="7" fill="#1a3a5c"/>
   <circle class="loader-circle" cx="48" cy="24" r="10" fill="#b8860b"/>
-  <circle class="loader-circle" cx="72" cy="24" r="10" fill="#1a3a5c"/>
+  <circle class="loader-circle" cx="72" cy="24" r="7" fill="#1a3a5c"/>
+  <circle class="loader-circle" cx="96" cy="24" r="10" fill="#b8860b"/>
 </svg>`;
 
 export class LoadingAnimationManager {

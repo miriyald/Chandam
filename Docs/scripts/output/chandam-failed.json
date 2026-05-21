@@ -195,8 +195,8 @@
       "source": "707",
       "meterName": "మండలాకృతి",
       "poemText": "అంతరాత్మవౌ హరిహర రామా\nవింతశక్తివై విరిసిన ధీమా\nకొంతలాభమున్ కొసరు విధిన్ వే\nదాంతసారమున్ దయనిడు శౌరీ",
-      "bestIdentifier": "aMtaraakkara",
-      "scoreWithYatiPrasa": 88,
+      "bestIdentifier": "mutyaalasaramu",
+      "scoreWithYatiPrasa": 80,
       "scoreWithoutYatiPrasa": 84
     },
     {
@@ -601,7 +601,7 @@
       "meterName": "కందర్ప",
       "poemText": "కందర్ప దర్ప వాసుడ కారుణ్య శ్రీనివాసా !\nసందర్భ దర్భ ప్రాయపు సంచార కర్మరీతిన్\nడెందమ్ము నేలు మానస ఢీకోలు వాద్యమీవై\nనందమ్ము గూర్చుమా హరి నారాయణుండ శౌరీ !",
       "bestIdentifier": "aMtaraakkara",
-      "scoreWithYatiPrasa": 88,
+      "scoreWithYatiPrasa": 0,
       "scoreWithoutYatiPrasa": 80
     },
     {
@@ -853,7 +853,7 @@
       "meterName": "కీరలేఖా",
       "poemText": "తపన నిల్పు జాతక విలాసమాలన్\nజపములేలు శ్వాస గణ డోలికాళిన్ \nచపలతత్వ దోషయుత లోకమున్ గె\nల్చు పథమీయవే సుగుణ తేజ శౌరీ !",
       "bestIdentifier": "aMtaraakkara",
-      "scoreWithYatiPrasa": 88,
+      "scoreWithYatiPrasa": 0,
       "scoreWithoutYatiPrasa": 80
     },
     {
@@ -861,7 +861,7 @@
       "source": "707",
       "meterName": "అంబుజ",
       "poemText": "వేదన కతంబునను ప్రాపిత దుగ్ధన్\nకాదను మనస్సు గల శోక వనమ్మై\nరాదను మహత్తులకు లాలస పోటున్\nమేదిని నివాస నిలు నెమ్మిగ శౌరీ",
-      "bestIdentifier": "iMduvadana",
+      "bestIdentifier": "aMtaraakkara",
       "scoreWithYatiPrasa": 88,
       "scoreWithoutYatiPrasa": 84
     },
@@ -951,7 +951,7 @@
       "source": "707",
       "meterName": "సుమతి",
       "poemText": "గగనసీమలన్ గరుడ విహారా\nజగడపుంభువిన్ చతురత నీవై\nనెగడు కర్మలన్ నిలుపగ రా రా\nసుగమమీయరా !సులభుడ శౌరీ",
-      "bestIdentifier": "aMtaraakkara",
+      "bestIdentifier": "kusuma_vichitra",
       "scoreWithYatiPrasa": 88,
       "scoreWithoutYatiPrasa": 84
     },
@@ -1671,8 +1671,8 @@
       "source": "707",
       "meterName": "మదనమాలా",
       "poemText": "నవ సనాతనా నళిన నేత్రా\nకవన సారమా కదన శూరా\nదివిన దీపమా తిమిర హారా\nసువన ధామ! దాసుడను శౌరీ",
-      "bestIdentifier": "aMtaraakkara",
-      "scoreWithYatiPrasa": 88,
+      "bestIdentifier": "haMsagatiragaDa",
+      "scoreWithYatiPrasa": 80,
       "scoreWithoutYatiPrasa": 81
     },
     {
@@ -1986,7 +1986,7 @@
       "source": "707",
       "meterName": "నభో",
       "poemText": "తత్వము తెలుపు దైవ పథమ్మున్\nసాత్విక గుణము శక్తి నొసంగున్ \nనత్వము దునుము నైక జనుండై\nఋత్విజుడగును ఋక్ధము  శౌరీ",
-      "bestIdentifier": "aMtaraakkara",
+      "bestIdentifier": "svaagatavRttamu",
       "scoreWithYatiPrasa": 88,
       "scoreWithoutYatiPrasa": 81
     },
@@ -2418,8 +2418,8 @@
       "source": "707",
       "meterName": "దళ",
       "poemText": "నిర్ధయ కలిన్ కనికరమ్మునీవై\nమర్ధనలుజేయు మరుజన్మ కర్మన్\nవర్ధనమునిల్పి వరమీయరా మా\nదుర్ధశల మ్రోత తొలగించి శౌరీ",
-      "bestIdentifier": "aMtaraakkara",
-      "scoreWithYatiPrasa": 88,
+      "bestIdentifier": "madhuragatiragaDa",
+      "scoreWithYatiPrasa": 85,
       "scoreWithoutYatiPrasa": 81
     },
     {
@@ -2995,7 +2995,7 @@
       "meterName": "ఏలా",
       "poemText": "హరి రూపమున్ మెరయుచు నిలుచు హసిత విలాసా ! \nపరమార్ధమై తిరుమల గిరుల పరమ నివాసా !\nనర జీవితమ్మును గత వెతలన వగచు జీవిన్\nకరుణాలవాల !గనుమ తరళ గతినిడి శౌరీ !",
       "bestIdentifier": "aMtaraakkara",
-      "scoreWithYatiPrasa": 0,
+      "scoreWithYatiPrasa": 88,
       "scoreWithoutYatiPrasa": 80
     },
     {
@@ -3579,8 +3579,8 @@
       "source": "707",
       "meterName": "సింహపుచ్ఛం",
       "poemText": "నియోగమ్ములన్ పుణ్యమై నిత్య సౌభాగ్యమందన్\nవియోగమ్ములన్ వేదనల్ భీతినిన్ బాపు శక్తిన్   \nదయామూర్తివై శ్రీహరీ !  తత్త్వ  మార్గమ్ము జూపన్\nనయమ్మై జనానంద కందమ్ము నీవయ్య శౌరీ",
-      "bestIdentifier": "aMtaraakkara",
-      "scoreWithYatiPrasa": 88,
+      "bestIdentifier": "nanaya",
+      "scoreWithYatiPrasa": 86,
       "scoreWithoutYatiPrasa": 86
     },
     {
@@ -3687,8 +3687,8 @@
       "source": "707",
       "meterName": "కల్పాహారీ",
       "poemText": "తమకముల కలతల చెదరు ధైర్యమ్మే \nక్షమ గలిగిన సుగుణము గను శాంతమ్మౌ \nసమతలనలరు భువిని సరిగా సంతా\nపముల దునిమి దయగను !  పరమౌ శౌరీ",
-      "bestIdentifier": "kandam",
-      "scoreWithYatiPrasa": 82,
+      "bestIdentifier": "aMtaraakkara",
+      "scoreWithYatiPrasa": 88,
       "scoreWithoutYatiPrasa": 84
     },
     {
@@ -3696,8 +3696,8 @@
       "source": "707",
       "meterName": "మాల్యోపస్థం",
       "poemText": "మరులు గొలుపు గిరుల రమాకాంతా! శ్రీనాధా !\nవిరుల కొలువు నలరెడు వేల్పున్ వేదార్ధమ్మై\nవరముల వరదనిడుచు పద్మాక్షీశా  !లోకో\nత్తర విభవమున వెలుగు తారా !రక్షౌ !శౌరీ",
-      "bestIdentifier": "priyakaaMta",
-      "scoreWithYatiPrasa": 80,
+      "bestIdentifier": "aMtaraakkara",
+      "scoreWithYatiPrasa": 88,
       "scoreWithoutYatiPrasa": 80
     },
     {
@@ -3723,8 +3723,8 @@
       "source": "707",
       "meterName": "వలివదనం",
       "poemText": "బిళహరి రాగమ్మే నాదమ్మై విరియు రమేశా\nకళ కల జీవమ్మున్ తేజమ్మై గరుడ విహారా\nతళుకుల దేహమ్మున్ ప్రాణమ్మై దరిగన జేయన్  \nభళిర ! సదా శ్రీవాసమ్మున్ దీవన లిడు శౌరీ",
-      "bestIdentifier": "priyakaaMta",
-      "scoreWithYatiPrasa": 80,
+      "bestIdentifier": "aMtaraakkara",
+      "scoreWithYatiPrasa": 88,
       "scoreWithoutYatiPrasa": 80
     },
     {
@@ -3795,8 +3795,8 @@
       "source": "707",
       "meterName": "వేల్లితా",
       "poemText": "ప్రసవార్చిత రూప !వరదకర విన్యాసా ! సూ\nర్య సుధాకర నేత్ర !యదుకుల యశోదానందా ! \nవసుధాస్థలి దివ్య వన తిరుమలేశా శ్రీశా ! \nవసుదేవసుతా!  శుభకర వరద దాతా శౌరీ",
-      "bestIdentifier": null,
-      "scoreWithYatiPrasa": 0,
+      "bestIdentifier": "aMtaraakkara",
+      "scoreWithYatiPrasa": 70,
       "scoreWithoutYatiPrasa": 0
     },
     {
@@ -4875,7 +4875,7 @@
       "source": "434",
       "meterName": "అక్షరావలీ",
       "poemText": "వేదముల్ నిలువెల్ల మ్రోగు సం\nవేదమై వృషభాద్రి కొండ స\nప్తాది నిర్ఝరి భక్తి ద్వారమై\nమోదమున్నిడు ముక్తి శ్రీపతీ",
-      "bestIdentifier": "aMtaraakkara",
+      "bestIdentifier": "maNiraMgamu",
       "scoreWithYatiPrasa": 85,
       "scoreWithoutYatiPrasa": 81
     },
@@ -4902,8 +4902,8 @@
       "source": "434",
       "meterName": "వర్మితా",
       "poemText": "అంజనాద్రి శ్రీ హరి రామమై\nపంజరమ్ములౌ వర దేహముల్\nకుంజరమ్ములౌ కొస మోక్ష భూ\nమంజరమ్ములై మను శ్రీపతీ",
-      "bestIdentifier": "aMtaraakkara",
-      "scoreWithYatiPrasa": 88,
+      "bestIdentifier": "haMsagatiragaDa",
+      "scoreWithYatiPrasa": 80,
       "scoreWithoutYatiPrasa": 81
     },
     {
@@ -4947,7 +4947,7 @@
       "source": "434",
       "meterName": "గల్లకమ్",
       "poemText": "తిరుమల శిఖర తీర్ధమ్ము సా\nభరణ సొబగుల భాగ్యమ్ము వే\nద రుణ గరిమల దంతిన్ జరా\nమరల నిడు నభమౌ శ్రీపతీ",
-      "bestIdentifier": "aMtaraakkara",
+      "bestIdentifier": "pRdhivi",
       "scoreWithYatiPrasa": 88,
       "scoreWithoutYatiPrasa": 80
     },
@@ -4974,7 +4974,7 @@
       "source": "434",
       "meterName": "వనమాలి",
       "poemText": "అమలకాంతుడ హాస ముద్రుడా\nవిమలభాస్కర వేద సుందరా\nకమలలోచన గమ్యమీవు జీ\nవముల విశ్వనివాస శ్రీపతీ",
-      "bestIdentifier": "aMtaraakkara",
+      "bestIdentifier": "bhadrika",
       "scoreWithYatiPrasa": 88,
       "scoreWithoutYatiPrasa": 81
     },
@@ -5001,8 +5001,8 @@
       "source": "434",
       "meterName": "భుజగహారిణీ",
       "poemText": "అఖిలలోక నాయకుడా! భువిన్\nశిఖర సూరివై చిరు శిల్పమై\nమఖహరా జరా మయ జన్మలౌ\nశిఖను త్రెంచు వాసిగ శ్రీపతీ",
-      "bestIdentifier": "aMtaraakkara",
-      "scoreWithYatiPrasa": 88,
+      "bestIdentifier": "haMsagatiragaDa",
+      "scoreWithYatiPrasa": 82,
       "scoreWithoutYatiPrasa": 81
     },
     {
@@ -5154,8 +5154,8 @@
       "source": "434",
       "meterName": "సుక్షమా",
       "poemText": "అణువణువున సాయమ్మై సచేతనై\nగుణ వితరణలన్ గోవిందమై తమో\nగుణ తపనగిరుల్ గోపాలమై యశో\nరుణముల సిరివౌ లోకాత్మ శ్రీపతీ",
-      "bestIdentifier": "aMtaraakkara",
-      "scoreWithYatiPrasa": 88,
+      "bestIdentifier": "taeTageeti",
+      "scoreWithYatiPrasa": 0,
       "scoreWithoutYatiPrasa": 84
     },
     {
@@ -5254,7 +5254,7 @@
       "meterName": "ప్రేయ",
       "poemText": "దర్శన సౌభాగ్య సంధాన విధానమ్ము సం\nదర్శనమందాడు భూతాత్మల ధారాళ ది\nగ్ధర్శన చిత్రించు లోకాంతర విశ్వాత్మ పెన్\nస్పర్శగ భావాత్మ గోపాలుడవౌ శ్రీపతీ",
       "bestIdentifier": "aMtaraakkara",
-      "scoreWithYatiPrasa": 88,
+      "scoreWithYatiPrasa": 0,
       "scoreWithoutYatiPrasa": 80
     },
     {
@@ -5488,7 +5488,7 @@
       "meterName": "మదన మాలికా",
       "poemText": "అభయ హస్తమున్నడరు యంత్ర శిల్పమ్మువై\nవిభవ పూల మాలలన వేద కల్పమ్మువై\nశుభద నాదమున్ కలిమి సుప్రభాతమ్ములన్\nప్రభు నిరంజనాత్మగ సురాగమౌ శ్రీపతీ",
       "bestIdentifier": "aMtaraakkara",
-      "scoreWithYatiPrasa": 0,
+      "scoreWithYatiPrasa": 88,
       "scoreWithoutYatiPrasa": 80
     },
     {
@@ -5596,7 +5596,7 @@
       "meterName": "అరుణశ్రీ",
       "poemText": "బ్రహ్మోత్సవ విహారమ్ము రథముల సందోహమున్ \nబ్రహ్మాండమున పొంగారు లయ నవ విన్యాసమున్ \nబ్రహ్మాదుల ముదమ్మై వర తిరుమలన్ వేడుకై\nబ్రహ్మాక్షర నినాదమ్ము రసమయమౌ శ్రీపతీ",
       "bestIdentifier": "aMtaraakkara",
-      "scoreWithYatiPrasa": 88,
+      "scoreWithYatiPrasa": 82,
       "scoreWithoutYatiPrasa": 80
     },
     {
@@ -5632,7 +5632,7 @@
       "meterName": "కోమలలతా",
       "poemText": "వైకుంఠమ్మున్ శ్రీకరమువై వైవిధ్య నారాయణా !\nభూకైలాసమ్మున్ శివుడవై పూజార్చనల్ రుద్రమా  !\nప్రాకారమ్మున్ వేదసిరివై బంగారు విష్ణాత్మవై\nసాకారమ్మౌ కర్మ వరదన్ చైతన్యమౌ శ్రీపతీ",
       "bestIdentifier": "aMtaraakkara",
-      "scoreWithYatiPrasa": 88,
+      "scoreWithYatiPrasa": 0,
       "scoreWithoutYatiPrasa": 80
     },
     {
@@ -6324,7 +6324,7 @@
       "source": "434",
       "meterName": "ప్రభాత/పభా శ్రవణప్రియ",
       "poemText": "ఉదయకిరణ మయుడివై ప్రభన్\nహృదయ తిరుమల కృపవై జగ\nద్విదులు గనని భవిక లోకమున్\nకదులు వరమిడి గను శ్రీపతీ",
-      "bestIdentifier": "aMtaraakkara",
+      "bestIdentifier": "prabha",
       "scoreWithYatiPrasa": 88,
       "scoreWithoutYatiPrasa": 81
     },
@@ -6414,8 +6414,8 @@
       "source": "434",
       "meterName": "పరిపుంఖితా",
       "poemText": "క్షీర సాగర చిద్విలాస విష్ణుమూ\nర్తీ రమాపతి తీర్ధ శ్రీనివాసుడా !\nధీర మాధవ దివ్య చింతదీర్చు శ్రీ\nశా రమేశ నిజాంతరంగ శ్రీపతీ",
-      "bestIdentifier": "aMtaraakkara",
-      "scoreWithYatiPrasa": 88,
+      "bestIdentifier": "dviradagatiragaDa",
+      "scoreWithYatiPrasa": 0,
       "scoreWithoutYatiPrasa": 81
     },
     {
@@ -6595,7 +6595,7 @@
       "meterName": "లలితకేసర / సుకేసర / ఇందిరా",
       "poemText": "జ్వలిత యోగ పావన వియోగ జన్మలన్\nలలిత రాగ తీరముల నాదమోదమున్\nకలిత కల్ప వ్యాకరణ జీవనార్దులన్\nకలిమివై విరాగములనేలు శ్రీపతీ",
       "bestIdentifier": "aMtaraakkara",
-      "scoreWithYatiPrasa": 88,
+      "scoreWithYatiPrasa": 0,
       "scoreWithoutYatiPrasa": 80
     },
     {
@@ -6684,8 +6684,8 @@
       "source": "434",
       "meterName": "సారిణీ",
       "poemText": "ఊయలూపెడి విలాపమున్ యుగ విశోకమున్\nమాయనాగని సజీవమున్ మసలు మైకమున్\nసాయమౌచు జగధీశమై సమర కృష్ణమై\nధ్యేయమున్ నిలుపు విష్ణువున్ తెలచు శ్రీపతీ",
-      "bestIdentifier": "dviradagatiragaDa",
-      "scoreWithYatiPrasa": 80,
+      "bestIdentifier": "aMtaraakkara",
+      "scoreWithYatiPrasa": 88,
       "scoreWithoutYatiPrasa": 81
     },
     {
@@ -6730,7 +6730,7 @@
       "meterName": "భారాక్రాంతా",
       "poemText": "బ్రహ్మోత్సాహమ్ము పుడమిన రంగరించెడి వేడుకల్\nబ్రహ్మోత్తేజమ్ము నలుదిశలా విరాజిలు పబ్బముల్\nబ్రహ్మాండమ్మున్ కలిపెడు పరాత్పరాత్మ విహారముల్\nబ్రహ్మాదుల్ చేరి కొలుచెడు రమ్య సేవగ శ్రీపతీ",
       "bestIdentifier": "aMtaraakkara",
-      "scoreWithYatiPrasa": 88,
+      "scoreWithYatiPrasa": 82,
       "scoreWithoutYatiPrasa": 80
     },
     {
@@ -6739,7 +6739,7 @@
       "meterName": "కాంతా",
       "poemText": "అలంకారమ్ముల తెలచు వాహనమ్ముల సారధీ\nశిలాజాలౌ జన గుణములన్ చిదాత్మగ నిల్పువై\nకలౌ నారాయణ గిరుల సాగరాంబర వేల్పువై\nబలమ్మై గుండెన కలిమివై వశించుమ శ్రీపతీ !",
       "bestIdentifier": "aMtaraakkara",
-      "scoreWithYatiPrasa": 82,
+      "scoreWithYatiPrasa": 0,
       "scoreWithoutYatiPrasa": 80
     },
     {
@@ -7387,7 +7387,7 @@
       "meterName": "గుణమాలాధరా",
       "poemText": "మంగళ కాంతుల చందన రాముడ మాధవ కేశవ రుద్రుడ సత్యాక్షుడా !\nమంగ సమేతుడ చంచల వల్లభ మార్దవ లోక విలాసుడ పద్మాక్షుడా !\nశృంగ ముకుందుడ ధర్ముడ శర్వుడ కృష్ణుడ  సప్త గిరీశుడ ధర్మాక్షుడా !\nనింగి సువర్ణుడ నందుడ విశ్వుడ నిత్య సుహాస నివాసుడవౌ శ్రీపతీ !\nనమో వేంకటేశాయనమః\nచతుశ్శతి\n సమాప్తం\nకవి పరిచయం\nవేంకట శ్రీరామ్ కుమార్  వేగరాజు, రాజమండ్రి లో జన్మించి విశాఖపట్నం లో ఉన్నత విద్యనభ్యసించారు. హైదరాబాద్  మద్రాసు లలో 1990 దశకం చివరలో కంప్యూటర్ నిపుణునిగా  పని ప్రారంభించి 2000 నాటికి అమెరికా లొ కాలుపెట్టి ప్రస్థుతం సియాటేల్ లో స్థిరపడ్డారు. వృత్తి పరంగా ఒరాకిల్ కంపెనీ లో సీనియర్ ఇంజినీరింగ్ డైరెక్టర్ గా పనిచేస్తున్నారు.\nతిరుమల వేంకటేశ్వరస్వామికి భక్తుడు. దాదాపు 2200 పైన గద్యములో కీర్తనలు రచించారు. కీర్తనా స్టూడియో ద్వారా శ్రీనేమాని పార్ధసారధి మ్యూజిక్ పర్యవేక్షణ లో శ్రీ SP బాలసుబ్రమణ్యం గారు పాడిన కొన్ని సీడిలను రీలీజ్ చేశారు. “విజయీభవ వేంకటేశా” మరియు “నీ చూపులే చాలు” మొదలగునవి. తదుపరి సినిమా రంగం లో  దర్శకత్వ బాధ్యతలు చేపట్టి “డిస్టెంట్ బీట్స్” (2011), “ఓరి దేవుడోయ్” (2015) అన్న సినిమాలు తీసారు. “ఫొర్సడ్ ఆర్ఫన్స్” (2019) అన్న ఇంగ్లీషు సినిమాకి కధని అందించారు.\nసాహిత్యం మీద మక్కువ తో మొదటిప్రయత్నంగా గురువుగారు ‘పద్య శిక్షక శిరోమణి’ బ్రహ్మశ్రీ కొల్లారపు ప్రకాశరావు శర్మ గారి ప్రోద్బలముతో పద్య సాహిత్యం నేర్చుకుని,  ‘ఛందశ్శాస్త్ర రత్నాకర’ బ్రహ్మశ్రీ తోపెల్ల బాలసుబ్రహ్మణ్య శర్మ గారి దగ్గర అనంతఛందస్సౌరభ రీతుల అభ్యసించి,  “తిరుమలేశ తేటగీతి”, “శ్రీనివాసు మాట – సిరులబాట”, ”శ్రీధర సుందర వేంకటేశ్వరా”, “లోక సంకటహరా! వేంకటాద్రీశ్వరా”, “తిరుమల శ్రీనివాసుని సీస పద్యమాల”  శతకాలతో తో పాటు వివిధ ఛందో రీతుల తో ఈ  “శ్రీపతీ” అని చతుశ్శతి రచించటం జరిగింది. ఈ ప్రయత్నం వెనుక ప్రత్యక్షంగా మరియు పరోక్షంగా సహకరించిన సహృదయులకు సాహీతి మిత్రులకు వందనాలు సమర్పించు కుంటూ,  ఎందరో మహానుభావులు – అందరికి వందనాలు.\nసర్వేజనా సుఖినోభవంతు",
       "bestIdentifier": "seesaM2",
-      "scoreWithYatiPrasa": 59,
+      "scoreWithYatiPrasa": 57,
       "scoreWithoutYatiPrasa": 57
     }
   ]

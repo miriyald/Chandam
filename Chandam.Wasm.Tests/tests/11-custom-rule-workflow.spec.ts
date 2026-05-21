@@ -37,6 +37,8 @@ async function clearStorageState(page: Page): Promise<void> {
   });
 
   // Reload so Blazor re-initializes from a clean slate.
+  // Without this, wiping IndexedDB while Blazor is live can leave the app
+  // in a corrupted in-memory state that causes button clicks to silently fail.
   await page.reload();
   await waitForWasmReady(page);
 }
@@ -50,9 +52,6 @@ async function createCustomRuleAndNavigate(
   name: string,
 ): Promise<string> {
   await gotoAndWait(page, '/create-rule');
-
-  // Ensure the form is fully interactive before filling
-  await page.locator('#rule-name').waitFor({ state: 'visible' });
   await page.locator('#rule-name').fill(name);
 
   const createBtn = page.locator('#create-rule-btn');
@@ -60,22 +59,11 @@ async function createCustomRuleAndNavigate(
   await expect(createBtn).toBeEnabled();
   await createBtn.scrollIntoViewIfNeeded();
 
-  // Wait for event handlers to be attached (gana dropdown must be populated)
-  await expect(page.locator('.gana-select').first()).toBeVisible({ timeout: 5_000 });
+  await createBtn.click({ force: true });
 
-  // Click create and wait for navigation. Retry click if page doesn't navigate
-  // (WASM async handler may not be ready on first click attempt).
-  const targetPattern = /\/learn\/custom-rules\/custom-\d+\/?$/;
-  for (let attempt = 0; attempt < 3; attempt++) {
-    await createBtn.click();
-    try {
-      await expect(page).toHaveURL(targetPattern, { timeout: 8_000 });
-      break;
-    } catch {
-      if (attempt === 2) throw new Error('Create rule did not navigate after 3 attempts');
-      await page.waitForTimeout(1_000);
-    }
-  }
+  await expect(page).toHaveURL(/\/learn\/custom-rules\/custom-\d+\/?$/, {
+    timeout: 15_000,
+  });
 
   return page.url().split('/').filter(Boolean).pop() ?? '';
 }
@@ -87,12 +75,13 @@ test.describe('Custom rule creator workflow', () => {
 
   test('shows validation message when rule name is missing', async ({ page }) => {
     await gotoAndWait(page, '/create-rule');
-
     await page.locator('#create-rule-btn').click();
 
-    // App shows a warning toast for validation errors
-    const warningToast = page.locator('#toast-container .toast-warning');
+    const warningToast = page.locator('#toast-container .toast.toast-warning').first();
     await expect(warningToast).toBeVisible({ timeout: 5_000 });
+    const validationMessages = warningToast.locator('.toast-list li');
+    await expect(validationMessages.first()).toBeVisible({ timeout: 5_000 });
+    expect(await validationMessages.count()).toBeGreaterThan(0);
   });
 
   test('creates a custom rule, lists it, then deletes it', async ({ page }) => {
@@ -194,6 +183,9 @@ test.describe('Custom rule – compute and persistence', () => {
     // Wait for analysis to complete (results section becomes visible OR stays hidden if no match)
     // The key assertion is that no JS error occurs
     await page.waitForTimeout(2_000);
+    const errors = await page.evaluate(() => {
+      return (window as any).__playwrightErrors ?? [];
+    });
     // Page should remain functional -- editor still visible
     await expect(page.locator('#poem-editor')).toBeVisible();
 
