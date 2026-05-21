@@ -59,12 +59,7 @@ async function createCustomRuleAndNavigate(
   await expect(createBtn).toBeEnabled();
   await createBtn.scrollIntoViewIfNeeded();
 
-  const dialogPromise = page.waitForEvent('dialog', { timeout: 15_000 });
   await createBtn.click({ force: true });
-
-  const dialog = await dialogPromise;
-  expect(dialog.message().trim().length).toBeGreaterThan(0);
-  await dialog.accept();
 
   await expect(page).toHaveURL(/\/learn\/custom-rules\/custom-\d+\/?$/, {
     timeout: 15_000,
@@ -80,17 +75,13 @@ test.describe('Custom rule creator workflow', () => {
 
   test('shows validation message when rule name is missing', async ({ page }) => {
     await gotoAndWait(page, '/create-rule');
-
-    let dialogMessage = '';
-    page.once('dialog', async (dialog) => {
-      dialogMessage = dialog.message();
-      await dialog.accept();
-    });
-
     await page.locator('#create-rule-btn').click();
-    await expect
-      .poll(() => dialogMessage, { timeout: 5_000 })
-      .not.toEqual('');
+
+    const warningToast = page.locator('#toast-container .toast.toast-warning').first();
+    await expect(warningToast).toBeVisible({ timeout: 5_000 });
+    const validationMessages = warningToast.locator('.toast-list li');
+    await expect(validationMessages.first()).toBeVisible({ timeout: 5_000 });
+    expect(await validationMessages.count()).toBeGreaterThan(0);
   });
 
   test('creates a custom rule, lists it, then deletes it', async ({ page }) => {
