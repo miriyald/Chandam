@@ -48,6 +48,7 @@ namespace Verifier
 					"topella" => GenerateTopellaOnly(options),
 					"sanskrit" or "sans" => GenerateSanskritOnly(options),
 					"convert" or "yaml2json" => ConvertYamlToJson(options),
+					"cheatsheet" or "cheat" or "sheets" => GenerateCheatSheetsCmd(options),
 					"help" or "--help" or "-h" or "/?" => ShowHelp(),
 					_ => ShowUnknownCommand(command)
 				};
@@ -127,6 +128,22 @@ namespace Verifier
 		}
 
 		/// <summary>
+		/// Generate one standalone HTML cheat sheet per rule set
+		/// </summary>
+		static int GenerateCheatSheetsCmd(string[] options)
+		{
+			Console.WriteLine("=== Generating Per-Rule-Set CheatSheets ===\n");
+
+			var outputDir = options.Length > 0 ? options[0] : @"Docs\cheatsheets";
+			var rulesDir = options.Length > 1 ? options[1] : @"Chandam.Config\Rules";
+
+			new GenerateCheatSheets(outputDir, rulesDir).GenerateAll();
+
+			Console.WriteLine("\n=== CheatSheet Generation Complete ===");
+			return 0;
+		}
+
+		/// <summary>
 		/// Show help/usage information
 		/// </summary>
 		static int ShowHelp()
@@ -150,6 +167,10 @@ namespace Verifier
 			Console.WriteLine("  convert, yaml2json     Convert YAML files to JSON");
 			Console.WriteLine("                         Usage: convert [input-dir] [output-dir]");
 			Console.WriteLine("                         Default: Chandam.Config\\Rules\n");
+			Console.WriteLine("  cheatsheet, cheat      Generate one standalone HTML cheat sheet per rule set");
+			Console.WriteLine("                         (chandam, topella, sanskrit) + index.html");
+			Console.WriteLine("                         Usage: cheatsheet [output-dir] [rules-dir]");
+			Console.WriteLine("                         Default: Docs\\cheatsheets  Chandam.Config\\Rules\n");
 			Console.WriteLine("  help, --help, -h, /?   Show this help message\n");
 			Console.WriteLine("Examples:");
 			Console.WriteLine("  Chandam.Tasks gen");

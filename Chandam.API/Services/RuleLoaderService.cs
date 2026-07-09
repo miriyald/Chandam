@@ -27,7 +27,7 @@ public class RuleLoaderService
     private readonly Dictionary<string, Dictionary<string, List<int>>> _chandamNameIndex = new();   // ChandamName -> array indexes (for Vruttam)
     private readonly Dictionary<string, Dictionary<string, List<int>>> _nameIndex = new();          // Telugu name -> array indexes
 
-    private static readonly string[] KnownRuleSets = ["chandam", "topella", "sanskrit"];
+    private static readonly string[] KnownRuleSets = ["chandam", "topella", "sanskrit", "jkmr"];
 
     private string _currentRuleSetId = "default";
     private string _rulesDirectory = "Chandam.Config/Rules";

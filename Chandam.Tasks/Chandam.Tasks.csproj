@@ -27,6 +27,8 @@
   <ItemGroup>
     <PackageReference Include="System.Text.Json" Version="9.0.1" />
     <PackageReference Include="YamlDotNet" Version="16.2.1" />
+    <PackageReference Include="ClosedXml" Version="0.105.0" />
+  
   </ItemGroup>
 
   <ItemGroup>
