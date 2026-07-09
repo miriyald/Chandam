@@ -185,7 +185,6 @@ namespace Chandam.Rules
 				row = row + "<th" + (fixedWidth ? " style=\"text-align:center\"" : "") + ">పేరు</th>";
 				row = row + "<th" + (fixedWidth ? " width=\"5%\" style=\"text-align:center\"" : "") + "><nobr>పాదాక్షరాల సంఖ్య</nobr></th>";
 				row = row + "<th" + (fixedWidth ? " width=\"3%\" style=\"text-align:center\"" : "") + "><nobr>మాత్రలు</nobr></th>";
-				row = row + "<th" + (fixedWidth ? " width=\"5%\" style=\"text-align:center\"" : "") + "><nobr>మాత్రా శ్రేణులు</nobr></th>";
 				row = row + "<th" + (fixedWidth ? " width=\"5%\" style=\"text-align:center\"" : "") + ">ఛందం</th>";
 				row = row + "<th" + (fixedWidth ? " width=\"3%\" style=\"text-align:center\"" : "") + ">ఎన్నోవ వృత్తం</th>";
 				row = row + "<th" + (fixedWidth ? " width=\"6%\" style=\"text-align:center\"" : "") + ">స్వభావం</th>";
@@ -195,6 +194,8 @@ namespace Chandam.Rules
 				row = row + "<th" + (fixedWidth ? " width=\"3%\" style=\"text-align:center\"" : "") + "><nobr>ప్రాస యతి</nobr></th>";
 				row = row + "<th" + (fixedWidth ? " width=\"7%\" style=\"text-align:center\"" : "") + ">యతి మైత్రి</th>";
 				row = row + "<th style=\"text-align:center\">లక్షణాలు(గణ )</th>";
+				row = row + "<th style=\"text-align:center\"><nobr>గణ శ్రేణి</nobr></th>";
+				row = row + "<th" + (fixedWidth ? " width=\"5%\" style=\"text-align:center\"" : "") + "><nobr>మాత్రా శ్రేణులు</nobr></th>";
 				row = row + "<th style=\"text-align:center\">ఉదాహరణ</th>";
 
 				if (extended)
@@ -234,7 +235,6 @@ namespace Chandam.Rules
 				row = row + "<td>" + ruleName + "</td>";
 				row = row + "<td>" + l + "</td>";
 				row = row + "<td>" + ml + "</td>";
-				row = row + "<td>" + mlSeries + "</td>";
 
 				row = row + "<td>" + cName + "</td>";
 				row = row + "<td>" + cNumber + "</td>";
@@ -251,8 +251,10 @@ namespace Chandam.Rules
 				row = row + "<td>" + (R.PrasaYati ? "కలదు" : "") + "</td>";
 				row = row + "<td>" + GetYatiRules(R.Rules, R.Yati, R.YatiMode, R.ReverseYati) + "</td>";
 				row = row + "<td>" + GetRules(R.Rules, R.RuleType, R.InfiniteLength, R.RowWiseRules) + "</td>";
+				row = row + "<td><nobr>" + ColorFul(R.Sequence) + "</nobr></td>";
+				row = row + "<td>" + mlSeries + "</td>";
 				//row = row + "<td>" + ( R.Examples.Length > 0 ?   R.Examples[0].Replace ( "\n" , "<br/>" ) : "" ) + "</td>";
-				row = row + "<td>" + (R.Examples2.Length > 0 ? TryMatch(R.Examples2[0].Text, R) : "") + "</td>";
+				row = row + "<td>" + (R.Examples2 != null && R.Examples2.Length > 0 ? TryMatch(R.Examples2[0].Text, R) : "") + "</td>";
 
 				if (extended)
 				{
@@ -270,6 +272,10 @@ namespace Chandam.Rules
 		private static string GetYatiRules(object[][] Rules, int[][] Yati, YatiMode Mode, bool ReverseYati)
 		{
 			string s = "";
+			if (Rules == null || Yati == null)
+			{
+				return s;
+			}
 			if (Yati.Length == Rules.Length && Yati.Length > 1)
 			{
 				for (int i = 0; i < Yati.Length; i++)
@@ -362,6 +368,10 @@ namespace Chandam.Rules
 		private static string GetRules(object[][] Rules, RuleType RuleType, bool infiniteLength, bool RowWiseRules)
 		{
 			string s = "";
+			if (Rules == null || Rules.Length == 0)
+			{
+				return s;
+			}
 			if (RowWiseRules && Rules.Length != 1)
 			{
 				s = s + "<ol  class='rules'>";

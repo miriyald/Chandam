@@ -314,7 +314,7 @@ namespace Chandam.Rules
 		{
 			get
 			{
-				return (this.Rules.Length == this.Lines && this.Lines != 1);
+				return (this.Rules != null && this.Rules.Length == this.Lines && this.Lines != 1);
 			}
 		}
 		public bool Prasa

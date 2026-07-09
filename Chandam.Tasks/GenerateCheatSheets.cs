@@ -44,9 +44,6 @@ namespace Verifier
 			( "jkmr",     "జెజ్జాల కృష్ణ మోహన రావు సేకరణ" ),
 		};
 
-		/// <summary>Header for the extra gaNa laghu/guru sequence column (populated for Vruttams).</summary>
-		private const string GanaColumnHeader = "గణ శ్రేణి";
-
 		public GenerateCheatSheets(string outputDirectory, string rulesDirectory)
 		{
 			_outputDirectory = outputDirectory;
@@ -107,105 +104,55 @@ namespace Verifier
 			// Order short meters first, matching the legacy cheat sheet layout.
 			Rule[] sorted = SortHelper.SortByCharLength(rules);
 
-			// The legacy BuildCheatSheet2 assumes non-null Rules/Yati. DTO-loaded rules whose
-			// gaNa 'rules:' block is empty come through with null Rules — normalize so a single
-			// under-specified rule doesn't abort the whole file. (The app itself does not use
-			// BuildCheatSheet2, so such rules still load fine there.)
-			NormalizeForRendering(id, sorted);
-
-			// Build the standard table, then inject the gaNa laghu/guru sequence column.
-			string table = InjectGanaColumn(CheatSheet.BuildCheatSheet2(false, true, sorted), sorted);
+			// CheatSheet.BuildCheatSheet2 now emits the గణ శ్రేణి column, the desired column order
+			// (rules | gaNa sequence | matra sequence | example), and is null-safe for DTO-loaded
+			// rules — so we render it directly and parse it for Excel.
+			string table = CheatSheet.BuildCheatSheet2(false, true, sorted);
 
 			WriteFile(id, name, table, sorted.Length);
 
-			// Excel sheet: reuse the exact same table content (incl. the new column) as plain text.
+			// Excel sheet: same columns/order as the HTML table, as plain text.
 			AddWorksheet(workbook, id, ParseTable(table));
 
 			return sorted.Length;
 		}
 
-		/// <summary>
-		/// Ensure every rule has non-null Rules/Yati arrays so the legacy renderer doesn't NRE.
-		/// Warns (once per rule) about rules with no gaNa rules defined.
-		/// </summary>
-		private static void NormalizeForRendering(string id, Rule[] rules)
-		{
-			foreach (Rule r in rules)
-			{
-				if (r.Rules == null)
-				{
-					r.Rules = new object[][] { Array.Empty<object>() };
-					Console.ForegroundColor = ConsoleColor.Yellow;
-					Console.WriteLine($"  ! {id}: rule '{r.Identifier}' has no గణ rules — rendering a blank row");
-					Console.ResetColor();
-				}
-				if (r.Yati == null)
-				{
-					r.Yati = Array.Empty<int[]>();
-				}
-			}
-		}
-
-		// -------------------------------------------------------------------------------------
-		// gaNa sequence column
-		// -------------------------------------------------------------------------------------
-
-		/// <summary>
-		/// Append a "గణ శ్రేణి" column (laghu/guru sequence, e.g. "I I I - I I I") to the generated
-		/// cheat-sheet table. Populated for Vruttams (Rule.Sequence); empty for other rules.
-		/// Row order matches the Rules array passed to BuildCheatSheet2.
-		/// </summary>
-		private static string InjectGanaColumn(string table, Rule[] rules)
-		{
-			// Header: add the column before the end of the header row.
-			table = table.Replace(
-				"</tr></thead>",
-				"<th style=\"text-align:center\">" + GanaColumnHeader + "</th></tr></thead>");
-
-			int tb = table.IndexOf("<tbody>", StringComparison.Ordinal);
-			int te = table.IndexOf("</tbody>", StringComparison.Ordinal);
-			if (tb < 0 || te < 0)
-			{
-				return table;
-			}
-
-			int bodyStart = tb + "<tbody>".Length;
-			string pre = table.Substring(0, bodyStart);
-			string body = table.Substring(bodyStart, te - bodyStart);
-			string post = table.Substring(te);
-
-			var sb = new StringBuilder();
-			string[] rowParts = body.Split(new[] { "</tr>\n" }, StringSplitOptions.None);
-			int idx = 0;
-			foreach (string part in rowParts)
-			{
-				if (part.Trim().Length == 0)
-				{
-					continue;
-				}
-				string cell = idx < rules.Length ? ColorFul(rules[idx].Sequence) : "";
-				sb.Append(part).Append("<td><nobr>").Append(cell).Append("</nobr></td></tr>\n");
-				idx++;
-			}
-
-			return pre + sb + post;
-		}
-
-		/// <summary>Render a laghu/guru sequence with coloured spans (mirrors CheatSheet.ColorFul).</summary>
-		private static string ColorFul(string sequence)
-		{
-			if (string.IsNullOrEmpty(sequence))
-			{
-				return "";
-			}
-			return sequence
-				.Replace("|", " <span class='laghu'>I</span> ")
-				.Replace("U", " <span class='guru'>U</span> ");
-		}
-
 		// -------------------------------------------------------------------------------------
 		// Excel
 		// -------------------------------------------------------------------------------------
+
+		/// <summary>Parse a cheat-sheet HTML table into rows of plain-text cells (header first).</summary>
+		private static List<string[]> ParseTable(string tableHtml)
+		{
+			var rows = new List<string[]>();
+
+			var thead = Regex.Match(tableHtml, "<thead>(.*?)</thead>", RegexOptions.Singleline);
+			if (thead.Success)
+			{
+				rows.Add(ExtractCells(thead.Groups[1].Value, "th"));
+			}
+
+			var tbody = Regex.Match(tableHtml, "<tbody>(.*?)</tbody>", RegexOptions.Singleline);
+			if (tbody.Success)
+			{
+				foreach (Match tr in Regex.Matches(tbody.Groups[1].Value, "<tr>(.*?)</tr>", RegexOptions.Singleline))
+				{
+					rows.Add(ExtractCells(tr.Groups[1].Value, "td"));
+				}
+			}
+
+			return rows;
+		}
+
+		private static string[] ExtractCells(string rowHtml, string tag)
+		{
+			var cells = new List<string>();
+			foreach (Match m in Regex.Matches(rowHtml, "<" + tag + "\\b[^>]*>(.*?)</" + tag + ">", RegexOptions.Singleline))
+			{
+				cells.Add(HtmlToText(m.Groups[1].Value));
+			}
+			return cells.ToArray();
+		}
 
 		/// <summary>Add one worksheet per rule set, populated from the parsed table rows.</summary>
 		private static void AddWorksheet(XLWorkbook workbook, string sheetName, List<string[]> rows)
@@ -233,39 +180,6 @@ namespace Verifier
 				}
 				ws.Columns().Width = 22;
 			}
-		}
-
-		/// <summary>Parse a generated cheat-sheet HTML table into rows of plain-text cells (header first).</summary>
-		private static List<string[]> ParseTable(string tableHtml)
-		{
-			var rows = new List<string[]>();
-
-			var thead = Regex.Match(tableHtml, "<thead>(.*?)</thead>", RegexOptions.Singleline);
-			if (thead.Success)
-			{
-				rows.Add(ExtractCells(thead.Groups[1].Value, "th"));
-			}
-
-			var tbody = Regex.Match(tableHtml, "<tbody>(.*?)</tbody>", RegexOptions.Singleline);
-			if (tbody.Success)
-			{
-				foreach (Match tr in Regex.Matches(tbody.Groups[1].Value, "<tr>(.*?)</tr>", RegexOptions.Singleline))
-				{
-					rows.Add(ExtractCells(tr.Groups[1].Value, "td"));
-				}
-			}
-
-			return rows;
-		}
-
-		private static string[] ExtractCells(string rowHtml, string tag)
-		{
-			var cells = new List<string>();
-			foreach (Match m in Regex.Matches(rowHtml, "<" + tag + "[^>]*>(.*?)</" + tag + ">", RegexOptions.Singleline))
-			{
-				cells.Add(HtmlToText(m.Groups[1].Value));
-			}
-			return cells.ToArray();
 		}
 
 		/// <summary>Strip HTML from a table cell to plain text, keeping list/line breaks as newlines.</summary>
