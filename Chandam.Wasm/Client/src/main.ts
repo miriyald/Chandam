@@ -220,11 +220,9 @@ window.onWasmReady = async () => {
   // Initialize console API for testing
   initConsoleAPI();
 
-  // Initialize Google Analytics (auto-detects measurement ID from index.html)
+  // Initialize Google Analytics (reads measurement ID from index.html)
   analyticsService.init();
-  const userId = getUserId();
-  analyticsService.setUserId(userId);
-  console.log('Analytics initialized with user ID');
+  analyticsService.setUserId(getUserId());
 
   // Update version and build date display from assembly metadata
   try {

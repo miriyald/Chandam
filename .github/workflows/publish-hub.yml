@@ -1,0 +1,136 @@
+name: Publish /v2/ to chandamu.github.io
+
+# Runs after "Deploy to GitHub Pages" succeeds on beta. It consumes that run's
+# unbased `wasm-publish` artifact rather than reading gh-pages, because gh-pages
+# content is already rebased to /chandam/ and cannot be rebased again.
+on:
+  workflow_run:
+    workflows: ["Deploy to GitHub Pages"]
+    types: [completed]
+    branches: [beta]
+  workflow_dispatch:
+    inputs:
+      run_id:
+        description: "Run ID of the Deploy to GitHub Pages run to publish"
+        required: true
+
+permissions:
+  contents: read
+  actions: read # Required to download an artifact from another run
+
+env:
+  HUB_REPO: chandamu/chandamu.github.io
+  HUB_BRANCH: chandam-hub-landing
+  SOURCE_RUN_ID: ${{ github.event.workflow_run.id || inputs.run_id }}
+  SOURCE_SHA: ${{ github.event.workflow_run.head_sha || github.sha }}
+
+jobs:
+  prepare:
+    name: Rebase site to /v2/
+    if: github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success'
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout scripts at source commit
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ env.SOURCE_SHA }}
+
+      - name: Download unbased site output
+        uses: actions/download-artifact@v4
+        with:
+          name: wasm-publish
+          path: site
+          run-id: ${{ env.SOURCE_RUN_ID }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Rebase site output to /v2/
+        run: bash .github/scripts/prepare-github-pages.sh site /v2/
+
+      - name: Upload /v2/-based site output
+        uses: actions/upload-artifact@v4
+        with:
+          name: hub-site-v2
+          path: site
+          retention-days: 1
+          include-hidden-files: true
+
+  push-branch:
+    name: Push branch to hub
+    needs: prepare
+    runs-on: ubuntu-latest
+    outputs:
+      changed: ${{ steps.commit.outputs.changed }}
+
+    steps:
+      - name: Checkout scripts at source commit
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ env.SOURCE_SHA }}
+
+      - name: Download /v2/-based site output
+        uses: actions/download-artifact@v4
+        with:
+          name: hub-site-v2
+          path: site
+
+      - name: Checkout hub repository
+        uses: actions/checkout@v4
+        with:
+          repository: ${{ env.HUB_REPO }}
+          ref: main
+          token: ${{ secrets.HUB_DEPLOY_TOKEN }}
+          path: hub
+
+      - name: Write /v2/ and root 404.html into the hub
+        run: bash .github/scripts/publish-to-hub.sh site hub
+
+      # The branch is always recreated from main and force-pushed, so a single
+      # rolling PR tracks the latest build instead of one PR per deploy.
+      - name: Commit and push
+        id: commit
+        working-directory: hub
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git checkout -B "$HUB_BRANCH"
+          git add -A
+          if git diff --cached --quiet; then
+            echo "Hub main already matches this build - nothing to publish"
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          git commit -m "Publish v2 from ${{ github.repository }}@${SOURCE_SHA}"
+          git push --force origin "$HUB_BRANCH"
+          echo "changed=true" >> "$GITHUB_OUTPUT"
+
+  open-pr:
+    name: Open pull request
+    needs: push-branch
+    if: needs.push-branch.outputs.changed == 'true'
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Create PR if none is open
+        env:
+          GH_TOKEN: ${{ secrets.HUB_DEPLOY_TOKEN }}
+        run: |
+          existing=$(gh pr list --repo "$HUB_REPO" --head "$HUB_BRANCH" --base main \
+            --state open --json number --jq '.[0].number // empty')
+          if [ -n "$existing" ]; then
+            echo "PR #$existing is already open - the force-push refreshed it"
+            exit 0
+          fi
+          cat > pr-body.md <<EOF
+          Automated publish of the Blazor WASM build into \`/v2/\`.
+
+          - Source: \`${{ github.repository }}@${SOURCE_SHA}\`
+          - Build run: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${SOURCE_RUN_ID}
+
+          \`${HUB_BRANCH}\` is force-updated on every publish, so this PR always
+          reflects the latest build. Root \`404.html\` is refreshed from the v2
+          shell so \`/v2/\` deep links resolve.
+          EOF
+          gh pr create --repo "$HUB_REPO" --base main --head "$HUB_BRANCH" \
+            --title "Publish /v2/ from chandam@${SOURCE_SHA:0:7}" \
+            --body-file pr-body.md

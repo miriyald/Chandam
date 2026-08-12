@@ -3,6 +3,7 @@ using System.IO;
 using System.IO.Compression;
 using System.Text;
 using System.Text.Json;
+using Chandam.API.Models.Config;
 using YamlDotNet.Serialization;
 using YamlDotNet.Serialization.NamingConventions;
 
@@ -94,15 +95,7 @@ namespace Verifier
             // Read YAML
             var yamlContent = File.ReadAllText(yamlFilePath, Encoding.UTF8);
 
-            // Deserialize YAML to object
-            var deserializer = new DeserializerBuilder()
-                .WithNamingConvention(CamelCaseNamingConvention.Instance)
-                .Build();
-
-            var yamlObject = deserializer.Deserialize(yamlContent);
-
-            // YamlDotNet deserializes to Dictionary<object, object>, need to normalize
-            var normalizedObject = NormalizeYamlObject(yamlObject);
+            var model = DeserializeYaml(fileName, yamlContent);
 
             // 1. Pretty-printed JSON
             var jsonOptionsPretty = new JsonSerializerOptions
@@ -110,7 +103,7 @@ namespace Verifier
                 WriteIndented = true,
                 Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping
             };
-            var jsonContentPretty = JsonSerializer.Serialize(normalizedObject, jsonOptionsPretty);
+            var jsonContentPretty = JsonSerializer.Serialize(model, model.GetType(), jsonOptionsPretty);
             File.WriteAllText(jsonFilePath, jsonContentPretty, Encoding.UTF8);
             Console.WriteLine($"  ✓ {jsonFileName} ({GetFileSize(jsonFilePath)})");
 
@@ -121,7 +114,7 @@ namespace Verifier
                 WriteIndented = false,
                 Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping
             };
-            var jsonContentMinified = JsonSerializer.Serialize(normalizedObject, jsonOptionsMinified);
+            var jsonContentMinified = JsonSerializer.Serialize(model, model.GetType(), jsonOptionsMinified);
             File.WriteAllText(minJsonFilePath, jsonContentMinified, Encoding.UTF8);
             Console.WriteLine($"  ✓ {Path.GetFileName(minJsonFilePath)} ({GetFileSize(minJsonFilePath)})");
 
@@ -130,38 +123,29 @@ namespace Verifier
         }
 
         /// <summary>
-        /// Normalize YamlDotNet's Dictionary<object, object> to Dictionary<string, object> for JSON serialization
+        /// Deserialize into the DTO matching the file's shape.
+        /// Typed deserialization is required: YamlDotNet's untyped path returns every
+        /// scalar as string, which serializes to JSON as "8"/"true" and breaks the
+        /// int/bool properties on RuleDto.
         /// </summary>
-        private object NormalizeYamlObject(object obj)
+        private static object DeserializeYaml(string fileName, string yamlContent)
         {
-            if (obj == null)
-                return null;
+            var deserializer = new DeserializerBuilder()
+                .WithNamingConvention(CamelCaseNamingConvention.Instance)
+                .Build();
 
-            // Handle dictionaries
-            if (obj is System.Collections.IDictionary dict)
+            var isExampleSet = fileName.EndsWith("-examples", StringComparison.OrdinalIgnoreCase);
+
+            object model = isExampleSet
+                ? deserializer.Deserialize<ExampleSetDto>(yamlContent)
+                : deserializer.Deserialize<RuleSetDto>(yamlContent);
+
+            if (model == null)
             {
-                var normalized = new System.Collections.Generic.Dictionary<string, object>();
-                foreach (System.Collections.DictionaryEntry entry in dict)
-                {
-                    var key = entry.Key?.ToString() ?? "";
-                    normalized[key] = NormalizeYamlObject(entry.Value);
-                }
-                return normalized;
+                throw new InvalidOperationException($"YAML deserialized to null for {fileName}");
             }
 
-            // Handle lists
-            if (obj is System.Collections.IList list)
-            {
-                var normalized = new System.Collections.Generic.List<object>();
-                foreach (var item in list)
-                {
-                    normalized.Add(NormalizeYamlObject(item));
-                }
-                return normalized;
-            }
-
-            // Primitives and strings
-            return obj;
+            return model;
         }
 
         /// <summary>

@@ -71,8 +71,18 @@ jobs:
       - name: Publish metrics into site output
         run: bash .github/scripts/publish-metrics-to-pages.sh
 
+      # Uploaded before the base href is set, so publish-hub.yml can rebase it
+      # to /v2/ without rebuilding. Retention covers manual re-publishes.
+      - name: Upload unbased site output
+        uses: actions/upload-artifact@v4
+        with:
+          name: wasm-publish
+          path: publish/wwwroot
+          retention-days: 5
+          include-hidden-files: true
+
       - name: Prepare for GitHub Pages
-        run: bash .github/scripts/prepare-github-pages.sh publish/wwwroot
+        run: bash .github/scripts/prepare-github-pages.sh publish/wwwroot /chandam/
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4

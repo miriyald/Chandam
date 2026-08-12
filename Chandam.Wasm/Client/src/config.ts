@@ -35,6 +35,15 @@ export const RULE_SETS: RuleSet[] = [
     examplesFile: 'data/sanskrit-examples.min.json.gz',
     ruleCount: 1165,
     exampleCount: 0
+  },
+  {
+    id: 'jkmr',
+    name: 'జెజ్జాల కృష్ణ మోహన రావు సేకరణ',
+    description: 'racchabanda/chandassu Google Groups సందేశముల నుండి సేకరించిన ఛందస్సు నియమావళి',
+    rulesFile: 'data/jkmr.min.json.gz',
+    examplesFile: 'data/jkmr-examples.min.json.gz',
+    ruleCount: 128,
+    exampleCount: 113
   }
 ];
 

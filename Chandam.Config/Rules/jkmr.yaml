@@ -1928,48 +1928,6 @@ rules:
   prasaYati: true
   ruleText: ప్రతి పాదమునకు మూడు సూర్య గణములు, మూడు ఇంద్ర గణములు, చివర ఒక చంద్ర గణము.
     మొదటి, నాల్గవ, ఆఱవ గణములకు ప్రాస యతి. ప్రాస కూడ గలదు.
-- identifier: nartakigeeti
-  name: నర్తకి గీతి
-  language: Telugu
-  padyamType: Jati
-  padyamSubType: Jati
-  ruleType: Type
-  frequency: Rare
-  lines: 4
-  threshold: 5
-  rules:
-  - - Indra
-    - Indra
-    - Indra
-    - Indra
-    - Indra
-    - Indra
-  - - Indra
-    - Indra
-    - Indra
-    - Indra
-    - Indra
-  - - Indra
-    - Indra
-    - Indra
-    - Indra
-    - Indra
-    - Indra
-  - - Indra
-    - Indra
-    - Indra
-    - Indra
-    - Indra
-  yati:
-  - - 4
-  - - 4
-  - - 4
-  - - 4
-  yatiMode: GPosition
-  prasaYati: true
-  ruleText: నర్తకి గీతిలో మొదటి పాదమునకు ఆఱు ఇంద్ర గణములు, రెండవ పాదములో ఐదు ఇంద్ర
-    గణములు ఉండును. మొదటి రెండు పాదములవలె మూడవ మఱియు నాల్గవ పాదములు. సామాన్య యతియైనా,
-    అథవా ప్రాస యతియైనా వాడ వచ్చును. యతి నాల్గవ గణపు మొదటి అక్షరము.
 - identifier: lalitagati
   name: లలితగతి
   language: Telugu
@@ -2338,29 +2296,6 @@ rules:
   yatiMode: GPosition
   prasa: true
   ruleText: వృషభగతి - 28 మాత్రలు - యతి 1, 15 మాత్రలు
-- identifier: sugaMdhi
-  name: సుగంధి
-  language: Telugu
-  padyamType: Vruttam
-  padyamSubType: Vruttam
-  ruleType: Name
-  frequency: Rare
-  lines: 4
-  threshold: 7
-  rules:
-  - - న
-    - న
-    - న
-    - న
-    - న
-    - న
-    - న
-    - గ
-  yati:
-  - - 7
-  yatiMode: CharPosition
-  prasa: true
-  ruleText: సుగంధి- ఏడు గలములు, చివర ఒక గురువు. యతి- (1, 7)
 - identifier: vitALacatuShpada
   name: వితాళచతుష్పద
   language: Telugu
@@ -2727,31 +2662,6 @@ rules:
   yatiMode: CharPosition
   prasa: true
   ruleText: జనని- జ-న-న-న-న, యతి (1, 8) 15 అతిశక్వరి 32766
-- identifier: gItika
-  name: గీతిక
-  language: Telugu
-  padyamType: Vruttam
-  padyamSubType: Vruttam
-  ruleType: Name
-  frequency: Rare
-  lines: 4
-  threshold: 7
-  rules:
-  - - స
-    - జ
-    - జ
-    - భ
-    - ర
-    - స
-    - ల
-    - గ
-  yati:
-  - - 13
-  yatiMode: CharPosition
-  prasa: true
-  prasaYati: true
-  ruleText: గీతిక- స-జ-జ-భ-ర-స-ల-గ, లేక నాలుగు స-లగములు. యతి (1, 13), ఐదేసి అక్షరములకు
-    ప్రాసయతి. 20 కృతి 372076
 - identifier: manOjna
   name: మనోజ్ఞ
   language: Telugu
@@ -3251,29 +3161,6 @@ rules:
   prasa: true
   ruleText: భంగి - 18 ధృతి 64951, గణములు - భ భ భ భ న య, యతి - 1, 10 (నా ఊహ), లయ -
     సుస్వరలహరి (ఆఝు చతుర్మాత్రలు), ఆధారము - హేమచంద్రుని ఛందోనుశాసనము
-- identifier: susvaralahari
-  name: సుస్వరలహరి
-  language: Telugu
-  padyamType: Jati
-  padyamSubType: Ragada
-  ruleType: Weight
-  frequency: Rare
-  lines: 2
-  threshold: 7
-  rules:
-  - - '4'
-    - '4'
-    - '4'
-    - '4'
-    - '4'
-    - '4'
-    - '4'
-    - '4'
-  yati:
-  - - 4
-  yatiMode: GPosition
-  prasa: true
-  ruleText: సుస్వరలహరి- ఆఝు చతుర్మాత్రలు, యతి (1.1, 4.1), ప్రాస, అంత్యప్రాస
 - identifier: padmamu
   name: పద్మము
   language: Telugu
