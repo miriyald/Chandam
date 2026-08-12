@@ -8,6 +8,9 @@
  *   4. Click Random (fetches an example for that specific rule).
  *   5. Click Analyze with Yati & Prasa both checked → match result appears.
  *   6. Uncheck Yati → re-analyze → no crash; results section still renders.
+ *
+ * Advanced options (Santi Prasa / Soundex Sandhi) are collapsed and off by
+ * default, and are hidden + reset when Yati is unchecked.
  */
 
 import { test, expect, gotoAndWait } from '../fixtures/wasm-ready';
@@ -58,6 +61,67 @@ test.describe('Compute page – auto-detect mode', () => {
   }) => {
     await expect(page.locator('#auto-detect')).toBeChecked();
     await expect(page.locator('#rule-picker-inline')).toBeHidden();
+  });
+
+  test('advanced options are collapsed and unchecked by default', async ({
+    page,
+  }) => {
+    const advanced = page.locator('#advanced-options');
+    await expect(advanced).toBeVisible();
+    await expect(advanced).not.toHaveAttribute('open', '');
+    await expect(page.locator('#match-santi-prasa')).not.toBeChecked();
+    await expect(page.locator('#match-soundex-sandhi')).not.toBeChecked();
+  });
+
+  test('advanced options hide and reset when Yati is unchecked', async ({
+    page,
+  }) => {
+    // Expand and switch both advanced toggles on. Native <summary> and the
+    // slider-covered <input> are set directly, as elsewhere in this file.
+    await page.locator('#advanced-options').evaluate((el: HTMLDetailsElement) => {
+      el.open = true;
+    });
+    await expect(page.locator('#advanced-options')).toHaveAttribute('open', '');
+    for (const id of ['#match-santi-prasa', '#match-soundex-sandhi']) {
+      await page.locator(id).evaluate((el: HTMLInputElement) => {
+        el.checked = true; el.dispatchEvent(new Event('change', { bubbles: true }));
+      });
+      await expect(page.locator(id)).toBeChecked();
+    }
+
+    // Turning Yati off hides the row and clears both toggles
+    await page.locator('#match-yati').evaluate((el: HTMLInputElement) => {
+      if (el.checked) { el.checked = false; el.dispatchEvent(new Event('change', { bubbles: true })); }
+    });
+    await expect(page.locator('#advanced-options')).toBeHidden();
+    await expect(page.locator('#match-santi-prasa')).not.toBeChecked();
+    await expect(page.locator('#match-soundex-sandhi')).not.toBeChecked();
+
+    // Turning Yati back on restores the row, still collapsed
+    await page.locator('#match-yati').evaluate((el: HTMLInputElement) => {
+      el.checked = true; el.dispatchEvent(new Event('change', { bubbles: true }));
+    });
+    await expect(page.locator('#advanced-options')).toBeVisible();
+    await expect(page.locator('#advanced-options')).not.toHaveAttribute('open', '');
+  });
+
+  test('advanced options expanded visual baseline', async ({ page }) => {
+    test.skip(!!process.env.CI, 'Visual baselines skipped in CI — run via workflow_dispatch with update_snapshots');
+
+    const advanced = page.locator('#advanced-options');
+    await advanced.evaluate((el: HTMLDetailsElement) => { el.open = true; });
+    await expect(page.locator('#match-soundex-sandhi')).toBeVisible();
+
+    // The Telugu labels are long enough to be the layout constraint, so glyph
+    // metrics must be settled before capture.
+    await page.evaluate(() => document.fonts.ready);
+
+    // Element-scoped: excludes the footer's daily "Published:" date, so unlike the
+    // full-page baselines this stays deterministic at a tight tolerance.
+    await expect(advanced).toHaveScreenshot('advanced-options-expanded.png', {
+      timeout: 15_000,
+      maxDiffPixelRatio: 0.02,
+    });
   });
 
   test('Random button fills editor with Telugu text', async ({ page }) => {

@@ -10,7 +10,13 @@ public class ChandamToolsTests
 {
     private readonly ChandamTools _tools;
 
-    // Indravajramu test poem (97% match expected)
+    // Soundex Sandhi ships off by default. These tests assert domain outcomes captured
+    // while it was on, so they opt in to keep their expected results stable.
+    // Note: baseline-results.yaml is the opposite — it records the strict (off) values,
+    // so the baseline-comparing tests in Chandam.API.IntegrationTests must NOT opt in.
+    private const bool BaselineSoundexSandhi = true;
+
+    // Indravajramu test poem (100% with Soundex Sandhi, 97% without — line 4 yati హే/రిం)
     private const string TestPoem = @"సామర్థ్యలీలన్ తతజద్విగంబుల్
 భూమిధ్రవిశ్రాంతుల బొంది యొప్పున్
 ప్రేమంబుతో నైందవబింబవక్త్రున్
@@ -30,7 +36,7 @@ public class ChandamToolsTests
     [Fact]
     public void DetermineChandam_WithValidPoem_ReturnsBestMatch()
     {
-        var result = _tools.DetermineChandam(TestPoem);
+        var result = _tools.DetermineChandam(TestPoem, match_soundex_sandhi: BaselineSoundexSandhi);
         var json = JsonDocument.Parse(result);
 
         Assert.True(json.RootElement.GetProperty("Success").GetBoolean());
@@ -50,7 +56,7 @@ public class ChandamToolsTests
     [Fact]
     public void TryMatchChandam_WithCorrectRule_ReturnsMatch()
     {
-        var result = _tools.TryMatchChandam(TestPoem, "iMdravajramu");
+        var result = _tools.TryMatchChandam(TestPoem, "iMdravajramu", match_soundex_sandhi: BaselineSoundexSandhi);
         var json = JsonDocument.Parse(result);
 
         Assert.True(json.RootElement.GetProperty("IsMatch").GetBoolean());
@@ -70,7 +76,7 @@ public class ChandamToolsTests
     [Fact]
     public void CalculateScores_ReturnsRankedResults()
     {
-        var result = _tools.CalculateScores(TestPoem, language: "te", min_percentage: 50);
+        var result = _tools.CalculateScores(TestPoem, match_soundex_sandhi: BaselineSoundexSandhi, language: "te", min_percentage: 50);
         var json = JsonDocument.Parse(result);
 
         var scores = json.RootElement.GetProperty("Scores");
@@ -131,7 +137,7 @@ public class ChandamToolsTests
     [InlineData("Telugu")]
     public void DetermineChandam_AllLanguageCodes_Work(string lang)
     {
-        var result = _tools.DetermineChandam(TestPoem, language: lang);
+        var result = _tools.DetermineChandam(TestPoem, match_soundex_sandhi: BaselineSoundexSandhi, language: lang);
         var json = JsonDocument.Parse(result);
 
         Assert.True(json.RootElement.GetProperty("Success").GetBoolean());
@@ -140,16 +146,55 @@ public class ChandamToolsTests
     [Fact]
     public void DetermineChandam_ResultContainsTelugu()
     {
-        var result = _tools.DetermineChandam(TestPoem);
+        var result = _tools.DetermineChandam(TestPoem, match_soundex_sandhi: BaselineSoundexSandhi);
 
         // Verify Telugu text is preserved (not replaced with English)
         Assert.Contains("ఇంద్రవజ్ర", result);
     }
 
     [Fact]
+    public void DetermineChandam_AdvancedFlagsRequireYati()
+    {
+        var gated = _tools.DetermineChandam(TestPoem, match_yati: false, match_santi_prasa: true, match_soundex_sandhi: true);
+        var plain = _tools.DetermineChandam(TestPoem, match_yati: false);
+
+        Assert.Equal(plain, gated);
+    }
+
+    [Fact]
+    public void TryMatchChandam_AdvancedFlagsRequireYati()
+    {
+        var gated = _tools.TryMatchChandam(TestPoem, "iMdravajramu", match_yati: false, match_santi_prasa: true, match_soundex_sandhi: true);
+        var plain = _tools.TryMatchChandam(TestPoem, "iMdravajramu", match_yati: false);
+
+        Assert.Equal(plain, gated);
+    }
+
+    [Fact]
+    public void CalculateScores_AdvancedFlagsRequireYati()
+    {
+        var gated = _tools.CalculateScores(TestPoem, match_yati: false, match_santi_prasa: true, match_soundex_sandhi: true);
+        var plain = _tools.CalculateScores(TestPoem, match_yati: false);
+
+        Assert.Equal(plain, gated);
+    }
+
+    [Fact]
+    public void TryMatchChandam_SoundexSandhiChangesYatiVerdict()
+    {
+        var strict = JsonDocument.Parse(_tools.TryMatchChandam(TestPoem, "iMdravajramu"));
+        var relaxed = JsonDocument.Parse(_tools.TryMatchChandam(TestPoem, "iMdravajramu", match_soundex_sandhi: true));
+
+        var strictPct = strict.RootElement.GetProperty("Match").GetProperty("MatchPercentage").GetInt32();
+        var relaxedPct = relaxed.RootElement.GetProperty("Match").GetProperty("MatchPercentage").GetInt32();
+
+        Assert.True(relaxedPct > strictPct);
+    }
+
+    [Fact]
     public void DetermineChandam_ReturnsBothMarkdownAndBeautified()
     {
-        var result = _tools.DetermineChandam(TestPoem);
+        var result = _tools.DetermineChandam(TestPoem, match_soundex_sandhi: BaselineSoundexSandhi);
         var json = JsonDocument.Parse(result);
 
         Assert.True(json.RootElement.GetProperty("Success").GetBoolean());
@@ -176,7 +221,7 @@ public class ChandamToolsTests
     [Fact]
     public void TryMatchChandam_ReturnsBothMarkdownAndBeautified()
     {
-        var result = _tools.TryMatchChandam(TestPoem, "iMdravajramu");
+        var result = _tools.TryMatchChandam(TestPoem, "iMdravajramu", match_soundex_sandhi: BaselineSoundexSandhi);
         var json = JsonDocument.Parse(result);
 
         Assert.True(json.RootElement.GetProperty("IsMatch").GetBoolean());
@@ -292,7 +337,7 @@ public class ChandamToolsTests
             "ఇ టా చతుర్ముఖుం డరాగఁ నిష్ట శిష్టపాళితోఁ"));
 
         // Run DetermineChandam first — this previously mutated the shared Rule
-        _tools.DetermineChandam(multiLinePoem, ruleset_id: "chandam");
+        _tools.DetermineChandam(multiLinePoem, match_soundex_sandhi: BaselineSoundexSandhi, ruleset_id: "chandam");
 
         // Now GetRuleInfo should still return the original Lines=4
         var result = _tools.GetRuleInfo("paMchaamaramu", include_examples: true, ruleset_id: "chandam");

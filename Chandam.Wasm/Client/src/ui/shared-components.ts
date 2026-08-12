@@ -1,10 +1,24 @@
 import { t } from '../i18n';
+import type { MatchFlags } from '../types';
 
 export interface EditorCardConfig {
   contextText: string;
   showRulePicker: boolean;
   showAutoDetect: boolean;
   rulePickerId?: string;
+}
+
+function isChecked(id: string, fallback: boolean): boolean {
+  return (document.getElementById(id) as HTMLInputElement | null)?.checked ?? fallback;
+}
+
+export function readMatchFlags(): MatchFlags {
+  return {
+    yati: isChecked('match-yati', true),
+    prasa: isChecked('match-prasa', true),
+    santiPrasa: isChecked('match-santi-prasa', false),
+    soundexSandhi: isChecked('match-soundex-sandhi', false)
+  };
 }
 
 /**
@@ -73,8 +87,48 @@ export function renderEditorCard(config: EditorCardConfig): string {
           </button>
         </div>
       </div>
+
+      <details class="advanced-options" id="advanced-options">
+        <summary>${t('editor_advanced')}</summary>
+        <div class="toggle-group stacked">
+          <label class="toggle-switch" for="match-santi-prasa">
+            <input type="checkbox" id="match-santi-prasa" aria-label="${t('editor_santi_prasa')}">
+            <span class="toggle-slider"></span>
+            <span class="toggle-label">${t('editor_santi_prasa')}</span>
+          </label>
+          <label class="toggle-switch" for="match-soundex-sandhi">
+            <input type="checkbox" id="match-soundex-sandhi" aria-label="${t('editor_soundex_sandhi')}">
+            <span class="toggle-slider"></span>
+            <span class="toggle-label">${t('editor_soundex_sandhi')}</span>
+          </label>
+        </div>
+      </details>
     </div>
   `;
+}
+
+/**
+ * Santi Prasa and Soundex Sandhi only take effect when Yati is on, so the row is
+ * hidden and cleared when Yati is off. The server enforces the same rule.
+ */
+export function attachAdvancedOptionsToggle(): void {
+  const yatiToggle = document.getElementById('match-yati') as HTMLInputElement | null;
+  const advanced = document.getElementById('advanced-options') as HTMLDetailsElement | null;
+  if (!yatiToggle || !advanced) return;
+
+  const sync = () => {
+    advanced.style.display = yatiToggle.checked ? 'block' : 'none';
+    if (yatiToggle.checked) return;
+
+    advanced.open = false;
+    for (const id of ['match-santi-prasa', 'match-soundex-sandhi']) {
+      const input = document.getElementById(id) as HTMLInputElement | null;
+      if (input) input.checked = false;
+    }
+  };
+
+  yatiToggle.addEventListener('change', sync);
+  sync();
 }
 
 /**

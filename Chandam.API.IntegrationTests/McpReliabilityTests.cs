@@ -49,7 +49,7 @@ public class McpReliabilityTests : IClassFixture<McpReliabilityFixture>
                 continue;
             }
 
-            var mcpJson = _fixture.Tools.TryMatchChandam(poemText, rule.Identifier);
+            var mcpJson = _fixture.Tools.TryMatchChandam(poemText, rule.Identifier, match_soundex_sandhi: true);
             var mcpResult = JsonSerializer.Deserialize<TryMatchResponse>(mcpJson, JsonOptions);
             Assert.NotNull(mcpResult);
 
@@ -118,7 +118,7 @@ public class McpReliabilityTests : IClassFixture<McpReliabilityFixture>
                 continue;
             }
 
-            var mcpJson = _fixture.Tools.DetermineChandam(poemText);
+            var mcpJson = _fixture.Tools.DetermineChandam(poemText, match_soundex_sandhi: true);
             var mcpResult = JsonSerializer.Deserialize<DetermineResponse>(mcpJson, JsonOptions);
             Assert.NotNull(mcpResult);
 
@@ -169,7 +169,7 @@ public class McpReliabilityTests : IClassFixture<McpReliabilityFixture>
         {
             var poemText = McpReliabilityFixture.CleanPoemText(example.Text);
 
-            var mcpJson = _fixture.Tools.CalculateScores(poemText, language: "te");
+            var mcpJson = _fixture.Tools.CalculateScores(poemText, match_soundex_sandhi: true, language: "te");
             var mcpResult = JsonSerializer.Deserialize<ScoresResponse>(mcpJson, JsonOptions);
             Assert.NotNull(mcpResult);
 

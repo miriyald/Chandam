@@ -5,7 +5,8 @@ import type {
   TryMatchResponse,
   ScoresResponse,
   RuleInfo,
-  AvailableFilters
+  AvailableFilters,
+  MatchFlags
 } from './types';
 
 declare const DotNet: {
@@ -35,17 +36,18 @@ export class WasmBridge {
 
   static async determine(
     poemText: string,
-    matchYati: boolean,
-    matchPrasa: boolean,
+    flags: MatchFlags,
     language: string = 'te'
   ): Promise<DetermineResponse> {
     const json = await DotNet.invokeMethodAsync<string>(
       this.ASSEMBLY,
       'Determine',
       poemText,
-      matchYati,
-      matchPrasa,
-      language
+      flags.yati,
+      flags.prasa,
+      language,
+      flags.santiPrasa,
+      flags.soundexSandhi
     );
     return JSON.parse(json);
   }
@@ -53,33 +55,35 @@ export class WasmBridge {
   static async tryMatch(
     poemText: string,
     ruleId: string,
-    matchYati: boolean,
-    matchPrasa: boolean
+    flags: MatchFlags
   ): Promise<TryMatchResponse> {
     const json = await DotNet.invokeMethodAsync<string>(
       this.ASSEMBLY,
       'TryMatch',
       poemText,
       ruleId,
-      matchYati,
-      matchPrasa
+      flags.yati,
+      flags.prasa,
+      flags.santiPrasa,
+      flags.soundexSandhi
     );
     return JSON.parse(json);
   }
 
   static async getScores(
     poemText: string,
-    matchYati: boolean,
-    matchPrasa: boolean,
+    flags: MatchFlags,
     minPercentage: number = 50
   ): Promise<ScoresResponse> {
     const json = await DotNet.invokeMethodAsync<string>(
       this.ASSEMBLY,
       'GetScores',
       poemText,
-      matchYati,
-      matchPrasa,
-      minPercentage
+      flags.yati,
+      flags.prasa,
+      minPercentage,
+      flags.santiPrasa,
+      flags.soundexSandhi
     );
     return JSON.parse(json);
   }

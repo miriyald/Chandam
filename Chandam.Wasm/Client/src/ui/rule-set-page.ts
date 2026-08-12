@@ -2,7 +2,7 @@ import { WasmBridge } from '../wasm-bridge';
 import { getRuleSet, getRuleSetAsync } from '../config';
 import { renderRulePicker, setSelectedRule, getSelectedRule } from './rule-picker';
 import { clearEditor, enableEditorAutoSave } from './editor';
-import { renderEditorCard, showRulePicker, hideRulePicker } from './shared-components';
+import { renderEditorCard, showRulePicker, hideRulePicker, readMatchFlags, attachAdvancedOptionsToggle } from './shared-components';
 import { renderFirstMatch, renderScoreCards, hideResults } from './results';
 import { getEditorText } from './editor';
 import type { RuleSummaryDetailed } from '../types';
@@ -144,6 +144,8 @@ function renderRuleSetPageHtml(ruleSetName: string, ruleCount: number, ruleSetId
 
 // Step 5: Attach event handlers
 function attachEventHandlers(ruleSet: string) {
+  attachAdvancedOptionsToggle();
+
   // Auto-detect toggle handler
   document.getElementById('auto-detect')?.addEventListener('change', (e) => {
     const isAutoDetect = (e.target as HTMLInputElement).checked;
@@ -273,8 +275,7 @@ async function handleDetermineWithTracking() {
     return;
   }
 
-  const yati = (document.getElementById('match-yati') as HTMLInputElement)?.checked ?? true;
-  const prasa = (document.getElementById('match-prasa') as HTMLInputElement)?.checked ?? true;
+  const flags = readMatchFlags();
 
   LoadingEvents.emit(LoadingEventType.ActionStarted, {
     source: 'analyze',
@@ -285,8 +286,8 @@ async function handleDetermineWithTracking() {
 
   try {
     const [response, scoresResponse] = await Promise.all([
-      WasmBridge.determine(poemText, yati, prasa),
-      WasmBridge.getScores(poemText, yati, prasa, 50).catch(() => null)
+      WasmBridge.determine(poemText, flags),
+      WasmBridge.getScores(poemText, flags, 50).catch(() => null)
     ]);
 
     if (response.success && response.matches.length > 0) {
@@ -367,9 +368,6 @@ async function handleMatchWithTracking() {
     };
   }
 
-  const yati = (document.getElementById('match-yati') as HTMLInputElement)?.checked ?? true;
-  const prasa = (document.getElementById('match-prasa') as HTMLInputElement)?.checked ?? true;
-
   LoadingEvents.emit(LoadingEventType.ActionStarted, {
     source: 'match',
     buttonId: 'btn-analyze',
@@ -378,7 +376,7 @@ async function handleMatchWithTracking() {
   await nextFrame();
 
   try {
-    const response = await WasmBridge.tryMatch(poemText, ruleId, yati, prasa);
+    const response = await WasmBridge.tryMatch(poemText, ruleId, readMatchFlags());
     if (response.isMatch && response.match) {
       await renderFirstMatch(response.match, 'results-container', currentRuleSet);
 

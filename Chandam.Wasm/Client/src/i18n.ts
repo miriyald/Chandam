@@ -26,6 +26,9 @@ export interface Translations {
   editor_auto_detect: string;
   editor_yati: string;
   editor_prasa: string;
+  editor_advanced: string;
+  editor_santi_prasa: string;
+  editor_soundex_sandhi: string;
   editor_auto_detect_context: string;
   editor_matching_with: string;
   editor_select_rule: string;
@@ -328,6 +331,9 @@ const translations: Record<Language, Translations> = {
     editor_auto_detect: 'Auto-detect',
     editor_yati: 'Yati',
     editor_prasa: 'Prasa',
+    editor_advanced: 'Advanced',
+    editor_santi_prasa: 'Santi Prasa',
+    editor_soundex_sandhi: 'Soundex Sandhi',
     editor_auto_detect_context: 'Auto-detecting best match...',
     editor_matching_with: 'Matching with:',
     editor_select_rule: 'Select a rule ▼',
@@ -612,6 +618,9 @@ const translations: Record<Language, Translations> = {
     editor_auto_detect: 'స్వయంచాలకంగా గుర్తించు',
     editor_yati: 'యతి',
     editor_prasa: 'ప్రాస',
+    editor_advanced: 'అధునాతన ఎంపికలు',
+    editor_santi_prasa: 'శాంత ప్రాసను పరిగణించు',
+    editor_soundex_sandhi: 'అచ్చు ఆధారంగా సంధియుత యతి మైత్రి గుర్తింపు',
     editor_auto_detect_context: 'ఉత్తమ సరిపోలికను స్వయంచాలకంగా గుర్తిస్తోంది.',
     editor_matching_with: 'దీనితో సరిపోలుస్తోంది:',
     editor_select_rule: 'ఒక నియమాన్ని ఎంచుకోండి ▼',

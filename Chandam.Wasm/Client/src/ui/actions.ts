@@ -2,6 +2,7 @@ import { WasmBridge } from '../wasm-bridge';
 import { getEditorText, setEditorText, clearEditor } from './editor';
 import { getSelectedRule } from './rule-picker';
 import { renderFirstMatch, hideResults } from './results';
+import { readMatchFlags } from './shared-components';
 import { t } from '../i18n';
 import { notify } from '../utils/notify';
 
@@ -12,11 +13,8 @@ export async function handleDetermineAndShowResults() {
     return;
   }
 
-  const yati = (document.getElementById('match-yati') as HTMLInputElement)?.checked ?? true;
-  const prasa = (document.getElementById('match-prasa') as HTMLInputElement)?.checked ?? true;
-
   try {
-    const response = await WasmBridge.determine(poemText, yati, prasa);
+    const response = await WasmBridge.determine(poemText, readMatchFlags());
     if (response.success && response.matches.length > 0) {
       // Show only the first (best) match - NO TAB SWITCHING
       renderFirstMatch(response.matches[0], 'results-container');
@@ -56,11 +54,8 @@ export async function handleMatch() {
     return;
   }
 
-  const yati = (document.getElementById('match-yati') as HTMLInputElement)?.checked ?? true;
-  const prasa = (document.getElementById('match-prasa') as HTMLInputElement)?.checked ?? true;
-
   try {
-    const response = await WasmBridge.tryMatch(poemText, ruleId, yati, prasa);
+    const response = await WasmBridge.tryMatch(poemText, ruleId, readMatchFlags());
     if (response.isMatch && response.match) {
       renderFirstMatch(response.match, 'results-container');
 

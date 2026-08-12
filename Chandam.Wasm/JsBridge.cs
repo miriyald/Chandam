@@ -123,7 +123,8 @@ public static class JsBridge
     }
 
     [JSInvokable]
-    public static string Determine(string poemText, bool matchYati, bool matchPrasa, string language = "te")
+    public static string Determine(string poemText, bool matchYati, bool matchPrasa, string language = "te",
+        bool allowSantiPrasa = false, bool soundexSandhi = false)
     {
         var service = ServiceAccessor.Services!.GetRequiredService<ChandamService>();
         var langEnum = LanguageCodeMapper.ParseLanguage(language) ?? RuleLanguage.Telugu;
@@ -131,6 +132,8 @@ public static class JsBridge
             PoemText = poemText,
             MatchYati = matchYati,
             MatchPrasa = matchPrasa,
+            AllowSantiPrasa = allowSantiPrasa,
+            SoundexSandhi = soundexSandhi,
             Language = langEnum,
             RenderFormat = RenderFormat.Html
         };
@@ -139,7 +142,8 @@ public static class JsBridge
     }
 
     [JSInvokable]
-    public static string TryMatch(string poemText, string ruleId, bool matchYati, bool matchPrasa)
+    public static string TryMatch(string poemText, string ruleId, bool matchYati, bool matchPrasa,
+        bool allowSantiPrasa = false, bool soundexSandhi = false)
     {
         var service = ServiceAccessor.Services!.GetRequiredService<ChandamService>();
         var request = new TryMatchRequest {
@@ -147,6 +151,8 @@ public static class JsBridge
             RuleIdentifier = ruleId,
             MatchYati = matchYati,
             MatchPrasa = matchPrasa,
+            AllowSantiPrasa = allowSantiPrasa,
+            SoundexSandhi = soundexSandhi,
             RenderFormat = RenderFormat.Html
         };
         var response = service.TryMatchWithBeautified(request);
@@ -154,13 +160,16 @@ public static class JsBridge
     }
 
     [JSInvokable]
-    public static string GetScores(string poemText, bool matchYati, bool matchPrasa, int minPercentage = 50)
+    public static string GetScores(string poemText, bool matchYati, bool matchPrasa, int minPercentage = 50,
+        bool allowSantiPrasa = false, bool soundexSandhi = false)
     {
         var service = ServiceAccessor.Services!.GetRequiredService<ChandamService>();
         var request = new ScoresRequest {
             PoemText = poemText,
             MatchYati = matchYati,
             MatchPrasa = matchPrasa,
+            AllowSantiPrasa = allowSantiPrasa,
+            SoundexSandhi = soundexSandhi,
             MinimumMatchPercentage = minPercentage
         };
         var response = service.Scores(request);

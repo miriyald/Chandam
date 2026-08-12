@@ -36,6 +36,8 @@ public class ChandamTools
         [Description("The poem text to analyze (Telugu/Sanskrit/Kannada)")] string poem_text,
         [Description("Check caesura (yati) matching")] bool match_yati = true,
         [Description("Check rhyme (prasa) matching")] bool match_prasa = true,
+        [Description("Allow Santi Prasa - first or last consonant may match. Requires match_yati")] bool match_santi_prasa = false,
+        [Description("Allow sound-based Sandhi at Yati position. Requires match_yati")] bool match_soundex_sandhi = false,
         [Description("Language code: te (Telugu), kn (Kannada), sa (Sanskrit), hi (Hindi), ml (Malayalam)")] string language = "te",
         [Description("RuleSet to use: chandam, sanskrit, topella (default: chandam)")] string? ruleset_id = null)
     {
@@ -45,6 +47,8 @@ public class ChandamTools
             PoemText = poem_text,
             MatchYati = match_yati,
             MatchPrasa = match_prasa,
+            AllowSantiPrasa = match_santi_prasa,
+            SoundexSandhi = match_soundex_sandhi,
             Language = lang,
             RenderFormat = RenderFormat.Markdown,  // Request Markdown format
             RuleSetId = ruleset_id ?? "chandam"
@@ -60,6 +64,8 @@ public class ChandamTools
         [Description("Rule identifier (e.g., 'kandam', 'utpalamaala', 'iMdravajramu')")] string rule_identifier,
         [Description("Check caesura (yati) matching")] bool match_yati = true,
         [Description("Check rhyme (prasa) matching")] bool match_prasa = true,
+        [Description("Allow Santi Prasa - first or last consonant may match. Requires match_yati")] bool match_santi_prasa = false,
+        [Description("Allow sound-based Sandhi at Yati position. Requires match_yati")] bool match_soundex_sandhi = false,
         [Description("Language code: te (Telugu), kn (Kannada), sa (Sanskrit), hi (Hindi), ml (Malayalam)")] string language = "te",
         [Description("RuleSet to use: chandam, sanskrit, topella (default: chandam)")] string? ruleset_id = null)
     {
@@ -70,6 +76,8 @@ public class ChandamTools
             RuleIdentifier = rule_identifier,
             MatchYati = match_yati,
             MatchPrasa = match_prasa,
+            AllowSantiPrasa = match_santi_prasa,
+            SoundexSandhi = match_soundex_sandhi,
             Language = lang,
             RenderFormat = RenderFormat.Markdown,  // Request Markdown format
             RuleSetId = ruleset_id ?? "chandam"
@@ -84,6 +92,8 @@ public class ChandamTools
         [Description("The poem text to analyze")] string poem_text,
         [Description("Check caesura (yati) matching")] bool match_yati = true,
         [Description("Check rhyme (prasa) matching")] bool match_prasa = true,
+        [Description("Allow Santi Prasa - first or last consonant may match. Requires match_yati")] bool match_santi_prasa = false,
+        [Description("Allow sound-based Sandhi at Yati position. Requires match_yati")] bool match_soundex_sandhi = false,
         [Description("Language code: te, kn, sa, hi, ml")] string language = "te",
         [Description("Minimum match percentage to include in results (0-100)")] double min_percentage = 0,
         [Description("RuleSet to use: chandam, sanskrit, topella (default: chandam)")] string? ruleset_id = null)
@@ -94,6 +104,8 @@ public class ChandamTools
             PoemText = poem_text,
             MatchYati = match_yati,
             MatchPrasa = match_prasa,
+            AllowSantiPrasa = match_santi_prasa,
+            SoundexSandhi = match_soundex_sandhi,
             Language = lang,
             MinimumMatchPercentage = min_percentage,
             RuleSetId = ruleset_id ?? "chandam"

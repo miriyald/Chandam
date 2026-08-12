@@ -106,7 +106,8 @@ public class BaselineGenerator
             PoemText = poemText,
             RuleIdentifier = rule.Identifier,
             MatchYati = true,
-            MatchPrasa = true
+            MatchPrasa = true,
+            SoundexSandhi = true
         };
 
         var response = _service.TryMatch(request);

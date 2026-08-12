@@ -3,7 +3,7 @@ import { getRuleSetAsync } from '../config';
 import { CustomRulesLoader } from '../services/custom-rules-loader';
 import { renderFirstMatch, hideResults } from './results';
 import { clearEditor, enableEditorAutoSave } from './editor';
-import { renderEditorCard } from './shared-components';
+import { renderEditorCard, readMatchFlags, attachAdvancedOptionsToggle } from './shared-components';
 import { makeUrl } from '../utils/url-helpers';
 import { renderBreadcrumbs, buildRuleBreadcrumbs } from './breadcrumbs';
 import { renderModeSwitcher } from './mode-switcher';
@@ -179,6 +179,8 @@ async function renderRulePageHtml(
 
 // Step 5: Attach event handlers
 function attachEventHandlers(ruleSet: string, ruleId: string) {
+  attachAdvancedOptionsToggle();
+
   // Analyze button - always calls Match with fixed ruleId
   document.getElementById('btn-analyze')?.addEventListener('click', async () => {
     const editor = document.getElementById('poem-editor') as HTMLTextAreaElement;
@@ -189,9 +191,6 @@ function attachEventHandlers(ruleSet: string, ruleId: string) {
       return;
     }
 
-    const yati = (document.getElementById('match-yati') as HTMLInputElement)?.checked ?? true;
-    const prasa = (document.getElementById('match-prasa') as HTMLInputElement)?.checked ?? true;
-
     const trackComplete = analyticsService.startTimedEvent('analyze_click', {
       mode: 'specific_rule',
       ruleSet: ruleSet,
@@ -200,7 +199,7 @@ function attachEventHandlers(ruleSet: string, ruleId: string) {
     });
 
     try {
-      const response = await WasmBridge.tryMatch(poemText, ruleId, yati, prasa);
+      const response = await WasmBridge.tryMatch(poemText, ruleId, readMatchFlags());
       if (response.isMatch && response.match) {
         renderFirstMatch(response.match, 'results-container', ruleSet, { showRuleLink: false });
 
