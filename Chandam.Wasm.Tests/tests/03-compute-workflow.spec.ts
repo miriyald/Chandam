@@ -105,6 +105,25 @@ test.describe('Compute page – auto-detect mode', () => {
     await expect(page.locator('#advanced-options')).not.toHaveAttribute('open', '');
   });
 
+  test('advanced options expanded visual baseline', async ({ page }) => {
+    test.skip(!!process.env.CI, 'Visual baselines skipped in CI — run via workflow_dispatch with update_snapshots');
+
+    const advanced = page.locator('#advanced-options');
+    await advanced.evaluate((el: HTMLDetailsElement) => { el.open = true; });
+    await expect(page.locator('#match-soundex-sandhi')).toBeVisible();
+
+    // The Telugu labels are long enough to be the layout constraint, so glyph
+    // metrics must be settled before capture.
+    await page.evaluate(() => document.fonts.ready);
+
+    // Element-scoped: excludes the footer's daily "Published:" date, so unlike the
+    // full-page baselines this stays deterministic at a tight tolerance.
+    await expect(advanced).toHaveScreenshot('advanced-options-expanded.png', {
+      timeout: 15_000,
+      maxDiffPixelRatio: 0.02,
+    });
+  });
+
   test('Random button fills editor with Telugu text', async ({ page }) => {
     await page.locator('#btn-random').click();
     await expect(page.locator('#poem-editor')).not.toHaveValue('', { timeout: 10_000 });
