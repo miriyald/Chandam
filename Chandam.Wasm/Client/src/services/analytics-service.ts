@@ -8,6 +8,7 @@ declare global {
   interface Window {
     gtag?: (...args: any[]) => void;
     dataLayer?: any[];
+    GA4_MEASUREMENT_ID?: string;
   }
 }
 
@@ -103,20 +104,11 @@ export class AnalyticsService {
   }
 
   /**
-   * Auto-detect GA4 Measurement ID from gtag config in index.html
-   * Reads from window.dataLayer which is populated by gtag.js
+   * Read the GA4 Measurement ID published by index.html
    */
   private detectMeasurementId(): string | null {
-    // Extract from dataLayer (populated by gtag('config', 'G-XXXXXX'))
-    if (window.dataLayer && window.dataLayer.length > 0) {
-      for (const item of window.dataLayer) {
-        if (Array.isArray(item) && item[0] === 'config' && typeof item[1] === 'string' && item[1].startsWith('G-')) {
-          return item[1];
-        }
-      }
-    }
-
-    return null;
+    const id = window.GA4_MEASUREMENT_ID;
+    return typeof id === 'string' && id.startsWith('G-') ? id : null;
   }
 }
 
