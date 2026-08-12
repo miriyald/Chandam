@@ -11,6 +11,7 @@
 //---------------------------------------------------------------------------------------------
 
 using System;
+using System.IO;
 using System.Linq;
 using Chandam.Rules;
 
@@ -112,16 +113,25 @@ namespace Verifier
 		}
 
 		/// <summary>
-		/// Convert YAML files to JSON
+		/// Convert YAML files to JSON. Input may be a directory or a single .yaml file.
 		/// </summary>
 		static int ConvertYamlToJson(string[] options)
 		{
 			Console.WriteLine("=== Converting YAML to JSON ===\n");
 
-			var inputDir = options.Length > 0 ? options[0] : @"Chandam.Config\Rules";
-			var outputDir = options.Length > 1 ? options[1] : inputDir;
+			var input = options.Length > 0 ? options[0] : @"Chandam.Config\Rules";
 
-			new ConvertYamlToJson(inputDir, outputDir).ConvertAll();
+			if (File.Exists(input))
+			{
+				var inputDir = Path.GetDirectoryName(input);
+				var outputDir = options.Length > 1 ? options[1] : inputDir;
+				new ConvertYamlToJson(inputDir, outputDir).ConvertFile(input);
+			}
+			else
+			{
+				var outputDir = options.Length > 1 ? options[1] : input;
+				new ConvertYamlToJson(input, outputDir).ConvertAll();
+			}
 
 			Console.WriteLine();
 			return 0;
@@ -165,7 +175,7 @@ namespace Verifier
 			Console.WriteLine("                         Usage: sanskrit [output-directory]");
 			Console.WriteLine("                         Default: Chandam.Config\\Rules\n");
 			Console.WriteLine("  convert, yaml2json     Convert YAML files to JSON");
-			Console.WriteLine("                         Usage: convert [input-dir] [output-dir]");
+			Console.WriteLine("                         Usage: convert [input-dir|input-file] [output-dir]");
 			Console.WriteLine("                         Default: Chandam.Config\\Rules\n");
 			Console.WriteLine("  cheatsheet, cheat      Generate one standalone HTML cheat sheet per rule set");
 			Console.WriteLine("                         (chandam, topella, sanskrit) + index.html");
