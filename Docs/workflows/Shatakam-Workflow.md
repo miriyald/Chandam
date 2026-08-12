@@ -228,7 +228,7 @@ Checked **in order** — first match wins:
 | 11 | **Finish group confirmation** | Steps 6-10 matched | **Required second check** — see Phase 2 |
 | 12 | **మువిభక్తియతి / ముకారయతి** | One is మ+{ు,ూ,ొ,ో} | Other must be {ప,ఫ,భ,బ,మ}+{ు,ూ,ొ,ో} |
 | 13 | **అంత్యోష్మ సంధి కళులు** | One contains హ | Other has a specific aspirate conjunct |
-| 14 | **SoundexSandhi** | Flag enabled | Match FinishGroups only |
+| 14 | **SoundexSandhi** | Opt-in flag, **off by default** | Match FinishGroups only |
 
 #### Phase 2: Finish Group Confirmation
 

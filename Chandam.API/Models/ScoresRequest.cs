@@ -28,6 +28,18 @@ public class ScoresRequest
     public bool MatchPrasa { get; set; } = true;
 
     /// <summary>
+    /// Whether to allow Santi Prasa (శాంతిప్రాసము) - first or last consonant may match.
+    /// Only applied when MatchYati is true.
+    /// </summary>
+    public bool AllowSantiPrasa { get; set; } = false;
+
+    /// <summary>
+    /// Whether to allow sound-based Sandhi at Yati position (matches finish groups only).
+    /// Only applied when MatchYati is true.
+    /// </summary>
+    public bool SoundexSandhi { get; set; } = false;
+
+    /// <summary>
     /// Minimum match percentage to include in results (0-100)
     /// </summary>
     public double MinimumMatchPercentage { get; set; } = 0;

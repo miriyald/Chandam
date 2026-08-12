@@ -115,6 +115,13 @@ export interface ChandamScore {
   frequency: string;
 }
 
+export interface MatchFlags {
+  yati: boolean;
+  prasa: boolean;
+  santiPrasa: boolean;                     // Only applied when yati is true
+  soundexSandhi: boolean;                  // Only applied when yati is true
+}
+
 export interface AvailableFilters {
   categories: string[];                    // PadyamSubType values that exist (sorted)
   chandamNames: string[];                  // ChandamName values for Vruttam (sorted by charLength)

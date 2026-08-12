@@ -69,8 +69,8 @@ test.describe('Mobile navigation menu', () => {
     const mainNav = page.locator('#main-nav');
     await expect(mainNav).toHaveClass(/open/);
 
-    // Click "Rule Sets" link
-    const ruleSetsLink = mainNav.locator('a[href="/rule-sets"]');
+    // Click "Rule Sets" link (shell nav links are base-relative)
+    const ruleSetsLink = mainNav.locator('a[href="rule-sets"]');
     await expect(ruleSetsLink).toBeVisible();
     await ruleSetsLink.click();
 
@@ -92,7 +92,7 @@ test.describe('Mobile navigation menu', () => {
 
     // On desktop, nav links should always be visible
     const mainNav = page.locator('#main-nav');
-    const ruleSetsLink = mainNav.locator('a[href="/rule-sets"]');
+    const ruleSetsLink = mainNav.locator('a[href="rule-sets"]');
     await expect(ruleSetsLink).toBeVisible();
   });
 

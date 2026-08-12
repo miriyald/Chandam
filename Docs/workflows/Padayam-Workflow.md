@@ -168,7 +168,7 @@ Checked **in order** — first match wins:
 | 11 | **Finish group confirmation** | Steps 6-10 matched | **Required second check** — see Phase 2 below |
 | 12 | **మువిభక్తియతి / ముకారయతి** | One is మ+{ు,ూ,ొ,ో} | Other must be {ప,ఫ,భ,బ,మ}+{ు,ూ,ొ,ో} |
 | 13 | **అంత్యోష్మ సంధి కళులు** | One contains హ | Other has a specific aspirate conjunct (క్ఖ, గ్ఘ, చ్ఛ, etc.) |
-| 14 | **SoundexSandhi** | Flag enabled on engine | Match FinishGroups only (no consonant check) |
+| 14 | **SoundexSandhi** | Opt-in flag, **off by default** | Match FinishGroups only (no consonant check) |
 
 **Input Preprocessing:** Before matching, the engine replaces variant ై with normalized form and ఽ (avagraha) with అ.
 
@@ -243,7 +243,7 @@ The engine calls `IsPrasaMatched(s1, s2)` first, then falls back to `IsPrasaMatc
 2. **Extract consonants** — If multi-akshar (conjunct), use only the first akshar's consonants
 3. **Same consonant count** — Compare using PrasaGroups (see below)
 4. **Different consonant count** — **సంయుతాసంయుత ప్రాసము**: If one has 2 consonants and the 2nd is ల or ర, drop it and retry
-5. **శాంతిప్రాసము** (only if `AllowSantiPrasa=true`) — First OR last consonant matches
+5. **శాంతిప్రాసము** (only if `AllowSantiPrasa=true`; opt-in flag, off by default) — First OR last consonant matches
 
 ### Prasa Consonant Groups (PrasaGroups)
 

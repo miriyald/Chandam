@@ -21,6 +21,18 @@ public class ChandamService
         _ruleLoader = ruleLoader;
     }
 
+    /// <summary>
+    /// Santi Prasa and Soundex Sandhi only take effect when Yati matching is on.
+    /// This is the single place that invariant is enforced.
+    /// </summary>
+    private static Padyam CreatePadyam(bool matchYati, bool matchPrasa, bool allowSantiPrasa, bool soundexSandhi) => new()
+    {
+        MatchYati = matchYati,
+        MatchPrasa = matchPrasa,
+        AllowSantiPrasa = matchYati && allowSantiPrasa,
+        SandiMatch = matchYati && soundexSandhi
+    };
+
 
     /// <summary>
     /// Auto-detect the best matching Chandam(s) for a poem
@@ -44,6 +56,8 @@ public class ChandamService
             options.Language = request.Language;
             options.MatchYati = request.MatchYati;
             options.MatchPrasa = request.MatchPrasa;
+            options.AllowSantiPrasa = request.MatchYati && request.AllowSantiPrasa;
+            options.ExperimenatalSandhi = request.MatchYati && request.SoundexSandhi;
 
             var probable = Padyam.MostProbable2(request.PoemText, options, rules);
 
@@ -112,11 +126,7 @@ public class ChandamService
                 };
             }
 
-            var padyam = new Padyam
-            {
-                MatchYati = request.MatchYati,
-                MatchPrasa = request.MatchPrasa
-            };
+            var padyam = CreatePadyam(request.MatchYati, request.MatchPrasa, request.AllowSantiPrasa, request.SoundexSandhi);
 
             var ruleClone = rule.Clone();
             var matchResult = padyam.Match(request.PoemText, ruleClone);
@@ -151,11 +161,7 @@ public class ChandamService
             var rule = _ruleLoader.FetchRuleFromRuleSet(match.Rule.Identifier, request.RuleSetId);
             if (rule != null)
             {
-                var padyam = new Padyam
-                {
-                    MatchYati = request.MatchYati,
-                    MatchPrasa = request.MatchPrasa
-                };
+                var padyam = CreatePadyam(request.MatchYati, request.MatchPrasa, request.AllowSantiPrasa, request.SoundexSandhi);
                 var ruleClone = rule.Clone();
                 var matchResult = padyam.Match(request.PoemText, ruleClone);
                 match.Beautified = padyam.Beautify(matchResult);
@@ -178,11 +184,7 @@ public class ChandamService
             var rule = _ruleLoader.FetchRuleFromRuleSet(request.RuleIdentifier, request.RuleSetId);
             if (rule != null)
             {
-                var padyam = new Padyam
-                {
-                    MatchYati = request.MatchYati,
-                    MatchPrasa = request.MatchPrasa
-                };
+                var padyam = CreatePadyam(request.MatchYati, request.MatchPrasa, request.AllowSantiPrasa, request.SoundexSandhi);
                 var ruleClone = rule.Clone();
                 var matchResult = padyam.Match(request.PoemText, ruleClone);
                 response.Match.Beautified = padyam.Beautify(matchResult);
@@ -231,11 +233,7 @@ public class ChandamService
                 };
             }
 
-            var padyam = new Padyam
-            {
-                MatchYati = request.MatchYati,
-                MatchPrasa = request.MatchPrasa
-            };
+            var padyam = CreatePadyam(request.MatchYati, request.MatchPrasa, request.AllowSantiPrasa, request.SoundexSandhi);
 
             var matchResult = padyam.Match(request.PoemText, rule);
             var match = BuildChandamMatch(matchResult, rule, padyam, request.RenderFormat);
@@ -274,11 +272,7 @@ public class ChandamService
             var allRules = _ruleLoader.GetRulesForRuleSet(request.RuleSetId, request.Language);
             var scores = new List<ChandamScore>();
 
-            var padyam = new Padyam
-            {
-                MatchYati = request.MatchYati,
-                MatchPrasa = request.MatchPrasa
-            };
+            var padyam = CreatePadyam(request.MatchYati, request.MatchPrasa, request.AllowSantiPrasa, request.SoundexSandhi);
 
             foreach (var rule in allRules)
             {
@@ -356,7 +350,7 @@ public class ChandamService
                     string? beautified = null;
                     try
                     {
-                        var padyam = new Padyam { MatchYati = true, MatchPrasa = true };
+                        var padyam = CreatePadyam(true, true, false, false);
                         // Clone to prevent Core engine from mutating the shared Rule in Manager
                         var ruleClone = rule.Clone();
                         var matchResult = padyam.Match(example.Text, ruleClone);
