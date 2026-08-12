@@ -12,7 +12,7 @@ SRC_DIR="${1:?Usage: publish-to-hub.sh SRC_DIR HUB_DIR}"
 HUB_DIR="${2:?Usage: publish-to-hub.sh SRC_DIR HUB_DIR}"
 
 [ -f "$SRC_DIR/index.html" ] || { echo "✗ $SRC_DIR/index.html not found"; exit 1; }
-[ -d "$HUB_DIR/v1" ] || { echo "✗ $HUB_DIR does not look like the hub repo (no v1/)"; exit 1; }
+[ -d "$HUB_DIR/v1" ] || { echo "✗ no v1/ in $HUB_DIR - wrong repo, or a branch predating the v1/v2 restructure"; exit 1; }
 
 grep -q '<base href="/v2/" />' "$SRC_DIR/index.html" || {
   echo "✗ $SRC_DIR/index.html is not based at /v2/ - run prepare-github-pages.sh first"
