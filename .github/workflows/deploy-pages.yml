@@ -71,14 +71,14 @@ jobs:
       - name: Publish metrics into site output
         run: bash .github/scripts/publish-metrics-to-pages.sh
 
-      # Uploaded before the base href is set, so downstream jobs can rebase it
-      # to their own sub-path without rebuilding.
+      # Uploaded before the base href is set, so publish-hub.yml can rebase it
+      # to /v2/ without rebuilding. Retention covers manual re-publishes.
       - name: Upload unbased site output
         uses: actions/upload-artifact@v4
         with:
           name: wasm-publish
           path: publish/wwwroot
-          retention-days: 1
+          retention-days: 5
           include-hidden-files: true
 
       - name: Prepare for GitHub Pages
@@ -95,46 +95,3 @@ jobs:
           user_name: "github-actions[bot]"
           user_email: "github-actions[bot]@users.noreply.github.com"
           commit_message: "Deploy from ${{ github.sha }}"
-
-  publish-hub:
-    name: Publish /v2/ to chandamu.github.io
-    needs: deploy
-    if: github.ref == 'refs/heads/beta'
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout scripts
-        uses: actions/checkout@v4
-
-      - name: Download unbased site output
-        uses: actions/download-artifact@v4
-        with:
-          name: wasm-publish
-          path: site
-
-      - name: Checkout hub repository
-        uses: actions/checkout@v4
-        with:
-          repository: chandamu/chandamu.github.io
-          ref: main
-          token: ${{ secrets.HUB_DEPLOY_TOKEN }}
-          path: hub
-
-      - name: Rebase site output to /v2/
-        run: bash .github/scripts/prepare-github-pages.sh site /v2/
-
-      - name: Write /v2/ and root 404.html into the hub
-        run: bash .github/scripts/publish-to-hub.sh site hub
-
-      - name: Commit and push
-        working-directory: hub
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add -A
-          if git diff --cached --quiet; then
-            echo "Hub already up to date - nothing to push"
-            exit 0
-          fi
-          git commit -m "Publish v2 from miriyald/chandam@${{ github.sha }}"
-          git push origin main
