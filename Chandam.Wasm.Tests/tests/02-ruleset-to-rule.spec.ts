@@ -17,7 +17,7 @@ import { test, expect, gotoAndWait, waitForWasmReady } from '../fixtures/wasm-re
 import { dailyRandom, pickRandomIndex } from '../helpers/random';
 
 // Built-in rule set IDs defined in config.ts
-const RULE_SET_IDS = ['chandam', 'topella', 'sanskrit'] as const;
+const RULE_SET_IDS = ['chandam', 'topella', 'sanskrit', 'jkmr'] as const;
 
 async function selectAnalyzableRule(
   page: import('@playwright/test').Page,
