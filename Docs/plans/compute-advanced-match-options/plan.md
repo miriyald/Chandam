@@ -34,6 +34,13 @@
 - [x] 10c. Add a dedicated element-scoped snapshot for the **expanded** Advanced row (desktop + mobile) — the full-page baselines only capture it collapsed, and on mobile it is below the fold.
 - [x] 11. Author this documentation set; update the `SoundexSandhi` rows in `Docs/workflows/*`.
 
+### Follow-up round (requested after first delivery)
+
+- [x] 12. Move the Advanced row **above** the primary action: `.main-actions` leaves `.controls-bar` and becomes its own row after the `<details>`, so document order is toggles → Advanced → Analyze at every width.
+- [x] 13. Persist the match flags in `localStorage`, like the editor text: `matchSantiPrasa` / `matchSoundexSandhi` added to `EditorState` and `StorageService`, and the two pre-existing but dead `matchYati` / `matchPrasa` fields wired up at the same time.
+- [x] 14. Surface an in-force hint: the row reopens **expanded** when a restored advanced flag is active, and the summary carries a count badge so an active flag stays visible once collapsed.
+- [x] 14b. Fold restore + persist + gate into one `initMatchOptions()` (replacing `attachAdvancedOptionsToggle`) so restore cannot race the Yati gate.
+
 ## Risks & mitigations
 
 | Risk | Mitigation |

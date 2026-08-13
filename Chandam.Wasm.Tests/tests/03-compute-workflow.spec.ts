@@ -9,8 +9,9 @@
  *   5. Click Analyze with Yati & Prasa both checked → match result appears.
  *   6. Uncheck Yati → re-analyze → no crash; results section still renders.
  *
- * Advanced options (Santi Prasa / Soundex Sandhi) are collapsed and off by
- * default, and are hidden + reset when Yati is unchecked.
+ * Advanced options (Santi Prasa / Soundex Sandhi) sit above the Analyze button,
+ * are collapsed and off by default, are hidden + reset when Yati is unchecked,
+ * and are remembered in localStorage — reopening expanded with a badge when active.
  */
 
 import { test, expect, gotoAndWait } from '../fixtures/wasm-ready';
@@ -71,6 +72,41 @@ test.describe('Compute page – auto-detect mode', () => {
     await expect(advanced).not.toHaveAttribute('open', '');
     await expect(page.locator('#match-santi-prasa')).not.toBeChecked();
     await expect(page.locator('#match-soundex-sandhi')).not.toBeChecked();
+    await expect(page.locator('#advanced-badge')).toBeHidden();
+  });
+
+  test('advanced options row sits above the Analyze button', async ({ page }) => {
+    const advanced = await page.locator('#advanced-options').boundingBox();
+    const analyze = await page.locator('#btn-analyze').boundingBox();
+
+    expect(advanced!.y + advanced!.height).toBeLessThanOrEqual(analyze!.y);
+  });
+
+  test('advanced options are remembered and reopen expanded when active', async ({
+    page,
+  }) => {
+    await page.locator('#match-soundex-sandhi').evaluate((el: HTMLInputElement) => {
+      el.checked = true; el.dispatchEvent(new Event('change', { bubbles: true }));
+    });
+    await expect(page.locator('#advanced-badge')).toHaveText('1');
+
+    // Reload: the row comes back expanded so the active flag is not silently in force
+    await gotoAndWait(page, '/compute/chandam/');
+
+    await expect(page.locator('#match-soundex-sandhi')).toBeChecked();
+    await expect(page.locator('#advanced-options')).toHaveAttribute('open', '');
+    await expect(page.locator('#advanced-badge')).toHaveText('1');
+  });
+
+  test('Yati and Prasa toggles are remembered', async ({ page }) => {
+    await page.locator('#match-prasa').evaluate((el: HTMLInputElement) => {
+      el.checked = false; el.dispatchEvent(new Event('change', { bubbles: true }));
+    });
+
+    await gotoAndWait(page, '/compute/chandam/');
+
+    await expect(page.locator('#match-prasa')).not.toBeChecked();
+    await expect(page.locator('#match-yati')).toBeChecked();
   });
 
   test('advanced options hide and reset when Yati is unchecked', async ({

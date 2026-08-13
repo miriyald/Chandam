@@ -15,7 +15,8 @@ _Last updated: 2026-08-12_
 | MCP tool params | `Chandam.MCP.Tools/ChandamTools.cs` |
 | WASM interop params | `Chandam.Wasm/JsBridge.cs` |
 | `MatchFlags` contract | `Chandam.Wasm/Client/src/types.ts` |
-| `readMatchFlags()`, Advanced row, `attachAdvancedOptionsToggle()` | `Chandam.Wasm/Client/src/ui/shared-components.ts` |
+| `readMatchFlags()`, Advanced row, `initMatchOptions()` | `Chandam.Wasm/Client/src/ui/shared-components.ts` |
+| Flag persistence (`matchSantiPrasa`, `matchSoundexSandhi`) | `Chandam.Wasm/Client/src/services/storage/{models,storage-service}.ts` |
 | Bridge signatures | `Chandam.Wasm/Client/src/wasm-bridge.ts` |
 | De-duplicated flag reads (5 sites → 1 helper) | `Chandam.Wasm/Client/src/ui/{actions,rule-page,rule-set-page}.ts` |
 | i18n (`en` + `te`) | `Chandam.Wasm/Client/src/i18n.ts` |
@@ -135,6 +136,36 @@ Three other baselines were rewritten by the forced update and then **reverted**,
 |---|---|
 | `desktop/create-rule.png` | Toggle row is pixel-identical — `flex-wrap: wrap` has no effect without overflow. The byte diff was pre-existing staleness: nav `సంప్రదింపులు` → `నా డేటా`, footer redesigned, `Published:` 2026-05-08 → 2026-08-12. |
 | `mobile/compute-chandam.png`, `mobile/compute-topella.png` | Mobile shots are viewport-only and the Advanced row is below the fold. The diff was an icon-font race (Material Symbols rendering as `notdef` boxes in the old baseline). |
+
+### Follow-up round: placement, persistence, in-force hint
+
+Three practical changes requested after the first delivery.
+
+**1. Advanced row moved above the primary action.** It previously rendered *below* the Analyze button, so expanding it pushed options past the action they modify. `.main-actions` now leaves `.controls-bar` and becomes its own row after the `<details>`:
+
+```
+[textarea]
+[Yati | Prasa]
+▸ అధునాతన ఎంపికలు
+                        [▶ విశ్లేషించు]
+```
+
+The button keeps its right-aligned prominence via `.editor-section > .main-actions { justify-content: flex-end }` — scoped to a direct child of the editor card so the create-rule page, which also uses `.main-actions` but nested inside its own `.controls-bar`, is untouched. On mobile the existing `width: 100%` override still applies.
+
+**2. Flags persist in `localStorage`.** `EditorState` gains `matchSantiPrasa` / `matchSoundexSandhi` (keys `editor:matchSantiPrasa`, `editor:matchSoundexSandhi`, both defaulting to `false`).
+
+Worth noting: `matchYati` / `matchPrasa` already existed on `EditorState` and in `StorageService`, but **nothing read or wrote them** — no caller passed them to `saveEditorState`, and the loaded values were never applied to the DOM. Only `editor:text` was genuinely remembered. Rather than persist the two new flags on top of dead fields, this round wires up all four, which is also what keeps the restore coherent: restoring `soundexSandhi: true` is meaningless if `matchYati` silently resets to `true` on every load.
+
+`clearEditorState()` is deliberately left alone — Clear empties the poem, it should not reset the user's match options.
+
+**3. In-force hint.** `initMatchOptions()` (replacing `attachAdvancedOptionsToggle`) opens the row on load when a restored advanced flag is active, and maintains a count badge on the summary:
+
+- `#advanced-badge` shows the number of active advanced flags, hidden at zero, with `title="${t('editor_advanced_active')}"` (`Advanced options in effect` / `అధునాతన ఎంపికలు అమలులో ఉన్నాయి`).
+- `.advanced-options.active summary` turns primary-coloured and semi-bold.
+
+Auto-open fires **only on init**, never from the change handler — otherwise unticking the last flag would collapse the row from under the user mid-interaction.
+
+Restore, persist and the Yati gate were folded into one function for ordering reasons: restore must complete before the gate syncs, or a restored `soundexSandhi: true` under a restored `matchYati: false` would be displayed as active while the server treats it as off. One entry point makes that unrepresentable.
 
 ### Pre-existing visual-baseline hygiene issues (out of scope, worth a separate pass)
 

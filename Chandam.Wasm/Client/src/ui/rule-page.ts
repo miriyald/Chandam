@@ -3,7 +3,7 @@ import { getRuleSetAsync } from '../config';
 import { CustomRulesLoader } from '../services/custom-rules-loader';
 import { renderFirstMatch, hideResults } from './results';
 import { clearEditor, enableEditorAutoSave } from './editor';
-import { renderEditorCard, readMatchFlags, attachAdvancedOptionsToggle } from './shared-components';
+import { renderEditorCard, readMatchFlags, initMatchOptions } from './shared-components';
 import { makeUrl } from '../utils/url-helpers';
 import { renderBreadcrumbs, buildRuleBreadcrumbs } from './breadcrumbs';
 import { renderModeSwitcher } from './mode-switcher';
@@ -179,7 +179,7 @@ async function renderRulePageHtml(
 
 // Step 5: Attach event handlers
 function attachEventHandlers(ruleSet: string, ruleId: string) {
-  attachAdvancedOptionsToggle();
+  initMatchOptions();
 
   // Analyze button - always calls Match with fixed ruleId
   document.getElementById('btn-analyze')?.addEventListener('click', async () => {

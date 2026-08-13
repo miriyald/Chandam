@@ -1,4 +1,5 @@
 import { t } from '../i18n';
+import { storageService } from '../services/storage/storage-service';
 import type { MatchFlags } from '../types';
 
 export interface EditorCardConfig {
@@ -79,17 +80,10 @@ export function renderEditorCard(config: EditorCardConfig): string {
             <span class="toggle-label">${t('editor_prasa')}</span>
           </label>
         </div>
-
-        <div class="main-actions">
-          <button id="btn-analyze" class="btn-primary">
-            <span class="material-symbols-outlined" style="font-size:14px" aria-hidden="true">play_arrow</span>
-            ${t('editor_btn_analyze')}
-          </button>
-        </div>
       </div>
 
       <details class="advanced-options" id="advanced-options">
-        <summary>${t('editor_advanced')}</summary>
+        <summary>${t('editor_advanced')}<span class="advanced-badge" id="advanced-badge" title="${t('editor_advanced_active')}" hidden></span></summary>
         <div class="toggle-group stacked">
           <label class="toggle-switch" for="match-santi-prasa">
             <input type="checkbox" id="match-santi-prasa" aria-label="${t('editor_santi_prasa')}">
@@ -103,32 +97,82 @@ export function renderEditorCard(config: EditorCardConfig): string {
           </label>
         </div>
       </details>
+
+      <div class="main-actions">
+        <button id="btn-analyze" class="btn-primary">
+          <span class="material-symbols-outlined" style="font-size:14px" aria-hidden="true">play_arrow</span>
+          ${t('editor_btn_analyze')}
+        </button>
+      </div>
     </div>
   `;
 }
 
+const ADVANCED_INPUT_IDS = ['match-santi-prasa', 'match-soundex-sandhi'];
+
+function setChecked(id: string, value: boolean): void {
+  const input = document.getElementById(id) as HTMLInputElement | null;
+  if (input) input.checked = value;
+}
+
 /**
- * Santi Prasa and Soundex Sandhi only take effect when Yati is on, so the row is
- * hidden and cleared when Yati is off. The server enforces the same rule.
+ * Restores the saved match flags, keeps them persisted, and keeps the Advanced row
+ * consistent with Yati: Santi Prasa and Soundex Sandhi only take effect when Yati is
+ * on, so the row is hidden and cleared when Yati is off. The server enforces the same
+ * rule. The row starts expanded when a restored advanced flag is active, and the
+ * summary carries a badge so an active flag stays visible once collapsed.
  */
-export function attachAdvancedOptionsToggle(): void {
+export function initMatchOptions(): void {
   const yatiToggle = document.getElementById('match-yati') as HTMLInputElement | null;
   const advanced = document.getElementById('advanced-options') as HTMLDetailsElement | null;
   if (!yatiToggle || !advanced) return;
 
+  const saved = storageService.loadEditorState();
+  setChecked('match-yati', saved.matchYati);
+  setChecked('match-prasa', saved.matchPrasa);
+  setChecked('match-santi-prasa', saved.matchSantiPrasa);
+  setChecked('match-soundex-sandhi', saved.matchSoundexSandhi);
+
+  const activeAdvancedCount = () =>
+    ADVANCED_INPUT_IDS.filter(id => isChecked(id, false)).length;
+
   const sync = () => {
     advanced.style.display = yatiToggle.checked ? 'block' : 'none';
-    if (yatiToggle.checked) return;
 
-    advanced.open = false;
-    for (const id of ['match-santi-prasa', 'match-soundex-sandhi']) {
-      const input = document.getElementById(id) as HTMLInputElement | null;
-      if (input) input.checked = false;
+    if (!yatiToggle.checked) {
+      advanced.open = false;
+      ADVANCED_INPUT_IDS.forEach(id => setChecked(id, false));
+    }
+
+    const active = activeAdvancedCount();
+    advanced.classList.toggle('active', active > 0);
+
+    const badge = document.getElementById('advanced-badge');
+    if (badge) {
+      badge.hidden = active === 0;
+      badge.textContent = String(active);
     }
   };
 
-  yatiToggle.addEventListener('change', sync);
+  const persist = () => {
+    const flags = readMatchFlags();
+    storageService.saveEditorState({
+      matchYati: flags.yati,
+      matchPrasa: flags.prasa,
+      matchSantiPrasa: flags.santiPrasa,
+      matchSoundexSandhi: flags.soundexSandhi
+    });
+  };
+
+  for (const id of ['match-yati', 'match-prasa', ...ADVANCED_INPUT_IDS]) {
+    document.getElementById(id)?.addEventListener('change', () => {
+      sync();
+      persist();
+    });
+  }
+
   sync();
+  advanced.open = yatiToggle.checked && activeAdvancedCount() > 0;
 }
 
 /**
