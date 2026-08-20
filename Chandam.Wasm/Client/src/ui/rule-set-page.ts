@@ -2,7 +2,7 @@ import { WasmBridge } from '../wasm-bridge';
 import { getRuleSet, getRuleSetAsync } from '../config';
 import { renderRulePicker, setSelectedRule, getSelectedRule } from './rule-picker';
 import { clearEditor, enableEditorAutoSave } from './editor';
-import { renderEditorCard, showRulePicker, hideRulePicker, readMatchFlags, attachAdvancedOptionsToggle } from './shared-components';
+import { renderEditorCard, showRulePicker, hideRulePicker, readMatchFlags, initMatchOptions } from './shared-components';
 import { renderFirstMatch, renderScoreCards, hideResults } from './results';
 import { getEditorText } from './editor';
 import type { RuleSummaryDetailed } from '../types';
@@ -144,7 +144,7 @@ function renderRuleSetPageHtml(ruleSetName: string, ruleCount: number, ruleSetId
 
 // Step 5: Attach event handlers
 function attachEventHandlers(ruleSet: string) {
-  attachAdvancedOptionsToggle();
+  initMatchOptions();
 
   // Auto-detect toggle handler
   document.getElementById('auto-detect')?.addEventListener('change', (e) => {

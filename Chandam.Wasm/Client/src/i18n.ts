@@ -27,6 +27,7 @@ export interface Translations {
   editor_yati: string;
   editor_prasa: string;
   editor_advanced: string;
+  editor_advanced_active: string;
   editor_santi_prasa: string;
   editor_soundex_sandhi: string;
   editor_auto_detect_context: string;
@@ -332,6 +333,7 @@ const translations: Record<Language, Translations> = {
     editor_yati: 'Yati',
     editor_prasa: 'Prasa',
     editor_advanced: 'Advanced',
+    editor_advanced_active: 'Advanced options in effect',
     editor_santi_prasa: 'Santi Prasa',
     editor_soundex_sandhi: 'Soundex Sandhi',
     editor_auto_detect_context: 'Auto-detecting best match...',
@@ -619,6 +621,7 @@ const translations: Record<Language, Translations> = {
     editor_yati: 'యతి',
     editor_prasa: 'ప్రాస',
     editor_advanced: 'అధునాతన ఎంపికలు',
+    editor_advanced_active: 'అధునాతన ఎంపికలు అమలులో ఉన్నాయి',
     editor_santi_prasa: 'శాంత ప్రాసను పరిగణించు',
     editor_soundex_sandhi: 'అచ్చు ఆధారంగా సంధియుత యతి మైత్రి గుర్తింపు',
     editor_auto_detect_context: 'ఉత్తమ సరిపోలికను స్వయంచాలకంగా గుర్తిస్తోంది.',

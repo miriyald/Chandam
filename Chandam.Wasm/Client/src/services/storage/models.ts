@@ -7,6 +7,8 @@ export interface EditorState {
   language: string;
   matchYati: boolean;
   matchPrasa: boolean;
+  matchSantiPrasa: boolean;
+  matchSoundexSandhi: boolean;
   selectedRule?: string;
 }
 

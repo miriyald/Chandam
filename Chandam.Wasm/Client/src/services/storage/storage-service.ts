@@ -24,6 +24,8 @@ export class StorageService {
     if (state.language !== undefined) this.localStorage.set('editor:language', state.language);
     if (state.matchYati !== undefined) this.localStorage.set('editor:matchYati', state.matchYati);
     if (state.matchPrasa !== undefined) this.localStorage.set('editor:matchPrasa', state.matchPrasa);
+    if (state.matchSantiPrasa !== undefined) this.localStorage.set('editor:matchSantiPrasa', state.matchSantiPrasa);
+    if (state.matchSoundexSandhi !== undefined) this.localStorage.set('editor:matchSoundexSandhi', state.matchSoundexSandhi);
     if (state.selectedRule !== undefined) this.localStorage.set('editor:selectedRule', state.selectedRule);
   }
 
@@ -33,6 +35,8 @@ export class StorageService {
       language: this.localStorage.get<string>('editor:language', 'te') || 'te',
       matchYati: this.localStorage.get<boolean>('editor:matchYati', true) ?? true,
       matchPrasa: this.localStorage.get<boolean>('editor:matchPrasa', true) ?? true,
+      matchSantiPrasa: this.localStorage.get<boolean>('editor:matchSantiPrasa', false) ?? false,
+      matchSoundexSandhi: this.localStorage.get<boolean>('editor:matchSoundexSandhi', false) ?? false,
       selectedRule: this.localStorage.get<string>('editor:selectedRule', '')
     };
   }
