@@ -301,6 +301,7 @@ export interface Translations {
   footer_clear_data: string;
   footer_favorites: string;
   footer_custom_rules: string;
+  footer_presentation: string;
   clear_data_warning: string;
 
   // Pages
@@ -592,6 +593,7 @@ const translations: Record<Language, Translations> = {
     footer_clear_data: 'Clear Site Data',
     footer_favorites: 'Favorites',
     footer_custom_rules: 'Custom Rules',
+    footer_presentation: 'Walkthrough',
     clear_data_warning: 'This will delete all your saved poems, favorites, custom rules, and editor state. This action cannot be undone. Continue?',
 
     page_about_title: 'About Chandam',
@@ -880,6 +882,7 @@ const translations: Record<Language, Translations> = {
     footer_clear_data: 'డేటా తొలగించు',
     footer_favorites: 'ఇష్టమైనవి',
     footer_custom_rules: 'అనుకూల నియమాలు',
+    footer_presentation: 'యాప్ పరిచయం',
     clear_data_warning: 'ఇది మీ భద్రపరచిన పద్యాలు, ఇష్టమైనవి, అనుకూల నియమాలు మరియు ఎడిటర్ స్థితిని తొలగిస్తుంది. ఈ చర్యను రద్దు చేయలేరు. కొనసాగించాలా?',
 
     page_about_title: 'పరిచయం',
