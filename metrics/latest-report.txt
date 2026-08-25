@@ -1,0 +1,86 @@
+
+================================================================
+           CHANDAM - CODE METRICS REPORT
+           2026-08-25 00:26
+================================================================
+
+-- Lines of Code (CS, excluding obj/bin/Obsolete/Rules) --
+
+Project                            Files   Total    Code   Blank   Cmts
+----------------------------------------------------------------------
+
+  [Core]
+Chandam.Util*                         18    3132    2466     330    336
+Chandam.Indic*                        17    2710    2160     270    280
+Chandam.Samples*                      10    2245    1729     389    127
+Chandam.Core*                         31    8725    7062     855    808
+Chandam.Dictionary                     8     485     355      82     48
+
+  [API]
+Chandam.API                           24    3722    2631     478    613
+Chandam.API.WebApi                     2     510     399      74     37
+Chandam.API.Demo                       1     165     140      19      6
+Chandam.API.IntegrationTests           9    1357    1036     220    101
+
+  [MCP]
+Chandam.MCP.Tools                      5    1074     958     109      7
+Chandam.MCP.Stdio                      1      35      26       6      3
+Chandam.MCP.Http                       1      20      16       4      0
+Chandam.MCP.Tests                      1     368     278      67     23
+
+  [Web]
+Chandam.Wasm                           4     763     621      93     49
+
+  [Tasks]
+Chandam.Tasks                         37    9518    6592    1348   1578
+
+----------------------------------------------------------------------
+TOTAL                                169   34829   26469    4344   4016
+
+-- File distribution (all types, including WASM/Node/etc; excluding obj/bin/Obsolete/Rules) --
+
+  .js       2994  ########################################
+  .ts       1233  ########################################
+  .json      409  ########################################
+  .md        335  ########################################
+  .cs        306  ########################################
+  .map       188  ######################################
+  .cjs       175  ###################################
+  (none)     169  ##################################
+  .png        87  ##################
+  .html       60  ############
+  .mjs        54  ###########
+  .mts        32  #######
+  .cts        32  #######
+  .txt        28  ######
+  .csproj     28  ######
+
+-- Project dependency depth (ProjectReference chain) --
+
+  Chandam.MCP.Http                         depth 5
+  Chandam.API.IntegrationTests             depth 5
+  Chandam.MCP.Stdio                        depth 5
+  Chandam.MCP.Tests                        depth 5
+  Chandam.API.Demo                         depth 4
+  Chandam.API.WebApi                       depth 4
+  Chandam.Tasks                            depth 4
+  Chandam.Wasm                             depth 4
+  Chandam.MCP.Tools                        depth 4
+  Chandam.API                              depth 3
+  Chandam.Core                             depth 2
+  Chandam.Rules                            depth 1
+  Chandam.Indic                            depth 1
+  Chandam.Dictionary                       depth 0
+  Chandam.Util                             depth 0
+  Chandam.Samples                          depth 0
+
+-- Summary --
+  Total C# files : 169
+  Total lines    : 34829
+  Code lines     : 26469
+  Comment lines  : 4016 (11.5%)
+  Blank lines    : 4344 (12.5%)
+
+  Tip: Run with -Deep for cyclomatic complexity, inheritance depth, and long-method detection.
+
+

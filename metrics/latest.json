@@ -1,0 +1,13 @@
+{
+  "generatedAtUtc": "2026-08-25T00:26:55.8318315Z",
+  "commit": "c0f1206fc97cb3cfcf2b5ce4ae965c9e3e900181",
+  "branch": "beta",
+  "mode": "basic",
+  "totals": {
+    "totalCSharpFiles": 169,
+    "totalLines": 34829,
+    "codeLines": 26469,
+    "commentLines": 4016,
+    "blankLines": 4344
+  }
+}
