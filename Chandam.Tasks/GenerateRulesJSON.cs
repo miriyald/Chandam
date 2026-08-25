@@ -527,7 +527,7 @@ namespace Verifier
 
 
 
-                Rules = ParseRulesColumn(rulesText),
+                Rules = ParseRulesColumn(rulesText, rowNumber),
                 Yati = ParseYatiColumn(yatiText),
                 References = string.IsNullOrWhiteSpace(reference) ? null : new string[] { reference }
             };
@@ -568,20 +568,39 @@ namespace Verifier
             return fields.ToArray();
         }
 
+        private static readonly HashSet<string> ValidGanas = new HashSet<string>
+        {
+            "మ", "న", "భ", "జ", "స", "త", "ర", "య",
+            "ల", "గ", "వ", "హ", "గా", "లల"
+        };
+
         /// <summary>
-        /// Split Telugu gana string into individual characters
+        /// Split a Telugu gana string into tokens. Cells containing a multi-akshara gana
+        /// (గా, లల) are hyphen-separated; the rest split one grapheme per gana.
         /// </summary>
-        private object[][] ParseRulesColumn(string rulesText)
+        private object[][] ParseRulesColumn(string rulesText, int rowNumber)
         {
             if (string.IsNullOrWhiteSpace(rulesText))
                 return new object[0][];
 
             var ganas = new List<string>();
-            var si = new StringInfo(rulesText);
 
-            for (int i = 0; i < si.LengthInTextElements; i++)
+            if (rulesText.Contains('-'))
             {
-                ganas.Add(si.SubstringByTextElements(i, 1));
+                ganas.AddRange(rulesText.Split('-').Where(g => !string.IsNullOrWhiteSpace(g)));
+            }
+            else
+            {
+                var si = new StringInfo(rulesText);
+                for (int i = 0; i < si.LengthInTextElements; i++)
+                {
+                    ganas.Add(si.SubstringByTextElements(i, 1));
+                }
+            }
+
+            foreach (var gana in ganas.Where(g => !ValidGanas.Contains(g)))
+            {
+                Console.WriteLine($"  ! Row {rowNumber}: unknown gana token '{gana}'");
             }
 
             // Return as single row (Lines=4 handles repetition)

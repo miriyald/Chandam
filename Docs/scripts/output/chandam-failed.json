@@ -1131,7 +1131,7 @@
       "source": "707",
       "meterName": "పుష్పా",
       "poemText": "రాగంపు వేగాలన్  రసాధారలలోన్\nవేగమ్ము పోనివ్వన్ విరాగమ్ము నొగ్గన్\nసౌగంధ పద్యాలన్ సరాగమ్మునాపన్\nచేగూర్చు భావమ్మున్ జిదానంద శౌరీ",
-      "bestIdentifier": "alpaakkara",
+      "bestIdentifier": "maNimaala1",
       "scoreWithYatiPrasa": 73,
       "scoreWithoutYatiPrasa": 76
     },
@@ -3498,8 +3498,8 @@
       "source": "707",
       "meterName": "మృదంగ",
       "poemText": "ఓర్వంగలేని ప్రజ సాయుధులై ధరిత్రిన్ జనించు దీనాళిన్ \nపూర్వాద్రి భాస్కరుడివై మొరలాలకించన్  వృషాద్రి విహారా !  \nనిర్వేద తీరముల సన్నిధి జేర్చవే వేంకటాద్రి పై గొల్వౌ \nసర్వేశుడా !వరదుడా! శరణాగతిన్ గూర్చు దైవమా !  శౌరీ !",
-      "bestIdentifier": "madhyaakkara",
-      "scoreWithYatiPrasa": 71,
+      "bestIdentifier": null,
+      "scoreWithYatiPrasa": 0,
       "scoreWithoutYatiPrasa": 0
     },
     {
@@ -3795,8 +3795,8 @@
       "source": "707",
       "meterName": "వేల్లితా",
       "poemText": "ప్రసవార్చిత రూప !వరదకర విన్యాసా ! సూ\nర్య సుధాకర నేత్ర !యదుకుల యశోదానందా ! \nవసుధాస్థలి దివ్య వన తిరుమలేశా శ్రీశా ! \nవసుదేవసుతా!  శుభకర వరద దాతా శౌరీ",
-      "bestIdentifier": "aMtaraakkara",
-      "scoreWithYatiPrasa": 70,
+      "bestIdentifier": null,
+      "scoreWithYatiPrasa": 0,
       "scoreWithoutYatiPrasa": 0
     },
     {
@@ -3966,8 +3966,8 @@
       "source": "707",
       "meterName": "శాయినీ",
       "poemText": "గగన కిరణమ్ములన్ నిగారముల తత్త్వ కాంతిన్ \nపగడ మకుటమ్ములన్ శుభాంగ ఝరివౌ మురారీ\nనెగడు మెరుపై నెలవౌ నీరవ నిశీధి జన్మల్\nసుగమ నిగమము జేర్చు సుందర నరేశ శౌరీ",
-      "bestIdentifier": "madhuraakkara",
-      "scoreWithYatiPrasa": 71,
+      "bestIdentifier": "dviradagatiragaDa",
+      "scoreWithYatiPrasa": 75,
       "scoreWithoutYatiPrasa": 78
     },
     {
@@ -4434,7 +4434,7 @@
       "source": "707",
       "meterName": "ద్రుతముఖం",
       "poemText": "కలగ కరుగు కలియుగ భువి కారుణ్యమ్మౌ సత్యానివౌ విశ్వా\nనల నిలయ దినకర హరుడ నాదానందమ్ము నేలు గోవిందా !\nకలతల నెలవున తరగని కర్మల్ వారించ రా !పరంధామా !\nబలితల నదిమిన ఘన నిజపాదమ్మున్ జేర్చరా హరీ !శౌరీ",
-      "bestIdentifier": "harigatiragaDa",
+      "bestIdentifier": "turagavalganaragaDa",
       "scoreWithYatiPrasa": 78,
       "scoreWithoutYatiPrasa": 82
     },
@@ -5856,8 +5856,8 @@
       "source": "434",
       "meterName": "శాతశర",
       "poemText": "ఎక్కని గిరులనెక్కెడు పథమ్మెంచు సంకటహారుడా!\nదక్కని సిరుల చిక్కెడు నౌ మేథన్  కుదించుమ శ్రీవరా !\nమ్రొక్కుల ఫల విజేతయనునామోదమందగ భూధరా !\nచిక్కుల కథను దిక్కుగ విరాజిల్లు వెన్నుడ !శ్రీపతీ !",
-      "bestIdentifier": "madhuraakkara",
-      "scoreWithYatiPrasa": 78,
+      "bestIdentifier": "vRshabhagatiragaDa",
+      "scoreWithYatiPrasa": 84,
       "scoreWithoutYatiPrasa": 86
     },
     {
